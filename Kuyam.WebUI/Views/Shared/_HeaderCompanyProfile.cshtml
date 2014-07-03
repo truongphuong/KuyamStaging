@@ -449,7 +449,7 @@
     </div>
     @if (profile.IsClass.HasValue && profile.IsClass.Value)
     {
-        <div class="avaitab" style="display:none">
+        <div class="avaitab">
             <a href="@Url.RouteUrl("Class", new { seName = profile.GetSeName(Model.ProfileId) })" title="class" @((!Request.RawUrl.TrimStart('/').ToLower().Contains("/") || Request.RawUrl.ToLower().Contains("class")) ? "class=tabactive" : "")>
                 <span class="profileltab">
                 </span><span class="profilectab">class</span><span class="profilertab"></span>
