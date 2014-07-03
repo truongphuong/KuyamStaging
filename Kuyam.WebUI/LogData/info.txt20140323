@@ -1,0 +1,5 @@
+2014-03-11 09:59:47,450 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-11 10:02:01,254 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code BF1B4E success
+2014-03-11 10:02:10,409 INFO  - Kuyam.Domain.CustService.UpdateCustomer - Updated customer: CustID= 205
+2014-03-11 11:21:18,949 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-03-11 16:22:19,367 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

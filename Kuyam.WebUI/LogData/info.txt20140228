@@ -1,0 +1,26 @@
+2014-02-28 11:49:40,677 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-28 11:50:28,968 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-02-28 11:50:29,067 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-02-28 11:50:29,647 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2flocalhost%3a4236%2fvinasource-santa-monica--ca--2701-ocean-park-boulevard%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-03-07T04%3a50%3a28.953Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2flocalhost%3a4236%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-02-28T04%3a50%3a28.883Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-02-28 11:50:32,788 DEBUG - Service response
+2014-02-28 11:50:32,788 DEBUG - responseEnvelope.timestamp=2014-02-27T20%3A50%3A31.642-08%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=4570b7700cf58&responseEnvelope.build=9641252&preapprovalKey=PA-4MB61161M9552600D
+2014-02-28 16:11:53,230 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-28 16:13:23,794 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-02-28 16:13:23,814 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-02-28 16:13:24,102 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2flocalhost%3a4236%2fvinasource-santa-monica--ca--2701-ocean-park-boulevard%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-03-07T09%3a13%3a23.774Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2flocalhost%3a4236%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-02-28T09%3a13%3a23.678Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-02-28 16:13:27,530 DEBUG - Service response
+2014-02-28 16:13:27,530 DEBUG - responseEnvelope.timestamp=2014-02-28T01%3A13%3A26.515-08%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=bd73c520ffc3d&responseEnvelope.build=9641252&preapprovalKey=PA-8UT521290P542310C

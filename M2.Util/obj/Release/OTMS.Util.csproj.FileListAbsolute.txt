@@ -1,0 +1,5 @@
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\bin\Release\OTMS.Util.dll
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\bin\Release\OTMS.Util.pdb
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\obj\Release\OTMS.Util.dll
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\obj\Release\OTMS.Util.pdb

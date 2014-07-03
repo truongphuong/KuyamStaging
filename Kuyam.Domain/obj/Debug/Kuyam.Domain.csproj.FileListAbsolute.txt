@@ -1,0 +1,335 @@
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Kuyam\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-Domain\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\M2.Util.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll.config
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Android.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Apple.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Core.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.Windows.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\PushSharp.WindowsPhone.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EPPlus.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\itextsharp.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\log4net.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramework.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb

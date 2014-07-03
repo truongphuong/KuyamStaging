@@ -1,0 +1,14 @@
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Release\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Release\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Release\M2.Util.dll
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Release\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\obj\Release\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\obj\Release\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Release\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Release\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Release\M2.Util.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Release\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\obj\Release\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\obj\Release\M2.Util.MVC.pdb

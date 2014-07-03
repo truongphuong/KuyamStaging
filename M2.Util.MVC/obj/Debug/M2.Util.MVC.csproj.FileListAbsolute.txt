@@ -1,0 +1,35 @@
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\bin\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\bin\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\obj\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.MVC\obj\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\obj\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\m2.util\M2.Util.MVC\obj\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\obj\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.MVC\obj\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\bin\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\bin\Debug\M2.Util.MVC.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\obj\Debug\M2.Util.MVC.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.MVC\obj\Debug\M2.Util.MVC.pdb
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\bin\Debug\M2.Util.MVC.dll
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\bin\Debug\M2.Util.MVC.pdb
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\bin\Debug\M2.Util.dll
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\bin\Debug\M2.Util.pdb
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\obj\Debug\ResolveAssemblyReference.cache
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\obj\Debug\M2.Util.MVC.dll
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.MVC\obj\Debug\M2.Util.MVC.pdb

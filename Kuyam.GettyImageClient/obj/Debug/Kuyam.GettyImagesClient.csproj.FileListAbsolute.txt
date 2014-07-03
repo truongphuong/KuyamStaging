@@ -1,0 +1,13 @@
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\bin\Debug\Kuyam.GettyImagesClient.dll
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\bin\Debug\Kuyam.GettyImagesClient.pdb
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.dll
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\Kuyam.GettyImageClient\bin\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\Kuyam.GettyImageClient\bin\Debug\Kuyam.GettyImagesClient.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\Kuyam.GettyImageClient\obj\Debug\Kuyam.GettyImagesClient.pdb

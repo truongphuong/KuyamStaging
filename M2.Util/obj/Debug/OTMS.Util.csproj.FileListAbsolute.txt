@@ -1,0 +1,12 @@
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\bin\Debug\OTMS.Util.dll.config
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\bin\Debug\OTMS.Util.dll
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\bin\Debug\OTMS.Util.pdb
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\obj\Debug\OTMS.Util.dll
+C:\Users\Steve\Proj\otms\dev\OTMS.Util\obj\Debug\OTMS.Util.pdb
+C:\Users\Steve\Documents\Proj\otms\dev\OTMS.Util\bin\Debug\OTMS.Util.dll.config
+C:\Users\Steve\Documents\Proj\otms\dev\OTMS.Util\bin\Debug\OTMS.Util.dll
+C:\Users\Steve\Documents\Proj\otms\dev\OTMS.Util\bin\Debug\OTMS.Util.pdb
+C:\Users\Steve\Documents\Proj\otms\dev\OTMS.Util\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\otms\dev\OTMS.Util\obj\Debug\OTMS.Util.dll
+C:\Users\Steve\Documents\Proj\otms\dev\OTMS.Util\obj\Debug\OTMS.Util.pdb

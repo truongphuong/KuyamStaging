@@ -1,0 +1,46 @@
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll.config
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\DataAnnotationsExtensions.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll.config
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\DataAnnotationsExtensions.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll.config
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.pdb
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\DataAnnotationsExtensions.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\M2.Util.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.csprojResolveAssemblyReference.cache
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll.config
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\DataAnnotationsExtensions.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.pdb

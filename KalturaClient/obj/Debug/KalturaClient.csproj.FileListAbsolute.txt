@@ -1,0 +1,13 @@
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\bin\Debug\KalturaClient.dll
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\bin\Debug\KalturaClient.pdb
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.dll
+E:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\KalturaClient\KalturaClient\bin\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\KalturaClient\KalturaClient\bin\Debug\KalturaClient.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-Lib\KalturaClient\KalturaClient\obj\Debug\KalturaClient.pdb

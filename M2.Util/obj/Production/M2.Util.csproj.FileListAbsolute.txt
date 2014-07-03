@@ -1,0 +1,6 @@
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util\bin\Production\M2.Util.dll.config
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util\bin\Production\M2.Util.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util\bin\Production\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util\obj\Production\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util\obj\Production\M2.Util.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util\obj\Production\M2.Util.pdb

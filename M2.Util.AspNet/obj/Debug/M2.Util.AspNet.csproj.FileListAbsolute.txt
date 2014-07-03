@@ -1,0 +1,33 @@
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.AspNet\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\otms\dev\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\bin\Debug\M2.Util.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\bin\Debug\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\Kuyam\dev\Kuyam\util\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.pdb
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.dll
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\bin\Debug\M2.Util.AspNet.pdb
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\bin\Debug\M2.Util.dll
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\bin\Debug\M2.Util.pdb
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\obj\Debug\ResolveAssemblyReference.cache
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.dll
+D:\Beakon Files\Projects\WasatchDev\Kuyam\Git\Kuyam-Website-Util\M2.Util.AspNet\obj\Debug\M2.Util.AspNet.pdb

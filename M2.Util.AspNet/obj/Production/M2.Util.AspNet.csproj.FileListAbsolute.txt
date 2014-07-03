@@ -1,0 +1,7 @@
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Production\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Production\M2.Util.AspNet.pdb
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Production\M2.Util.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\bin\Production\M2.Util.pdb
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\obj\Production\ResolveAssemblyReference.cache
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\obj\Production\M2.Util.AspNet.dll
+C:\Users\Steve\Documents\Proj\M2.Util\M2.Util.AspNet\obj\Production\M2.Util.AspNet.pdb

@@ -1,0 +1,1742 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KuyamWebUIModelsStoreContainer" CdmEntityContainer="kuyamEntities">
+    <EntitySetMapping Name="AccessKeyManagements">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.AccessKeyManagement">
+        <MappingFragment StoreEntitySet="AccessKeyManagement">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="EmailAdmin" ColumnName="EmailAdmin" />
+          <ScalarProperty Name="EmailUser" ColumnName="EmailUser" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="AccessKeyID" ColumnName="AccessKeyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AppointmentLogs">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.AppointmentLog">
+        <MappingFragment StoreEntitySet="AppointmentLog">
+          <ScalarProperty Name="LogDT" ColumnName="LogDT" />
+          <ScalarProperty Name="Viewed" ColumnName="Viewed" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+          <ScalarProperty Name="AppointmentLogID" ColumnName="AppointmentLogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AppointmentNotifies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.AppointmentNotify">
+        <MappingFragment StoreEntitySet="AppointmentNotify">
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="NotifyType" ColumnName="NotifyType" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="NotifyId" ColumnName="NotifyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AppointmentParticipants">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.AppointmentParticipant">
+        <MappingFragment StoreEntitySet="AppointmentParticipant">
+          <ScalarProperty Name="ParticipantTypeID" ColumnName="ParticipantTypeID" />
+          <ScalarProperty Name="ParticipantStatusID" ColumnName="ParticipantStatusID" />
+          <ScalarProperty Name="CalendarID" ColumnName="CalendarID" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+          <ScalarProperty Name="AppointmentParticipantID" ColumnName="AppointmentParticipantID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Applications">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.aspnet_Applications">
+        <MappingFragment StoreEntitySet="aspnet_Applications">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+          <ScalarProperty Name="LoweredApplicationName" ColumnName="LoweredApplicationName" />
+          <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Membership">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.aspnet_Membership">
+        <MappingFragment StoreEntitySet="aspnet_Membership">
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+          <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+          <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+          <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+          <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+          <ScalarProperty Name="LoweredEmail" ColumnName="LoweredEmail" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobilePIN" ColumnName="MobilePIN" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Profile">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.aspnet_Profile">
+        <MappingFragment StoreEntitySet="aspnet_Profile">
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="PropertyValuesBinary" ColumnName="PropertyValuesBinary" />
+          <ScalarProperty Name="PropertyValuesString" ColumnName="PropertyValuesString" />
+          <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Roles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.aspnet_Roles">
+        <MappingFragment StoreEntitySet="aspnet_Roles">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Users">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.aspnet_Users">
+        <MappingFragment StoreEntitySet="aspnet_Users">
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+          <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+          <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_BlogRollItems">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_BlogRollItems">
+        <MappingFragment StoreEntitySet="be_BlogRollItems">
+          <ScalarProperty Name="SortIndex" ColumnName="SortIndex" />
+          <ScalarProperty Name="Xfn" ColumnName="Xfn" />
+          <ScalarProperty Name="FeedUrl" ColumnName="FeedUrl" />
+          <ScalarProperty Name="BlogUrl" ColumnName="BlogUrl" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="BlogRollId" ColumnName="BlogRollId" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="BlogRollRowId" ColumnName="BlogRollRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Blogs">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Blogs">
+        <MappingFragment StoreEntitySet="be_Blogs">
+          <ScalarProperty Name="IsSiteAggregation" ColumnName="IsSiteAggregation" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+          <ScalarProperty Name="VirtualPath" ColumnName="VirtualPath" />
+          <ScalarProperty Name="StorageContainerName" ColumnName="StorageContainerName" />
+          <ScalarProperty Name="IsAnyTextBeforeHostnameAccepted" ColumnName="IsAnyTextBeforeHostnameAccepted" />
+          <ScalarProperty Name="Hostname" ColumnName="Hostname" />
+          <ScalarProperty Name="BlogName" ColumnName="BlogName" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="BlogRowId" ColumnName="BlogRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Categories">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Categories">
+        <MappingFragment StoreEntitySet="be_Categories">
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="FeaturedPostID" ColumnName="FeaturedPostID" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="CategoryRowID" ColumnName="CategoryRowID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_DataStoreSettings">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_DataStoreSettings">
+        <MappingFragment StoreEntitySet="be_DataStoreSettings">
+          <ScalarProperty Name="Settings" ColumnName="Settings" />
+          <ScalarProperty Name="ExtensionId" ColumnName="ExtensionId" />
+          <ScalarProperty Name="ExtensionType" ColumnName="ExtensionType" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="DataStoreSettingRowId" ColumnName="DataStoreSettingRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_FileStoreDirectory">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_FileStoreDirectory">
+        <MappingFragment StoreEntitySet="be_FileStoreDirectory">
+          <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+          <ScalarProperty Name="LastAccess" ColumnName="LastAccess" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="FullPath" ColumnName="FullPath" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_FileStoreFiles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_FileStoreFiles">
+        <MappingFragment StoreEntitySet="be_FileStoreFiles">
+          <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+          <ScalarProperty Name="LastAccess" ColumnName="LastAccess" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Contents" ColumnName="Contents" />
+          <ScalarProperty Name="FullPath" ColumnName="FullPath" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentDirectoryID" ColumnName="ParentDirectoryID" />
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_FileStoreFileThumbs">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_FileStoreFileThumbs">
+        <MappingFragment StoreEntitySet="be_FileStoreFileThumbs">
+          <ScalarProperty Name="contents" ColumnName="contents" />
+          <ScalarProperty Name="size" ColumnName="size" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+          <ScalarProperty Name="thumbnailId" ColumnName="thumbnailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_GettyImages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_GettyImages">
+        <MappingFragment StoreEntitySet="be_GettyImages">
+          <ScalarProperty Name="GettyImageId" ColumnName="GettyImageId" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="UrlAttachment" ColumnName="UrlAttachment" />
+          <ScalarProperty Name="PixelWidth" ColumnName="PixelWidth" />
+          <ScalarProperty Name="PixelHeight" ColumnName="PixelHeight" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UrlPreview" ColumnName="UrlPreview" />
+          <ScalarProperty Name="UrlThumb" ColumnName="UrlThumb" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="LocationData" ColumnName="LocationData" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_MediaType">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_MediaType">
+        <MappingFragment StoreEntitySet="be_MediaType">
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="Fr_height" ColumnName="Fr_height" />
+          <ScalarProperty Name="Fr_width" ColumnName="Fr_width" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PackageFiles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PackageFiles">
+        <MappingFragment StoreEntitySet="be_PackageFiles">
+          <ScalarProperty Name="IsDirectory" ColumnName="IsDirectory" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="FileOrder" ColumnName="FileOrder" />
+          <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Packages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Packages">
+        <MappingFragment StoreEntitySet="be_Packages">
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Pages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Pages">
+        <MappingFragment StoreEntitySet="be_Pages">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="ShowInList" ColumnName="ShowInList" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="IsFrontPage" ColumnName="IsFrontPage" />
+          <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="PageContent" ColumnName="PageContent" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PageID" ColumnName="PageID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PageRowID" ColumnName="PageRowID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PingService">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PingService">
+        <MappingFragment StoreEntitySet="be_PingService">
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PingServiceID" ColumnName="PingServiceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PostCategory">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PostCategory">
+        <MappingFragment StoreEntitySet="be_PostCategory">
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PostCategoryID" ColumnName="PostCategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PostComment">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PostComment">
+        <MappingFragment StoreEntitySet="be_PostComment">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsSpam" ColumnName="IsSpam" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="ModeratedBy" ColumnName="ModeratedBy" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="Ip" ColumnName="Ip" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+          <ScalarProperty Name="ParentCommentID" ColumnName="ParentCommentID" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="PostCommentID" ColumnName="PostCommentID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PostCommentRowID" ColumnName="PostCommentRowID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PostCompanies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PostCompanies">
+        <MappingFragment StoreEntitySet="be_PostCompanies">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PostMedia">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PostMedia">
+        <MappingFragment StoreEntitySet="be_PostMedia">
+          <ScalarProperty Name="ZoomPercent" ColumnName="ZoomPercent" />
+          <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+          <ScalarProperty Name="Fr_height" ColumnName="Fr_height" />
+          <ScalarProperty Name="Fr_width" ColumnName="Fr_width" />
+          <ScalarProperty Name="Rel_height" ColumnName="Rel_height" />
+          <ScalarProperty Name="Rel_width" ColumnName="Rel_width" />
+          <ScalarProperty Name="Crop_y" ColumnName="Crop_y" />
+          <ScalarProperty Name="Crop_x" ColumnName="Crop_x" />
+          <ScalarProperty Name="MediaType" ColumnName="MediaType" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PostNotify">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PostNotify">
+        <MappingFragment StoreEntitySet="be_PostNotify">
+          <ScalarProperty Name="NotifyAddress" ColumnName="NotifyAddress" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PostNotifyID" ColumnName="PostNotifyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Posts">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Posts">
+        <MappingFragment StoreEntitySet="be_Posts">
+          <ScalarProperty Name="IsEvent" ColumnName="IsEvent" />
+          <ScalarProperty Name="GeoLocation" ColumnName="GeoLocation" />
+          <ScalarProperty Name="Radius" ColumnName="Radius" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="IsLocation" ColumnName="IsLocation" />
+          <ScalarProperty Name="AlowChatToBook" ColumnName="AlowChatToBook" />
+          <ScalarProperty Name="Caption" ColumnName="Caption" />
+          <ScalarProperty Name="CoverPhoto" ColumnName="CoverPhoto" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Raters" ColumnName="Raters" />
+          <ScalarProperty Name="IsCommentEnabled" ColumnName="IsCommentEnabled" />
+          <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="PostContent" ColumnName="PostContent" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PostRowID" ColumnName="PostRowID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_PostTag">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_PostTag">
+        <MappingFragment StoreEntitySet="be_PostTag">
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="PostTagID" ColumnName="PostTagID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Profiles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Profiles">
+        <MappingFragment StoreEntitySet="be_Profiles">
+          <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+          <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_QuickNotes">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_QuickNotes">
+        <MappingFragment StoreEntitySet="be_QuickNotes">
+          <ScalarProperty Name="Updated" ColumnName="Updated" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="NoteID" ColumnName="NoteID" />
+          <ScalarProperty Name="QuickNoteID" ColumnName="QuickNoteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_QuickSettings">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_QuickSettings">
+        <MappingFragment StoreEntitySet="be_QuickSettings">
+          <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+          <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="QuickSettingID" ColumnName="QuickSettingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Referrers">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Referrers">
+        <MappingFragment StoreEntitySet="be_Referrers">
+          <ScalarProperty Name="IsSpam" ColumnName="IsSpam" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="ReferralCount" ColumnName="ReferralCount" />
+          <ScalarProperty Name="ReferrerUrl" ColumnName="ReferrerUrl" />
+          <ScalarProperty Name="ReferralDay" ColumnName="ReferralDay" />
+          <ScalarProperty Name="ReferrerId" ColumnName="ReferrerId" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="ReferrerRowId" ColumnName="ReferrerRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_RightRoles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_RightRoles">
+        <MappingFragment StoreEntitySet="be_RightRoles">
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="RightName" ColumnName="RightName" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="RightRoleRowId" ColumnName="RightRoleRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Rights">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Rights">
+        <MappingFragment StoreEntitySet="be_Rights">
+          <ScalarProperty Name="RightName" ColumnName="RightName" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="RightRowId" ColumnName="RightRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Roles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Roles">
+        <MappingFragment StoreEntitySet="be_Roles">
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Settings">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Settings">
+        <MappingFragment StoreEntitySet="be_Settings">
+          <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+          <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="SettingRowId" ColumnName="SettingRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_StopWords">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_StopWords">
+        <MappingFragment StoreEntitySet="be_StopWords">
+          <ScalarProperty Name="StopWord" ColumnName="StopWord" />
+          <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          <ScalarProperty Name="StopWordRowId" ColumnName="StopWordRowId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_UserRoles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_UserRoles">
+        <MappingFragment StoreEntitySet="be_UserRoles">
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="be_Users">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.be_Users">
+        <MappingFragment StoreEntitySet="be_Users">
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bookmarks">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Bookmark">
+        <MappingFragment StoreEntitySet="Bookmark">
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Calendars">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Calendar">
+        <MappingFragment StoreEntitySet="Calendar">
+          <ScalarProperty Name="SyncCalendarId" ColumnName="SyncCalendarId" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="CalendarDisplayTypeID" ColumnName="CalendarDisplayTypeID" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="ForeColor" ColumnName="ForeColor" />
+          <ScalarProperty Name="BackColor" ColumnName="BackColor" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="CalendarID" ColumnName="CalendarID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CalendarShares">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CalendarShare">
+        <MappingFragment StoreEntitySet="CalendarShare">
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="ShareTypeID" ColumnName="ShareTypeID" />
+          <ScalarProperty Name="CalendarID" ColumnName="CalendarID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="CalendarShareID" ColumnName="CalendarShareID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryFeatureds">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CategoryFeatured">
+        <MappingFragment StoreEntitySet="CategoryFeatured">
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="BeCategoryId" ColumnName="BeCategoryId" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryFeaturedHotels">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CategoryFeaturedHotel">
+        <MappingFragment StoreEntitySet="CategoryFeaturedHotel">
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="BeCategoryId" ColumnName="BeCategoryId" />
+          <ScalarProperty Name="FeaturedId" ColumnName="FeaturedId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyEmployees">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyEmployee">
+        <MappingFragment StoreEntitySet="CompanyEmployee">
+          <ScalarProperty Name="EmployeeTypeId" ColumnName="EmployeeTypeId" />
+          <ScalarProperty Name="PaymentAccount" ColumnName="PaymentAccount" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="ProfileCompanyID" ColumnName="ProfileCompanyID" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyMedias">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyMedia">
+        <MappingFragment StoreEntitySet="CompanyMedia">
+          <ScalarProperty Name="IsHidden" ColumnName="IsHidden" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="IsVideo" ColumnName="IsVideo" />
+          <ScalarProperty Name="IsLogo" ColumnName="IsLogo" />
+          <ScalarProperty Name="IsBanner" ColumnName="IsBanner" />
+          <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="CompanyMediaID" ColumnName="CompanyMediaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyPackages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyPackage">
+        <MappingFragment StoreEntitySet="CompanyPackage">
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="KalturaImageId" ColumnName="KalturaImageId" />
+          <ScalarProperty Name="DurationInMonth" ColumnName="DurationInMonth" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="NumberOfBooking" ColumnName="NumberOfBooking" />
+          <ScalarProperty Name="PackageType" ColumnName="PackageType" />
+          <ScalarProperty Name="ProfileCompanyId" ColumnName="ProfileCompanyId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+          <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyPackageImages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyPackageImage">
+        <MappingFragment StoreEntitySet="CompanyPackageImage">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LocationData" ColumnName="LocationData" />
+          <ScalarProperty Name="CompanyProfileId" ColumnName="CompanyProfileId" />
+          <ScalarProperty Name="CompanyPackageImageId" ColumnName="CompanyPackageImageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyPackageServices">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyPackageService">
+        <MappingFragment StoreEntitySet="CompanyPackageService">
+          <ScalarProperty Name="ServiceCompanyId" ColumnName="ServiceCompanyId" />
+          <ScalarProperty Name="CompanyPackageId" ColumnName="CompanyPackageId" />
+          <ScalarProperty Name="CompanyPackageServiceId" ColumnName="CompanyPackageServiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Discounts">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Discount">
+        <MappingFragment StoreEntitySet="Discount">
+          <ScalarProperty Name="DiscountType" ColumnName="DiscountType" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ProfileCompanyId" ColumnName="ProfileCompanyId" />
+          <ScalarProperty Name="ApplyToAllServices" ColumnName="ApplyToAllServices" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Percent" ColumnName="Percent" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DiscountId" ColumnName="DiscountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiscountInvites">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.DiscountInvite">
+        <MappingFragment StoreEntitySet="DiscountInvite">
+          <ScalarProperty Name="DateUsage" ColumnName="DateUsage" />
+          <ScalarProperty Name="NumberofUsage" ColumnName="NumberofUsage" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="DiscountId" ColumnName="DiscountId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiscountRegularClients">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.DiscountRegularClient">
+        <MappingFragment StoreEntitySet="DiscountRegularClient">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="RegularClientId" ColumnName="RegularClientId" />
+          <ScalarProperty Name="DiscountId" ColumnName="DiscountId" />
+          <ScalarProperty Name="DiscountRegularClientId" ColumnName="DiscountRegularClientId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiscountServices">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.DiscountService">
+        <MappingFragment StoreEntitySet="DiscountService">
+          <ScalarProperty Name="ServiceCompanyId" ColumnName="ServiceCompanyId" />
+          <ScalarProperty Name="DiscountId" ColumnName="DiscountId" />
+          <ScalarProperty Name="DiscountServiceId" ColumnName="DiscountServiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeServices">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.EmployeeService">
+        <MappingFragment StoreEntitySet="EmployeeService">
+          <ScalarProperty Name="CompanyEmployeeID" ColumnName="CompanyEmployeeID" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Errors">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Error">
+        <MappingFragment StoreEntitySet="Errors">
+          <ScalarProperty Name="Resolved" ColumnName="Resolved" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="ErrorID" ColumnName="ErrorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Favorites">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Favorite">
+        <MappingFragment StoreEntitySet="Favorites">
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="FavoriteID" ColumnName="FavoriteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeaturedHotels">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.FeaturedHotel">
+        <MappingFragment StoreEntitySet="FeaturedHotel">
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="FeaturedID" ColumnName="FeaturedID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GeneralTimeSlots">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.GeneralTimeSlot">
+        <MappingFragment StoreEntitySet="GeneralTimeSlot">
+          <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="ToHour" ColumnName="ToHour" />
+          <ScalarProperty Name="FromHour" ColumnName="FromHour" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GettyImages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.GettyImage">
+        <MappingFragment StoreEntitySet="GettyImages">
+          <ScalarProperty Name="LocationData" ColumnName="LocationData" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="IsHidden" ColumnName="IsHidden" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="UrlAttachment" ColumnName="UrlAttachment" />
+          <ScalarProperty Name="PixelWidth" ColumnName="PixelWidth" />
+          <ScalarProperty Name="PixelHeight" ColumnName="PixelHeight" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UrlPreview" ColumnName="UrlPreview" />
+          <ScalarProperty Name="UrlThumb" ColumnName="UrlThumb" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="GettyImageId" ColumnName="GettyImageId" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GiftCards">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.GiftCard">
+        <MappingFragment StoreEntitySet="GiftCard">
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="GiftStatus" ColumnName="GiftStatus" />
+          <ScalarProperty Name="PayKey" ColumnName="PayKey" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="ReceiveNumber" ColumnName="ReceiveNumber" />
+          <ScalarProperty Name="EstimateDate" ColumnName="EstimateDate" />
+          <ScalarProperty Name="ShippingCost" ColumnName="ShippingCost" />
+          <ScalarProperty Name="ShippingMethod" ColumnName="ShippingMethod" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="UsedValue" ColumnName="UsedValue" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+          <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+          <ScalarProperty Name="RecipientEmail" ColumnName="RecipientEmail" />
+          <ScalarProperty Name="RecipientName" ColumnName="RecipientName" />
+          <ScalarProperty Name="GiftCardCode" ColumnName="GiftCardCode" />
+          <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="GiftCardType" ColumnName="GiftCardType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GiftCardHistories">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.GiftCardHistory">
+        <MappingFragment StoreEntitySet="GiftCardHistory">
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="UsedValue" ColumnName="UsedValue" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="GiftCardId" ColumnName="GiftCardId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GiftCardLockCusts">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.GiftCardLockCust">
+        <MappingFragment StoreEntitySet="GiftCardLockCust">
+          <ScalarProperty Name="FailedGiftCardAttemptStart" ColumnName="FailedGiftCardAttemptStart" />
+          <ScalarProperty Name="FailedGiftCardAttemptCount" ColumnName="FailedGiftCardAttemptCount" />
+          <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+          <ScalarProperty Name="LockedTime" ColumnName="LockedTime" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hotels">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Hotel">
+        <MappingFragment StoreEntitySet="Hotel">
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LogoId" ColumnName="LogoId" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="HotelType" ColumnName="HotelType" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelCodes">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.HotelCode">
+        <MappingFragment StoreEntitySet="HotelCode">
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CodeType" ColumnName="CodeType" />
+          <ScalarProperty Name="CodeNumber" ColumnName="CodeNumber" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelMedias">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.HotelMedia">
+        <MappingFragment StoreEntitySet="HotelMedia">
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="MediaType" ColumnName="MediaType" />
+          <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="HotelMediaID" ColumnName="HotelMediaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelStaffs">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.HotelStaff">
+        <MappingFragment StoreEntitySet="HotelStaff">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImageCrops">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ImageCrop">
+        <MappingFragment StoreEntitySet="ImageCrop">
+          <ScalarProperty Name="ZoomPercent" ColumnName="ZoomPercent" />
+          <ScalarProperty Name="Fr_height" ColumnName="Fr_height" />
+          <ScalarProperty Name="Fr_width" ColumnName="Fr_width" />
+          <ScalarProperty Name="Rel_height" ColumnName="Rel_height" />
+          <ScalarProperty Name="Rel_width" ColumnName="Rel_width" />
+          <ScalarProperty Name="Crop_y" ColumnName="Crop_y" />
+          <ScalarProperty Name="Crop_x" ColumnName="Crop_x" />
+          <ScalarProperty Name="LocationData" ColumnName="LocationData" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KuyamEvents">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.KuyamEvent">
+        <MappingFragment StoreEntitySet="KuyamEvents">
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Summary" ColumnName="Summary" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LandingPageCompanies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.LandingPageCompany">
+        <MappingFragment StoreEntitySet="LandingPageCompanies">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="LandingPageId" ColumnName="LandingPageId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LandingPages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.LandingPage">
+        <MappingFragment StoreEntitySet="LandingPages">
+          <ScalarProperty Name="Scripts" ColumnName="Scripts" />
+          <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="MainContent" ColumnName="MainContent" />
+          <ScalarProperty Name="Banner" ColumnName="Banner" />
+          <ScalarProperty Name="UrlName" ColumnName="UrlName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Media">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Medium">
+        <MappingFragment StoreEntitySet="Media">
+          <ScalarProperty Name="Desc" ColumnName="Desc" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="LocationData" ColumnName="LocationData" />
+          <ScalarProperty Name="LocationPath" ColumnName="LocationPath" />
+          <ScalarProperty Name="MediaLocationTypeID" ColumnName="MediaLocationTypeID" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+          <ScalarProperty Name="CustTypeID" ColumnName="CustTypeID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="MediaTypeID" ColumnName="MediaTypeID" />
+          <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MediaTypes">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.MediaType">
+        <MappingFragment StoreEntitySet="MediaType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MediaTypeID" ColumnName="MediaTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="CompanyPaidTotal" ColumnName="CompanyPaidTotal" />
+          <ScalarProperty Name="KuyamPaidTotal" ColumnName="KuyamPaidTotal" />
+          <ScalarProperty Name="GiftCardAmount" ColumnName="GiftCardAmount" />
+          <ScalarProperty Name="GiftCardCodeNumber" ColumnName="GiftCardCodeNumber" />
+          <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="TrackingNumber" ColumnName="TrackingNumber" />
+          <ScalarProperty Name="PaidDateUtc" ColumnName="PaidDateUtc" />
+          <ScalarProperty Name="PurchaseOrderNumber" ColumnName="PurchaseOrderNumber" />
+          <ScalarProperty Name="SubscriptionTransactionID" ColumnName="SubscriptionTransactionID" />
+          <ScalarProperty Name="CaptureTransactionResult" ColumnName="CaptureTransactionResult" />
+          <ScalarProperty Name="CaptureTransactionID" ColumnName="CaptureTransactionID" />
+          <ScalarProperty Name="AuthorizationTransactionResult" ColumnName="AuthorizationTransactionResult" />
+          <ScalarProperty Name="AuthorizationTransactionCode" ColumnName="AuthorizationTransactionCode" />
+          <ScalarProperty Name="AuthorizationTransactionID" ColumnName="AuthorizationTransactionID" />
+          <ScalarProperty Name="CardExpirationYear" ColumnName="CardExpirationYear" />
+          <ScalarProperty Name="CardExpirationMonth" ColumnName="CardExpirationMonth" />
+          <ScalarProperty Name="CardCvv2" ColumnName="CardCvv2" />
+          <ScalarProperty Name="MaskedCreditCardNumber" ColumnName="MaskedCreditCardNumber" />
+          <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+          <ScalarProperty Name="CardName" ColumnName="CardName" />
+          <ScalarProperty Name="CardType" ColumnName="CardType" />
+          <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+          <ScalarProperty Name="OrderSubtotal" ColumnName="OrderSubtotal" />
+          <ScalarProperty Name="KuyamFeeTotal" ColumnName="KuyamFeeTotal" />
+          <ScalarProperty Name="AppointmentAdditionalFee" ColumnName="AppointmentAdditionalFee" />
+          <ScalarProperty Name="PercentKuyamFee" ColumnName="PercentKuyamFee" />
+          <ScalarProperty Name="PaymentFeeTotal" ColumnName="PaymentFeeTotal" />
+          <ScalarProperty Name="TransactionAdditionalFee" ColumnName="TransactionAdditionalFee" />
+          <ScalarProperty Name="PercentPaymentFee" ColumnName="PercentPaymentFee" />
+          <ScalarProperty Name="DiscountCodeNumber" ColumnName="DiscountCodeNumber" />
+          <ScalarProperty Name="OrderDiscount" ColumnName="OrderDiscount" />
+          <ScalarProperty Name="OrderSubTotalDiscount" ColumnName="OrderSubTotalDiscount" />
+          <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+          <ScalarProperty Name="PaymentStatusID" ColumnName="PaymentStatusID" />
+          <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="OrderGuID" ColumnName="OrderGuID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UserPackagePurchaseId" ColumnName="UserPackagePurchaseId" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderDetailGuid" ColumnName="OrderDetailGuid" />
+          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderGettyImageDetails">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.OrderGettyImageDetail">
+        <MappingFragment StoreEntitySet="OrderGettyImageDetail">
+          <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="UrlAttachment" ColumnName="UrlAttachment" />
+          <ScalarProperty Name="PixelWidth" ColumnName="PixelWidth" />
+          <ScalarProperty Name="PixelHeight" ColumnName="PixelHeight" />
+          <ScalarProperty Name="UrlPreview" ColumnName="UrlPreview" />
+          <ScalarProperty Name="UrlThumb" ColumnName="UrlThumb" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="GettyImageId" ColumnName="GettyImageId" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderDetailGuid" ColumnName="OrderDetailGuid" />
+          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentMethods">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.PaymentMethod">
+        <MappingFragment StoreEntitySet="PaymentMethod">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+          <ScalarProperty Name="PaymentAccount" ColumnName="PaymentAccount" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Profile">
+        <MappingFragment StoreEntitySet="Profile">
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="RelationshipTypeID" ColumnName="RelationshipTypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PrivacyTypeID" ColumnName="PrivacyTypeID" />
+          <ScalarProperty Name="ProfileTypeID" ColumnName="ProfileTypeID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfileCompanies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ProfileCompany">
+        <MappingFragment StoreEntitySet="ProfileCompany">
+          <ScalarProperty Name="IsClass" ColumnName="IsClass" />
+          <ScalarProperty Name="IsEvent" ColumnName="IsEvent" />
+          <ScalarProperty Name="IsShowCatagory" ColumnName="IsShowCatagory" />
+          <ScalarProperty Name="MobileCarrier" ColumnName="MobileCarrier" />
+          <ScalarProperty Name="CancelRefundPercent" ColumnName="CancelRefundPercent" />
+          <ScalarProperty Name="CancelHour" ColumnName="CancelHour" />
+          <ScalarProperty Name="CancelPolicy" ColumnName="CancelPolicy" />
+          <ScalarProperty Name="ContactLastName" ColumnName="ContactLastName" />
+          <ScalarProperty Name="ContactFirstName" ColumnName="ContactFirstName" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="ApptDefaultPeoplePerSlot" ColumnName="ApptDefaultPeoplePerSlot" />
+          <ScalarProperty Name="ApptDefaultSlotDuration" ColumnName="ApptDefaultSlotDuration" />
+          <ScalarProperty Name="ApptAutoConfirm" ColumnName="ApptAutoConfirm" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Parking" ColumnName="Parking" />
+          <ScalarProperty Name="PublicTransportation" ColumnName="PublicTransportation" />
+          <ScalarProperty Name="CrossStreet" ColumnName="CrossStreet" />
+          <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+          <ScalarProperty Name="MapUrl" ColumnName="MapUrl" />
+          <ScalarProperty Name="PayAfter" ColumnName="PayAfter" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+          <ScalarProperty Name="PaymentOptions" ColumnName="PaymentOptions" />
+          <ScalarProperty Name="SecondAlert" ColumnName="SecondAlert" />
+          <ScalarProperty Name="FirstAlert" ColumnName="FirstAlert" />
+          <ScalarProperty Name="PreferredContact" ColumnName="PreferredContact" />
+          <ScalarProperty Name="YoutubeLink" ColumnName="YoutubeLink" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Street2" ColumnName="Street2" />
+          <ScalarProperty Name="Street1" ColumnName="Street1" />
+          <ScalarProperty Name="ContactTitle" ColumnName="ContactTitle" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="Desc" ColumnName="Desc" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyStatusID" ColumnName="CompanyStatusID" />
+          <ScalarProperty Name="CompanyTypeID" ColumnName="CompanyTypeID" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfileCompanyTemps">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ProfileCompanyTemp">
+        <MappingFragment StoreEntitySet="ProfileCompanyTemp">
+          <ScalarProperty Name="CusId" ColumnName="CusId" />
+          <ScalarProperty Name="IsDaily" ColumnName="IsDaily" />
+          <ScalarProperty Name="SunTo" ColumnName="SunTo" />
+          <ScalarProperty Name="SunFrom" ColumnName="SunFrom" />
+          <ScalarProperty Name="SatTo" ColumnName="SatTo" />
+          <ScalarProperty Name="SatFrom" ColumnName="SatFrom" />
+          <ScalarProperty Name="FriTo" ColumnName="FriTo" />
+          <ScalarProperty Name="FriFrom" ColumnName="FriFrom" />
+          <ScalarProperty Name="ThurTo" ColumnName="ThurTo" />
+          <ScalarProperty Name="ThurFrom" ColumnName="ThurFrom" />
+          <ScalarProperty Name="WedTo" ColumnName="WedTo" />
+          <ScalarProperty Name="WedFrom" ColumnName="WedFrom" />
+          <ScalarProperty Name="TusTo" ColumnName="TusTo" />
+          <ScalarProperty Name="TusFrom" ColumnName="TusFrom" />
+          <ScalarProperty Name="MonTo" ColumnName="MonTo" />
+          <ScalarProperty Name="MonFrom" ColumnName="MonFrom" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="HoursSun" ColumnName="HoursSun" />
+          <ScalarProperty Name="HoursSat" ColumnName="HoursSat" />
+          <ScalarProperty Name="HoursFri" ColumnName="HoursFri" />
+          <ScalarProperty Name="HoursThur" ColumnName="HoursThur" />
+          <ScalarProperty Name="HoursWed" ColumnName="HoursWed" />
+          <ScalarProperty Name="HoursTue" ColumnName="HoursTue" />
+          <ScalarProperty Name="HoursMon" ColumnName="HoursMon" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Street2" ColumnName="Street2" />
+          <ScalarProperty Name="Street1" ColumnName="Street1" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfileHours">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ProfileHour">
+        <MappingFragment StoreEntitySet="ProfileHours">
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="ProfileHoursID" ColumnName="ProfileHoursID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfileHoursExceptions">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ProfileHoursException">
+        <MappingFragment StoreEntitySet="ProfileHoursExceptions">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="AllDay" ColumnName="AllDay" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="ProfileHoursExceptionID" ColumnName="ProfileHoursExceptionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProposedAppointmentNotifies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ProposedAppointmentNotify">
+        <MappingFragment StoreEntitySet="ProposedAppointmentNotify">
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="NotifyType" ColumnName="NotifyType" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="NotifyId" ColumnName="NotifyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Rating">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="PrivateContent" ColumnName="PrivateContent" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="RatingValue" ColumnName="RatingValue" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegularClients">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.RegularClient">
+        <MappingFragment StoreEntitySet="RegularClient">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CompanyProfileId" ColumnName="CompanyProfileId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="RegularClientId" ColumnName="RegularClientId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestAppointments">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.RequestAppointment">
+        <MappingFragment StoreEntitySet="RequestAppointment">
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="CalendarId" ColumnName="CalendarId" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ServiceCompanyId" ColumnName="ServiceCompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SeoFriendlyUrls">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.SeoFriendlyUrl">
+        <MappingFragment StoreEntitySet="SeoFriendlyUrl">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+          <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Service">
+        <MappingFragment StoreEntitySet="Service">
+          <ScalarProperty Name="kalturaId" ColumnName="kalturaId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="ParentServiceID" ColumnName="ParentServiceID" />
+          <ScalarProperty Name="Desc" ColumnName="Desc" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceHours">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ServiceHour">
+        <MappingFragment StoreEntitySet="ServiceHour">
+          <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+          <ScalarProperty Name="ToHour" ColumnName="ToHour" />
+          <ScalarProperty Name="FromHour" ColumnName="FromHour" />
+          <ScalarProperty Name="ServiceHoursID" ColumnName="ServiceHoursID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Setting">
+        <MappingFragment StoreEntitySet="Settings">
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMSMessages">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.SMSMessage">
+        <MappingFragment StoreEntitySet="SMSMessage">
+          <ScalarProperty Name="ReceivedStatus" ColumnName="ReceivedStatus" />
+          <ScalarProperty Name="DecriptionStatus" ColumnName="DecriptionStatus" />
+          <ScalarProperty Name="ErrorCode" ColumnName="ErrorCode" />
+          <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="DestinationAddress" ColumnName="DestinationAddress" />
+          <ScalarProperty Name="SenderAddress" ColumnName="SenderAddress" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Type">
+        <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="OverrideID" ColumnName="OverrideID" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="ParentTypeID" ColumnName="ParentTypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="TypeGroupID" ColumnName="TypeGroupID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeGroups">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.TypeGroup">
+        <MappingFragment StoreEntitySet="TypeGroup">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TypeGroupID" ColumnName="TypeGroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserBadges">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.UserBadge">
+        <MappingFragment StoreEntitySet="UserBadge">
+          <ScalarProperty Name="TotalSent" ColumnName="TotalSent" />
+          <ScalarProperty Name="BadgeUnread" ColumnName="BadgeUnread" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="UserBadgeId" ColumnName="UserBadgeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDevices">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.UserDevice">
+        <MappingFragment StoreEntitySet="UserDevice">
+          <ScalarProperty Name="ServiceVersion" ColumnName="ServiceVersion" />
+          <ScalarProperty Name="AppId" ColumnName="AppId" />
+          <ScalarProperty Name="DateUsage" ColumnName="DateUsage" />
+          <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="UserDeviceId" ColumnName="UserDeviceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDiscounts">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.UserDiscount">
+        <MappingFragment StoreEntitySet="UserDiscount">
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="DateUsage" ColumnName="DateUsage" />
+          <ScalarProperty Name="NumberofUsage" ColumnName="NumberofUsage" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="DiscountId" ColumnName="DiscountId" />
+          <ScalarProperty Name="UserDiscount1" ColumnName="UserDiscount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPackagePurchases">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.UserPackagePurchase">
+        <MappingFragment StoreEntitySet="UserPackagePurchase">
+          <ScalarProperty Name="UserPackageStatus" ColumnName="UserPackageStatus" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+          <ScalarProperty Name="OrginalPrice" ColumnName="OrginalPrice" />
+          <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
+          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+          <ScalarProperty Name="CompanyPackageId" ColumnName="CompanyPackageId" />
+          <ScalarProperty Name="UserPackagePurchaseId" ColumnName="UserPackagePurchaseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPackagePurchaseHistories">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.UserPackagePurchaseHistory">
+        <MappingFragment StoreEntitySet="UserPackagePurchaseHistory">
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="UserPackagePurchaseId" ColumnName="UserPackagePurchaseId" />
+          <ScalarProperty Name="UserPackagePurchaseHistoryId" ColumnName="UserPackagePurchaseHistoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ZipCodes">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ZipCode">
+        <MappingFragment StoreEntitySet="ZipCode">
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="County" ColumnName="County" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ZipCodeId" ColumnName="ZipCodeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="Kuyam.WebUI.Models.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
+      <EndProperty Name="aspnet_Users">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="aspnet_Roles">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="FeaturedCompanies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.FeaturedCompany">
+        <MappingFragment StoreEntitySet="FeaturedCompany">
+          <ScalarProperty Name="FeatureType" ColumnName="FeatureType" />
+          <ScalarProperty Name="priority" ColumnName="priority" />
+          <ScalarProperty Name="StartDT" ColumnName="StartDT" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="CompanyFeaturedID" ColumnName="CompanyFeaturedID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Custs">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Cust">
+        <MappingFragment StoreEntitySet="Cust">
+          <ScalarProperty Name="LocationReminder" ColumnName="LocationReminder" />
+          <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
+          <ScalarProperty Name="FacebookToken" ColumnName="FacebookToken" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TimeZoneId" ColumnName="TimeZoneId" />
+          <ScalarProperty Name="YahooCalendar" ColumnName="YahooCalendar" />
+          <ScalarProperty Name="OutlookCalendar" ColumnName="OutlookCalendar" />
+          <ScalarProperty Name="OtherCalendar" ColumnName="OtherCalendar" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="LastVisit" ColumnName="LastVisit" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="CustStatusNote" ColumnName="CustStatusNote" />
+          <ScalarProperty Name="CustStatusReasonTypeID" ColumnName="CustStatusReasonTypeID" />
+          <ScalarProperty Name="CustStatusTypeID" ColumnName="CustStatusTypeID" />
+          <ScalarProperty Name="GenderTypeID" ColumnName="GenderTypeID" />
+          <ScalarProperty Name="EmailHtml" ColumnName="EmailHtml" />
+          <ScalarProperty Name="IcalUrl" ColumnName="IcalUrl" />
+          <ScalarProperty Name="SecondAlert" ColumnName="SecondAlert" />
+          <ScalarProperty Name="FirstAlert" ColumnName="FirstAlert" />
+          <ScalarProperty Name="PreferredPhoneTypeID" ColumnName="PreferredPhoneTypeID" />
+          <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+          <ScalarProperty Name="MobileCarrier" ColumnName="MobileCarrier" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Street2" ColumnName="Street2" />
+          <ScalarProperty Name="Street1" ColumnName="Street1" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="CustTypeID" ColumnName="CustTypeID" />
+          <ScalarProperty Name="AspUserID" ColumnName="AspUserID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invites">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Invite">
+        <MappingFragment StoreEntitySet="Invite">
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="FacebookToken" ColumnName="FacebookToken" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="InviteType" ColumnName="InviteType" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
+          <ScalarProperty Name="Uses" ColumnName="Uses" />
+          <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="InviteID" ColumnName="InviteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelVisits">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.HotelVisit">
+        <MappingFragment StoreEntitySet="HotelVisit">
+          <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+          <ScalarProperty Name="CheckOutDate" ColumnName="CheckOutDate" />
+          <ScalarProperty Name="CheckInDate" ColumnName="CheckInDate" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyEvents">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyEvent">
+        <MappingFragment StoreEntitySet="CompanyEvent">
+          <ScalarProperty Name="EventID" ColumnName="EventID" />
+          <ScalarProperty Name="ProfileCompanyID" ColumnName="ProfileCompanyID" />
+          <ScalarProperty Name="CompanyEventID" ColumnName="CompanyEventID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyServiceEvents">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyServiceEvent">
+        <MappingFragment StoreEntitySet="CompanyServiceEvent">
+          <ScalarProperty Name="NewPrice" ColumnName="NewPrice" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+          <ScalarProperty Name="CompanyEventID" ColumnName="CompanyEventID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Event">
+        <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EventID" ColumnName="EventID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceCompanies">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ServiceCompany">
+        <MappingFragment StoreEntitySet="ServiceCompany">
+          <ScalarProperty Name="IsPerDay" ColumnName="IsPerDay" />
+          <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="AttendeesNumber" ColumnName="AttendeesNumber" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ToDateTime" ColumnName="ToDateTime" />
+          <ScalarProperty Name="FromDateTime" ColumnName="FromDateTime" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Appointments">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Appointment">
+        <MappingFragment StoreEntitySet="Appointment">
+          <ScalarProperty Name="ClassSchedulerID" ColumnName="ClassSchedulerID" />
+          <ScalarProperty Name="BookingType" ColumnName="BookingType" />
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="IsViewDetail" ColumnName="IsViewDetail" />
+          <ScalarProperty Name="AttendeesNumber" ColumnName="AttendeesNumber" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+          <ScalarProperty Name="PreapprovalKey" ColumnName="PreapprovalKey" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Desc" ColumnName="Desc" />
+          <ScalarProperty Name="PersonCount" ColumnName="PersonCount" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="AllDay" ColumnName="AllDay" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="ContactType" ColumnName="ContactType" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="StatusChangeDate" ColumnName="StatusChangeDate" />
+          <ScalarProperty Name="AppointmentStatusID" ColumnName="AppointmentStatusID" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AppointmentTemps">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.AppointmentTemp">
+        <MappingFragment StoreEntitySet="AppointmentTemp">
+          <ScalarProperty Name="ClassSchedulerID" ColumnName="ClassSchedulerID" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="AttendeesNumber" ColumnName="AttendeesNumber" />
+          <ScalarProperty Name="CalendarId" ColumnName="CalendarId" />
+          <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+          <ScalarProperty Name="PreapprovalKey" ColumnName="PreapprovalKey" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Desc" ColumnName="Desc" />
+          <ScalarProperty Name="PersonCount" ColumnName="PersonCount" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="AllDay" ColumnName="AllDay" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="ContactType" ColumnName="ContactType" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="StatusChangeDate" ColumnName="StatusChangeDate" />
+          <ScalarProperty Name="AppointmentStatusID" ColumnName="AppointmentStatusID" />
+          <ScalarProperty Name="ServiceCompanyID" ColumnName="ServiceCompanyID" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NonKuyamAppointments">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.NonKuyamAppointment">
+        <MappingFragment StoreEntitySet="NonKuyamAppointment">
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="AttendeesNumber" ColumnName="AttendeesNumber" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="CalendarId" ColumnName="CalendarId" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StatusChangeDate" ColumnName="StatusChangeDate" />
+          <ScalarProperty Name="AppointmentStatusID" ColumnName="AppointmentStatusID" />
+          <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProposedAppointments">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.ProposedAppointment">
+        <MappingFragment StoreEntitySet="ProposedAppointment">
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+          <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="AttendeesNumber" ColumnName="AttendeesNumber" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="CalendarId" ColumnName="CalendarId" />
+          <ScalarProperty Name="CustID" ColumnName="CustID" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StatusChangeDate" ColumnName="StatusChangeDate" />
+          <ScalarProperty Name="AppointmentStatusID" ColumnName="AppointmentStatusID" />
+          <ScalarProperty Name="ServiceCompanyId" ColumnName="ServiceCompanyId" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeHours">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.EmployeeHour">
+        <MappingFragment StoreEntitySet="EmployeeHour">
+          <ScalarProperty Name="LastedUpdate" ColumnName="LastedUpdate" />
+          <ScalarProperty Name="IsPreview" ColumnName="IsPreview" />
+          <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+          <ScalarProperty Name="CompanyEmployeeID" ColumnName="CompanyEmployeeID" />
+          <ScalarProperty Name="ToHour" ColumnName="ToHour" />
+          <ScalarProperty Name="FromHour" ColumnName="FromHour" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstructorClassSchedulers">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.InstructorClassScheduler">
+        <MappingFragment StoreEntitySet="InstructorClassScheduler">
+          <ScalarProperty Name="IsPreview" ColumnName="IsPreview" />
+          <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+          <ScalarProperty Name="ToHour" ColumnName="ToHour" />
+          <ScalarProperty Name="FromHour" ColumnName="FromHour" />
+          <ScalarProperty Name="InstructorClassID" ColumnName="InstructorClassID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyHours">
+      <EntityTypeMapping TypeName="Kuyam.WebUI.Models.CompanyHour">
+        <MappingFragment StoreEntitySet="CompanyHour">
+          <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+          <ScalarProperty Name="ProfileCompanyID" ColumnName="ProfileCompanyID" />
+          <ScalarProperty Name="IsDaily" ColumnName="IsDaily" />
+          <ScalarProperty Name="ToHour" ColumnName="ToHour" />
+          <ScalarProperty Name="FromHour" ColumnName="FromHour" />
+          <ScalarProperty Name="CompanyHourID" ColumnName="CompanyHourID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
