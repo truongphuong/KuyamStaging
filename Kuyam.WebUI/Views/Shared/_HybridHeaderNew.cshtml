@@ -1,0 +1,17 @@
+﻿<div class="header">
+    <div class="hcontent h73">
+    <img alt="Kuyam" src="/images/kuyam_logo.png" />
+    <p class="admincompany" style="top: 0px; padding:4px; font:30px/30px baskerville_italic,Arial, Helvetica, sans-serif;" title="company admin">@ViewBag.CompanyName</p>       
+        <div class="date" id="datetitle">
+            <script type="text/javascript">
+                var stringdate = $.datepicker.formatDate('DD, MM dd yy', new Date());
+                $("#datetitle").html(stringdate);                                
+            </script>
+        </div>
+        <ul class="menuHeader signout ">
+            <li><a href="/company/companyemployeelisthour/?companyID=@ViewBag.companyId" title="list/edit hours">list/edit hours</a></li>
+                <li><a href="/CompanyAppointment/?companyID=@ViewBag.companyId" title="company admin">company admin</a></li>
+                <li class="lastchild"><a  href="/Company/CompanySetting/?companyID=@ViewBag.companyId" title="settings">settings</a></li> 
+        </ul>
+    </div>
+</div>

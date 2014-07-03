@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "appointment";
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        appointment status</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        @*<select id="companyType" style="width:150px">
+                            <option value="@((int)Kuyam.Database.Types.CompanyType.Unknown)" selected="selected">
+                                select company type</option>
+                            <option value="@((int)Kuyam.Database.Types.CompanyType.KuyamInstantBook)">kuyam instant
+                                book</option>
+                            <option value="@((int)Kuyam.Database.Types.CompanyType.KuyamBookIt)">kuyam book-it</option>
+                            <option value="@((int)Kuyam.Database.Types.CompanyType.HybridKuyamBookIt)">hybrid-kuyam
+                                book-it</option>
+                            <option value="@((int)Kuyam.Database.Types.CompanyType.NonKuyamBookIt)">non-kuyam book-it</option>
+                        </select>*@
+                        <select id="hotelId" style="width:200px">
+                            @{                                                            
+                                if (ViewBag.Hotels != null)
+                                {
+                                    foreach (Kuyam.Database.Hotel item in ViewBag.Hotels)
+                                    {                                  
+                                <option value="@item.HotelID" @(ViewBag.HotelId == item.HotelID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }
+                        </select>
+                        <select id="appointmentStatus" style="width:200px">
+                            <option value="@((int)Kuyam.Database.Types.AppointmentStatus.Unknown)">select appointment
+                                status</option>
+                            <option value="@((int)Kuyam.Database.Types.AppointmentStatus.Cancelled)">cancelled</option>
+                            <option value="@((int)Kuyam.Database.Types.AppointmentStatus.Confirmed)">confirmed</option>
+                            <option value="@((int)Kuyam.Database.Types.AppointmentStatus.Modified)">modified</option>
+                            <option value="@((int)Kuyam.Database.Types.AppointmentStatus.Pending)" selected="selected">
+                                pending</option>
+                        </select>
+                        <input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="listAppointments">
+        @Html.Partial("_AppointmentAdminListResults")
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        //var type = $("#companyType option:selected").val();
+        var status = $("#appointmentStatus option:selected").val();
+        var hotelId = $("#hotelId option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, status: status, hotelId: hotelId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Hotel/Appointment/'
+            })
+            .success(function (result) {
+                $('#listAppointments').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };   
+</script>

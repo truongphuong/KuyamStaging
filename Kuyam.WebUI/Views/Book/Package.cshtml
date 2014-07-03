@@ -1,0 +1,39 @@
+﻿@using Kuyam.Database
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    ViewBag.Title = "packages of " + Model.CompanyName;
+    Layout = "~/Views/Shared/_MasterPageLayoutBooking.cshtml";
+    ViewBag.IsAllowOtherCompnies = false;
+}
+@section MetaSeoSection{
+    @Model.MetaTagExtension.MetaTag()
+}
+
+<style type="text/css">
+    .ybox, .newcompanyschedule .allviewing .personcalendar .activeperson, .checkoutinfo, .timecontentpopup, .blueinfo, .newcheckoutpopup .paymentmethod .totaldue {
+        behavior: url(PIE.htc);
+    }
+</style>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight newcompanyschedule">
+            @Html.Partial("_HeaderCompanyProfile")
+            <div class="clear7">
+            </div>
+            <div class="companypackage">
+                @Html.Partial("_CompanyProfilePackage", Model)
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear23">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+

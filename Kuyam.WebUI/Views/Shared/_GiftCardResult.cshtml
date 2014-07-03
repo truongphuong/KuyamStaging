@@ -1,0 +1,268 @@
+﻿@using Kuyam.Database
+@{
+    int totalRecord = 0;
+    bool isOdd = false;
+    if (ViewBag.Data != null)
+    {
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#txtKey").val("@ViewBag.Key");
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                FilterSearchResult();
+
+                return false;
+            }
+        });
+        $("a[id^=print_]").click(function () {
+            var id = $(this).attr("itemid");
+            Print(id);
+        });
+        $("a[id^=marksend_]").click(function () {
+            var id = $(this).attr("itemid");
+            MarkSend(id);
+        });
+    });
+    
+</script>
+<table border='0' cellpadding="0" cellspacing="0" class="tbldata" id="tblServices">
+    <tr>
+        <th style="width: 50px;">
+            buyer       
+        </th>
+        <th style="width: 50px;">
+            recipient
+        </th>
+         <th style="width: 50px;">
+             receipt numbers
+        </th>
+        <th style="width: 100px;">
+            address
+        </th>
+        <th style="width: 150px;">
+            status
+        </th>
+        <th style="width: 40px;">
+            amount
+        </th>
+        <th style="width: 40px;">
+            balance
+        </th>
+         <th style="width: 230px;">
+            gift card number
+        </th>
+        <th style="width:40px;">
+            date
+        </th>
+        <th style="width: 90px;">
+            action
+        </th>
+    </tr>
+    @foreach (Kuyam.Database.GiftCard giftCard in ViewBag.Data)
+    {  
+        string addClass = "";
+        var address = giftCard.Address1 + " " + giftCard.City + ", " + giftCard.State + " " + giftCard.ZipCode;
+        var status = string.Empty;
+        var balace = string.Empty;
+        if (giftCard.UsedValue == null)
+        {
+            var giftUsed = giftCard.GiftCardHistories.Where(a => a.GiftCardId == giftCard.Id);
+            decimal giftBlance = 0;
+            if (giftUsed.Any())
+            {
+                var used = giftUsed.Sum(a => a.UsedValue);
+                giftBlance = (giftCard.Amount - used);
+                balace = giftBlance.ToString("c");
+            }
+            else
+            {
+                giftBlance = giftCard.Amount;
+                balace = giftCard.Amount.ToString("c");
+            }
+        }
+        else
+        {
+            balace = giftCard.UsedValue.Value.ToString("c");
+        }
+        if (giftCard.GiftCardType == (int) Types.GiftCardType.email)
+        {
+            status = "sent via email";
+        }
+        else
+        {
+            status = giftCard.ShippingMethod == (int)Types.GiftCardShippingMethod.ViaFreeStandardShipping ? 
+                (giftCard.GiftStatus == (int)Types.GiftCardStatus.NoSend ? "ordered for standard shipping" : "sent via standard shipping") :
+                (giftCard.GiftStatus == (int)Types.GiftCardStatus.NoSend ? "ordered for premium shipping" : "sent via premium shipping");
+        }
+        if (isOdd)
+        {
+            addClass = "class=odd";
+            isOdd = false;
+
+        }
+        else
+        {
+            isOdd = true;
+        }
+        <tr id="@giftCard.Id" @addClass>
+            <td>
+                 @Html.ActionLink(@giftCard.SenderName, "AdminUserDetail", "Admin", new { id = giftCard.CustId, userListPageIndex = ViewBag.Page, key = ViewBag.Key, backAction = "GiftCardList" }, new { })
+                @*<a href="@Url.Action("","Admin")">@giftCard.SenderName</a> *@
+            </td>
+            <td>
+                @giftCard.RecipientName
+            </td>
+             <td>
+                @giftCard.ReceiveNumber
+            </td>
+            <td style="width: 100px;">
+                @if (giftCard.GiftCardType == (int)Types.GiftCardType.mail)
+                {
+                    @address
+                }
+                else
+                {
+                    @giftCard.RecipientEmail
+                }
+            </td>
+           
+            <td style="width: 150px;">
+                @status
+            </td>
+            <td style="width: 40px;">
+                @giftCard.Amount.ToString("c")
+            </td>
+            <td>
+                @balace
+            </td>
+            <td style="width: 230px;">
+                @giftCard.GiftCardCode
+            </td>
+            <td style="width: 40px;">
+                 @giftCard.Created.ToString("MM/dd/yyyy")
+            </td>
+            <td style="width: 90px;">
+               @* <a class="modifyService" href="javascript:void(0)">print</a>&nbsp; <span>| </span>
+                <a class="deleteService" href="javascript:void(0)">mark sent</a>*@
+                @if (giftCard.GiftCardType == (int)Types.GiftCardType.mail)
+                {
+                    if (giftCard.GiftStatus == (int)Types.GiftCardStatus.Send)
+                    {
+                          <a id='print_@giftCard.Id' itemid='@giftCard.Id' class="modifyService" href="javascript:void(0)">print</a>
+                    }
+                    else
+                    {
+                        <a id='print_@giftCard.Id' itemid='@giftCard.Id' class="modifyService" href="javascript:void(0)">print</a> <span>| </span>
+                        <a id='marksend_@giftCard.Id' itemid='@giftCard.Id' class="deleteService" href="javascript:void(0)">mark sent</a>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+<table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+    <tr class="odd" style="width: 50%;">
+        <td>
+            <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+            @{ 
+                int from = (ViewBag.Page - 1) * 10 + 1;
+                int to = ViewBag.Page * 10;
+                if (to > totalRecord)
+                {
+                    to = totalRecord;
+                }
+                int lastPage = 0;
+                if (totalRecord % 10 == 0)
+                {
+                    lastPage = totalRecord / 10;
+                }
+                else
+                {
+                    lastPage = totalRecord / 10 + 1;
+                }
+               
+            
+                <div class="fLeft mt4" style="float: left; padding-left: 0px;">
+                    @if (totalRecord > 0)
+                    {
+                        <span>@from - @to of </span>
+                        <span><strong>@totalRecord results</strong></span>
+                    }
+                </div>
+            }
+        </td>
+        <td class="paging" style="text-align: right; width: 50%;">
+            @{
+                if (totalRecord > 0)
+                {
+                <div class="paging">
+                    @if (ViewBag.Page > 1)
+                    {
+                    
+                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+                    }
+                    @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+                    {
+                        if (ViewBag.Page == 4)
+                        {
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 3))" pageIndex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                        }
+                        if (ViewBag.Page > 4)
+                        {
+                        <a onclick="pagingEvent(1)" title="previous">1</a>
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                        
+                        }
+                    
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 2))" pageIndex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 1))" pageIndex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                    }
+                    @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+                    {
+
+                        if (ViewBag.Page == 3)
+                        {
+                        <a onclick="pagingEvent(1)" title="previous">1</a>
+                        }
+                        if (ViewBag.Page > 3)
+                        {
+                        <a onclick="pagingEvent(1)" title="previous">1</a>
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                        
+                        }
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 1))" pageIndex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                    }
+                    <span class="active" title="@ViewBag.Page">@ViewBag.Page</span>
+                    @if (ViewBag.Page + 1 < lastPage)
+                    {
+                        <a  onclick="pagingEvent(@(ViewBag.Page + 1))" pageIndex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+                    }
+                    @if (ViewBag.Page + 2 < lastPage)
+                    {
+                        <a  onclick="pagingEvent(@(ViewBag.Page + 2))" pageIndex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+                    }
+                    @if (ViewBag.Page + 3 < lastPage)
+                    {
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                    }
+                    @if (ViewBag.Page < lastPage)
+                    {
+                        <a  onclick="pagingEvent(@lastPage)" pageIndex="@lastPage" title="@lastPage">@lastPage</a>
+                        <a  onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+                    }
+                </div>
+                <div class="clear">
+                </div>
+                }
+            }
+        </td>
+    </tr>
+</table>
+<div style="width: 100%">
+</div>

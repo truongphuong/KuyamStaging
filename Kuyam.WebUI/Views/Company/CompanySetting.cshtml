@@ -1,0 +1,946 @@
+﻿@model CompanySettingModel
+@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@{
+    ViewBag.Title = "Company Settings";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<link href="@Url.Content("~/css/companysetting.css")" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .field-validation-error
+    {
+        color: red;
+    }
+    .field-validation-error
+    {
+        font-size: 12px;
+        font-weight: normal; /*margin-left: 276px;
+        position: relative;
+        top: 18px;*/
+    }
+</style>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maxlength-min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maskedinput-1.3.min.js")"></script>
+<script type="text/javascript">
+   var companyId = '@ViewBag.companyId';
+    $(document).ready(function () {
+        @ViewBag.PopupString
+        $('#category, #mobilecarrier, #FirstAlert, #SecondAlert, #anytime, #norefund').selectmenu();
+        @ViewBag.Defaultfuntion
+        loadDefaultData();
+        $("#txtcompanynumberinput").mask("(999) 999-9999");
+        
+       $('#text').checkBox({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                if (ui.checked == true) {
+                    $(".companynumber").show();
+                    $("#divSendSMS").show();
+                    $("#txtcompanynumberinput").prop('disabled', false);
+                }
+                else {
+                    $(".companynumber").hide();
+                    $("#divSendSMS").hide();
+                    $("#txtcompanynumberinput").prop('disabled', true);
+                }
+            }
+        });
+
+        $('#firstname').maxlength({
+            events: [], // Array of events to be triggerd   
+            maxCharacters: 15, // Characters limit  
+            status: false, // True to show status indicator bewlow the element   
+            statusClass: "status", // The class on the status div 
+            statusText: "character left", // The status text 
+            notificationClass: "notification",  // Will be added when maxlength is reached 
+            showAlert: false, // True to show a regular alert message   
+            alertText: "You have typed too many characters.", // Text in alert message  
+            slider: false // True Use counter slider   
+        });
+        
+        $('#lastname').maxlength({
+            events: [], // Array of events to be triggerd   
+            maxCharacters: 15, // Characters limit  
+            status: false, // True to show status indicator bewlow the element   
+            statusClass: "status", // The class on the status div 
+            statusText: "character left", // The status text 
+            notificationClass: "notification",  // Will be added when maxlength is reached 
+            showAlert: false, // True to show a regular alert message   
+            alertText: "You have typed too many characters.", // Text in alert message  
+            slider: false // True Use counter slider   
+        });
+
+        $('#mail').checkBox({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                if (ui.checked == true) {
+                    $(".companyemail").show();
+                    $("#txtcompanyemailinput").prop('disabled', false);
+                }
+                else {
+                    $(".companyemail").hide();
+                    $("#txtcompanyemailinput").prop('disabled', true);
+                }
+            }
+
+        });
+        
+        $('#cancelstandard, #cancelnone, #cancelstrict, #cancelcustom, #paypal, #person, #bookit, #instantbook').checkBox();
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+        
+        $('#deletecompany').click(function () {
+            showpopup("deletecompanypopup");
+        });
+        $('#deletecompanycancel').click(function () {
+            $('#deletecompanypopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+
+        $('#btsave').click(function () {
+            if (validationdata()) {
+                if (twicePush == 0) {
+                    $('#CompanySetting').submit();
+                    twicePush = 1;
+                }
+            } else {
+
+                window.scrollTo(0, 0);
+                return false;
+            }
+
+        });
+
+    });
+
+    function saveChange() {
+        showDialog('savechangepopup');
+        setTimeout("redirectTo()", 1000);
+
+    }
+    function redirectTo() {        
+        window.location.href = "/";
+    }
+
+    function checkPhoneNumber(phoneNumber)
+    { 
+       var email= "@(Model.CustEmail)";
+       var param = "phoneNumber=" + phoneNumber+ "&email="+ email+"&nocache=" + getunixtime();
+       commonGetAjax("Setting", "CheckPhoneNumber", param, checkPhoneNumbercallbacksucess, setError, "html"); 
+    }
+
+    function loadDefaultData() {
+
+        if (document.getElementById("text").checked == true) {
+            $(".companynumber").show();
+            $("#txtcompanynumberinput").prop('disabled', false);
+        }
+        else {
+            $(".companynumber").hide();
+            $("#txtcompanynumberinput").prop('disabled', true);
+        }
+
+        if (document.getElementById("mail").checked == true) {
+            $(".companyemail").show();
+            $("#txtcompanyemailinput").prop('disabled', false);
+        }
+        else {
+            $(".companyemail").hide();
+            $("#txtcompanyemailinput").prop('disabled', true);
+
+        }
+    }
+
+    function validationdata() {
+        var text = document.getElementById("text").checked;
+        var mail = document.getElementById("mail").checked;
+        var isValid = true;
+        if (mail) {
+            isValid = $('#CompanySetting').validate().element($('#txtcompanyemailinput'));
+        }
+        if (text) {
+            isValid = ($('#CompanySetting').validate().element($('#txtcompanynumberinput'))) ? isValid : false;
+        }
+        return isValid;
+    }    
+    
+    function checkPhoneNumbercallbacksucess(result) {
+    
+        if (result == "true") {
+            isverification();
+            $("#divCompanyVerify").hide();
+            $('#forget').hide();
+            $('.field-validation-error').hide();
+        }
+        else if(result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)'){
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+       } else {
+//            $('#divCompanyVerify').attr('display', "block");       
+            $("#btnsendsms").prop('disabled', false);
+            $('#btnsendsms').removeClass().addClass('btnverify');
+            $("#verifiycode").hide();
+            $('#forget').hide();
+        }
+    }
+
+    function isverification() {
+        $('#btnsendsms').removeClass().addClass('btnverified');
+        $("#btnsendsms").prop('disabled', true);             
+    }
+    
+    function SendInviteCode() {
+    
+        var phoneNumber = $("#txtcompanynumberinput").val();        
+        var firstName= "@(Model.FirstName)";
+        var lastName= "@(Model.LastName)";
+        var email= "@(Model.CustEmail)";
+        var param = "phoneNumber=" + phoneNumber+"&email="+email+"&firstName="+firstName+"&lastName="+lastName;
+        if (phoneNumber == "")
+            return;
+        commonPostAjax("Account", "SendInviteCode", param, sendcallbacksucess, setError, "html");
+        $('#btnsendsms').hide();
+        $('.busyIndicator').show();
+    }
+
+    function sendcallbacksucess(result) {
+    
+        if (result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)') {
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+        }
+        if (result == "true") {
+            $("#divCompanyVerify").show();
+            $('#btnsendsms').removeClass('btnverify');
+            $('#btnsendsms').addClass('btnsent');
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").attr('title',"sent! check your messages");            
+            $('#forget').show();
+            $('.busyIndicator').hide();
+        }
+    }
+    
+    function resendCode() {
+        /*var phoneNumber = $("#HomePhone").val();
+        var param = "phoneNumber=" + phoneNumber;
+        if (phoneNumber == "")
+            return;
+        showDialog('resended');
+        commonPostAjax("Account", "SendInviteCode", param, resendCodecallbacksucess, setError, "html");*/
+        
+        $("#divCompanyVerify").hide();
+        $('#btnsendsms').addClass('btnverify');
+        $('#btnsendsms').removeClass('btnsent');
+        $("#btnsendsms").prop('disabled', false);
+        $("#btnsendsms").attr('title',"send SMS verification code");            
+        $('#forget').hide();
+        $('#btnsendsms').show();
+        $('.busyIndicator').hide();
+        $('#smserrormessage').hide();
+        $('div.msmerror span.field-validation-error').html('').removeClass('field-validation-error').addClass('span.field-validation-valid');
+    }
+
+    function resendCodecallbacksucess(result) {
+        if (result == "true") {
+            setTimeout("hideDialog('resended')",1000);
+            $('.busyIndicator').hide();
+        }
+    }
+    
+     function VerifyInviteCode() {
+        var inviteCode = $("#smsinviteCode").val();
+        if (inviteCode == "" || inviteCode == "enter code") {            
+            $('#smserrormessage').show();
+            return;
+        }
+        var param = "inviteCode=" + inviteCode;
+        commonPostAjax("Account", "SMSVerifyInviteCode", param, verifycallbacksucess, setError, "html");
+    }
+
+    function verifycallbacksucess(result) {
+        if (result == "true") {
+            $('#smserrormessage').hide();
+            $("#divCompanyVerify").hide();
+            $('#btnsendsms').removeClass();
+            $('#btnsendsms').addClass('btnverified');
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").attr('title', "verification phone number");            
+            $('#smsinviteCode').val("enter code");
+            $('#forget').hide();
+            $('.field-validation-error').hide();
+            $('#btnsendsms').show();
+        } else {
+            $('#smserrormessage').show();
+        }
+    }
+    
+    function setDefaultvalue() {
+        $("#verifiycode").show();
+        $('#btnsendsms').removeClass('btnsend');
+        $("#btnsendsms").prop('disabled', false);  
+        $("#btnsendsms").hide();
+        $('#forget').show();
+        if ($('#text').prop('checked')) {
+            $('#divSendSMS').show();
+        } else {
+            $('#divSendSMS').hide();
+        }
+    }
+</script>
+<!-- InstanceBeginEditable name="content" -->
+<div class="usersettings companysettings">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        @if (!ViewBag.IsAdminOrAgent)
+        {
+            <div class="textusersettings">
+                <a href="/Setting/UserSetting" title="user settings">user settings</a></div>
+            <div class="textcalendarsettings">
+                <a href="/calendarsetting" title="calendar settings">calendar settings</a></div>
+        }
+        <div class="textcompanysettings tabactive">
+            <a href="/Company/CompanySetting?companyId=@Model.ProfileID" title="company settings">
+                company settings</a></div>
+    </div>
+    <div class="clear">
+    </div>
+    @using (Html.BeginForm("CompanySetting", "Company", FormMethod.Post, new { id = "CompanySetting" }))
+    {  
+        <input type="hidden"  id="ProfileID" name="ProfileID" value="@Model.ProfileID"/> 
+        <div class="usersettingsbox">
+            <div class="companysettingsboxtop">
+            </div>
+            <div class="companysettingsboxmid newcompanysettingsboxmid">
+                <div class="usersettingcol1">
+                    <div class="companyaccount">
+                        <h2 class="comaccount">
+                            company account</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="deletecompany">
+                        <a href="javascript: void(0);" id="deletecompany" title="delete company">delete company</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="companyaccount ">
+                        <h2 class="payment">
+                            payment account</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="companyaccount">
+                        <h2 class="contactpre">
+                            contact preferences</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="privateinfo">
+                        <p>
+                            private information</p>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="companyaccount">
+                        <h2 class="contactper">
+                            primary contact person:</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="personfirstname">
+                        <input type="text" id="devfirstname" value="first name" />
+                        @Html.TextBoxFor(m => m.ContactFirstName, new { @id = "firstname", @style = "color:#333333;" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="personlastname">
+                        <input type="text" id="devlastname" value="last name" />
+                        @Html.TextBoxFor(m => m.ContactLastName, new { @id = "lastname", @style = "color:#333333;" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="usersettingcol2">
+                    <div class="userinfo">
+                        <div class="infoarea1">
+                        </div>
+                        <div class="infoarea">
+                            <div class="namearea">
+                                <div class="companysettingsname" style="height:24px; width:380px">@Model.Name</div>
+                                <div class="clear">
+                                </div>
+                                <div class="companysettingseditbasic">
+                                    <a href="/Company/SetupBasicEdit?companyID=@Model.ProfileID" title="edit basic information">
+                                        edit company information</a></div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="btnlistyourhours">
+                                <a class="lnklistyourhours" title="List your hours" href="/company/companyemployeelisthour?companyID=@Model.ProfileID">
+                                    list your hours</a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear12">
+                    </div>
+                    <div class="paypalarea">
+                        <div class="paypalbox1">
+                        </div>
+                        <div class="paypalbox">
+                            <div class="companysettingsname ppemail">
+                                PayPal e-mail: <span id="readPayEmail" href="#" title="@Model.PaymentOptions">
+                                    @Model.PaymentOptions</span> <span id="spachangeEmail" style="text-align: left">
+                                        @Html.TextBoxFor(m => m.PaymentOptions, new { @id = "PaymentOptions", @style = "display:none;width:350px;border: 1px solid #999999;color: #808080;font-size: 18px;height: 28px;width: 353px;" })
+                                    </span>
+                            </div>
+                            <div class="editpaypal">
+                                <a id="editPayEmail" href="#" title="Edit" onclick="EditPaypalEmail()">edit</a></div>
+                            <div class="clear">
+                            </div>
+                            <div class="howdoaccept">
+                                how do you accept payment?
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="cancellation paymenttype">
+                                <div class="paypalonly">
+                                    <input type="radio" id="paypal" value="0" @((!Model.PaymentMethod.HasValue || Model.PaymentMethod.Value == (int)Types.PaymentMethod.Paypal) ? "checked" : "") name="PaymentMethod" />
+                                    <label for="paypal">
+                                        <span class="rdtitle">PayPal only</span>
+                                    </label>
+                                </div>
+                                <div class="payinperson">
+                                    <input type="radio" id="person" value="1" @((Model.PaymentMethod.HasValue && Model.PaymentMethod.Value == (int)Types.PaymentMethod.PayInPerson) ? "checked" : "") name="PaymentMethod" />
+                                    <label for="person">
+                                        <span class="rdtitle">PayPal and pay in person</span>
+                                    </label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="reminderarea">
+                        <div class="reminderbox1">
+                        </div>
+                        <div class="reminderbox">
+                            <div class="companycontacttext howshouldkuyam">
+                                <div class="companycontactpre">
+                                    how should kuyam contact you?</div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="companycontactvalue">
+                                <div class="chkcall">
+                                    <input type="checkbox" name="EmailType" id="mail" @(Model.EmailType ? "checked=checked" : "") value="true" />
+                                    <label id="lblmail" for="mail">
+                                        e-mail</label>
+                                </div>
+                                <div class="chktext">
+                                    <input type="checkbox" name="TextType" id="text" @(Model.TextType ? "checked=checked" : "") value="true" />
+                                    <label id="lbltext" for="text">
+                                        SMS</label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="contactpreferencesbox">
+                                <div class="companyemail">
+                                    <div class="companyemailtext">
+                                        if different e-mail than profile, enter here:</div>
+                                    <div class="companyemailinput">
+                                        @*<input type="text" id="txtcompanyemailinput" value="monika@meerkarchitecture.com" />*@
+                                        @Html.TextBoxFor(m => m.Email, new { @id = "txtcompanyemailinput" })
+                                        <div class="clear">
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Email)
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="companynumber" style="padding-top: 8px;">
+                                    <div class="companynumbertext">
+                                        mobile number for SMS updates:</div>
+                                    <div class="companynumberinput">
+                                        @*<input type="text" id="txtcompanynumberinput" value="(123)123-1234" />*@
+                                        @Html.TextBoxFor(m => m.Phone, new { @id = "txtcompanynumberinput", @onchange = "checkPhoneNumber(this.value);" })
+                                        <div class="clear">
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Phone)
+                                    </div>
+                                    <div class="ddlmobilecarrier comsettingmobile">
+                                        <select id="mobilecarrier" name="SelectCarrier">
+                                            <option>select mobile carrier</option>
+                                            @foreach (var item in @Model.CarrierList)
+                                            {
+                                                <option value="@item.Data" @(item.Data == Model.SelectCarrier ? "selected=selected" : "")>@item.Name.ToLower()</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="companysms" style="padding-left: 275px; padding-top: 0;">
+                                    <div class="companysmsverify">
+                                        <div class="hidden" id="divCompanyVerify">
+                                            <div class="divtxtsend">
+                                                <div class="rpostformtext">
+                                                    <div class="ltxtcompanysetup">
+                                                    </div>
+                                                    <div class="txtcompanysetup txtbday">
+                                                        <input type="text" id="smsinviteCode" value="enter code" onfocus="if (this.value=='enter code') {this.value = '';}this.className = 'inputactive';"
+                                                            onblur="if (this.value==''){this.value='enter code';this.className = '';}" />
+                                                    </div>
+                                                    <div class="rtxtcompanysetup">
+                                                    </div>
+                                                    <div class="clear">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="divbtnverify">
+                                                <input type="button" class="verifysms" onclick="VerifyInviteCode();" title="verify" />
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                        <div class="msmerror">
+                                            @Html.ValidationMessage("VerifiPhoneNumber")
+                                            <span id="smserrormessage" style="display: none;">wrong code</span>&nbsp;
+                                        </div>
+                                    </div>
+                                    <div class="divverify" id="divSendSMS" style="padding-left: 0px; @(Model.TextType ? "" : "display: none;")" >
+                                        <input type="button" id="btnsendsms" class="btnverify" title="send SMS verification code"
+                                            onclick="SendInviteCode();" />
+                                        <div class="busyIndicator" style="display: none; height: 28px; width: 184px; background-color: orange;
+                                            border: green; background-image: url('/Images/sendcode.png')">
+                                            <img src="/Images/BusyIndicator.gif" alt="" style="margin: 4px 5px 0 14px;" />
+                                        </div>
+                                    </div>
+                                    <div class="resendcode">
+                                        <div class="hidden" id="forget" @(Model.TextType ? "" : "style='display: none;'")>
+                                            didn’t get it?<br />
+                                            <a href="javascript:void(0);" onclick="resendCode();" title="resend code">resend code</a>
+                                        </div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="companyremind" style="padding-top: 22px;">
+                                <div class="companyremindmealert">
+                                    <div class="userfirstalert">
+                                        <div class="firstalerttitle">
+                                            first alert:
+                                        </div>
+                                        <div class="firstalertselect">
+                                            @Html.DropDownListFor(m => m.FirstAlert, Model.FirstListItem)
+                                        </div>
+                                    </div>
+                                    <div class="clear7">
+                                    </div>
+                                    <div class="userfirstalert">
+                                        <div class="firstalerttitle">
+                                            second alert:
+                                        </div>
+                                        <div class="firstalertselect">
+                                            @Html.DropDownListFor(m => m.SecondAlert, Model.SecondListItem)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="cancellation paymenttype">
+                                <div class="paypalonly">
+                                    <input type="radio" id="kuyamInstantBook" value="1" @((Model.CompanyType == (int)Types.CompanyType.KuyamInstantBook) ? "checked" : "") name="CompanyType" />
+                                    <label for="kuyamInstantBook">
+                                        <span class="rdtitle">kuyam instant book</span>
+                                    </label>
+                                </div>
+                                <div class="payinperson">
+                                    <input type="radio" id="hybridKuyamBookIt" value="3" @((Model.CompanyType == (int)Types.CompanyType.HybridKuyamBookIt) ? "checked" : "") name="CompanyType" />
+                                    <label for="hybridKuyamBookIt">
+                                        <span class="rdtitle">hybrid-kuyam book-it</span>
+                                    </label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="reminderarea h130">
+                        <div class="reminderbox1 h105">
+                        </div>
+                        <div class="reminderbox companysettingbook h105">
+                            <div class="colleft">
+                                <div class="leftbook">
+                                    <input type="radio" id="instantbook" value="@((int)Types.CompanyType.KuyamInstantBook)" @((Model.CompanyType == (int)Types.CompanyType.KuyamInstantBook) ? "checked" : "") name="CompanyType" />
+                                    <label for="instantbook">
+                                        <span class="rdtitle">&nbsp;</span>
+                                    </label>
+                                </div>
+                                <div class="rightbook">
+                                    <span title="instant book" class="btnbook">instant book</span>
+                                    <div class="clear">
+                                    </div>
+                                    <p>
+                                        make sure your available hours are up to date, so there is no confusion.</p>
+                                </div>
+                            </div>
+                            <div class="colright">
+                                <div class="leftbook">
+                                    <input type="radio" id="bookit" value="@((int)Types.CompanyType.KuyamBookIt)" @((Model.CompanyType == (int)Types.CompanyType.KuyamBookIt) ? "checked" : "") name="CompanyType" />
+                                    <label for="bookit">
+                                        <span class="rdtitle">&nbsp;</span>
+                                    </label>
+                                </div>
+                                <div class="rightbook w230">
+                                    <span title="book it" class="btnbook">book it</span>
+                                    <div class="clear">
+                                    </div>
+                                    <p>
+                                        you will need to confirm each appointment by hand.</p>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="companysettingsboxbot">
+            </div>
+            <div class="clear12">
+            </div>
+            <div class="redcompanysettingsboxtop">
+            </div>
+            <div class="redcompanysettingsboxmid">
+                <div class="cancellation">
+                    <div class="cancelbox1">
+                        <h2>
+                            cancellation policy</h2>
+                        <p>
+                            displayed on your profile<br />
+                            <br />
+                            user receives a full refund if they cancel before the specified time period.
+                        </p>
+                    </div>
+                    <div class="cancelbox5">
+                        <div class="rcancelhead">
+                            <div class="typepolicy">
+                                type of policy</div>
+                            <div class="hoursprior">
+                                users must cancel how many hours prior to the appointment?
+                            </div>
+                            <div class="anyrefund">
+                                if user cancels after, any refund?
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear13">
+                        </div>
+                        <div class="rcancelitem">
+                            <div class="rcancelitembox1">
+                            </div>
+                            <div class="rcancelitembox">
+                                <div class="typepolicy">
+                                    <input type="radio" id="cancelnone" value="0" @((Model.CancelPolicy == 0) ? "checked" : "") name="CancelPolicy" />
+                                    <label for="cancelnone">
+                                        <span class="rdtitle">none</span>
+                                    </label>
+                                </div>
+                                <div class="hoursprior">
+                                    anytime
+                                </div>
+                                <div class="anyrefund">
+                                    full refund
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear13">
+                        </div>
+                        <div class="rcancelitem">
+                            <div class="rcancelitembox1">
+                            </div>
+                            <div class="rcancelitembox">
+                                <div class="typepolicy">
+                                    <input type="radio" id="cancelstandard" value="1" @((Model.CancelPolicy == 1) ? "checked" : "")  name="CancelPolicy" />
+                                    <label for="cancelstandard">
+                                        <span class="rdtitle">standard</span>
+                                    </label>
+                                </div>
+                                <div class="hoursprior">
+                                    24 hours
+                                </div>
+                                <div class="anyrefund">
+                                    50% refund
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear13">
+                        </div>
+                        <div class="rcancelitem">
+                            <div class="rcancelitembox1">
+                            </div>
+                            <div class="rcancelitembox">
+                                <div class="typepolicy">
+                                    <input type="radio" id="cancelstrict" value="2" @((Model.CancelPolicy == 2) ? "checked" : "")  name="CancelPolicy" />
+                                    <label for="cancelstrict">
+                                        <span class="rdtitle">strict</span>
+                                    </label>
+                                </div>
+                                <div class="hoursprior">
+                                    72 hours
+                                </div>
+                                <div class="anyrefund">
+                                    50% refund
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear13">
+                        </div>
+                        <div class="rcancelitem">
+                            <div class="rcancelitembox1">
+                            </div>
+                            <div class="rcancelitembox customcancel">
+                                <div class="typepolicy">
+                                    <input type="radio" id="cancelcustom" value="3" @((Model.CancelPolicy == 3) ? "checked" : "") name="CancelPolicy" />
+                                    <label for="cancelcustom">
+                                        <span class="rdtitle">custom</span>
+                                    </label>
+                                </div>
+                                <div class="hoursprior">
+                                    @*<select name="anytime" id="anytime" class="secondalert" name="hourspriorid">
+                                    <option value="0" selected="selected">none</option>
+                                    <option value="1">1 hour</option>
+                                    <option value="2">2 hours</option>
+                                    <option value="3">3 hours</option>
+                                    <option value="6">6 hours</option>
+                                    <option value="12">12 hours</option>
+                                    <option value="24">24 hours</option>
+                                    <option value="36">36 hours</option>
+                                    <option value="48">48 hours</option>
+                                    <option value="72">72 hours</option>                                    
+                                </select>*@
+                                    @Html.DropDownListFor(
+                                                    x => x.anytime,
+                                    new SelectList(Model.Hours, "Value", "Text"),
+                                    new { @class = "secondalert" }
+                                )
+                                </div>
+                                <div class="anyrefund">
+                                    @*<select name="norefund" id="norefund" class="secondalert" name="anyrefundid">
+                                    <option value="0" selected="selected">none</option>
+                                    <option value="25">25%</option>
+                                    <option value="50">50%</option>
+                                    <option value="75">75%</option>
+                                </select>*@
+                                    @Html.DropDownListFor(
+                                                    x => x.norefund,
+                                    new SelectList(Model.Funds, "Value", "Text"),
+                                    new { @class = "secondalert" }
+                                )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="redcompanysettingsboxbot">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="btnarea btncompanysettingarea">
+                @if (!ViewBag.IsAdminOrAgent)
+                {
+                    <a href="/" class="btnusersetting btncanceluser"><span class="btnusersettingleft"></span>
+                        <span class="btnusersettingcenter btncancelusersetting">cancel </span><span class="btnusersettingright">
+                        </span></a>
+                }
+                <a id="btsave" class="btnusersetting"><span class="btnusersettingleft"></span><span
+                    class="btnusersettingcenter btnsaveusersetting">save changes </span><span class="btnusersettingright">
+                    </span></a>
+            </div>
+        </div>
+        <div class="clear35">
+        </div>
+    }
+</div>
+<div class="clear">
+</div>
+<div id="lightBox" class="lightBox">
+</div>
+<div id="deletecompanypopup" class="comfirmationpopup deletecom">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="deletecompanypopup">
+            <div class="deltitle">
+                are you sure you want to delete this company?</div>
+            <div class="delcancel">
+                if no, <a href="JavaScript:void(0);" class="canceldeletecompany" title="cancel" id="deletecompanycancel">
+                    cancel</a></div>
+            <div class="delyes">
+                if yes, please enter your password:</div>
+            <div class="deltxt">
+                <input type="password" id="txtpassword" /></div>
+            <div class="delreason">
+                reason for deletion?</div>
+            <div class="delreasontext">
+                <textarea id="txtreason" class="textarea" rows="3" cols="5"></textarea></div>
+            <div class="clear8">
+            </div>
+            <a href="#" class="btndeletecompany" id="cancel" title="delete this company">delete
+                this company</a>
+            <div class="clear">
+            </div>
+            <div id="errordiv" class="errortext14">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div id="resended" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            Your code was resent.
+        </p>
+    </div>
+</div>
+<div id="savechangepopup" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            your changes are saved...
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var firstname = $('#firstname').val();
+        if (firstname == "") {
+            $('#firstname').hide();
+            $('#devfirstname').show();
+        } else {
+            $('#firstname').show();
+            $('#devfirstname').hide();
+        }
+        $('#devfirstname').focus(function () {
+            $('#devfirstname').hide();
+            $('#firstname').show();
+            $('#firstname').css('color', '#333333');
+            $('#firstname').focus();
+        });
+        $('#firstname').blur(function () {
+            if ($('#firstname').val() == '') {
+                $('#devfirstname').show();
+                $('#devfirstname').css('color', '#808080');
+                $('#firstname').hide();
+            }
+        });
+
+
+        var lastname = $('#lastname').val();
+        if (lastname == "") {
+            $('#lastname').hide();
+            $('#devlastname').show();
+        } else {
+            $('#lastname').show();
+            $('#devlastname').hide();
+        }
+        $('#devlastname').focus(function () {
+            $('#devlastname').hide();
+            $('#lastname').show();
+            $('#lastname').css('color', '#333333');
+            $('#lastname').focus();
+        });
+        $('#lastname').blur(function () {
+            if ($('#lastname').val() == '') {
+                $('#devlastname').show();
+                $('#devlastname').css('color', '#808080');
+                $('#lastname').hide();
+            }
+        });
+
+
+
+        $(".btndeletecompany").click(function () {
+            var valid = true;
+            $('#errordiv').empty();
+            if ($('#txtpassword').val() == '') {
+                valid = false;
+                $('#errordiv').append("password is a required field! <br/>");
+            }
+            if ($('#txtreason').val() == '') {
+                valid = false;
+                $('#errordiv').append("reason is a required field! <br/>");
+            }
+            var pass = $('#txtpassword').val();
+            var reason = $('#txtreason').val();
+
+            var parameters = { pass: pass, reason: reason, profileId: companyId };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'json',
+                    url: '/company/DeleteCompany/'
+                })
+                .success(function (result) {
+                    if (result.status == '0') {
+                        $('#errordiv').append(result.message);
+                    } else {
+                        window.location.href = '/';
+                    }
+                })
+                .error(function (error) {
+                });
+
+        });
+    });
+
+    function EditPaypalEmail() {
+        $("#spachangeEmail").show();
+        $("#readPayEmail").hide();
+        $("#editPayEmail").hide();
+        $('#PaymentOptions').show();
+        $("#PaymentOptions").val($.trim($("#readPayEmail").text()));
+    }
+
+    $(document).ready(function () {       
+        $(".companysettingsname").dotdotdot();
+
+    });
+</script>

@@ -1,0 +1,92 @@
+﻿@using Kuyam.Database
+@model Kuyam.WebUI.Models.AddUserModel
+
+
+<style type="text/css">
+    body {
+        color: red;
+    }
+
+    .tbldata td span {
+        color: red;
+        text-align: left;
+    }
+</style>
+<fieldset>
+    <div style="width: 100%">
+        <table cellpadding="1" cellspacing="1" border="0" class="tbldata" width="100%">
+            <tr>
+                <td style="width: 100px;">
+                    user role
+                </td>
+                <td>
+
+                    @Html.DropDownListFor(model => model.RoleName, new SelectList(Model.AllRoles, "RoleName", "RoleName"), "--select role--", new { style = @"width: 100px;float: left;", onchange = @"loadHotel(this.value);" })
+                    <div style="float: left; margin-left: 20px; line-height: 20px;">optional</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px;">
+                    assign to hotel
+                </td>
+                <td>
+
+                    @Html.DropDownListFor(model => model.HotelId, new SelectList(Model.HotelList, "HotelID", "Name"), "--select hotel--", new { id = @"HotelId", style = @"width: 300px;float: left;" })
+                    <div id="optionalHotelId" style="float: left; margin-left: 20px; line-height: 20px;">optional</div>
+                    @Html.ValidationMessageFor(m => m.HotelId, "", new { style = @"float: left; margin-left: 5px; line-height: 20px;" })
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px;">
+                    first name
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.FirstName, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px;">
+                    last name
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.LastName, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px;">
+                    email
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.UserName, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px;">
+                    password
+                </td>
+                <td>
+                    @Html.PasswordFor(model => model.Password, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    confirm password
+                </td>
+                <td>
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</fieldset>

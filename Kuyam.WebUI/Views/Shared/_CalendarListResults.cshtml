@@ -1,0 +1,64 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain
+@using Kuyam.Repository.Infrastructure
+@{   
+    List<Calendar> calendars = ViewBag.Calendars;
+
+    CalendarService _calendarService = EngineContext.Current.Resolve<CalendarService>();
+}
+<ul class="ulcalendarlist">
+    @if (calendars != null)
+    {
+        for (int i = 0; i < calendars.Count; i++)
+        {
+            Calendar calendar = calendars[i];
+            var id = "chkfamily" + (i + 1);
+        <li>
+            <div class="chkcsyncalendar">
+                <input type="radio" id="@id" name="calendarlist" value="@calendar.CalendarID"/>
+                <label for="@id">
+                    <span class="rdtitle">&nbsp;</span>
+                </label>
+            </div>
+            <div class="namecsyncalendar" style="background-color:#@calendar.BackColor;" title="@calendar.Name">
+                @Kuyam.Domain.UtilityHelper.TruncateAtWord(calendar.Name, 11)
+            </div>
+            <div class="typecsyncalendar">
+                @{  
+                    string calendarTypeName = string.Empty;
+                    switch (calendar.CalendarDisplayTypeID){
+                            
+                        case (int)Kuyam.Database.Types.CalendarType.iCal:
+                            calendarTypeName = "iCal";
+                            break;
+                        case (int)Kuyam.Database.Types.CalendarType.Facebook:
+                            calendarTypeName = "Facebook";
+                            break;
+                        case (int)Kuyam.Database.Types.CalendarType.Google:
+                            calendarTypeName = "Google Cal";
+                            break;
+                        default:
+                            calendarTypeName = string.Empty;
+                            break;
+                    }
+                }
+                @calendarTypeName
+            </div>
+            <div class="clear">
+            </div>
+        </li>
+        }
+    }
+</ul>
+<div class="clear">
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".namecsyncalendar").dotdotdot(
+            {
+                height: 22,
+                width: 125
+            });
+     
+    });
+</script>

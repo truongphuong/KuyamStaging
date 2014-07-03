@@ -1,0 +1,921 @@
+﻿@model Kuyam.WebUI.Models.RegisterEmail
+@using Kuyam.WebUI.Helpers
+@{
+    ViewBag.Title = "RegisterEmail";
+    Layout = "~/Views/Shared/_KuyamLayoutRegister.cshtml";
+}
+<div class="newpostinvitecode">
+    <div class="clear">
+    </div>
+    @using (Html.BeginForm("RegisterEmail", "Account", FormMethod.Post, new { @id = "RegisterForm" }))
+    {
+
+         <div class="boxinvite">
+            <div class="invitebox1">
+            </div>
+            <div class="invitebox">
+                <div class="lpostinvitecode @(Model.IsFacebookRegister?"facebookregister":"")" >
+                    <div class="postfirstname">
+                        first name</div>
+                    <div class="clear">
+                    </div>
+                    <div class="postlastname">
+                        last name</div>
+                    <div class="clear">
+                    </div>
+                    <div class="postphonenumber">
+                        phone number</div>
+                    <div class="clear">
+                    </div>
+                    <div class="postphoneverify">
+                        <div id="forget">
+                            didn’t get it?<br />
+                            <a href="javascript:void(0);" onclick="resendCode();" title="resend code">resend code</a>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="postemail">
+                        e-mail</div>
+                    <div class="clear">
+                    </div>
+                    @if (!Model.IsFacebookRegister)
+                    {
+                        <div class="postpwd">
+                            password</div>
+                        <div class="clear">
+                        </div>
+                    }
+                    <div class="zipcode">
+                        zip code</div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="rpostinvitecode @(Model.IsFacebookRegister?"facebookregister":"")">
+                    <div class="rpostfirstname">
+                        <div class="rpostformtext">
+                            <div class="ltxtcompanysetup">
+                            </div>
+                            <div class="txtcompanysetup txtemail">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "color333333" })
+                                @*<input type="text" id="rpostfirstname" class="color333333" value="" />*@
+                            </div>
+                            <div class="rtxtcompanysetup">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="rpostgender">
+                        <div class="rpostgendertitle">
+                            gender
+                        </div>
+                        <div class="rpostselectgender">
+                            <select name="selectgender" id="selectgender" style="width: 102px;">
+                                @foreach (var item in @Model.GenderList)
+                                {
+                                    if (Model.selectgender.ToString() ==
+                                        item.Value)
+                                    {
+                                    <option value="@item.Value" selected="selected">@item.Text.ToLower()</option>
+                                    }
+                                    else
+                                    {
+                                    <option value="@item.Value">@item.Text.ToLower()</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="rpostlastname">
+                        <div class="rpostformtext">
+                            <div class="ltxtcompanysetup">
+                            </div>
+                            <div class="txtcompanysetup txtemail">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "color333333" })
+                                @*<input type="text" id="rpostlastname" class="color333333" value="" />*@
+                            </div>
+                            <div class="rtxtcompanysetup">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="rpostbirth">
+                        <div class="rpostbirthtext">
+                            birthday</div>
+                        <div class="rpostbirthinput">
+                            <div class="rpostformtext">
+                                <div class="ltxtcompanysetup">
+                                </div>
+                                <div class="txtcompanysetup txtbday">
+                                    <input type="text" id="txtbdText" value="mm/dd/yy" />
+                                    @Html.TextBoxFor(m => m.Birthday, new
+                           {
+                               @id = "txtbdBlur",
+                               @class = "inputactive"
+                           })
+                                </div>
+                                <div class="rtxtcompanysetup">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rpostwhy">
+                            <a href="#" id="lnkwhy">why ?</a>
+                            <div id="whypopup" class="whypopup">
+                                <div class="contentPopup">
+                                    kuyam requires all users booking appointments to be at least 18 years old.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="rpostphonenumber">
+                        <div class="rpostformtext">
+                            <div class="ltxtcompanysetup">
+                            </div>
+                            <div class="txtcompanysetup txtemail">
+                                @*<input type="text" name="Phone" id="rpostlastname" value="(       )         -"
+                                    onfocus="if (this.value=='(       )         -') {this.value = '';this.className = 'inputactive';}"
+                                    onblur="if (this.value==''){this.value='(       )         -';this.className = '';}" />*@
+                                <input type="text" id="txtPhoneText" value="(###) ### - ####" />
+                                @Html.TextBoxFor(m => m.Phone, new
+                               {
+                                   @id = "txtPhoneBlur",
+                                   @class = "inputactive",
+                                   @onchange = "checkPhoneNumber(this.value);"
+                               })
+                            </div>
+                            <div class="rtxtcompanysetup">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="ddlmobile">
+                        <select name="SelectCarrier" id="selectmobile">
+                            <option value="none">none</option>
+                            @foreach (var item in @Model.CarrierList)
+                            {
+                                <option value="@item.Data" @(item.Data == Model.SelectCarrier ? "selected=selected" : "")>@item.Name.ToLower()</option>                               
+                            }
+                        </select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="smsarea">
+                        <div class="smstitle">
+                            for SMS appointment updates and reminders:
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="smscontent">
+                            <div class="divbtnsend">
+                                <input type="button" id="btnsendsms" class="btnsend" title="send SMS verification code"
+                                       onclick="SendInviteCode();" />
+                                <div class="busyIndicator" style="display: none; height: 28px; width: 184px; background-color: orange; border: green; background-image: url('/Images/sendcode.png'); margin-right: 13px;">
+                                    <img src="/Images/BusyIndicator.gif" alt="" style="margin: 4px 5px 0 14px;"/>
+                                    @*<div style="color: #4F4F4F; font-weight: bold; left: 45px; position: relative; top: -17px; width: 88px;">
+                                        sending code...
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div id="verifiycode" style="display: none;position:absolute;">
+                                <div class="divtxtsend">
+                                    <div class="rpostformtext">
+                                        <div class="ltxtcompanysetup">
+                                        </div>
+                                        <div class="txtcompanysetup txtbday">
+                                            <input type="text" id="smsinviteCode" value="enter code" onfocus="if (this.value=='enter code') {this.value = '';}this.className = 'inputactive';"
+                                                onblur="if (this.value==''){this.value='enter code';this.className = '';}" />
+                                        </div>
+                                        <div class="rtxtcompanysetup">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="divbtnverify">
+                                    <input type="button" class="verifysms" title="verify" onclick="VerifyInviteCode();" />
+                                </div>
+                                <div class="msmerror">
+                                    <span id="smserrormessage" style="display: none;">wrong code</span>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="rpostemail">
+                        <div class="divrpostemail">
+                            <div class="rpostformtext">
+                                <div class="ltxtcompanysetup">
+                                </div>
+                                <div class="txtcompanysetup txtemail">
+                                    <input type="text" id="txtEmailText" value="enter e-mail" />
+                                    @Html.TextBoxFor(m => m.Email, new
+                               {
+                                   @id = "txtEmailBlur",
+                                   @class = "inputactive",
+                                   @Value = @Html.DisplayFor(x => Kuyam.WebUI.Models.MySession.RegisterModel.ContactEmail),
+                                   @disabled="True"
+                               })
+                                </div>
+                                <div class="rtxtcompanysetup">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divrpostreemail">
+                            <div class="rpostformtext">
+                                <div class="ltxtcompanysetup">
+                                </div>
+                                <div class="txtcompanysetup txtemail2">
+                                    <input type="text" id="txtConfirmEmailText" value="re-enter e-mail" />
+                                    @Html.TextBoxFor(m => m.ConfirmEmail, new
+                               {
+                                   @id = "txtConfirmEmailBlur",
+                                   @class = "inputactive",
+                                   @Value = @Html.DisplayFor(x => Kuyam.WebUI.Models.MySession.RegisterModel.ContactEmail),
+                                   @disabled = "True"
+                               })
+                                </div>
+                                <div class="rtxtcompanysetup">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @if (!Model.IsFacebookRegister)
+                    {
+                        <div class="rpostpwd">
+                            <div class="divrpostemail">
+                                <div class="rpostformtext">
+                                    <div class="ltxtcompanysetup">
+                                    </div>
+                                    <div class="txtcompanysetup txtemail">
+                                        <input type="text" id="rpostpwdtextfield" value="enter password" />
+                                        @Html.PasswordFor(model => model.Password, new
+                                            {
+                                                @id = "rpostpasspwdpassfield",
+                                                @class = "inputactive"
+                                            })
+                                    </div>
+                                    <div class="rtxtcompanysetup">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divrpostreemail">
+                                <div class="rpostformtext">
+                                    <div class="ltxtcompanysetup">
+                                    </div>
+                                    <div class="txtcompanysetup txtemail2">
+                                        <input type="text" id="rpostrepwdtextfield" value="re-enter password" />
+                                        @Html.PasswordFor(model => model.ConfirmPassword, new
+                                            {
+                                                @id = "rpostrepwdpassfield",
+                                                @class = "inputactive"
+                                            })
+                                    </div>
+                                    <div class="rtxtcompanysetup">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    }
+                    <div class="rpostzipcode">
+                        <div class="rpostformtext">
+                            <div class="ltxtcompanysetup">
+                            </div>
+                            <div class="txtcompanysetup txtzipcode">
+                                <input type="text" id="txtZipCodeText" value="#####" />
+                                @Html.TextBoxFor(m => m.ZipCode, new
+                           {
+                               @id = "txtZipCodeBlur",
+                               @class = "inputactive",
+                               @onkeypress = "return isNumberKey(event)",
+                               @maxlength="5"
+                           })
+                            </div>
+                            <div class="rtxtcompanysetup">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="rpostagree">
+                        <div class="chkcall">
+                            <div>
+                                @Html.CheckBoxFor(m => m.AgreeToTerms, new { @id = "terms1" })
+                                <label for="terms1">
+                                    i have reviewed and agree to kuyam's</label>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="rpostlink">
+                                <a href="#" id="termprivacy" title="terms of use">terms of use</a> and <a href="#"
+                                    id="privacy" title="">privacy</a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="chktext" style="display:none;">
+                            <div>
+                                @Html.CheckBoxFor(m => m.AgreeToNonDisclosure, new { @id = "disclosure" })
+                                <label for="disclosure">
+                                    i have reviewed <span>and</span> agree to kuyam's</label>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="rpostlink">
+                                <a href="#" id="disclosurepopup" title="non-disclosure agreenment">non-disclosure agreement</a>.
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="errormsg" style="padding-left: 350px; margin-bottom: 20px;">
+            <!--Error message here-->
+            <div id='divSummary'>
+                @Html.CustomValidationSummary()</div>
+            <div id="divSummaryError">
+                <div class="ui-state-error ui-corner-all">
+                    <div id="content" style="position: relative; margin-left: -30px; margin-right: 6px;
+                        padding-top: 5px;">
+                        <ul style="display: block; list-style-type: none; margin-top: 2px;">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divnext">
+            <a id="submitFormEmail">
+                <input class="btninvitenext" type="button" title="Start">
+            </a>
+        </div>
+        <div class="clear">
+        </div>
+    }
+    <input id="hdfPhone" type="hidden" />
+    <div class="clear">
+    </div>
+</div>
+<div id="resended" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            Your code was resent.
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    var isEmail=false;
+
+    var currentPhoneRequestVerify = '';
+    $('#divSummaryError').hide();
+    $('#selectmobile').selectmenu();
+    jQuery(function ($) {
+        $("#txtPhoneBlur").mask("(999) 999-9999");
+        $("#verifiycode").hide();
+        @ViewBag.Defaultfuntion;
+        @Html.Raw(ViewBag.CheckPhone);
+    });
+
+    $('#lnkwhy').mouseout(function () {
+        $('#whypopup').fadeOut(400);
+    });
+
+    $('#lnkwhy').mouseover(function () {
+
+        $('#whypopup').fadeIn(400);
+        $('#whypopup').css('top', 32);
+        $('#whypopup').css('left', 2);
+    });
+
+    $('#submitFormEmail').click(function () {
+        $('#RegisterForm').submit();
+    });
+
+    $('#btnfacebook').click(function () {
+
+        location.href = "/Home/fbCalendar";
+    });
+    $('#btngoogle').click(function () {
+
+        location.href = "/Home/ggCalendar";
+    });
+
+    $(function () {
+
+        $('#terms1').checkBox({ addVisualElement: false });
+        $('#disclosure').checkBox({ addVisualElement: false });
+        $('select#selectgender').selectmenu();
+
+        //        if ($("#bd").val() != "dd/mm/yy") {
+        //            $("#bd").addClass('inputactive');
+        //        }
+        //        else {
+        //            $("#bd").removeClass('inputactive');
+        //        }
+
+        //        if ($("#rpostemail").val() != "enter e-mail") {
+        //            $("#rpostemail").addClass('inputactive');
+        //        }
+
+        //        if ($("#rpostreemail").val() != "re-enter e-mail") {
+        //            $("#rpostreemail").addClass('inputactive');
+        //        }
+
+        //        if ($("#rpostzipcode").val() != "######") {
+        //            $("#rpostzipcode").addClass('inputactive');
+        //        }
+
+        $('#rpostpasspwdpassfield').hide();
+        $('#rpostpwdtextfield').focus(function () {
+            $('#rpostpwdtextfield').hide();
+            $('#rpostpasspwdpassfield').show();
+            $('#rpostpasspwdpassfield').focus();
+        });
+        $('#rpostpasspwdpassfield').blur(function () {
+            if ($('#rpostpasspwdpassfield').val() == '') {
+                $('#rpostpwdtextfield').show();
+                $('#rpostpasspwdpassfield').hide();
+            }
+        });
+
+        $('#rpostrepwdpassfield').hide();
+        $('#rpostrepwdtextfield').focus(function () {
+            $('#rpostrepwdtextfield').hide();
+            $('#rpostrepwdpassfield').show();
+            $('#rpostrepwdpassfield').focus();
+        });
+        $('#rpostrepwdpassfield').blur(function () {
+            if ($('#rpostrepwdpassfield').val() == '') {
+                $('#rpostrepwdtextfield').show();
+                $('#rpostrepwdpassfield').hide();
+            }
+        });
+
+        if ($('#txtEmailBlur').val() != '') {
+            $('#txtEmailText').hide();
+            $('#txtEmailBlur').show();
+        } else {
+            $('#txtEmailBlur').hide();
+        }
+
+        $('#txtEmailText').focus(function () {
+            $('#txtEmailText').hide();
+            $('#txtEmailBlur').show();
+            $('#txtEmailBlur').focus();
+        });
+
+        $('#txtEmailBlur').blur(function () {
+            if ($('#txtEmailBlur').val() == '') {
+                $('#txtEmailText').show();
+                $('#txtEmailBlur').hide();
+            }
+        });
+
+        /**/
+        if ($('#txtConfirmEmailBlur').val() != '') {
+            $('#txtConfirmEmailText').hide();
+            $('#txtConfirmEmailBlur').show();
+        } else {
+            $('#txtConfirmEmailBlur').hide();
+        }
+        $('#txtConfirmEmailText').focus(function () {
+            $('#txtConfirmEmailText').hide();
+            $('#txtConfirmEmailBlur').show();
+            $('#txtConfirmEmailBlur').focus();
+        });
+        $('#txtConfirmEmailBlur').blur(function () {
+            if ($('#txtConfirmEmailBlur').val() == '') {
+                $('#txtConfirmEmailText').show();
+                $('#txtConfirmEmailBlur').hide();
+            }
+        });
+
+        if ($('#txtPhoneBlur').val() != '') {
+            $('#txtPhoneText').hide();
+            $('#txtPhoneBlur').show();
+        } else {
+            $('#txtPhoneBlur').hide();
+        }
+        $('#txtPhoneText').focus(function () {
+            $('#hdfPhone').val($('#txtPhoneText').val());
+            $('#txtPhoneText').hide();
+            $('#txtPhoneBlur').show();
+            $('#txtPhoneBlur').focus();
+        });
+        $('#txtPhoneBlur').blur(function () {
+            if ($('#txtPhoneBlur').val() == '') {
+                $('#txtPhoneText').show();
+                $('#txtPhoneBlur').hide();
+                $('#forget').hide();
+                $('#verifiycode').hide();
+                $('#btnsendsms').addClass('btnsend').show().prop('disabled', false);
+            }
+            else if(currentPhoneRequestVerify != $('#txtPhoneBlur').val()) {
+                $('#forget').hide();
+                $('#verifiycode').hide();
+                $('#btnsendsms').addClass('btnsend').show().prop('disabled', false);
+            }
+        });
+
+        if ($('#txtZipCodeBlur').val() != '') {
+            $('#txtZipCodeText').hide();
+            $('#txtZipCodeBlur').show();
+        } else {
+            $('#txtZipCodeBlur').hide();
+        }
+
+        $('#txtZipCodeText').focus(function () {
+            $('#txtZipCodeText').hide();
+            $('#txtZipCodeBlur').show();
+            $('#txtZipCodeBlur').focus();
+        });
+        $('#txtZipCodeBlur').blur(function () {
+            if ($('#txtZipCodeBlur').val() == '') {
+                $('#txtZipCodeText').show();
+                $('#txtZipCodeBlur').hide();
+            }
+        });
+
+        if ($('#txtbdBlur').val() != '') {
+            $('#txtbdText').hide();
+            $('#txtbdBlur').show();
+        } else {
+            $('#txtbdBlur').hide();
+        }
+
+        $('#txtbdText').focus(function () {
+            $('#txtbdText').hide();
+            $('#txtbdBlur').show();
+            $('#txtbdBlur').focus();
+        });
+
+        $("#txtbdBlur").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dayNamesMin: $.datepicker._defaults.dayNamesShort,
+            dateFormat: 'mm/dd/y',
+            onClose: function () {
+                $("#txtbdBlur").addClass('inputactive');
+                //$('#verifiycode').hide();
+            }
+        });
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+
+        $('.btninvitenext').click(function () {
+            $("#content ul").empty();
+            var flag = true;
+            //first name
+            if ($('#FirstName').val() == '') {
+                $("#content ul").append('<li>first name is required.</li>');
+                flag = false;
+            } else {
+                if ($('#FirstName').val().length > 50) {
+                    $("#content ul").append('<li>first name must be less than 50 characters.</li>');
+                    flag = false;
+                }
+            }
+            //last name
+            if ($('#LastName').val() == '') {
+                $("#content ul").append('<li>last name is required.</li>');
+                flag = false;
+            } else {
+                if ($('#LastName').val().length > 50) {
+                    $("#content ul").append('<li>last name must be less than 50 characters.</li>');
+                    flag = false;
+                }
+            }
+
+            //phone number            
+            var phone = $('#txtPhoneBlur').val();
+            //if (phone == '') {
+                //$("#content ul").append('<li>phone number is required.</li>');
+                //flag = false;
+            //} else {
+//                if (phone.length > 50) {
+//                    $("#content ul").append('<li>phone number must be less than 50 characters.</li>');
+//                    flag = false;
+//                }
+               
+                /* for phone viet nam
+                var re = /^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})$/;
+                if (!phone.match(re)) {
+                    $("#content ul").append('<li>invalid phone.</li>');
+                    flag = false;
+                }
+                */
+            //}
+
+            //email
+            var email = $('#txtEmailBlur').val();
+            if (email == '') {
+                $("#content ul").append('<li>email required.</li>');
+                flag = false;
+            } else {
+                if (email.length > 50) {
+                    $("#content ul").append('<li>email must be less than 50 characters.</li>');
+                    flag = false;
+                }
+                var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+                if (!reemail.test(email)) {
+                    $("#content ul").append('<li>invalid e-mail address.</li>');
+                    flag = false;
+                }
+            }
+
+            //email confirm
+            var emailConfirm = $('#txtConfirmEmailBlur').val();
+            if (email != emailConfirm) {
+                $("#content ul").append('<li>e-mail addresses do not match.</li>');
+                flag = false;
+            }
+
+            @if (!Model.IsFacebookRegister)
+            {
+                <text>
+                //password            
+                var password = $
+                ('#rpostpasspwdpassfield').val();
+                if (password == '')
+                {
+                $
+                    ("#content ul").append('<li>password required.</li>');
+                    flag = false;
+                }
+                else
+                {
+                    if (password.length < 6)
+                    {
+                    $
+                        ("#content ul").append('<li>password must be at least 6 characters long.</li>');
+                        flag = false;
+                    }
+                }
+                //password confirm
+                var passConfirm = $
+                ('#rpostrepwdpassfield').val();
+                if (password != passConfirm && password != '')
+                {
+                $
+                    ("#content ul").append('<li>passwords do not match.</li>');
+                    flag = false;
+                }
+                </text>
+            }
+            //Birthday 
+
+            var birthday = $('#txtbdBlur').val();
+
+            //var date = $.datepicker.parseDate('mm/dd/yy', birthday);
+             var date ;
+            try {
+                date = $.datepicker.parseDate('mm/dd/yy', birthday);
+            } catch (e) {
+//            var errorText='<li>'+e.toLowerCase()+'</li>';
+                $("#content ul").append('<li>invalid birthday</li>');
+                flag = false;
+            };
+            Date.prototype.age = function (at) {
+                var value = new Date(this.getTime());
+                var age = at.getFullYear() - value.getFullYear();
+                value = value.setFullYear(at.getFullYear());
+                if (at < value) --age;
+                return age;
+            };
+
+            var dob = new Date(Date.parse(date));
+            if (birthday == '') {
+                $("#content ul").append('<li>birthday is required.</li>');
+                flag = false;
+            } else {
+                if (dob.age(new Date()) < 18) {
+
+                    $("#content ul").append('<li>all users are at least 18 years old.</li>');
+                    flag = false;
+                }
+            }
+            //zipcode            
+            var zipcode = $('#txtZipCodeBlur').val();
+            if (zipcode == '') {
+                $("#content ul").append('<li>zip code is required.</li>');
+                flag = false;
+            } else {
+                if (zipcode.length < 5 || zipcode.length > 10) {
+                    $("#content ul").append('<li>zip code must be 5 characters long.</li>');
+                    flag = false;
+                }
+            }
+
+            //2 options
+//            if (!$('#disclosure').is(':checked')) {
+//                $("#content ul").append('<li>you must agree to the non-disclosure to continue.</li>');
+//                flag = false;
+//            }
+            if (!$('#terms1').is(':checked')) {
+                $("#content ul").append('<li>you must agree to the terms to continue.</li>');
+                flag = false;
+            }
+
+            if (!flag) {
+                $('#divSummaryError').show();
+                $('#divSummary  ').hide();
+                return false;
+            } else {
+                $('#divSummaryError').hide();
+                return true;
+            }
+            return false;
+        });
+    });
+
+//        function SendInviteCode() {
+//        debugger;
+//            var phoneNumber = $("#txtPhoneBlur").val();
+//            var firstName= $("#FirstName").val();
+//            var lastName= $("#LastName").val();
+//            var email= $("#txtEmailBlur").val();
+//        
+//            var inviteObject={
+//                Email:email,
+//                FirstName:firstName,
+//                LastName:lastName,
+//                Phone:phoneNumber
+//            }
+
+//            currentPhoneRequestVerify = phoneNumber;
+//            var param = { inviteObject: inviteObject };
+//            if (phoneNumber == "")
+//                return;
+//            commonPostAjax("Account", "SendInviteCode", param, sendcallbacksucess, ajaxCallbackError, "html");
+//            $('#btnsendsms').hide();
+//            $('.busyIndicator').show();
+//    }
+    function SendInviteCode() {
+        var phoneNumber = $("#txtPhoneBlur").val();
+        var firstName= $("#FirstName").val();
+        var lastName= $("#LastName").val();
+        var email= $("#txtEmailBlur").val();
+//        
+//        checkEmail(email);
+//        var fsdfsdf=isEmail;
+        currentPhoneRequestVerify = phoneNumber;
+        var param = "phoneNumber=" + phoneNumber+"&email="+email+"&firstName="+firstName+"&lastName="+lastName;
+        if (phoneNumber == "")
+            return;
+        commonPostAjax("Account", "SendInviteCode", param, sendcallbacksucess, ajaxCallbackError, "html");
+        $('#btnsendsms').hide();
+        $('.busyIndicator').show();
+    }
+
+    function sendcallbacksucess(result) {
+        if (result == "true") {
+            $("#verifiycode").show();
+            $('#btnsendsms').removeClass('btnsend');
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").prop('title',"sent! check your messages");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#forget').show();
+            //$('#btnsendsms').show();
+            $('.busyIndicator').hide();
+        }
+        if (result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)') {
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+        }
+    }
+
+    function VerifyInviteCode() {
+        var inviteCode = $("#smsinviteCode").val();
+        if (inviteCode == "" || inviteCode == "enter code") {            
+            $('#smserrormessage').show();
+            return;
+        }
+        var param = "inviteCode=" + inviteCode;
+        commonPostAjax("Account", "SMSVerifyInviteCode", param, verifycallbacksucess, setError, "html");
+    }
+
+    function verifycallbacksucess(result) {
+        if (result == "true") {
+            $('#smserrormessage').hide();
+            $("#verifiycode").hide();
+            $('#btnsendsms').addClass('btnverified');
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").prop('title',"verification phone number");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#smsinviteCode').val("enter code");
+            $('#forget').hide();
+            $('#btnsendsms').show();
+        } else {            
+            $('#smserrormessage').show();
+        }
+    }
+
+    function resendCode() {
+        /*var phoneNumber = $("#txtPhoneBlur").val();
+        var param = "phoneNumber=" + phoneNumber;
+        if (phoneNumber == "")
+            return;
+        showDialog('resended');
+        commonPostAjax("Account", "SendInviteCode", param, resendCodecallbacksucess, ajaxCallbackError, "html");
+        $('#btnsendsms').hide();
+        $('.busyIndicator').show();*/
+
+        $("#verifiycode").hide();
+        $('#btnsendsms').addClass('btnsend');
+        $("#btnsendsms").prop('disabled', false);
+        $("#btnsendsms").prop('title',"send SMS verification code");
+        //$("#txtPhoneBlur").prop('disabled', true);
+        $('#forget').hide();
+        $('#btnsendsms').show();
+        $('.busyIndicator').hide();
+        $('#smserrormessage').hide();
+    }
+
+    function resendCodecallbacksucess(result) {
+        if (result == "true") {
+            $('#btnsendsms').removeClass('btnverified');
+            $("#verifiycode").show();
+            $("#btnsendsms").prop('title',"sent! check your messages");
+            //$('#resended').show();            
+            setTimeout("hideDialog('resended')",1000);
+            //$('#btnsendsms').show();
+            $('.busyIndicator').hide();
+        }
+    }
+
+    function checkPhoneNumber(phoneNumber)
+    {  
+        var email =  $("#txtEmailBlur").val();
+        var param = "phoneNumber=" + phoneNumber+ "&email="+ email+"&nocache=" + getunixtime();
+        commonGetAjax("Account", "CheckPhoneNumber", param, checkPhoneNumbercallbacksucess, setError, "html"); 
+    }
+
+    function checkPhoneNumbercallbacksucess(result) {
+    
+        if(result=="true"){
+            isverification();         
+        }else{
+            $("#btnsendsms").prop('disabled', false); 
+            $('#btnsendsms').removeClass('btnverified').addClass('btnsend');
+            $("#verifiycode").hide();
+            $('#forget').hide();
+        }
+    }
+
+    function setDefaultvalue() {
+        $("#verifiycode").show();
+        $('#btnsendsms').removeClass('btnsend')
+        $("#btnsendsms").prop('disabled', true);
+        $("#btnsendsms").hide();
+        $('#forget').show();
+    }
+
+    function isverification() {
+        $('#btnsendsms').removeClass('btnsend').addClass('btnverified');
+        $("#btnsendsms").prop('disabled', true);     
+        
+    }
+     
+    function ajaxCallbackError(error) {
+        $('#btnsendsms').show();
+        $('.busyIndicator').hide();
+        alert('Sending code failure.');
+    }
+   function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+</script>

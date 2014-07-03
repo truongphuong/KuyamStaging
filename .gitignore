@@ -1,0 +1,17 @@
+# Ignored files
+*.suo 
+*.user 
+*.pdb 
+*.cache 
+*_svn 
+*.svn 
+*.build-res 
+*.dll
+/Beautify
+/Kuyam.Bin
+/Kuyam.WebUI/bin
+bin
+obj
+*.suo
+LogData
+

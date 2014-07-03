@@ -1,0 +1,270 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.Domain.CompanyProfileServices
+@{
+    Appointment appoiontment = ViewBag.appointment;
+
+    CompanyProfileService _companyProfileService = EngineContext.Current.Resolve<CompanyProfileService>();
+    string imageUrl = string.Empty;
+    if (appoiontment.ServiceCompany != null)
+    {
+        Medium companyMedia = _companyProfileService.GetCompanyLogoByProfileID(appoiontment.ServiceCompany.ProfileID);
+        if (companyMedia!=null)
+        {
+            imageUrl = companyMedia.LocationData;
+        }
+        
+    }
+    
+    
+}
+<div class="contentPopup">
+    <a class="btnClose" id="btnClose" href="JavaScript:void(0);" onclick="hideDialog('modifypopup');"
+        title="Close"></a>
+    <div class="apheader">
+        <div class="colWishSalon fleft">
+            @*<a href="javascript:void(0)" onclick="hideDialog('modifypopup');" id="closemodify"
+                class="back backtosearch" title="back to appointments">back to appointments</a>*@
+            <div class="contentWish">
+                <h5 class="ellipsismore">
+                    @((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.ProfileCompany != null) ? appoiontment.ServiceCompany.ProfileCompany.Name : "")
+                </h5>
+                @if (imageUrl == string.Empty)
+                {
+                    <span class="boxcontentimg" style="border: 1px solid #000000; margin-bottom: 10px;
+                        margin-left: 64px;"><span class="boximage">
+                            <img src="/Images/placeholder.png" title="no logo" alt="no logo" width="86px;" height="83px;"
+                                style="padding: 0px;" />
+                        </span></span>
+                }
+                else
+                {
+                    <div>
+                        <img alt="@((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.ProfileCompany != null) ? appoiontment.ServiceCompany.ProfileCompany.Name : "")"title="@((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.ProfileCompany != null) ? appoiontment.ServiceCompany.ProfileCompany.Name : "")"src="@string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/109/height/107", imageUrl,Types.KaturaDoman)">
+                    </div>
+                }
+                @* <p class="highlightYellow">george’s 7-day availability</p>
+                <p>(see calendar below)</p>*@
+            </div>
+        </div>
+        <div class="colCurrentAppointment fleft">
+            <div class="contentCurrent">
+                <h6>
+                    current appointment</h6>
+                <p class="pt3">@(appoiontment != null ? appoiontment.Start.ToString("MMM dd").ToLower() : "")
+                    <span>at @(appoiontment != null ? appoiontment.Start.ToString("h:mm tt").ToLower() : "")</span></p>
+                <p class="fontWeight ellipsiscalendar">
+                    for @((appoiontment != null && appoiontment.Cust != null) ? appoiontment.Cust.FirstName : "")
+                </p>
+                <p class="fontWeight ellipsiscalendar">
+                    with @((appoiontment != null && appoiontment.CompanyEmployee != null) ? Kuyam.Domain.UtilityHelper.TruncateText(appoiontment.CompanyEmployee.EmployeeName, 17) : "")
+                </p>
+                <p class="ellipsiscalendar">@((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.Service != null) ? Kuyam.Domain.UtilityHelper.TruncateText(appoiontment.ServiceCompany.Service.ServiceName, 20) : "")</p>
+                <p class="mb9">@((appoiontment != null && appoiontment.ServiceCompany != null) ? string.Format("{0}min, ${1}, {2} person", appoiontment.ServiceCompany.Duration, appoiontment.ServiceCompany.Price, appoiontment.ServiceCompany.AttendeesNumber) : "")</p>
+            </div>
+            <div>
+                <a href="javascript:void(0)" onclick="hideDialog('modifypopup');" class="btnCurrent"
+                    title="keep current appointment">keep current appointment</a>
+            </div>
+        </div>
+        <div class="colModifyAppointment fleft">
+            <div class="bgModify">
+                <h6>
+                    modify appointment here:</h6>
+                <div class="grounpInput">
+                    <p>
+                        <input type="text" class="inputMonth"  id="inputMonth" readonly="readonly"  value="@(appoiontment != null ? appoiontment.Start.ToString("MMM dd") : "")"/>
+                        <span class="classAt">at</span>
+                        <input type="text" class="inputTime" style="width: 67px;" id="inputTime" readonly="readonly" value="@(appoiontment != null ? appoiontment.Start.ToString("h:mm tt").ToLower() : "")"/>
+                    </p>
+                </div>
+                <div class="groupSelectName">
+                    <p>
+                        <span class="pr29">for</span> @* <select name="category" class="nameOption">
+                            @if (ViewBag.listEmployee != null)
+                            {
+                                foreach (CompanyEmployee item in ViewBag.listEmployee)
+                                {
+                                <option value="@item.EmployeeID" selected="selected">@item.EmployeeName</option>
+                                }
+                            }
+                        </select>*@
+                        @((appoiontment != null && appoiontment.Cust != null) ? appoiontment.Cust.FirstName : "")
+                    </p>
+                </div>
+                <div class="groupSelectName">
+                    <p>
+                        <span class="pr20">with</span>
+                        <select name="employeeservice" class="nameOption" id="employeeservice" onchange="getServicebyEmployeeId(this.options[this.selectedIndex].value)">
+                            @if (ViewBag.listEmployee != null)
+                            {
+                                foreach (CompanyEmployee item in ViewBag.listEmployee)
+                                {
+                                <option value="@item.EmployeeID" @(appoiontment.CompanyEmployee != null && item.EmployeeID == appoiontment.CompanyEmployee.EmployeeID ? "selected=selected" : "") >@Kuyam.Domain.UtilityHelper.TruncateText(item.EmployeeName,13)</option>
+                                }
+                            }
+                        </select>
+                    </p>
+                </div>
+                <div class="selectMinute">
+                    <p>
+                        <select name="servicetype" class="nameOption" id="servicetype">
+                            @if (ViewBag.listService != null)
+                            {
+                                foreach (ServiceCompany item in ViewBag.listService)
+                                {
+                                <option value="@item.ServiceCompanyID" @(appoiontment.ServiceCompany != null && item.ServiceCompanyID == appoiontment.ServiceCompany.ServiceCompanyID ? "selected=selected" : "")>@Kuyam.Domain.UtilityHelper.TruncateText(string.Format("{0}, {1} min, ${2}...", item.Service.ServiceName, item.Duration, item.Price),20)</option>
+                                }
+                            }
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <div class="pl2">
+                <a href="javascript:void(0);" rel="@appoiontment.AppointmentID" rev="@(appoiontment.ServiceCompany != null ? appoiontment.ServiceCompany.ProfileID : 0)"  class="btnRequest" title="request modification">
+                    request modification</a>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="modifypouperror" class="error">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <input id="hdfModifAppId" type="hidden" value="0" />
+</div>
+<script type="text/javascript">
+    var companyId = "";
+    $(document).ready(function () {
+        $('select#employeeservice').selectmenu();
+        $('select#servicetype').selectmenu();
+        $('.btnRequest').click(function () {
+            requestModification(this.rel);
+        });
+
+        $('#inputTime').timepicker({
+            ampm: true,
+            stepMinute: 15,
+            timeFormat: 'h:mm tt',
+            amNames: ['am', 'a'],
+            pmNames: ['pm', 'p']
+        });
+
+        $("#inputMonth").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: "M dd",
+            dayNamesMin: $.datepicker._defaults.dayNamesShort
+        });
+        companyId = $(".btnRequest").attr("rev");
+    });
+
+    function requestModification(appointmentId) {
+        
+        var employeeservice = document.getElementById('employeeservice');
+        if (employeeservice.options.length > 0) {
+            var employeeid = employeeservice.options[employeeservice.selectedIndex].value;
+        } else {
+            return;
+        }
+
+        var servicetype = document.getElementById('servicetype');
+        if (servicetype.options.length > 0) {
+            var serviceId = servicetype.options[servicetype.selectedIndex].value;
+        } else {
+            $("#modifypouperror").html("please choose one service");
+            return;
+
+        }
+        var monthday = $(".inputMonth").val();
+        if (monthday == '') {
+            return;
+        }
+        var hour = $(".inputTime").val();
+        if (hour == '') {
+            return;
+        }
+
+        var now = new Date();
+        var unixnow = Date.parse(now);
+        var date = $.datepicker.parseDate('M dd', monthday);
+        var tmp = date.toDateString() + " " + hour;
+        var unixdate = Date.parse(tmp);
+        if (unixnow >= unixdate) {
+            $("#modifypouperror").html("invalid time");
+            return;
+        }
+        var date = monthday + " " + hour;
+        var param = "appointmentId=" + appointmentId + "&serviceId=" + serviceId + "&employeeid=" + employeeid + "&date=" + date;
+
+        window.isUseDefaultAjaxHandle = true;
+        
+        if (window.location.href.toLowerCase().indexOf("companyappointmentcalendar") != -1) {
+            commonPostAjax("Appointment", "RequestAdminModification", param, callbacksucess, setError, "html");
+        } else if (window.location.href.toLowerCase().indexOf("companyappointment") != -1) {
+            commonPostAjax("Appointment", "RequestAdminModification", param, callbacksucess, setError, "html");
+        }
+        else {
+            commonPostAjax("Appointment", "RequestModification", param, callbacksucess, setError, "html");
+        }
+    }
+
+    function callbacksucess(result) {
+      
+        hideDialog('modifypopup');
+        if (window.location.href.toLowerCase().indexOf("companyappointmentcalendar") != -1) {
+            var employeeservice = document.getElementById('employeeservice');
+            $.get('@Url.Action("../CompanyAppointmentCalendar/LoadCurrentAppointment")', { id: employeeservice.options[employeeservice.selectedIndex].value, nocache: getunixtime() }, function (response) {
+                $('#divAppointment').html(response);
+            });
+            $.get('@Url.Action("../CompanyAppointment/LoadMasterAgenda")', { profileId: companyId, nocache: getunixtime() }, function (response) {
+                var arr = response.split('#');
+                if (arr.length > 3) {
+                    $('#divNewApp').val(arr[0]);
+                    $('#divModApp').val(arr[0]);
+                    $('#divConApp').val(arr[0]);
+                    $('#divCanApp').val(arr[0]);
+                }
+            });
+        } else if (window.location.href.toLowerCase().indexOf("companyappointment") != -1) {
+            var employeeId = $('#hdfEmployeeId').attr("value");
+            if (employeeId >= 0) {
+                $.get('@Url.Action("../CompanyAppointment/GetAppointmentByEmployee")', { profileId: companyId, employeeId: employeeId, nocache: getunixtime() }, function (response) {
+                    $('#divAppointment').html(response);
+                });
+            }
+            $.get('@Url.Action("../CompanyAppointment/LoadMasterAgenda")', { profileId: companyId, nocache: getunixtime() }, function (response) {
+                var arr = response.split('#');
+                $('#divNewApp').text(arr[0]);
+                $('#divModApp').text(arr[1]);
+                $('#divConApp').text(arr[2]);
+                $('#divCanApp').text(arr[3]);
+            });
+        }
+        else {
+            window.location = "/appointment/";
+            //$("#appointmentMain").html(result);
+            //activetab = 1;
+            //loadleftTab();
+            //domScript();
+
+        }
+
+    }
+
+    $(document).ready(function () {
+        $(".ellipsismore").dotdotdot({
+            height: 80
+        });
+
+        $(".ellipsiscalendar").dotdotdot({
+            height: 50
+        });
+        
+
+    });
+</script>

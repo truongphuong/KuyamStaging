@@ -1,0 +1,462 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain
+@using Kuyam.Domain.Seo
+@using Kuyam.WebUI.Models
+@model Kuyam.WebUI.Models.CompanyAppointment.CompanyProfileTimeSlots
+@{
+    string host = Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost();
+    var isRenderScript = ViewBag.IsScript != null;
+    var script = host + "Script/jquery-1.8.2.min.js";
+    var host1 = host.Replace("https", "http");
+    var avaiUrl = "/book" + Url.RouteUrl("availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID) });
+    //bool isNonKuyam = Model.Company != null && Model.Company.Profile != null && Model.Company.Profile.ProfileCompany != null
+    //                  && Model.Company.Profile.ProfileCompany.CompanyTypeID == (int) Types.CompanyType.NonKuyamBookIt;
+    var linkType = (int)Types.LinkType.Searchbox;
+
+    string state = string.Empty;
+    if (!string.IsNullOrEmpty(@Model.Company.City) && !string.IsNullOrEmpty(@Model.Company.State))
+    {
+        if (!string.IsNullOrEmpty(@Model.Company.City) && @Model.Company.City.Length > 30)
+        {
+            state = string.Format("{0}, {1}", UtilityHelper.TruncateAtWord(@Model.Company.City, 30), @Model.Company.State);
+        }
+        else
+        {
+            state = string.Format("{0}, {1}", @Model.Company.City, @Model.Company.State);
+        }
+
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(@Model.Company.City) && @Model.Company.City.Length > 30)
+        {
+            state = string.Format("{0}{1}", UtilityHelper.TruncateAtWord(@Model.Company.City, 30), @Model.Company.State);
+        }
+        else
+        {
+            state = string.Format("{0}{1}", @Model.Company.City, @Model.Company.State);
+        }
+    }
+}
+<div class="template1">
+    @if (isRenderScript)
+    {
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+        <style type="text/css">
+            .border {
+                background: none repeat scroll 0 0 #FFFAD7;
+                border: 2px solid #F7931E !important;
+            }
+        </style>
+    }
+
+    <style type="text/css">
+        .graystar {
+            background: url("../../images/homepage_icon.png") no-repeat scroll -290px 0 rgba(0, 0, 0, 0);
+            float: left;
+            height: 19px;
+            width: 18px;
+        }
+
+        .greenstar {
+            width: 18px;
+            height: 19px;
+            background: url(../../images/homepage_icon.png) no-repeat -272px 0px;
+            float: left;
+        }
+
+        .h5 {
+            height: 5px;
+        }
+
+        .clear {
+            clear: both;
+            font-size: 0;
+            height: 0;
+        }
+
+        .boxPrice .availableDate {
+            color: #009245;
+            display: block;
+            font: bold 13px/13px Arial,Helvetica,sans-serif;
+            margin: 7px 0 4px;
+            padding-left: 14px;
+            text-align: left;
+        }
+
+        .boxPrice .hours {
+            color: #808080;
+            font: 13px Arial,Helvetica,sans-serif;
+            min-height: 34px;
+            padding-left: 14px;
+            text-align: left;
+        }
+
+        .boxPrice .checkAvailabitity {
+            background: url(../../images/checkAvailability.png) no-repeat top left;
+            width: 140px;
+            height: 30px;
+            color: #000000;
+            display: inline-block;
+            padding-top: 7px;
+            font: bold 12px Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        .boxPrice .btnAvailability {
+            background: url("../../images/checkAvailability.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+            color: #000000;
+            display: inline-block;
+            font: bold 12px Arial,Helvetica,sans-serif;
+            height: 30px;
+            /*padding-top: 7px;*/
+            text-align: center;
+            width: 140px;
+            border: none;
+        }
+
+        .boxInfo .available .featured {
+            color: #F7931E;
+            font: bold 12px/15px Arial,Helvetica,sans-serif;
+            position: absolute;
+            right: 0;
+        }
+
+        .boxPrice .companyTimeSlot {
+            background: url("../../images/btn_time_slot.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+            color: #FFFFFF;
+            display: inline-block;
+            font: bold 13px Arial,Helvetica,sans-serif;
+            height: 25px;
+            padding-top: 6px;
+            text-align: center;
+            width: 70px;
+        }
+
+        .border {
+            /*background: none repeat scroll 0 0 #FFFAD7;
+                border: 2px solid #F7931E !important;*/
+            margin-top: 5px;
+            display: block;
+            float: left;
+            position: relative;
+            width: 624px;
+        }
+
+        .boxPrice .companyTimeSlotMore {
+            background: url("../../images/btn_more.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+            color: #000000;
+            display: inline-block;
+            font: bold 13px Arial,Helvetica,sans-serif;
+            height: 25px;
+            padding-top: 6px;
+            width: 70px;
+        }
+
+        .review {
+            color: #0071BC;
+            font-size: 12px;
+            font-style: italic;
+            text-decoration: none;
+        }
+
+        .boxInfo .iconHeart .brownHeart {
+            background: url("../../images/homepage_icon.png") no-repeat scroll -254px top rgba(0, 0, 0, 0);
+            cursor: pointer;
+            float: left;
+            height: 15px;
+            width: 19px;
+            cursor: pointer;
+        }
+
+        .boxInfo .iconHeart .pinkHeart {
+            background: url("../../images/sprite.png") no-repeat scroll 0 -153px rgba(0, 0, 0, 0);
+            float: left;
+            height: 15px;
+            width: 19px;
+            cursor: pointer;
+        }
+
+        .boxImg {
+            background: none repeat scroll 0 0 #FFFFFF;
+            border: 1px solid #000000;
+            cursor: pointer;
+            display: block;
+            float: left;
+            height: 82px;
+            margin: 5px 0 0 5px;
+            overflow: hidden;
+            width: 82px;
+        }
+
+            .boxImg .boxcontentimg {
+                display: table;
+                height: 82px;
+                width: 82px;
+            }
+
+                .boxImg .boxcontentimg .boximage {
+                    display: table-cell;
+                    margin: 0 auto;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+
+        .boxInfo {
+            display: block;
+            float: left;
+            min-height: 87px;
+            padding: 5px 9px 5px 15px;
+            position: relative;
+            width: 330px;
+        }
+
+            .boxInfo .companyLink {
+                color: #0071BC;
+                display: block;
+                font: bold 22px/22px Arial,Helvetica,sans-serif;
+                width: 330px;
+            }
+
+        .address {
+            color: #666666;
+            display: block;
+            float: left;
+            font: 15px/18px Arial,Helvetica,sans-serif;
+            width: 250px;
+        }
+
+        .boxPrice {
+            border: 1px solid #C1D72E;
+            display: block;
+            float: right;
+            margin: -1px -1px -1px 0;
+            min-height: 98px;
+            text-align: center;
+            width: 171px;
+        }
+
+        .totalReview .companyLink {
+            color: #0071BC;
+            font-size: 12px;
+            font-style: italic;
+            text-decoration: none;
+        }
+
+        .description {
+            color: #666666;
+            display: block;
+            font: 11px/13px Arial,Helvetica,sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .boxPrice .listTimeSlots {
+            padding-left: 14px;
+            text-align: left;
+        }
+
+        .boxInfo .tabvideo {
+            background: url("../../images/appointment.png") no-repeat scroll -12px -840px rgba(0, 0, 0, 0);
+            cursor: pointer;
+            float: right;
+            height: 20px;
+            width: 94px;
+        }
+    </style>
+    @if (!@Model.IsFeatureCompany)
+    {
+        <style type="text/css">
+            .border1 {
+                background: none repeat scroll 0 0 #FFFFFF !important;
+                border: 2px solid #D6D6D6 !important;
+            }
+        </style>
+    }
+
+    <div class="item @(Model.IsFeatureCompany ? "itemyellow" : "")" style="clear: both;min-height: 101px;position: relative;">
+        <div class="border border1" id="@Model.Company.ProfileID">
+            @{
+                if (!string.IsNullOrEmpty(Model.UrlLogo))
+                {
+                    <span class="boxImg">
+                        <span class="boxcontentimg">
+                            <span class="boximage">
+                                <a id="aboximage" href="@avaiUrl" profileid="@Model.Company.ProfileID" class="companyLink" title="@Model.Company.Name">
+                                    <img src="@Model.UrlLogo" title="@Model.Company.Name" alt="@Model.Company.Name" />
+                                </a>
+                            </span>
+                        </span>
+                    </span>
+                }
+                else
+                {
+                    <span class="boxImg">
+                        <span class="boxcontentimg">
+                            <span class="boximage">
+                                <a id="aboximage" href="@avaiUrl" profileid="@Model.Company.ProfileID" class="companyLink" style="color: #2F00EA;" title="@Model.Company.Name">
+                                    <img src="/Images/placeholder.png" title="@Model.Company.Name" alt="@Model.Company.Name" width="82" height="82" />
+                                </a>
+                            </span>
+                        </span>
+                    </span>
+                }
+            }
+            <div class="boxInfo">
+                <a id="aboxInfo" href="@avaiUrl" profileid="@Model.Company.ProfileID" class="title companyLink" title="@Model.Company.Name">
+
+                    @Kuyam.Domain.UtilityHelper.TruncateAtWord(@Model.Company.Name, 25)
+                    @if (Model.HasVideo)
+                    {
+                        <span class="tabvideo"></span>
+                    }
+                </a>
+                @if (Model.IsFavorite)
+                {
+                    <span class="iconHeart" style="position: absolute; right: 9px; top: 7px; ">
+                        <span class="pinkHeart" profileid="@Model.Company.ProfileID" onclick="removeFavorite1(this);"></span>
+                    </span>
+                }
+                else
+                {
+                    <span class="iconHeart" style="position: absolute; right: 9px; top: 7px;">
+                        <span class="brownHeart" profileid="@Model.Company.ProfileID" onclick="addFavorite1(this);"></span>
+                    </span>
+                }
+
+                <span class="address">@state</span> <span class="available">
+                    @if (@Model.IsFeatureCompany)
+                    {
+                        <span class="featured">featured</span>
+                    }
+                </span>
+                <span class="clear h2"></span>
+                <span class="iconStar" style="display: block; float: left; width: 208px;">
+                    @{
+                        switch (@Model.Rate)
+                        {
+                            case 0:
+                                {
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    <span class="greenstar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="graystar"></span>
+                                    <span class="graystar"></span>
+                                    break;
+                                }
+                            case 4:
+                                {
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="graystar"></span>
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    <span class="greenstar"></span>
+                                    break;
+                                }
+                        }
+                        <div class="totalReview">
+                            <a id="aTotalReview" href="@avaiUrl/review" class="review companyLink" id="@Model.Company.ProfileID">
+                                (@Model.TotalReviews reviews)
+                            </a>
+                        </div>
+                    }
+                </span>
+                <div class="clear h5">
+                </div>
+                <span class="description">categories:@Model.Categories</span>
+            </div>
+            <div class="boxPrice bptemplate1">
+                @Html.Partial("_CompanyAvailableTimeSlots", @Model.TimeSlots)
+            </div>
+        </div>
+    </div>
+    <div class="clear h3">
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".bptemplate1 .listTimeSlots a").click(function() {
+            var url = $(this).attr("href");
+            url = url + "?LinkType=" + '@linkType';
+            window.open(url, "_blank");
+            return false;
+        });
+        $(".bptemplate1 .btnSchedule").click(function() {
+            var url = '@avaiUrl';
+            url = url + "?LinkType=" + '@linkType';
+            window.open(url, "_blank");
+            return false;
+        });
+        $("#aTotalReview").click(function() {
+            var url = $(this).attr("href");
+            url = url + "?LinkType=" + '@linkType';
+            window.open(url, "_blank");
+            return false;
+        });
+        $("#aboxInfo").click(function() {
+            var url = $(this).attr("href");
+            url = url + "?LinkType=" + '@linkType';
+            window.open(url, "_blank");
+            return false;
+        });
+        $("#aboximage").click(function() {
+            var url = $(this).attr("href");
+            url = url + "?LinkType=" + '@linkType';
+            window.open(url, "_blank");
+            return false;
+        });
+        $(".bptemplate1 .companyLink").click(function() {
+            var url = $(this).attr("href");
+            url = url + "?LinkType=" + '@linkType';
+            window.open(url, "_blank");
+            return false;
+        });
+    });
+    function addFavorite1(sef) {
+        var href = "@Url.Action("AddToFavorite1", "Company")/" + @Model.Company.ProfileID;
+        window.open(href, "_blank");
+    }
+    function removeFavorite1(sef) {
+        var href = "@Url.Action("removeFavorite1", "Company")/" + @Model.Company.ProfileID;
+        window.open(href, "_blank");
+    }
+</script>

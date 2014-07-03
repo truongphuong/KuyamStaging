@@ -1,0 +1,84 @@
+﻿@*<table id="smsAddMobile" class="tbldata tbldata1" style="border: none;">
+    <tr>
+        <td colspan="2">
+            <h3>SMS Messages</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span>there is no phone number for this user. Please enter one below and then you will be able to send and receive text messages to and from this user</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p class="validateTips"></p>
+            <input id="messNumber" style="width: 100%;" class="btnActivate" type="text" />
+        </td>
+    </tr>
+    <tr>
+        <td style="border: none"></td>
+        <td style="border: none;float: right;"><input id="messAdd" class="btnActivate" type="button" value="add number" /></td>
+    </tr>
+
+</table>
+<table id="smsMessage" class="tbldata tbldata1" style="border: none;">
+    <tr>
+        <td colspan="2">
+            <h3>SMS Messages</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div style="overflow: auto;height: 200px;">
+                @{
+                                            var smsMessages = @ViewBag.Messages;
+                                            var i = 0;
+                }
+                @foreach (var smsMessage in smsMessages)
+                                        {
+                                            if (i == 0)
+                                            {
+                                        <table>
+                                            <tr><td>@smsMessage.CreatedDate</td></tr>
+                                            <tr><td>@smsMessage.MessageContent</td></tr>
+                                        </table>
+                                            }
+                                            else
+                                            {
+                                        <table>
+                                            <tr><td>@smsMessage.CreatedDate</td></tr>
+                                            <tr><td>@smsMessage.MessageContent</td></tr>
+                                        </table>
+                                            }
+                                            i = 0;
+                                        }
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 10px;">
+        <td style="height: 10px;" colspan="2"></td>
+    </tr>
+    <tr style="height: 30px;">
+        <td colspan="2" style="height: 50px;">
+            <p class="validateTips"></p>
+            <input id="messContent" style="width: 100%;height: 50px;" class="btnActivate" type="text" />
+            <textarea id="messContent" style="height: 67px; width: 339px;" onkeyup="countChar(this)"
+                          onblur="if (this.value == '') this.value = 'Send a message';"
+                          onclick="if(this.value == 'Send a message') this.value = '';">
+                    Send a message
+                </textarea>
+            <textarea id="messContent" style="height: 67px; width: 339px;" onkeyup="countChar(this)"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: none"><span id="countCharacter">0</span> charecters in message</td>
+        <td style="border: none"><input id="messSend" class="btnActivate" type="button" value="Send" /></td>
+    </tr>
+
+</table>*@
+<div id="smsAddMobile">
+    @Html.Partial("AdminSMSNoNumber")
+</div>
+<div id="smsMessage">
+    @Html.Partial("AdminSMSSendReceive")
+</div>

@@ -1,0 +1,130 @@
+﻿<style type="text/css">
+    .tbldata1 {
+        color: #353535;
+        height: 30px;
+        padding: 0.3em 1em;
+        text-align: left;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .validateTips {
+        border: 1px solid transparent;
+        padding: 0.3em;
+        color: red;
+    }
+ </style>
+<table class="tbldata1" style="border: none;">
+    <tr>
+        <td colspan="2">
+            <h2 style="font-size: 25px;">SMS Messages</h2>
+        </td>
+    </tr>
+    <tr style="height: 15px;"></tr>
+    <tr>
+        <td colspan="2">
+            <div style=" margin-left: 4px; margin-right: 8px; padding-left: 3px; padding-right: 1px;  word-break: keep-all; word-wrap: break-word;">there is no phone number for this user. Please enter one below and then you will be able to send and receive text messages to and from this user.</div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p class="validateTips"></p>
+            <input id="messNumber" style="width: 100%; border: 1px solid #A5A5A5; height: 27px;" maxlength="10" class="btnActivate" type="text" />
+        </td>
+    </tr>
+    <tr>
+        <td style="border: none"></td>
+        <td style="border: none;float: right;"><input id="messAdd" class="btnActivate" type="button" value="add number" /></td>
+    </tr>
+
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#messAdd").click(function () {
+            var messNumber = $("#messNumber").val();
+            $(".validateTips").hide();
+            if (messNumber == '') {
+                $(".validateTips").show();
+                $('#messNumber').focus();
+                $('#messNumber').addClass('ui-state-error');
+                updateTips("please enter a valid US phone number with area code");
+                return false;
+            }
+            var valid = ValidePhoneNumber(messNumber);
+            if (!valid) {
+                $(".validateTips").show();
+                $('#messNumber').focus();
+                $('#messNumber').addClass('ui-state-error');
+                updateTips("please enter a valid US phone number with area code");
+                return false;
+            }
+            $('#messNumber').removeClass("ui-state-error");
+            AddNumber(messNumber);
+            return false;
+        });
+        //$("#messNumber").bind("paste", function (e) {
+        //    e.preventDefault();
+        //});
+        $('#messNumber').keydown(function (event) {
+            CheckNumber(event);
+        });
+
+    });
+
+    function ValidePhoneNumber(p) {
+        var phoneRe = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+        var digits = p.replace(/\D/g, "");
+        return (digits.match(phoneRe) !== null);
+    }
+    function CheckNumber(event) {
+        if ($.inArray(event.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+                       (event.keyCode == 65 && event.ctrlKey === true) ||
+            // Allow: home, end, left, right
+                       (event.keyCode >= 35 && event.keyCode <= 39)) {
+            // let it happen, don't do anything
+            if (event.keyCode == 46 || event.keyCode == 190) {
+                event.preventDefault();
+            }
+            return;
+        } else {
+            //
+            // Ensure that it is a number and stop the keypress
+            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                event.preventDefault();
+            }
+        }
+    }
+    function AddNumber(number) {
+        var userId = $("#hdfUserId").val();
+        var postData = {
+            userId: userId,
+            userAddNumber: number
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/UserAddNumber/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    if (result.result == false && result.existed == true) {
+                        showAlertMessage("phone number is existed. please enter an other number.");
+                    } else {
+                        if (result.result == true && result.existed == false) {
+                            window.location.href = "/Admin/AdminUserDetail?id=" + userId + "&userListPageIndex=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val() + "&backAction=@(ViewBag.Action)";
+                        } else {
+                            showAlertMessage("Can not add number.");
+                        }
+                    }
+                }
+            })
+            .error(function (error) {
+            });
+    }
+</script>

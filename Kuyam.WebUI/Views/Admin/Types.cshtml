@@ -1,0 +1,30 @@
+﻿@model M2.Util.StandardTypeList
+@{
+    ViewBag.Title = "Types";
+}
+<h2>
+    Types</h2>
+<table class="caseAsEntered" border=1 cellspacing=0 cellpadding=5>
+    <tr>
+        <th>
+            Group
+        </th>
+        <th>
+            Name
+        </th>
+    </tr>
+    @foreach (var item in Model.Keys)
+    {
+        <tr>
+            <td style="vertical-align:top">
+                @(item) (@(Model[item]))
+            </td>
+            <td>
+                @foreach (var typ in Kuyam.Database.DAL.GetTypes((int)Model[item]))
+                { 
+                    @:@(typ.Key) (@(typ.Value))<br />
+                }
+            </td>
+        </tr>
+    }
+</table>

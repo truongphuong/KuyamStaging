@@ -1,0 +1,48 @@
+﻿@using Kuyam.Utility
+@using Kuyam.WebUI.Models
+@model Kuyam.WebUI.Models.LandingPage.LandingPageModel
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_LandingPageLayout.cshtml";
+    ViewBag.ShowSignUp = false;
+}
+<div class="landing">
+    <div class="landingbanner">
+        <img src="@Model.BannerDisplayImage" alt="@Model.Name" title="@Model.Name" />
+        <div class="bgcaption">
+            <h1 class="textCaption">@Model.Name </h1>
+        </div>
+    </div>
+    <div class="landingcolumns">
+        <div class="listSearch">
+            @Html.Raw(Model.MainContent)
+        </div>
+        <div>
+            @Html.Raw(Model.Scripts)
+        </div>
+
+        @*<div class="listSearch">
+                @foreach (var item in Model.CompanyAvaiableList)
+                {
+                    Html.RenderAction("CompanyProfileTimeSlots", "CompanyAppointment", new { companyId = item.CompanyId });
+                }
+            </div>*@
+
+        <div class="clear">
+        </div>
+    </div>
+    <div id="chattobook">
+        @Html.Partial("_ChatToBook", new ChatToBookModels
+                {
+                    AlowChatToBook = true
+                })
+    </div>
+</div>
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/js/ui.checkbox.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/js/companyProfileTimeslot.js")" type="text/javascript"></script>
+
+}
+
+

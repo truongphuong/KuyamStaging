@@ -1,0 +1,22 @@
+﻿/***employeeorservice page***/
+.employeeorservice{background:url(../images/verify_bg.jpg) no-repeat left top;height:818px;padding:20px 0px 0px 78px;position:relative;}
+.employeeorservice .estop{padding-bottom:22px;}
+.employeeorservice h1{font-weight:600;font-size:24px;color:#1B1464;margin:0px;padding:0px;}
+.employeeorservice h2{font-weight:600;font-size:24px;color:#1B1464;margin:0px;padding:0px;}
+.employeeorservice p{font-size:16px;color:#1B1464;margin:0px;padding:0px;}
+.employeeorservice .descript{width:390px;}
+.employeeorservice .bgboxemployee{width:290px;height:504px;opacity:0.5;filter: alpha(opacity=50);background-color:white;border-radius:10px;;position:absolute;z-index:1;left:165px;}
+.employeeorservice .boxemployee{width:250px;height:484px;z-index:2;position:absolute;left:165px;text-align:center;padding:8px 20px 15px 20px;}
+.employeeorservice .boxemployee h2{margin-right:12px;}
+.employeeorservice .boxemployee input{border:solid 0px transparent;}
+.employeeorservice .boxemployee p{text-align:left;background:url(../images/homepage_icon.png) no-repeat -297px -1968px;padding:0px 0px 20px 20px;}
+.employeeorservice .boxemployee img{padding:4px 0px 2px 0px;}
+.employeeorservice .bgboxservice{width:290px;height:504px;opacity:0.5;filter: alpha(opacity=50);background-color:white;border-radius:10px;;position:absolute;z-index:1;left:490px;}
+.employeeorservice .boxservice p{text-align:left;background:url(../images/homepage_icon.png) no-repeat -297px -1968px;padding:0px 0px 20px 20px;width:180px;}
+.employeeorservice .boxservice{width:252px;height:484px;z-index:2;position:absolute;left:490px;text-align:center;padding:8px 18px 15px 20px;}
+.employeeorservice .boxservice h2{margin-right:6px;}
+.employeeorservice .boxservice img{padding:4px 0px 0px 0px;}
+.employeeorservice .boxservice input{border:solid 0px transparent;}
+.employeeorservice .boxservice input{margin-left:65px;}
+.employeeorservice .btnnextsvtype{border:solid 0px transparent;background:url(../images/appointment.png) no-repeat -143px -273px;width:132px;height:61px;padding:0px;margin-top:18px;}
+.employeeorservice css3-container{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);}

@@ -1,0 +1,41 @@
+﻿@model Kuyam.WebUI.Models.InactiveCompanyAppointmentListModel
+@using M2.Util.MVC
+
+@{
+    ViewBag.Title = "Inactive Companies with Pending Appointments";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="grid">
+    @{
+        var grid = new System.Web.Helpers.WebGrid(source: Model.CustCompanies.OrderBy(x => x.ProfileCompany.Name),
+                                                  rowsPerPage: 18,
+                                                  ajaxUpdateContainerId: "grid",
+                                                  canPage: true,
+                                                  canSort: true,
+                                                  ajaxUpdateCallback: "fixLinks()");    
+    }
+    @(grid.GetHtml(
+            tableStyle: "webgrid-connections",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "webgrid-selected-row",
+            rowStyle: "webgrid-row-style",
+            columns: grid.Columns(
+                                    grid.Column(style: "webgrid-icon-col", format: (item) => Html.ImageLink("process-appointments", "admin", Url.Content("~/images/edit.png"), "Edit", 14, 14, new { id = item.Cust.CustID })),
+                                    grid.Column("ProfileCompany.Name" ,"Company", (item) => MvcHtmlString.Create("<a href=\"" + Url.Content("~/profile/companyprofile") + "/" + item.ProfileCompany.ProfileID + "\">" + item.ProfileCompany.Name + "</a>"), null, true),
+                                    grid.Column("ProfileCompany.City", "City"),
+                                    grid.Column("ProfileCompany.State", "State")
+                                 )
+                  )
+    )
+</div>
+<br />
+@Html.GoBackLink()
+<script type="text/javascript">
+    function fixLinks() {
+        $('#grid a').removeAttr('href');
+    }
+</script>

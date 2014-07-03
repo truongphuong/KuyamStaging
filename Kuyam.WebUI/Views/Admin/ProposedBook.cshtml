@@ -1,0 +1,16 @@
+﻿@model Kuyam.WebUI.Models.ProposedAppointmentModel
+@{
+    ViewBag.Title = "Proposed Book";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("ProposedBook", "Admin", FormMethod.Post, new { id = "add", enctype = "multipart/form-data" }))
+{
+    <div id="contentmainpage">
+        <h2>proposed appointment company-book</h2>
+        @Html.Partial("_ProposedAddEdit", Model)
+        <input id="btnbook" type="submit" value="book it" />
+        <p>
+            <a href="/Admin/ProposedAppointmentList">back to list</a>
+        </p>
+    </div>
+}

@@ -1,0 +1,74 @@
+﻿@model List<Kuyam.WebUI.Models.NokuyamAppointmentListModel>
+@using Kuyam.Database
+@{
+    ViewBag.Title = "nonkuyam book";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>chat to schedule</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <select id="companyId" name="companyName" style="width:500px;">
+                            @{       
+                                <option value="0">all</option>                           
+                                if (ViewBag.Companys != null)
+                                {
+                                    foreach (ProfileCompany item in ViewBag.Companys)
+                                    {                                  
+                                <option value="@item.ProfileID" @(ViewBag.profileID == item.ProfileID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }
+                        </select>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                        <button class="button" id="btnAddApt" type="button" onclick="bookit();">
+                            book</button>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="apptlist">
+        @Html.Partial("_NokuyamBookList", Model)
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#txtKey").val("@ViewBag.Key");
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+
+    function bookit() {
+        window.location.href = "/Admin/NonKuyamBookAdd";
+    }
+
+    function pagingEvent(pageIndex) {
+        var companyId = $('#companyId option:selected').val();
+        var searchParameters = { companyId: companyId, pageIndex: pageIndex };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/NonKuyamBookList/'
+            })
+            .success(function (result) {
+                $('#apptlist').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>

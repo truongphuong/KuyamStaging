@@ -1,0 +1,153 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain
+@using Kuyam.Domain.Seo;
+@model Kuyam.WebUI.Models.CompanyAppointment.CompanyProfileTimeSlots
+
+<div class="item @(Model.IsFeatureCompany ? "itemyellow" : "")">
+    <div class="border" id="@Model.Company.ProfileID">
+        @{
+            if (!string.IsNullOrEmpty(Model.UrlLogo))
+            {
+                <span class="boxImg">
+                    <span class="boxcontentimg">
+                        <span class="boximage">
+                            <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})" profileid="@Model.Company.ProfileID" class="companyLink" title="@Model.Company.Name">
+                                <img src="@Model.UrlLogo" title="@Model.Company.Name" alt="@Model.Company.Name" />
+                            </a>
+                        </span>
+                    </span>
+                </span>
+            }
+            else
+            {
+                <span class="boxImg">
+                    <span class="boxcontentimg">
+                        <span class="boximage">
+                            <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})" profileid="@Model.Company.ProfileID" class="companyLink" title="@Model.Company.Name">
+                                <img src="/Images/placeholder.png" title="@Model.Company.Name" alt="@Model.Company.Name" width="86px;" height="83px;" />
+                            </a>
+                        </span>
+                    </span>
+                </span>
+            }
+        }
+        <div class="boxInfo">
+            <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})" profileid="@Model.Company.ProfileID" class="title companyLink" title="@Model.Company.Name">
+                @Model.Company.Name
+                @if (Model.HasVideo)
+                {
+                    <span class="tabvideo"></span>
+                }
+            </a>
+            @if (Model.IsFavorite)
+            {
+                <span class="iconHeart">
+                    <span class="pinkHeart" profileid="@Model.Company.ProfileID" onclick="removeFavorite(this);"></span>
+                </span>
+            }
+            else
+            {
+                <span class="iconHeart">
+                    <span class="brownHeart" profileid="@Model.Company.ProfileID" onclick="addFavorite(this);"></span>
+                </span>
+            }
+            <span class="address"><span class="dotmore">@Model.Company.City</span>,<span class="dotmore">@Model.Company.State</span> </span>
+            <span class="available">
+                @if (Model.IsFeatureCompany)
+                {
+                <span class="featured">featured</span>
+                }
+            </span>
+            <span class="clear h2"></span>
+            <span class="iconStar">
+                @{
+                    switch (Model.Rate)
+                    {
+                        case 0:
+                            {
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                                break;
+                            }
+                        case 1:
+                            {
+                <span class="greenstar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                                break;
+                            }
+                        case 2:
+                            {
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                                break;
+                            }
+                        case 3:
+                            {
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="graystar"></span>
+                <span class="graystar"></span>
+                                break;
+                            }
+                        case 4:
+                            {
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="graystar"></span>
+                                break;
+                            }
+                        case 5:
+                            {
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                <span class="greenstar"></span>
+                                break;
+                            }
+                    }
+                    <div class="totalReview">
+                        <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})/review" class="review companyLink" id="@Model.Company.ProfileID">
+                            (@Model.TotalReviews reviews)
+                        </a>
+                    </div>
+}
+            </span>
+            <div class="clear h5">
+            </div>
+            <span class="description">categories: @Model.Categories </span>
+        </div>
+        <div class="boxPrice">
+           @Html.Partial("_CompanyAvailableTimeSlots", Model.TimeSlots)
+        </div>
+    </div>
+</div>
+<div class="clear h3">
+</div>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+       
+        $(".companyLink").dotdotdot({
+            height:30
+        });      
+        
+        $(".dotmore").dotdotdot({
+            height: 50
+        });
+    });
+
+</script>

@@ -1,0 +1,124 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/css/appointment.css?v=16")" />
+<script src="@Url.Content("~/Scripts/js/appointment-history.js?v=16")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/js/jquery.rating.js?v=16")" type="text/javascript"></script>
+
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div class="ualist">
+                <div class="leftcol">
+                    <div class="title">
+                        select a calendar</div>
+                    <div class="clear">
+                    </div>
+                    <div class="divfavorite">
+                        <a href="javascript:void(0);" onclick="fillterByCalendar('0');" id="employees" class="schedulefavorite"
+                            title="all employees">all calendars </a>
+                        <ul class="favorite" id="employeeslist">
+                            @if (ViewBag.CalendarList != null)
+                            {
+                                foreach (Calendar item in ViewBag.CalendarList)
+                                {
+                                <li><a class="calendarName"  href="javascript:void(0);" onclick="fillterByCalendar('@item.CalendarID');" title="@item.Name" calendarid="@item.CalendarID">@Kuyam.Domain.UtilityHelper.TruncateAtWord(item.Name, 14)</a></li>                            
+                                }
+                            }
+                        </ul>
+                        <a href="#" id="employeeslistarrowup" class="schedulefavoritearrowup" title="up">
+                        </a><a href="#" id="employeeslistarrowdown" class="schedulefavoritearrowdown" title="down">
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>                   
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="rightcol">
+                    <div class="tophead">
+                        <div class="toptitle">
+                            scroll to date:</div>
+                        <div class="topday">
+                            <div class="arrowleft">
+                                <a class="btnpreview" title="Previous" href="javascript:void(0);"></a>
+                            </div>                           
+                              <input type="text" id="searchDate" class="textday" style="border:none; text-align:center; color: #808080; font-size: 12px;font-family: Arial,Helvetica,sans-serif;"/>   
+                            <div class="arrowright">
+                                <a class="btnnext" title="Next" href="javascript:void(0);"></a>
+                            </div>
+                        </div>
+                        <div class="topselect">
+                            <select name="message" id="allcategories" class="selectcategories">
+                                <option value="0" selected="selected">all categories</option>
+                                @if (ViewBag.Category != null)
+                                {
+                                    foreach (Service item in ViewBag.Category)
+                                    {
+                                        <option class="serviceName" value="@item.ServiceID" >@item.ServiceName</option>
+                                    }
+                                }                               
+                            </select>
+                        </div>
+                        <div class="topviewhistory">
+                            @*<a href="/Appointment/" title="back to current appointments">back to current appointments</a>*@
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="appointmentdetail">                   
+                        @Html.Raw(ViewBag.HtmlData)
+                    </div>
+                    <div class="clear">
+                    </div>
+                     <div class="loadmore" id="divViewhistory" style="display: @(ViewBag.ShowLoadMore?"block":"none")">
+                            <a href="javascript:void(0);" onclick="filterAllHistory();" title="load more...">load more...</a>
+                        </div>
+                </div>
+                <div class="clear">
+            </div>
+            </div>
+            <div class="clear">
+            </div>            
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="viewnotespopup" class="viewnotespopup">
+    </div>
+    <div id="formaddreview" class="formaddreview">
+    </div>
+    <img id="aptImgLoader" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+    <div id="lightBox" class="lightBox z499">
+    </div>
+    <div id="modifypopup" class="modifypopup">
+    </div>
+    <div id="cancelpopup" class="cancelpopup">
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ui-accordion-accordion-panel-1").css("display", "none");
+        $("#accordion").accordion("option", "active", 2);
+
+        $(".calendarName").dotdotdot(
+           {
+               height: 22,
+               width: 125
+           });
+
+        $(".serviceName").dotdotdot(
+           {
+               height: 17,
+               width: 85
+           });
+        
+    });
+</script>

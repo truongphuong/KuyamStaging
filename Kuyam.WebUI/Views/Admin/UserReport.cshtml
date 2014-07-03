@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Kuyam.Database.Cust>
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "User Report";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            City, State Zip
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Modified
+        </th>
+        <th>
+            LastVisit
+        </th>
+        <th>
+            LastLogin
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.OrderBy( c => c.LastName).ThenBy(c => c.FirstName)) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName), 
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.State) @Html.DisplayFor(modelItem => item.Zip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastVisit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLogin)
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+@Html.SaveCancelLC()

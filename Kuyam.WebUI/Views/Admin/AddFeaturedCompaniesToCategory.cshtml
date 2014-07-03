@@ -1,0 +1,120 @@
+﻿@using Kuyam.Database
+@using Kuyam.WebUI.Models
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "edit featured companies";
+}
+
+@{
+    const int numberOfCompany = 3;
+    List<CompanyProfileSummary> profileCompanies = ViewBag.profilesSummary;
+    List<CategoryFeatured> categoryFeaturedCompanies = ViewBag.categoriesFeatured;
+    bool isOdd = false;
+    be_Categories category = ViewBag.Category;
+    int categoryId = category.CategoryRowID;    
+}
+<div id="contentmainpage">
+    <h2>edit featured companies - @category.CategoryName.ToLower()</h2>
+    <fieldset>
+        <div style="width: 360px;">
+            <table border="0" class="tbldata">
+                @for (int i = 1; i <= numberOfCompany; i++)
+                {                    
+                    var company = categoryFeaturedCompanies.FirstOrDefault(c => c.Order == i);
+                    var addClass = "";
+                    if (isOdd)
+                    {
+                        addClass = "class=odd";
+                        isOdd = false;
+
+                    }
+                    else
+                    {
+                        isOdd = true;
+                    }
+                    Medium pcImage = null;
+
+                    if (company != null && company.ProfileId > 0)
+                    {
+                        pcImage = DAL.GetCompanyPhotoByCompanyID(company.ProfileId);
+                    }
+
+                    string pcImageUrl = "/images/photo_company_image.png";
+
+                    if (pcImage != null)
+                    {
+                        pcImageUrl = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/299/height/212", @pcImage.LocationData, Types.KaturaDoman);
+                    }
+                    <tr @addClass>
+                        <td valign="top">
+                            @i.ToString()
+                        </td>
+                        <td valign="top">
+                            <select name="selectfeatured" id="@("company" + i)" onchange="selectcompany('@i',this.value);" style="width:302px;">
+                                <option value='0'>select company</option>
+                                @{
+                                    foreach (var c in profileCompanies)
+                                    {
+                                        if (company != null && c.ProfileId == company.ProfileId)
+                                        {
+                                        <option  value='@c.ProfileId' selected='selected' data-isSelected='true'>@c.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option  value='@c.ProfileId'>@c.Name</option>
+                                        }
+                                    }
+                                }
+                            </select>                                                       
+                            <br />
+                            <div class="divphoto" style="text-align: center; padding: 10px 0 5px 0px;">
+                                <div class="divimg" style="background:url(@pcImageUrl) repeat center;">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </fieldset>
+    <a href="@Url.Content("~/Admin/GetCategories")">back to list</a>
+</div>
+<script type="text/javascript">
+    function resetOptionValue(i){
+        var selectedHtml = $('#company' + i + ' option:selected');
+        if(selectedHtml.length > 0){
+            selectedHtml.prop('selected', '');
+        }
+        selectedHtml = $('#company' + i + ' option[data-isSelected="true"]');
+        if(selectedHtml.length > 0){
+            selectedHtml.prop('selected', 'selected');
+        }
+    }
+
+    function selectcompany(priority, profileId, type) {
+        debugger;
+        var parameters = { ProfileId: profileId, Order: priority, BeCategoryId: @categoryId };
+        console.log(JSON.stringify(parameters));        
+        window.isUseDefaultAjaxHandle = true;
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),                    
+                    url: '/Admin/UpdateFeaturedCategory/'
+                })
+                .success(function (reponse) {
+                    debugger;
+                    if (reponse.success == false) {
+                        alert(reponse.errorMessage);
+                        resetOptionValue(resetOptionValue(priority));
+                    }
+                    else{
+                    window.location.reload();
+                    }
+                })
+                .error(function (error) {
+                    debugger;
+                });
+    }
+</script>

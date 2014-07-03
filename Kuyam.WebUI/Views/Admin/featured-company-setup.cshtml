@@ -1,0 +1,21 @@
+﻿@model Kuyam.WebUI.Models.FCODSetupModel
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "featured company setup";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    <div class="editor-row">
+        <div class="editor-label-wide">
+            select a company to be featured IMMEDIATELY
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.SelectedProfileID, Model.Companies.OrderBy(x => x.Text))
+        </div>
+    </div>
+    <div class="editor-row-end"></div>
+    <br />
+    @Html.SaveCancelLC()
+}

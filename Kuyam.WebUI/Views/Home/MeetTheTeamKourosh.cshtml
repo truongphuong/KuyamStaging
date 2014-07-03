@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_KuyamLayoutGrey.cshtml";
+    ViewBag.Title = "MeetTheTeamKourosh";
+}
+
+    <img class="BodyTop" src="@Url.Content("~/images/About/MeditateTop.png")" alt="Schedule, Share, and Discover" />
+
+    <ul class="GreenTabs">
+        <li class="TabLeft">@Html.ActionLink("About", "About", "home")</li>
+        <li class="TabCenter Here"></li>
+        <li class="TabRight">@Html.ActionLink("Business Solutions", "BusinessSolutions", "home")</li>
+    </ul>
+
+    <a name="Top"></a>
+
+    <img style="padding-right:40px" src="@Url.Content("~/images/MeetTheTeam/Kouroshbig.png")" class="FloatLeft" alt="Kourosh Big" /><br />
+    <span class="TeamName">Kourosh Gohar/ "<b>The Genius</b>"</span><br />
+    <span class="TeamTitle">CEO and Founder</span><br />
+    <p>
+        Kourosh, a longtime california resident, believes in fun and friendly
+        management, making this his first priority at kuyam. Hailing from the 
+        world of finance and banking, kourosh has officially traded in his suit
+        for a t-shirt and jeans. When he's not working with the guys on kuyam, you
+        can find him hiking, kickboxing, or playing soccer with his kids.
+    </p>
+
+<div class="GreyBodyFooter">
+<table width="100%">
+    <tr>
+    <td align="center"><img src="@Url.Content("~/images/MeetTheTeam/kouroshtrans.png")" alt='kourosh trans' /></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamTony")#Top"><img src="@Url.Content("~/images/MeetTheTeam/tonysmall.png")" alt='tony small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamTodd")#Top"><img src="@Url.Content("~/images/MeetTheTeam/toddsmall.png")" alt='todd small' /></a></td>
+    </tr>
+    <tr>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamMatt")#Top"><img src="@Url.Content("~/images/MeetTheTeam/mattsmall.png")" alt='matt small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamJackie")#Top"><img src="@Url.Content("~/images/MeetTheTeam/jackiesmall.png")" alt='jackie small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamCory")#Top"><img src="@Url.Content("~/images/MeetTheTeam/corysmall.png")" alt='cory small' /></a></td>
+    </tr>
+</table>
+</div>

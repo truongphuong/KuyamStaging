@@ -1,0 +1,14 @@
+﻿/***verification code page***/
+.verification{background:url(../images/verify_bg.jpg) no-repeat left top;height:818px;padding:41px 0px 0px 78px;}
+.verification .verititle{font-family:Arial, Helvetica, sans-serif;font-size:24px;font-weight:bold;color:#1B1464;padding-bottom:6px;}
+.verification .veriform .txtveri{width:251px;height:49px;border:solid 1px #808080;font-size:24px;padding:0px;margin-right:4px;float:left;}
+.verification .veriform .inputveri{border:solid 0px transparent;background:url(../images/appointment.png) no-repeat -143px -273px;width:132px;height:61px;padding:0px;float:left;}
+.verification .veriform .error{color:#ff0000;font-size:12px;font-family:Arial, Helvetica, sans-serif;font-weight:400;height:15px;padding-top:4px;}
+.ie .verification .veriform .txtveri{line-height:45px;}
+/***postsetup page***/
+.postsetup{background:url(../images/verify_bg.jpg) no-repeat left top;height:818px;padding:39px 0px 0px 78px;}
+.postsetup h1{font-weight:600;font-size:24px;color:#1B1464;margin:0px;padding:0px;}
+.postsetup p{color:#000000;font-size:18px;width:600px;margin:19px 0px 22px 0px;padding:0px;}
+.postsetup a{color:#0071BC;font-size:18px;font-weight:bold;text-decoration:none;}
+.postsetup a:hover{text-decoration:none;}
+

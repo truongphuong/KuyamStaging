@@ -1,0 +1,123 @@
+﻿@using Kuyam.Database;
+@using System.Configuration;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.WebUI.Models;
+@{
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    ViewBag.Title = "lets you book all your appointments in one place";
+}
+@section MetaSeoSection{
+    @ViewBag.MetaTagExtension.MetaTag()
+}
+<script type="text/javascript">
+    $(function () {
+        $('select#speedC').selectmenu();
+    });
+</script>
+<script src="@Url.Content("~/Scripts/js/basic-jquery-slider.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        @ViewBag.Message;
+        forgotPasswordpopup();
+        $('#slides').bjqs({
+            'animation': 'slide',
+            'width': 750,
+            'height': 412,
+            showControls: false,
+            centerControls: false,
+            showMarkers: false
+        });
+
+        $('#btnDiscover').click(function () {        
+            window.redrectToResult();
+        });      
+
+        $('.bfooter').click(function (e) {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+
+            if(!isLogin){
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            window.location = $(this).attr("url");
+        });
+
+
+        function forgotPasswordpopup() 
+        {                 
+            var myParam = getQueryString()["key"];
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+
+            if(!isLogin && myParam=='true'){
+                $('#forgotPass').hide();
+                $('#loginError').hide();
+                $('#signuppopup').hide();
+                $('#loginpopup').hide();
+                showDialog('forgotpassword', 'btnCloseloginPopup');
+            }                            
+        }
+
+        $('.homecontent .activityitemimg').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+
+            if(!isLogin){
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+        });
+            
+        $('#listyourhours').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+
+            if(!isLogin){
+                window.location.href = '/home/howitworks'
+                return false;
+            }
+        });
+
+        $('.text').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+           
+            if(!isLogin){
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+        });
+        $('#slides').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+        });
+        $('.activityitem').click(function (e) {           
+            window.location = $(this).attr("url");
+        });
+        loadhomepageitems();
+    });
+
+</script>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight">
+            <div class="contentAuthor contentBlogAfter">
+                <div id="blogCategoryNavigation">
+                    @Html.Partial("_BlogCategoryNavigation")
+                </div>
+                <div id="webBlogLogin">@Html.Partial("_WebBlogHomeLoginResult")</div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>

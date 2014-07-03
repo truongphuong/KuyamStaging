@@ -1,0 +1,307 @@
+﻿/* TODO: Combine left, updates, fcod into a one set of styles for lhs boxes */
+/*-----left side-----*/
+.box-title
+{
+	color: white;
+	background: url(../images/appt-stat-green.png) repeat-x top left;
+	padding: 3px;
+	margin: 0px;
+	border-left: 2px solid #666;
+	border-right: 2px solid #666;
+}
+
+.box-frame
+{
+	border: 2px solid #ccc;
+}
+
+/* --------- Updates -------*/
+.updates-frame
+{
+	background-color: #e5e5e5;
+	border: 2px solid #bbb;
+	padding: 5px;
+	xwidth: 95%;
+	xheight: 100%;
+	xoverflow: none;
+	xmargin-top: 70px;
+}
+
+.appt-notifications
+{
+	border: 0px solid #ddd;
+	font-size: 0.8em;
+	width: 275px;
+	height: 105px;
+	overflow: auto;
+	padding: 3px;
+	xmargin-top: -30px;
+	xposition: absolute;
+}
+
+
+
+/*---------- FCOD ----------*/
+
+.fcod-title
+{
+	font-size: 18px;
+}
+
+.fcod-frame
+{
+	background-color: #e5e5e5;
+	border: 2px solid #bbb;
+	padding: 5px;
+	xwidth: 95%;
+	xheight: 100%;
+	xoverflow: none;
+	xmargin-top: 70px;
+}
+
+.fcod-inner
+{
+	margin: 0px;
+	overflow: auto;
+}
+
+.fcod-title
+{
+	padding-top: 0px;
+	padding-bottom: 15px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.fcod-blurb p, .fcod-blurb ul
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: left;
+}
+
+.fcod-blurb ul
+{
+	line-height: 8px;
+}
+
+.fcod-contact-info
+{
+	padding-top: 12px;
+	font-size: 12px;
+}
+
+
+/*--------------- Appt Tag -----------------*/
+.appt-tag-col
+{
+	width: 260px;
+	border: solid 0px black;
+	float: left;
+	padding-right: 36px;
+}
+.appt-tag-space
+{
+	height: 5px;
+	clear: both;
+}
+.appt-tag
+{
+	width: 260px;
+	border: solid 2px gray;
+	color: black;
+	background: url(../images/gray-grad-up-65.png) top left repeat-x;
+}
+
+.appt-tag-pic
+{
+	width: 50px;
+	height: 50px;
+	xbackground: blue;
+	border: solid 0px black;
+	float: left;
+	color: White;
+	padding: 1px;
+	xpadding-right: 10px;
+}
+.appt-tag-dt
+{
+	width: 208px;
+	height: 65px;
+	float: left;
+	text-align: center;
+	vertical-align:middle;
+	border-radius: 0px;
+}
+.appt-tag-status, .appt-tag-status-accepted, .appt-tag-status-confirmed, .appt-tag-status-pending, .appt-tag-status-na
+{
+	clear: both;
+	width: 100%;
+	text-align: center;
+	padding: 2px 0 4px 0;
+	font-weight: bold;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	border-radius: 0px;
+}
+.appt-tag-status-accepted, .appt-tag-status-confirmed
+{
+	background: url(../images/appt-stat-green.png) repeat-x top left;
+	color: White;
+}
+.appt-tag-status-pending
+{
+	background: url(../images/appt-stat-yellow.png) repeat-x top left;
+	color: White;
+}
+.appt-tag-status-na
+{
+	background: url(../images/appt-stat-red.png) repeat-x top left;
+	color: white;
+}
+.appt-tag-buttonbar
+{
+	clear: both;
+	border: solid 0px red;
+	background: #a0a0a0;
+	width:100%;
+	border-radius: 0px;
+}
+.appt-tag-button, .appt-tag-buttonright
+{
+	float: left;
+	width: 82px;
+	border-right: solid 0px gray;
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+	background: url(../images/appt-but-bg.png) top right;
+	border-radius: 0px;
+}
+.appt-tag-buttonright
+{
+	float:right;
+	width: 79px;
+	border: 0px;
+}
+
+.appt-tag-contactname
+{
+	font-weight: bold;
+	color: black;
+}
+
+/*--------------- CUST ----------------*/
+
+.cust-main-left
+{
+	clear: both;
+	width: 34%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	float: left; /*border: solid 1px red;*/
+	padding: 0px;
+	overflow: hidden;
+}
+
+.cust-main-right
+{
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	float: right;
+}
+
+.cust-active-page
+{
+	color: white;
+	background: url(../images/appt-stat-green.png) repeat-x top left;
+	padding: 3px;
+	margin: 0px;
+	border-left: 2px solid #666;
+	border-right: 2px solid #666;
+}
+
+.cust-inactive-page
+{
+	padding: 5px;
+	color: black;
+	font-weight: normal;
+	xbackground: url(../images/button-gray-slice.jpg) repeat-x top left;
+}
+
+a.cust-active-page:hover
+{
+	color: white;
+}
+
+a.cust-inactive-page:hover
+{
+	color: black;
+	background: #ddd;
+	padding: 3px;
+	margin: 0px;
+	border-left: 2px solid #ddd;
+	border-right: 2px solid #ddd;
+}
+
+a.xcust-inactive-page:hover
+{
+	color: white;
+	background: url(../images/appt-stat-green.png) repeat-x top left;
+	padding: 3px;
+	margin: 0px;
+	border-left: 2px solid #666;
+	border-right: 2px solid #666;
+}
+
+.sched-appt-box
+{
+	float: left;
+	width: 98%;
+	text-align: left;
+	border: 2px solid #bbb;
+	padding: 0px;
+}
+
+.sched-appt-company
+{
+	width: 96%;
+	padding: 5px;
+	color: #666;
+	text-align: center;
+	font-weight: bold;
+	background: url(../images/gray-grad-rev.png) repeat-x top left;
+	xbackground: #999;
+}
+
+.sched-appt-submit
+{
+	width: 300px;
+	padding: 5px;
+	padding-left: 66px;
+	padding-right: 67px;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+	background: url(../images/button-gray-slice.jpg) repeat-x top left;
+	xbackground: #999;
+}
+
+a.sched-appt-submit:hover
+{
+	color: white;
+	background: url(../images/button-green-slice.jpg) repeat-x top left;
+}
+
+.editor-label
+{
+	text-align: left;
+}
+
+.editor-field input
+{
+	width: 250px;
+}

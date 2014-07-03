@@ -1,0 +1,227 @@
+﻿@using Kuyam.Database
+@using Kuyam.Utility
+@using Kuyam.WebUI.Models
+@using System.Web
+@{   
+    int profileID = ViewBag.companyId;
+    List<Appointment> lstApp = ProfileCompany.GetAppointmentByProfileIdV2(profileID != 0 ? profileID : MySession.ProfileID).ToList();
+    //Session[Contants.COMPANY_APPOINTMENT_LISTAPPOINTMENT] = lstApp;
+    int numofNewApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Pending);
+    int numofModApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Modified || a.AppointmentStatusID == (int)Types.AppointmentStatus.CompanyModified);
+    int numofConApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Confirmed);
+    int numofCanApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Cancelled);
+    string rawURL = Request.RawUrl;
+    CompanyEmployee employee = null;
+    if (ViewBag.Employee != null)
+    {
+        employee = ViewBag.Employee;
+    }
+}
+<div class="colLeft menuLeft activeblue">
+    <div class="scroll">
+        <div id="accordion">
+            <h3 title="manage">
+                manage</h3>
+            <div class="panelmanual searchschedule">
+                <div class="editservices">
+                    <div class="leftitem" id="employeeListHourMenu">
+                        <a href="/company/companyemployeelisthour?companyId=@profileID" title="list/edit hours">
+                            list/edit hours</a>
+                    </div>
+                </div>
+                @if (rawURL.Contains("/company/companyemployeelisthour"))
+                {
+                    <div class="clear h3">
+                    </div>
+                    <div class="employeefavorite">
+                        <div class="divfavorite ">
+                            @if (employee != null)
+                            {
+                                <a href="#" id="schedulefavorite" class="chooseemployeeactive" title="@employee.EmployeeName">
+                                    @Kuyam.Domain.UtilityHelper.TruncateText(employee.EmployeeName, 12)
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" id="schedulefavorite" class="schedulefavorite" title="select employee">select
+                                    employee </a>
+                            }
+                            <ul class="favorite" id="favorite">
+                                @if (ViewBag.CompanyEmployees != null)
+                                {
+                                    List<CompanyEmployee> ceList = ViewBag.CompanyEmployees;
+                                    foreach (CompanyEmployee employeeTemp in ceList)
+                                    {
+                                        string url = "/company/companyemployeelisthour/" + employeeTemp.EmployeeID + "?companyId=" + profileID;
+                                    <li><a href="@url" title="@employeeTemp.EmployeeName">@employeeTemp.EmployeeName</a></li>
+                                    }
+                                }
+                            </ul>
+                            <a href="#" id="favoritearrowup" class="schedulefavoritearrowup" title="up"></a>
+                            <a href="#" id="favoritearrowdown" class="schedulefavoritearrowdown" title="down">
+                            </a>
+                        </div>
+                    </div>
+                    <div id="selectservice" class="popupSelected">
+                        <div class="contentPopup">
+                            <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+                            <div class="formSelected">
+                                <h6>
+                                    selected:</h6>
+                                <h5>
+                                    <label id="employeeHourDayEdit">
+                                    </label>
+                                </h5>
+                                <p class="questionYellow">
+                                    ?</p>
+                                <p>
+                                    <input type="text" value="12:00pm" class="inputTime1" id="fromEditHours" />
+                                    <label>
+                                        to</label>
+                                    <input type="text" value="2:00pm" class="inputTime2" id="toEditHours" />
+                                </p>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="formInput">
+                                <a href="javascript:void(0);" class="btnDeleteEmployeeHour" id="bookme" title="delete">
+                                    delete</a> <a href="javascript:void(0);" class="btnSaveeditEmployeeHour" id="bookme"
+                                        title="save edits">save edits</a>
+                            </div>
+                        </div>
+                    </div>	
+                }
+                <div class="clear">
+                </div>
+                <div class="editservices">
+                    <div class="leftitem" id="CompanyServicesMenu">
+                        <a href="/company/companyservices?companyId=@profileID" title="edit services">edit services
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @if (rawURL.Contains("/company/companyemployee") && !rawURL.Contains("/company/companyemployeelisthour"))
+                    {
+                        <div class="leftitem choosenonbg">
+                            edit employees
+                        </div>            
+                        <div class="clear">
+                        </div>
+                        <div class="leftitem choose1">
+                            <a href="/company/employee/?companyId=@profileID" class="addnewemployee" title="add new employee">
+                                + add new employee </a>
+                        </div>                                  
+                    }
+                    else
+                    {
+                        <div class="leftitem" id="EmployeeMenu">
+                            <a href="/company/employee/?companyId=@profileID" title="edit employees">edit employees</a>
+                        </div>  
+                    }
+                </div>
+                @if (rawURL.Contains("/company/employee") && !rawURL.Contains("/company/companyemployeelisthour"))
+                {
+                    <div class="clear h3">
+                    </div>
+                    <p class="or1">
+                        or</p>
+                    <div class="clear h6">
+                    </div>
+                    <div class="employeefavorite">
+                        <div class="divfavorite">
+                            @if (employee != null)
+                            {
+                                <a href="#" id="schedulefavorite" class="chooseemployeeactive" title="@employee.EmployeeName">
+                                    @Kuyam.Domain.UtilityHelper.TruncateText(employee.EmployeeName, 12)
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" id="schedulefavorite" class="schedulefavorite" title="select employee">select
+                                    employee </a>
+                            }
+                            <ul class="favorite" id="favorite">
+                                @if (ViewBag.CompanyEmployees != null)
+                                {
+                                    List<CompanyEmployee> ceList = ViewBag.CompanyEmployees;
+                                    foreach (CompanyEmployee employeeTemp in ceList)
+                                    {
+                                        string url = "/company/employee/" + employeeTemp.EmployeeID + "?companyId=" + profileID; 
+                                    <li><a href="@url" title="@employeeTemp.EmployeeName">@employeeTemp.EmployeeName</a></li>
+                                    }
+                                }
+                            </ul>
+                            <a href="#" id="favoritearrowup" class="schedulefavoritearrowup" title="up"></a>
+                            <a href="#" id="favoritearrowdown" class="schedulefavoritearrowdown" title="down">
+                            </a>
+                        </div>
+                    </div>                    
+                }
+                <div class="editservices">
+                    <div class="clear">
+                    </div>
+                    <div class="grayline">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyInvoicesMenu">
+                        <a href="/companyappointment/CompanyInvoices?companyId=@profileID" title="invoice">invoice</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyPackagesMenu">
+                        <a href="/company/companypackages?companyId=@profileID" title="packages">packages
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyRegularClientMenu">
+                        <a href="/company/CompanyRegularClients?companyId=@profileID" title="regular clients">
+                            regular clients</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyDiscountMenu">
+                        <a href="/company/companyactivediscountCode?companyId=@profileID" title="promo codes">
+                            promo codes</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <h3 title="appointments">
+                appointments</h3>
+            <div class="panelapp">
+                <div class="appts">
+                    <ul>
+                        <li id="liApp" class="active"><a href="#" id="divApp" title="master agenda" ng-click="gotoStatus('app', 0)">
+                            master agenda</a> </li>
+                        <li id="liNew"><a href="#" id="divNew" title="new requests" ng-click="gotoStatus('new', 0)">
+                            new requests</a> <a href="#" id="divNewApp" class="yellow" ng-click="gotoStatus('new', 0)">@numofNewApp</a>
+                        </li>
+                        <li id="liMod"><a href="#" id="divMod" title="modified" ng-click="gotoStatus('mod', 0)">
+                            modified</a> <a href="#" id="divModApp" class="orange" ng-click="gotoStatus('mod', 0)">@numofModApp</a>
+                        </li>
+                        <li id="liCon"><a href="#" id="divCon" title="confirmed" ng-click="gotoStatus('con', 0)">
+                            confirmed</a> <a href="#" id="divConApp" class="green" ng-click="gotoStatus('con', 0)">@numofConApp</a>
+                        </li>
+                        <li id="liCan"><a href="#" id="divCan" title="cancellations" ng-click="gotoStatus('can', 0)">
+                            cancellations</a> <a href="#" id="divCanApp" class="red" ng-click="gotoStatus('can', 0)">@numofCanApp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @if (!ViewBag.IsAdminOrAgent)
+            {
+                <h3 title="calendar">
+                    calendar</h3>
+                <div class="panelcal">
+                    <div id="datepicker">
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

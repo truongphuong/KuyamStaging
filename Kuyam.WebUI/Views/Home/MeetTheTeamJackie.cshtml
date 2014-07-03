@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/_KuyamLayoutGrey.cshtml";
+    ViewBag.Title = "MeetTheTeamJackie";
+}
+
+    <img class="BodyTop" src="@Url.Content("~/images/About/MeditateTop.png")" alt="Schedule, Share, and Discover" />
+
+    <ul class="GreenTabs">
+        <li class="TabLeft">@Html.ActionLink("About", "About", "home")</li>
+        <li class="TabCenter Here"></li>
+        <li class="TabRight">@Html.ActionLink("Business Solutions", "BusinessSolutions", "home")</li>
+    </ul>
+
+    <a name="Top"></a>
+
+    <img style="padding-right:40px" src="@Url.Content("~/images/MeetTheTeam/jackiebig.png")" class="FloatLeft" alt="Jackie Big" /><br />
+    
+    <span class="TeamName">Jackie Chang/ "<b>The Maestro</b>"</span><br />
+    <span class="TeamTitle">Creative Director</span><br />
+    <p>
+        Jackie is the whimsical meerkat maestro who uses her tablet as 
+        a powerful design weapon. When she's not making graphics or animations, 
+        she's conquering mobile word games, brewing wicked ideas and 
+        dreaming of becoming an independent graphic novelist.
+    </p>
+
+
+<div class="GreyBodyFooter">
+<table width="100%">
+    <tr>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamKourosh")#Top"><img src="@Url.Content("~/images/MeetTheTeam/kouroshsmall.png")" alt='kourosh small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamTony")#Top"><img src="@Url.Content("~/images/MeetTheTeam/tonysmall.png")" alt='tony small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamTodd")#Top"><img src="@Url.Content("~/images/MeetTheTeam/toddsmall.png")" alt='todd small' /></a></td>
+    </tr>
+    <tr>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamMatt")#Top"><img src="@Url.Content("~/images/MeetTheTeam/mattsmall.png")" alt='matt small' /></a></td>
+    <td align="center"><img src="@Url.Content("~/images/MeetTheTeam/jackietrans.png")" alt='jackie trans' /></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamCory")#Top"><img src="@Url.Content("~/images/MeetTheTeam/corysmall.png")" alt='cory small' /></td>
+    </tr>
+</table>
+</div>
+

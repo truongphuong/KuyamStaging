@@ -1,0 +1,26 @@
+﻿
+@using Kuyam.Database
+@using Kuyam.Repository.Infrastructure
+@using Kuyam.Domain
+@{
+    ViewBag.Title = "Zipcode Add/Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    bool isAddNew = true;
+    int userListPageIndex = ViewBag.Page ?? 1;
+    string key = ViewBag.Key == "-1" || ViewBag.Key == null? "" : ViewBag.Key;
+    int searchType = ViewBag.SearchType ?? -1;
+    if (Model.Code == null) { Model.Code = "";}
+    if (Model.ZipCodeId != 0) { isAddNew = false;}
+    ViewBag.Page = userListPageIndex;
+    ViewBag.Key = key;
+    ViewBag.IsAddMode = isAddNew;
+}
+
+      <div id="contentmainpage">
+         @Html.Partial("_ZipCodeAddEdit")
+     </div>
+    
+<script type="text/javascript">
+   
+</script>

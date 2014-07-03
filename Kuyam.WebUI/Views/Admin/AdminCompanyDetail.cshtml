@@ -1,0 +1,651 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "Admin Company Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    Kuyam.Database.ProfileCompany company = ViewBag.CompanyDetail;
+    Kuyam.Database.Profile profile = ViewBag.ProfileDetail;
+    var phone = @Kuyam.Domain.UtilityHelper.FormatPhone(company.Phone);
+
+    int userListPageIndex = ViewBag.UserListPageIndex ?? 1;
+    string key = ViewBag.Key;
+    int searchType = ViewBag.SearchType ?? -1;
+    var isShowCatalory = ViewBag.IsShowCategory;
+    var isEvent = ViewBag.IsEvent;
+    var isClass = ViewBag.IsClass;
+}
+<script type="text/javascript" src="../../Scripts/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../../Scripts/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<style type="text/css">
+    td {
+        width: 400px;
+    }
+     td:first-child {
+         width: 500px;
+     }
+</style>
+<div id="contentmainpage">
+    <h2>@Html.DisplayFor(model => company.Name)</h2>
+    <div id="divcompanydetail">
+        <fieldset>
+            <div class="loginform">
+                <input id="hdfProfileID" type="hidden" value="@company.ProfileID" />
+                <input type="hidden" id="hdfUserPageIndex" value="@userListPageIndex" />
+                <input type="hidden" id="hdfKey" value="@key" />
+                <input type="hidden" id="hdfSearchType" value="@searchType" />
+                <table cellpadding="2" cellspacing="2" border="0" class="tbldata" style="width: 160%">
+                    <tr class="odd">
+                        <td>
+                            name
+                        </td>
+                        <td>
+                            <span id="spcompanyname">
+                                @Html.DisplayFor(model => company.Name)
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            street
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => company.Street1)
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td>
+                            phone
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => phone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            email
+                        </td>
+                        <td>
+                            <a href='mailto:@company.Email' title='@company.Email'>@company.Email</a>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td>
+                            city
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => company.City)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            state
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => company.State)
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td>
+                            zip
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => company.Zip)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            paypal e-mail
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => company.PaymentOptions)
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td>
+                            expired date
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => company.ExpiredDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            status
+                        </td>
+                        <td>
+                            @{ var enu = Enum.ToObject(typeof(Types.CompanyStatus), company.CompanyStatusID).ToString(); }
+                            @enu.ToLower()
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td>
+                            user
+                        </td>
+                        <td>
+                            <a href="/Admin/AdminUserDetail/@(profile.Cust.CustID)/@(userListPageIndex)/@(key)/@(searchType)">@(profile.Cust.FullName)</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            company type
+                        </td>
+                        <td>
+                            @{
+                                string companyType = string.Empty;
+                                switch (company.CompanyTypeID)
+                                {
+                                    case (int)Types.CompanyType.KuyamInstantBook:
+                                        companyType = string.Format("{0}", "kuyam instant");
+                                        break;
+                                    case (int)Types.CompanyType.KuyamBookIt:
+                                        companyType = string.Format("{0}", "kuyam book-it");
+                                        break;
+                                    case (int)Types.CompanyType.HybridKuyamBookIt:
+                                        companyType = string.Format("{0}", "hybrid");
+                                        break;
+                                    case (int)Types.CompanyType.NonKuyamBookIt:
+                                        companyType = string.Format("{0}", "non kuyam");
+                                        break;
+                                    case (int)Types.CompanyType.GeneralAvailability:
+                                        companyType = string.Format("{0}", "general availability");
+                                        break;
+                                }
+                            }
+                            <a id="changecompanytype" title="@companyType" href="#">@companyType</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>time slot</td>
+                        <td>
+                            <a id="addTimeSlot">add time slot</a> |
+                            <a id="viewTimeSlot">view time slot</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user must select category before service (optional)</td>
+                        <td>
+                            <input id="isShowCatalory" type="checkbox" checked="@isShowCatalory" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>participart of beautify LA (optional)</td>
+                        <td>
+                            <input id="isEvent" type="checkbox" checked="@isEvent" />
+                        </td>
+                    </tr>
+                    @if(company.CompanyTypeID == (int)Types.CompanyType.HybridKuyamBookIt)
+                    {
+                        <tr>
+                            <td>company offers classes</td>
+                                <td>
+                                    <input id="isClass" type="checkbox" checked="@isClass" />
+                                </td>
+                        </tr>
+                    }
+                   
+                    @*<tr>
+                        <td>generate search box</td>
+                        <td>
+                            <a id="aSearchBox">generate</a>
+                        </td>
+                    </tr>*@
+                </table>
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                        if (company.CompanyStatusID == (int) Types.CompanyStatus.Unknown || company.CompanyStatusID == (int) Types.CompanyStatus.Pending)
+                        {
+                            <input id="btnReview" type="button" value="approve" />
+                            <input id="btnDenied" type="button" value="denied" />
+                        }                        
+                        else if (company.CompanyStatusID == (int) Types.CompanyStatus.Active)
+                        {
+                            <input id="btnSuspend" type="button" value="suspend" onclick="changeUserStatus(5);" />
+                            <input class="btnCancel" type="button" value="cancel company" onclick="changeUserStatus(6);" />                           
+                            <br />
+                            <br />
+                            <input id="btnExtend" type="button" value="extend trial " />
+                            <input id="txtDay" type="text" />
+                            @Html.Raw("&nbsp;")
+                            @Html.Label("day(s)")
+                            <br />
+                            <br />
+                            <input id="btnReduce" type="button" value="reduce trial " />
+                            <input id="txtReduceDay" type="text" />
+                            @Html.Raw("&nbsp;")
+                            @Html.Label("day(s)")
+                        }
+                        else if (company.CompanyStatusID == (int) Types.CompanyStatus.Frozen)
+                        {
+                            <input class="btnActivate" type="button" value="activate" onclick="changeUserStatus(7);" />
+                            <input class="btnCancel" type="button" value="cancel company" onclick="changeUserStatus(6);" />                           
+                        }
+                        else if (company.CompanyStatusID == (int) Types.CompanyStatus.Cancelled)
+                        {
+                            <input class="btnActivate" type="button" value="activate" onclick="changeUserStatus(7);" />                           
+                           
+                        }
+                                                
+                    }
+}
+            </div>
+            <br/>   
+            @if (User.IsInRole("Admin"))
+            {         
+            <input id="btnSaveCompanyName" style="float:left;" type="button" value="change company name" onclick="saveCompanyName();" />
+            <input id="txtCompanyName" style=" width: 500px; color:#B3B3B3;" type="text" value="enter new company name" onfocus="if ($.trim(this.value) == 'enter new company name') { this.value = ''}"
+                   onblur="if (this.value == '') { this.value = 'enter new company name'; this.style.color = '#B3B3B3'; }" />
+            }
+        </fieldset>
+        
+        <p>
+            <a href="/Admin/AdminCompanyList?page=@(userListPageIndex)&key=@(key)&searchType=@(searchType)">
+                back to list</a>
+        </p>
+    </div>
+    <div id="divcompanychangetype" style="margin: 10px;">
+        <div class="clear">
+        </div>
+        <select id="companyType">
+            <option value="@((int)Kuyam.Database.Types.CompanyType.KuyamInstantBook)" @(company.CompanyTypeID == (int)Kuyam.Database.Types.CompanyType.KuyamInstantBook ? "selected" : "")>
+                kuyam instant</option>
+            <option value="@((int)Kuyam.Database.Types.CompanyType.KuyamBookIt)" @(company.CompanyTypeID == (int)Kuyam.Database.Types.CompanyType.KuyamBookIt ? "selected" : "")>
+                kuyam book-it</option>
+            <option value="@((int)Kuyam.Database.Types.CompanyType.HybridKuyamBookIt)" @(company.CompanyTypeID == (int)Kuyam.Database.Types.CompanyType.HybridKuyamBookIt ? "selected" : "")>
+                hybrid</option>
+            <option value="@((int)Kuyam.Database.Types.CompanyType.NonKuyamBookIt)" @(company.CompanyTypeID == (int)Kuyam.Database.Types.CompanyType.NonKuyamBookIt ? "selected" : "")>
+                non-kuyam</option>
+            <option value="@((int)Kuyam.Database.Types.CompanyType.GeneralAvailability)" @(company.CompanyTypeID == (int)Kuyam.Database.Types.CompanyType.GeneralAvailability ? "selected" : "")>
+                general availability
+            </option>
+        </select>
+        <input id="btnchangecompanytype" type="button" value="save" />
+        <p>
+            <a id="backcompany" href="#">back to company</a>
+        </p>
+    </div>
+</div>
+<div id="savechangepopup" style="display: none;">
+    <img style="z-index: 9999; position: absolute; top: 50%; left: 50%" id="imgLoaderphoto"
+        alt="progress..." src="/Images/progress.gif">
+</div>
+<script type="text/javascript">
+    //Show/Hide company type
+    $('#changecompanytype').click(function () {
+        $("#divcompanydetail").hide();
+        $("#divcompanychangetype").show();
+       
+    });
+    $('#backcompany').click(function () {
+        $("#divcompanydetail").show();
+        $("#divcompanychangetype").hide();
+
+    });
+    //Chenge company type
+    $('#btnchangecompanytype').click(function () {
+        var companyType = $("#companyType option:selected").val();
+        var companyId = $("#hdfProfileID").val();
+
+        var parameters = { companyType: companyType, companyId: companyId };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/Admin/ChangeCompanyType/'
+        })
+        .success(function (result) {
+            if (result = 'true') {
+                window.location.href = '/Admin/AdminCompanyDetail?companyID=' + companyId + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val();
+            }
+        })
+        .error(function (error) {
+            //alert(result);
+        });
+
+        
+    });
+    $("#isShowCatalory").click(function () {
+        var companyId = $("#hdfProfileID").val();
+        var parameters = { companyId: companyId, typeCheck: this.checked };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/Admin/SetCompanyshowCataloryServices/'
+        })
+        .success(function (result) {
+        })
+        .error(function (error) {
+            //alert(result);
+        });
+    });
+
+    $("#isEvent").click(function () {
+        var companyId = $("#hdfProfileID").val();
+        var parameters = { companyId: companyId, typeCheck: this.checked };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/Admin/SetCompanyIsEventServices/'
+        })
+        .success(function (result) {
+        })
+        .error(function (error) {
+            //alert(result);
+        });
+    });
+
+    $("#isClass").click(function () {
+        var companyId = $("#hdfProfileID").val();
+        var parameters = { companyId: companyId, typeCheck: this.checked };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/Admin/SetCompanyIsClassServices/'
+        })
+        .success(function (result) {
+        })
+        .error(function (error) {
+            //alert(result);
+        });
+    });
+    
+    //Dialog
+    function showDialog(dialogid) {
+        $('#' + dialogid).css('top', ($(window).height() - $('#' + dialogid).height()) / 2);
+        $('#' + dialogid).css('left', ($(window).width() - $('#' + dialogid).width()) / 2);
+        window.onresize = function () {
+            $("#" + dialogid).css('top', ($(window).height() - $("#" + dialogid).height()) / 2);
+            $("#" + dialogid).css('left', ($(window).width() - $("#" + dialogid).width()) / 2);
+        }
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#' + dialogid).fadeIn(400);
+
+    }
+    //Get services hour
+    $(document).ready(function () {
+        $("#divcompanydetail").show();
+        $("#divcompanychangetype").hide();
+        $('#txtDay').inputlimiter({
+            limit: 3,
+            remText: 'You only have %n word%s remaining...',
+            limitText: 'Field limited to %n word%s.'
+        });
+
+        $("#txtDay").keydown(function (event) {
+            // Allow: backspace, delete, tab, escape, and enter
+            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+            // Allow: Ctrl+A
+            (event.keyCode == 65 && event.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $('#txtReduceDay').inputlimiter({
+            limit: 3,
+            remText: 'You only have %n word%s remaining...',
+            limitText: 'Field limited to %n word%s.'
+        });
+
+        $("#txtReduceDay").keydown(function (event) {
+            // Allow: backspace, delete, tab, escape, and enter
+            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+            // Allow: Ctrl+A
+            (event.keyCode == 65 && event.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#addTimeSlot").click(function() {
+            var companyId = $("#hdfProfileID").val();
+            window.location.href = '/Admin/RequestTimeSlotAdd?Id=' + companyId + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val() + "&isDetail=true";
+        });
+        $("#viewTimeSlot").click(function () {
+            var companyId = $("#hdfProfileID").val();
+            window.location.href = '/Admin/RequestTimeSlotList?companyId=' + companyId + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val();
+        });
+
+        //$("#aSearchBox").click(function () {
+        //    var companyId = $("#hdfProfileID").val();
+        //    window.location.href = "/Admin/GenerateSearchbox?companyId=" + companyId;
+        //});
+    });
+
+    $('#btnReduce').click(function () {
+        if ($("#txtReduceDay").val() != '' && typeof $("#txtReduceDay") != "undefined") {
+
+            var day = $("#txtReduceDay").val();
+            var profileid = $("#hdfProfileID").val();
+
+            var parameters = { profileid: profileid, day: day };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Admin/AdminCompayAddReduce/'
+            })
+            .success(function (result) {
+                if (result = 'true') {
+                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val();
+                }
+            })
+
+            .error(function (error) {
+                //alert(result);
+            });
+        }
+    });
+
+    $('#btnExtend').click(function () {
+        if ($("#txtDay").val() != '' && typeof $("#txtDay") != "undefined") {
+
+            var day = $("#txtDay").val();
+            var profileid = $("#hdfProfileID").val();
+
+            var parameters = { profileid: profileid, day: day };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Admin/AdminCompayAddExtend/'
+            })
+            .success(function (result) {
+                if (result = 'true') {
+                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val();
+                }
+            })
+
+            .error(function (error) {
+                //alert(result);
+            });
+        }
+    });
+
+    $('#btnReview').click(function () {
+        showDialog('savechangepopup');
+        var profileid = $("#hdfProfileID").val();
+        var parameters = { profileid: profileid };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Admin/SendEmailVerifiedCodeCompany/'
+            })
+            .success(function (result) {
+                if (result = 'true') {
+                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val();
+                }
+            })
+
+            .error(function (error) {
+                //                alert(result);
+            });
+    });
+
+    function changeUserStatus(status) {
+        var profileid = $("#hdfProfileID").val();
+        var parameters = { profileid: profileid, status: status };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Admin/ChangeCompanyStatus/'
+            })
+            .success(function (result) {
+                if (result = 'true') {
+                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid + "&page=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val();
+                }
+            })
+
+            .error(function (error) {
+                //alert(result);
+            });
+    };
+
+    //        $('#btnSuspend').click(function () {
+    //            var profileid = $("#hdfProfileID").val();
+    //            var parameters = { profileid: profileid, status:5 };
+    //            $.ajax(
+    //            {
+    //                type: 'POST',
+    //                contentType: 'application/json; charset=utf-8',
+    //                data: JSON.stringify(parameters),
+    //                dataType: 'html',
+    //                url: '/Admin/ChangeCompanyStatus/'
+    //            })
+    //            .success(function (result) {
+    //                if (result = 'true') {
+    //                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid
+    //                }
+    //            })
+
+    //            .error(function (error) {
+    //                //alert(result);
+    //            });
+    //        });
+    //        $('.btnCancel').click(function () {
+    //            var profileid = $("#hdfProfileID").val();
+    //            var parameters = { profileid: profileid, status: 6 };
+    //            $.ajax(
+    //            {
+    //                type: 'POST',
+    //                contentType: 'application/json; charset=utf-8',
+    //                data: JSON.stringify(parameters),
+    //                dataType: 'html',
+    //                url: '/Admin/ChangeCompanyStatus/'
+    //            })
+    //            .success(function (result) {
+    //                if (result = 'true') {
+    //                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid
+    //                }
+    //            })
+
+    //            .error(function (error) {
+    //                //alert(result);
+    //            });
+    //        });
+    //        $('.btnActivate').click(function () {
+    //            var profileid = $("#hdfProfileID").val();
+    //            var parameters = { profileid: profileid, status: 7 };
+    //            $.ajax(
+    //            {
+    //                type: 'POST',
+    //                contentType: 'application/json; charset=utf-8',
+    //                data: JSON.stringify(parameters),
+    //                dataType: 'html',
+    //                url: '/Admin/ChangeCompanyStatus/'
+    //            })
+    //            .success(function (result) {
+    //                if (result = 'true') {
+    //                    window.location.href = '/Admin/AdminCompanyDetail?companyID=' + profileid
+    //                }
+    //            })
+
+    //            .error(function (error) {
+    //                //alert(result);
+    //            });
+    //        });
+    $('#btnDenied').click(function () {
+        var profileid = $("#hdfProfileID").val();
+        var parameters = { profileid: profileid, status: 9 };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Admin/ChangeCompanyStatus/'
+            })
+            .success(function (result) {
+                if (result = 'true') {
+                    window.location.href = '/Admin/AdminCompanyList';
+                }
+            })
+
+            .error(function (error) {
+                //alert(result);
+            });
+
+
+    });
+       
+
+    function saveCompanyName() {
+        var profileId = $("#hdfProfileID").val();
+        var name = $("#txtCompanyName").val();
+        if (name == '' || name == 'enter new company name')
+            return;
+       
+        var parameters = { profileId: profileId, name: name };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/Admin/ChangeCompanyName/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    $("#spcompanyname").html(result.name);
+                    showAlertMessage("change success");
+                }
+            })
+            .error(function (error) {
+              
+            });
+
+    }
+</script>

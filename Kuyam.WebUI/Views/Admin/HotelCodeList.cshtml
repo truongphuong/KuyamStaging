@@ -1,0 +1,133 @@
+﻿@using Kuyam.Database
+@model List<HotelCode>
+@{
+    ViewBag.Title = "Hotel Code List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        hotel codes list</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                        <select id="hotelId" onchange="pagingEvent(@ViewBag.Page);">
+                            @{       
+                                <option value="0">all</option>                           
+                                if (ViewBag.Hotels != null)
+                                {
+                                    foreach (Hotel item in ViewBag.Hotels)
+                                    {                                  
+                                <option value="@item.HotelID" @(ViewBag.HotelId == item.HotelID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }
+                        </select>
+                        <button class="button" id="btnAddHotelCode" type="button" onclick="createCode();">
+                            generate
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="divlistcodehotel">
+        @Html.Partial("_HotelCodeList", Model)
+    </div>
+    <input type="hidden" id="hdfhotelid" name="id" value="@ViewBag.HotelId" />
+</div>
+<a href="/Hotel/HotelList?pageIndex=@ViewBag.Page&keyName=@ViewBag.KeyName">back</a>
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#txtKey").val("@ViewBag.Key");
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+
+    function createCode() {
+        var key = $.trim($('#txtKey').val());
+        var hotelid = $("#hotelId option:selected").val();
+        if(hotelid==0)
+        {
+              alert("please select a hotel.");
+              return false;
+        }
+        var pageIndex =@ViewBag.Page;
+        var searchParameters = { pageIndex: pageIndex, keyCode: key, id: hotelid };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Hotel/HotelCodeAdd/'
+            })
+            .success(function (result) {
+                $('#divlistcodehotel').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+
+    function deleteCode(codeId){
+       
+        var cfm=confirm("do you want to delete this code?")
+        if(!cfm)
+        return false;
+       
+        var key = $.trim($('#txtKey').val());
+        var pageIndex =@ViewBag.Page;       
+        var searchParameters = { pageIndex: pageIndex, keyCode: key, id: codeId};
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Hotel/HotelCodeDelete/'
+            })
+            .success(function (result) {
+                $('#divlistcodehotel').html(result);
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function pagingEvent(pageIndex) {
+        var key = $.trim($('#txtKey').val());
+        //var hotelId = $("#hdfhotelid").val();
+        var hotelId = $("#hotelId option:selected").val();
+        var searchParameters = { pageIndex: pageIndex, keyCode: key, id: hotelId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Hotel/HotelCodeList/'
+            })
+            .success(function (result) {
+                $('#divlistcodehotel').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>
+

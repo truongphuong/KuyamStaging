@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "lifestyle";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+     $('select#category').selectmenu();
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+
+        $('#btnlifestylenext').click(function () {
+//         var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+//            if (!isLogin) {
+//                $('#loginError').hide();
+//                showDialog('signuppopup', 'btnCloseloginPopup');
+//                return false;
+//            }
+            window.location = "/home/lifestyle4";
+        });
+
+    });
+</script>
+<div class="contentMarketPlace">
+    <div class="howitworks life">
+        <div class="lifestyle">
+            <div class="headlifestyle">
+                <a href="/home/howitworks_user" title="back to how it works">< back to how it works</a>
+                <div class="headcurrent">
+                    <span class="nonarrow"></span><a href="/home/lifestyle" title="what is a lifestyle business?">
+                        what is a lifestyle business?</a></div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="menulifestyle">
+                <div class="divcosmetics">
+                    <a href="/home/lifestyle2" title="beauty">beauty</a></div>
+                <div class="divhealth">
+                    <span class="greenarrow"></span><span class="active">health/fitness</span></div>
+                <div class="divlessons">
+                    <a href="/home/lifestyle4" title="lessons/tutoring">lessons/tutoring</a></div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="imglifestyle">
+                <img alt="what is a lifestyle business?" src="/images/lifestyle_banner3.png" />
+            </div>
+            <div class="clear">
+            </div>
+            <div class="contentlifestyle">
+                <h1>
+                    health/fitness <span>such as: yoga, pilates, spin class, personal trainer, self defense,
+                        gym, massage</span></h1>
+                <div class="clear">
+                </div>
+                <div class="clifestyle1">
+                    <b>users:</b> do you have a favorite spin class, or a favorite trainer that always
+                    makes sure you go that extra mile? maintaining a healthy lifestyle is easy when
+                    kuyam gives you the power to seamlessly schedule your perfect personalized workout!
+                </div>
+                <div class="clifestyle2">
+                    <b>companies:</b> as a health and fitness professional, your availability is everything.
+                    the more clients you can make time for, the more business you'll have coming back.
+                    but what happens when you're out working with a client, while another is calling
+                    to schedule a last minute appointment with you? kuyam helps keep your clients and
+                    your business more organized.
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="btnnextlifestyle">
+                <input type="button" id="btnlifestylenext" title="next" value="next" />
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>

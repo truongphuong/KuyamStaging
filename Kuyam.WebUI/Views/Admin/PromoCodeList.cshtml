@@ -1,0 +1,875 @@
+﻿@using Kuyam.Database
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "promo codes";
+}
+<style type="text/css">
+    .error
+    {
+        color: red;
+        text-align: left;
+    }
+    .creatediscountcode .dctitleinput input {
+        width: 514px;
+        
+    }
+    .dctitleinput, .startdaycontent {
+        padding-left: 16px;
+    } 
+    .creatediscountcode input[type="text"] {
+        border: 1px solid #666666;
+        color: #666666;
+        font-size: 18px;
+        height: 36px;
+        line-height: 18px;
+        padding: 0 10px;
+    }
+
+    .clear {
+        clear: both;
+        font-size: 0;
+        height: 0;
+    }
+    .creatediscountcode .cdctitle {
+        color: #333333;
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 18px;
+    }
+    .clear5 {
+        clear: both;
+        height: 5px;
+    }
+    .clear6 {
+        clear: both;
+        height: 6px;
+    }
+    .clear8 {
+        clear: both;
+        height: 8px;
+    }
+    .clear10 {
+        clear: both;
+        height: 10px;
+    }
+    .creatediscountcode .entercode {
+        padding-bottom: 18px;
+        padding-left: 16px;
+    }
+    .clear13 {
+        clear: both;
+        height: 13px;
+    }
+    .creatediscountcode .discounttype {
+        margin-bottom: 13px;
+    }
+    .creatediscountcode .entercode input {
+        background-color: #FCEE21;
+        color: #F48523;
+        float: left;
+        width: 243px;
+    }
+    .creatediscountcode .discounttype .dctext {
+        color: #000000;
+        display: block;
+        float: left;
+        font-size: 21px;
+        padding: 5px 0px 0px 0px;
+    }
+    .comfirmationpopup {
+        display: block;
+        border: none;
+        position: inherit;
+    }
+    .creatediscountcode input[type="text"] {
+        padding: 0;
+    }
+    .creatediscountcode .discounttype .discountinput {
+        width: 75px;
+    }
+    .comfirmationpopup .contentPopup {
+        padding: 0;
+    }
+</style>
+<div id="contentmainpage">
+    <div id="divList">
+        <h2>
+            promo codes</h2>
+        <div class="boxsearch">
+            <center>
+                <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                    <tr class="odd">
+                        <td>
+                            <label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>
+                            <select id="searchType">
+                                <option value="-1" @(ViewBag.SearchType == -1 ? "selected='selected'" : "")>select type</option>
+                                <option value="1" @(ViewBag.SearchType == 0 ? "selected='selected'" : "")>Active
+                                </option>
+                                <option value="0" @(ViewBag.SearchType == 1 ? "selected='selected'" : "")>InActive</option>
+                            </select>
+                            <input type="text" value="start date"
+                            onfocus="if (this.value=='start date') {this.value = '';}"
+                        onblur="if (this.value==''){this.value='start date';}" id="ainpStartDateSearchAdmin" />
+                            &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                            <button class="button" id="btnNewPromoCode" type="button">
+                                add new promo code</button>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+        <div id="listGiftCard" style="overflow-x: hidden; display: block">
+            @Html.Partial("_PromoCodeResult")
+        </div>
+    </div>
+    <input id="hidPageIndex" value="1" type="hidden" />
+</div>
+<div id="dialog-form" style="display: none;">
+    <h2 id="formTitle">
+    </h2>
+    <p class="validateTips">
+    </p>
+    <div id="form-data">
+        <div id="creatediscountcode" class="comfirmationpopup creatediscountcode">
+            <div class="contentPopup">
+                <div class="clear5">
+                </div>
+                <div class="cdctitle">
+                    title</div>
+                <div class="clear8">
+                </div>
+                <div class="dctitleinput">
+                    
+                    <input id="ainpDiscountNameAdmin" type="text" value="e.g. christmas discount" 
+                           onfocus="if (this.value=='e.g. christmas discount') {this.value = '';}"
+                           onblur="if (this.value==''){this.value='e.g. christmas discount';}" />
+                </div>
+                <div class="clear13">
+                </div>
+                <div class="cdctitle">
+                    promo code: <i>(case sensitive, this is what clients will type to receive the discount)</i>
+                </div>
+                <div class="clear6">
+                </div>
+                <div class="entercode">
+                    <input id="ainpDiscountCodeAdmin" type="text" value="enter code" 
+                        onfocus="if (this.value=='enter code') {this.value = '';}"
+                        onblur="if (this.value==''){this.value='enter code';}" />
+                    <input id="ainpReDiscountCodeAdmin" type="text" class="reenter" value="re-enter code"
+                        onfocus="if (this.value=='re-enter code') {this.value = '';}" onblur="if (this.value==''){this.value='re-enter code';}" />
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="dcamountquantity">
+                    <div class="dcamount">
+                        <div class="cdctitle">
+                            discount amount: <i>(amount clients save)</i>
+                        </div>
+                        <div class="clear10">
+                        </div>
+                        <div class="discounttype">
+                            <div class="dollar">
+                                <label for="dollar">
+                                    <span class="rdtitle">&nbsp;</span>
+                                </label>
+                                <span class="dctext">$</span>
+                                <input type="text" class="discountinput" id="ainpDiscountAmountAdmin" />
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                <div class="clear5">
+                </div>
+                <div class="cdctitle">
+                    max uses(only numeric)</div>
+                <div class="clear8">
+                </div>
+                <div class="dctitleinput">
+                    <input id="ainpMaxUserAdmin" type="text" value="" maxlength="10" /></div>
+                 <div class="clear5">
+                </div>
+                <div class="dccreatetime">
+                    <div class="dcstartday">
+                        <div class="cdctitle">
+                            start date and time:</div>
+                        <div class="clear6">
+                        </div>
+                        <div class="startdaycontent">
+                            <input type="text" value="" id="ainpStartDateAdmin" readonly />
+                            <span class="at">at</span>
+                            <input type="text" value="" id="ainpStartTimeAdmin" readonly />
+                        </div>
+                    </div>
+                    <div class="dcexpiryday">
+                        <div class="cdctitle">
+                            expiry date and time:(leave blank if no expiry)</div>
+                        <div class="clear6">
+                        </div>
+                        <div class="startdaycontent">
+                            <input type="text" value="" id="ainpEndDateAdmin" readonly />
+                            <span class="at">at</span>
+                            <input type="text" value="" id="ainpEndTimeAdmin" readonly />
+                            
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear8">
+                </div>
+                 <div class="startdaycontent">
+                  
+                        <input type="radio" id="activeAdmin" name="client" checked="checked" />
+                        <label for="activeAdmin">
+                            <span class="rdtitle cdctitle">active</span>
+                        </label>
+                        <input type="radio" id="inactiveAdmin" name="client" />
+                        <label for="inactiveAdmin">
+                            <span class="rdtitle cdctitle">inactive</span>
+                        </label>
+                   
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="divcreatediscount">
+                    <center>
+                        <button id="btnSave">
+                            create</button>
+                        <button id="btnCancel">
+                            cancel</button>
+                    </center>
+                </div>
+                <div class="clear">
+                </div>
+                <div id="errordiv" style="color: red">
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        @*<table border='0' cellpadding="0" cellspacing="0" class="tbldata">
+            <tr>
+                <td style="width: 90px;">
+                    <label for="txtTitle">
+                        title</label>
+                </td>
+                <td>
+                    <input type="text" name="txtTitle" id="txtTitle" class="text" maxlength="150" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtServiceDescription">
+                        promo code</label>
+                </td>
+                <td>
+                    <input type="text" name="txtServiceDescription" id="txtServiceDescription" value=""
+                        class="text" maxlength="150" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtServiceDescription">
+                        status</label>
+                </td>
+                <td>
+                    <select id="status">
+                        <option value="1" @(ViewBag.SearchType == 1 ? "selected='selected'" : "")>active</option>
+                        <option value="0" @(ViewBag.SearchType == 0 ? "selected='selected'" : "")>inactive</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <center>
+                        <button id="btnSave">
+                            create</button>
+                        <button id="btnCancel">
+                            cancel</button>
+                    </center>
+                </td>
+            </tr>
+        </table>*@
+    </div>
+    <a id="lnkBack" href="javascript:void(0)">back to list</a>
+</div>
+<style type="text/css">
+    /*#dialog-form label,*/#dialog-form input:text
+    {
+        display: block;
+    }
+    #dialog-form input.textc
+    {
+        width: 99%; /*margin-bottom:12px; width:95%; padding: .4em;*/
+    }
+    #dialog-form fieldset
+    {
+        padding: 0;
+        border: 0;
+        margin-top: 25px;
+    }
+    #dialog-form .ui-state-error
+    {
+        border-color: red;
+    }
+    #dialog-form .validateTips
+    {
+        border: 1px solid transparent;
+        padding: 0.3em;
+        color: red;
+    }
+</style>
+<script src="/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-timepicker-addon.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.format.1.05.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.jstepper.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maxlength-min.js")"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+ 
+        $("#ainpStartDateSearchAdmin").keypress(function(e) {
+            if(e.keyCode!=8)
+            {
+                return false;
+            }
+        });
+        $('#ainpStartDateAdmin, #ainpEndDateAdmin,#ainpStartDateAdmin, #ainpEndDateAdmin, #ainpStartDateSearchAdmin').datepicker({
+        });
+        $('#ainpStartTimeAdmin, #ainpEndTimeAdmin, #ainpStartTimeAdmin, #ainpEndTimeAdmin').timepicker({
+            ampm: true,
+            stepMinute: 15,
+            amNames: ['am', 'am'],
+            pmNames: ['pm', 'pm'],
+            showLeadingZero: false,
+            onHourShow: 10,
+            onMinuteShow: 30
+        });
+        $('#ainpDiscountCodeAdmin, #ainpReDiscountCodeAdmin, #ainpDiscountAmountAdmin').maxlength({
+            events: [], // Array of events to be triggerd   
+            maxCharacters: 20, // Characters limit  
+            status: false, // True to show status indicator bewlow the element   
+            statusClass: "status", // The class on the status div 
+            statusText: "character left", // The status text 
+            notificationClass: "notification",  // Will be added when maxlength is reached 
+            showAlert: false, // True to show a regular alert message   
+            alertText: "You have typed too many characters.", // Text in alert message  
+            slider: false // True Use counter slider   
+        });
+        $('#txtKey').keypress(function (e) {
+            var startDate = $("#ainpStartDateSearchAdmin").val();
+            if (startDate != 'start date') {
+                if (Date.parse(startDate)) {
+                    if (e.which == 13) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        $('#btnSearch').click();
+                    }
+                } else {
+                    alert("start date invalid");
+                }
+                
+            }
+        });
+
+        $('#btnNewPromoCode').click(function (e) {
+            e.preventDefault();
+            resetFormFields();
+            $('#divList').hide();
+            $('#dialog-form').show();
+            $('#formTitle').text('add promo code');
+        });
+
+        $('#btnCancel, #lnkBack').click(function (e) {
+            e.preventDefault();
+            $('#divList').show();
+            $('#dialog-form').hide();
+        });
+
+        $('#btnSave').live('click', function (e) {
+            e.preventDefault();
+            window.isUseDefaultAjaxHandle = true;
+            var text = $(this).text();
+            if(text=='create')
+                CreateOrUpdatePromoCode(1, true);
+            else {
+                var id = $("#hidDiscountId").val();
+                CreateOrUpdatePromoCode(id, false);
+            }
+        });
+        $("#ainpMaxUserAdmin").bind("paste", function (e) {
+            e.preventDefault();
+        });
+        $('#ainpMaxUserAdmin').keydown(function (event) {
+            CheckNumber(event);
+        });
+        
+        $("#ainpDiscountAmountAdmin").bind("paste", function (e) {
+            e.preventDefault();
+        });
+        $('#ainpDiscountAmountAdmin').keydown(function (event) {
+
+            CheckNumberDecimal(event);
+        });
+    });
+    function CheckLengthMaxUse(str) {
+        if (str.length > 10)
+            return false;
+        return true;
+    }
+    function CheckNumber(event) {
+        if ($.inArray(event.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+                       (event.keyCode == 65 && event.ctrlKey === true) ||
+            // Allow: home, end, left, right
+                       (event.keyCode >= 35 && event.keyCode <= 39)) {
+            // let it happen, don't do anything
+            if (event.keyCode == 46 || event.keyCode == 190) {
+                event.preventDefault();
+            }
+            return;
+        }
+        else {
+            // Ensure that it is a number and stop the keypress
+            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                event.preventDefault();
+            }
+        }
+    }
+    function CheckNumberDecimal(event) {
+        if ($.inArray(event.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+                       (event.keyCode == 65 && event.ctrlKey === true) ||
+            // Allow: home, end, left, right
+                       (event.keyCode >= 35 && event.keyCode <= 39)
+        || event.keyCode == 46) {
+            // let it happen, don't do anything
+            return;
+        }
+        else {
+            // Ensure that it is a number and stop the keypress
+            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                event.preventDefault();
+            }
+        }
+    }
+    function pagingEvent(pageIndex) {
+        var searchParameters = PostParam(pageIndex);
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/PromoCodeList/'
+            })
+            .success(function (result) {
+                $('#listGiftCard').html(result);
+                $("#hidPageIndex").val(pageIndex);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function FilterSearchResult() {
+        //var startDate = $("#ainpStartDateSearchAdmin").val();
+        //if (startDate != 'start date') {
+        //    if (!IsDate(startDate)) {
+        //        alert("start date invalide");
+        //        $("#ainpStartDateSearchAdmin").val('start date');
+        //        return false;
+        //    }
+        //}
+        //var endDate = null;
+        //var key = $('#txtKey').val();
+        //var type = $('#searchType').val();
+        //var pageIndex = $("#hidPageIndex").val();
+        // var searchType = type;
+        //if (type == -1) {
+        //    searchType = -1;
+        //} 
+        //var searchParameters = {
+        //    page:pageIndex,
+        //    key: $.trim(key),
+        //    type: searchType,
+        //    startDate:startDate,
+        //    endDate:endDate
+        //};
+        var pageIndex = $("#hidPageIndex").val();
+        var searchParameters = PostParam(pageIndex);
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/PromoCodeList/'
+            })
+            .success(function (result) {
+                if (result == "false") {
+                    window.location.href = "/Admin/Login";
+                } else {
+                    $('#listGiftCard').html(result);
+                }
+
+            })
+            .error(function (error) {
+
+            });
+    }
+    function ModifyPromoCode(iditem) {
+        var searchParameters = {
+            discountId: iditem
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                url: '/Admin/GetDiscountById/'
+            })
+            .success(function (result) {
+               
+                if (result.isLogin == false && result.result == false) {
+                    window.location.href = "/Admin/Login";
+                } else {
+                    if (result.result == false)
+                        alert("Discount code not found");
+                    else {
+                        $('#divList').hide();
+                        $('#ainpDiscountNameAdmin').val(result.title).removeClass("ui-state-error");
+                        $('#ainpDiscountCodeAdmin').val(result.code).removeClass("ui-state-error");
+                        $('#ainpReDiscountCodeAdmin').val(result.code).removeClass("ui-state-error");
+                        $('#ainpDiscountAmountAdmin').val(result.amount).removeClass("ui-state-error");
+                        $('#ainpMaxUserAdmin').val(result.maxUser).removeClass("ui-state-error");
+                        $('#ainpStartDateAdmin').val(result.startDate).removeClass("ui-state-error");
+                        $('#ainpStartTimeAdmin').val(result.startTime).removeClass("ui-state-error");
+                        $('#ainpEndDateAdmin').val(result.endDate).removeClass("ui-state-error");
+                        $('#ainpEndTimeAdmin').val(result.endsTime).removeClass("ui-state-error");
+                        if (result.status == 1)
+                         {  
+                            $('#activeAdmin').attr('checked', 'checked');
+                            $('#inactiveAdmin').removeAttr('checked');
+                        }
+                        else {
+                            $('#inactiveAdmin').attr('checked', 'checked');
+                            $('#activeAdmin').removeAttr('checked');
+                        }
+                        $("#formTitle").text("update promo code");
+                        $("#hidDiscountId").val(iditem);
+                        $("#btnSave").text("update");
+                        $('#dialog-form').show();
+                        $('.validateTips').empty();
+                    }
+                    //$('#listGiftCard').html(result);
+                }
+
+            })
+            .error(function (error) {
+
+            });
+    }
+    function ActiveDeactivePromodeCode(iditem, activeOrinctive) {
+        var searchParameters = {
+             id: iditem,
+             actionType: activeOrinctive
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'json',
+                url: '/Admin/PromoCodeActiveOrInActive/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.isLogin ==false) {
+                    window.location.href = "/Admin/Login";
+                } else {
+                    FilterSearchResult();
+                    $('#listGiftCard').html(result);
+                }
+
+            })
+            .error(function (error) {
+
+            });
+    }
+    function InvitePromoCode(iditem, promoCode) {
+        //var searchParameters = {
+        //    id: iditem,
+        //    promoCode: promoCode
+        //};
+        //$.ajax(
+        //    {
+        //        type: 'POST',
+        //        contentType: 'application/json; charset=utf-8',
+        //        data: JSON.stringify(searchParameters),
+        //        dataType: 'html',
+        //        url: '/Admin/PromoCodeInvitePromocode/'
+        //    })
+        //    .success(function (result) {
+        //        if (result=='false') {
+        //            window.location.href = "/Admin/Login";
+        //        } else {
+        //            //FilterSearchResult();
+        //            $('#listGiftCard').html(result);
+        //        }
+
+        //    })
+        //    .error(function (error) {
+
+        //    });
+    }
+    function CreateOrUpdatePromoCode(id, actionType) {
+        if (!validateData()) {
+            return;
+        }
+        var key = $('#txtKey').val();
+        var statusSearch = $("#searchType").val();
+        var startDateSearch = $("#ainpStartDateSearchAdmin").val();
+        var title = $('#ainpDiscountNameAdmin').val();
+        var code =  $('#ainpDiscountCodeAdmin').val();
+        var amount = $('#ainpDiscountAmountAdmin').val();
+        var startDate =  $('#ainpStartDateAdmin').val();
+        var startTime = $('#ainpStartTimeAdmin').val();
+        var endDate = $('#ainpEndDateAdmin').val();
+        var endTime = $('#ainpEndTimeAdmin').val();
+        var maxUser = $('#ainpMaxUserAdmin').val();
+        var status = 1;
+        if (!$('#activeAdmin').attr('checked')) {
+            status = 0;
+        }
+        if (startTime == '')
+            startTime = '00:00';
+        if (endDate == '' || endDate == 'end date') {
+            endDate = 'end date';
+        }
+        else{
+            if (endTime == '') {
+                endTime = '00:00';
+            }
+        }
+        var postData = {
+            key:key,
+            statusSearch:statusSearch,
+            startDateSearch:startDateSearch,
+            title: title,
+            code: code,
+            amount: amount,
+            maxUser:maxUser,
+            startDate: startDate,
+            startTime: startTime,
+            endDate: endDate,
+            endTime: endTime,
+            status: status,
+            actionType:actionType,
+            discountId : id
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/CreateOrUpdatePromoCodes/'
+            })
+            .success(function (result) {
+                if (!result.result && !result.isLogin) {
+                    window.location.href = "/Admin/Login";
+                } else {
+                    if (result.result && result.isLogin && result.isCreatedOrUpdate == 1) {
+                        $('#dialog-form').hide();
+                        if(actionType)
+                            alert("promo code '" + result.code +"' is created successfully.");
+                        else
+                            alert("promo code '" + result.code +"' is updated successfully.");
+                        FilterSearchResult();
+                        $('#divList').show();
+                    }
+                    else {
+                        removeHighlight();
+                        if (result.isCreatedOrUpdate == 0) {
+                            //alert("code is existed. please typing an other code");
+                            $('#ainpDiscountCodeAdmin').addClass('ui-state-error');
+                            $('#ainpDiscountCodeAdmin').focus();
+                            updateTips("code is existed. please typing an other code");
+                            $("html, body").animate({ scrollTop: 0 }, "slow");
+                            return false;
+                        } else {
+                            if (result.isCreatedOrUpdate == 2) {
+                                alert(result.error);
+                            }
+                        }
+                    }
+
+                }
+            })
+            .error(function (error) {
+                    });
+    }
+    function isDecimal(n) {
+        if (!$.isNumeric(n))
+            return false; 
+        return true;
+    }
+    function validateData() {
+        removeHighlight();
+        if ($.trim($('#ainpDiscountNameAdmin').val()) == "" || $.trim($('#ainpDiscountNameAdmin').val()) == "e.g. christmas discount") {
+            $('#ainpDiscountNameAdmin').addClass('ui-state-error');
+            $('#ainpDiscountNameAdmin').focus();
+            updateTips("title could not be blank.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+
+        if ($.trim($('#ainpDiscountCodeAdmin').val()) == "" || $.trim($('#ainpDiscountCodeAdmin').val())=="enter code") {
+            $('#ainpDiscountCodeAdmin').addClass('ui-state-error');
+            $('#ainpDiscountCodeAdmin').focus();
+            updateTips("code could not be blank.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+        if ($.trim($('#ainpReDiscountCodeAdmin').val()) == "" || $.trim($('#ainpReDiscountCodeAdmin').val())=='re-enter code') {
+            $('#ainpReDiscountCodeAdmin').addClass('ui-state-error');
+            $('#ainpReDiscountCodeAdmin').focus();
+            updateTips("re-enter code could not be blank.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+
+        if ($.trim($('#ainpDiscountCodeAdmin').val()) != $.trim($('#ainpReDiscountCodeAdmin').val())) {
+            $('#ainpDiscountCodeAdmin').addClass('ui-state-error');
+            $('#ainpReDiscountCodeAdmin').addClass('ui-state-error');
+            updateTips("code and re-enter code must be the same.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+        if ($.trim($('#ainpDiscountAmountAdmin').val()) == "") {
+            $('#ainpDiscountAmountAdmin').addClass('ui-state-error');
+            $('#ainpDiscountAmountAdmin').focus();
+            updateTips("amout could not be blank.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+        if (!isDecimal($.trim($('#ainpDiscountAmountAdmin').val())))
+        {
+            $('#ainpDiscountAmountAdmin').addClass('ui-state-error');
+            $('#ainpDiscountAmountAdmin').focus();
+            updateTips("amout incorrect.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+        if ($.trim($('#ainpStartDateAdmin').val()) == "") {
+            $('#ainpStartDateAdmin').addClass('ui-state-error');
+            $('#ainpStartDateAdmin').focus();
+            updateTips("start date could not be blank.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+       
+        if ($.trim($('#ainpEndTimeAdmin').val()) != "" && $.trim($('#ainpEndDateAdmin').val()) == "") {
+            $('#ainpStartDateAdmin').addClass('ui-state-error');
+            $('#ainpStartDateAdmin').focus();
+            updateTips("end date could not be blank when end time is selected.");
+            return false;
+        }
+        if ($.trim($('#ainpStartDateAdmin').val()) != "" && $.trim($('#ainpEndDateAdmin').val()) != "") {
+            var startDate = $.trim($('#ainpStartDateAdmin').val());
+            var endDate = $.trim($('#ainpEndDateAdmin').val());
+            var regExp = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/;
+            if (parseInt(endDate.replace(regExp, "$3$2$1")) < parseInt(startDate.replace(regExp, "$3$2$1"))) {
+                $('#ainpStartDateAdmin').addClass('ui-state-error');
+                $('#ainpStartDateAdmin').focus();
+                updateTips("start date could not greater end date");
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
+            }
+        }
+        return true;
+    }
+    function updateTips(t) {
+        $('.validateTips')
+            .text(t)
+            .addClass("ui-state-highlight");
+        setTimeout(function () {
+            $('.validateTips').removeClass("ui-state-highlight", 1500);
+        }, 500);
+    }
+    function resetFormFields() {
+        $('#ainpDiscountNameAdmin').val('e.g. christmas discount').removeClass("ui-state-error");
+        $('#ainpDiscountCodeAdmin').val('enter code').removeClass("ui-state-error");
+        $('#ainpReDiscountCodeAdmin').val('re-enter code').removeClass("ui-state-error");
+        $('#ainpDiscountAmountAdmin').val('').removeClass("ui-state-error");
+        $('#ainpStartDateAdmin').val('').removeClass("ui-state-error");
+        $('#ainpStartTimeAdmin').val('').removeClass("ui-state-error");
+        $('#ainpEndDateAdmin').val('').removeClass("ui-state-error");
+        $('#ainpEndTimeAdmin').val('').removeClass("ui-state-error");
+        $('#ainpMaxUserAdmin').val('');
+        $('#activeAdmin').attr('checked', 'checked');
+        $('.validateTips').empty();
+        $('#formTitle').text('add promo code');
+        $('#btnSave').text('create');
+    }
+    function removeHighlight() {
+        $('#ainpDiscountNameAdmin').removeClass("ui-state-error");
+        $('#ainpDiscountCodeAdmin').removeClass("ui-state-error");
+        $('#ainpReDiscountCodeAdmin').removeClass("ui-state-error");
+        $('#ainpDiscountAmountAdmin').removeClass("ui-state-error");
+        $('#ainpStartDateAdmin').removeClass("ui-state-error");
+        $('#ainpStartTimeAdmin').removeClass("ui-state-error");
+        $('#ainpEndDateAdmin').removeClass("ui-state-error");
+        $('#ainpEndTimeAdmin').removeClass("ui-state-error");
+    }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function IsDate(date) {
+        var dateRegEx = /^(0[1-9]|1[012]|[1-9])[- /.](0[1-9]|[12][0-9]|3[01]|[1-9])[- /.](19|20)\d\d$/;
+        if (date.match(dateRegEx) !== null)
+            return true;
+        return false;
+    }
+    function PostParam(pageIndex)
+    {
+        var startDate = $("#ainpStartDateSearchAdmin").val();
+        if (startDate != 'start date') {
+            if (!IsDate(startDate)) {
+                alert("start date invalide");
+                $("#ainpStartDateSearchAdmin").val('start date');
+                return false;
+            }
+        }
+        var endDate = null;
+        var key = $('#txtKey').val();
+        var type = $('#searchType').val();
+        var index = pageIndex;
+        var searchType = type;
+        if (type == -1) {
+            searchType = -1;
+        }
+        var searchParameters = {
+            page: index,
+            key: $.trim(key),
+            type: searchType,
+            startDate: startDate,
+            endDate: ''
+        };
+        return searchParameters;
+    }
+</script>

@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "";
+}
+@using Kuyam.Database
+<script type="text/javascript">    SetupPage();</script>
+@using Kuyam.WebUI.Models
+@using M2.Util
+@using M2.Util.MVC
+@Html.ActionLink("Manage calendars", "index", "calendar")&nbsp;|&nbsp;@Html.ActionLink("Create Calendar", "create", "calendar")
+<br /><br />
+@using (Html.BeginForm())
+{
+    int count = 0;
+    string checkStr = null;
+    List<Calendar> cals = MySession.Cust.GetCalendars();
+    int colCount = ((int)(Math.Min(cals.Count() / 20, 2)))+1;
+    foreach (Kuyam.Database.Calendar c in MySession.Cust.GetCalendars().OrderBy(x => x.Name))
+    {
+        count++;
+        checkStr = (c.CalendarDisplayTypeID == (int)Kuyam.Database.Types.CalendarDisplayType.Selected ? "checked='checked'": null);
+    @:<div class="calendar-label" style="background:#@(c.BackColor); text-align:left"><input type="checkbox" value="@(c.CalendarID)" name="calselect" id="calselect" @(checkStr)/>@c.Name.SubstringSafe(0, 22)</div>&nbsp;
+            if (count % colCount == 0)
+            {
+    @:<div class="clear"></div>
+            }
+    }
+    @:<div class="clear"></div>
+    @Html.SaveCancelLC()
+}

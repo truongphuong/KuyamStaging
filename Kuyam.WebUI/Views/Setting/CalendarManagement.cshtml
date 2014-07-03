@@ -1,0 +1,325 @@
+﻿@using Kuyam.Database
+@model dynamic
+@{
+    ViewBag.Title = "Calendar Management";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<link href="@Url.Content("~/css/companysetting.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/css/kuyam.css")" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/js/ui.checkbox.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../Scripts/js/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="../../Scripts/js/StickyScroller.js"></script>
+<script type="text/javascript" src="../../Scripts/js/GetSet.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#category, #mobilecarrier, #firstalert, #secondalert, #anytime, #norefund').selectmenu();
+        $('#text').checkBox({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                if (ui.checked == true) {
+                    $(".companynumber").show();
+                }
+                else {
+                    $(".companynumber").hide();
+                }
+            }
+        });
+        $('#mail').checkBox({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                if (ui.checked == true) {
+                    $(".companyemail").show();
+                }
+                else {
+                    $(".companyemail").hide();
+                }
+            }
+
+        });
+        $('#cancelstandard, #cancelstrict, #cancelcustom, #paypal, #person').checkBox();
+        $('input:radio').each(function (index) { //lblid
+            $(this).checkBox();
+        });
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+        $('#deletecompany').click(function () {
+            showpopup("deletecompanypopup");
+        });
+        $('#deletecompanycancel').click(function () {
+            $('#deletecompanypopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+
+    });
+</script>
+<script type="text/javascript" src="../../Scripts/js/general.js"></script>
+<style type="text/css">
+    .reminderarea .reminderbox1, .cancellation .cancelbox5 .rcancelitem .rcancelitembox1, .paypalarea .paypalbox1, .userinfo .infoarea1
+    {
+        behavior: url("~/PIE.htc");
+    }
+</style>
+<!-- InstanceBeginEditable name="content" -->
+<div class="usersettings companysettings admincpsetting">
+    <div class="clear20">
+    </div>
+    <div class="redcompanysettingsboxtop">
+    </div>
+    <div class="redcompanysettingsboxmid">
+        <div class="cancellation">
+            <div class="cancelbox1">
+                <h2>
+                    calendar management</h2>
+                <p>
+                    displayed on your profile<br />
+                    <br />
+                </p>
+            </div>
+            <div class="cancelbox5">
+                <div class="rcancelhead">
+                    calendar list
+                </div>
+                @{  if (ViewBag.CalendarList != null)
+                    {
+                        for (int i = 0; i < ViewBag.CalendarList.Count; i++)
+                        {
+                            Calendar calendar = ViewBag.CalendarList[i];
+                            var id = "cancelnone" + (i + 1);
+                    <div class="clear13">
+                    </div>
+                    <div class="rcancelitem">
+                        <div class="rcancelitembox1">
+                        </div>
+                        <div class="rcancelitembox">
+                            <input type="radio" id="@id" name="cancel" value="@calendar.CalendarID"/>
+                            <label for="@id">
+                                <span class="rdtitle">@calendar.Name</span>
+                            </label>
+                        </div>
+                    </div>
+                        }
+                    }
+                }
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="redcompanysettingsboxbot">
+    </div>
+    <div class="clear">
+    </div>
+    <div class="btnarea btncompanysettingarea">
+        <a href="#" class="btnusersetting btncanceluser" title="Add" id="btnAdd"><span class="btnusersettingleft">
+        </span><span class="btnusersettingcenter btncancelusersetting">Add </span><span class="btnusersettingright">
+        </span></a><a href="#" class="btnusersetting btncanceluser" title="Edit" id="btnEdit">
+            <span class="btnusersettingleft"></span><span class="btnusersettingcenter btncancelusersetting">
+                Edit </span><span class="btnusersettingright"></span></a><a href="#" class="btnusersetting btncanceluser"
+                    title="Delete" id="btnDelete"><span class="btnusersettingleft"></span><span class="btnusersettingcenter btncancelusersetting">
+                        Delete </span><span class="btnusersettingright"></span></a>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div style="color: red" id="divSelectError">
+    </div>
+</div>
+<div class="clear">
+</div>
+<!-- InstanceEndEditable -->
+<div id="loginpopup" class="appPopup">
+    <div class="popUpAppoiment">
+        <div class="bgtopPopup">
+        </div>
+        <div class="bgmidPopup">
+            <h3>
+                are you sure you want to delete this calendar?</h3>
+            <p class="pYesNo">
+                <a class="btnYes" href="JavaScript:void(0);" title="Yes">yes</a> <a class="btnNo"
+                    href="JavaScript:void(0);" title="No">no</a>
+            </p>
+            <div id="divDeleteError" class="contentQuestion">
+                <p>
+                    you made some unsaved modifications.</p>
+            </div>
+        </div>
+        <div class="bgbottomPopup">
+        </div>
+    </div>
+</div>
+<div id="addnumber" class="comfirmationpopup addnumber">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>
+                <label id="lblAddCalendar">
+                    add calendar</label></strong></h3>
+        <div class="clear20">
+        </div>
+        <div class="dctitleinput">
+            <input id="inCalendarName" type="text" value="" /></div>
+        <div class="clear">
+        </div>
+        <div class="divcreatediscount">
+            <a href="#" class="createpkg" id="btnAddCalendar" title="Add">
+                <span class="lcreatepkg"></span>
+                <span class="ccreatepkg" id="spanAddTitle">Add</span> <span class="rcreatepkg"></span>
+            </a>
+        </div>
+        <div class="clear7">
+        </div>
+        <div style="color: red" id="divError">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        $('#btnDelete').click(function () {
+            $('#divSelectError').empty();
+            if ($('.rcancelitembox').find(':radio').filter(':checked').length == 0) {
+                $('#divSelectError').append("select a service to delete");
+                return false;
+            }
+            $('#lightBox').css('opacity', '0.3').fadeIn(400);
+            $('#loginpopup').fadeIn(400);
+            $('#loginpopup').css('top', ($('#lightBox').height() - $('#loginpopup').height()) / 2);
+            $('#loginpopup').css('left', ($('#lightBox').width() - $('#loginpopup').width()) / 2);
+            $('#divDeleteError').empty();
+            $('#loginpopup .btnYes').click(function () {
+                $('#divDeleteError').empty();
+                var id = $('.rcancelitembox').find(':radio').filter(':checked').attr('value');
+                var parameters = { id: id };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(parameters),
+                        dataType: 'html',
+                        url: '/setting/DeleteCalendar/'
+                    })
+                    .success(function (result) {
+                        if (result == false || result == 'false') {
+                            $('#divDeleteError').empty();
+                            $('#divDeleteError').append("<p>cannot delete in use calendar<p/>");
+                            return false;
+                        }
+                        $('#loginpopup').fadeOut(400);
+                        $('#lightBox').fadeOut(400);
+                        window.location.href = '/setting/calendarmanagement';
+                    })
+                    .error(function (error) {
+                        $('#divDeleteError').append("<p>cannot delete in use calendar<p/>");
+                    });
+
+            });
+            $('#loginpopup .btnNo').click(function () {
+                $('#loginpopup').fadeOut(400);
+                $('#lightBox').fadeOut(400);
+            });
+        });
+
+        $('#inCalendarName').keyup(function () {
+            var $this = $(this);
+            if ($this.val().length > 60)
+                $this.val($this.val().substr(0, 60));
+        });
+
+        $("#btnAdd").click(function () {
+            $('#divError').empty();
+            $('#lblAddCalendar').text("add calendar");
+            $('#spanAddTitle').text("Add");
+            showpopup("addnumber");
+        });
+
+        $("#btnEdit").click(function () {
+            $('#divSelectError').empty();
+            if ($('.rcancelitembox').find(':radio').filter(':checked').length == 0) {
+                $('#divSelectError').append("select a service to edit");
+                return false;
+            }
+            $('#divError').empty();
+            $('#spanAddTitle').text("Update");
+            $('#lblAddCalendar').text("edit calendar");
+            showpopup("addnumber");
+
+        });
+
+        $(document).ready(function () {
+            $("#btnAddCalendar").click(function () {
+                $('#divError').empty();
+                var name = $('#inCalendarName').val();
+
+                if (typeof name == 'undefined' || name == '') {
+                    $('#divError').append('calendar name is required field');
+                    return false;
+                }
+
+                if ($('#spanAddTitle').text() != 'Update') {
+                    var parameters = { name: name };
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(parameters),
+                            dataType: 'html',
+                            url: '/setting/AddCalendar/'
+                        })
+                        .success(function (result) {
+                            window.location.href = '/setting/calendarmanagement';
+                        })
+                        .error(function (error) {
+                            window.location.href = '/setting/calendarmanagement';
+                        });
+                }
+                else {
+                    var id = $('.rcancelitembox').find(':radio').filter(':checked').attr('value');
+                    var eparameter = { id: id, name: name };
+                    $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(eparameter),
+                        dataType: 'html',
+                        url: '/setting/UpdateCalendar/'
+                    })
+                    .success(function (result) {
+                        $('#loginpopup').fadeOut(400);
+                        $('#lightBox').fadeOut(400);
+                        window.location.href = '/setting/calendarmanagement';
+                    })
+                    .error(function (error) {
+                        //window.location.href = '/setting/calendarmanagement';
+                    });
+                }
+            });
+        });
+
+    });
+    //Login popup
+    function showpopup(popupid) {
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#' + popupid).fadeIn(400);
+        //document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+        //document.body.scroll = "no"; // ie only
+        $('#' + popupid).css('top', ($('#lightBox').height() - $('#' + popupid).height()) / 2);
+        $('#' + popupid).css('left', ($('#lightBox').width() - $('#' + popupid).width()) / 2);
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentId = deviceAgent.match(/(iphone|ipod|android)/);
+        if (agentId) {
+            $('#' + popupid).css('position', 'absolute');
+        }
+
+        $('#' + popupid + ' .btnClose').click(function () {
+            $('#' + popupid).fadeOut(400);
+            $('#lightBox').fadeOut(400);
+            //document.documentElement.style.overflow = 'auto';  // firefox, chrome
+            //document.body.scroll = "yes"; // ie only	
+        });
+    }
+			
+</script>

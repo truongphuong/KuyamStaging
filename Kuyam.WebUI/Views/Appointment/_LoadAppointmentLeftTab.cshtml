@@ -1,0 +1,113 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@{
+    List<Appointment> lstAppointment = ViewBag.lstAppoitment;
+    
+}
+@if (lstAppointment != null)
+{
+    foreach (Appointment item in lstAppointment)
+    {
+        if ((Types.AppointmentStatus)item.AppointmentStatusID != Types.AppointmentStatus.Unknown)
+        {
+
+            if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Pending)
+            {
+                                           
+    <div id="@item.AppointmentID" class="pannelappointments">
+        <div class="pending">
+            <div class="top">
+                <span class="icon"></span>&nbsp;pending confirmation</div>
+            <div class="center">
+                <div class="info">
+                    <h6>@String.Format("{0:t}", item.Start) @String.Format("{0:ddd MMM d}", item.Start)</h6>
+                    @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                    {
+                        @item.ServiceCompany.ProfileCompany.Name
+                    }
+                </div>
+                <a href="#" class="linkdetail" title="detail"></a>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="bottom">
+            </div>
+        </div>
+    </div>
+            }
+            else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Confirmed)
+            {
+    <div id="@item.AppointmentID" class="pannelappointments">
+        <div class="comfirmed">
+            <div class="top">
+                <span class="icon"></span>&nbsp;confirmed</div>
+            <div class="center">
+                <div class="info">
+                    <h6>@String.Format("{0:t}", item.Start) @String.Format("{0:ddd MMM d}", item.Start)</h6>
+                    @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                    {
+                        @item.ServiceCompany.ProfileCompany.Name
+                    }
+                </div>
+                <a href="#" class="linkdetail" title="detail"></a>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="bottom">
+            </div>
+        </div>
+    </div>
+                                    
+            }
+            else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Modified ||
+            (Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.CompanyModified)
+            {
+                                        
+    <div id="@item.AppointmentID" class="pannelappointments">
+        <div class="modified">
+            @if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.CompanyModified)
+            {
+                <div class="top">
+                    <span class="icon"></span>&nbsp;modified time
+                </div>
+                <div class="center">
+                    <div class="info">
+                        <h6>
+                            <span class="highlight">@String.Format("{0:t}", item.Start) </span>@String.Format("{0:ddd MMM d}", item.Start)</h6>
+                        @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                        {
+                            @item.ServiceCompany.ProfileCompany.Name
+                        }
+                    </div>
+                    <a href="#" class="linkdetail" title="detail"></a>
+                    <div class="clear">
+                    </div>
+                </div>   
+            }
+            else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Modified)
+            {
+                <div class="top">
+                    <span class="icon"></span>&nbsp;modified time
+                </div>                     
+                <div class="center">
+                    <div class="info">
+                        <h6>@String.Format("{0:t}", item.Start) @String.Format("{0:ddd MMM d}", item.Start)</h6>
+                        @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                        {
+                            @item.ServiceCompany.ProfileCompany.Name
+                        }
+                    </div>
+                    <a href="#" class="linkdetail" title="detail"></a>
+                    <div class="clear">
+                    </div>
+                </div>
+            }
+            <div class="bottom">
+            </div>
+        </div>
+    </div>
+            }
+        }
+    }
+}

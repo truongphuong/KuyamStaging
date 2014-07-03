@@ -1,0 +1,42 @@
+@{
+    Layout = "~/Views/Shared/_KuyamLayoutBlank.cshtml";
+    ViewBag.Title = "about";
+}
+
+        <img class="BodyTop" src="@Url.Content("~/images/About/MeditateTop.png")" alt="Schedule, Share, and Discover" />
+
+        <ul class="GreenTabs">
+            <li class="TabLeft Here"></li>
+            <li class="TabCenter">@Html.ActionLink("Meet The Team", "MeetTheTeamKourosh", "home")</li>
+            <li class="TabRight">@Html.ActionLink("Business Solutions", "BusinessSolutions", "home")</li>
+        </ul>
+
+
+        <img class="FloatRight" src="@Url.Content("~/images/About/MeerkatTourist.png")" alt="Tourist Meerkat" />
+
+        <p>
+            Founded in 2011 by <a href="@Url.Content("~/home/meettheteamkourosh")#Top">Kourosh Gohar</a> 
+            <a href="@Url.Content("~/home/meettheteamtony")#Top">Tony Rhoton</a>, and 
+            <a href="@Url.Content("~/home/meettheteamtodd")#Top">Todd Zebert</a>,
+            what started as @Html.ActionLink("a man who simply wanted to get his hair cut", "HairCut", "home") 
+            has evolved into a fresh online scheduling platform: Kuyam.
+        </p>
+
+        <p>
+            With Kuyam, you can easily <b>schedule</b> appointments with
+            your favorite lifestyle (cosmetic, fitness, and family-related) businesses 
+            in your neighborhood. You can create, <b>share</b> and connect
+            calendars with your friends or even manage your family schedule. Kuyam is
+            also a hub to <b>discover</b> local non-profit and for-profit companies.
+        </p>
+
+        <p>
+            @Html.ActionLink("Our office", "contact", "home") is in Los Angeles 
+            where we're building the first Kuyam community.
+            @Html.ActionLink("The team", "MeetTheTeamKourosh", "home")
+            believes in an organic, friendly and collaberative company
+            environment which celebrates the core idea of Kuyam, which in Chumash
+            means, "A meeting place where we can come together."
+        </p>
+
+

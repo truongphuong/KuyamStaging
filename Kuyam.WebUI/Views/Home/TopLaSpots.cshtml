@@ -1,0 +1,311 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Database.Extensions;
+@using Kuyam.Domain;
+@using Kuyam.Utility;
+@using Kuyam.Domain.Seo;
+@{
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+    ViewBag.Title = "lets you book all your appointments in one place";
+}
+@{
+    List<Service> parentCategories = ViewBag.ParentCategories;
+    List<PostExt> recentPosts = ViewBag.Posts;
+    PostExt featuredPost = ViewBag.FeaturedPost;
+    ProfileCompany profileCompany = ViewBag.ProfileCompany;
+    FeaturedCompany featuredCompany = ViewBag.FeaturedCompany;
+}
+@section MetaSeoSection{
+    @ViewBag.MetaTagExtension.MetaTag()
+}
+<link href="@Url.Content("~/Content/jcarousel/skins/tango/skin.css")" rel="stylesheet" type="text/css" />
+<!-- InstanceBeginEditable name="content" -->
+
+<div class="contentMarketPlace contentLanding">
+    <div class="bgMainContent">
+        <div id="leftTab">
+                        <div class="colLeft">
+                            <div class="notmemberscroll">
+                                <div class="appBox">
+                                    <img width="55" class="iconunknow" src="../../images/ios7appicon117tilt.png" />
+                                    <i>
+                                        with our app,<br />
+                                        book your<br />
+                                        appointments<br />
+                                        on-the-go.
+                                    </i>
+                                    <div class="clear">
+                                    </div>
+                                    <a href="@Kuyam.Database.Constants.iPhone" title="iPhone" target="_blank" class="btnIPhone">
+                                        <img src="../../images/btn-iphone.png" />
+                                    </a>
+                                    <a href="@Kuyam.Database.Constants.Android" title="Android" target="_blank" class="btnAndroid">
+                                        <img src="../../images/btn-android.png" />
+                                    </a>
+                                </div>
+                                <div id="signup2" class="formForNotMember" style="@(Request.IsAuthenticated? (((bool)ViewBag.ShowSignUp==false)?"display:none;":""):"")">
+                                    
+                                    <div class="clear h5">
+                                    </div>
+                                    <fieldset>
+                                        <div class="clear h3">
+                                        </div>
+                                        <input type="button" class="btnSignUp" value="" title="sign up now"/>
+                                        <div class="clear h3">
+                                        </div>
+                                        <div class="errorarea">
+                                            <div id="loginError" style="display: none;">
+                                                <span style="color: Red"></span>
+                                            </div>
+                                        </div>
+                                        <div class="clear h3">
+                                        </div>
+                                    </fieldset>
+                                    <p>
+                                        schedule appointments instantly or add your own listing. <b>it's free!</b>
+                                    </p>
+                                    <div class="imgFooter">
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+        <div class="colRight">
+            <div class="contentAuthor contentBlogAfter">
+                <div id="blogCategoryNavigation">
+                    @Html.Partial("_BlogCategoryNavigation")
+                </div>
+                <div id="webBlogLogin">@Html.Partial("_WebBlogHomeLoginResult")</div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+
+@*
+<div class="whitebackground">
+    <div class="banner">
+        <div style="position: absolute; z-index: 1;">
+            <div class="bheader">
+                <div class="col1 marketplacecol1">
+                    <img style="margin-top: 14px; margin-left: 157px;" src="/Images/text.png" />
+                    <div class="r3">
+                        <div class="homeselect">
+                            <select name="speedC" id="speedC" class="selectmenu" onchange="redrectToResult();">
+                                <option value="0" style="font-weight: bold" selected="selected"><span>select a category</span></option>
+                                @foreach (Service parent in parentCategories)
+                                {
+                                    <option style="font-weight:bold" value="@parent.ServiceID" name="@parent.ServiceName">@UtilityHelper.TruncateText(parent.ServiceName, 30)</option>
+                                }
+                            </select>
+                        </div>
+                        <a href="#" title="discover" id="btnDiscover" class="discover" style="display: none;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="slides" class="marketplaceblog">
+            <ul class="bjqs">
+                <li>
+                    @if (featuredPost == null)
+                    {
+                        <img alt="" src="/images/photo_company_image.png" style="width: 961px; height: 511px;" />
+                        <div class="bgcaption">
+                        </div>
+
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl("blogPost", new { seName = featuredPost.GetSeName(featuredPost.PostRowID, "post") })" title="@featuredPost.Title">
+                            @if (string.IsNullOrEmpty(featuredPost.CoverPhoto))
+                            {
+
+                                <img alt="@featuredPost.Title" src="/images/photo_company_image.png" style="width: 961px; height: 511px;" />
+                            }
+                            else
+                            {
+                                <img alt="" src="@KalturaHelper.GetKalturaUrl(featuredPost.PostRowID, featuredPost.CoverPhoto, (int)Types.MediaCropType.HomeBeforeLogin, 961, 511)" style="width: 961px; height: 511px;" />
+                            }
+                            <div class="bgcaption">
+                                <h1 class="textCaption">@UtilityHelper.TruncateText(featuredPost.Title, 65)</h1>
+                            </div>
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="homecontent marketplaceblog">
+        <div class="itembox">
+            @if (profileCompany != null)
+            {
+                var addrees1 = UtilityHelper.TruncateText(profileCompany.City, 15) + ", " + profileCompany.State;
+                if (addrees1.Length > 45)
+                {
+                    addrees1 = addrees1.Substring(0, 40) + "...";
+                }
+                var imgsrc = DAL.GetCompanyPhotoByCompanyID(featuredCompany.ProfileID);
+                var urlPhoto = "/images/photo_company_image.png";
+                if (imgsrc != null)
+                {
+                    urlPhoto = KalturaHelper.GetKalturaUrl(imgsrc.LocationData, 961, 511);
+                }
+                string pUrl = Url.RouteUrl("availability", new { seName = featuredCompany.GetSeName(featuredCompany.ProfileID) }); ;
+
+                //if (DAL.isViewAvailability(featuredCompany.ProfileID))
+                //{
+                //    pUrl = Url.RouteUrl("availability",new { seName = featuredCompany.GetSeName(featuredCompany.ProfileID) });
+                //}
+                //else
+                //{
+                //    pUrl = "/company/companysearch/0?profileId=" + featuredCompany.ProfileID;
+                //}
+
+                <div class="activitivedouble">
+                    <div class="featured">
+                    </div>
+                    <a href="@pUrl" title="@featuredCompany.Profile.ProfileCompany.Name" class="testing">
+                        <img src="@urlPhoto" alt="" style="width: 472px; height: 230px;" />
+                        <div class="bgcaptionactive">
+                            <div class="contentcaption captionactivitive" style="color: #FFFFFF; font-size: 35px;bottom: 45px !important" title="@featuredCompany.Profile.ProfileCompany.Name">
+                                @UtilityHelper.TruncateText(featuredCompany.Profile.ProfileCompany.Name, 25)
+                            </div>
+                            <div class="rankingstar">
+                                <div class="clear5">
+                                </div>
+                                @for (var i = 0; i < profileCompany.Rate; i++)
+                                {
+                                    <span class="greenstar"></span>
+                                }
+                                @for (var i = 5 - profileCompany.Rate; i > 0; i--)
+                                {
+                                    <span class="graystar"></span>
+                                }
+                                <a href="#" title="reviews" class="weburl" style="font-size: 18px;">
+                                    (@profileCompany.TotalReview
+                                    @(profileCompany.TotalReview > 1 ? "reviews" : "review"))
+                                </a> <span class="addr"
+                                           style="font-size: 18px;">@addrees1</span>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btnarrow">
+                                        <img src="@Url.Content("~/Images/Blog/arrow-right.png")" alt="arrow-right" />
+                                    </a>
+                                </div>
+                            </a>
+                        </div>
+            }
+            
+            @foreach (var post in recentPosts)
+            {
+                <div class="activebox1">
+                    <a href="@Url.RouteUrl("blogPost", new { seName = post.GetSeName(post.PostRowID,"post") })" title="@post.Title">
+                        @if (string.IsNullOrEmpty(post.CoverPhoto))
+                        {
+                            <img src="@Url.Content("~/Images/noimg.jpg")" alt="No Image" style="width: 233px; height: 230px;" />
+                        }
+                        else
+                        {
+                            <img src="@Kuyam.Utility.KalturaHelper.GetKalturaUrl(post.PostRowID, post.CoverPhoto, (int)Types.MediaCropType.DetailBeforeLogin, 233, 230)" alt="@post.Title" style="width: 233px; height: 230px;" />
+                        }
+                        <div class="bgcaptionactive">
+                            <div class="contentcaption">@Kuyam.Domain.UtilityHelper.TruncateText(post.Title, 35)</div>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            <div class="clear">
+            </div>
+           
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+*@
+
+<!-- InstanceEndEditable -->
+<div class="clear">
+</div>
+<script src="@Url.Content("~/Content/jcarousel/jquery.jcarousel.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    //carousels
+    $(document).ready(function(){
+        $('#as-featured-on').jcarousel({
+            wrap: 'circular',
+            scroll: 4,
+        });
+    });
+    $(document).ready(function () {
+
+        $('select#speedC').selectmenu();
+        $(".termspopupheader a").click(function () {
+            $(".termspopupheader a").removeClass("headeractive");
+            $(this).addClass("headeractive");
+            $("#divtermsofuse, #divprivacy, #divservices").hide();
+            $("#div" + $(this).attr("id")).show();
+            var deviceAgent = navigator.userAgent.toLowerCase();
+            var agentId = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+            if (agentId) {
+                $("#termspopupbody").niceScroll({ cursorborder: "", cursoropacitymin: 1, cursorcolor: "#89c1f5", boxzoom: false }).resize();
+            }
+        });
+
+        loadhomepageitems();
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+
+
+
+        function forgotPasswordpopup()
+        {
+            var myParam = getQueryString()["key"];
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+
+            if(!isLogin && myParam=='true'){
+                $('#forgotPass').hide();
+                $('#loginError').hide();
+                $('#signuppopup').hide();
+                $('#loginpopup').hide();
+                showDialog('forgotpassword', 'btnCloseloginPopup');
+            }
+        }
+
+        $('.activitivedouble').click(function (e) {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            redirectUrl= $(this).children(".testing").attr("href");
+            if(!isLogin){
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+        });
+    });
+
+    function redrectToResult()
+    {        
+        var categoryName = $("#speedC option:selected").attr("name");
+        var slug = generateSlug(categoryName);
+        var url = "/" + slug;
+        window.location = url;
+
+    }
+
+    $('.btnSignUp').click(function () {
+        redirectUrl = "";
+        $('#txtFirstname').val('first name').css('color', '#B3B3B3');
+        $('#txtLastname').val('last name').css('color', '#B3B3B3');
+        $('#txtEmailAddress').val('enter e-mail address').css('color', '#B3B3B3');
+        $('#loginError').hide();
+        showDialog('signuppopup', 'btnCloseloginPopup');
+    });
+</script>

@@ -1,0 +1,211 @@
+﻿<style type="text/css">
+    .sendmsgpopup .senddescription {
+        line-height: 22px;
+        padding-top: 6px;
+    }
+
+    .sendmsgpopup .senddescription {
+        color: #666666;
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .sendmsgpopup .contentPopup {
+        padding-left: 21px;
+    }
+
+    .comfirmationpopup .contentPopup {
+        color: #666666;
+        font: 15px/18px Arial,Helvetica,sans-serif;
+        padding: 15px 19px;
+        position: relative;
+    }
+    .sendmsgpopup .contentmsgsend {
+        color: #666666;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 20px;
+        margin: 8px 0 6px;
+    }
+    .comfirmationpopup .contentPopup textarea {
+        height: 145px;
+        margin-left: 4px;
+        overflow: auto;
+        width: 485px;
+    }
+    .sendmsgpopup .msgsend textarea {
+        border: 1px solid #666666;
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 16px;
+        height: 98px;
+        margin: 0;
+        padding: 5px;
+        width: 603px;
+    }
+
+    
+
+    textarea {
+        color: #666666;
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 15px;
+        font-weight: normal;
+    }
+    .sendmsgpopup .recipient {
+        background-color: #BFDBEE;
+        border-left: 10px solid #333333;
+        margin: 9px 0 0 3px;
+        min-height: 174px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 10px 0 10px 25px;
+        width: 575px;
+    }
+
+    .recipient {
+        background-color: #BFDBEE;
+        border-image: none;
+        border-style: solid;
+        border-width: 1px 1px 1px 10px;
+        margin: 9px 0 0 3px;
+        min-height: 405px;
+        overflow-y: auto;
+        padding: 10px 0 10px 25px;
+        width: 575px;
+    }
+
+    .recipitem label.ui-checkbox {
+        background: url("../Images/homepage_icon.png") no-repeat scroll -288px -1600px rgba(0, 0, 0, 0);
+        color: #000000;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 20px;
+        margin: 0;
+        padding: 2px 0 2px 30px;
+        width: 150px;
+    }
+    .sendmsgpopup .recipitem {
+        padding-bottom: 2px;
+    }
+
+    .recipitem {
+        color: #000000;
+        float: left;
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 16px;
+        padding-bottom: 5px;
+        width: 186px;
+    }
+ </style>
+
+<!--begin SEND TO CLIENT popup-->
+<div id="sendmsgpopup" class="comfirmationpopup sendmsgpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="close"></a>
+        <h3>
+            <div id="smsDivTitle">
+            </div>
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="senddescription">
+            we’ll send a kuyam e-mail blast to your clients to promote your promo code.<br />
+            <span class="redc1272d">
+                you have a limit of 1 email blast per promo code. use it
+                wisely!
+            </span>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="contentmsgsend">
+            include a message from your company <i>(max 250 characters)</i>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="msgsend">
+            <textarea id="msgsend" cols="4" rows="4" onfocus="if (this.value=='enter message here....') {this.value = '';}"
+                      onblur="if (this.value==''){this.value='enter message here....';}">
+                enter message here....
+            </textarea>
+        </div>
+        <div class="clear15">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="recipient">
+            @{
+                for (int i = 0; i < 10; i++)
+                {
+                    <div class="recipitem">
+                        <input type="checkbox" class="ui-helper-hidden-accessible" />
+                        <label class="ui-checkbox ">
+                            @i.ToString()
+                        </label>
+                        <div class="clear">
+                        </div>
+                                        </div>
+                }
+            }
+            @*@{
+                //RegularClients
+                if (ViewBag.RegularClients != null)
+                {
+                    for (int i = 0; i < ViewBag.RegularClients.Count; i++)
+                    {
+                        Kuyam.Database.RegularClient regular = ViewBag.RegularClients[i];
+                        var id = string.Format("client{0}", i + 1);
+                        var stName = string.Format("{0} {1}", regular.FirstName, regular.LastName);
+                        if (stName.Length > 15)
+                        {
+                            stName = stName.Substring(0, 15);
+                        }
+                        <div class="recipitem">
+                            <input type="checkbox" id="@id" idvalue="@regular.RegularClientId" />
+                            <label for="@id">
+                                @stName
+                            </label>
+                        </div>
+                    }
+                }
+            }*@
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divpreviewemail">
+            <a href="#" class="createpkg" id="btnSendSMSReview" title="preview e-mail">
+                <span class="lcreatepkg"></span><span class="ccreatepkg">preview e-mail</span> <span class="rcreatepkg">
+                </span>
+            </a>
+        </div>
+        <div class="clear7">
+        </div>
+        <div id="errorDivSendSMS" style="color: red">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!--end SEND TO CLIENT popup-->
+<!--begin recipients popup-->
+@*<div id="recipientpopup" class="comfirmationpopup recipientpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="close"></a>
+        <h3>
+            <div id="divRecipientTitle">
+            </div>
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="recipient">
+            <div id="divRecipientContent">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear20">
+        </div>
+    </div>
+</div>*@
+<!--end recipients popup-->

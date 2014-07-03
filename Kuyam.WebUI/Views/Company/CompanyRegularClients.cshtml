@@ -1,0 +1,404 @@
+﻿@{
+    ViewBag.Title = "Regular Clients";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+}
+<style type="text/css">
+    .companyregular .sortarea a.viewall, .rcitem
+    {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<script type="text/javascript">
+    var companyId = '@ViewBag.companyId';
+    $(function () {
+        createtopleftscroll();
+        $("#btncreatepackage").click(function () {
+            showpopup("packagecreatepopup");
+        });
+
+        $('#sortby').selectmenu();
+
+        $("#btninviteregular").click(function () {
+            showpopup("inviteregularpopup");
+        });
+
+        $('#allclient, #sltclient').checkBox();
+        $("#selectquanlity, #selectduration").selectmenu();
+
+        $('.recipitem input[type="checkbox"], .servicelist ul li input[type="checkbox"]').checkBox();
+
+        $('#CompanyRegularClientMenu').attr("class", "leftitem choose");
+        $('#sortby').change(function () {
+            var key = $(".viewall").html();
+            regularClientSearch(key)
+        });
+
+    });
+
+    function gotoStatus(status) {
+        window.location = "/CompanyAppointment/index/?companyId=" + companyId;
+    }
+
+    function insertRegularClients() {
+        
+        var regularClients = '';
+        var errors = true;
+        var flagFirstname = true;
+        var flagLastname = true;
+        var flagEmail = true;
+        var flagDuplicateEmail = true;
+
+        var validEmail = true;
+        var alerterror = 0;
+        var lstemail = new Array();
+        
+        for (var i = 0; i < 10; i++) {
+            var firstname = $("#firstname_" + i).val();
+            var lastname = $("#lastname_" + i).val();
+            var email = $("#email_" + i).val();
+            var textRegularClients = '';
+            var flag = '';
+            var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+
+            var emailExist = false;
+
+            validEmail = true;
+            if (($.trim(firstname) != '' && $.trim(firstname) != 'first name') || ($.trim(lastname) != ''
+            && $.trim(lastname) != 'last name') || ($.trim(email) != '' && $.trim(email) != 'e-mail address')) {
+                window.isUseDefaultAjaxHandle = false;
+                var parameters = { email: email, profileId: companyId };
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'json',
+                    url: '/company/RegularClientCheckExistEmail/',
+                    success: function (result) {
+                        if (result == true) {
+                            emailExist = true;
+                        }
+                    },
+                    complete: function () {
+                        if ($.trim(firstname) == '' || $.trim(firstname) == 'first name') {
+                            flagFirstname = false;
+                            $("#firstname_" + i).addClass('errorinput');
+                        }
+                        if ($.trim(lastname) == '' || $.trim(lastname) == 'last name') {
+                            flagLastname = false;
+                            $("#lastname_" + i).addClass('errorinput');
+                        }
+                        if (!reemail.test(email)) {
+                            flagEmail = false;
+                            validEmail = false;
+                            $("#email_" + i).addClass('errorinput');
+                        } else if (lstemail.indexOf(email) != -1) {
+                            flagDuplicateEmail = false;
+                            alerterror += 1;
+                            //alert("you already have a regular employee with this email address.");
+                            $("#email_" + i).addClass('errorinput');
+                        } else if (emailExist == true) {
+                            alerterror += 1;
+                            //alert("you already have a regular employee with this email address.");
+                            flagEmail = false;
+                            validEmail = false;
+                            $("#email_" + i).addClass('errorinput');
+                        }
+                        if (flagFirstname && flagLastname && flagEmail && flagDuplicateEmail) {
+                            regularClients += firstname + ',' + lastname + ',' + email + ';';
+                            lstemail.push(email);
+                        } else {
+                            errors = false;
+                        }
+                    },
+                    error: function (error) {
+                        alert(error);
+                    },
+                    async: false
+                });
+
+            }
+
+        }
+        if (alerterror > 0) {
+            alert("you already have a regular employee with this email address.");
+            $($('.iritem .iremail input.errorinput')[0]).focus()
+        }
+        if (errors) {
+
+            $("#ccreatepkg").removeAttr("onclick");
+            var parameters = { regularClients: regularClients, profileId: companyId };
+            window.isUseDefaultAjaxHandle = true;
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/InsertRegularClient/'
+            })
+            .success(function (result) {
+                window.location.href = '/company/CompanyRegularClients?companyId=' + companyId;
+            })
+            .error(function (error) {
+                $("#ccreatepkg").attr("onclick", "insertRegularClients();");
+                alert(error);
+            });
+        } else {
+            return false;
+        }
+    }
+
+    function namechange() {
+
+        $("#spaEdit").hide();
+        $("#spachange").show();
+        $("#namechange").hide();
+
+        $("#changeFirstName").val($(".editfirst").html());
+        $("#changeLastName").val($(".editlast").html());
+
+
+    };
+    function emailchange() {
+
+        $("#spachangeEmail").show();
+        $("#spaeditEmail").hide();
+        $("#enailchange").hide();
+        $("#changeemail").val($(".editemail").html());
+    };
+    
+    function savechange() {
+
+        var firstName = $("#changeFirstName").val();
+        var lastName = $("#changeLastName").val();
+        var email = $("#changeemail").val();
+        var regularClientId = $("#defregularclientid").val();
+
+        var flag = '';
+
+        if (firstName.trim() == '' || lastName.trim() == '') {
+            alert('Please enter name!');
+            flag = 'true';
+        }
+        var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+        if (!reemail.test(email)) {
+            alert('invalid e-mail address.');
+            //errors += 'invalid e-mail address.'
+            flag = 'true';
+        }
+
+        if (flag == '') {
+            var searchParameters = { regularClientId: regularClientId, firstName: firstName, lastName: lastName, email: email, profileId: companyId };
+            //window.isUseDefaultAjaxHandle = true;
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Company/RegularClientUpdate'
+                })
+                .success(function (result) {
+                    window.location.href = '/company/CompanyRegularClients?companyId=' + companyId;
+                })
+                .error(function (error) {
+
+                });
+        }
+    };
+</script>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight">
+            <div class="editserviceform companypackageform">
+                <div class="companypackagebox">
+                    <div class="companypackageboxtext">
+                        <h1>
+                            regular clients</h1>
+                        <div class="clear3">
+                        </div>
+                        <p class="padd">
+                            whenever regular clients book with you through kuyam, we waive the<br />
+                            5.0% Appointment Fee so you only have to pay $0.99 per booking.
+                        </p>
+                    </div>
+                    <div class="companypackageboxbutton">
+                        <a href="#" title="invite clients now" id="btninviteregular" class="btncreatepackage">
+                            invite clients now</a> <span class="daysleft">30 days left</span>
+                    </div>
+                    <div class="clear3">
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="clear6">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="companyregular">
+                    <div class="sortarea">
+                        <div class="alphab">
+                            <div class="zindex1">
+                                <a href="#" class="viewall" title="view all" onclick="regularClientSearch('');" id="viewall">
+                                    view all</a>
+                            </div>
+                            <a href="#" title="a" onclick="regularClientSearch('a');" id="a">a</a> <a href="#"
+                                title="b" onclick="regularClientSearch('b');" id="b">b</a> <a href="#" title="c"
+                                    onclick="regularClientSearch('c');" id="c">c</a> <a href="#" title="d" onclick="regularClientSearch('d');"
+                                        id="d">d</a> <a href="#" title="e" onclick="regularClientSearch('e');" id="e">e</a>
+                            <a href="#" title="f" onclick="regularClientSearch('f');" id="f">f</a> <a href="#"
+                                title="g" onclick="regularClientSearch('g');" id="g">g</a> <a href="#" title="h"
+                                    onclick="regularClientSearch('h');" id="h">h</a> <a href="#" title="i" onclick="regularClientSearch('i');"
+                                        id="i">i</a> <a href="#" title="j" onclick="regularClientSearch('j');" id="j">j</a>
+                            <a href="#" title="k" onclick="regularClientSearch('k');" id="k">k</a> <a href="#"
+                                title="l" onclick="regularClientSearch('l');" id="l">l</a> <a href="#" title="m"
+                                    onclick="regularClientSearch('m');" id="m">m</a> <a href="#" title="n" onclick="regularClientSearch('n');"
+                                        id="n">n</a> <a href="#" title="o" onclick="regularClientSearch('o');" id="o">o</a>
+                            <a href="#" title="p" onclick="regularClientSearch('p');" id="p">p</a> <a href="#"
+                                title="q" onclick="regularClientSearch('q');" id="q">q</a> <a href="#" title="r"
+                                    onclick="regularClientSearch('r');" id="r">r</a> <a href="#" title="s" onclick="regularClientSearch('s');"
+                                        id="s">s</a> <a href="#" title="t" onclick="regularClientSearch('t');" id="t">t</a>
+                            <a href="#" title="u" onclick="regularClientSearch('u');" id="u">u</a> <a href="#"
+                                title="v" onclick="regularClientSearch('v');" id="v">v</a> <a href="#" title="w"
+                                    onclick="regularClientSearch('w');" id="w">w</a> <a href="#" title="x" onclick="regularClientSearch('x');"
+                                        id="x">x</a> <a href="#" title="y" onclick="regularClientSearch('y');" id="y">y</a>
+                            <a href="#" title="z" onclick="regularClientSearch('z');" id="z">z</a>
+                        </div>
+                        <div class="rcsortby">
+                            <select id="sortby" class="selectcategories">
+                                <option value="0" selected="selected">sort by first name</option>
+                                <option value="1">sort by last name</option>
+                                <option value="2">sort by email</option>
+                                <option value="3">sort by newest</option>
+                                <option value="4">sort by invited</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="rccontent" id="rccontent">
+                        @Html.Partial("_RegularClientsResults")
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="lightBox" class="lightBox">
+</div>
+<input type="hidden" id="defregularclientid" />
+<div id="rcdeletepopup" class="comfirmationpopup rcdeletepopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>delete regular client?</strong></h3>
+        <div class="clear4">
+        </div>
+        <div class="rcdelcontent">
+            <label class="editfirst">
+            </label>
+            <label class="editlast">
+            </label>
+            <br />
+            <a href="#">
+                <label class="editemail">
+                </label>
+            </a>
+        </div>
+        <div class="clear5">
+        </div>
+        <a href="#" class="btndelete" onclick="regularClientDelete();" id="btndelete" title="delete">
+            delete</a>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="rceditpopup" class="comfirmationpopup
+rcdeletepopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>edit regular client</strong></h3>
+        <div class="clear4">
+        </div>
+        <div class="rcdelcontent">
+            <span id="spaEdit">
+                <label class="editfirst">
+                </label>
+                <label class="editlast">
+                </label>
+            </span><span id="spachange">
+                <input id="changeFirstName" type="text" style="width: 100px;" />
+                <input id="changeLastName" type="text" style="width: 100px;" />
+            </span><a href="#" title="change" class="rceditchange" id="namechange" onclick="namechange();">
+                change</a><br />
+            <a href="#"><span id="spaeditEmail">
+                <label class="editemail">
+                </label>
+            </span><span id="spachangeEmail">
+                <input id="changeemail" type="text" /></span> </a>&nbsp;&nbsp;<a href="#" title="change"
+                    id="enailchange" class="rceditchange" onclick="emailchange();">change</a>
+        </div>
+        <div class="clear5">
+        </div>
+        <a href="#" class="btnsavechange" onclick="savechange();" id="btnsave" title="save changes">
+            save changes</a>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="inviteregularpopup" class="comfirmationpopup editregularpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>invite regular clients</strong> <i>(up to 10 at a time)</i></h3>
+        <div class="clear">
+        </div>
+        <div id="inviteregulararea" class="inviteregulararea">
+            @for (int i = 0; i < 10; i++)
+            {
+                <div class="iritem" id="@("iritem_" + @i)">
+                    <div class="irfirstname">
+                        <input id="@("firstname_" + @i)" type="text" value="first name" onfocus="if (this.value=='first name') {this.value = '';} $(this).css('color', '#000000');" onblur="if (this.value==''){this.value='first name'; $(this).css('color', '#B2B2B2');}" />
+                    </div>
+                    <div class="irlastname">
+                        <input id="@("lastname_" + @i)" type="text" value="last name" onfocus="if (this.value=='last name') {this.value = '';} $(this).css('color', '#000000');" onblur="if (this.value==''){this.value='last name'; $(this).css('color', '#B2B2B2');}" />
+                    </div>
+                    <div class="iremail">
+                        <input id="@("email_" + @i)" type="text" value="e-mail address" onfocus="if (this.value=='e-mail address') {this.value = '';} $(this).css('color', '#000000');" onblur="if (this.value==''){this.value='e-mail address'; $(this).css('color', '#B2B2B2');}" />
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            }
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divregularclient">
+            <a href="#" class="createpkg" id="btnpreviewpkg" title="send invitation"><span class="lcreatepkg">
+            </span><span id="ccreatepkg" onclick="insertRegularClients();" class="ccreatepkg">send
+                invitation</span> <span class="rcreatepkg"></span></a>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="errormsg" style="padding-left: 160px; margin-top: 50px;">
+            <!--Error message here-->
+            <div id="divSummaryError">
+                <div id="content">
+                    <ul style="display: block; list-style-type: none; margin: 2px 0px 0px 0px; color: Red;
+                        padding: 0px;">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

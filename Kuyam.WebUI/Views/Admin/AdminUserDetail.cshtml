@@ -1,0 +1,310 @@
+﻿@using Kuyam.Database
+@using Kuyam.Repository.Infrastructure
+@using Kuyam.Domain
+@using Kuyam.Domain.CompanyProfileServices
+@{
+    ViewBag.Title = "Admin User Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    Kuyam.Database.Cust user = ViewBag.UserDetail;
+    ProfileCompany profileCompany = new ProfileCompany();
+    if (user != null)
+    {
+        profileCompany = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileCompanyByCustID(user.CustID);
+    }
+
+    var phoneHome = Kuyam.Domain.UtilityHelper.FormatPhone(user.HomePhone);
+    var phoneMobile = Kuyam.Domain.UtilityHelper.FormatPhone(user.MobilePhone);
+
+    int userListPageIndex = ViewBag.UserListPageIndex ?? 1;
+    string key = ViewBag.Key == "-1" ? "" : ViewBag.Key;
+    var searchType = ViewBag.SearchType;
+    bool isHasMobile = !string.IsNullOrEmpty(phoneMobile);
+}
+<link href="~/Scripts/GettyImages/css/popup.css?v=1" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ishasphone = '@isHasMobile';
+        if (ishasphone == 'True') {//Has mobile
+            $("#smsAddMobile").hide();
+            $("#smsMessage").show();
+        } else {//Need add mobile
+            $("#smsMessage").hide();
+            $("#smsAddMobile").show();
+            $("#messNumber").focus();
+        }
+    });
+</script>
+<div id="contentmainpage">
+    <h2>@Html.DisplayFor(model => user.FullName)</h2>
+    <fieldset>
+        <div class="loginform">
+            <table width="700px">
+                <tr>
+                    <td width="300px;">
+                        <table cellpadding="2" cellspacing="2" border="0" class="tbldata">
+                            <tr class="odd">
+                                <td>
+                                    name
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => user.FullName)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    street
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => user.Street1)
+                                </td>
+                            </tr>
+                            <tr class="odd">
+                                <td>
+                                    phone
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => phoneMobile)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    email
+                                </td>
+                                <td>
+                                    <a href='mailto:@user.Email' title='@user.Email'>@user.Email</a>
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+                                <td>
+                                    city
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => user.City)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    state
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => user.State)
+                                </td>
+                            </tr>
+                            <tr class="odd">
+                                <td>
+                                    zip
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => user.Zip)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    status
+                                </td>
+                                <td>
+                                    @{var userStatus = Enum.ToObject(typeof(Types.UserStatusType), user.Status).ToString();}
+                                    @userStatus.ToLower()
+
+                                    @*@{
+                                            var userStatus = Enum.ToObject(typeof(Types.UserStatusType), user.Status).ToString();
+                                             }
+                                        @Html.ActionLink(@userStatus, "ChangeUserStatus", new { id = user.CustID })*@
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+                                <td>
+                                    company
+                                </td>
+                                <td>
+                                    @{
+                                        @*var prof = user.Profiles.ToList().Where(p => p.ProfileCompany.CompanyStatusID == (int)Types.CompanyStatus.Active).SingleOrDefault();
+                                            <a href="/Admin/AdminCompanyDetail?companyID=@(prof.ProfileID)&page=@(userListPageIndex)&key=@(key)&searchType=@(searchType)">@(prof.Name)</a> *@
+                                        if (profileCompany != null)
+                                        {
+                                            <a href="/Admin/AdminCompanyDetail?companyID=@(profileCompany.ProfileID)&page=@(userListPageIndex)&key=@(key)&searchType=@(searchType)">@(profileCompany.Name)</a>
+                                        }
+                                    }
+
+
+                                </td>
+                            </tr>
+                            @*   <tr class="odd">
+                                    <td>
+                                        expired date
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => company.ExpiredDate)
+                                    </td>
+                                </tr>*@
+                            @*   <tr class="odd">
+                                    <td>
+                                        status
+                                    </td>
+                                    <td>
+                                        @{ var enu = Enum.ToObject(typeof(Types.CompanyStatus), company.CompanyStatusID).ToString(); }
+                                        @enu
+                                    </td>
+                                </tr>*@
+                        </table>
+                        @{
+                            if (User.IsInRole("Admin"))
+                            {
+                                if (user.Status == (int)Types.UserStatusType.Active)
+                                {
+                                    <input id="btnSuspend" type="button" value="suspend" onclick=" changeUserStatus(2); " />
+                                    <input class="btnCancel" type="button" value="cancel user account" onclick=" changeUserStatus(0); " />
+                                }
+                                else if (user.Status == (int)Types.UserStatusType.Frozen)
+                                {
+                                    <input class="btnActivate" type="button" value="activate" onclick=" changeUserStatus(1); " />
+                                    <input class="btnCancel" type="button" value="cancel user account" onclick=" changeUserStatus(0); " />
+                                }
+                                else if (user.Status == (int)Types.UserStatusType.Cancelled)
+                                {
+                                    <input class="btnActivate" type="button" value="activate" onclick="changeUserStatus(1);" />
+                                }
+                                if (user.HasDevice)
+                                {
+                                    <input id="btnpushmessage" type="button" value="send push message" onclick="pushGeneralMessage(@user.CustID);" />
+                                }
+                            }
+                        }
+                    </td>
+                    <td width="20px"></td>
+                    <td width="350px;">
+                        <div style="height: 400px;">
+                            @Html.Partial("AdminSMSMessages")
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+
+        </div>
+
+    </fieldset>
+    <fieldset></fieldset>
+    <p>
+        <input type="hidden" id="hdfUserId" value="@user.CustID" />
+        <a href="/Admin/@(ViewBag.Action)?page=@(userListPageIndex)&key=@(key)&searchType=@(ViewBag.SearchType)">back to list</a>
+    </p>
+    <input type="hidden" id="hdfUserPageIndex" value="@userListPageIndex" />
+    <input type="hidden" id="hdfKey" value="@key" />
+    <input type="hidden" id="hdfSearchType" value="@searchType" />
+    <input type="hidden" id="hdMobilePhone" value="@phoneMobile" />
+</div>
+
+<div id="pushnotificationpopup" class="popupDialog">
+    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+    <br />
+    <div>
+        <div>
+            <textarea style="width: 300px; height: 100px; max-width: 300px; min-width: 300px;" id="txtmessage" name="txtmessage" onblur="if (this.value == '') { this.value = 'please type message to push notification'; this.style.color = '#B3B3B3'; }"
+                      onfocus="if (this.value == 'please type message to push notification') { this.value = ''; this.style.color = '#333333'; }">please type message to push notification</textarea>
+        </div>
+
+        <div class="buttons">
+            <input type="button" value="send" id="btnsend" onclick="pushNotificationMessage();" />
+        </div>
+    </div>
+
+</div>
+
+<script src="/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#txtmessage").css({ 'color': '#B3B3B3' });
+    });
+
+    function updateTips(t) {
+        $('.validateTips')
+            .text(t)
+            .addClass("ui-state-highlight");
+        setTimeout(function () {
+            $('.validateTips').removeClass("ui-state-highlight", 1500);
+        }, 500);
+    }
+
+
+
+    function changeUserStatus(status) {
+        var id = $("#hdfUserId").val();
+        var searchParameters = { id: id, status: status };
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/ChangeUserStatus/'
+            })
+            .success(function (result) {
+                if (result == "true") {
+                    window.location.href = "/Admin/AdminUserDetail?id=" + id + "&userListPageIndex=" + $("#hdfUserPageIndex").val() + "&key=" + $("#hdfKey").val() + "&searchType=" + $("#hdfSearchType").val() + "&backAction=@(ViewBag.Action)";
+
+                }
+            })
+            .error(function (error) {
+
+            });
+
+    };
+
+    var _custId;
+    function pushGeneralMessage(custId) {
+
+        var txtMessage = $.trim($("#txtmessage").val());
+        if (txtMessage != "please type message to push notification") {
+            $("#txtmessage").val("please type message to push notification");
+            $("#txtmessage").css({ "color": "#B3B3B3" });
+        }
+        _custId = custId;
+        $('#lightBox').css('z-index', '9998');
+        showDialog('pushnotificationpopup', 'btnCloseloginPopup');
+    }
+
+
+    function pushNotificationMessage() {
+
+        var message = $.trim($("#txtmessage").val());
+
+        if (message == 'please type message to push notification')
+            return false;
+
+        $('#lightBox').hide();
+        window.isUseDefaultAjaxHandle = true;
+
+        var parameters = {
+            deviceId: _custId,
+            message: message
+        };
+        hideDialog('pushnotificationpopup');
+        $.ajax(
+           {
+               type: 'POST',
+               contentType: 'application/json; charset=utf-8',
+               data: JSON.stringify(parameters),
+               dataType: 'html',
+               url: '/Admin/PushNotificationGeneralMessage/'
+           })
+           .success(function (result) {
+               if (result) {
+                   showAlertMessage("push message is sent successfully.");
+               } else {
+                   showAlertMessage("can't sent message.");
+               }
+
+           })
+           .error(function (error) {
+
+           });
+    }
+
+</script>

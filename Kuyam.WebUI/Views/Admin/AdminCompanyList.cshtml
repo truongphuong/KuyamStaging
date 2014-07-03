@@ -1,0 +1,189 @@
+﻿@{
+    ViewBag.Title = "AdminCompanyList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var adminRole = ViewBag.IsAdmin;
+}
+<div id="contentmainpage">
+    <h2>
+        companies list</h2>
+    <div class="boxsearch">
+        <center>
+            <table class="tbldata" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr class="odd">
+                        <td>
+                            <label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>
+                            <select id="searchType">
+                                <option value="-1"  @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Unknown ? "selected" : "")>select status</option>
+                                <option value="8" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Pending ? "selected" : "")>pending</option>
+                                <option value="7" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Active ? "selected" : "")>active</option>
+                                <option value="5" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Frozen ? "selected" : "")>frozen</option>
+                                <option value="6" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Cancelled ? "selected" : "")>cancelled</option>
+                            </select>
+                            <select id="CompanyType">
+                                <option value="-1" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Unknown ? "selected" : "")>select type</option>
+                                <option value="0" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Pending ? "selected" : "")>service</option>
+                                <option value="1" @(ViewBag.SearchType == (int)Kuyam.Database.Types.CompanyStatus.Active ? "selected" : "")>class</option>
+                             
+                            </select>
+                            <input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                            @if (@adminRole)
+                            {
+                                <input class="button" id="btnImportDate" value="import data" type="button" onclick="ShowImportData();" />
+                            }
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </div>
+    <div id="listCompany">
+        @Html.Partial("_CompanyListResults")
+    </div>
+</div>
+<style type="text/css">
+    /* ------------- Spinner -----------*/
+    .spinner2 {
+        display: none;
+        width: 100px;
+        height: 100px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background: url(spinner.gif) no-repeat center #fff;
+        text-align: center;
+        padding: 10px;
+        font: normal 16px Tahoma, Geneva, sans-serif;
+        border: 1px solid #666;
+        margin-left: -50px;
+        margin-top: -50px;
+        z-index: 2;
+        overflow: auto;
+    }
+
+    .spinner {
+        /*position: relative;
+        top: 210px;
+        left: 300px;
+        text-align: center;*/
+    }
+    .PopUpDialog {
+        width: 500px;
+        height: 540px;
+        padding: 30px;
+        margin: 30px;
+        position: relative;
+        overflow: auto;
+    }
+    .ui-widget-overlay {
+        background: repeat scroll 100% 100% #AAAAAA;
+        height: 500%;
+         opacity: 0.3;
+    }
+    .ui-dialog .ui-dialog-titlebar-close span {
+        margin: -8px;
+    }
+</style>
+<div id="uploadpopup" class="popup-facebook">
+    <div class="contentPopup">
+        <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="close"></a>
+        <div class="clear">
+        </div>
+        <input id="fileSubmit" type="file"/>  
+        <input id="submit" type="submit"/>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //var loadingHtml = '<img src="@Url.Content("~/images/spinner.gif")" class="spinner"/>';
+        $('#uploadpopup').dialog({
+            autoOpen: false,
+            dialogClass: 'PopUpDialog',
+            position: 'center',
+            resizable: false,
+            title: "Import data",
+            modal: true,
+            open: function (event, ui) {
+                //$(this).html(loadingHtml);
+                //$(this).load(url);
+
+            }
+        });
+        //$("#uploadpopup").dialog({autoOpen: false});
+        var importResult = $("#importResult").val();
+      
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var companyType = $("#CompanyType option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, searchType: searchType, companyType: companyType };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/AdminCompanyList/'
+            })
+            .success(function (result) {
+                $('#listCompany').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function FilterSearchResult() {
+
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var companyType = $("#CompanyType option:selected").val();
+        var searchParameters = { key: key, searchType: searchType, companyType: companyType };
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/AdminSearchCompanies/'
+                })
+                .success(function (result) {
+                    if (result == "false") {
+                        window.location.href = "/Admin/Login";
+                    }else{ 
+                    $('#listCompany').html(result);
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+    }
+    
+    function ShowImportData() {
+        CheckExistedPreviewPage();
+        //$("#uploadpopup").dialog("open");
+    }
+    function CheckExistedPreviewPage() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CheckExistedTempDate","Admin")',
+            data: "",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.isExisted == true) {
+                    alert("existed data need preview. please reivew before upload other file.");
+                    window.location.href = "/Admin/GoToReviewPage";
+                } else {
+                    window.location.href = "/Admin/ImportDataPage";
+                }
+            },
+
+        });
+        return false;
+    }
+</script>

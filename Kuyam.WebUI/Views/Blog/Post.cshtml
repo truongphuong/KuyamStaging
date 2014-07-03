@@ -1,0 +1,335 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Database.BlogModels;
+@using Kuyam.Domain
+@using Kuyam.Utility
+@using Kuyam.WebUI.Models
+@using Kuyam.Domain.Seo;
+@model Kuyam.WebUI.Models.PostModels
+@{
+    ViewBag.Title = Model.Title;//"post detail";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    BlogUser user = ViewBag.User;
+    var categoryStr = Model.Categories.Aggregate(string.Empty, (current, category) => current + string.Format("{0}, ", category));
+    categoryStr = categoryStr.Substring(0, categoryStr.Length - 2);
+    var isAuthenticated = Request.IsAuthenticated ? "true" : "false";
+
+
+    //Trong addded
+    var sharingUrl = string.Format("~/Post/{0}", Model.Id);
+    var url = Request.Url;
+    sharingUrl = url.Scheme + "://" + url.Host + Url.Content(sharingUrl);
+    var description = UtilityHelper.StripTagsRegexCompiled(HttpUtility.HtmlDecode(Model.PostContent)).Trim();
+
+    if (description.Length > 100)
+    {
+        description = description.Substring(0, 100) + "...";
+    }
+
+    var sharingExtension = new Kuyam.WebUI.Extension.SharingExtension
+    {
+        Title = Model.Title,
+        Description = description,
+        Image = KalturaHelper.GetKalturaUrl(Model.Id, Model.CoverPhoto, (int)Types.MediaCropType.MainPostAfterLogin, 522, 283),
+        Url = sharingUrl
+    };
+    var linkFb = string.Format("http://www.facebook.com/sharer/sharer.php?u={0}", sharingUrl);
+    var linkTwitter = string.Format("http://twitter.com/home?status={0}", sharingUrl);
+    var linkGooglePus = string.Format("https://plus.google.com/share?url={0}", sharingUrl);
+    var emailBody = string.Format("I read this article on kuyam, and I thought you might be interested in reading it too.%0D{0} {1}", Model.Title + ": ", sharingUrl);
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".tags a").on("click", function (event) {
+            event.preventDefault();
+            if (!@isAuthenticated) {
+                showDialog("loginpopup", "btnCloseloginPopup");
+        }
+            return false;
+    });
+
+    //        $("#sharringbyemail").on("click", function() {
+    //            if (!@isAuthenticated) {
+    //                showDialog("loginpopup", "btnCloseloginPopup");
+    //            }
+    //            return false;
+    //        });
+    });
+</script>
+<div class="contentinside">
+    <div class="navtop">
+        @Html.Partial("_BlogCategoryNavigation")
+    </div>
+    <div class="clear40">
+    </div>
+    <div class="wrapperBlogContent">
+        <div class="titleBlog">
+            <h1>
+                @Model.Title
+            </h1>
+            <div class="tags">
+                <span>categories:</span>
+                @foreach (var category in Model.Categories)
+                {
+                    var index = Model.Categories.IndexOf(category);
+                    if (index < Model.Categories.Count - 1)
+                    {
+                    <i>
+                        <a href="@Url.RouteUrl("HomePage", new { seName = category.GetSeName(category.CategoryRowID, "blog") })" title="@category.CategoryName" style="color: #29ABE2;">@category.CategoryName</a><span style="color: black;">,</span>
+                    </i>
+                    }
+                    else
+                    {
+                    <i><a href="@Url.RouteUrl("HomePage", new { seName = category.GetSeName(category.CategoryRowID, "blog") })" title="@category.CategoryName" style="color: #29ABE2;">@category.CategoryName</a></i>
+                    }
+                }
+            </div>
+            <div class="clear">
+            </div>
+            <div class="wrapperAdbox" style="margin-top: 50px;">
+                <div class="linksSocial" style="margin-bottom: 9px; width: 523px;">
+                    <a id="totalcomment" class="viewcomments" style="margin-bottom: 10px;">view comments
+                        (@Model.TotalComments)
+                    </a>
+                    <div style="float: right;">
+                        <a class="navsharring" href="@linkFb" title="facebook" target="_blank">
+                            <img src="/images/icon-fb.png" alt="">
+                        </a><a class="navsharring" href="@linkTwitter" title="twitter" target="_blank">
+                            <img src="/images/icon-twitter.png" alt="">
+                        </a><a class="navsharring" href="@linkGooglePus" title="google" target="_blank">
+                            <img src="/images/icon-googleplus.png" alt="">
+                        </a>
+
+                        <a class="navsharring" id="sharringbyemail" href="mailto:?Subject=your friend has shared a kuyam article with you&body=@emailBody" target="_top">
+                            <img src="/images/icon-email.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="adbox">
+                    <img src="@Model.CoverPhoto" alt="@Model.Title" style="width: 522px;height: 283px; margin-bottom: 65px;">
+                    <div class="captionAdbox">
+                        @Model.Caption
+                    </div>
+                </div>
+            </div>
+            @if (Model.IsEvent)
+            {
+                <div class="thumbnail-post-no-login" style="display: block;">
+                    <img alt="thumbnail logo" src="../images/thumbnail-logo.jpg" />
+                </div> 
+            }
+            <h3>by <span>
+                <a style="color: #29ABE2;" href="@Url.Content("~/Blog/Author/")@Model.Author.UserName.ToLower()" title="@user.FirstName @user.LastName">
+                    @user.FirstName @user.LastName
+                </a>
+            </span>
+                <time>@Model.DateCreated.ToString("MM/dd/yy")</time>
+            </h3>
+        </div>
+        <div class="contentBlog">
+            <div id="content" class="listSearch">@Html.Raw(Model.PostContent)</div>
+            <div class="clear">
+            </div>
+            <div id="chattobook" style="padding-left: 1px; margin-right: -1px;">
+                @Html.Partial("_ChatToBook", new ChatToBookModels
+                {
+                    AlowChatToBook = Model.AlowChatToBook
+                })
+            </div>
+            <div class="clear15">
+            </div>
+            @*<div class="listSearch">
+                    @foreach (var item in Model.CompaniesRelated)
+                    {
+                        Html.RenderAction("CompanyProfileTimeSlots", "CompanyAppointment", new { companyId = item.ProfileId });
+                    }
+                </div>*@
+            @if (Model.OtherPosts != null && Model.OtherPosts.Count > 0)
+            {
+                <p class="alsoblogtext">
+                    also on our blog...
+                </p>
+            }
+            <div class="clear">
+            </div>
+            <div class="marketplaceblog blogarticle">
+                <div class="itembox">
+                    @foreach (var ortherPost in Model.OtherPosts)
+                    {
+                        <a href="@Url.RouteUrl("blogPost", new { seName = ortherPost.GetSeName(ortherPost.Id, "post") })" title="@ortherPost.Title">
+                            <div class="activebox1">
+                                <img style="width: 233px;height: 230px;" src="@ortherPost.CoverPhoto" alt="@Model.Title">
+                                <div class="bgcaptionactive">
+                                    <div class="contentcaption">
+                                        @ortherPost.Title
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="clear">
+        </div>
+        <div class="blogcolleft" ng-app="commentModule">
+            <div ng-view>
+            </div>
+        </div>
+        <div class="blogcolright">
+            <div class="appBox">
+                <img alt="kuyam" src="/images/ios7appicon117tilt.png" class="iconunknow" />
+                <i>with our app,<br />
+                    book your<br />
+                    appointments<br />
+                    on-the-go.
+                </i>
+                <div class="clear">
+                </div>
+                <a href="@Kuyam.Database.Constants.iPhone" title="iPhone" target="_blank">
+                    <img src="/images/btn-iphone.png">
+                </a><a href="@Kuyam.Database.Constants.Android" title="Android" target="_blank">
+                    <img src="/images/btn-android.png">
+                </a>
+            </div>
+            <h3 class="headerComment">featured companies
+            </h3>
+            <div class="clear15">
+            </div>
+            @foreach (var featuredCompany in Model.FeaturedCompanies.Where(featuredCompany => featuredCompany != null))
+            {
+                Html.RenderPartial("_FeaturedCompany", featuredCompany, new ViewDataDictionary { { "BoxSize", "306" }, { "IsLogin", "false" } });
+            }
+        </div>
+        <div class="clear29">
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/scripts/encoder.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/js/companyProfileTimeslot.js?v=11")" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function() {
+        $('.btnView').click(function (){
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                window.location = "/book"+$(this).attr('url');
+            }
+            else
+            {
+                window.location = $(this).attr('url');
+            }
+        });
+    });
+
+    $("#totalcomment").on("click", function () {
+        $("html,body").animate({ scrollTop: $(".blogcolleft").offset().top-140 },1000);
+    });
+
+    var app = angular.module("commentModule", []);
+
+    app.config(function($routeProvider) {
+        $routeProvider
+            .when('/comment/:id', {
+                controller: 'commentCtrl',
+                templateUrl: '/Templates/CommentTemplate.html?v=1'
+            })
+            .otherwise({
+                redirectTo: '/comment/0'
+            });
+    });
+
+    app.filter("childrenFilter", function () {
+        return function(list, parentId) {
+            var result = [];
+            for(var i = 0; i < list.length; i++){
+                if(list[i].ParentCommentId == parentId){
+                    result.push(list[i]);
+                }
+            }
+            return result;
+        };
+    });
+
+    app.controller("commentCtrl", function ($scope, $http, $location ,$routeParams) {
+        $scope.pageIndex = parseInt($routeParams.id);
+        $scope.postId = @Model.Id;
+        $scope.commentUrl = '@Url.Content("~/Blog/GetComments")';
+        $scope.limit = 10;
+        $scope.parentComments = 0;
+        $scope.commentOfParent = [];
+        $scope.commentOfChildren = [];
+        var url = $scope.commentUrl + '?postId=' + $scope.postId + "&pageIndex=" + $scope.pageIndex + "&limit=" + $scope.limit + '&uniq_param=' + (new Date()).getTime();;
+        $http.get(url).success(function (data) {
+            for(var i = 0; i < data.data.comments.length; i++){
+                data.data.comments[i].Comment = Encoder.htmlDecode(data.data.comments[i].Comment);
+                var createDate = new Date(data.data.comments[i].CommentDate);
+                data.data.comments[i].CommentDate = createDate.format("m/dd/yy h:MMtt");
+                if(data.data.comments[i].User != null && data.data.comments[i].User.LastName != null && data.data.comments[i].User.LastName.length > 0){
+                    data.data.comments[i].User.LastName = data.data.comments[i].User.LastName.substring(0, 1) + '.';
+                }
+                else{
+                    data.data.comments[i].Author.LastName = data.data.comments[i].Author.LastName.substring(0, 1) + '.';
+                }
+                if(data.data.comments[i].ParentCommentId == '00000000-0000-0000-0000-000000000000'){
+                    data.data.comments[i].isParent = true;
+                    $scope.parentComments++;
+                    $scope.commentOfParent.push(data.data.comments[i]);
+                }
+                else{
+                    $scope.commentOfChildren.push(data.data.comments[i]);
+                    data.data.comments[i].isParent = false;
+                }
+            }
+            $scope.comments = data.data.comments;
+            $scope.totalComments = data.data.totalComments;
+            $scope.totalPages = data.data.totalPages;
+        });
+
+        $scope.gotoPage = function(pageIndex){
+            var length = $location.absUrl().lastIndexOf('/');
+            var url = $location.absUrl().substring(0, length) + '/' + pageIndex;
+            window.location = url;
+        }
+    });   
+
+    $(document).ready(function () {
+        $(".captionAdbox").dotdotdot({
+            height:85
+        });
+
+        $(".contentcaption").dotdotdot({
+            height:40
+        });
+        
+        $(".captionactivitive").dotdotdot({
+            height:40
+        });
+        $(".ellipsisCity").dotdotdot({
+            height:20
+        });
+        /* style css for add logo*/
+        //var newbusinesshours = $('.wrapperBlogContent .wrapperAdbox'),
+        //    newHeight =$('.thumbnail-post-no-login img:visible').height();
+        //if (newHeight == null) {
+        //    newHeight = 0;
+        //    newbusinesshours.css('margin-top', newHeight);
+        //} else {
+        //    newbusinesshours.css('margin-top', -(newHeight + 40));
+        //}
+    });
+    
+</script>
+
+@section SharingSection{
+    @sharingExtension.MetaTag()
+}

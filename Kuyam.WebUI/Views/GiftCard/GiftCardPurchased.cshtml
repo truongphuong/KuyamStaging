@@ -1,0 +1,95 @@
+﻿@using Kuyam.Database
+@model Kuyam.WebUI.Models.GiftCardModels
+@{
+    ViewBag.Title = "gift card purchased";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+          <div id="divLoadForm" class="GiftCardReceipt">
+                <div class="imgpurchased">
+                    <img alt="" src="/images/GiftCardReceipt.png" />
+                </div>
+                <div class="receiptid">
+                    <strong>receipt #: </strong>@Model.ReceiveNumber @*23481CMWH2*@
+                </div>
+                <div class="receipttable">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <span>@Model.Created</span>
+                                </th>
+                            </tr>
+                            <tr class="odd">
+                                <td>
+                                    <span class="span1">@*$25*@ @Model.IntAmount kuyam gift card for @Model.RecipientName</span>
+                                </td>
+                                <td align="right">
+                                    @Model.Amount
+                                    @*$25.00*@
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td>
+                                    @if (@Model.GiftCardType == (int) Types.GiftCardType.mail)
+                                    {
+                                        if(Model.ShippingMethod == (int)Types.GiftCardShippingMethod.ViaPreminumShipping)
+                                         {
+                                             <div> premium shipping <span class="span2">estimated arrival: @Model.EstimateDate</span>   
+                                             </div>
+                                         }
+                                         else
+                                         {
+                                             <div> FREE shipping <span class="span2">estimated arrival: @Model.EstimateDate</span></div>
+                                         }
+                                    }
+                                </td>
+                                <td align="right">
+                                    @if (@Model.GiftCardType == (int)Types.GiftCardType.mail)
+                                    { 
+                                        if (@Model.ShippingMethod == (int)Types.GiftCardShippingMethod.ViaPreminumShipping)
+                                        {
+                                            <span>@Model.ShippingCost</span>
+                                        }
+                                        else
+                                        {
+                                            <span>$0.00</span>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr class="receipttotal">
+                                <td colspan="2" align="right">
+                                    <strong>Total:&nbsp @Model.PayAmount @*$30.00*@</strong>
+                                </td>
+                            </tr>
+                            <tr class="receiptpaid">
+                                <td>
+                                    @*MASTERCARD ending in 4639*@
+                                </td>
+                                <td align="right">
+                                    <strong>Paid: @Model.PayAmount</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="receiptcopy">
+                    a copy of this receipt has been sent to your e-mail.
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#accordion").accordion("option", "active", 1);
+    });
+</script>

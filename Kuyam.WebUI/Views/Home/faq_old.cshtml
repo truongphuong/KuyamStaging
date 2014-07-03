@@ -1,0 +1,282 @@
+﻿@{
+    ViewBag.Title = "faq";
+}
+
+<div id="faqanchor"></div>
+
+
+<script language="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+
+/*
+        $.ajax(
+        {
+            type: "GET",
+            url: '@Url.Content("~/content/faq.xml")',
+            dataType: "xml",
+            success: function (xml) {
+                var id = 0;
+                $(xml).find('cat').each(function () {
+
+                    var title = $(this).attr('title');
+
+                    $('#faqanchor').append('<br />');
+                    $('#faqanchor').append('<h3>' + title + '</h3>');
+
+                    $(this).find('faq').each(function () {
+
+                        var q = $(this).find('question').text();
+                        var a = $(this).find('answer').text();
+
+                        $('#faqanchor').append(
+                            '<div class="ContainerPanel">                                   ' +
+                            '   <div class="collapsePanelHeader">                           ' +
+                            '       <div class="ArrowExpand"></div>                         ' +
+                            '       <div class="HeaderContent">' + q + '</div>              ' +
+                            '   </div>                                                      ' +
+                            '   <div class="Content" style="display:none">' + a + '</div>   ' +
+                            '</div>                                                         ' +
+                            '<div class="BottomLine"></div>                                 ');
+                    });
+                });
+            }
+        }),
+*/
+        $("DIV.ContainerPanel > DIV.collapsePanelHeader > DIV.ArrowExpand").toggle(
+                function () {
+                    $(this).parent().next("div.Content").show("slow");
+                    $(this).attr("class", "ArrowClose");
+                },
+                function () {
+                    $(this).parent().next("div.Content").hide("slow");
+                    $(this).attr("class", "ArrowExpand");
+                }
+        )
+    }); 
+</script>
+
+<h3>frequently asked questions</h3>
+
+
+<br />
+
+<h3>general</h3>
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">why kuyam? wait, what is kuyam?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        kuyam is life, organized. but you probably meant specifically, right? 
+        well, kuyam is an online scheduling platform to help you organize your 
+        life by helping you easily schedule appointments with local businesses, 
+        calendar, and arrange your life. if you want, it will also connect you 
+        to cool local businesses and non-profits that might interest you.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what does kuyam mean?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        kuyam is a meeting place, a crossroads. it comes from the chumash language 
+        as a place to rest together, which fits right in with our philosophy.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">where did this idea come from?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        it all started when kourosh, the boss man, spent weeks trying to set up a hair 
+        appointment, and just couldn't get hold of his hair guy. it sparked the idea - 
+        hey, what if there was an easy way to schedule appointments online - and bam, 
+        here we are.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">why me?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        if you're like us, then you've probably got a lot on your plate. kuyam is 
+        trying to ease your load a bit by simplifying and streamlining your calendering 
+        and appointment system.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">where can i access kuyam?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        anywhere you can access the internet.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what's up with all this lower case?!?!</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        our shift key broke.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div style="height:70px;" class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what if i need help with something else? how exactly do i use kuyam?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        we're here to help. please visit our help page (click on the 
+        link at the top right) and let us know what's up.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<br />
+
+<h3>user</h3>
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">how do i schedule an appointment?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        it's easy! just click the schedule an appointment tab, search for the company 
+        you want to schedule with, choose the day and time, and click! our elves will 
+        scurry away and set that appointment for you, or let you know if the time is unavailable.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">will I always get my desired schedule time?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        not necessarily. sometimes when you request a time slot the company may have already 
+        filled it or is otherwise unavailable. when that happens we'll let you know that your 
+        desired time isn't going to work and present you some other options for scheduling. 
+        we'll work it out!
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div style="height:70px;" class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what if I try to make an appointment with a place that doesn't have an account with kuyam?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        believe it or not, it's not a problem. if that company doesn't yet have an 
+        account with kuyam, we can still get you your appointment. just give us some 
+        information about the company and we'll make it happen.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">how long does it take for a new schedule request to be processed?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        we'll start taking care of your order as soon as you place it, though if 
+        the business you want an appointment with is closed, we may have to wait 
+        until they are open to get in touch with them.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">how do i know if my schedule has been accepted by the company?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        you'll get a message confirming it shortly thereafter.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<br />
+
+<h3>cancellation/no show policies</h3>
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what are kuyam's cancellation policies?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        even though as of now there are no kuyam cancellation fees associated 
+        with no-shows, we request that you respect each company by either 
+        modifying or canceling your scheduled appointment at least 2 days 
+        prior to the scheduled appointment. we strongly recommend that you 
+        modify or cancel your scheduled appointment on kuyam to make sure it goes through.
+
+        however, if you're cancelling your appointment within two days of 
+        your scheduled time, we request that you contact the company directly. 
+        depending on each company's individual terms of use, a same day 
+        cancellation may be deemed a ‘no-show' by kuyam.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what are the no-show policies of the platform?</div>              
+   </div>                                                      
+   <div class="clearfix:after"></div>
+   <div class="Content" style="display:none">
+        if the company you scheduled with reports that you did not show up 
+        to your appointment, a notice of no-show will be sent to you. after 
+        accumulating three no-show notices within twelve consecutive months 
+        your membership may be deactivated and all of your privileges to the 
+        platform may be revoked immediately.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<div class="ContainerPanel">                                   
+   <div class="collapsePanelHeader">                           
+       <div class="ArrowExpand"></div>                         
+       <div class="HeaderContent">what about cancellation fees for no-show appointments?</div>              
+   </div>                                                      
+   <div class="Content" style="display:none">
+        if you are concerned that the company may charge you a fee in accordance 
+        to its cancellation policy, we strongly recommend that you contact each 
+        company directly to discuss the matter.
+
+        kuyam cannot be held responsible for the accuracy of the cancellation 
+        policy information provided by each company for publication on kuyam's 
+        online appointment schedule form, confirmation emails, or reminder emails. 
+        we strongly recommend that you contact each company directly for specifics 
+        regarding cancellation fees.
+   </div>   
+</div>                                                         
+<div class="BottomLine"></div>                                      
+
+<br />
+

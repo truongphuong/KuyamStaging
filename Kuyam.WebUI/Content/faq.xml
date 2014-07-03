@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<faqroot>
+  <cat title="general">
+    <faq>
+      <question>why kuyam? wait, what is kuyam?</question>
+      <answer>kuyam is life, organized. but you probably meant specifically, right? well, kuyam is an online scheduling platform to help you organize your life by helping you easily schedule appointments with local businesses, calendar, and arrange your life. if you want, it will also connect you to cool local businesses and non-profits that might interest you.</answer>
+    </faq>
+    <faq>
+      <question>what does kuyam mean?</question>
+      <answer>kuyam is a meeting place, a crossroads. it comes from the chumash language as a place to rest together, which fits right in with our philosophy.</answer>
+    </faq>
+    <faq>
+      <question>where did this idea come from?</question>
+      <answer>it all started when kourosh, the boss man, spent weeks trying to set up a hair appointment, and just couldn't get hold of his hair guy. it sparked the idea - hey, what if there was an easy way to schedule appointments online - and bam, here we are.</answer>
+    </faq>
+    <faq>
+      <question>why me?</question>
+      <answer>if you're like us, then you've probably got a lot on your plate. kuyam is trying to ease your load a bit by simplifying and streamlining your calendering and appointment system.</answer>
+    </faq>
+    <faq>
+      <question>where can i access kuyam?</question>
+      <answer>anywhere you can access the internet.</answer>
+    </faq>
+    <faq>
+      <question>what's up with all this lower case?!?!</question>
+      <answer>our shift key broke.</answer>
+    </faq>
+    <faq>
+      <question>what if i need help with something else? how exactly do i use kuyam?</question>
+      <answer>we're here to help. please visit our help page (click on the link at the top right) and let us know what's up.</answer>
+    </faq>
+  </cat>
+  <cat title="user">
+    <faq>
+      <question>how do i schedule an appointment?</question>
+      <answer>it's easy! just click the schedule an appointment tab, search for the company you want to schedule with, choose the day and time, and click! our elves will scurry away and set that appointment for you, or let you know if the time is unavailable.</answer>
+    </faq>
+    <faq>
+      <question>will I always get my desired schedule time?</question>
+      <answer>not necessarily. sometimes when you request a time slot the company may have already filled it or is otherwise unavailable. when that happens we'll let you know that your desired time isn't going to work and present you some other options for scheduling. we'll work it out!</answer>
+    </faq>
+    <faq>
+      <question>what if I try to make an appointment with a place that doesn't have an account with kuyam?</question>
+      <answer>believe it or not, it's not a problem. if that company doesn't yet have an account with kuyam, we can still get you your appointment. just give us some information about the company and we'll make it happen.</answer>
+    </faq>
+    <faq>
+      <question>how long does it take for a new schedule request to be processed?</question>
+      <answer>we'll start taking care of your order as soon as you place it, though if the business you want an appointment with is closed, we may have to wait until they are open to get in touch with them.</answer>
+    </faq>
+    <faq>
+      <question>how do i know if my schedule has been accepted by the company?</question>
+      <answer>you'll get a message confirming it shortly thereafter.</answer>
+    </faq>
+  </cat>
+  <cat title="cancellation/no show policies">
+    <faq>
+      <question>what are kuyam's cancellation policies?</question>
+      <answer>
+        even though as of now there are no kuyam cancellation fees associated with no-shows, we request that you respect each company by either modifying or canceling your scheduled appointment at least 2 days prior to the scheduled appointment. we strongly recommend that you modify or cancel your scheduled appointment on kuyam to make sure it goes through.
+
+        however, if you're cancelling your appointment within two days of your scheduled time, we request that you contact the company directly. depending on each company's individual terms of use, a same day cancellation may be deemed a ‘no-show' by kuyam.
+      </answer>
+    </faq>
+    <faq>
+      <question>what are the no-show policies of the platform?</question>
+      <answer>if the company you scheduled with reports that you did not show up to your appointment, a notice of no-show will be sent to you. after accumulating three no-show notices within twelve consecutive months your membership may be deactivated and all of your privileges to the platform may be revoked immediately. </answer>
+    </faq>
+    <faq>
+      <question>what about cancellation fees for no-show appointments?</question>
+      <answer>
+        if you are concerned that the company may charge you a fee in accordance to its cancellation policy, we strongly recommend that you contact each company directly to discuss the matter.
+
+        kuyam cannot be held responsible for the accuracy of the cancellation policy information provided by each company for publication on kuyam's online appointment schedule form, confirmation emails, or reminder emails. we strongly recommend that you contact each company directly for specifics regarding cancellation fees.
+      </answer>
+    </faq>
+  </cat>
+  <cat title="businesses/non-profits">
+    <faq>
+      <answer>
+        stay tuned, we'll be ready for you shortly!
+      </answer>
+    </faq>
+  </cat>
+</faqroot>

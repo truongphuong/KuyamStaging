@@ -1,0 +1,749 @@
+﻿@using Kuyam.Database;
+@using System.Configuration;
+@{
+    ViewBag.Title = "company search by " + ViewBag.SearchBy;
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    List<ProfileCompany> companies = null;
+
+    if (ViewBag.ProfileCompanies != null)
+    {
+        companies = ViewBag.ProfileCompanies;
+    }
+
+    double userLat = 0;
+    double userLon = 0;
+    if (ViewBag.UserLat != null && ViewBag.UserLon != null)
+    {
+        userLat = ViewBag.UserLat;
+        userLon = ViewBag.UserLon;
+    }
+    string categoryId = ViewBag.CategoryId + "";
+
+    string googlemapUrl = "https://maps-api-ssl.google.com";
+    //if (Kuyam.Utility.UtiHelper.UseSsl)
+    //{
+    //    googlemapUrl = "https://maps-api-ssl.google.com";
+    //}
+
+}
+@section MetaSeoSection{
+    @ViewBag.MetaTagExtension.MetaTag()
+}
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maskedinput-1.3.min.js")"></script>
+<script type="text/javascript" src="@googlemapUrl/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#cbAvailable').checkBox({ addVisualElement: false });
+        $('#cbavailable').checkBox({ addVisualElement: false });
+        $('#cbemail').checkBox({ addVisualElement: false });
+        $('#cbsms').checkBox({ addVisualElement: false });
+        $('select#category').selectmenu();
+        $('select#time').selectmenu();
+        $('select#within').selectmenu();
+        $('select#price').selectmenu();
+        $('select#sortBy').selectmenu();
+    });
+
+    var map;
+    var defaultLat='@System.Configuration.ConfigurationManager.AppSettings["defaultLatitude"]';
+    var defaultLng='@System.Configuration.ConfigurationManager.AppSettings["defaultLongitude"]';
+    function initialize() {
+        var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+        var myLatlng = new google.maps.LatLng(defaultLat, defaultLng);
+        if (isLogin) {
+            var lat = @userLat;
+            var lon = @userLon;
+
+            myLatlng = new google.maps.LatLng(lat, lon);
+        }
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        map.setZoom(map.getZoom() - 3);
+
+        //        var myLatLng;
+        //        myLatLng = new google.maps.LatLng(defaultLat, defaultLng);
+
+        //        if (isLogin) {
+        //            var lat = @userLat;
+        //            var lon = @userLon;
+        //            myLatLng = new google.maps.LatLng(lat, lon);
+        //        }
+
+        var beachMarker = new google.maps.Marker({
+            position: myLatlng,
+            map: map
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    $(function () {
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function addNewCompany(){
+        $('#divSummaryError').hide();
+        var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+        if(!isLogin)
+        {
+            $('#loginpopup').hide();
+            showDialog('signuppopup', 'btnCloseloginPopup');
+            //return false;
+        }
+        else
+        {
+            //window.location.href ="/company/companysetup
+            showDialog('addnewcompanypopup');
+        }
+    }
+    $(document).ready(function () {
+
+        loadShedulerTab();
+        function getURLParam( name )
+        {
+            // get query string part of url into its own variable
+            var url = window.location.href;
+            var query_string = url.split("?");
+
+            // make array of all name/value pairs in query string
+            if(query_string.length >1)
+            {
+                var params = query_string[1].split("&");
+
+                // loop through the parameters
+                var i = 0;
+                while (i < params.length) {
+                    // compare param name against arg passed in
+                    var param_item = params[i].split("=");
+                    if (param_item[0] == name) {
+                        // if they match, return the value
+                        return param_item[1];
+                    }
+                    i++;
+                }
+            }
+            return "";
+        }
+
+
+
+        function loadShedulerTab()
+        {
+            var profileID = getURLParam("profileId");
+            if (profileID != "")
+            {
+                var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+                if(!isLogin)
+                {
+                    ShowSignUpPopup();
+                    return false;
+                }
+
+
+                var companyId = profileID;
+                var scheduleParameters = { id: companyId };
+                $.ajax(
+                        {
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(scheduleParameters),
+                            dataType: 'html',
+                            url: '/company/LoadScheduleTab/'
+                        })
+                            .success(function (result) {
+                                $('#leftTab').html(result);
+
+                            })
+                            .error(function (error) {
+
+                            });
+            }
+        }
+
+        $('#passwordPopup').hide();
+        $('#passwordtextPopup').focus(function () {
+            $('#passwordtextPopup').hide();
+            $('#passwordPopup').show();
+            $('#passwordPopup').css('color', '#333333');
+            $('#passwordPopup').focus();
+        });
+        $('#passwordPopup').blur(function () {
+            if ($('#passwordPopup').val() == '') {
+                $('#passwordtextPopup').show();
+                $('#passwordPopup').hide();
+            }
+        });
+
+        $('#within').change(function ()
+        {
+            FilterSearchResult();
+        });
+
+        $('#time').change(function ()
+        {
+            FilterSearchResult();
+        });
+
+        $('#price').change(function ()
+        {
+            FilterSearchResult();
+        });
+
+        $('#cbAvailable').change(function ()
+        {
+            FilterSearchResult();
+        });
+
+        $('#sortBy').change(function ()
+        {
+            FilterSearchResult();
+        });
+
+    });
+
+    function FilterSearchResult()
+    {
+        var compareValue =$('#within').val();
+        var price = $('#price').val();
+        var time = $('#time').val();
+        var isAvailableToday = $('#cbAvailable').is(':checked');
+        var id = '@categoryId';
+        var sortBy = $('#sortBy').val();
+        var key = $('#searchByName').val()
+        var searchParameters ={ id: id, compare:compareValue, price:price, time:time,isAvailableToday:isAvailableToday, sortBy: sortBy, key:key };
+        $('#imgLoaderListDetail').show();
+        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/company/CompanySearchWithDistance/'
+            })
+            .success(function (result) {
+                $('#imgLoaderListDetail').hide();
+                $('#companyList').html(result);
+                domScript();
+                $('#searchByName').val(key);
+            })
+            .error(function (error) {
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').hide();
+            });
+    }
+
+
+</script>
+<!-- InstanceBeginEditable name="content" -->
+<div class="contentMarketPlace">
+    <div class="bgMainContent" style="min-height: 620px;">
+        <div id="leftTab">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight" style="min-height: 620px;">
+            <div class="w741 p10_8">
+                <div class="map">
+                    <div id="map_canvas">
+                    </div>
+                    <div class="formSearch" style="display:none">
+                        <fieldset>
+                            <div class="fLeft time">
+                                <select name="time" id="time" class="selectTime">
+                                    <option value="0">anytime</option>
+                                    <option value="1">morning</option>
+                                    <option value="2">afternoon</option>
+                                    <option value="3">evening</option>
+                                </select>
+                            </div>
+                            <div class="fRight">
+                                <p>
+                                    <input id="cbAvailable" onfocus="this.blur();" type="checkbox" /><label class="ctext"
+                                                                                                            for="cbAvailable">available today?</label>
+                                </p>
+                            </div>
+                            <div class="clear h3">
+                            </div>
+                            <div class="fLeft">
+                                <span>within?</span>
+                            </div>
+                            <div class="fLeft ml11 within">
+                                <select name="within" id="within" class="selectWithin">
+                                    <option value="0" selected="selected">any</option>
+                                    <option value="2">2 miles</option>
+                                    <option value="5">5 miles</option>
+                                    <option value="10">10 miles</option>
+                                </select>
+                            </div>
+                            <div class="fRight ml11 price">
+                                <select name="price" id="price" class="selectPrice">
+                                    <option value="0">any</option>
+                                    <option value="1">$1 - $50</option>
+                                    <option value="2">$51 - $100</option>
+                                    <option value="3">$101-$250</option>
+                                    <option value="4">$251 +</option>
+                                </select>
+                            </div>
+                            <div class="fRight">
+                                <span>price?</span>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="headerResults">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(ViewBag.Key))
+                        {
+                            ViewBag.Category = string.Empty;
+                        }
+                    }
+                    <span>
+                        search results for
+                        <label id="lbKeyword">@((!string.IsNullOrEmpty(ViewBag.Key) && ViewBag.Key != "search by name") ? "'" + @Kuyam.Domain.UtilityHelper.TruncateText(ViewBag.Key.ToString().ToLower(), 30) + "'" : "")@(!string.IsNullOrEmpty(ViewBag.Category) ? "'" + @Kuyam.Domain.UtilityHelper.TruncateText(ViewBag.Category, 30) + "'" : "")</label>
+                        @(!string.IsNullOrEmpty(ViewBag.SearchArea) ? " in " + ViewBag.SearchArea : "")
+                    </span>
+                    <ul class="sortBy">
+                        <li>sort by</li>
+                        <li>
+                            <fieldset>
+                                <select name="sortBy" id="sortBy" class="selectSortBy">
+                                    <option value="0" selected="selected">auto-scheduler</option>
+                                    <option value="1">company name</option>
+                                </select>
+                            </fieldset>
+                        </li>
+                    </ul>
+                </div>
+                <div id="companyList">
+                    @Html.Partial("_ProfileCompanies")
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div id="addnewcompanypopup" class="addnewcompanypopup" style="height: 485px;">
+    <div class="contentPopup">
+        <a class="btnClose" id="btncloseaddcompany" onclick="hideDialog('addnewcompanypopup');"
+           href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            add a company to our search listing
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="txtaddnewpopup">
+            if you have your own company, go to <a href="/Company/SetupBasic" title="add your company">
+                add your company
+            </a>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="boxcomapny">
+            <div class="companyname">
+                company name:
+            </div>
+            <div class="inputcompanyname">
+                <input type="text" id="txtcompanyname" class="txtcompanyname" />
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="boxcontact">
+            <div class="companycontact">
+                contact:
+            </div>
+            <div class="inputcompanyname">
+                <input type="text" class="txtperson" id="txtperson" value="person's name" onblur="if (this.value==''){this.value='person\'s name';this.style.color='#B6B6B6';}"
+                       onfocus="if (this.value=='person\'s name') {this.value = '';}this.style.color='#707070';" />
+                <input type="text" class="txtphone" id="txtphone" value="(###) ### - ####" onblur="if (this.value==''){this.value='(###) ### - ####';this.style.color='#B6B6B6';}"
+                       onfocus="if (this.value=='(###) ### - ####') {this.value = '';}this.style.color='#707070';" />
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="boxaddress">
+            <div class="companyaddress">
+                address:
+            </div>
+            <div class="inputcompanyname">
+                <input type="text" value="optional" class="txtaddress" id="btncompanyname" onblur="if (this.value==''){this.value='optional';this.style.color='#B6B6B6';}"
+                       onfocus="if (this.value=='optional') {this.value = '';}this.style.color='#707070';" />
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="boxstate">
+            <div class="companyname">
+                &nbsp;
+            </div>
+            <div class="inputcompanyname">
+                <input type="text" style="width: 220px;" class="txtstate" id="txtstate" value="city, state"
+                       onblur="if (this.value==''){this.value='city, state';this.style.color='#B6B6B6';}"
+                       onfocus="if (this.value=='city, state') {this.value = '';}this.style.color='#707070';" />
+                <input type="text" onkeypress='validate(event)' maxlength="5" style="width: 106px;"
+                       class="txtzipcode" id="txtzipcode" onkeypress='validate(event)' value="zip code"
+                       onblur="if (this.value==''){this.value='zip code';this.style.color='#B6B6B6';}"
+                       onfocus="if (this.value=='zip code') {this.value = '';}this.style.color='#707070';" />
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear12">
+        </div>
+        <a href="#" class="btnbook" id="bookme" title="add this company" style="margin-top: 0px;">
+            add this company
+        </a>
+        <div id="divSummaryError" style="margin-left: 110px; margin-right: 110px;">
+            <div class="ui-state-error ui-corner-all">
+                <div id="content" style="position: relative; margin-left: -30px; margin-right: 6px;
+                    padding-top: 5px;">
+                    <ul id='errorContent' style="display: block; list-style-type: none; margin-top: 2px;"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="comfirmationpopup" class="comfirmationpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="contentPopupForm">
+            <h3>
+                how should we give you confirmation?
+            </h3>
+            <div class="clear">
+            </div>
+            <center>
+                <input id="cbemail" class="ui-helper-hidden-accessible" type="checkbox" name="verification">
+                <label class="cbcheck ui-checkbox " for="cbemail">
+                    email?
+                </label>
+                <input id="cbsms" class="ui-helper-hidden-accessible" type="checkbox" name="verification">
+                <label class="smscheck ui-checkbox" for="cbsms">
+                    SMS?
+                </label>
+            </center>
+            <label id="appointmentError" style="color: Red; display: none">
+                please check email or sms
+            </label>
+            <div class="clear h7">
+            </div>
+            <h3>
+                appointment notes? <span>(specify reason, contact person, etc)</span>
+            </h3>
+            <div class="clear h7">
+            </div>
+            <textarea id="txtCustomerScheduleLog" cols="" rows=""></textarea>
+            <div class="clear h7">
+            </div>
+            <a href="#" class="btnbook" onclick="bookAppointmentNow();" title="book it for me, kuyam!">
+            </a>
+        </div>
+        <div class="contentPopupSuccess" style="display: none; color: red; font-size: 12px;
+            padding-top: 150px">
+            <center>
+                <h1>
+                    We will contact you soon. Thanks!
+                </h1>
+            </center>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //---------------
+    jQuery(function ($) {
+        $("#txtphone").mask("(999) 999-9999");
+
+        $('#txtphone').val('(###) ### - ####');
+    });
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+    $('#divSummaryError').hide();
+
+    $('#bookme').click(function () {
+        $('#errorContent').html('');
+        $('#divSummaryError').hide();
+        var flag = true;
+        var companyName=$('#txtcompanyname').val();
+        var contactName=$('#txtperson').val();
+        var phoneNumber=$('#txtphone').val();
+        var address=$('#btncompanyname').val();
+        var city=$('#txtstate').val();
+        var zipCode=$('#txtzipcode').val();
+
+        //company name
+        if (companyName == '') {
+            $("#content ul").append('<li>company name is required.</li>');
+            flag = false;
+        } else {
+            if (companyName.length > 50) {
+                $("#content ul").append('<li>company name must be less than 50 characters.</li>');
+                flag = false;
+            }
+        }
+
+        //contact name
+        //            if (contactName == '' || contactName=='person\'s name') {
+        //                $("#content ul").append('<li>contact name is required.</li>');
+        //                flag = false;
+        //            } else {
+        //                if (contactName.length > 50) {
+        //                    $("#content ul").append('<li>contact name must be less than 50 characters.</li>');
+        //                    flag = false;
+        //                }
+        //            }
+
+        //address
+        //            if (address == '' || address=='optional') {
+        //                $("#content ul").append('<li>address is required.</li>');
+        //                flag = false;
+        //            } else {
+        //                if (address.length > 50) {
+        //                    $("#content ul").append('<li>address must be less than 50 characters.</li>');
+        //                    flag = false;
+        //                }
+        //            }
+        //city state
+        if (city == '' || city=='city, state') {
+            $("#content ul").append('<li>city, state is required.</li>');
+            flag = false;
+        } else {
+            if (city.length > 50) {
+                $("#content ul").append('<li>city,state must be less than 50 characters.</li>');
+                flag = false;
+            }
+        }
+
+        //zipcode
+        //            if (zipCode == '' || zipCode=='zip code') {
+        //                $("#content ul").append('<li>zip code is required.</li>');
+        //                flag = false;
+        //            } else {
+        //                if (zipCode.length < 5 || zipCode.length > 10) {
+        //                    $("#content ul").append('<li>zip code must be 5 or 10 characters long.</li>');
+        //                    flag = false;
+        //                }
+        //            }
+
+        //phone number
+        //            if (phoneNumber == ''|| phoneNumber=='(###)### ####') {
+        //                $("#content ul").append('<li>phone number is required.</li>');
+        //                flag = false;
+        //            } else {
+        //                if (phoneNumber.length > 50) {
+        //                    $("#content ul").append('<li>phone number must be less than 50 characters.</li>');
+        //                    flag = false;
+        //                }
+
+        //            }
+
+        if (flag) {
+            var parameters = { companyName: companyName, contactName: contactName, phoneNumber: phoneNumber, address: address, city: city ,zipCode: zipCode  };
+
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/RequestAddNewCompany/'
+            })
+            .success(function (result) {
+                window.location.href ='/company/companysearch/?id=0';
+            });
+        }else{
+            $('#divSummaryError').show();
+            return false;
+            //alert('error');
+        }
+    });
+
+
+    //---------------
+
+
+    function pagingEvent(pageIndex) {
+        var compareValue =$('#within').val();
+        var price = $('#price').val();
+        var time = $('#time').val();
+        var isAvailableToday = $('#cbAvailable').is(':checked');
+        var id='@categoryId';
+        var sortBy = $('#sortBy').val();
+        var key = $('#searchByName').val()
+        var searchParameters ={ id: id, compare:compareValue, price:price, time:time,isAvailableToday:isAvailableToday,page: pageIndex, sortBy:sortBy, key:key };
+        $('#imgLoaderListDetail').show();
+        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/company/CompanySearchWithDistanceAndPaging/'
+            })
+            .success(function (result) {
+                $('#imgLoaderListDetail').hide();
+                $('#companyList').html(result);
+                domScript();
+                $('#searchByName').val(key);
+            })
+            .error(function (error) {
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').show();
+            });
+
+
+    };
+
+    //    $('.btnbook').click(function () {
+    //        var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+    //        if(!isLogin)
+    //        {
+    //            $('.contentPopupForm').hide();
+    //            $('.loginFormScheduler').show();
+    //            return false;
+    //        }
+
+    //        var companyId =$('#hdnCompanyID').val();
+    //        var date1  = $('#customerScheduler1Day').val() + ' ' +  $('#customerScheduler1Hour').val();
+    //        var date2  = $('#customerScheduler2Day').val() + ' ' +  $('#customerScheduler2Hour').val();
+    //        var date3  = $('#customerScheduler3Day').val() + ' ' +  $('#customerScheduler3Hour').val();
+    //        var mess = $('#txtCustomerScheduleLog').val();
+    //        $('.btnbook').hide();
+    ////        $('#imgLoaderListDetail').show();
+    ////        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+    //        var scheduleParameters ={ id: companyId, dateTime1: date1, dateTime2: date2, dateTime3: date3, messageLog : mess};
+    //
+    //
+    //        $.ajax(
+    //        {
+    //            type: 'POST',
+    //            contentType: 'application/json; charset=utf-8',
+    //            data: JSON.stringify(scheduleParameters),
+    //            dataType: 'html',
+    //            url: '/company/AddCustomerSchedules/'
+    //            })
+    //            .success(function (result) {
+    //                $('#imgLoaderListDetail').hide();
+    //                $('#lightBox').hide();
+    //                $('.contentPopupForm').hide();
+    //                $('.contentPopupSuccess').show();
+    //                })
+    //            .error(function (error) {
+    //                $('.btnbook').show();
+    //                    $('#imgLoaderListDetail').hide();
+    //                    $('#lightBox').hide();
+    //                    $('#comfirmationpopup').hide();
+    //
+    //                });
+    //
+    //        });
+
+    function bookAppointmentNow() {
+        if ($(location).attr('href').indexOf("companysearch") == -1) {
+        }
+        else {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if (!isLogin) {
+                $('.contentPopupForm').hide();
+                $('.loginFormScheduler').show();
+                return false;
+            }
+
+            if($('#cbsms').is(':checked')==true &&  $('#cbemail').is(':checked') ==true)
+            {
+                $('#appointmentError').show();
+                return false;
+
+            }
+
+            var companyId = $('#hdnCompanyID').val();
+            var date1 = $('#customerScheduler1Day').val() + ' ' + $('#customerScheduler1Hour').val();
+            var date2 = $('#customerScheduler2Day').val() + ' ' + $('#customerScheduler2Hour').val();
+            var date3 = $('#customerScheduler3Day').val() + ' ' + $('#customerScheduler3Hour').val();
+            var mess = $('#txtCustomerScheduleLog').val();
+            $('.btnbook').hide();
+            //            $('#imgLoaderListDetail').show();
+            //            $('#lightBox').css('opacity', '0.6').fadeIn(200);
+            var scheduleParameters = { id: companyId, dateTime1: date1, dateTime2: date2, dateTime3: date3, messageLog: mess };
+
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(scheduleParameters),
+                    dataType: 'html',
+                    url: '/company/AddCustomerSchedules/'
+                })
+                .success(function(result) {
+                    $('#comfirmationpopup').hide();
+                    popupThankYou();
+                    //                    $('#imgLoaderListDetail').hide();
+                    //                    $('#lightBox').hide();
+                    //                    $('.contentPopupForm').hide();
+                    //                    $('.contentPopupSuccess').show();
+                })
+
+                .error(function(error) {
+
+                    //                    $('.btnbook').show();
+                    //                    $('#imgLoaderListDetail').hide();
+                    //                    $('#lightBox').hide();
+                    //                   $('#comfirmationpopup').hide();
+                    //                  $('#imgLoaderListDetail').hide();
+                    //                    $('#lightBox').hide();
+                    //                    $('.contentPopupForm').hide();
+                    //                    $('.contentPopupSuccess').show();
+                    $('#comfirmationpopup').hide();
+                    popupThankYou();
+                });
+
+        }
+    }
+    $(document).ready(function () {
+        $("#lbKeyword").dotdotdot({
+            height: 25,
+            width: 50
+        });
+    });
+
+</script>

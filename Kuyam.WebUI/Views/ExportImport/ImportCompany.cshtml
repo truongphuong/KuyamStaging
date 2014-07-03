@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "ImportCompany";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+
+ @using (Html.BeginForm("ImportCompany", "ExportImport", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table style="text-align: left;">
+            <tr>
+                <td>
+                   
+                </td>
+                <td>
+                    <input type="file" id="importexcelfile" name="importexcelfile" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" class="t-button" value="ImportFromExcel" />
+                </td>
+            </tr>
+        </table>
+    }
+  
+

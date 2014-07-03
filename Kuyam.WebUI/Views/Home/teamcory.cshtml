@@ -1,0 +1,82 @@
+@{
+    ViewBag.Title = "team kourosh";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        $('select#category').selectmenu();
+
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+    });
+</script>
+<div class="contentMarketPlace">
+    <div class="howitworks" style="background-position:0 100%;">
+        <div class="ourstory">
+            <div class="ourstoryleft teammember">
+                <ul>
+                    <li><a href="/home/ourstory" title="our story">our story</a> <span class="nonarrow">
+                    </span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <li class="meetingteam"><span class="active">meet the team</span> <span class="greenarrow">
+                    </span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ourstoryright">
+                <div class="teamcontent">
+                    <div class="imagemember">
+                        <img src="/images/cory.png" alt="cory" />
+                    </div>
+                    <div class="contentmember">
+                        <h1>
+                            cory sanford/ <span>“the ludologist”</span>
+                        </h1>
+                        <h2>
+                            gamification strategist</h2>
+                        <p>
+                            Cory is a master of the dark art known by some as "gaming." When not developing
+                            meaningful interactions and engrossing experiences, Cory can be found doodling,
+                            photographing, and, of course, playing video games.
+                        </p>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="teamline">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="othermembers">
+                    <a href="/home/teamkourosh" class="kourosh" title="kourosh"></a><a href="/home/teamtony"
+                        class="tony" title="tony"></a><a href="/home/teamtodd" class="todd" title="todd">
+                    </a><a href="/home/teamjackie" class="jackie" title="jackie"></a><span class="cory">
+                    </span><a href="/home/teammonika" class="monika" title="monika"></a>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>

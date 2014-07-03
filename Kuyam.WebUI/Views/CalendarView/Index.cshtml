@@ -1,0 +1,232 @@
+﻿@using Kuyam.WebUI.InfoConnServiceReference;
+@{
+    
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+
+}
+<link href="../../fullCalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
+<script src="../../fullCalendar/fullcalendar.js" type="text/javascript"></script>
+<script src="../../fullCalendar/fullcalendar.min.js" type="text/javascript"></script>
+<link href="../../fullCalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" />
+<!-- InstanceBeginEditable name="content" -->
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight">
+            <div class="clear2">
+            </div>
+            <div class="calendar" style="background-color: White">
+                <div class="clear4">
+                </div>
+                <div id='calendar'>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear5">
+            </div>
+            <div>
+                <span class="viewingtext">viewing calendars:</span>
+                @{
+                    if (ViewBag.IsGoogleConnected)
+                    {
+                    <a href="#" title="google calendar" id="ggcalendar" ispopup="true"><span class="viewinggcal">
+                    </span></a>
+                    }
+                    else
+                    {
+                    <a href="#" title="google calendar" id="ggcalendar" ispopup="false"><span class="viewinggcal">
+                    </span></a>
+                    }
+                }
+                <a href="#" title="kuyam appointment" id="kyapp"><span class="viewingkuyamappointment">
+                </span></a>
+                @{
+                    if (ViewBag.IsFBConnected)
+                    {
+                    <a href="#" title="facebook events" id="fbevents" ispopup="true"><span class="viewingfbappointment">
+                    </span></a>
+                    }
+                    else
+                    {
+                    <a href="#" title="facebook events" id="fbevents" ispopup="false"><span class="viewingfbappointment">
+                    </span></a>
+                    }
+                }
+                <a href="#" title="iCal" id="icalapp"><span class="viewingicalappointment"></span>
+                </a>
+            </div>
+            <div class="clear86">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!-- InstanceEndEditable -->
+<script type='text/javascript'>
+
+    $(function () {
+
+     $('#icalapp').click(function () {
+            var currentClass = $("#icalapp span").attr("class");
+            if (currentClass == "viewingicalappointment") {
+                $("#icalapp span").removeClass("viewingicalappointment");
+                $("#icalapp span").addClass("viewingicalappointmenttext");
+                $(".iCalapp").hide();
+            }
+            else if (currentClass == "viewingicalappointmenttext") {
+                $("#icalapp span").removeClass("viewingicalappointmenttext");
+                $("#icalapp span").addClass("viewingicalappointment");
+                $(".iCalapp").show();
+            }
+            return false;
+        });
+        $('#ggcalendar').click(function() {           
+            var currentClass = $("#ggcalendar span").attr("class");
+            if (currentClass == "viewinggcal") {
+                $("#ggcalendar span").removeClass("viewinggcal");
+                $("#ggcalendar span").addClass("viewinggcaltext");
+                $(".ggcal").hide();
+            } else if (currentClass == "viewinggcaltext") {
+                $("#ggcalendar span").removeClass("viewinggcaltext");
+                $("#ggcalendar span").addClass("viewinggcal");
+                $(".ggcal").show();
+            }
+            return false;
+        });
+
+        $('#kyapp').click(function () {
+            var currentClass = $("#kyapp span").attr("class");
+            if (currentClass == "viewingkuyamappointment") {
+                $("#kyapp span").removeClass("viewingkuyamappointment");
+                $("#kyapp span").addClass("viewingkuyamappointmenttext");
+                $(".kuyamapp").hide();
+            }
+            else if (currentClass == "viewingkuyamappointmenttext") {
+                $("#kyapp span").removeClass("viewingkuyamappointmenttext");
+                $("#kyapp span").addClass("viewingkuyamappointment");
+                $(".kuyamapp").show();
+            }
+            return false;
+        });
+
+        $('#fbevents').click(function() {
+            var currentClass = $("#fbevents span").attr("class");
+            if (currentClass == "viewingfbappointment") {
+                $("#fbevents span").removeClass("viewingfbappointment");
+                $("#fbevents span").addClass("viewingfbappointmenttext");
+                $(".fbapp").hide();
+            } else if (currentClass == "viewingfbappointmenttext") {
+                $("#fbevents span").removeClass("viewingfbappointmenttext");
+                $("#fbevents span").addClass("viewingfbappointment");
+                $(".fbapp").show();
+            }
+            return false;
+        });
+    });
+		
+
+$(function() {
+
+    $("#accordion").accordion({
+        collapsible: true,
+        autoHeight: false
+        });
+
+        $( "#datepicker" ).datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dayNamesMin: $.datepicker._defaults.dayNamesShort
+        });
+
+        });
+        $(function(){
+        $('select#category').selectmenu();
+    });
+
+    $(document).ready(function () {
+        
+        $( "#accordion" ).accordion( "option", "active", 3 );
+
+        $('#calendar').fullCalendar({
+            header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: true,
+                disableDragging: true,
+                disableResizing: true,
+            events: "/CalendarView/GetCadlendars/",
+            eventRender: function (event, element) {
+                var title = "";
+                if (event.title.length > 27) {
+                    title = event.title.substring(0, 27) + '...';
+                }
+                else {
+                    title = event.title;
+                }
+                if (element.context.className.indexOf("fbapp") != -1) {
+                    element.html("<div class='fc-event-inner fc-event-skin'><div class='fbapp'><div class='fbapptop'></div><div class='fbappmid'>" + title + "</div><div class='fbappbot'></div></div></div>");
+                }
+                else if (element.context.className.indexOf("ggapp") != -1) {
+                    element.html("<div class='fc-event-inner fc-event-skin'><div class='ggcal'><div class='ggcaltop'></div><div class='ggcalmid'>" + title + "</div><div class='ggcalbot'></div></div></div>");
+                }
+                else if (element.context.className.indexOf("kuyamapp") != -1) {
+                     element.html("<div class='fc-event-inner fc-event-skin'><div class='kuyamapp'><div class='top'><div class='rtop'></div></div><div class='mid'>" + title + "</div><div class='bot'><div class='rbot'></div></div></div></div>");
+                }
+                else if (element.context.className.indexOf("icalapp") != -1) {
+                    element.html("<div class='fc-event-inner fc-event-skin'><div class='iCalapp'><div class='top'><div class='rtop'></div></div><div class='mid'>" + title + "</div><div class='bot'><div class='rbot'></div></div></div></div>");
+                }
+
+            },
+
+            loading: function (bool) {
+                if (bool) {
+                   
+                } else {
+                     
+                    var currentClass = $("#ggcalendar span").attr("class");
+                    if (currentClass == "viewinggcaltext") {
+                        $(".ggcal").hide();
+                    }
+                    currentClass = $("#fbevents span").attr("class")
+                    if (currentClass == "viewingfbappointmenttext") {
+                        $(".fbapp").hide();
+                    }
+
+                    currentClass = $("#kyapp span").attr("class")
+                    if (currentClass == "viewingkuyamappointmenttext") {
+                        $(".kuyamapp").hide();
+                    }
+
+                  
+//                    var current = new Date();
+//                    current = new Date($('#hdfCurrentYear').attr('value'), $('#hdfCurrentMonth').attr('value') - 1, 1);                    
+//                    $('#calendar').fullCalendar('gotoDate', current);
+                }
+            },
+
+            viewDisplay: function(view) {
+                var currentClass = $("#ggcalendar span").attr("class");
+                    if (currentClass == "viewinggcaltext") {
+                        $(".ggcal").hide();
+                    }
+                    currentClass = $("#fbevents span").attr("class")
+                    if (currentClass == "viewingfbappointmenttext") {
+                        $(".fbapp").hide();
+                    }
+
+                    currentClass = $("#kyapp span").attr("class")
+                    if (currentClass == "viewingkuyamappointmenttext") {
+                        $(".kuyamapp").hide();
+                    }
+            }
+        });
+        $('#calendar').fullCalendar('gotoDate', @ViewBag.CurrentYear, @ViewBag.CurrentMonth, @ViewBag.CurrentDay);        
+        $("#ui-accordion-accordion-panel-1").css("display", "none");
+    });
+
+</script>

@@ -1,0 +1,501 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models
+
+@{
+    ViewBag.Title = "Company Employees";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+
+    List<ServiceCompany> scList = new List<ServiceCompany>();
+    if (ViewBag.CompanyServices != null)
+    {
+        scList = ViewBag.CompanyServices;
+    }
+    string scListIDs = string.Empty;
+    if (ViewBag.StringSCListIDs != null)
+    {
+        scListIDs = ViewBag.StringSCListIDs;
+    }
+    CompanyEmployee employee = null;
+    if (ViewBag.Employee != null)
+    {
+        employee = ViewBag.Employee;
+    }
+    string id = "0";
+    if (Url.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = Url.RequestContext.RouteData.Values["id"].ToString();
+    }
+}
+<link href="/css/uploader/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<script src="/Scripts/uploader/jquery.fileupload.js" type="text/javascript"></script>
+<script src="/Scripts/uploader/jquery.fileupload-ui.js" type="text/javascript"></script>
+<script src="/Scripts/uploader/jquery.fileupload-ip.js" type="text/javascript"></script>
+<script src="/Scripts/uploader/jquery.fileupload-fp.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.form.js" type="text/javascript"></script>
+
+<style>
+    .file
+    {
+        display: inline-block;
+        width: 94px;
+        position: relative; /*background: #61c6f5;
+        border-bottom: solid 1px #59b8e4;*/
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin-bottom: 10px;
+        cursor:pointer;
+    }
+    .file .button
+    {
+        background: url("/images/appointment.png") no-repeat scroll -281px -113px transparent;
+        text-indent: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #555;
+        height: 40px;
+        line-height: 40px;
+        display: block;
+        cursor: pointer;
+    }
+    .file input
+    {
+        cursor: pointer;
+        height: 42px;
+        position: absolute;
+        right: -2px;
+        top: 0;
+        filter: alpha(opacity=0);
+        -moz-opacity: 0;
+        opacity: 0;
+        font-size: 5px;
+        line-height: 35px;
+    }
+</style>
+<div class="contentMarketPlace ml2">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+
+        <div class="colRight w760">
+            <div class="editserviceform">
+                <h1>
+                    add/edit your employees and tag their services</h1>
+                <p class="padd">
+                    per employee, please check all the services they provide.<br />
+                    to edit employees, select their name from the drop-down on the left.
+                </p>
+                <div class="line1">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="listservices">
+                    <div class="employeebasedcol1">
+                        <div class="leftaddnew1">
+                        </div>
+                        <div class="leftaddnew">
+                            <div class="title">
+                                employee name</div>
+                            <div class="clear">
+                            </div>
+                            <div id="employeename" class="textbox">
+                                <div class="ltxtaddnewemployee editformtextboxyellowbgleft">
+                                </div>
+                                <div class="ctxtaddnewemployee editformtextboxyellowbgmid">
+                                    @if (employee != null)
+                                    {
+                                        <input id="employee" type="text" value="@employee.EmployeeName" />
+                                    }
+                                    else
+                                    {
+                                        <input id="employee" type="text" value="" />
+                                    }
+                                </div>
+                                <div class="rtxtaddnewemployee editformtextboxyellowbgright">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="title addemail">
+                                e-mail</div>
+                            <div class="clear">
+                            </div>
+                            <div id="emailname" class="textbox">
+                                <div class="ltxtaddnewemployee editformtextboxyellowbgleft">
+                                </div>
+                                <div class="ctxtaddnewemployee editformtextboxyellowbgmid">
+                                    @if (employee != null)
+                                    {
+                                        <input id="email" type="text" value="@employee.Email" />
+                                    }
+                                    else
+                                    {
+                                        <input id="email" type="text" value="" />
+                                    }
+                                </div>
+                                <div class="rtxtaddnewemployee editformtextboxyellowbgright">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="title addphone">
+                                phone #</div>
+                            <div class="clear">
+                            </div>
+                            <div id="phonename" class="textbox">
+                                <div class="ltxtaddnewemployee editformtextboxyellowbgleft">
+                                </div>
+                                <div class="ctxtaddnewemployee phone editformtextboxyellowbgmid" style="width: 175px;">
+                                    @if (employee != null)
+                                    {
+                                        <input id="phone" type="text" value="@employee.Phone" />
+                                    }
+                                    else
+                                    {
+                                        <input id="phone" type="text" value="" />
+                                    }
+                                </div>
+                                <div class="rtxtaddnewemployee editformtextboxyellowbgright">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="title sync">
+                                calendars to sync:</div>
+                            <div class="clear">
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="title2 ical">
+                                iCal:<div id='lcalFileName' style="display: table;float: right;max-width: 170px;width:170px;word-break:break-all"></div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <form id="file_upload"  method="POST" action="/Company/UploadFiles" enctype="multipart/form-data">
+                            <div class="usericaltext">
+                                <span class="fileinput-button companyemployeeupload">
+                                   <input type="file" id="fileUpload" runat="server" onchange='$("#file_upload").submit();' name="files[]" multiple />
+                                </span>
+                            </div>
+                            </form>
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#file_upload').ajaxForm({
+                                        beforeSubmit: function () {
+                                        },
+                                        success: function (data) {
+                                            if (data && data.length > 0) {
+                                                data= data.replace(new RegExp( "\"", "gi" ),"");
+                                                $('#lcalFileName').html(data);
+                                                $('#lcalFileName').css("background-color", "red");
+                                            }
+                                            //alert('uploaded');
+                                        }
+                                    });
+                                });
+
+                            </script>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="employeebasedcol2">
+                        <div class="rightaddnew1">
+                        </div>
+                        <div class="rightaddnew">
+                            <div class="title">
+                                tag services</div>
+                            <div class="clear">
+                            </div>
+                            <div class="rightaddnewcontent">
+                                <ul>
+                                    @foreach (ServiceCompany service in scList)
+                                    {
+                                        string liID = "li" + service.ServiceCompanyID;
+                                        string inputID = service.ServiceCompanyID.ToString();
+
+                                        if (scListIDs != string.Empty && scListIDs.Contains(service.ServiceCompanyID.ToString()))
+                                        {
+                                        <li id="@liID"  class="iefirst liactive">
+                                            <input type="checkbox" checked="checked" class="ckServiceCompany" id="@inputID" liID="@liID" serviceCompanyID="@service.ServiceCompanyID" />
+                                            <label for="@inputID">
+                                                @service.Service.ServiceName , @service.Duration.Value min, @service.Price.Value.ToString("C2")
+                                                , @service.AttendeesNumber.Value person</label>
+                                        </li>
+                                                    
+                                        }
+                                        else
+                                        {
+                                                
+                                        <li id="@liID"  class="iefirst">
+                                            <input type="checkbox" class="ckServiceCompany" id="@inputID" liID="@liID" serviceCompanyID="@service.ServiceCompanyID" />
+                                            <label for="@inputID">
+                                                @service.Service.ServiceName , @service.Duration.Value min, @service.Price.Value.ToString("C2")
+                                                , @service.AttendeesNumber.Value person</label>
+                                        </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="btnareaemployeebased">
+                    @if (employee != null)
+                    {
+                        <input type="button" value="save changes" class="btnEditemployee" title="save changes" />
+                        <div class="clear">
+                        </div>
+                        <input type="button" value="delete this employee" class="btndelemployee" title="delete this employee" />
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#employeename").addClass("editformtextboxyellowbg");
+                                $("#phonename").addClass("editformtextboxyellowbg");
+                                $("#emailname").addClass("editformtextboxyellowbg");
+                                $("#ical").addClass("editformtextboxyellowbg");
+                            });
+                        </script>
+                    }
+                    else
+                    {                                
+                        <input type="button" value="add employee" class="btnaddemployee" title="add employee" />
+                    }
+                </div>
+                <div id="divErrorBox" style="width: 218px; margin-top: -54px; color: Red;">
+                    <div class="ui-state-error ui-corner-all">
+                        <div style="position: relative;">
+                            <div id='errorlist' style="padding: 4px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear300">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="addemployeepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                added a new employee successfully...
+            </p>
+        </div>
+    </div>
+    
+    <div id="savechangepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                your changes are saved...
+            </p>
+        </div>
+    </div>
+    <div id="deletecompanychangepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                Delete Success.
+            </p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+    $('#divErrorBox').hide();
+    jQuery(function ($) {
+        $("#phone").mask("(999) 999-9999");
+    });
+
+     $('.ckServiceCompany').checkBox
+        ({
+            addVisualElement: false,
+            'change': function(e, ui){
+            if(ui.checked == true)
+            {
+            employee_edit_add_active($(this).attr('id'));
+            }
+            else
+            {
+            employee_edit_remove_active($(this).attr('id'));
+            }
+            }
+});
+
+
+
+//        $('.ckServiceCompany').change(function () {
+//            var id = $(this).attr("id")
+//            var liID = $(this).attr("liID");
+//            if (document.getElementById(id).checked == true) {
+//                document.getElementById(liID).className += " liactive";
+//            }
+//            else {
+//                document.getElementById(liID).className = "iefirst";
+//            }
+
+//        });
+
+        $('.btnaddemployee').click(function () {
+            var employeeName = $('#employee').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            //Trong edit
+
+            var err='';
+
+             //employee name
+            if (employeeName == '') {
+                err=err+'employee name is required.</br>';
+               
+            } else {
+                if (employeeName.length > 50) {
+                    err=err+'employee name must be less than 50 characters.</br>';
+                }
+            }
+
+            //phone number            
+            if (phone == '') {
+                err=err+'phone number is required.</br>';
+            } else {
+                if (phone.length > 50) {
+                    err=err+'phone number must be less than 50 characters.</br>';
+                }
+                var re = /^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})$/;
+                if (!phone.match(re)) {
+                    err=err+'invalid phone.</br>';
+                }
+            }
+
+            //email
+            if (email == '') {
+                err=err+'email is required.</br>';
+               
+            } else {
+                if (email.length > 50) {
+                    err=err+'email must be less than 50 characters.</br>';
+                }
+                var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+                if (!reemail.test(email)) {
+                    err=err+'invalid e-mail address.</br>';
+                   
+                }
+            }
+
+            //
+            if (err=='') {
+                    var listServiceCompanyLi = document.querySelectorAll('.ckServiceCompany')// document.getElementsByClassName("ckServiceCompany");
+                    var stringServiceCompanyIDList = '';
+                    if (listServiceCompanyLi && listServiceCompanyLi.length > 0) {
+                        for (var i = 0; i < listServiceCompanyLi.length; i++) {
+                            if (listServiceCompanyLi[i].checked == true) {
+                                stringServiceCompanyIDList += listServiceCompanyLi[i].attributes["serviceCompanyID"].value + ',';
+                            }
+                        }
+                    }
+
+                    var parameters = { employeeName: employeeName, email: email, phone: phone, stringServiceCompanyIDs: stringServiceCompanyIDList };
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(parameters),
+                            dataType: 'html',
+                            url: '/company/AddEmployeeInFo/'
+                        })
+                        .success(function (result) {
+                            showDialog('addemployeepopup');
+                            setTimeout( window.location.href ="/company/companyemployee",1000);
+//                            window.location.href ="/company/companyemployee";
+                    
+                        })
+                        .error(function (error) {
+                        });
+                }else{
+                    $('#divErrorBox').show();
+                    $('#errorlist').html(err);
+                }
+           
+            });
+
+            $('.btnEditemployee').click(function () {
+            var employeeID = @id;
+            var employeeName = $('#employee').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var listServiceCompanyLi = document.querySelectorAll('.ckServiceCompany');//document.getElementsByClassName("ckServiceCompany");
+            var stringServiceCompanyIDList = '';
+            if (listServiceCompanyLi && listServiceCompanyLi.length > 0) {
+                for (var i = 0; i < listServiceCompanyLi.length; i++) {
+                    if (listServiceCompanyLi[i].checked == true) {
+                        stringServiceCompanyIDList += listServiceCompanyLi[i].attributes["serviceCompanyID"].value + ',';
+                    }
+                }
+            }
+
+            var parameters = { employeeID:employeeID, employeeName: employeeName, email: email, phone: phone, stringServiceCompanyIDs: stringServiceCompanyIDList };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/EditEmployeeInFo/'
+                })
+                .success(function (result) {
+                
+                    showDialog('savechangepopup');
+                    setTimeout( "timeOut();",1000);
+//                    window.location.href ="/company/companyemployee/" +@id;
+                    
+                })
+                .error(function (error) {
+                });
+            });
+
+            
+            $('.btndelemployee').click(function () {
+            
+            var employeeID = @id;
+            var parameters = { employeeID:employeeID};
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/DeleteEmployeeInFo/'
+                })
+                .success(function (result) {
+                    if(result == 'true')
+                    {
+                    showDialog('deletecompanychangepopup');
+                    setTimeout( window.location.href ="/company/companyemployee/",1000);
+                    }
+                    else
+                    {
+                    alert('this employee is not allowed to delete!');
+                    }
+//                    window.location.href ="/company/companyemployee/" ;
+                    
+                })
+                .error(function (error) {
+                });
+            });
+    });
+     function gotoStatus(status) {
+            window.location.href="/CompanyAppointment/";
+    }   
+    function timeOut(){
+                window.location.href ="/company/companyemployee/" +@id;
+            }
+     $(document).ready(function () {
+        $("#ui-accordion-accordion-header-2").click(function () {            
+            if (window.location.href.indexOf("calendarview") == -1) {
+                window.location = "/calendarview/";
+            }
+        });
+    });
+</script>

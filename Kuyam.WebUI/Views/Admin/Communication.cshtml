@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Communication";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        formatPhonenumber($("#txtphoneNumber").val());
+    });
+
+    function validateEmail(field) {
+        var regex = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+        return (regex.test(field)) ? true : false;
+    }
+
+    function validateMultipleEmailsCommaSeparated(value) {
+        var result = value.split(";");
+        for (var i = 0; i < result.length; i++)
+            if (result[i]!="" && !validateEmail(result[i]))
+                return false;
+        return true;
+    }
+
+    function validatePhone(value) {
+        var newnumber = value.replace(/[^0-9]/g, '');
+        var regex = /^1?([2-9]..)([2-9]..)(....)$/;
+        if (!regex.test(newnumber)) {
+            return false;
+        } else {
+           return true;
+        }
+    }
+
+    function validateMultiplePhonenumber(value) {
+        var result = value.split(";");
+        for (var i = 0; i < result.length; i++)
+            if (result[i]!=""&&!validatePhone(result[i]))
+                return false;
+        return true;
+    }
+
+    function saveChange() {
+        var email = $("#emailaddress").val();
+        var phoneNumber = $("#txtphoneNumber").val();
+        if (!validateMultipleEmailsCommaSeparated(email))
+            $("#emailerror").show();
+        if (!validateMultiplePhonenumber(phoneNumber))
+            $("#phoneerror").show();
+        if (!validateMultipleEmailsCommaSeparated(email) || !validateMultiplePhonenumber(phoneNumber))
+            return;   
+       $("#Communication").submit();
+        
+    }
+
+    function formatPhonenumber(value) {
+        var formatted_number="";
+        var result = value.split(";");        
+        var regex = /^1?([2-9]..)([2-9]..)(....)$/;
+        for (var i = 0; i < result.length; i++) {
+            if (formatted_number!="") formatted_number += ';';
+             formatted_number+= result[i].replace(regex, '($1) $2-$3');
+         }
+         $("#txtphoneNumber").val(formatted_number);
+    }
+
+</script>
+<div id="contentmainpage">
+<h2>bcc admin (sms & email)</h2>
+@using (Html.BeginForm("Communication", "Admin", FormMethod.Post, new { id = "Communication" }))
+{
+<div style="width:745px;">
+<table border='0' cellpadding="0" cellspacing="0" class="tbldata">
+   <tr> 
+    <td>email</td>
+    <td><input  type ="text" id="emailaddress" name="emailaddress" style="width:538px;" value="@ViewBag.EmailBcc"/> </td> 
+    <td><input name="enableEmailBcc" id="enableEmailBcc" type="checkbox" @(ViewBag.EnableEmailBcc == true ? "checked=checked" : "") value="true" /> <label for="enableEmailBcc">enable</label></td>
+  </tr>
+  <tr> 
+    <td>sms</td>
+    <td><input type="text" id="txtphoneNumber" name="txtphoneNumber" onblur="formatPhonenumber(this.value);" value="@ViewBag.PhoneNumber" style="width:538px;"/> </td> 
+    <td><input name="enablePhoneBcc" id="enablePhoneBcc" type="checkbox" @(ViewBag.EnablePhoneBcc == true ? "checked=checked" : "") value="true"/> <label for="enablePhoneBcc">enable</label></td>
+  </tr>
+  <tr> 
+    <td colspan="3" align="center"><center><input  type="button" onclick="saveChange();" value="save" /></center></td>
+  </tr>
+</table>
+</div>
+    <div class="errorarea" style="color: Red;">           
+            <div id="emailerror" style="display: none">
+                <span style="color: Red;">email is invalid</span>                   
+            </div>
+            <div id="phoneerror" style="display: none">
+                <span style="color: Red;">phone number is invalid</span>                   
+            </div>             
+      </div>
+}
+</div>

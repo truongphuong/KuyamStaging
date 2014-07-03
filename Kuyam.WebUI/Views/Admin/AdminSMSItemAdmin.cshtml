@@ -1,0 +1,10 @@
+﻿@using Kuyam.Database
+@model Kuyam.Database.SMSMessage
+<ul class="adminItemContent" style="list-style: none">
+    <li class="liodd1">@Model.DateTime.ToString("MMM dd,yyyy hh:mm tt")</li>
+    <li class="liodd">@Model.Message</li>
+    @if (Model.DeliveryStatus == (int)Types.DeliveryStatus.CanNotSend)
+    {
+        <li id="li_@Model.MessageId" class="liodd2">Can't send message <a id="@Model.MessageId" style="text-decoration: underline; cursor: pointer;" onclick="TryaginMessage(this); return false; ">Try again</a></li>
+    }
+</ul>

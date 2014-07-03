@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Service Type";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<link href="@Url.Content("~/css/servicetype.css")" rel="stylesheet" type="text/css" />
+<div class="employeeorservice">
+    <div class="estop">
+        <h1>
+            to start, choose a type of scheduling:
+        </h1>
+        @*<p class="descript">
+            in other words, when users book appointments with you do they look for certain people
+            or services?</p>*@
+    </div>
+    <div class="clear">
+    </div>
+    <div class="bgboxemployee">
+    </div>
+    <div class="boxemployee">
+        <h2>
+            employee-based</h2>
+        <img alt="employee-based" src="/images/employee.png" />
+        <p>
+            you can list each employee and their individual availability.
+        </p>
+        <p>
+            users will be booking with their preferred employees.</p>
+        <input type="button" title="next" class="btnnextsvtype" />
+    </div>
+    <div class="bgboxservice">
+    </div>
+    <div class="boxservice">
+        <h2>
+            service-based</h2>
+        <img alt="employee-based" src="/images/service.png" />
+        <p>
+            simpler setup. no need for employee names, just the number of available slots.</p>
+        <p>
+            users will booking slots.
+        </p>
+        <input type="button" title="next" class="btnnextsvtype" style="margin-left:0px;" />
+    </div>
+</div>
+<div class="clear">
+</div>

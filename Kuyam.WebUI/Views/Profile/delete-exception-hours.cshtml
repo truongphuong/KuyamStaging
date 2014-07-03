@@ -1,0 +1,19 @@
+﻿@model Kuyam.Database.ProfileHoursException
+           @using Kuyam.Database
+           @using M2.Util
+           @using M2.Util.MVC
+@{
+    ViewBag.Title = "delete exception hours";
+}
+<h2>
+    @ViewBag.Title</h2>
+<h3>
+    Are you sure you want to delete @Model.Start - @Model.End (@(Model.IsOpen ? "open" : "closed"))?</h3>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.HiddenFor(model => model.ProfileHoursExceptionID)
+        @Html.HiddenFor(model => model.ProfileID)
+        @Html.SaveCancelLC("Delete", "Deleting")
+    </p>
+}

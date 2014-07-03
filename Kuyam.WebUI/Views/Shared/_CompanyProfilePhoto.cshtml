@@ -1,0 +1,49 @@
+﻿@using Kuyam.Database
+@model Kuyam.WebUI.Models.ProfileCompaniesModels
+
+@{
+    List<Medium> media = Model.MediaCompanies;
+    if (media == null || !media.Any())
+    {
+        media = new List<Medium>();
+        media.Add(new Medium
+            {
+                MediaID = 0,
+                LocationPath = Url.Content("~/Images/photo_company_image.png")
+            });
+    }
+}
+
+<div>
+    <div class="companyimagebox">
+        <div id="galleria">
+            @foreach (Medium item in media)
+            {
+                string thumb = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/height/50", item.LocationData, Kuyam.Database.Types.KaturaDoman);
+                string photo = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/500/height/400/", item.LocationData, Kuyam.Database.Types.KaturaDoman);
+                if (item.MediaID == 0)
+                {
+                    thumb = item.LocationPath;
+                    photo = item.LocationPath;
+                }
+                <a href="@photo">
+                    <img src="@thumb" alt="photo" />
+                </a>
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="clear">
+</div>
+
+<script type="text/javascript">
+
+    // Load the classic theme
+    Galleria.loadTheme("@Url.Content("~/Content/gallery/galleria.classic.min.js")");
+
+    // Initialize Galleria
+    Galleria.run('#galleria');
+
+</script>

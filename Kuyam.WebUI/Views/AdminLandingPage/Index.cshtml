@@ -1,0 +1,90 @@
+﻿@using Kuyam.Database
+@using PagedList.Mvc
+@model Kuyam.WebUI.Models.LandingPage.LandingPageList
+
+@{
+    ViewBag.Title = "Landing pages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        landing page list
+    </h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@Model.SearchKey" />
+                        </label>
+                        @Html.DropDownListFor(model=>model.Status, Model.StatusList, new {id="status"})
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                        &nbsp;&nbsp;<input class="button" id="btnAddNew" value="add new" type="button" onclick="addNewLandingPage();" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="landingPageList">
+        <div class="sucess-messasge">@TempData[Kuyam.Utility.Contants.SuccessMessageTempData]</div>
+        <div class="error-messasge">@TempData[Kuyam.Utility.Contants.ErrorMessageTempData]</div>
+        @Html.Partial("_AdminLandingPageList", Model)
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        HandleChangePage();
+
+        $("#txtKey").bind("keypress", function (event) {
+            if (event.which == 13) {
+                $("#btnSearch").click();
+            }
+        });
+    });
+    
+    function HandleChangePage() {
+        $(".pagination a").on("click", function(e) {
+            e.preventDefault();
+            $.ajax(
+                {
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    url: $(this).attr("href")
+                })
+                .success(function(result) {
+                    $('#landingPageList').html(result);
+                    HandleChangePage();
+                });
+        });
+    }
+
+    function FilterSearchResult() {
+        var key = $('#txtKey').val();
+        var status = $("#status").val();
+        var searchParameters = { page: 1, key: key, status: status };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: "@Url.Action("Index", "AdminLandingPage")"
+            })
+            .success(function (result) {
+                $('#landingPageList').html(result);
+                HandleChangePage();
+
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function addNewLandingPage() {
+        window.location = "@Url.Action("Edit")";
+    }
+</script>
+
+

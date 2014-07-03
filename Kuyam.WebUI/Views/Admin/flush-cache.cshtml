@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Flush Cache";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>@Html.Raw(ViewBag.List)</p>
+<p>Starting item count: @ViewBag.OldCount</p>
+<p>Post-flush count: @ViewBag.NewCount</p>
+

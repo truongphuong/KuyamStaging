@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_KuyamLayoutGrey.cshtml";
+    ViewBag.Title = "MeetTheTeamTony";
+}
+
+    <img class="BodyTop" src="@Url.Content("~/images/About/MeditateTop.png")" alt="Schedule, Share, and Discover" />
+
+    <ul class="GreenTabs">
+        <li class="TabLeft">@Html.ActionLink("About", "About", "home")</li>
+        <li class="TabCenter Here"></li>
+        <li class="TabRight">@Html.ActionLink("Business Solutions", "BusinessSolutions", "home")</li>
+    </ul>
+
+    <a name="Top"></a>
+
+    <img style="padding-right:40px" src="@Url.Content("~/images/MeetTheTeam/Mattbig.png")" class="FloatLeft" alt="Matt Big" /><br />
+    <span class="TeamName">Matt Reagan/ "<b>The Mathlete</b>"</span><br />
+    <span class="TeamTitle">Community Manager</span><br />
+    <p>
+        Matt is kuyam's resident 'geek-in-training', applying nerdy skills he learns from
+        the founders to manage the company's social media sites and help kuyam's webpage stay
+        functional. In his time away from work, he can be found twiddling knobs as a recording
+        engineer or reading a good book. He nerds out over his job, but lets face it, no human
+        being should spend this much time on twitter.
+    </p>
+
+<div class="GreyBodyFooter">
+<table width="100%">
+    <tr>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamKourosh")#Top"><img src="@Url.Content("~/images/MeetTheTeam/kouroshsmall.png")" alt='kourosh small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamTony")#Top"><img src="@Url.Content("~/images/MeetTheTeam/tonysmall.png")" alt='tony small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamTodd")#Top"><img src="@Url.Content("~/images/MeetTheTeam/toddsmall.png")" alt='todd small' /></a></td>
+    </tr>
+    <tr>
+    <td align="center"><img src="@Url.Content("~/images/MeetTheTeam/matttrans.png")" alt='matt trans' /></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamJackie")#Top"><img src="@Url.Content("~/images/MeetTheTeam/jackiesmall.png")" alt='jackie small' /></a></td>
+    <td align="center"><a href="@Url.Content("~/Home/MeetTheTeamCory")#Top"><img src="@Url.Content("~/images/MeetTheTeam/corysmall.png")" alt='cory small' /></a></td>
+    </tr>
+</table>
+</div>

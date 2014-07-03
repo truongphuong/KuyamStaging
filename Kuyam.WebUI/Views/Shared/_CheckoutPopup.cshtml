@@ -1,0 +1,707 @@
+﻿@using Kuyam.Database;
+@model Kuyam.WebUI.Models.CheckoutModel
+<div class="contentPopup">
+    <a class="btnClose" href="JavaScript:void(0);" onclick="cancelbooking();" title="Close">
+    </a>
+    <input type="hidden" id="appteprice" value="@Model.Price" />
+    <input type="hidden" id="duration" value="@Model.Duration" />
+    <input type="hidden" id="NonApptTempId" value="@Model.NonApptTempId" />
+    <input type="hidden" id="profileIdbooking" value="@Model.ProfileId" />
+    <div class="giftcardcol1">
+        <div class="giftcardcolcontent">
+            <div class="giftcardinfo">
+                <h3>
+                    @*appointment summary*@
+                    @Model.CheckOutSummary
+                </h3>
+                <div class="giftcardbrow">
+                    <center>
+                        <strong>@Model.CompanyName</strong><br />
+                        @Model.Address .<br />
+                        @Model.City
+                    </center>
+                </div>
+                <div class="clear17">
+                </div>
+                <div class="giftcardbrow">
+                    <strong>@Model.ServiceName</strong>
+                </div>
+                <div class="giftcardbrow">
+                    <div class="bcol1">
+                        with @Model.EmployeeName
+                    </div>
+                    <div class="bcol2">
+                        @Model.Datetime
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="giftcardbrow">
+                    <div class="bcol1">
+                        for @Model.CalendarName
+                    </div>
+                    <div class="bcol2">
+                        @Model.Time
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear11">
+        </div>
+        <div class="giftcardconfirmarea">
+            <div class="fieldsetleft">
+                <h4>
+                    appointment notes?
+                </h4>
+                <div class="clear3">
+                </div>
+                <textarea id="txtComment" onfocus="if ($.trim(this.value)=='e.g. i have lower back pain') {this.value = '';this.style.color='#666666';}"
+                    onblur="if (this.value==''){this.value='e.g. i have lower back pain';this.style.color='#B3B3B3';}">e.g. i have lower back pain</textarea>
+            </div>
+            <div class="fieldsetright">
+                <h4>
+                    how would you like confirmation?
+                </h4>
+                <div class="clear18">
+                </div>
+                <div class="chkboxemail">
+                    <input type="checkbox" id="cbemail" name="verification" />
+                    <label class="cbcheck" for="cbemail">
+                        email
+                    </label>
+                </div>
+                <div class="chkboxsms">
+                    <input type="checkbox" id="cbsms" name="verification" />
+                    <label class="smscheck" for="cbsms">
+                        SMS
+                    </label>
+                </div>
+            </div>
+            <div class="clear7">
+            </div>
+        </div>
+        @if (Model.CheckoutType == (int)Types.CheckoutType.Availability || Model.CheckoutType == (int)Types.CheckoutType.ClassBooking)
+        {
+            <div class="timecontentpopup">
+                <div class="lefttime countdownclock">
+                </div>
+                <div class="ptime">
+                    please complete your request in 10:00 minutes. otherwise this time will be released
+                    to others.
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="timecontentpopup" style="background-color: inherit;">
+                <div class="lefttime countdownclock">
+                </div>
+                <div class="ptime">
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        }
+        <div class="clear">
+        </div>
+    </div>
+    <div class="giftcardcol2">
+        <div class="giftcardcolcontent">
+            <div class="paymentmethod">
+                <div class="totaldue">
+                    <span>total due:</span> </br> @Model.Totaldue.ToString("C2")
+                </div>
+                @if (!Model.IsPackage)
+                {
+                <div class="checkoutgiftcard1" style="display: block;">
+                    <div class="clear">
+                    </div>
+                    <div class="newpaymentmethod">
+                        select method of payment:
+                    </div>
+                    <div class="discountcodebox">
+                        <input type="button" id="btnapply" class="btnapply" onclick="applyDiscount();" value=""
+                               title="apply" />
+                        <input type="text" id="txtdiscount" value="promo code" class="txtdiscount" onfocus="if (this.value=='promo code') {this.value = '';this.style.color='#666666';}"
+                               onblur="if (this.value==''){this.value='promo code';this.style.color='#B3B3B3'; $('.applycodeError').html('')}" />
+                    </div>
+                    <div class="applycodeError">
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divgiftcard">
+                            <a href="javascript:void(0);" onclick="applayGift();" title="gift card">
+                                <img alt="" src="/images/btnusegiftcard.png" />
+                            </a>
+                        </div>
+                        <div class="divpaypal">
+                            <a href="javascript:void(0)" onclick="bookWithPaypal();" title="PayPal">
+                                <img alt="" src="/images/btnpaypalorcreditcard.png" />
+                            </a>
+                        </div>
+                        <div class="divamazon">
+                            @if (Model.PaymentMethod == (int)Types.PaymentMethod.PayInPerson)
+                                {
+                                <a href="javascript:void(0)" onclick="cashPayment();" title="pay in person">
+                                    <img alt="" src="/images/btnpayinperson.png" />
+                                </a>
+                                }
+                        </div>
+                    </div>
+                </div>
+                }
+                <div class="checkoutgiftcard2" style="display: none;">
+                    <div class="clear">
+                    </div>
+                    <div class="giftcardnumber">
+                        <input type="text" id="txtgiftcard" class="txtgiftcard" onfocus="if (this.value=='enter gift card number') {this.value = '';this.style.color='#666666';}"
+                               onblur="if (this.value==''){this.value='enter gift card number'; this.style.color='#B3B3B3'; $('#giftcardError').html('');}"
+                               value="enter gift card number" />
+                        <span id="giftcardError" class="applycodeError"></span>
+                        <input type="submit" onclick="goback();" class="btngoback" value="" />
+                        <input type="submit" class="btnredeem" onclick="giftRedeem();" value="" />
+                    </div>
+                    <div class="currentbalance">
+                        current gift card balance:<br />
+                        <span id="currentbalance">$0.00 </span>
+                    </div>
+                    <div class="usetoday">
+                        use <span id="usetoday">$0.00 </span> today?
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divconfirm">
+                            <a href="javascript:void(0);" onclick="confirmUsedgift();" title="confirm">
+                                <img alt="" src="/images/btngiftcardconfirm1.png" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkoutgiftcard3" style="display: none;">
+                    <div class="clear">
+                    </div>
+                    <div class="newpaymentmethod">
+                        select method of payment for the remaining total:
+                    </div>
+                    <div class="discountcodebox">
+                        <input type="button" id="btnapply" class="btnapply" onclick="applyDiscount();" value=""
+                               title="apply" />
+                        <input type="text" id="txtdiscount" onfocus="if (this.value=='promo code') {this.value = '';this.style.color='#666666';}"
+                               onblur="if (this.value==''){this.value='promo code';this.style.color='#B3B3B3'; $('.applycodeError').html('');}"
+                               value="promo code" class="txtdiscount" />
+                    </div>
+                    <div class="applycodeError">
+                        &nbsp
+                    </div>
+                    <div class="txtgiftcard">
+                        $30.00
+                    </div>
+                    <div class="thankforpayment">
+                        thank you for your payment.
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divpaypal">
+                            <a href="javascript:void(0)" onclick="bookWithPaypal();" title="PayPal">
+                                <img alt="" src="/images/btnpaypalorcreditcard.png" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkoutgiftcard4" style="display: none;">
+                    <div class="clear">
+                    </div>
+                    <div class="newpaymentmethod">
+                        method of payment:
+                    </div>
+                    <div class="txtgiftcard">
+                        $30.00
+                    </div>
+                    <div class="thankforpayment">
+                        thank you for your payment.
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divconfirm">
+                            <a href="javascript:void(0);" onclick="confirmPayment()" title="confirm">
+                                <img alt="" src="/images/btngiftcardconfirm2.png" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkoutgiftcard5" style="display: none;">
+                    <div class="clear">
+                    </div>
+                    <div class="newpaymentmethod">
+                        select method of payment for the remaining total:
+                    </div>
+                    <div class="lblpromocode">
+                        $10.00
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divgiftcard">
+                            <a href="javascript:void(0);" onclick="applayGift();" title="gift card">
+                                <img alt="" src="/images/btnusegiftcard.png" />
+                            </a>
+                        </div>
+                        <div class="divpaypal">
+                            <a href="javascript:void(0)" onclick="bookWithPaypal();" title="PayPal">
+                                <img alt="" src="/images/btnpaypalorcreditcard.png" />
+                            </a>
+                        </div>
+                        <div class="divamazon">
+                            @if (Model.PaymentMethod == (int)Types.PaymentMethod.PayInPerson)
+                            {
+                            <a href="javascript:void(0)" onclick="cashPayment();" title="pay in person">
+                                <img alt="" src="/images/btnpayinperson.png" />
+                            </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="checkoutgiftcard6" style="display: none;">
+                    <div class="clear">
+                    </div>
+                    <div class="newpaymentmethod">
+                        method of payment:
+                    </div>
+                    <div style="height: 101px;">
+                        <div class="lblpromocode">
+                            $10.00
+                        </div>
+                        <div class="txtgiftcard">
+                            $30.00
+                        </div>
+                    </div>
+                    <div class="thankforpayment">
+                        thank you for your payment.
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divconfirm">
+                            <a href="javascript:void(0);" onclick="confirmPayment()" title="confirm">
+                                <img alt="" src="/images/btngiftcardconfirm2.png" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @if (Model.IsPackage)
+                {
+                <div class="checkoutgiftcard7">
+                    <div class="clear">
+                    </div>
+                    <div id="descpkginfo">
+                        <div id="pkginfo" class="pkginfo">
+                        </div>
+                    </div>
+                    <div class="usetoday">
+                        looking good?
+                    </div>
+                    <div class="buttonbox">
+                        <div class="divbookit ">
+                            <a href="javascript:void(0);" onclick="bookByPackage('@Model.PackageId')" title="book it">
+                                book it!
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<script type="text/javascript">
+    var discountamount = 0;
+    var giftAmount = 0;
+    var chekoutTye = '@Model.CheckoutType';
+
+    function cancelbooking() {
+        hideDialog('delayclock');
+        hideDialog('newpayment');
+        commonGetAjax("CompanyProfile", "ClearTimeSlot", null, null);
+    }
+
+    function changeTime() {
+        $('#delayclock').hide();
+        countDownFrom = extend5MinuteMore;
+        isTimeExtendMode = true;
+        $('.ptime').html("please complete your request in 05:00 minutes. otherwise this time will be released to others.");
+    }
+
+    function bookWithPaypal() {
+        var mess = $('#txtComment').val();
+        if (mess.length > 1000) {
+            alert("note must be less than 1000 characters.");
+            return false;
+        }
+
+        var note = $('#txtComment').val();
+        if (note == 'e.g. i have lower back pain')
+            note = '';
+        var param = "checkoutType=" + chekoutTye
+        + "&apptId=" + $("#NonApptTempId").val()
+        + "&email=" + $('#cbemail').attr('checked')
+        + "&sms=" + $('#cbsms').attr('checked')
+        + "&mess=" + note
+        + "&price=" + $("#appteprice").val()
+        + "&duration=" + $("#duration").val();
+
+        var code = $.trim($(".checkoutgiftcard1 #txtdiscount").val());
+
+        if (code == "promo code" || code == "") {
+            code = $.trim($(".checkoutgiftcard3 #txtdiscount").val());
+        }
+
+        if (discountamount > 0) {
+            param += "&promoCode=" + code;
+        }
+
+        if (giftAmount > 0) {
+            param += "&giftCode=" + $("#txtgiftcard").val();
+        }
+
+        $('#lightBox').css({ 'opacity': '0.6' }).fadeIn(200);
+        commonPostAjax("PayPal", "BookAppointment", param, bookAppointmentSuccess, bookAppointmentError);
+
+    }
+
+    function bookAppointmentSuccess(result) {
+        $('#newpayment').hide();
+        $('#comfirmationpopup').hide();
+        window.location.href = result.redirectAction;
+    }
+
+    function confirmPayment() {
+        var mess = $('#txtComment').val();
+        var apptId = $("#NonApptTempId").val()
+        if (mess.length > 1000) {
+            alert("note must be less than 1000 characters.");
+            return false;
+        }
+        var note = $('#txtComment').val();
+        if (note == 'e.g. i have lower back pain')
+            note = '';
+        var code = $.trim($(".checkoutgiftcard1 #txtdiscount").val());
+
+        if (code == "promo code" || code == "") {
+            code = $.trim($(".checkoutgiftcard3 #txtdiscount").val());
+        }
+        var param = "email=" + $('#cbemail').attr('checked')
+        + "&sms=" + $('#cbsms').attr('checked')
+        + "&apptId=" + $("#NonApptTempId").val()
+        + "&mess=" + note
+        + "&price=" + $("#appteprice").val()
+        + "&duration=" + $("#duration").val();
+
+        var code = $.trim($(".checkoutgiftcard1 #txtdiscount").val());
+        if (code == "promo code" || code == "") {
+            code = $.trim($(".checkoutgiftcard3 #txtdiscount").val());
+        }
+        if (discountamount > 0) {
+            param += "&promoCode=" + code;
+        }
+
+        if (giftAmount > 0) {
+            param += "&giftCode=" + $("#txtgiftcard").val();
+        }
+        $("#newpayment").hide();
+        $('#lightBox').css({ 'opacity': '0.15', 'z-index': '10000' }).fadeIn(200);
+        $('#imgLoadermain').show();
+        commonPostAjax("PayPal", "ConfirmAppointment", param, confirmAppointmentSuccess, bookAppointmentError);
+    }
+
+    function cashPayment() {
+
+        var mess = $('#txtComment').val();
+        if (mess.length > 1000) {
+            showAlertMessage("note must be less than 1000 characters.");
+            return false;
+        }
+        var note = $('#txtComment').val();
+        if (note == 'e.g. i have lower back pain')
+            note = '';
+
+        var param = "email=" + $('#cbemail').attr('checked')
+        + "&sms=" + $('#cbsms').attr('checked')
+        + "&mess=" + note
+        + "&price=" + $("#appteprice").val()
+        + "&duration=" + $("#duration").val()
+        + "&apptId=" + $("#NonApptTempId").val();
+
+        var code = $.trim($(".checkoutgiftcard1 #txtdiscount").val());
+        if (code == "promo code" || code == "") {
+            code = $.trim($(".checkoutgiftcard3 #txtdiscount").val());
+        }
+
+        if (discountamount > 0) {
+            param += "&promoCode=" + code;
+        }
+
+        $('#lightBox').css({ 'opacity': '0.15', 'z-index': '10000' }).fadeIn(200);
+        $('#imgLoadermain').show();
+
+        var action = "BookAppointmentCash";
+        if (chekoutTye == '@((int)Types.CheckoutType.NonAvailability)') {
+            action = 'BookNonAppointmentCash';
+        } else if (chekoutTye == '@((int)Types.CheckoutType.GeneralAvailability)') {
+            action = 'BookProposedAppointmentCash';
+        }
+        commonPostAjax("PayPal", action, param, confirmAppointmentSuccess, bookAppointmentError);
+    }
+
+
+    function confirmAppointmentSuccess(result) {
+        if (result == 'DiscountAdmin') {
+            showAlertMessage("this promo code only applies if you select PayPal as your payment method.");
+            $('#lightBox').css({ 'opacity': '0.6', 'z-index': '9901' });
+            $('#imgLoadermain').hide();
+            //var redirectUrl = "/CompanyProfile/availability/" + $("#profileid").val();
+            //window.location.href = redirectUrl;
+            return;
+        }
+        $("#newpayment").hide();
+        $('#lightBox').fadeOut(200);
+        $('#imgLoadermain').hide();
+
+        if (result == 'true') {
+            window.location.href = "/Appointment";
+        }
+        else {
+            var redirectUrl = "/CompanyProfile/availability/" + $("#profileid").val();
+            if (chekoutTye == '@((int)Types.CheckoutType.NonAvailability)') {
+                redirectUrl = "/company/companysearch/";
+            } else if (chekoutTye == '@((int)Types.CheckoutType.GeneralAvailability)') {
+                redirectUrl = "/CompanyProfile/availability/" + $("#profileid").val();
+            }
+            window.location.href = redirectUrl;
+        }
+
+    }
+
+    function bookByPackage(packageId) {
+        var note = $('#txtComment').val();
+        if (note == 'e.g. i have lower back pain')
+            note = '';
+        var param = "email=" + $('#cbemail').attr('checked')
+        + "&sms=" + $('#cbsms').attr('checked')
+        + "&mess=" + note
+         + "&price=" + $("#appteprice").val()
+         + "&duration=" + $("#duration").val()
+         + "&packageId=" + packageId;
+        commonPostAjax("PayPal", "BookAppointmentByPackage", param, bookAppointmentPackageSuccess, bookAppointmentError);
+    }
+
+    function bookAppointmentPackageSuccess(result) {
+        $('#newpayment').hide();
+        $('#comfirmationpopup').hide();
+        if (result == 'true') {
+            window.location.href = "/Appointment";
+        } else {
+            window.location.href = "/CompanyProfile/availability/" + $("#profileid").val();
+        }
+    }
+
+    function bookAppointmentError() {
+        showed = false;
+        $('#newpayment').hide();
+        $('#comfirmationpopup').hide();
+    }
+
+    function applyDiscount() {
+
+        var lastApply = false;
+        var profileId = $("#profileIdbooking").val();
+        var code = $.trim($(".checkoutgiftcard1 #txtdiscount").val());
+
+        if (code == "promo code" || code == "") {
+            code = $.trim($(".checkoutgiftcard3 #txtdiscount").val());
+            lastApply = true;
+        }
+
+        if (code == "promo code" || code == "")
+            return;
+
+        var seviceId = $("#servicetype option:selected").val();
+
+        if (typeof seviceId == 'undefined')
+            seviceId = 0;
+
+        $(".applycodeError").html("");
+        if (code == "")
+            return;
+        $.get("/CompanyProfile/GetDiscountCode?code=" + code + "&serviceId=" + seviceId + "&profileId=" + profileId + "&nocache=" + getunixtime(), function (result) {
+            var price = $("#appteprice").val();
+            var totaldue = price;
+            totaldue = price - giftAmount;
+            if (result != null) {
+
+                if (result.amount > 0) {
+                    discountamount = result.amount;
+                    if (discountamount >= price)
+                        discountamount = price;
+
+                } else {
+                    discountamount = price * result.percent / 100;
+                }
+                totaldue = totaldue - discountamount;
+                if (totaldue < 0)
+                    totaldue = 0;
+
+                var totalduetext = "<span>total due:</span><br> $" + parseFloat(totaldue).toFixed(2);
+                $(".totaldue").html(totalduetext);
+                $("#discoutamountapply").val(discountamount);
+                $("#totaldue").val(totaldue);
+                $("#discoutidapply").val(result.discountid);
+                var htmldiscountamount = "$" + parseFloat(discountamount).toFixed(2);
+                $(".lblpromocode").html(htmldiscountamount);
+                if (!lastApply) {
+
+                    if (totaldue == 0) {
+                        $(".checkoutgiftcard6").show();
+                        $(".txtgiftcard").hide();
+                        $(".checkoutgiftcard1").hide();
+                    } else {
+                        $(".checkoutgiftcard5").show();
+                        $(".checkoutgiftcard1").hide();
+                    }
+                } else {
+                    $(".checkoutgiftcard3").hide();
+                    $(".checkoutgiftcard2").hide();
+                    confirmUsedgift();
+                }
+
+            } else {
+
+                if (totaldue < 0)
+                    totaldue = 0;
+                var totalduetext = "<span>total due:</span><br> $" + parseFloat(totaldue).toFixed(2);
+                $("#discoutamountapply").val(0);
+                $(".totaldue").html(totalduetext);
+                $("#totaldue").val(totaldue);
+                $("#discoutidapply").val(0);
+                $(".applycodeError").html("invalid promo code or expired");
+            }
+
+        });
+    }
+
+    function applayGift() {
+        if (discountamount <= 0) {
+            $("#txtdiscount").val("");
+        }
+        $("#giftcardError").html("");
+        $("#txtgiftcard").val("enter gift card number");
+        var totaldue = $("#appteprice").val();
+        var userToday = 0;
+        var htmlusetoday = "$" + parseFloat(userToday).toFixed(2);
+        $("#usetoday").html(htmlusetoday);
+        $("#currentbalance").html(htmlusetoday);
+        totaldue = (totaldue - discountamount);
+        if (totaldue < 0)
+            totaldue = 0;
+        var totalduetext = "<span>total due:</span><br> $" + parseFloat(totaldue).toFixed(2);
+        $(".totaldue").html(totalduetext);
+
+        $(".checkoutgiftcard1").hide();
+        $(".checkoutgiftcard5").hide();
+        $(".checkoutgiftcard2").show();
+    }
+
+    function goback() {
+        $("#giftcardError").html("");
+        if (discountamount > 0) {
+            $(".checkoutgiftcard5").show();
+            $(".checkoutgiftcard2").hide();
+            $(".checkoutgiftcard1").hide();
+        } else {
+            $(".checkoutgiftcard1").show();
+            $(".checkoutgiftcard2").hide();
+        }
+    }
+
+    function giftRedeem() {
+        $("#giftcardError").html("");
+        var giftcode = $("#txtgiftcard").val();
+        if (giftcode == 'enter gift card number')
+            return;
+        var option = { giftCode: giftcode };
+        $("#giftcardError").html("");
+        $.post("/GiftCard/GiftCardBalance", option,
+         function (result) {
+
+             if (result.IsFailed && !result.isLock) {
+                 $("#giftcardError").html("incorrect your gift card number.");
+                 giftAmount = 0;
+                 return;
+             }
+             if (result.isLock) {
+                 $("#giftcardError").html("your account has been locked");
+                 giftAmount = 0;
+                 return;
+             }
+
+             $("#currentbalance").html(result.used);
+             giftAmount = result.giftAmount
+
+             var price = $("#appteprice").val();
+             var userToday = price - discountamount;
+             if (userToday > giftAmount) {
+                 userToday = giftAmount;
+             } else if (giftAmount <= 0) {
+                 userToday = 0;
+             }
+             var htmlusetoday = "$" + parseFloat(userToday).toFixed(2);
+             $("#usetoday").html(htmlusetoday);
+
+             var totaldue = (price - giftAmount - discountamount);
+             if (totaldue < 0)
+                 totaldue = 0;
+             var totalduetext = "<span>total due:</span><br> $" + parseFloat(totaldue).toFixed(2);
+             $(".totaldue").html(totalduetext);
+
+         }, "json");
+    }
+
+    function confirmUsedgift() {
+
+        $(".applycodeError").html("");
+        if (giftAmount <= 0)
+            return;
+        var price = $("#appteprice").val();
+        var totaldue = (price - giftAmount - discountamount);
+        if (discountamount > 0) {
+            $(".checkoutgiftcard6").show();
+            $(".checkoutgiftcard2").hide();
+            $(".checkoutgiftcard1").hide();
+            if (totaldue > 0) {
+                $(".thankforpayment").hide();
+                $(".divconfirm").html('<a title="PayPal" href="javascript:void(0)" onclick="bookWithPaypal();" ><img src="/images/btnpaypalorcreditcard.png" alt=""></a>');
+            } else {
+                $(".divconfirm").html('<a title="confirm" href="javascript:void(0);" onclick="confirmPayment()" ><img src="/images/btngiftcardconfirm2.png" alt=""></a>');
+            }
+        } else {
+            $(".checkoutgiftcard3").show();
+            $(".checkoutgiftcard2").hide();
+
+            if (totaldue > 0) {
+                $(".divpaypal").html('<a title="PayPal" href="javascript:void(0)" onclick="bookWithPaypal();" ><img src="/images/btnpaypalorcreditcard.png" alt=""></a>');
+                $(".checkoutgiftcard3 .thankforpayment").hide();
+            } else {
+                $(".checkoutgiftcard3 .thankforpayment").show();
+                $(".divpaypal").html('<a title="confirm" href="javascript:void(0);" onclick="confirmPayment()" ><img src="/images/btngiftcardconfirm2.png" alt=""></a>');
+            }
+        }
+        var usedgift = price - discountamount;
+        if (usedgift > giftAmount)
+            usedgift = giftAmount;
+        if (usedgift < 0)
+            usedgift = 0;
+
+        var totalhtml = "$" + parseFloat(usedgift).toFixed(2);
+        $(".txtgiftcard").html(totalhtml);
+    }
+
+</script>

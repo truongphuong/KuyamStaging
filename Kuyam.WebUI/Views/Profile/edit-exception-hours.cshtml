@@ -1,0 +1,41 @@
+﻿@model Kuyam.WebUI.Models.ProfileHoursExceptionEditModel
+@using M2.Util
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "change exception hours";
+}
+<h2>@ViewBag.Title</h2>
+@section Head
+{
+    @Html.Partial("_DatePickerControlSetup")
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Hour.ProfileHoursExceptionID)
+    @Html.HiddenFor(model => model.Hour.ProfileID)
+    @Html.ValidationSummary(true)
+
+    <div class="editor-label-narrow">
+        start
+    </div>
+    <div class="editor-field-narrow">
+        @Html.TextBoxFor(model => model.Hour.Start, new { type = "datetime", style="width:150px" } )
+        @Html.ValidationMessageFor(model => model.Hour.Start)
+    </div>
+
+    <div class="editor-label-narrow">
+        end
+    </div>
+    <div class="editor-field-narrow" style='width:150px'>
+        @Html.TextBoxFor(model => model.Hour.End, new { type = "datetime", style="width:150px" })
+        @Html.ValidationMessageFor(model => model.Hour.End)
+    </div>
+
+    <div class="editor-label-narrow" style="text-align:right;">
+        open @Html.EditorFor(model => model.Hour.IsOpen)
+    </div>
+    <div class="editor-field-narrow" style="text-align:left">
+    </div>
+    <div class="clear"></div>    
+    @Html.SaveCancelLC()
+}

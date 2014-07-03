@@ -1,0 +1,199 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Database.Extensions
+@using System.Configuration;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.WebUI.Models;
+@{
+    CustService _custService = EngineContext.Current.Resolve<CustService>();
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#spaEdit").show();
+        $("#spachange").hide();
+        $("#spachangeEmail").hide();
+
+    });
+    
+    $(function () {
+
+        $(".btndelete").click(function () {
+            showpopup("rcdeletepopup");
+        });
+
+        $(".btnedit").click(function () {
+
+            $("#spaEdit").show();
+            $("#namechange").show();
+            $("#spachange").hide();
+
+            $("#spachangeEmail").hide();
+            $("#spaeditEmail").show();
+            $("#enailchange").show();
+
+            showpopup("rceditpopup");
+        });
+
+    });
+
+    //    Get regular clients info
+    function regularClientDetail(regularClientId) {
+
+        if (typeof regularClientId == 'undefined') {
+            return;
+        }
+        $.get("/Company/regularClientInfo", { regularClientId: regularClientId }, function (response) {
+            $(".editemail").html(response.Email);
+            $(".editfirst").html(response.FirstName);
+            $(".editlast").html(response.LastName);
+
+            $("#changeFirstName").val(response.FirstName);
+            $("#changeLastName").val(response.LastName);
+            $("#changeemail").val(response.Email);
+
+
+            $("#defregularclientid").val(response.RegularClientId);
+        });
+
+    }
+    // Delete regular clients info
+    function regularClientDelete() {
+
+        var regularClientId = $("#defregularclientid").val();
+        if (typeof regularClientId == 'undefined') {
+            return;
+        }
+        var searchParameters = { regularClientId: regularClientId };
+        window.isUseDefaultAjaxHandle = true;
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Company/regularClientDelete'
+            })
+            .success(function (result) {
+                if (result == 'true') {
+                    window.location.href = '/company/CompanyRegularClients?companyId='+companyId;
+                } else {
+                    alert("Delete is error");
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+    // Search regular clients
+    function regularClientSearch(key) {
+        
+        var searchType = $("#sortby option:selected").val(),
+            activeId = key,
+            searchParameters = { key: key, searchType: searchType, profileId: companyId };
+
+        if (key == "") {
+            activeId = "viewall";
+        }
+        //window.isUseDefaultAjaxHandle = true;
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Company/CompanyRegularClients'
+            })
+            .success(function (result) {
+                $('#rccontent').html(result);
+                $(".alphab a").removeClass("viewall");
+                $("#" + activeId).addClass("viewall");
+            })
+            .error(function (error) {
+
+            });
+    }
+       
+</script>
+@foreach (RegularClient regularClient in @ViewBag.RegularClientList)
+{
+    if (_custService.CheckUserIsActiveByEmail(regularClient.Email))
+    {
+    <div class="zindex1 ">
+        <div class="rcitem">
+            <div class="rcname">
+                <div class="rcnametitle">
+                    @regularClient.FirstName @regularClient.LastName</div>
+                @if (!_custService.CheckCustInAppoinmentsByCustId(regularClient.Email))
+                {
+                    <div class="new">
+                    </div>        
+                }
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="rcmail">
+                <a href="mailto:@regularClient.Email" title="@regularClient.Email">@regularClient.Email</a></div>
+            <div class="clear">
+            </div>
+            <div class="rccontrol">
+                <div class="rceditlnkarea">
+                    <a href="#" title="history" class="btnhistory" style="display: none;">history</a>
+                    <a href="#" onclick="regularClientDetail(@regularClient.RegularClientId)" title="edit"
+                                                class="btnedit">edit</a>
+                </div>
+                <div class="rcdelete">
+                    <a href="#" onclick="regularClientDetail(@regularClient.RegularClientId)" title="delete" class="btndelete">
+                        delete</a></div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    }
+    else
+    { 
+    <div class="zindex1">
+        <div class="rcitem rciteminvited">
+            <div class="rcname">
+                <div class="rcnametitle">
+                    @regularClient.FirstName @regularClient.LastName</div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="rcmail">
+                <a href="mailto:@regularClient.Email" title="@regularClient.Email">@regularClient.Email</a></div>
+            <div class="clear">
+            </div>
+            <div class="rccontrol">
+                <div class="rcedit">
+                    invited, awaiting response</div>
+                <div class="rcdelete">
+                    <a href="#" onclick="regularClientDetail(@regularClient.RegularClientId)" title="delete" class="btndelete">
+                        delete</a></div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    }
+}
+<div class="clear">
+</div>
+rcmail
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".rcmail").dotdotdot(
+            {
+                height: 18,
+                width: 202              
+
+            });
+
+       
+    });
+</script>

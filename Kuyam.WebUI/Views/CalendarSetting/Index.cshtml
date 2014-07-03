@@ -1,0 +1,271 @@
+﻿@{
+    ViewBag.Title = "calendar setting";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script language='javascript' src="@Url.Content("~/Scripts/js/calendarsetting.js")"></script>
+<style type="text/css">
+    .savechangepopup .contentpopup, .csync2 .csyncalendarlist, .csync2 .csyncboxbg, .ulcalendarlist li .namecsyncalendar
+    {
+        behavior: url(~/PIE.htc);
+    }
+    .file
+    {
+        display: inline-block;
+        width: 95px;
+        position: relative;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin-bottom: 10px;
+    }
+    .file .button
+    {
+        background: url("../images/appointment.png") no-repeat scroll -244px -500px transparent;
+        text-indent: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #555;
+        height: 32px;
+        line-height: 40px;
+        display: block;
+    }
+    .file input
+    {
+        cursor: pointer;
+        font-size: 15px;
+        height: 33px;
+        position: absolute;
+        right: 42px;
+        top: 0;
+        color: Transparent;
+        background-color: Transparent;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+</style>
+<script type="text/javascript">
+    var isFacebookAccount = @(ViewBag.IsFacebookAccount?"true":"false");
+    $(document).ready(function () {
+        colordropdown("divcoloritem", "colorlist");
+    });
+</script>
+<div class="usersettings calendarsettings">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        <div class="textusersettings">
+            <a href="/Setting/UserSetting" title="user settings">user settings</a></div>
+        <div class="textcalendarsettings tabactive">
+            <a href="/CalendarSetting" title="calendar settings">calendar settings</a></div>
+        <div class="textcompanysettings">
+            <a href="/Company/CompanySetting" title="company settings">company settings</a></div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="usersettingsbox">
+        <div class="usersettingsboxtop">
+        </div>
+        <div class="usersettingsboxmid calendarsettingbox">
+            <div class="csync">
+                <div class="csync1">
+                    <h2 class="h2title">
+                        calendar sync</h2>
+                    <p class="csync1descript">
+                        synced calendars will appear in the calendar list below</p>
+                </div>
+                <div class="csync2">
+                    <div class="clear13">
+                    </div>
+                    <div class="calsync">
+                        <div class="csyncboxbg">
+                        </div>
+                        <div class="csyncbox">
+                            <div class="csynconnect">
+                                <div class="ggcalcol">
+                                    Google Cal:<br />
+                                    <input type="button" id="btngoogle" class="btngoogle" title="connect with google cal" />
+                                </div>
+                                <div class="fbcalcol">
+                                    Facebook Events:<br />
+                                    <input type="button" id="btnfacebook" class="btnfacebook" title="connect with Facebook" />
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="uploadical">
+                                <div class="infoical">
+                                    iCal:</div>
+                                <div class="clear">
+                                </div>
+                                <div class="csyncbutton">
+                                    <div class="infoicolupload">
+                                        <div class="divuploadtext">
+                                            <div class="rpostformtext">
+                                                <div class="ltxtcompanysetup">
+                                                </div>
+                                                <div class="txtcompanysetup infouptext">
+                                                    <input type="text" id="fninput" class="selectfile" value="select file..." onfocus="if (this.value=='select file...') {this.value = '';this.className = '';}"
+                                                        onblur="if (this.value==''){this.value='select file...';this.className = 'selectfile';}" />
+                                                </div>
+                                                <div class="rtxtcompanysetup">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="divupload">
+                                            <div class="file" title="select file">
+                                                <form id="file_upload" method="POST" action="/CalendarSetting/ICalInfoConnService"
+                                                enctype="multipart/form-data">
+                                                <input type="file" name="UploadUrl" id="UploadUrl" runat="server" accept=".ics" onchange='saveiCalendar();'
+                                                    name="files[]" multiple />
+                                                </form>
+                                                <span class="button" title="browse"></span>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear17">
+                </div>
+                <div class="csync">
+                    <div class="csync1">
+                        <h2 class="h2list">
+                            calendar list</h2>
+                        <p class="csync1descript">
+                            add a new kuyam calendar or edit or delete an existing calendar</p>
+                        <div class="clear">
+                        </div>
+                        <div class="csynccalendarlist">
+                            <a href="JavaScript:void(0);" class="btncalendarlist" title="add" id="btnAdd">add</a>
+                            <a href="JavaScript:void(0);" class="btncalendarlist" title="edit" id="btnEdit">edit</a>
+                            <a href="JavaScript:void(0);" class="btncalendarlist" title="delete" id="btnDelete">
+                                delete</a>
+                        </div>
+                    </div>
+                    <div class="csync2">
+                        <div class="csyncalendarlist">
+                            <div id="ulcalendarlistcontent">
+                                <div id="ulcalendarlistcontent1">
+                                    @Html.Partial("_CalendarListResults")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="usersettingsboxbot">
+        </div>
+        <div class="btnarea">
+            <a href="/" class="btnusersetting btncanceluser" title="cancel"><span class="btnusersettingleft">
+            </span><span class="btnusersettingcenter btncancelusersetting">cancel </span><span
+                class="btnusersettingright"></span></a><a href="/" id="ussavechange" class="btnusersetting"
+                    title="save changes"><span class="btnusersettingleft"></span><span class="btnusersettingcenter btnsaveusersetting">
+                        save changes </span><span class="btnusersettingright"></span></a>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="lightBox" class="lightBox z499">
+    </div>
+    <div id="savechangepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                thank you! we’ll notify you when the company is available for scheduling.
+            </p>
+        </div>
+    </div>
+    <div id="deletecalendarpopup" class="comfirmationpopup delcalendarname">
+        <div class="contentPopup">
+            <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+            <div class="deletecompanypopup">
+                <div class="deltitle">
+                    delete <span class="calendarname"><span id="spanDeleteTitle"></span></span>calendar?</div>
+                <div id="divPassword">
+                    <div class="delcancel">
+                        if no, <a href="JavaScript:void(0);" class="canceldeletecompany" title="cancel" id="btnDeleteCalendarCancel">
+                                   cancel</a></div>
+                    <div class="delyes">
+                        if yes, please enter your password:</div>
+                    <div class="deltxt">
+                        <input type="password" id="txtpassword" />
+                    </div>
+                    <div style="height: 20px;">
+                        <div id="passerror" style="color: #FF0000; font-size: 12px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="clear8">
+                </div>
+                <a href="JavaScript:void(0);" class="btndeletecompany" id="btnSubmitDelete" title="delete this calendar">
+                    delete this calendar</a>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addcalendarpopup" class="selectservicepopup addcalendar">
+        <div class="contentPopup">
+            <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+            <h3 id="spanTitle">
+                <strong>add a calendar</strong></h3>
+            <div class="clear16">
+            </div>
+            <div class="addcontent">
+                <div class="calitem">
+                    <div class="calitemleft name">
+                        name:</div>
+                    <div class="calitemright">
+                        <input type="text" id="txtCalendarName" class="calname" /></div>
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="calitem">
+                    <div class="calitemleft">
+                        color:</div>
+                    <div class="calitemright">
+                        <div class="ddcolor">
+                            <div class="divcoloritem" id="divcoloritem">
+                                <span id="currentcolor" class="currentcolor"></span><span class="colorname" id="colorname">
+                                    light blue</span>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <ul class="colorlist" id="colorlist">
+                                @foreach (var color in Kuyam.Database.Constants.colors)
+                                {
+                                    <li><span class="currentcolor" style="background-color: #@color.Value;"></span><span
+                                        class="colorname">
+                                        @color.Key.ToLower()</span> </li>
+                                }
+                                @*<li><span class="currentcolor" style="background-color: #FBC98E;"></span><span class="colorname">
+                                    red</span> </li>
+                                <li><span class="currentcolor" style="background-color: #FDF690;"></span><span class="colorname">
+                                    yellow</span> </li>
+                                <li><span class="currentcolor" style="background-color: #00FFFF;"></span><span class="colorname">
+                                    light blue</span> </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear25">
+            </div>
+            <a href="JavaScript:void(0);" class="btnbook" id="saveCalendar" title="add calendar">
+                add calendar</a>
+            <div class="clear25">
+            </div>
+        </div>
+    </div>
+</div>

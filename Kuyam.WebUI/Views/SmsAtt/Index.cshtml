@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+
+<h2>@ViewBag.ErrorMessage</h2>
+<form >
+    @Request.ServerVariables["SERVER_SOFTWARE"]
+    <input type="text" value="" name="phonenumber"/>
+    <input type="submit" value="resend" />
+    <span>Time elapsed:</span>
+    <span>@ViewBag.Elapsed</span>
+</form>

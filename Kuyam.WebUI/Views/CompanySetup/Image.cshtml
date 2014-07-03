@@ -1,0 +1,688 @@
+﻿@{
+    ViewBag.Title = "company setup image";
+    Layout = "~/Views/Shared/_CompanySetupLayout.cshtml";
+
+    List<Kuyam.Database.CompanyMedia> imagesDownloaded = ViewBag.ImagesDownloaded;
+    List<Kuyam.Database.GettyImage> imagesPending = ViewBag.ImagesPending;
+    Kuyam.Database.CompanyMedia companyMedia = ViewBag.Logo;
+    int imgId = 0;
+    if (companyMedia != null)
+    {
+        imgId = companyMedia.MediaID;
+    }
+
+    int tolal = imagesPending.Count;
+    decimal totalPrice = (decimal)(tolal * 0.99);
+    int totalRecord = imagesDownloaded.Count();
+}
+
+<link href="~/Scripts/jcrop/css/jquery.Jcrop.min.css" rel="stylesheet" />
+<link href="~/Scripts/jcrop/css/kuyamCrop.css" rel="stylesheet" />
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}   
+        <div class="preview"><span class="fade"></span></div>       
+        {% if (file.error) { %}
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } %}      
+
+{% } %}
+
+</script>
+<script id="company-photo-template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            @*<div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error]%}</div>*@
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %} <span class="boxcontentimg" style="height: 215px; width: 361px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/361/height/216"/></span></span> {% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.thumbnail_url%}" />
+        {% } %}
+{% } %}
+$('.photo').css('background-image', 'none');
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview" >{% if (file.thumbnail_url) { %}<span class="boxcontentimg" style="height: 99px; width: 99px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/99/height/100"/></span></span>{% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.kalturaid%}" />        
+        {% } %}
+{% } %}
+</script>
+<!-- The template to display files available for upload -->
+<div class="usersettingstab">
+    @if (!ViewBag.IsAdminOrAgent)
+    {
+        <div class="textusersettings">
+            <a href="/Setting/UserSetting" title="user settings">user settings</a></div>
+        <div class="textcalendarsettings">
+            <a href="/CalendarSetting" title="calendar settings">calendar settings</a></div>
+    }
+    <div class="textcompanysettings">
+        <a href="/Company/CompanySetting?companyId=@ViewBag.CompanyID" title="company settings">
+            company settings</a></div>
+</div>
+<div class="clear">
+</div>
+<div class="leftcompanysetupform">
+    <div class="companyinfo">
+        <a href="/Company/SetupBasic?companyId=@ViewBag.CompanyID" title="company information" id="companyinfo">
+            company information</a>
+    </div>
+    <div class="clear10">
+    </div>
+    <div class="companyimages">
+        <div class="companyactive">
+            company images</div>
+    </div>
+    <div class="clear10">
+    </div>
+    <div class="companyvideo">
+        <a href="/Company/SetupVideo?companyId=@ViewBag.CompanyID" title="company video">company
+            video</a>
+    </div>
+@if (ViewBag.IsActiveCompany != null && ViewBag.IsActiveCompany)
+{
+    <div class="companyvideo">
+        <a href="/Company/GenerateCodeCompany?companyId=@ViewBag.CompanyID" title="generate code">
+            company scripts
+        </a>
+    </div>
+}
+    
+</div>
+<div class="companysetupform">
+    <input type="hidden" id="hdftolal" value="@totalRecord" />
+    <div class="companysetupformtop1" id="companysetupformtop">
+    </div>
+    <div class="clear">
+    </div>
+    <div class="companysetupformmid">
+        <div class="clear">
+        </div>
+        <div class="companylogoupload">
+            <div class="formcol1 newcompanylogo1">
+                <div class="newcompanylogo">
+                    company<br />
+                    logo</div>
+                <div class="clear6">
+                </div>
+                <div class="rcompanytitle relative">
+                    <form id="fileuploadlogo" action="/Upload/LogoUploadHandler.ashx" method="POST" enctype="multipart/form-data">
+                    <div class="row fileupload-buttonbar">
+                        <div class="span7">
+                            <span class="btnupload fileinput-button">
+                                <input type="file" name="files[]" onchange="$('#logocontentfile').html('')" />
+                            </span>
+                            <div class="clear">
+                            </div>
+                            <span class="maxsize">max size 3mb</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="companyID" name="companyID" value="@ViewBag.CompanyID"/>
+                    </form>
+                </div>
+                <div class="clear">
+                </div>
+                @if (companyMedia != null)
+                {
+                    <div class="removephoto">
+                        <a href="#" onclick="mediaDelete(@imgId)" title="remove logo">remove</a>
+                    </div>
+                }
+                <div class="clear">
+                </div>
+            </div>
+            <div class="formcol2">
+                <div class="rcompanytitle logoimage">
+                    <div class="companylogo">
+                        <div id="logocontentfile">
+                            @if (companyMedia != null && companyMedia.Medium != null)
+                            {
+                                <span class="boxcontentimg" style="height: 99px; width: 99px;"><span class="boximage">
+                                    @*<input id="hdmediaid" class="in" type="hidden" name="hdmediaid" />
+                            <input id="hdmediadata" class="in" type="hidden" name="hdmediadata" />*@
+                                    <img alt="logo" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/@companyMedia.Medium.LocationData/height/102"/>
+                                </span></span>
+                        
+                                <script type="text/javascript">
+                                    $('.companysetup .companysetupform .formcol2 .companylogo').css({ 'background-image': 'none', 'border': 'medium none' });
+                                </script>
+                            }
+                        </div>
+                        <div class="waiting">
+                            <img id="imgLoaderlogo" src="../../Images/progress.gif" alt="progress..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companygalery">
+            <div class="companygalery5">
+                <div class="photo1">
+                    <div class="photocol1">
+                        <div>
+                            company<br />
+                            photo gallery
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="photocol2">
+                        <div class="companyphoto">
+                            <div class="photonote">
+                                upload or purchase up to <b>10 images</b> to create your photo gallery.
+                                <br />
+                                scroll down to purchase stock photos for $0.99 each.
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="photoimg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo1">
+                </div>
+                <div class="photo1">
+                </div>
+            </div>
+            <div class="clear10">
+            </div>
+            <div class="companysetupimagebox">
+                <div id="companyPhotos">
+                    <b>upload up to <span class="bluecolor">10</span> of your own images.</b> <em>
+                                                                                                  (3mb limit
+                                                                                                  per upload)
+                                                                                              </em>
+                    <div class="clear10">
+                    </div>
+                    <div class="wrapperimageupload">
+                        <div id="photocontentfile">
+                        </div>
+                        <div class="clear10">
+                        </div>
+                        <form id="fileuploadphoto" action="/Upload/PhotoUploadHandler.ashx" method="POST"
+                              enctype="multipart/form-data">
+                            <div class="row fileupload-buttonbar">
+                                <div class="span7">
+                                    <span class="btnuploadgalery fileinput-button" style="float: none;">
+                                        <input type="file" name="files[]" />
+                                    </span>
+                                </div>
+                            </div>
+                            <input type="hidden" id="companyID" name="companyID" value="@ViewBag.CompanyID" />
+                        </form>
+                        <div class="clear10">
+                        </div>
+                        @if (imagesDownloaded != null && imagesDownloaded.Count > 0)
+                        {
+                            <div class="checkboxFive">
+                                <input type="checkbox" value="1" id="defaultInput" name="" checked="" />
+                                <label for="defaultInput">
+                                    <span><b>set as default</b></span>
+                                </label>
+                            </div>
+                            <div class="clear10">
+                            </div>
+                            <div class="hideProfile">
+                                <input type="checkbox" value="1" id="hiddenInput" name="" />
+                                <label for="hiddenInput">
+                                    <span><b>hide on profile</b></span>
+                                </label>
+                            </div>
+                            
+                            @* <div class="chktext">
+                            <input id="text" type="checkbox" name="verification" />
+                            <label id="lbldefault" for="text">
+                                <b>set as default</b></label>
+                        </div>
+                        <div class="clear10">
+                        </div>
+                        <div class="chkcall">
+                            <input type="checkbox" id="mail" name="verification" />
+                            <label id="lblhide" for="mail">
+                                <b>hide on profile</b></label>
+                        </div>*@
+
+                            <a href="#" title="remove" class="removelink deletepopup">
+                                <span>or</span> delete from
+                                gallery
+                            </a>
+                            <div class="clear10">
+                            </div>
+                                
+                            <div>
+                                <div class="span7">
+                                    <span class="fileinput-button" style="float: none;">
+                                        <button onclick="createLogo()" class="button140">create logo</button>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div id="carousel_viewimage">
+                        <div class="photo" id="photocontentfile">
+                            @*<img alt="photo" src="/images/photo_company_image1.png" />*@ <span class="boxcontentimg"
+                                                                                                 style="height: 215px; width: 361px;">
+                                                                                               <span class="boximage">
+                                                                                                   <img alt="photo" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id//width/363/height/226" />
+                                                                                               </span>
+                                                                                           </span>
+                        </div>
+                        @*  @{
+
+                        string urlDefault = string.Empty;
+                        if (gettyImageList != null && gettyImageList.Count > 0)
+                        {
+                            Kuyam.Database.GettyImage img = gettyImageList.First();
+                            urlDefault = string.Format("{0}/p/811441/thumbnail/entry_id/{1}/width/363/height/226", Kuyam.Database.Types.KaturaDoman, img.UrlThumb);
+                        }
+                        else
+                        {
+                            urlDefault = "/images/photo_company_image1.png";
+                        }
+
+                    }*@ @* <img src="@urlDefault" id="viewphoto" />*@
+                    </div>
+                    <div class="carousel-gallery">
+                        <div id="my_carousel" class="carousel groupr">
+                            <div class=" carousel_btnprev">
+                            </div>
+                            <div class="carousel_btnnext">
+                            </div>
+                            <div class="carousel-nav">
+                                <div class="carousel-thumbs">
+                                    <ul class="carousel-apps group">
+                                        @if (imagesDownloaded != null && imagesDownloaded.Count > 0)
+                                        {
+                                            foreach (Kuyam.Database.CompanyMedia image in imagesDownloaded)
+                                            {
+                                                //if (image.Type == (int)Kuyam.Database.Types.ImageType.Kaltura)
+                                                //{
+                                                if (image.Medium != null)
+                                                {
+                                                    string urlImage = string.Format("{0}/p/811441/thumbnail/entry_id/{1}/width/363/height/226", Kuyam.Database.Types.KaturaDoman, image.Medium.LocationData);
+                                                    <li>
+                                                        <input type="hidden" id="@("chkisdefault_" + @image.MediaID)" value="@image.IsDefault" />
+                                                        <input type="hidden" id="@("chkishidden_" + @image.MediaID)" value="@image.IsHidden" />
+                                                        <a href="@urlImage">
+                                                            <div class="center-thumb">
+                                                                <span></span>
+                                                                <img id="@image.MediaID" src="@urlImage" location="@image.Medium.LocationData" title="@image.Medium.Desc" alt="@image.Medium.Desc"
+                                                                     class="image0">
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                //}
+                                            @* else
+                                            {
+                                        <li>
+                                            <input type="hidden" id="@("chkisdefault_" + @image.Id)" value="@image.IsDefault" />
+                                            <input type="hidden" id="@("chkishidden_" + @image.Id)" value="@image.IsHidden" />
+                                            <a href="@image.UrlPreview">
+                                                <div class="center-thumb">
+                                                    <span></span>
+                                                    <img id="@image.Id" src="@image.UrlPreview" title="@image.Title" alt="size: @image.PixelWidth x @image.PixelHeight </br>price:	$0.99 </br>tags: @image.Tags"
+                                                                        class="image0">
+                                                </div>
+                                            </a></li>
+                                            }*@
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="/images/preview-image.png">
+                                                    <div class="center-thumb">
+                                                        <span></span>
+                                                        <img src="/images/thumb-preview-image.png" title="default" alt="default" class="image0">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cropForLogo" style="display: none;">
+                    <div>
+                        <img id="imageTarget" alt="Crop image" />
+                       
+                        <div id="preview-pane">
+                            <div class="preview-container">
+                                <img class="jcrop-preview" alt="Preview" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reviewCrop">
+                        
+                        <div>
+                            <div class="span7">
+                                <span class="fileinput-button" style="float: none;">
+                                    <button onclick="setCropLogo()" class="button140">set as logo</button>
+                                </span>
+                            </div>
+                            <div class="clear10">
+                            </div>
+                            <div class="span7">
+                                <span class="fileinput-button" style="float: none;">
+                                    <button onclick="closeCrop()" class="button140">cancel</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="companysetupformbot">
+    </div>
+    <div class="btnarea newbtncompanysetup">
+        <a class="btnusersetting btnback5" href="/Company/SetupBasic?companyId=@ViewBag.CompanyID">
+            <span class="btnusersettingleft"></span><span class="btnusersettingcenter btncancelusersetting">
+                cancel</span> <span class="btnusersettingright"></span></a><a class="btnusersetting"
+                    id="btnsavechange" onclick="savechange();"><span class="btnusersettingleft"></span>
+                    <span class="btnusersettingcenter btnsavechange">save changes</span> <span class="btnusersettingright">
+                    </span></a>
+    </div>
+    <div class="companysetupform">
+        <div class="companysetupformtop1" id="companysetupformtop">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companysetupformmid">
+            <div class="clear">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="companygalery">
+                <div class="companygalery5">
+                    <div class="photo1">
+                        <div class="photocol1">
+                            <div>
+                                company<br />
+                                photo gallery
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="photocol2">
+                            <div class="companyphoto">
+                                <div class="photonote">
+                                    purchased photos will appear in your photo gallery above after checkout.</div>
+                                <div class="clear">
+                                </div>
+                                <div class="photoimg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="photo1">
+                    </div>
+                    <div class="photo1">
+                    </div>
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="companysetupimagebox">
+                    <div class="searchbar">
+                        @*<form id="form1" name="form1" method="post" action="">*@
+                        <label for="search">
+                        </label>
+                        <input type="text" name="search2" id="search" value="search stock photos for more..."
+                            onblur="if (this.value==''){this.value='search stock photos for more...';}" onfocus="if (this.value=='search stock photos for more...') {this.value = '';}" />
+                        <input type="image" src="/images/btn_search.png" name="search" id="search2" onclick="getGettyImages(1);" />
+                        @*</form>*@
+                    </div>
+                    <span class="colorblack" id="colorblack"><b>recommended for you based on ‘@ViewBag.ServiceName’</b></span>
+                    <div class="clear10">
+                    </div>
+                    <div id="carousel_viewimage1">
+                        <img src="/images/photos/img1.jpg" id="viewphoto1" />
+                    </div>
+                    <div class="clear10">
+                    </div>
+                    <div class="carousel-wrapper-thumbs">
+                        <div class="carousel-gallery">
+                            <div id="my_carousel1" class="carousel groupr">
+                                <div class=" carousel_btnprev1">
+                                </div>
+                                <div class="carousel_btnnext1">
+                                </div>
+                                <div class="carousel-nav">
+                                    <div class="carousel-thumbs">
+                                        <div id="divgettyimage">
+                                            @Html.Partial("_GettyImageListResults")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divgettyimagecart">
+                            @Html.Partial("_GettyImageListCartResults")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="companysetupformbot">
+        </div>
+    </div>
+</div>
+<div class="clear6">
+</div>
+@if (ViewBag.IsAdminOrAgent)
+{
+    <div class="btnarea newbtncompanysetup">
+        <a href="/companysetup/Success?companyId=@ViewBag.CompanyID" class="btnusersetting">
+            <span class="btncheckoutleft"></span><span class="btncheckoutcenter btncheckout">confirm</span>
+            <span class="btncheckoutright"></span></a>
+    </div>
+}
+else
+{ 
+    <div class="btnarea newbtncompanysetup">
+        <a href="/companysetup/Checkout" class="btnusersetting"><span class="btncheckoutleft">
+        </span><span class="btncheckoutcenter btncheckout">checkout with PayPal &gt; </span>
+            <span class="btncheckoutright"></span></a>
+    </div>    
+}
+<img id="aptImgLoader" src="../../Images/progress.gif" class="waiting" alt="loading..."
+    style="position: fixed; top: 50%; left: 50%;" />
+<div id="lightBox" class="lightBox" style="z-index: 9901;">
+</div>
+<div class="btnpurchasemore">
+    <a href="#" title="purchase more photo below!"></a>
+</div>
+<!-- POPUP -->
+<div id="selectservice" class="deletephotopopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            are you sure you want to permanently <b>delete this photo</b> from your gallery?</h3>
+        <div class="clear">
+        </div>
+        <div class="ydescript newydescript">
+            we recommend <b>“hide on profile”</b> for purchased stock photos in case you want
+            to use it later.
+        </div>
+        <div class="clear">
+        </div>
+        <a href="#" class="btndelete" id="btndelete" title="delete">delete</a> <a href="JavaScript:void(0);"
+            class="btnnevermind" id="bookme" title="nevermind, i will keep it">nevermind, i
+            will keep it</a>
+        <div class="clear">
+        </div>
+        <div id="errordiv" class="msgerror">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="savechangepopup" class="deletephotopopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            your images have successfully been saved to your company profile</h3>
+        <div class="clear">
+        </div>
+        <br />
+        <center>
+            <a href="@Url.Action("SetupVideo", "Company", new { companyId = ViewBag.CompanyID })" class="btnnevermind" id="btnok" title="ok" style="float: none;">
+                ok</a></center>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!-- END POPUP -->
+<script src="/Scripts/jcrop/js/jquery.Jcrop.js"></script>
+
+<script type="text/javascript">
+    var logoSizeW = 124;
+    var logoSizeH = 120;
+    var kalturaId = "";
+    var jcrop_api,
+        boundx,
+        boundy,
+
+        // Grab some information about the preview pane
+        $preview = $('#preview-pane'),
+        $pcnt = $('#preview-pane .preview-container'),
+        $pimg = $('#preview-pane .preview-container img'),
+
+        xsize = $pcnt.width(),
+        ysize = $pcnt.height();
+    
+
+    function createLogo() {
+        
+        pageBusy();
+        kalturaId = $("#my_carousel .carousel-thumbs ul li.ad-active img").attr("location");
+        var url = "https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/" + kalturaId + "/type/1/width/0/height/0";
+
+        if ($('#imageTarget').attr("src") == url) {
+            $("#companyPhotos").hide();
+            $("#cropForLogo").show();
+            pageActive();
+            return;
+        }
+
+        $pimg.css({
+            width: '0px',
+            height: '0px',
+            marginLeft: logoSizeW + 'px',
+            marginTop: logoSizeH + 'px'
+        });
+        $pimg.attr("src", "");
+
+        if (jcrop_api != null) {
+            jcrop_api.destroy();
+            jcrop_api = null;
+            $('#imageTarget').attr("width", "");
+            $('#imageTarget').attr("height", "");
+        }
+
+        $('#imageTarget').attr("src", url).load(function () {
+            $pimg.attr("src", url);
+            $("#companyPhotos").hide();
+            $("#cropForLogo").show();
+
+            var scale = $('#imageTarget').height() / $('#imageTarget').width();
+            var centerTop = ($('#imageTarget').height() - logoSizeH) / 2;
+            var centerLeft = ($('#imageTarget').width() - logoSizeW) / 2;
+
+            $('#imageTarget').Jcrop({
+                onChange: updatePreview,
+                onSelect: updatePreview,
+                aspectRatio: 1,
+                bgOpacity: 0.65,
+                bgColor: 'white',
+                addClass: 'jcrop-light',
+                minSize: [logoSizeW, logoSizeH],
+                boxWidth: 450,
+                boxHeight: 450 * scale
+            }, function () {
+                // Use the API to get the real image size
+                var bounds = this.getBounds();
+                boundx = bounds[0];
+                boundy = bounds[1];
+                // Store the API in the jcrop_api variable
+                jcrop_api = this;
+                jcrop_api.setSelect([centerLeft, centerTop, centerLeft + logoSizeW, centerTop+logoSizeH]);
+                // Move the preview into the jcrop container for css positioning
+                $preview.appendTo(jcrop_api.ui.holder);
+            });
+            pageActive();
+        });
+    }
+
+    var newLogo = "";
+    function updatePreview(c) {
+        if (parseInt(c.w) > 0) {
+            var rx = xsize / c.w;
+            var ry = ysize / c.h;
+
+            var src_x = Math.round(rx * c.x);
+            var src_y =  Math.round(ry * c.y);
+            var rel_w = Math.round(rx * boundx);
+            var rel_h = Math.round(ry * boundy);
+            $pimg.css({
+                width: rel_w + 'px',
+                height: rel_h + 'px',
+                marginLeft: '-' + src_x + 'px',
+                marginTop: '-' + src_y + 'px'
+            });
+
+            newLogo = "https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/" + kalturaId + "/width/" + logoSizeW + "/height/" + logoSizeH + "/src_x/" + src_x + "/src_y/" + src_y + "/src_w/" + logoSizeW + "/src_h/" + logoSizeH + "/rel_width/" + rel_w + "/rel_height/" + rel_h;
+        }
+    }
+
+    function closeCrop() {
+        $("#cropForLogo").hide();
+        $("#companyPhotos").show();
+    }
+
+    function setCropLogo() {
+        window.isUseDefaultAjaxHandle = true;
+        var data = { companyId: $("#companyID").val(), url: newLogo };
+        $.ajax({
+            url: "@Url.Action("CropImageForLogo", "CompanySetup")",
+            data: JSON.stringify(data),
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            //beforeSend: onAjaxBeforeSend,
+            success: function (result) {
+                $("#logocontentfile img").attr("src", "https://cdnsecakmi.kaltura.com/p/811441/thumbnail/entry_id/" + result.location + "/height/102");
+                
+                closeCrop();
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                location.reload();
+
+            }
+        });
+    }
+</script>

@@ -1,0 +1,126 @@
+﻿@using Kuyam.WebUI.Helpers
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var isUsesAccessKey = $("#useskey").attr("checked");
+        if (isUsesAccessKey) {
+            $("#accesskey").html("access key");
+        } else {
+            $("#accesskey").html("password");
+        }
+
+        $(".loginform").keypress(function (e) {           
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                Login();
+                return false;
+            }
+        });
+    });
+
+    function getTimezoneName() {
+        timezone = jstz.determine()
+        return timezone.name();
+    }
+
+    function Login() {
+        $('.loginErrorServer').hide();
+        $('.loginError').hide();
+        //email
+        var email = $('#username').val();
+        var pass = $('#pass').val();
+        var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+        if (!reemail.test(email)) {
+            $('.loginError').show();
+        }
+        else if (email == '' || pass == '') {
+            $('.loginError').show();
+        }
+        else {
+            var timezoneId = getTimezoneName();           
+            $("#timeZoneId").val(timezoneId);
+            var returnUrl = getQueryString();            
+            $("#returnUrl").val(returnUrl["returnurl"]);
+            $('#LoginForm').submit();
+        }
+    }
+
+    function usesswichKey(value) {
+        if (value) {
+            $("#accesskey").html("access key");
+        } else {
+            $("#accesskey").html("password");
+        }
+    }
+   
+
+</script>
+
+
+@using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { id = "LoginForm" }))
+{   
+    <input type="hidden" name="timeZoneId" id="timeZoneId" value=""/>
+    <input type="hidden" name="ReturnUrl" id="returnUrl" value="" />
+    <div id="contentmainpage">
+        <div class="frmlogin">
+            <fieldset>
+                <div class="loginform">
+                    <center>
+                        <h2>
+                            login to your account</h2>
+                    </center>
+                    <table cellpadding="2" cellspacing="2" border="0" class="tbldata">
+                        <tr >
+                            <td width="100">
+                                <span>email</span>
+                            </td>
+                            <td>
+                                <input type="text" id="username" name="username" title="enter e-mail address" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="accesskey">password</span>
+                            </td>
+                            <td>
+                                <input type="password" name="pass" id="pass" title="enter password" />
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>
+                            </td>
+                            <td>
+                                <input type="checkbox" id="useskey" value="true" name="usesKey" @(ViewBag.IsUsesAccessKey == true ? "checked=checked" : "") onclick="usesswichKey(this.checked);"/>
+                                <label for="useskey">
+                                    uses access key</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="button" class="btnLogin" id="btnAdminLogin" value="login" onclick="Login();"
+                                    title="login" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+            <div style="color: Red; font-family: Verdana;">
+                <div class="loginErrorServer" style="margin-left: -10px !important">
+                    @Html.CustomValidationSummary()
+                </div>
+                <div class="loginError" style="display: none">
+                   the user name or password is invalid. please try again.
+                </div>
+                &nbsp;
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+}

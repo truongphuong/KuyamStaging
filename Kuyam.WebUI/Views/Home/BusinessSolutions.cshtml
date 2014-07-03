@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = "Business Solutions";
+}
+
+
+        <img class="BodyTop" src="@Url.Content("~/images/About/MeditateTop.png")" alt="Schedule, Share, and Discover" />
+
+        <ul class="GreenTabs">
+            <li class="TabLeft">@Html.ActionLink("About", "About", "home")</li>
+            <li class="TabCenter">@Html.ActionLink("Meet The Team", "MeetTheTeamKourosh", "home")</li>
+            <li class="TabRight Here"></li>
+        </ul>
+
+        <a name="top"></a>
+
+        <!-- Why Kuyam (top) -->
+
+        <img class="FloatRight" style="margin-bottom:20px;" src="@Url.Content("~/images/About/WhyKuyam.png")" alt="Why Kuyam" />
+
+        <br />
+        <i>select your type of business:</i>
+        <br />
+        <a href="#cosmetics">Cosmetics</a><br />
+        <a href="#health">Health/Fitness</a><br />
+        <a href="#lessons">Lessons/Tutoring</a><br />
+
+        <br />
+
+        <p>
+            At Kuyam, we take pride in supporting some of the best businesses
+            in the industries that are all about you. Businesses that make you
+            and your community feel happy and healthy. In turn, we help those
+            businesses find new customers and deepen their relationships with
+            existing ones.
+        </p>
+
+        <!-- Cosmetics -->
+        <hr />
+        <a name="cosmetics"></a>
+
+        <center>
+        <img src="@Url.Content("~/images/About/CosmeticsTitle.png")" alt="Cosmetics" />
+        </center>
+
+        <span class="BusinessTitle">Cosmetics</span>
+        <span class="BusinessDesc">/ hair, nail, wax, tanning, spa, skin, salon</span>
+
+        <p>
+            With Kuyam, running a salon has never been easier. 
+            With just a few clicks, your customers can set up 
+            automated appointments with your salon, saving you 
+            time to beautify your clients, and keeping your customers 
+            from having to catch you in-between appointments.
+        </p>
+
+        <p>
+            Kuyam lets you list the type of services you offer online, 
+            and allows your clients to select their own service package 
+            when they book. You can also designate which of your employees 
+            offers each service, so that people can schedule directly with 
+            their favorite specialist. From nails to highlights to waxes, 
+            we've got you covered every step of the way.
+        </p>
+
+        <br />
+        <div class="FloatRight">
+            <a href="javascript:showSignUpDialog('@Url.Content("~/home/SignUp")', '')">
+                <img src="@Url.Content("~/Images/About/SignMeUp.png")" alt="Sign Me Up" />
+            </a>
+        </div>
+
+        <div class="Center clear">
+            <a href="#top">back to top</a>
+        </div>
+        <br />
+
+        <!-- Health and Fitness -->
+        <hr />
+        <a name="health"></a>
+
+        <center>
+        <img src="@Url.Content("~/images/About/HealthAndFitnessTitle.png")" alt="Cosmetics" />
+        </center>
+
+
+        <span class="BusinessTitle">Health and Fitness</span>
+        <span class="BusinessDesc">/ yoga, pilates, spin class, personal trainer, self defense, gym, individual coaching, massage</span>
+
+        <p>
+            As a health and fitness professional, your availability is everything.
+            The more clients you can make time for, the more business you'll have
+            coming back. But what happens when you're out working with a client,
+            while another is calling to schedule a last minute appointment with you? With 
+            Kuyam, running your business has never been easier.
+        </p>
+
+        <p>
+            Kuyam lets you list your custom exercise packages online, and allows your
+            clients to select which servics they want when they book. You can also
+            designate which of your trainers, or teachers offer each service. For
+            larger class sessions, such as yoga, pilates, and spin class, Kuyam has
+            an easy and fast way for your clients to reserve their space... and an 
+            easy way for you to keep track of them all.
+        </p>
+
+        <div class="FloatRight">
+            <a href="javascript:showSignUpDialog('@Url.Content("~/home/SignUp")', '')">
+                <img src="@Url.Content("~/Images/About/SignMeUp.png")" alt="Sign Me Up" />
+            </a>
+        </div>
+
+        <div class="Center clear">
+            <a href="#top">back to top</a>
+        </div>
+        <br />
+
+        <!-- Cosmetics -->
+        <hr />
+        <a name="lessons"></a>
+
+        <center>
+        <img src="@Url.Content("~/images/About/LessonsAndTutoringTitle.png")" alt="Cosmetics" />
+        </center>
+
+        <span class="BusinessTitle">Lessons and Tutoring</span>
+        <span class="BusinessDesc">/ mommy and me, dance lessons, music lessons, tutoring</span>
+
+        <p>
+            When you're a private teacher, you know how quickly things can change.
+            One moment you've got a full schedule, and the next your clients are
+            sick, tired, or maybe just forgetful. Sometimes life just seems to
+            get in the way.
+        </p>
+
+        <p>
+            With Kuyam, your customers can set up fast, instantaneous appointments 
+            with your company, as well as cancel them when they don't work out, 
+            saving you time to teach your clients. Kuyam lets you list the courses
+            you offer, and has your customers sign up for the ones they want without
+            having to talk to you beforehand. Instead of playing phone tag with your
+            busiest customers, let the negotiating happen instantly online.
+        </p>
+
+        <div class="FloatRight">
+            <a href="javascript:showSignUpDialog('@Url.Content("~/home/SignUp")', '')">
+                <img src="@Url.Content("~/Images/About/SignMeUp.png")" alt="Sign Me Up" />
+            </a>
+        </div>
+
+        <div class="Center clear">
+            <a href="#top">back to top</a>
+        </div>
+        <br />
+
+
+        <div id="SignUpDialog">
+        </div>

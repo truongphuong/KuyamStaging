@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Kuyam.Database.ProfileHoursException>
+@using M2.Util
+@using M2.Util.MVC
+@using Kuyam.Database
+@{
+    ViewBag.Title = "exception hours";
+}
+<div style="float: left">
+    <h2>
+        @ViewBag.Title</h2>
+</div>
+<div style="float: right">
+</div>
+<div class="clear">
+</div>
+<p>
+    @Html.ActionLink("Add Exception Hours", "add-exception-hours")
+</p>
+<table>
+@*    <tr>
+        <th>
+            times
+        </th>
+        <th>
+            open/closed
+        </th>
+        <th>
+            notes
+        </th>
+        <th>
+        </th>
+    </tr> *@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.Start.Date == item.End.Date)
+                { 
+                    
+                    @:@(item.Start.ToCasual())
+                }
+                else
+                {
+                    @:@(item.Start.ToCasualRange(item.End))
+                }
+            </td>
+            <td style="text-align:center">
+                @(item.IsOpen ? "open" : "closed")
+            </td>
+            <td>
+                @item.Note
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "edit-exception-hours", new { id = item.ProfileHoursExceptionID }) |
+                @Html.ActionLink("Delete", "delete-exception-hours", new { id = item.ProfileHoursExceptionID })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+@Html.ActionLink("back", "companyprofile", "profile", new { id=Kuyam.WebUI.Models.MySession.CompanyProfileID }, null)

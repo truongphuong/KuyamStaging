@@ -1,0 +1,20 @@
+﻿@{
+
+    /* The side bar according section, load in the necessary pages */
+    Kuyam.WebUI.Models.CompanySearchModel search = new Kuyam.WebUI.Models.CompanySearchModel();
+    search.LockAndLoad();
+}
+
+
+<div id="accordion" style="min-height:400px;">
+    <h3><a href"#">Schedule Appt</a></h3>
+    <div style="padding:0px;">
+        @Html.Partial("dashboard-view-scheduleappt", search)
+    </div>
+
+    <h3><a href="#">My Appts</a></h3>
+    <div style="padding:0px; ">
+        @Html.Partial("dashboard-view-myappts")
+    </div>
+</div>
+

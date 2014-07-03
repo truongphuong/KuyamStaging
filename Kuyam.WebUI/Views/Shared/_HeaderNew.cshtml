@@ -1,0 +1,225 @@
+﻿@using Kuyam.WebUI.Models
+@using Kuyam.Database;
+@using Kuyam.Domain;
+@using System.Configuration;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.Domain.CompanyProfileServices
+@{   
+    
+    List<Kuyam.Database.Service> parentCategories = DAL.GetParentService();
+    int categoryId = 0;
+    if (ViewBag.CategoryId != null)
+    {
+        categoryId = ViewBag.CategoryId;
+    }
+
+    string companyname = string.Empty;
+    Profile profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(MySession.ProfileID);
+    if (profile != null)
+    {
+        companyname = profile.Name;
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#loginform").keypress(function (e) {
+            kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                login();
+                return false;
+            }
+        });
+
+        $("#signuppopup").keypress(function (e) {
+            kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                singUpNow();
+                return false;
+            }
+        });
+        $('#alreadymember1').click(function () {
+            $('#loginError').hide();
+            $('#loginpopup').hide();
+            showDialog('signuppopup', 'btnCloseloginPopup');
+        });
+
+        $('#alreadymember').click(function () {
+            $('#loginError').hide();
+            $('#signuppopup').hide();
+            hideDialog("signupemailpopup");
+            showDialog('loginpopup', 'btnCloseloginPopup');
+        });
+
+
+        $('.btndiscover').click(function (e) {
+            var selected = document.getElementById('category');
+            var categoryId = selected.options[selected.selectedIndex].value;
+            var url = "/company/companysearch/" + categoryId;
+            self.window.location = url;
+            return false;
+        });
+
+        $('select#category').selectmenu();
+
+        $('.homePageLogin').click(function () {
+            redirectUrl = "";
+            ShowLoginPopup();
+        });
+
+        $('.linksignout').click(function (e) {
+            logout();
+        });
+
+        $('.btnLogin').click(function () {
+            login();
+        });
+
+        $('#signup').click(function () {
+            redirectUrl = "";
+            $('#signuppopup #loginError').hide();
+            showDialog('signuppopup', 'btnCloseloginPopup');
+        });
+
+    });
+
+    
+    function ShowLoginPopup() {
+        $('#loginform #loginError').hide();
+        showDialog("loginpopup", "btnCloseloginPopup");
+    }
+
+    function fullTrim(val) {
+        return val.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
+    };
+
+    function singUpNow() {
+        $('#signuppopup #loginError').hide();
+        var fname = $('#txtFirstname').val();
+        var lname = $('#txtLastname').val();
+        var email = $('#txtEmailAddress').val();
+        var err = "";
+        if (fullTrim(fname) == '' || fname == 'first name') {
+            err = err + 'First Name is required.<br/> ';
+        }
+        if (fullTrim(lname) == '' || lname == 'last name') {
+            err = err + 'Last Name is required. <br/> ';
+        }
+        if (fullTrim(email) == '' || email == "enter e-mail address") {
+            err = err + ' Email is required.<br/>';
+        }
+        if (fullTrim(email) != '' && email != "enter e-mail address" && !validateEmail(email)) {
+            err = err + 'Email is invalid.';
+        }
+
+        $('#signuppopup #loginError').html("<div style='color: Red;padding-left: 20px;'>" + err + "</div>");
+        if (err == '') {
+            $('#signuppopup #loginError').hide();
+            var param = "fname=" + fname + "&lname=" + lname + "&email=" + email;
+            $('#signuppopup #imgLoaderContact1').show();
+            commonPostAjax("company", "SignUpNow", param, masterSignUpSuccess, callbackError);
+        } else {
+            $('#signuppopup #loginError').show();
+        }
+    };
+
+    function callbackError(error) {
+        $('#signuppopup #loginError').html("<span style='color: Red;padding-left: 20px;'>" + error + "</span>");
+        $('#signuppopup #loginError').show();
+    }
+
+    function masterSignUpSuccess(result) {
+
+        $('#signuppopup #imgLoaderContact1').hide();
+        if (result.status == 1) {
+            self.location.href = "/Account/RegisterEmail";
+        } else {
+            callbackError(result.message);
+        }
+
+    }
+    function redrectToResult() {
+        //            var index = $("#category-menu li").index($('li[class*="ui-selectmenu-item-selected"]'));
+        //            var id = $("#category option").eq(index).val();
+        //var selected = document.getElementById('category');
+        //var categoryId = selected.options[selected.selectedIndex].value;
+        //var url = "/company/companysearch/?id=" + categoryId;
+        var categoryName = $("#category option:selected").attr("name");
+        var slug = generateSlug(categoryName);
+        var url = "/" + slug;
+        window.location = url;
+        return false;
+        window.location = url;
+        return false;
+    }   
+</script>
+<div class="header">
+    <div class="hcontent h73">
+        <a href="/" class="logo" title="Kuyam">
+            <img alt="Kuyam" src="/images/kuyam_logo.png" /></a>
+             @*<a href="#" class="nameUser"  title="Santa Monica, CA">Santa Monica, CA</a>*@
+        <div class="date" id="datetitle">
+            <script type="text/javascript">
+                var stringdate = $.datepicker.formatDate('DD, MM dd yy', new Date());
+                $("#datetitle").html(stringdate);                                
+            </script>
+        </div>
+        <div class="boxSearch">
+            <fieldset>
+                <div class="fleft boxsearchcatagory">
+                    <select name="category" id="category" class="selectcatagory" onchange="redrectToResult();">
+                        <option value="0" style="font-weight: bold"><span>select a category</span></option>
+                        @foreach (Kuyam.Database.Service parent in parentCategories)
+                        {                                           
+                            <option style="font-weight: bold"  @(parent.ServiceID == categoryId ? "selected=selected" : "") value="@parent.ServiceID" name="@parent.ServiceName">@parent.ServiceName</option>                                           
+                        }
+                    </select>
+                </div>
+                <div class="fleft" style="@(!Request.IsAuthenticated?"display: none;":"")">
+                    <a class="btnLiveChat @(MySession.ShowLiveChat?"On":"Off")" href="JavaScript:void(0);" title="live chat support" id="btnLiveChat"></a>
+                </div>
+                <div class="fleft" style="display:none;">
+                    <a href="" class="btndiscover" title="Discover"></a>
+                </div>
+            </fieldset>
+        </div>
+        <ul class="menuHeader signout ">
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                Cust user = MySession.Cust;               	                   
+                        
+                <li class="accountname">
+                    <div class="divaccount">
+                        <span class="state"><span>hi, @UtilityHelper.TruncateText(user.FirstName, 15)@*@(string.IsNullOrEmpty(companyname) ? UtilityHelper.TruncateText(user.FirstName, 15) : UtilityHelper.TruncateText(companyname, 15))*@!</span></span></div>
+                    <ul class="the_menu">
+                        @if (profile != null)
+                        {   
+                            <li><a href="/company/companyemployeelisthour/" title="list/edit hours">list/edit hours</a><div
+                                class="clear">
+                            </div>
+                            </li> 
+                            <li><a href="/" title="settings">user account</a></li>
+                        }
+                        else
+                        {   
+                           @* <li><a href="/home/howitworks_user" title="list/edit hours">list/edit hours</a><div
+                                class="clear">
+                            </div>
+                            </li>*@
+                            <li><a href="/Company/SetupBasic" title="settings">add company</a></li>
+                        }
+                        <li><a href="/setting/UserSetting" title="settings">settings</a></li>
+                    </ul>
+                </li>
+                        
+                <li class="lastchild"><a class="linksignout" title="sign out">sign out</a></li>              	
+            }
+            else
+            {
+                <li><a href="/home/haircut" title="how it works">how it works</a></li>
+                <li><a href="#" id="signup" title="sign up">sign up</a></li>
+                <li class="lastchild"><a class="homePageLogin" title="login">log in</a></li> 
+            }
+        </ul>
+    </div>
+</div>

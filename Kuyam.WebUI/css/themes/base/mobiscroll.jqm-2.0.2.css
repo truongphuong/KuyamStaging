@@ -1,0 +1,100 @@
+/* jQuery Mobile Theme */
+.jqm .dwo {
+    background: none;
+	background-color:black;
+}
+.jqm .dw {
+    padding: 6px;
+    z-index: 9902;
+}
+.jqm .dwv {
+    position: static;
+    width: auto;
+    padding: .7em 15px .7em 15px;
+    border: 0;
+	background: -moz-linear-gradient(#6FACD5, #497BAE) repeat scroll 0 0 #5E87B0;
+}
+.jqm .dwwr {
+    border: 0;
+}
+.jqm .dwpm .dwwo {
+    background: none;
+}
+.jqm .dwc {
+    margin: 0;
+    padding: 30px 5px 5px 5px;
+	background-color:white;
+ }
+.jqm .dwhl {
+    padding: 5px;
+}
+.jqm .dwwb {
+    margin: 0;
+    border: 0;
+}
+.jqm .dwwb span {
+    padding: 0;
+}
+.jqm .dwwbp .ui-btn-inner {
+    font-size: 40px;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+.jqm .dwwbm .ui-btn-inner {
+    font-size: 32px;
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}
+.jqm .dwwbp span {
+    font-weight: normal;
+}
+.jqm .dwbc .ui-btn {
+    margin:.5em 5px;
+}
+.jqm .dwbc .ui-btn-inner {
+    font-size:12px;
+}
+.ui-overlay-shadow{box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);}
+.ui-body-a, .ui-overlay-a{border:1px solid #444444;background:-moz-linear-gradient(#444444, #222222) repeat scroll 0 0 #222222;}
+.ui-bar-b{
+	border:0px solid #456f9a;
+	background:#5e87b0;
+	color:#fff;
+	font-weight:bold;
+	text-shadow:0 1px 1px #3e6790;
+	background-image:-webkit-gradient(linear,left top,left bottom,from(#6facd5),to(#497bae));
+	background-image:-webkit-linear-gradient(#6facd5,#497bae);
+	background-image:-moz-linear-gradient(#6facd5,#497bae);
+	background-image:-ms-linear-gradient(#6facd5,#497bae);
+	background-image:-o-linear-gradient(#6facd5,#497bae);
+	background-image:linear-gradient(#6facd5,#497bae);
+	}
+.dwb {
+	border:1px solid #456f9a;
+	background:#5e87b0;
+	color:#fff;
+	font-weight:bold;
+	text-shadow:0 1px 1px #3e6790;
+	background-image:-webkit-gradient(linear,left top,left bottom,from(#6facd5),to(#497bae));
+	background-image:-webkit-linear-gradient(#6facd5,#497bae);
+	background-image:-moz-linear-gradient(#6facd5,#497bae);
+	background-image:-ms-linear-gradient(#6facd5,#497bae);
+	background-image:-o-linear-gradient(#6facd5,#497bae);
+	background-image:linear-gradient(#6facd5,#497bae);
+	background-clip: padding-box;
+	padding: 0.6em 20px;
+	white-space: nowrap;
+}
+.dwc {
+    background: -moz-linear-gradient(#FFFFFF, #F1F1F1) repeat scroll 0 0 #EEEEEE;
+    border: 1px solid white;
+    color: #222222;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #FFFFFF;
+	background-clip: padding-box;
+	padding: 0.6em 20px;
+	white-space: nowrap;
+}
+

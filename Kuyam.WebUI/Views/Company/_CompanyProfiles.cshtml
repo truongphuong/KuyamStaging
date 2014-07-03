@@ -1,0 +1,864 @@
+﻿@using Kuyam.Database;
+@using System.Configuration;
+@using Kuyam.Database.Extensions
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.Domain.Seo;
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    List<CompanyProfileSearch> companies = null;
+    int totalRecord = 0;
+    if (ViewBag.ProfileCompanies != null)
+    {
+        companies = ViewBag.ProfileCompanies;
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+    var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
+    //string id = string.Empty;
+    //if (Url.RequestContext.RouteData.Values["id"] != null)
+    //{
+    //    id = Url.RequestContext.RouteData.Values["id"].ToString();
+    //}
+    //CompanyProfileService companyProfileService = EngineContext.Current.Resolve<CompanyProfileService>();
+}
+
+<div class="listSearch relative left-2">
+    @{
+        int i = 0;
+        if (totalRecord == 0)
+        {
+            if (ViewBag.TotalRecords == null || ViewBag.TotalRecords == 0)
+            {
+                <div class="noSearchResultMessage">
+                    <span>
+                        can't find it? <a href="javascript:addNewCompany();" style="color: #0071BC"
+                                          id="noSearchResultLink">add a company</a>
+                    </span>
+                </div>
+            }
+            <div class="headerResults">
+                <span>Your search did not match any companies. Please try again. Thanks!</span>
+            </div>
+        }
+        foreach (var company in companies)
+        {
+            i++;
+            var divID = "item" + i.ToString();
+
+            string url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID), categotyId = ViewBag.CategoryId }); ;
+            string googleCursorName;
+            if (company.IsFeature)
+            {
+                googleCursorName = "orange_icon" + i.ToString() + ".PNG";
+            }
+            else
+            {
+                googleCursorName = "icon" + i.ToString() + ".PNG";
+            }
+            string state = string.Empty;
+            if (!string.IsNullOrEmpty(company.City) && !string.IsNullOrEmpty(company.State))
+            {
+                if (!string.IsNullOrEmpty(company.City) && company.City.Length > 30)
+                {
+                    state = string.Format("{0}, {1}", UtilityHelper.TruncateAtWord(company.City, 20), company.State);
+                }
+                else
+                {
+                    state = string.Format("{0}, {1}", company.City, company.State);
+                }
+
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(company.City) && company.City.Length > 30)
+                {
+                    state = string.Format("{0}{1}", UtilityHelper.TruncateAtWord(company.City, 30), company.State);
+                }
+                else
+                {
+                    state = string.Format("{0}{1}", company.City, company.State);
+                }
+            }
+            
+            <input type="hidden" id="linkUrl" value="" />
+            <div id="@divID" class="item">
+               
+                    @if (company.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+{
+    <div class="LA">
+        @{var companyEvent = company.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
+
+        <img class="btnGetTheOffer" id="@companyEvent.CompanyEventID" src="../images/GetTheOffer.png?v=1" />}
+        
+    </div>
+}
+else if (company.IsEvent.HasValue && company.IsEvent.Value)
+{
+                        <div class="LA1">
+                            <img alt="LA" src="../images/LA.png" />
+                        </div>
+                    }
+                 
+               
+                <span class="number" lat="@company.Latitude" lon="@company.Longitude" googlecursoricon="@googleCursorName">@i</span>
+                <label class="border" for="@divID" id="@company.ProfileID">
+                    @{
+                        Medium logo = DAL.GetCompanyLogoFromProfileCompanyID(company.ProfileID);
+            //Medium image = DAL.GetCompanyImageFromProfileCompanyID(company.ProfileID);
+            bool isViewAvailability = company.CompanyTypeID != (int)Types.CompanyType.NonKuyamBookIt;   
+                
+            bool isSchedule = !isViewAvailability;
+            bool isNonkuyam=(company.CompanyTypeID==(int)Types.CompanyType.NonKuyamBookIt);
+
+
+            if (logo != null && logo.LocationPath != null && logo.LocationPath != string.Empty)
+            {
+                string urlLogo = @Types.KaturaDoman + "/p/811441/thumbnail/entry_id/" + logo.LocationData + "/width/85/height/82";
+                <span class="boxImg">
+                    <span class="boxcontentimg">
+                        <span class="boximage">
+                            <a href="@url"  profileid="@company.ProfileID" title="@company.Name">
+                                <img src="@urlLogo" title="@company.Name" alt="@company.Name" />
+                            </a>
+                        </span>
+                    </span>
+                </span>
+            }
+            else
+            {
+                <span class="boxImg">
+                    <span class="boxcontentimg">
+                        <span class="boximage">
+                            <a href="@url" isnonkuyam="@isNonkuyam" profileid="@company.ProfileID" title="@company.Name">
+                                <img src="/Images/placeholder.png" title="@company.Name" alt="@company.Name" width="86px;" height="83px;" />
+                            </a>
+                        </span>
+                    </span>
+                </span>
+            }
+                    }
+                    <span class="boxInfo">
+                        <div class="title">
+                            <a href="@url" isfeature="@isSchedule" isnonkuyam="@isNonkuyam" profileid="@company.ProfileID" class="companyname" title="@company.Name">
+                                @UtilityHelper.TruncateAtWord(company.Name,17)
+
+                            </a>
+                            @if (company.IsVideo)
+                            {
+                                <span class="tabvideo"></span>
+                            }
+                        </div>
+                        @if (company.IsUserFavorite)
+                        {
+                            <span class="iconHeart">
+                                <span class="pinkHeart" profileid="@company.ProfileID"></span>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="iconHeart">
+                                <span class="brownHeart" profileid="@company.ProfileID"></span>
+                            </span>
+                        }
+                        <span class="address">@state</span>
+                        <span class="available">
+                            @if (company.IsFeature)
+                            {
+                                <script type="text/javascript">
+                                    document.getElementById("@divID").className += " itemyellow";
+                                </script>
+
+                                <span class="featured">featured</span>
+                            }
+                        </span>
+                        <span class="clear h2"></span><span class="iconStar">
+                            @{
+                            switch (company.Rate.ToString())
+                            {
+                                case "0":
+                                    {
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        break;
+                                    }
+                                case "1":
+                                    {
+                                        <span class="greenstar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        break;
+                                    }
+                                case "2":
+                                    {
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        break;
+                                    }
+                                case "3":
+                                    {
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="graystar"></span>
+                                        <span class="graystar"></span>
+                                        break;
+                                    }
+                                case "4":
+                                    {
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="graystar"></span>
+                                        break;
+                                    }
+                                case "5":
+                                    {
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        <span class="greenstar"></span>
+                                        break;
+                                    }
+                            }
+
+
+                            <a href="@Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID) })/review" class="review" id="@company.ProfileID">
+                                (@company.TotalReviews
+                                reviews)
+                            </a>
+                            }
+                        </span><span class="price" style="display: none;">price: $</span>
+                        <div class="clear h5">
+                        </div>
+                        @{
+                            string stringCategories = company.ListServices;                            
+                            <span class="description">categories: @UtilityHelper.TruncateText(stringCategories,25) </span>
+                        }
+                    </span>
+                    <span class="boxPrice">
+                        @Html.Partial("_TimeSlots", company.CompanyAvailableTimeSlots)
+                    </span>
+                </label>
+            </div>
+            <div class="clear h3">
+            </div>
+        }
+    }
+</div>
+<div class="contentPaging">
+    <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+    @{
+        int from = (ViewBag.Page - 1) * 10 + 1;
+        int to = ViewBag.Page * 10;
+        if (to > totalRecord)
+        {
+            to = totalRecord;
+        }
+        int lastPage = 0;
+        if (totalRecord % 10 == 0)
+        {
+            lastPage = totalRecord / 10;
+        }
+        else
+        {
+            lastPage = totalRecord / 10 + 1;
+        }
+
+
+        <div class="fLeft mt4">
+            @if (totalRecord > 0)
+            {
+                <span>@from - @to of </span>
+                <span>@totalRecord results</span>
+            }
+        </div>
+
+        if (totalRecord > 0)
+        {
+            <div class="paging">
+                @if (ViewBag.Page > 1)
+                {
+                    <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+
+                }
+                @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+                {
+                    <a onclick="pagingEvent(@(ViewBag.Page - 3))" pageindex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                    <a onclick="pagingEvent(@(ViewBag.Page - 2))" pageindex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                    <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                }
+                @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+                {
+                    <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                }
+                <span title="@ViewBag.Page">@ViewBag.Page</span>
+                @if (ViewBag.Page + 1 < lastPage)
+                {
+                    <a onclick="pagingEvent(@(ViewBag.Page + 1))" pageindex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+                }
+                @if (ViewBag.Page + 2 < lastPage)
+                {
+                    <a onclick="pagingEvent(@(ViewBag.Page + 2))" pageindex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+                }
+                @if (ViewBag.Page + 3 < lastPage)
+                {
+                    <span class="borderNone p0 ml4 dotmore">...</span>
+                }
+                @if (ViewBag.Page < lastPage)
+                {
+                    <a onclick="pagingEvent(@lastPage)" pageindex="@lastPage" title="@lastPage">@lastPage</a>
+                    <a onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+                }
+            </div>
+            <div class="clear">
+            </div>
+        }
+    }
+</div>
+<img id="imgLoaderListDetail" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+<div id="lightBox" class="lightBox">
+</div>
+<div id="formPopup" class="formPopup">
+</div>
+<div id="gettheoffer" class="gettheofferpopup">
+</div>
+<div id="gettheofferterms" class="gettheoffertermspopup">
+    <div class="contentPopup">
+        <h3>terms of use</h3>
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="gettheoffertermscontent">
+            <p>Last update: September 9, 2012</p>
+            <h4>User Agreement:</h4>
+            <p>
+                This User Agreement (the “Agreement”) and the policies referred to herein contain the
+                complete terms and conditions that apply to your use of the appointment services (the
+                “Services”) being offered at the URL: <a href="http://www.kuyam.com" title="">http://www.kuyam.com</a> and all affiliated web sites
+                owned and operated solely by Kuyam (collectively, the “Website”). As used in this
+                Agreement, “Kuyam” refers to Kuyam Companies, Inc. and any of its subsidiaries, and
+                “User” or “you” refers to you. USE OF THE SERVICES AND THE WEBSITE
+                CONSTITUTES KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS
+                USER AGREEMENT, KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS,
+                AND KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS, AND KUYAM’S
+                TERMS AND CONDITIONS.
+            </p>
+            <p>
+                Kuyam may modify this Agreement’s terms and conditions at any time without notice.
+                Continued use of the Services and the Kuyam Website after a change in this
+                Agreement, a change in the Privacy policy, a change in the Services Listings, or after
+                implementation of any other new policy constitutes acceptance of such change or
+                policy.
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="popupthanks" class="comfirmationpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="kuyamicon">
+        </div>
+        <h3 class="thankyou">
+            thank you!
+        </h3>
+    </div>
+</div>
+<div id="viewReviewpopup" class="viewnotespopup">
+</div>
+<div id="dialogchat" class="viewnotespopupchat">
+    <div class="toppopup">
+        <div class="bottompopupchat">
+            <div class="contentPopup">
+                <a id="btnClose" class="btnClose" href="JavaScript:closePopupChat();" title="Close">
+                </a>
+                <div id="companyinfo">
+                    <h3 id="companyname"></h3>
+                    <p id="companyaddress">
+                    </p>
+                </div>
+                <div class="screenchat" id="textmessagerecived">
+                    <p>
+                        <strong>kuyam:</strong> <span>how can we help you?</span>
+                    </p>
+                    <p id="nowtime">
+                    </p>
+                </div>
+                <textarea name="" cols="" rows="" id="inputmsgchat"></textarea>
+                <input name="" type="image" src="/images/btn_send_chat.png" id="btnChat" />
+                <div class="clear">
+                </div>
+                <h3>
+                    appointment summary:
+                </h3>
+                <div class="appointmentbluebox" id="appointmentview">
+                    <em>
+                        once we have enough information about your request, your appointment details will
+                        appear here and you can book it below
+                    </em>
+                </div>
+                <div class="clear">
+                </div>
+                <a href="#" onclick="getNonDataCheckout();" id="btnbookit" title="" class="btnBookitDisable">
+                </a>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@*<div id="newpayment" class="comfirmationpopup checkoutpopup newcheckoutpopup"></div>*@
+<div id="newpayment" class="giftcardpopup">
+</div>
+<script type="text/javascript">
+
+    var chatInterval;
+    $(document).ready(function () {
+        var nowtime = new Date().format('hh:MM TT');
+        $("#nowtime").html(nowtime);
+
+        window.clearInterval(chatInterval);
+
+        $('div.item').click(function(e){
+            if($(this).attr("class") == "itemyellow")
+            {
+                $('div.item').removeClass("itemyellowactive");
+                $(this).addClass("itemyellowactive");
+            }
+            else
+            {
+                $('div.item').removeClass("itemnormalactive");
+                $(this).addClass("itemnormalactive");
+            }
+        });
+
+        $('Label.border').click(function (e) {
+
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            var className = $(e.target).attr('class');
+            var target = e.target;
+
+            var returnUrl = $(e.target).attr("href");
+
+            if (typeof returnUrl != 'undefined' && returnUrl != '') {
+                redirectUrl = returnUrl;
+            } else {
+                redirectUrl = "";
+            }
+
+            if (!isLogin) {
+                $('.loginError').hide();
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+
+            var isnonkuyam=  $(e.target).attr("isnonkuyam")
+
+
+            if(className=="companyname" && !isnonkuyam)
+                return true;           
+
+            if(className!="review")
+            {
+                if (className == "btnView" || className == "btnSchedule" || className == "brownHeart" || className == "company" || className == "pinkHeart") {
+                    return false;
+                }
+                else if ($(target).hasClass("companyTimeSlot") || $(target).hasClass("companyTimeSlotMore")  || $(target).hasClass("checkAvailabitity") || $(target).hasClass("btnAvailable")  ) {
+                    return true;
+                }
+                else {
+                    $("#formPopup").html("");
+                    $("#formPopup").load("/company/LoadDetailPopup/?profileId="+this.id + "&nocache=" + getunixtime());
+                    var id = "#" + $(this).attr("for");
+                    $('#formPopup').appendTo(id);
+                    $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
+                    $('#formPopup').css('z-index', '1000');
+                    $('#formPopup').fadeIn(200);
+                }
+                return false;
+            }
+            return true;
+
+        });
+
+        $('.btnGetTheOffer').click(function (e) {
+            var pTop=($(window).height() - $('#gettheoffer').height())/2;
+            var pLeft=($(window).width() - $('#gettheoffer').width())/2;
+            $('#gettheoffer').css({top: pTop, left: pLeft});
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            var className = $(e.target).attr('class');
+            var target = e.target;
+
+            var returnUrl = $(e.target).attr("href");
+
+            if (typeof returnUrl != 'undefined' && returnUrl != '') {
+                redirectUrl = returnUrl;
+            } else {
+                redirectUrl = "";
+            }
+
+            if (!isLogin) {
+                $('.loginError').hide();
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            $("#gettheoffer").html("");
+            $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+this.id + "&nocache=" + getunixtime());
+            var id = "#" + $(this).attr("for");
+            $('#gettheoffer').appendTo(id);
+            $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
+            $('#gettheoffer').css('z-index', '1000');
+            $('#gettheoffer').fadeIn(200);
+            return false;
+        });
+
+        $('.btnSchedule').click(function() {
+            redirectUrl = "";
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(isLogin){
+                if ($(this).attr("isGa") == "true") {
+                    window.location = "@Url.Action("Availability","CompanyProfile")/"+$(this).attr("profileid");
+                }
+                else{
+                    window.clearInterval(chatInterval);
+                    companyname =$(this).attr("companyname");
+                    var companyaddress =$(this).attr("address");
+                    $("#companyinfo #companyname").html(companyname);
+                    $("#companyinfo #companyaddress").html(companyaddress);
+                    phoneNumber=$(this).attr("phoneNumber");
+                    companySite=$(this).attr("companysite");
+                    if(typeof hipmob !=='undefined')
+                        hipmob.hide();
+                    $("#btnLiveChat").addClass("Off");
+                    $("#btnLiveChat").removeClass("On");
+
+                    $("#lightBox").css({'z-index':9901});
+                    var profileId =$(this).attr("profileid");
+                    showDialog('dialogchat');
+                    chatInterval= setInterval(getNonAppointment,3000,profileId);
+                }
+            }else{
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            return false;
+        });
+
+
+        $("#inputmsgchat").keypress(function (e) {
+            kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                sendmessages();
+                return false;
+            }
+        });
+
+        $('#btnChat').click(function(){
+            sendmessages();
+        });
+
+        $('.boxPrice .company').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                redirectUrl = $(this).attr("href");
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            $('#imgLoaderListDetail').show();
+            $('#lightBox').css('opacity', '0.6').fadeIn(200);
+            var companyName = $(this).attr("companyName");
+            var parameters = { companyName: companyName };
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/RequireSendEmailListCompanyHours/'
+            })
+                        .success(function (result) {
+                            $('#imgLoaderListDetail').hide();
+                            $('#lightBox').css('opacity', '0.6').fadeOut(200);
+                            $('#lightBox').css('opacity', '0.6').fadeIn(200);
+                            $('#popupthanks').fadeIn(200);
+                            popupThankYou();
+                            $('#popupthanks').css('top', ($('#lightBox').height() - $('#popupthanks').height()) / 2);
+                            $('#popupthanks').css('left', ($('#lightBox').width() - $('#popupthanks').width()) / 2);
+
+                            $('#popupthanks .btnClose').click(function () {
+                                $('#popupthanks').fadeOut(200);
+                                $('#lightBox').fadeOut(200);
+                            });
+
+                        })
+                        .error(function (error) {
+                            $('#imgLoaderListDetail').hide();
+                            $('#lightBox').css('opacity', '0.6').fadeOut(200);
+
+                        });
+        });
+
+
+        $('.number').click(function () {
+            var lat = $(this).attr("lat");
+            var lon = $(this).attr("lon");
+            var googleIcon = "/Images/" + $(this).attr("googleCursorIcon");
+            google.maps.event.addDomListener(window, 'load', loadmap(lat, lon,googleIcon));
+            window.location = "#";
+        });
+
+
+        function loadmap(lat, lon, googleIcon) {
+            var myLatlng = new google.maps.LatLng(lat, lon);
+            var myOptions = {
+                zoom: 12,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.DEFAULT,
+                    position: google.maps.ControlPosition.LEFT_CENTER
+                },
+                disableDefaultUI: true,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            var myLatLng = new google.maps.LatLng(lat, lon);
+            var beachMarker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: googleIcon
+
+
+            });
+        }
+
+        $('.brownHeart').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            $('#imgLoaderListDetail').show();
+            $('#lightBox').css('opacity', '0.6').fadeIn(200);
+            var valu2 = $(this).attr("profileID");
+            var parameters = { profileID: valu2 };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/AddToFavorite/'
+            })
+            .success(function (result) {
+
+                var page = '@ViewBag.Page';
+                pagingEvent(page);
+                reloadFavorites();
+
+            })
+
+            .error(function (error) {
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').css('opacity', '0.6').fadeOut(200);
+
+            });
+        });
+
+        $('.pinkHeart').click(function () {
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            $('#imgLoaderListDetail').show();
+            $('#lightBox').css('opacity', '0.6').fadeIn(200);
+            var valu2 = $(this).attr("profileID");
+            var parameters = { profileID: valu2 };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/RemoveFavorite/'
+            })
+            .success(function (result) {
+                var page = @ViewBag.Page;
+                pagingEvent(page);
+                reloadFavorites();
+            })
+            .error(function (error) {
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').css('opacity', '0.6').fadeOut(200);
+
+            });
+        });
+
+
+        $('.btnView').click(function () {
+            $('.formPopup').fadeOut(200);
+            $('#lightBox').fadeOut(200);
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            else
+            {
+                window.location = $(this).attr('url');
+            }
+        });
+
+
+    });
+
+    function getNonAppointment(profileId){
+        var custId ='@Kuyam.WebUI.Models.MySession.CustID';
+        $.get("/Appointment/LoadNonAppointmentByFoUser?nocache=" + getunixtime(),
+        {custId:custId,profileId:profileId},
+        function(data){
+            if(data==false) {
+                $('#btnbookit').attr('class','btnBookitDisable')
+                $('#appointmentview').html("<em>once we have enough information about your request, your appointment details will appear here and you can book it below</em>");
+            }else{
+                $('#btnbookit').attr('class','btnBookitActive');
+                $('#appointmentview').html(data);
+
+            }
+        });
+    }
+
+    function cancelbooking(){
+        hideDialog("newpayment");
+        //showDialog('dialogchat');
+    }
+
+    function showPopupChat(){
+        var companyname =$(".btnSchedule").attr("companyname");
+        var companyaddress =$(".btnSchedule").attr("address");
+        $("#companyinfo #companyname").html(companyname);
+        $("#companyinfo #companyaddress").html(companyaddress);
+        if(typeof hipmob !=='undefined')
+            hipmob.hide();
+        $("#btnLiveChat").addClass("Off");
+        $("#btnLiveChat").removeClass("On");
+
+        $("#lightBox").css({'z-index':9901});
+        hideDialog("newpayment");
+        showDialog('dialogchat');
+        chatInterval= setInterval(getNonAppointment,3000);
+        return false;
+    }
+
+
+    function getNonDataCheckout(){
+        var apptId =$("#apptdetail").attr("apptid");
+        $.get("/Paypal/GetDataCheckoutByNonKuyamByAppId?nocache=" + getunixtime(),{apptId:apptId},
+        function(data){
+            window.clearInterval(chatInterval);
+            hideDialog("dialogchat");
+            $('#newpayment').html(data.content);
+            $('#cbemail').checkBox({ addVisualElement: false });
+            $('#cbsms').checkBox({ addVisualElement: false });
+            showDialog('newpayment');
+        });
+    }
+
+    function closePopupChat(){
+        window.clearInterval(chatInterval);
+        $('#btnbookit').attr('class', 'btnBookitDisable');
+        hideDialog("dialogchat");
+        $('#appointmentview').html("<em>once we have enough information about your request, your appointment details will appear here and you can book it below</em>");
+
+    }
+
+    function checkAuthority()
+    {
+        var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+        if(!isLogin)
+        {
+            ShowLoginPopup();
+            return false;
+        }
+        return true
+    }
+
+    function removeActive(id){
+        alert(id);
+    }
+
+    function  reloadFavorites(){
+        $.ajax(
+        {
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            url: '/company/GetFavorite/'
+        })
+        .success(function (result) {
+            var sthtml="";
+            if(result.length > 0)
+            {
+                for( var i=0; i< result.length;i++){
+                    sthtml+='<li><a href="/CompanyProfile/availability/'+result[i].ProfileID+'" title="'+result[i].Name +'">'+ truncateText(result[i].Name,14)+'</a></li>';
+                }
+                $("#reloaddivfavorite #favorite").html(sthtml);
+            }
+        })
+        .error(function (error) {
+        });
+    }
+
+
+    function truncateText(input,length){
+        if(input.length<=length)
+            return input.toLowerCase();
+        return input.substring(0, length).toLowerCase() + "...";
+    }
+
+    function viewReview(profileId) {
+        //alert(profileId);
+        $('#viewReviewpopup').html("");
+        $("#viewReviewpopup").load("/Company/ReviewDetail?profileId=" + profileId + "&nocache=" + getunixtime(), function () {
+            showDialog('viewReviewpopup');
+            //lengthofviewnote();
+        });
+    }
+
+  
+    $(document).ready(function () {       
+        $(".companyname").dotdotdot({
+            height: 25,
+            width:306
+        });
+        
+        $(".description").dotdotdot({
+            height: 13,
+            width:350
+        });       
+       
+    });
+   
+   
+</script>

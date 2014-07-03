@@ -1,0 +1,139 @@
+﻿@{
+        //List<Kuyam.Database.GettyImage> imagesPending = ViewBag.ImagesPending;
+        //int tolal = imagesPending.Count;
+        //decimal totalPrice = (decimal)(tolal * 0.99);
+}
+<ul class="carousel-apps group">
+    @if (ViewBag.ImageList != null)
+    {
+        foreach (Kuyam.GettyImagesClient.Domain.Image item in ViewBag.ImageList)
+        {
+            if (!string.IsNullOrEmpty(item.UrlPreview))
+            {
+                string width = item.SizesDownloadableImages.FirstOrDefault().PixelWidth.ToString();
+                string height = item.SizesDownloadableImages.FirstOrDefault().PixelHeight.ToString();
+                string tags = string.Empty;
+
+                for (int i = 0; i < 5; i++)
+                {
+                    if (i == 4)
+                    {
+                        tags += string.Format("{0} ", item.Keywords[i].Text);
+                    }
+                    else
+                    {
+                        tags += string.Format("{0}, ", item.Keywords[i].Text);
+                    }
+                }
+                                    
+        <li><a href="@item.UrlPreview">
+            <input type="hidden" id="@("hdftype_" + @item.ImageId)" value="gettyimage" />
+            <input type="hidden" id="@("hdftags_" + @item.ImageId)" value="@tags" />
+            <input type="hidden" id="@("hdfwidth_" + @item.ImageId)" value="@width" />
+            <input type="hidden" id="@("hdfheight_" + @item.ImageId)" value="@height" />
+            <input type="hidden" id="@("hdftitle_" + @item.ImageId)" value="@item.Title" />
+            <input type="hidden" id="@("hdfpreview_" + @item.ImageId)" value="@item.UrlPreview" />
+            <input type="hidden" id="@("hdfthumb_" + @item.ImageId)" value="@item.UrlThumb" />
+            <div class="center-thumb">
+                <span></span>
+                <img id="@item.ImageId" src="@item.UrlPreview" title="@item.Title" alt="size: 	@width x @height </br>price:	$0.99 </br>tags: @tags" class="image0">
+            </div>
+        </a></li>
+            }
+        }
+    }
+    else
+    { 
+        <li><a href="/images/preview-image.png">
+            <div class="center-thumb">
+                <span></span>
+                <img src="/images/thumb-preview-image.png" title="default" alt="default" class="image0">
+            </div>
+        </a></li>
+    }
+</ul>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        /************* Gallery Slider ****************/
+        
+         /************* CAROUSEL 1 ****************/
+        
+        maximum = $('#my_carousel ul li').size();
+        ulSize = (liSize + 15) * maximum;
+
+        $('#my_carousel ul').css("width", ulSize + "px").css("left", -(current * liSize)).css("position", "absolute");
+
+        $('#my_carousel').css("width", divSize + "px").css("height", carousel_height + "px").css("visibility", "visible").css("overflow", "hidden").css("position", "relative");
+        
+        
+        /************* CAROUSEL 2 ****************/
+        maximum1 = $('#my_carousel1 ul li').size();
+        ulSize1 = (liSize + 15) * maximum1;
+
+        $('#my_carousel1 ul').css("width", ulSize1 + "px").css("left", -(current * liSize)).css("position", "absolute");
+
+        $('#my_carousel1').css("width", divSize + "px").css("height", carousel_height + "px").css("visibility", "visible").css("overflow", "hidden").css("position", "relative");
+        
+        //Auto load the first images
+        var imglink = $('#my_carousel1 .carousel-thumbs li:first').find('a');
+        var imgattr = $('#my_carousel1 .carousel-thumbs li:first').find('img');
+        $('#carousel_viewimage1').html($('<span></span><img src = "' + imglink.attr('href') + '">'));
+        
+        if (@(ViewBag.ImageList != null ? "true" : "false")) {
+            $('#carousel_viewimage1').append('<div class="caption"><a class="btnuploadimagenocheck" href="javascript:void(0);" onclick="insertGettyImage();"></a><span class="imgtitle">' + imgattr.attr('title') + '</span><span class="imgalt">' + imgattr.attr('alt') + '</span></div>');
+        }
+        else{
+            $("#colorblack").addClass('displaynone');
+            $('#carousel_viewimage1').append('<div class="caption displaynone"><a class="btnuploadimagenocheck" href="javascript:void(0);" onclick="insertGettyImage();"></a><span class="imgtitle">' + imgattr.attr('title') + '</span><span class="imgalt">' + imgattr.attr('alt') + '</span></div>');
+        }
+        imglink.parents('li').addClass('ad-active');
+
+        /************* CAROUSEL 3 ****************/
+        maximum2 = $('#my_carousel2 ul li').size();
+        ulSize2 = (liSize + 15) * maximum2;
+        $('#my_carousel2 ul').css("width", ulSize2 + "px").css("left", -(current * liSize)).css("position", "absolute");
+
+        $('#my_carousel2').css("width", divSize + "px").css("height", carousel_height + "px").css("visibility", "visible").css("overflow", "hidden").css("position", "relative");
+
+        $('.carousel-wrapper-thumbs a').click(function (e) {
+         
+         if (@(ViewBag.ImageList != null ? "true" : "false")) {
+                e.preventDefault();
+                var img = $(this).find('img');
+                $('.carousel-wrapper-thumbs .carousel-thumbs li').removeClass('ad-active');
+			    $(this).parents('li').addClass('ad-active');
+             
+//                $('.carousel-wrapper-thumbs .carousel-thumbs a').removeClass('ad-active');
+//                $(this).addClass('ad-active');
+             
+                var id = img.attr('id');
+                var type = $('#hdftype_' + id).val();
+                $('#carousel_viewimage1').html($('<img>').attr({ 'src': this.href }).fadeIn(1000));
+                if (type == 'gettyimage') {
+                    $('#carousel_viewimage1').append('<div class="caption"><a class="btnuploadimagenocheck" href="javascript:void(0)" onclick="insertGettyImage();"></a><span class="imgtitle">' + img.attr('title') + '</span><span class="imgalt">' + img.attr('alt') + '</span></div>');
+                } else {
+                    $('#carousel_viewimage1').append('<div class="caption"><a class="btnuploadimage" href="javascript:void(0)" onclick="deletecartitem();" ></a><span class="imgtitle">' + img.attr('title') + '</span><span class="imgalt">' + img.attr('alt') + '</span></div>');
+                }
+            }else{
+            e.preventDefault();
+                var img = $(this).find('img');
+                $('.carousel-wrapper-thumbs .carousel-thumbs li').removeClass('ad-active');
+			    $(this).parents('li').addClass('ad-active');
+             
+//                  $('.carousel-wrapper-thumbs .carousel-thumbs a').removeClass('ad-active');
+//                  $(this).addClass('ad-active');
+             
+                var id = img.attr('id');
+                var type = $('#hdftype_' + id).val();
+                $("#colorblack").addClass('displaynone');
+                $('#carousel_viewimage1').html($('<img>').attr({ 'src': this.href }).fadeIn(1000));
+               $('#carousel_viewimage1').append('<div class="caption displaynone"><a class="btnuploadimage" href=""></a><span class="imgtitle">' + img.attr('title') + '</span><span class="imgalt">' + img.attr('alt') + '</span></div>');
+            }
+        });
+        /************* End Gallery Slider ****************/
+        
+    });
+   
+</script>

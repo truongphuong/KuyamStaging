@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://localhost:3670/InfoConn.asmx?wsdl" docRef="http://localhost:3670/InfoConn.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://localhost:3670/InfoConn.asmx" xmlns:q1="http://kuyam.com/" binding="q1:InfoConnSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://localhost:3670/InfoConn.asmx" xmlns:q2="http://kuyam.com/" binding="q2:InfoConnSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

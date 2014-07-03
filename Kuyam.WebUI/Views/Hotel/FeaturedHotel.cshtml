@@ -1,0 +1,156 @@
+﻿@using Kuyam.Database
+@model Kuyam.WebUI.Models.FeatureCompanyHotelModel
+@{
+    ViewBag.Title = "Featured company for Hotel";
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+}
+@{    
+    //List<FeaturedCompany> company = ViewBag.AdminEditFeatureCompanies;
+    int count = Model.FeaturedHotel.Count;
+    if (Model.FeaturedHotel != null && Model.FeaturedHotel.Count < 6)
+    {
+        for (int j = 0; j < 6 - count; j++)
+        {
+            int index = 1;
+            FeaturedHotel item = new FeaturedHotel();
+            for (int n = 1; n <= 6; n++)
+            {
+                if (!Model.FeaturedHotel.Select(m => m.Priority).Contains(n))
+                {
+                    index = n;
+                    break;
+                }
+            }
+            item.Priority = index;
+            Model.FeaturedHotel.Add(item);
+        }
+        Model.FeaturedHotel = Model.FeaturedHotel.OrderBy(m => m.Priority).ToList();
+    }
+    //List<Kuyam.Database.ProfileCompany> lstCompany = ViewBag.AdminAllCompanies;
+
+    int i = 0;
+    bool isOdd = false;
+}
+<div id="contentmainpage">
+    <h2>
+        edit featured companies of hotel</h2>
+        <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                       select hotel &nbsp <select id="hotelId" onchange="filterByHotel();">
+                            @{       
+                                     
+                                if (Model.Hotel != null)
+                                {
+                                    foreach (Hotel item in Model.Hotel)
+                                    {                                  
+                                <option value="@item.HotelID" @(Model.HotelId == item.HotelID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }                        
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+  
+        <div style="width: 360px;">
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                @foreach (FeaturedHotel cf in Model.FeaturedHotel)
+                {
+                    string addClass = "";
+                    if (isOdd)
+                    {
+                        addClass = "class=odd";
+                        isOdd = false;
+
+                    }
+                    else
+                    {
+                        isOdd = true;
+                    }
+                    i++;
+                    Medium pcImage = null;
+                    if (cf.ProfileID > 0)
+                    {
+                        pcImage = DAL.GetCompanyPhotoByCompanyID(cf.ProfileID);
+                    }
+
+                    string pcImageUrl = "/images/photo_company_image.png";
+
+                    if (pcImage != null)
+                    {
+
+                        pcImageUrl = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/299/height/212", @pcImage.LocationData, Types.KaturaDoman);
+                    }
+                    <tr @addClass>
+                        <td valign="top">
+                            @i.ToString()
+                        </td>
+                        <td valign="top">
+                            <select name="selectfeatured" id="featured" onchange="selectcompany(@cf.FeaturedID,'@i',this.value);" style="width:302px;">
+                                <option value='0'>select an featured</option>
+                                @{                                  
+                    foreach (var c in Model.ProfileCompany)
+                    {
+                                    <option  value='@c.ProfileID' @(c.ProfileID == cf.ProfileID ? "selected=selected" : "")>@c.Name</option>
+                    }
+                                }
+                            </select><br />
+                            @*@if (cf.FeaturedID != 0)
+                            {
+                                <br />         
+                                <div>
+                                    @if (Model.HotelId == 0)
+                                    {
+                                        <a href="@Url.Action("EditCategoriesForFeaturedHotel", new { id = cf.FeaturedID })">blog category</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Content(string.Format("~/Hotel/EditCategoriesForFeaturedHotel/{0}?hotelId={1}", cf.FeaturedID, Model.HotelId))">blog category</a>
+                                    }                                                                        
+                                </div>
+                            }*@
+                            <div class="divphoto" style="text-align: center; padding: 10px 0px 5px 0px;">
+                                <div class="divimg" style="background:url(@pcImageUrl) repeat center;">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+</div>
+<script type="text/javascript">
+
+    function selectcompany(featureId,priority, value) {
+        var hotelid = $("#hotelId option:selected").val();
+        var parameters = { hotelId: hotelid, profileId: value, priority: priority, featureId: featureId };
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/Hotel/FeaturedHotel/'
+                })
+                .success(function (result) {
+                    if (result == 'false') {
+                        alert("This company is already selected. Please select another one.");
+                        return false;
+                    }
+                    window.location.reload();
+                })
+                .error(function (error) {
+                });
+    }
+
+    function filterByHotel() {
+     var hotelid = $("#hotelId option:selected").val();
+     window.location.href = "/Hotel/FeaturedHotel?hotelId=" + hotelid;
+    }
+</script>

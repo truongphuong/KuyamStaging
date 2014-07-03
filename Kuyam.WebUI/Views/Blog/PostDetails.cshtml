@@ -1,0 +1,69 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Database.BlogModels;
+@using Kuyam.WebUI.Extension
+@using Kuyam.WebUI.Helpers
+@using Kuyam.Utility;
+@using Kuyam.Domain;
+@{
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    ViewBag.Title =  Model.Title ;
+    BlogUser user = ViewBag.User;
+    var caption = Model.Title; // when table has caption column, please change this line
+    var sharingUrl = string.Format("~/Post/{0}", Model.PostRowID);
+    var url = Request.Url;
+    sharingUrl = url.Scheme + "://" + url.Host + Url.Content(sharingUrl);
+    var description = UtilityHelper.StripTagsRegexCompiled(HttpUtility.HtmlDecode(Model.PostContent)).Trim();
+
+    if (description.Length > 100)
+    {
+        description = description.Substring(0, 100) + "...";
+    }
+
+    var sharingExtension = new Kuyam.WebUI.Extension.SharingExtension
+    {
+        Title = Model.Title,
+        Description = description,
+        Image =KalturaHelper.GetKalturaUrl(Model.PostRowID, Model.CoverPhoto, (int)Types.MediaCropType.MainPostBeforeLogin, 522, 384),
+        Url = sharingUrl
+    };
+}
+@model be_Posts
+<style type="text/css">
+    .author a
+    {
+        color: #26a9e0;
+        text-decoration: none;
+    }
+</style>
+<div class="contentinside">
+    <div class="clear">
+    </div>
+    <div class="wrapperBlogContent" style="margin-top:0" >
+        <div class="titleBlog author">
+            <h1 class="share">@Model.Title</h1>
+            <div class="clear">
+            </div>
+            <h3>
+                by <a href='@Url.Content("~/Blog/Author/")@Model.Author'>@user.FirstName @user.LastName</a>
+                @String.Format("{0:M/d/yyyy}", Model.DateCreated.Value)</h3>
+        </div>
+        <div class="contentBlog">
+            <div class="wrapperAdbox">
+                <div class="adbox">
+                    <img src="@KalturaHelper.GetKalturaUrl(Model.PostRowID, Model.CoverPhoto, (int)Types.MediaCropType.MainPostAfterLogin, 522, 384)" style="width: 522px; height: 348px;" alt="@Model.Title" />
+                    <div class="captionAdbox">
+                        @caption
+                    </div>
+                </div>
+            </div>
+            @Html.Raw(Model.PostContent)
+        </div>
+        <div class="clear29">
+        </div>
+    </div>
+</div>
+<!-- InstanceEndEditable -->
+@section SharingSection{
+    @sharingExtension.MetaTag()
+}
+

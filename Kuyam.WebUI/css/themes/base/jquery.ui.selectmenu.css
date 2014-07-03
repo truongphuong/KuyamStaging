@@ -1,0 +1,167 @@
+/* Selectmenu
+----------------------------------*/
+.selectmenu{width:309px;height:45px;}
+.selectmessage{width:171px;height:31px;}
+.selectcatagory{width:234px;height:33px;}
+.ui-selectmenu { display: block; display: inline-block; position: relative; vertical-align: middle; text-decoration: none; overflow: hidden; zoom: 1; -moz-border-radius: 0px; -webkit-border-radius: 0px; -khtml-border-radius: 0px; border-radius: 0px;background: url(../../../images/homepage_icon.png) no-repeat left -343px;height:45px;border:solid 0px white;}
+.ui-selectmenu-icon { position:absolute; right:13px; margin-top:-7px; top: 50%; background: url(../../../images/sprite.png) no-repeat right -10px !important;}
+.ui-selectmenu-menu { padding:0; margin:0; position:absolute; top: 0; display: none; } /* z-index: 1005 to make selectmenu work with dialog */
+#div-category-menu{z-index: 9901 !important;position:fixed !important;}
+.ipad #div-category-menu{top:73px !important;left:330px !important;}
+.ie #div-category-menu{top:73px !important;}
+.safari #div-category-menu{top:73px !important;}
+.chrome #div-category-menu,
+/*.webkit #div-category-menu,*/
+.opera #div-category-menu{top:73px !important;}
+.safari #servicetype-button{width:442px !important;}
+#div-endtime-menu{z-index: 9903 !important;position:fixed !important;}
+.ui-selectmenu-menu  ul { padding:0; margin:0; list-style:none; position: relative; overflow: auto; overflow-y: auto ; overflow-x: hidden; -webkit-overflow-scrolling: touch;-moz-border-radius: 0px; -webkit-border-radius: 0px; -khtml-border-radius: 0px; border-radius: 0px;} 
+.ui-selectmenu-open { display: block;}
+.ui-selectmenu-menu-popup { margin-top: -1px; }
+.ui-selectmenu-menu li { padding:0; margin:0; display: block; border-top: 1px dotted transparent; border-bottom: 1px dotted transparent; border-right-width: 0 !important; border-left-width: 0 !important; font-weight: normal !important; -moz-border-radius: 0px; -webkit-border-radius: 0px; -khtml-border-radius: 0px; border-radius: 0px;}
+.ui-selectmenu-menu li a,.ui-selectmenu-status { line-height: 1.4em; display: block; padding: 6px 10px 4px 15px; outline:none; text-decoration:none; }
+.ui-selectmenu-menu li.ui-state-disabled a, .ui-state-disabled { cursor: default; }
+.ui-selectmenu-menu li.ui-selectmenu-hasIcon a,
+.ui-selectmenu-hasIcon .ui-selectmenu-status { padding-left: 20px; position: relative; margin-left: 5px; }
+.ui-selectmenu-menu li .ui-icon, .ui-selectmenu-status .ui-icon { position: absolute; top: 1em; margin-top: -8px; left: 0; }
+.ui-selectmenu-status { line-height: 33px;font-size:24px;font-family:Arial, Helvetica, sans-serif;color:#666666; }
+.ui-selectmenu-menu li span,.ui-selectmenu-status span { display:block; margin-bottom: .2em; }
+.ui-selectmenu-menu li .ui-selectmenu-item-header { font-weight: bold; }
+.ui-selectmenu-menu li .ui-selectmenu-item-footer { opacity: .8; }
+/* for optgroups */
+.ui-selectmenu-menu .ui-selectmenu-group { font-size: 1em; }
+.ui-selectmenu-menu .ui-selectmenu-group .ui-selectmenu-group-label { line-height: 1.4em; display:block; padding: .6em .5em 0; font-weight: bold; }
+.ui-selectmenu-menu .ui-selectmenu-group ul { margin: 0; padding: 0; }
+/* IE6 workaround (dotted transparent borders) */
+* html .ui-selectmenu-menu li { border-color: pink; filter:chroma(color=pink); width:100%; }
+* html .ui-selectmenu-menu li a { position: relative }
+/* IE7 workaround (opacity disabled) */
+*+html .ui-state-disabled, *+html .ui-state-disabled a { color: silver; }
+
+/* Selectmenu for company profile page */
+.chartselect .ui-selectmenu{height:31px; background-position:left -399px;}
+.chartselect .ui-selectmenu-status{font-size:16px;font-family:Arial, Helvetica, sans-serif;color:#333333;line-height:21px;padding-top:4px;}
+.chartselect .ui-selectmenu-icon{margin-top:-5px;right:7px;}
+
+/* Selectmenu for head of page */
+.boxSearch .ui-selectmenu{height:31px;background:url(../../../images/select_head_bg.png) repeat-x left top;border:solid 1px #666666;}
+.boxSearch .ui-selectmenu-status{font:16px/21px Arial, Helvetica, sans-serif;color:#666666;padding:6px 0px 0px 13px;}
+.boxSearch .ui-selectmenu-icon{margin-top:-6px;right:12px;}
+
+/* Selectmenu for head of list */
+.sortBy .ui-selectmenu{width:175px !important;height:28px;background:url(../../../images/homepage_icon.png) no-repeat left -622px;}
+.sortBy .ui-selectmenu-status{height:18px;font:13px/18px Arial, Helvetica, sans-serif;color:#666;padding:5px 0px 0px 8px;margin-right:20px;overflow:hidden;}
+.sortBy .ui-selectmenu-icon{width:11px;margin-top:-6px;right:10px;background-position: right -68px !important;}
+
+/* Selectmenu for search map */
+.time .ui-selectmenu{width:98px !important;height:25px;background:url(../../../images/homepage_icon.png) no-repeat right -518px;}
+.time .ui-selectmenu-status{height:18px;font:13px/18px Arial, Helvetica, sans-serif;color:#666;padding:3px 0px 0px 8px;margin-right:20px;overflow:hidden;}
+.time .ui-selectmenu-icon{width:11px;margin-top:-6px;right:9px;background-position: right -66px !important;}
+
+/* Selectmenu for search map */
+.within .ui-selectmenu{width:82px !important;height:25px;background:url(../../../images/homepage_icon.png) no-repeat right -479px;}
+.within .ui-selectmenu-status{height:18px;font:13px/18px Arial, Helvetica, sans-serif;color:#666;padding:3px 0px 0px 8px;margin-right:20px;overflow:hidden;}
+.within .ui-selectmenu-icon{width:11px;margin-top:-6px;right:9px;background-position: right -66px !important;}
+
+/* Selectmenu for search map */
+.price .ui-selectmenu{width:100px !important;height:25px;background:url(../../../images/homepage_icon.png) no-repeat right -518px;}
+.price .ui-selectmenu-status{height:18px;font:13px/18px Arial, Helvetica, sans-serif;color:#666;padding:3px 0px 0px 8px;margin-right:20px;overflow:hidden;width:82px;}
+.price .ui-selectmenu-icon{width:11px;margin-top:-6px;right:7px;background-position: right -66px !important;}
+.ui-selectmenu-menu #price-menu{width:98px !important;}
+
+/* Selectmenu for company setup page */
+.addcategories .ui-selectmenu{width:192px !important;height:30px;background:url(../../../images/appts_sprite.png) no-repeat -167px -836px;}
+.addcategories .ui-selectmenu-status{height:18px;font:14px/18px Arial, Helvetica, sans-serif;color:#808080;padding:5px 0px 0px 8px;margin-right:20px;overflow:hidden;}
+.addcategories .ui-selectmenu-icon{width:11px;margin-top:-6px;right:9px;background-position: right -66px !important;display:none;}
+
+/* Selectmenu for user setting */
+.firstalertselect .ui-selectmenu{height:32px;background:url(../../../images/appointment.png) no-repeat 0px -362px;}
+.firstalertselect .ui-selectmenu-status{font-size:18px;font-family:Arial, Helvetica, sans-serif;color:#333333;line-height:21px;padding:5px 0px 0px 23px;}
+.firstalertselect .ui-selectmenu-icon{background:url(../../../images/appointment.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;}
+
+.secondalertselect .ui-selectmenu{height:32px;background:url(../../../images/appointment.png) no-repeat 0px -362px;}
+.secondalertselect .ui-selectmenu-status{font-size:18px;font-family:Arial, Helvetica, sans-serif;color:#333333;line-height:21px;padding:5px 0px 0px 23px;}
+.secondalertselect .ui-selectmenu-icon{background:url(../../../images/appointment.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;}
+
+/*New Selectmenu for user setting */
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .userfirstalert .firstalertselect select{width:283px;}
+.newcompanysettingsboxmid .firstalertselect .ui-selectmenu{height:32px;background:url(../../../images/appts_sprite.png) no-repeat -154px -657px;}
+.newcompanysettingsboxmid .firstalertselect .ui-selectmenu-status{font-size:18px;font-family:Arial, Helvetica, sans-serif;color:#333333;line-height:21px;padding:5px 0px 0px 23px;}
+.newcompanysettingsboxmid .firstalertselect .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;}
+
+/*Selectmenu for cancel policy */
+.rcancelitem select{width:136px;}
+.rcancelitem .ui-selectmenu{height:34px;background:url(../../../images/appts_sprite.png) no-repeat -445px -655px;}
+.rcancelitem .ui-selectmenu-status{font-size:18px;font-family:Arial, Helvetica, sans-serif;color:#000000;line-height:21px;padding:7px 0px 0px 15px;text-align:left;}
+.rcancelitem .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;}
+
+/* Selectmenu for Post invite code pate */
+.rpostselectgender .ui-selectmenu{background:url(../../../images/appointment.png) no-repeat -337px -640px;width:101px;height:30px;}
+.rpostselectgender .ui-state-default .ui-icon{display:none;}
+.rpostselectgender .ui-selectmenu-status{color:#4d4d4d;font-size:14px;line-height:19px;font-style:italic;}
+
+/* Selectmenu for User Appointment List */
+.topselect .selectcategories{width:115px;}
+.topselect .ui-selectmenu{height:24px;background:url(../../../images/appts_sprite.png) no-repeat 0 -665px;}
+.topselect .ui-selectmenu-status{font-size:12px;font-family:Arial, Helvetica, sans-serif;color:#4D4D4D;line-height:21px;padding:1px 0px 0px 15px;}
+.topselect .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;}
+.ui-selectmenu-menu #allcategories-menu li a{font-size:12px;}
+
+/* Selectmenu for Slot List */
+.slotselect{height: 34px;width: 45px;float:left;}
+.selectslot .ui-selectmenu{width:45px !important;height:34px;background:url(../../../images/appts_sprite.png) no-repeat -467px -255px;border:0px;}
+.selectslot .ui-selectmenu-status{height:27px;font:16px Arial, Helvetica, sans-serif;color:#666;padding:7px 0px 0px 8px;margin-right:20px;overflow:hidden;width:37px;color:#000000;text-align:left;}
+.selectslot .ui-selectmenu-icon{width:11px;margin-top:-6px;right:7px;background-position: right -66px !important;display:none;}
+.selectslot .ui-state-active{width:45px !important;height:34px;background:url(../../../images/appts_sprite.png) no-repeat -467px -255px !important;border:0px !important;}
+#div-slot-menu ul{width:43px !important;}
+.rslot{float:left;padding:1px 3px 0px 3px;}
+.boxselect .available .addhours1{float:left;width:106px;margin-top:0px;padding-left:0px;}
+.boxselect .availableservicebased{float:left;width:345px;}
+
+/* Selectmenu for postinvitecode */
+.ddlmobile{float:left;padding-top:8px;}
+.ddlmobile .ui-selectmenu{height:30px;background:url(../../../images/appts_sprite.png) no-repeat -419px -435px;}
+.ddlmobile .ui-selectmenu-status{font-size:14px;font-family:Arial, Helvetica, sans-serif;color:#4D4D4D;line-height:21px;padding:4px 0px 0px 15px;font-style:italic;}
+.ddlmobile .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;display:none;}
+
+/* Selectmenu for postinvitecode */
+.ddlmobilecarrier #mobilecarrier{width:157px;}
+.ddlmobilecarrier{float:left;padding-top:8px;}
+.ddlmobilecarrier .ui-selectmenu{height:34px;background:url(../../../images/appts_sprite.png) no-repeat 0px -834px;}
+.ddlmobilecarrier .ui-selectmenu-status{font-size:14px;font-family:Arial, Helvetica, sans-serif;color:#000000;line-height:21px;padding:6px 0 0 6px;font-weight:normal;}
+.ddlmobilecarrier .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;display:none;}
+#mobilecarrier-menu li a{padding-left:6px;}
+
+/* Selectmenu for company profile checkout1 */
+.selectcontent #username {width: 135px;}
+.selectcontent .ui-selectmenu{height:30px;background:url(../../../images/appts_sprite.png) no-repeat -366px -838px;}
+.selectcontent .ui-selectmenu-status{font-size:16px;font-family:Arial, Helvetica, sans-serif;color:#4D4D4D;line-height:21px;padding:4px 0px 0px 10px;font-style:normal;}
+.selectcontent .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;display:none;}
+
+/* Selectmenu for create a package */
+.pkgquanlityselect #selectquanlity,
+.pkgquanlityselect #selectduration,
+.pkgquanlityselect #eselectquanlity,
+.pkgquanlityselect #eselectduration{width:146px;}
+.pkgquanlityselect{float:left;padding-top:9px;}
+.pkgquanlityselect .ui-selectmenu{height:38px;background:url(../../../images/appts_sprite.png) no-repeat -174px -558px;}
+.pkgquanlityselect .ui-selectmenu-status{font-size:16px;font-family:Arial, Helvetica, sans-serif;color:#616161;line-height:21px;padding:6px 0 0 14px;font-weight:normal;}
+.pkgquanlityselect .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;display:none;}
+
+/* Selectmenu for sort */
+.rcsortby #sortby {width: 139px;}
+.rcsortby .ui-selectmenu{height:24px;background:url(../../../images/appts_sprite.png) no-repeat -328px -524px;}
+.rcsortby .ui-selectmenu-status{font-size:12px;font-family:Arial, Helvetica, sans-serif;color:#4D4D4D;line-height:21px;padding:1px 0px 0px 10px;font-style:normal;}
+.rcsortby .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;display:none;}
+#sortby-menu a{padding: 6px 10px 4px 10px;}
+
+/* Selectmenu for Create Discount Code popup */
+.selectdiscountcode #dcselectservice {width: 536px;}
+.selectdiscountcode #edcselectservice {width: 536px;}
+.selectdiscountcode .ui-selectmenu{height:38px;background:url(../../../images/ddlcreatediscountcode.png) no-repeat 0px 0px;}
+.selectdiscountcode .ui-selectmenu-status{font-size:18px;font-family:Arial, Helvetica, sans-serif;color:#616161;line-height:21px;padding:8px 0px 0px 10px;font-style:normal;}
+.selectdiscountcode .ui-selectmenu-icon{background:url(../../../images/appts_sprite.png) no-repeat -245px -374px !important;margin-top:-5px;right:7px;display:none;}
+
+/* Selectmenu for Companypackages Inactive popup */
+#div-selectduration-menu,
+#div-selectquanlity-menu{position:fixed;}

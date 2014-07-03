@@ -1,0 +1,200 @@
+﻿@using Kuyam.WebUI.Models
+@model ChatToBookModels
+@{
+    var isAuthenticated = Request.IsAuthenticated ? "true" : "false";
+}
+@if (Model.AlowChatToBook)
+{
+    <div class="wrapperDonate">
+        <div class="wrapperText" >
+            <p class="donateText">
+                <div style="width: 200px;"></div>
+                <span> </span><br />
+            </p>
+            <p class="donateText" style="display: none;">
+                <span>Non Profit Company #1</span><br />
+                12345 Santa Monica Blvd. Los Angeles, CA</p>
+            <p class="donateText" style="display: none;">
+                <span>Non Profit Company #1</span><br />
+                12345 Santa Monica Blvd. Los Angeles, CA</p>
+        </div>
+        <span class="helpyou">how may we help you?</span> <a href="#" class="btnDonate" id="btnSchedule">
+            <img src="/images/btnChatTOBook.png" width="302" height="62" /></a>
+        <div class="clear">
+        </div>
+    </div>
+}
+else
+{
+    <div class="wrapperDonate" style="display: none;">
+        <p class="donateText">
+            <div style="width: 200px;"></div>
+            <span></span><br />
+        </p>
+        <a href="#" class="btnDonate">
+            <img src="/images/btnDonate.png"></a>
+        <div class="clear">
+        </div>
+    </div>
+}
+<div id="dialogchat" class="viewnotespopupchat">
+    <div class="toppopup">
+        <div class="bottompopupchat">
+            <div class="contentPopup">
+                <a id="btnClose" class="btnClose" href="JavaScript:closePopupChat();" title="Close">
+                </a>
+                <div id="companyinfo">
+                    <h3 id="companyname">
+                        chat to book
+                    </h3>
+                    <p id="companyaddress">
+                    </p>
+                </div>
+                <div class="screenchat" id="textmessagerecived">
+                    <p>
+                        <strong>kuyam:</strong> <span>how can we help you?</span></p>
+                    <p id="nowtime">
+                    </p>
+                </div>
+                <textarea name="" cols="" rows="" id="inputmsgchat"></textarea>
+                <input name="" type="image" src="/images/btn_send_chat.png" id="btnChat" />
+                <div class="clear">
+                </div>
+                <h3>
+                    appointment summary:</h3>
+                <div class="appointmentbluebox" id="appointmentview">
+                    <em>once we have enough information about your request, your appointment details will
+                        appear here and you can book it below</em>
+                </div>
+                <div class="clear">
+                </div>
+                <span id="btnbookit" title="" class="btnBookitDisable" onclick="getNonDataCheckout();">
+                </span>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="newpayment" class="giftcardpopup">
+</div>
+<script type="text/javascript">
+    var chatInterval;
+    $(document).ready(function () {
+        $('.btnSchedule').on("click", function () {
+            redirectUrl = "";
+            var isLogin = isAuthenticated;
+            if (isLogin) {
+                if ($(this).attr("isGa") == "true") {
+                    window.location = "@Url.Action("Availability","CompanyProfile")/"+$(this).attr("profileid");
+                }
+                else{
+                    window.clearInterval(chatInterval);
+                    companyname =$(this).attr("companyname");
+                    var companyaddress =$(this).attr("address");
+                    $("#companyinfo #companyname").html(companyname);
+                    $("#companyinfo #companyaddress").html(companyaddress);
+                    phoneNumber=$(this).attr("phoneNumber");
+                    companySite=$(this).attr("companysite");
+                    if(typeof hipmob !=='undefined')
+                        hipmob.hide();
+                    $("#btnLiveChat").addClass("Off");
+                    $("#btnLiveChat").removeClass("On");
+
+                    $("#lightBox").css({'z-index':9901});
+                    var profileId =$(this).attr("profileid");
+                    showDialog('dialogchat');
+                    chatInterval= setInterval(getNonAppointment,3000,profileId);
+                }
+            } else {
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            return false;
+        });
+    });
+
+    function closePopupChat() {
+        window.clearInterval(chatInterval);
+        $('#btnbookit').attr('class', 'btnBookitDisable');
+        hideDialog("dialogchat");
+        $('#appointmentview').html("<em>once we have enough information about your request, your appointment details will appear here and you can book it below</em>");
+
+    }
+
+    $('#btnChat').click(function() {
+        sendmessageschattobook();
+    });
+
+    function sendmessageschattobook() {
+
+        var txtinput = "";
+        if (companyname != '')
+            txtinput += companyname + " ";
+        if (phoneNumber != '')
+            txtinput += phoneNumber + " ";
+        if (companySite != '')
+            txtinput += companySite;
+
+        txtinput += "| " + $("#inputmsgchat").val();
+
+        var message = $("#inputmsgchat").val();
+        if (message != '') {
+            $("#hipmob_input").val(txtinput);
+            hipmob.removeListener('textmessagereceived', showMessagereceived);
+            hipmob.on('textmessagereceived', showMessagereceived);
+            hipmob.once('textmessagesent', showTextmessagesent);
+            hipmob.send_now();
+            $("#inputmsgchat").val("");
+            var view = $('#textmessagerecived');
+            var hight = view[0].scrollHeight;
+            view.scrollTop(hight);
+        }
+    }
+
+    $("#inputmsgchat").keypress(function(e) {
+        kCode = e.keyCode || e.charCode;
+        if (kCode == 13) {
+            sendmessageschattobook();
+            return false;
+        }
+    });
+
+    function getNonDataCheckout() {
+        window.clearInterval(chatInterval);
+        var apptId = $("#apptdetail").attr("apptid");
+        $.get("/Paypal/GetDataCheckoutByNonKuyamByAppId?nocache=" + getunixtime(),
+            { apptId: apptId },
+            function(data) {
+                hideDialog("dialogchat");
+                $('#newpayment').html(data.content);
+                $('#cbemail').checkBox({ addVisualElement: false });
+                $('#cbsms').checkBox({ addVisualElement: false });
+                showDialog('newpayment');
+            });
+    }
+
+    function getNonAppointment(profileId) {
+        var custId = '@MySession.CustID';
+        $.get("/Appointment/LoadNonAppointmentByFoUser?nocache=" + getunixtime(),
+    { custId: custId, profileId: profileId },
+    function (data) {
+        if (data == false) {
+            $('#btnbookit').attr('class', 'btnBookitDisable');
+            $('#appointmentview').html("<em>once we have enough information about your request, your appointment details will appear here and you can book it below</em>");
+        } else {
+            $('#btnbookit').attr('class', 'btnBookitActive');
+            $('#appointmentview').html(data);
+
+        }
+    });
+    }
+
+    function cancelbooking()
+    {
+        hideDialog('newpayment');
+    }
+</script>

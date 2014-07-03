@@ -1,0 +1,235 @@
+﻿@{
+    ViewBag.Title = "Modify";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+@using Kuyam.Database;
+@using Kuyam.Database.Extensions;
+@{
+    AppointmentParticipant appointmentPart = ViewBag.Appoiment;
+    List<Calendar> calendarList = ViewBag.calendarList;
+    Appointment appointment = null;
+    CompanyEmployee employee = null;
+    Calendar calendar = null;
+    ServiceCompany seviceCompany = null;
+    int calendarId = ViewBag.CalendarId;
+    int employeeId = ViewBag.EmployeeId;
+    string CompanyName = string.Empty;
+    string logo = string.Empty;
+    if (appointmentPart != null)
+    {
+        appointment = appointmentPart.Appointment;
+        calendar = appointmentPart.Calendar;
+
+    }
+
+    if (appointment != null)
+    {
+        employee = appointment.CompanyEmployee;
+        seviceCompany = appointment.ServiceCompany;
+    }
+
+    ProfileCompany profile = null;
+    if (seviceCompany != null)
+    {
+        profile = seviceCompany.ProfileCompany;
+    }
+    List<CompanyEmployee> listEmployee = null;
+    if (profile != null)
+    {
+        listEmployee = profile.CompanyEmployees.ToList();
+        CompanyName = profile.Name;
+
+    }
+    List<CompanyService> listServiceEmployee = ViewBag.SeviceEmployee;
+    
+    
+}
+<link rel="stylesheet" href="@Url.Content("~/css/appointment.css")" />
+<link rel='stylesheet' type='text/css' href="@Url.Content("~/css/themes/base/fullcalendar_appts_calendar.css")" />
+<link rel='stylesheet' type='text/css' href="@Url.Content("~/css/themes/base/fullcalendar.print_appts_calendar.css")" media='print'/>
+<script type='text/javascript' src="@Url.Content("~/Scripts/js/fullcalendar_userappointment_allcalendar.js")"></script>
+<link rel="stylesheet" media="all" type="text/css" href="@Url.Content("~/css/themes/base/jquery-ui-timepicker-addon.css")" />
+<script src="@Url.Content("~/Scripts/jQueryTimepickerAddon/jQueryTimepickerAddon.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/js/modify.js")" type="text/javascript"></script>
+<div class="contentMarketPlace appointmentModify">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div class="appointmenthistory">
+                <div class="apheader">
+                    <div class="colWishSalon fleft">
+                        <a href="javascript:void(0);" class="back backtosearch" title="back to current appointments">
+                            back to current appointments</a>
+                        <div class="contentWish">
+                            <h5>@CompanyName</h5>
+                            @if (ViewBag.LogoId != null)
+                            {
+                                <img alt="@CompanyName" title="@CompanyName" src="@string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/109/height/107", ViewBag.LogoId, Types.KaturaDoman)" />    
+                            }
+                            else
+                            { 
+                                <span class="boxcontentimg" style="border: 1px solid #000000; margin-bottom: 10px;
+                                    margin-left: 64px;"><span class="boximage">
+                                        <img src="/Images/placeholder.png" title="no logo" alt="no logo" width="86px;" height="83px;"
+                                            style="padding: 0px;" />
+                                    </span></span>
+                            }
+                            <p id="employeenameavailability" class="highlightYellow">
+                                @Kuyam.Domain.UtilityHelper.TruncateText(employee != null ? employee.EmployeeName : ViewBag.EmployeeName, 17)’s
+                                7-day availability</p>
+                            <p>
+                                (see calendar below)</p>
+                        </div>
+                    </div>
+                    <div class="colCurrentAppointment fleft">
+                        <div class="contentCurrent">
+                            <h6>
+                                current appointment</h6>
+                            <p class="pt3" id="currentdate">@(appointment != null ? string.Format("{0:MMM dd}", appointment.Start).ToLower() : "")<span>&nbsp;
+                                at @(appointment != null ? appointment.Start.ToString("h:mm tt").ToLower() : "")</span></p>
+                            <p class="fontWeight" id="calendarname" title="@calendar.Name">
+                                for&nbsp;@(calendar != null ? Kuyam.Domain.UtilityHelper.TruncateText(calendar.Name, 15) : "")</p>
+                            <p class="fontWeight" id="employeename" title="@(employee != null?employee.EmployeeName:ViewBag.EmployeeName)">
+                                with&nbsp;@(employee != null ? Kuyam.Domain.UtilityHelper.TruncateText(employee.EmployeeName, 17) : "")</p>
+                            <p id="serveicename">@(seviceCompany != null ? Kuyam.Domain.UtilityHelper.TruncateText(seviceCompany.Service.ServiceName, 20) : "")</p>
+                            <p id="serviecdescription" class="mb9">@(string.Format("{0}min, ${1} {2} person",seviceCompany!=null? seviceCompany.Duration:appointment.Duration,seviceCompany!=null? seviceCompany.Price:appointment.Price,seviceCompany!=null? seviceCompany.AttendeesNumber:appointment.AttendeesNumber))</p>
+                        </div>
+                        <div>
+                            <a href="/Appointment/" class="btnCurrent" title="keep current appointment">keep current
+                                appointment</a>
+                        </div>
+                    </div>
+                    <div class="colModifyAppointment fleft">
+                        <div class="bgModify">
+                            <div>
+                                <h6>
+                                    modify appointment here:</h6>
+                                <div class="grounpInput">
+                                    <p>
+                                        <input type="text" id="inputmonth" class="inputMonth" readonly="readonly" value="@(appointment != null ? string.Format("{0:MMM dd}", appointment.Start).ToLower() : "")" />
+                                        <span class="classAt">at</span>
+                                        <input type="text" class="inputTime" id="inputhour" readonly="readonly" value="@(appointment != null ? appointment.Start.ToString("h:mm tt").ToLower() : "")" />
+                                    </p>
+                                </div>
+                                <div class="groupSelectName">
+                                    <p>
+                                        <span class="pr29">for</span>
+                                        <select id="calendarOption" name="category" class="nameOption">
+                                            @if (calendarList != null)
+                                            {
+                                                foreach (Calendar item in calendarList)
+                                                {
+                                                <option value="@item.CalendarID"  @(item.CalendarID == calendarId ? "selected=selected" : "")>@Kuyam.Domain.UtilityHelper.TruncateText(item.Name, 10)</option>
+                                                }
+                                            }
+                                        </select>
+                                    </p>
+                                </div>
+                                <div class="groupSelectName">
+                                    <p>
+                                        <span class="pr20">with</span>
+                                        <select id="employeeOption" name="category" class="nameOption">
+                                            @if (listEmployee != null)
+                                            {
+                                                foreach (CompanyEmployee item in listEmployee)
+                                                {
+                                                    <option value="@item.EmployeeID" @(item.EmployeeID == employeeId ? "selected=selected" : "")>@Kuyam.Domain.UtilityHelper.TruncateText(item.EmployeeName, 13)</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@ViewBag.EmployeeName" >@Kuyam.Domain.UtilityHelper.TruncateText(ViewBag.EmployeeName, 13)</option>
+                                            }
+                                        </select>
+                                    </p>
+                                </div>
+                                <div class="selectMinute">
+                                    <p>
+                                        <select id="servcieOption" name="category" class="nameOption">
+                                            @if (listServiceEmployee != null)
+                                            {
+                                                foreach (CompanyService item in listServiceEmployee)
+                                                { 
+                                                <option value="@item.ID" selected="selected">@Kuyam.Domain.UtilityHelper.TruncateText(string.Format("{0}, {1}min, ${2}...", item.ServiceName, item.Duration, item.Price, item.AttendeesNumber), 20)</option>
+                                                }
+                                            }
+                                        </select>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl2">
+                            <a href="javascript:void(0);" class="btnRequest" title="request modification">request
+                                modification</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="modifypouperror" style="text-align: right; color: red; padding-right: 95px;">
+                    &nbsp;</div>
+                <div class="clear5">
+                </div>
+                <div class="apptscalendar">
+                    <div class="divavailability">
+                        <span id="availabilitycalendar" class="availability">@calendar.Name’s calendar</span>
+                    </div>
+                    <div class="divappointmentpreview">
+                        <div class="appointmentpreview">
+                            appointment preview</div>
+                    </div>
+                    <div class="divModifiedPreview">
+                        <div class="appointmentpreview">
+                            modified preview</div>
+                    </div>
+                    <div id="calendar">
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear23">
+                </div>
+            </div>
+            <div class="clear25">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<input type="hidden" id="appointmentId" value="" />
+<div id="lightBox" class="lightBox">
+</div>
+<div id="loginpopup" class="appPopup">
+    <div class="popUpAppoiment">
+        <div class="bgtopPopup">
+        </div>
+        <div class="bgmidPopup">
+            <h3>
+                are you sure you want to leave this page?</h3>
+            <p class="pYesNo">
+                <a class="btnYes" href="/Appointment/" title="Yes">yes</a> <a class="btnNo" href="javascript:void(0);"
+                    onclick="$('#loginpopup').hide();" title="No">no</a>
+            </p>
+            <div class="contentQuestion">
+                <p>
+                    you made some unsaved modifications.</p>
+                <p>
+                    to save, click ‘no’ and ‘request modification’.</p>
+                <p>
+                    if you don’t want to save, click yes to continue.</p>
+            </div>
+        </div>
+        <div class="bgbottomPopup">
+        </div>
+    </div>
+</div>
+<img id="aptImgLoader" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+<div id="lightBox" class="lightBox z49">
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ui-accordion-accordion-panel-1").css("display", "none");
+        $("#accordion").accordion("option", "active", 2);
+    });
+</script>

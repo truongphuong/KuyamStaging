@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Pending Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        pending users list</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        <select id="searchType">
+                            <option value="-1" @(ViewBag.SearchType == -1 ? "selected" : "")>select status</option>
+                            <option value="2" @(ViewBag.SearchType == 2 ? "selected" : "")>pending</option>
+                            <option value="3" @(ViewBag.SearchType == 3 ? "selected" : "")>approved</option>
+                            <option value="4" @(ViewBag.SearchType == 4 ? "selected" : "") >denied</option>
+                        </select>
+                        <input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="listPendingUsers">
+        @Html.Partial("_PendingUserResults")
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#txtKey').val("@ViewBag.Key")
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, searchType: searchType };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/PendingUsers/'
+            })
+            .success(function (result) {
+                $('#listPendingUsers').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function FilterSearchResult() {
+
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var searchParameters = { key: key, searchType: searchType };
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/SearchPendingUsers/'
+                })
+                .success(function (result) {
+                    if (result == "false") {
+                        window.location.href = "/Admin/Login";
+                    } else {
+                        $('#listPendingUsers').html(result);
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+    }
+</script>

@@ -1,0 +1,19 @@
+﻿@using Kuyam.Database
+@{
+    var smsMessages = @ViewBag.Messages;  
+}
+@foreach (var smsMessage in smsMessages)
+{
+    var smsModel = smsMessage as SMSMessage;
+    if (smsModel.ReceivedStatus == (int)Types.ReceiveStatus.Receive)
+    {
+        <div>
+            @Html.Partial("AdminSMSItem", smsModel)
+        </div>
+    }
+    else
+    {    <div>
+            @Html.Partial("AdminSMSItemAdmin", smsModel)
+        </div>
+    }
+}

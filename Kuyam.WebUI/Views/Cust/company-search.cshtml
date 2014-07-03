@@ -1,0 +1,49 @@
+﻿@model Kuyam.WebUI.Models.CompanySearchModel
+@{
+    ViewBag.CustPage = "sched";
+    Layout = "~/Views/Cust/custmaster.cshtml";
+    int maxLen = 33;
+}
+@using M2.Util.MVC
+@using M2.Util
+<div>
+    Not scheduling with a company? @Html.ActionLink("Click here.", "schedule-appointment", "cust", new { id = -1 }, null)<br />
+</div>
+<br />
+@Html.Partial("_CompanySearch")
+@if (Model.PriorCompanies != null && Model.PriorCompanies.Count > 0)
+{
+    <br />
+    <h3>
+        Companies you've used before</h3>
+    foreach (Kuyam.Database.ProfileCompany pc in Model.PriorCompanies.OrderBy(x => x.Name))
+    { 
+    @Html.ActionLink((pc.Name + " " + Model.GetCityState(pc.City, pc.State)).SubstringSafe(0, maxLen), "schedule-appointment", "cust", new { id = pc.ProfileID }, null)
+    <br />
+    }
+}
+@if (Model.Results != null)
+{
+    <br />
+    @:<h3>Companies matching "@Model.SearchTerms"</h3>
+    if (Model.Results.Count == 0)
+    {
+    @:No Companies found. Please change your criteria and try again.<br /><br />
+    }
+    else
+    {     
+    <div class="div-scrollinglist">
+        @foreach (Kuyam.Database.ProfileCompany pc in Model.Results.OrderBy(x => x.Name))
+        { @((pc.Name + " " + Model.GetCityState(pc.City, pc.State)).SubstringSafe(0, maxLen))<br />
+          @*<a href="javascript:showCompanyViewDialog(@(pc.ProfileID), '@pc.Name.EscapeJS()')" class="dialoglink">@((pc.Name + " " + Model.GetCityState(pc.City, pc.State)).SubstringSafe(0, maxLen))</a><br />*@
+        }
+    </div>
+    <br />
+    }
+}
+@Html.Partial("company-view-setup-partial")
+<script type="text/javascript">
+    function fixLinks() {
+        $('#grid a').removeAttr('href');
+    }
+</script>

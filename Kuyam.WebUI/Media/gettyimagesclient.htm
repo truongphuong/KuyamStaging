@@ -1,0 +1,19 @@
+﻿<div class="carousel-thumbs">
+    <ul class="carousel-apps group" style="width: 1998px; left: 0px; position: absolute;">
+        {#if $T.length == 0}
+        <li class=""><a href="/Scripts/GettyImages/images/preview-image.png">
+            <div class="center-thumb">
+                <span></span>
+                <img class="image0" alt="" title="" src="/Scripts/GettyImages/images/preview-image.png">
+            </div>
+        </a></li>
+        {#else} {#foreach $T as p}
+        <li class=""><a kalturaId="{$T.p.LocationData}" mediaId="{$T.p.Id}" href="https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/{$T.p.LocationData}/width/500/type/3/quality/100">
+            <div class="center-thumb">
+                <span></span>
+                <img class="{$T.p.GettyImageId}" alt="" title="" src="https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/{$T.p.LocationData}/width/500/type/3/quality/100">
+            </div>
+        </a></li>
+        {#/for} {#/if}
+    </ul>
+</div>

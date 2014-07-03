@@ -1,0 +1,241 @@
+﻿@using M2.Util.MVC
+@model Kuyam.WebUI.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+@*<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>*@
+<div style="float: left; width: 400px">
+    <br />
+    <br />
+        <iframe width="400" height="225" src="http://www.youtube.com/embed/Gj632vH5gFM" frameborder="1">
+    </iframe>
+    <p>
+        make appointments with your favorite local businesses with the click of a mouse.
+        no assembly required.</p>
+    @Html.Partial("_KalturaVideoPlayer", new Kuyam.WebUI.Models.MediaDisplayModel(3, 255, 400))
+    <br />
+    <br />
+    <div class="regSteps">
+        Three simple steps to better organization:</div>
+    <br />
+    <table width="400">
+        <tr>
+            <td>
+                <img src="@Url.Content("~/images/circle-1.png")" />
+            </td>
+            <td width="400">
+                find a company
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content("~/images/circle-2.png")" />
+            </td>
+            <td>
+                schedule your appointment
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content("~/images/circle-3.png")" />
+            </td>
+            <td>
+                get confirmed
+            </td>
+        </tr>
+    </table>
+    @*<img src="@Url.Content("~/images/calfake.jpg")" width=400 alt=""/>*@
+    <br />
+</div>
+<div style="float: right; width: 450px">
+    @using (Html.BeginForm())
+    {
+        <div style="margin: 0">
+            <div class="center" style="width: 400px; float: right; border: 0px solid red">
+                <div style="text-align: left; clear: both; margin-left: 35.5%; padding-top: 25px;">
+                    <h2>
+                        sign up for free!</h2>
+                </div>
+                <div class="editor-row">
+                    @Html.ValidationSummary(true, "account creation was unsuccessful. please correct the errors and try again.")
+                </div>
+                @*<div class="editor-row">
+                    <div class="editor-label-5050">
+                        @@Html.LabelFor(m => m.CustType)
+                    </div>
+                    <div class="editor-field-5050 editor-field-radiobuttonlist">
+                        @@Html.RadioButtonForSelectList(m => m.CustType, Model.CustTypeList, 0, 1)<br />
+                    </div>
+                </div>*@
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.FirstName)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.TextBoxFor(m => m.FirstName)<br />
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.LastName)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.TextBoxFor(m => m.LastName)<br />
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.ZipCode)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "90401" })<br />
+                        <span class="footnote">(currently available in los angeles only)</span>
+                        @Html.ValidationMessageFor(m => m.ZipCode)
+                    </div>
+                </div>
+                @*                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.CompanyName)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.TextBoxFor(m => m.CompanyName)<br />
+                        @Html.ValidationMessageFor(m => m.CompanyName)
+                    </div>
+                </div>
+*@
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.UserName)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.TextBoxFor(m => m.UserName, new { placeholder = "you@gmail.com" })<br />
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.ConfirmEmail)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.TextBoxFor(m => m.ConfirmEmail, new { placeholder = "you@gmail.com" })<br />
+                        @Html.ValidationMessageFor(m => m.ConfirmEmail)
+                    </div>
+                </div>
+                @*
+                <div class="editor-row">
+                    <br />
+                    <p style="text-align: left">
+                        did you receive an invite code? if so, please continue filling out the form below,
+                        otherwise <a href="javascript:submit();">click here</a> to be added to our mailing
+                        list and to be notified when we open kuyam to the public.
+                    </p>
+                </div>
+                *@
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.Password)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.PasswordFor(m => m.Password)<br />
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.PasswordFor(m => m.ConfirmPassword)<br />
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label-5050">
+                        Invite Code
+                    </div>
+                    <div class="editor-field-5050">
+                        @Html.PasswordFor(m => m.TestKey)<br />
+                        @Html.ValidationMessageFor(m => m.TestKey, "the invite code field is required")
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="editor-row smallerText agreeToTerms">
+                    <input type="checkbox" id="agreeToTerms" class="smallerCheckbox" />By checking this
+                    box, you signify that you have reviewed, understand, meet and agree with Kuyam's
+                    <a href="javascript:showDialog('@Url.Content("~/home/terms")', 'terms & conditions')" class="dialoglink">
+                        terms & conditions</a> and <a href="javascript:showDialog('@Url.Content("~/home/privacy-security")', 'privacy & security')" class="dialoglink">
+                            privacy & security policy</a> for using this site.
+                </div>
+                <br />
+                <div class="editor-row smallerText agreeToTerms">
+                    <input type="checkbox" id="agreeToTerms2" class="smallerCheckbox" />by checking
+                    this box, you signify that you have reviewed, understand and agree to the terms
+                    of the <a href="javascript:showDialog('@Url.Content("~/home/nda")', 'Non-Disclosure Agreement')" class="dialoglink">
+                        Non-Disclosure Agreement</a>.<br />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <br />
+            <p style="text-align: left; clear: both; margin-left: 42%">
+                <img id="submitnotok" src="@Url.Content("~/images/yesiwantlifeorg_dim.png")" />
+                <input type="image" value="submit" id="submitok" src="@Url.Content("~/images/yesiwantlifeorg.png")" />
+            </p>
+        </div>
+    }
+    <script type="text/javascript">
+        $j().ready(function () {
+            $j("#submitok").hide();
+            $j("#agreeToTerms,#agreeToTerms2").click(function () {
+                if ($j("#agreeToTerms").prop("checked") && $j("#agreeToTerms2").prop("checked")) {
+                    $j("#submitnotok").hide();
+                    $j("#submitok").show();
+                }
+                else {
+                    $j("#submitnotok").show();
+                    $j("#submitok").hide();
+                }
+            });
+        });
+    
+    </script>
+</div>
+@*<div style="clear: both; margin: auto; padding: 0; width: 750px">
+    <br />
+    <br />
+    <h3 style="text-align: center; color: #f7ce00;">
+        Hear what our beta customers have to say...</h3>
+    <div class="regTestimonials" style="float: left; width: 350px">
+        <p>
+            "Kuyam has made my life so much easier. Making appointments online is the best!"<br />
+            <div class="testimonialPerson">
+                - Steve M, Calabasas, CA</div>
+        </p>
+        <br />
+        <p>
+            "Our business has increased 25% and our customer satisfaction is much higher. Thanks
+            Kuyam!"<br />
+            <div class="testimonialPerson">
+                - Tony T., Tony's Personal Training, Los Angeles, CA</div>
+        </p>
+    </div>
+    <div class="regTestimonials" style="float: left; width: 350px">
+        <p>
+            "The staff at Kuyam quickly got us up and running and we've never looked back."<br />
+            <div class="testimonialPerson">
+                - Lorena M., LMPR, Pasadena, CA</div>
+        </p>
+        <br />
+        <p>
+            "the calendar is a life-saver. 3 kids, a husband, soccer, cub scouts, haircuts,
+            spa days... kuyam let's me set everything up from my iPad over my morning coffee."<br />
+            <div class="testimonialPerson">
+                - Shirley J., Santa Monica, CA</div>
+        </p>
+    </div>
+</div>
+*@

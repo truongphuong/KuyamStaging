@@ -1,0 +1,39 @@
+﻿@model Kuyam.WebUI.Models.CalendarSearchModel
+@{
+    ViewBag.Title = "Calendar Search";
+}
+<h2>@ViewBag.Title results</h2>
+@using M2.Util.MVC
+@if (Model.Results == null || Model.Results.Count < 1)
+{
+<p>No appointments were found.</p>
+}
+else
+{ 
+    <div id="calgrid">
+        @{
+    var grid = new System.Web.Helpers.WebGrid(Model.Results.OrderBy(x => x.Appointment.Start),
+        rowsPerPage: 18, ajaxUpdateContainerId: "calgrid", canSort: false, canPage: true);
+        }
+        @(grid.GetHtml(
+            displayHeader: true,
+            tableStyle: "webgrid-calendar",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "webgrid-selected-row",
+            rowStyle: "webgrid-row-style",
+            columns: grid.Columns(
+            grid.Column("When", format: (item) => String.Format("{0}: {1} - {2}", item.Appointment.Start.ToShortDateString(), item.Appointment.Start.ToShortTimeString(), item.Appointment.End.ToShortTimeString())),
+            grid.Column("Company", format: (item) => item.Company.Name),
+            grid.Column("Contact", format: (item) => item.Appointment.ContactPerson),
+            grid.Column(format: (item) => Html.ActionLink("select", "modify-appointment", "cust", new { id = item.Appointment.AppointmentID }, null))
+        //,
+        //grid.Column("Company - TODO", ""
+            ))
+        )
+    </div>
+    
+}
+<br />
+@Html.GoBackLink()

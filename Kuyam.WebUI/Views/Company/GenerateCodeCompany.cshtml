@@ -1,0 +1,196 @@
+﻿@model Kuyam.WebUI.Models.CompanySetupModel
+@using Kuyam.Domain.Seo
+@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@{
+    ViewBag.Title = "generate code company";
+    Layout = "~/Views/Shared/_LayoutCompanySetup.cshtml";
+    var htmlString = ViewBag.htmlItem;
+    var htmlString1 = ViewBag.htmlItem1;
+    string host = Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost().Replace("https", "http");
+    var url1 = host + "/company/GoTemplate1?id=" + ViewBag.EnCompanyId;
+    var url2 = host + "/company/GoTemplate2?id=" + ViewBag.EnCompanyId;
+    var stringTemp1 = "<iframe style=\" border: none;display: block;margin-top: 5px;position: relative;width: 660px;\" src=" + url1 + "></iframe>";
+    var stringTemp2 = "<iframe style=\" border: none;display: block;margin-top: 5px;position: relative;width: 376px;height: 335px;\" src=" + url2 + "></iframe>";
+    var urlLinke = host + "Images/schedbutton12.png";
+    var linkType = (int)Types.LinkType.Opentable;
+    var bookLinke = "book/" + Model.ProfileCompany.GetSeName(Model.ProfileID) + "/Availability?LinkType=" + linkType;
+    var link = host + bookLinke;
+    var bookingLinke = "<a href=" + link + " style=\"cursor: pointer;\"><img src=" + urlLinke + "></a>";
+    var bookingLinke1 = "<a href=" + link + " style=\"cursor: pointer;text-decoration: none;\">schedule now!</a>";
+}
+<link rel="stylesheet" type="text/css" href="../../Content/themes/base/jquery.ui.tabs.css" />
+<link rel="stylesheet" type="text/css" href="../../css/themes/base/jquery.ui.selectmenu.css" />
+<script type="text/javascript" src="../../Scripts/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script type="text/javascript" src="../../Scripts/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.selectmenu.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tabs").tabs();
+        $('select#category').selectmenu();
+    });
+
+</script>
+<div class="companysetup newcompanysetup">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        @if (!ViewBag.IsAdminOrAgent)
+        {
+            <div class="textusersettings">
+                <a href="/setting/UserSetting" title="user settings">user settings</a>
+            </div>
+            <div class="textcalendarsettings">
+                <a href="/CalendarSetting" title="calendar settings">calendar settings</a>
+            </div>
+        }
+        <div class="textcompanysettings">
+            <a href="/Company/CompanySetting?companyId=@Model.ProfileID" title="company settings">
+                company settings
+            </a>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="leftcompanysetupform">
+        <div class="companyinfo">
+            <a href="/Company/SetupBasic?companyId=@Model.ProfileID" title="company information" id="companyinfo">
+                company information
+            </a>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companyimages">
+            <a href="/companysetup/image?companyId=@Model.ProfileID" title="company images">
+                company
+                images
+            </a>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companyvideo">
+            <a href="/Company/SetupVideo?companyId=@Model.ProfileID" title="company video">
+                company
+                video
+            </a>
+        </div>
+        <div class="companyvideo">
+            <div class="companyactive">
+                company scripts
+            </div>
+        </div>
+    </div>
+    <div class="companysetupform">
+        <div class="companysetupformtop1" id="companysetupformtop">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companysetupformmid">
+            <div class="loginform">
+                @*<input id="insertCompany" type="button" value="generat code insert company" />*@
+                <div id="tabs">
+                    <ul>
+                        @if (Model.ProfileCompany.CompanyTypeID == (int)Types.CompanyType.KuyamInstantBook
+                            || Model.ProfileCompany.CompanyTypeID == (int)Types.CompanyType.KuyamBookIt)
+                        {
+                            <li><a href="#tabs-1">booking link</a></li>
+                        }
+                        <li><a href="#tabs-2">search box 1</a></li>
+                        <li><a href="#tabs-3">search box 2</a></li>
+                    </ul>
+                    @if (Model.ProfileCompany.CompanyTypeID == (int)Types.CompanyType.KuyamInstantBook
+     || Model.ProfileCompany.CompanyTypeID == (int)Types.CompanyType.KuyamBookIt)
+                    {
+
+                        <div id="tabs-1">
+                            <div>
+                                <a id="bookigLinke" href="@bookLinke" style="cursor: pointer"><img src="../../Images/schedbutton12.png" /></a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div>
+                                <h3>script for the kuyam button option</h3>
+                                <div>
+                                    <textarea style="min-height: 78px; min-width: 624px; max-width: 624px; max-height:78px;" readonly="readonly">@bookingLinke</textarea>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div>
+                                <h3>script for the text option</h3>
+                                <div>
+                                    <textarea style="min-height: 78px; min-width: 624px; max-width: 624px; max-height:78px;" readonly="readonly">@bookingLinke1</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div id="tabs-2">
+                        <div>
+                            @Html.Raw(@htmlString)
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div>
+                            <h3>script</h3>
+                            <div>
+                                @*<iframe style=" border: none;display: block;margin-top: 5px;position: relative;width: 660px;" src="@url1"></iframe>*@
+                                <textarea style="min-height: 78px; min-width: 624px; max-width: 624px; max-height:78px;" readonly="readonly">@stringTemp1</textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tabs-3">
+                        <div>
+                            @Html.Raw(@htmlString1)
+                        </div>
+                        <h3>script</h3>
+                        <div>
+                            @*<iframe style=" border: none;display: block;margin-top: 5px;position: relative;width: 660px;" src="@url1"></iframe>*@
+                            <textarea style="min-height: 78px; min-width: 624px; max-width: 624px; max-height:78px;" readonly="readonly">@stringTemp2</textarea>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clear">
+            </div>
+            <div class="companysetupformbot">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear6">
+        </div>
+        @*<div class="btnarea newbtncompanysetup">
+                @if (!ViewBag.IsAdminOrAgent)
+                {
+                    <a href="/" class="btnusersetting btncanceluser"><span class="btnusersettingleft"></span>
+                        <span class="btnusersettingcenter btncancelusersetting">cancel </span><span class="btnusersettingright">
+                        </span></a>
+                }
+                <a href="#" id="btnsubmit" class="btnusersetting"><span class="btnusersettingleft"></span>
+                    <span class="btnusersettingcenter btnsaveusersetting">save changes </span><span class="btnusersettingright">
+                    </span></a>
+            </div>*@
+        <div class="clear">
+        </div>
+        <div id="lightBox" class="lightBox">
+        </div>
+
+    </div>
+
+    <!-- The template to display files available for upload -->
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#bookigLinke").click(function () {
+            window.open('@link', "_blank");
+            return false;
+        });
+        $('.linksignout').click(function (e) {
+            logout();
+        });
+    });
+</script>

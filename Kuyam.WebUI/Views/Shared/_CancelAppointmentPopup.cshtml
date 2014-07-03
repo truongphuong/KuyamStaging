@@ -1,0 +1,144 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@{
+    Appointment appoiontment = ViewBag.appointment;
+}
+<div class="contentPopup">
+    <a class="btnClose" id="btnClose" href="JavaScript:void(0);" onclick="hideDialog('cancelpopup');"
+       title="Close"></a>
+    <h3>
+        are you sure you want to cancel?
+    </h3>
+    <div class="clear">
+    </div>
+    <div class="contentcancel">
+        <div class="contentcancelcol1">
+            @(appoiontment != null ? appoiontment.Start.ToString("ddd, MMM d, h:mm tt").ToLower() : "")
+        <br />
+        for @(ViewBag.CalendarName)<br />
+    </div>
+    <div class="contentcancelcol2">
+        @((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.ProfileCompany != null)
+            ? appoiontment.ServiceCompany.ProfileCompany.Name : "")
+        <br />
+        with
+        @((appoiontment != null && appoiontment.CompanyEmployee != null)
+                  ? Kuyam.Domain.UtilityHelper.TruncateText(appoiontment.CompanyEmployee.EmployeeName, 17) :
+                  appoiontment != null && !string.IsNullOrEmpty(appoiontment.EmployeeName) ? Kuyam.Domain.UtilityHelper.TruncateText(appoiontment.EmployeeName, 17) : "")
+        <br />
+        @((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.Service != null)
+            ? Kuyam.Domain.UtilityHelper.TruncateText(appoiontment.ServiceCompany.Service.ServiceName, 20)
+            : appoiontment != null && !string.IsNullOrEmpty(appoiontment.ServiceName) ? Kuyam.Domain.UtilityHelper.TruncateText(appoiontment.ServiceName, 20) : "")
+        <br />
+        @((appoiontment != null && appoiontment.ServiceCompany != null) ?
+            string.Format("{0}min, ${1}, {2} person", appoiontment.ServiceCompany.Duration, appoiontment.ServiceCompany.Price, appoiontment.ServiceCompany.AttendeesNumber) :
+            appoiontment != null ? string.Format("{0}min, ${1}, {2} person", appoiontment.Duration, appoiontment.Price, appoiontment.AttendeesNumber) : "")
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="divreason">
+    <h3>
+        reason for cancellation:
+    </h3>
+    <div class="clear h1">
+    </div>
+    <div class="boxreason">
+        <textarea id="reason" cols="3" rows="4"></textarea>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="reasonerror" style="color: #ff0000; position: absolute;margin-top: -8px;font-size: 12px;">
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@if (ViewBag.UserType != Types.CustType.Facebook)
+{
+    <div class="divpass">
+        <h3>
+            enter password:
+        </h3>
+        <div class="clear h3">
+        </div>
+        <div class="boxpass">
+            <input type="password" id="txtpwd" />
+        </div>
+        <div class="errorpass">
+            <div id="passerror">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+}
+<div class="clear">
+</div>
+<a href="JavaScript:void(0);" class="btnbook" onclick="cancelAppointment('@appoiontment.AppointmentID');" id="btncancel" title="cancel appointment">
+    cancel appointment
+</a>
+</div>
+<script type="text/javascript">
+    //    var companyId = "";
+    //    $(document).ready(function () {
+    //        $('#btncancel').click(function () {
+    //            cancelAppointment(this.rel);
+    //        });
+    //        companyId = $(".btnbook").attr("rev");
+    //    });
+
+    $(function () {
+        var custType = '@ViewBag.UserType';
+        if (custType == 'Facebook') {
+            $("#reason").css({ 'width': 494 });
+        }
+
+    });
+
+
+    function cancelAppointment(appointmentId) {
+        var flag = false;
+        var key = $("#hdfKey").val();
+        if (key != null && typeof key != "undefined") {
+            flag = true;
+        }
+
+        var reason = $("#reason").val();
+        var pass = $("#txtpwd").val();
+        var isError = true;
+        if (reason == '') {
+            $("#reasonerror").html("please input reason");
+            isError = false;
+        } else {
+            $("#reasonerror").html("");
+        }
+        if (pass == '') {
+            $("#passerror").html("please input password.");
+            isError = false;
+        } else {
+            $("#passerror").html("");
+        }
+        if (!isError)
+            return false;
+        var param = "appointmentId=" + appointmentId + "&reason=" + reason + "&pass=" + pass + "&flag=" + flag
+        $('#aptImgLoader').show();
+        commonPostAjax("Appointment", "DeleteAppointment", param, callbacksucess, setError);
+    }
+
+    function callbacksucess(result) {
+        if (result == 2) {
+            $("#passerror").html("wrong password. please try again");
+            $('#aptImgLoader').hide();
+            return false;
+        } else {
+            $("#passerror").html("");
+        }
+        $('#aptImgLoader').hide();
+        hideDialog('cancelpopup');
+        $("#appointmentdetail").html(result);
+        commonPostAjax("Appointment", "LoadMasterAgenda", "", loadMenu, setError);
+    }
+
+</script>

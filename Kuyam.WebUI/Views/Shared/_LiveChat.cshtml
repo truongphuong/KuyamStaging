@@ -1,0 +1,128 @@
+﻿@using Kuyam.WebUI.Models
+@{
+    var  _settingService =new Kuyam.Domain.Services.SettingService() ;
+}
+@if (Request.IsAuthenticated)
+{
+    <script type="text/javascript">
+        var isShowLiveChat = @((MySession.ShowLiveChat).ToString().ToLower());
+        var appId ='@(_settingService.GetSetting("hmb_appid"))';
+        var companyname;
+        var phoneNumber;
+        var companySite;
+        var loaded = function()
+        {
+            //            hipmob.set_name("@MySession.Cust.FullName");
+            //            hipmob.set_email("@MySession.Cust.Email");
+
+            $("#btnLiveChat").click(function() {
+                isShowLiveChat = !isShowLiveChat;
+
+                $.get("@Url.Action("ToogleShowLiveChat", "Home")", function(data) {
+                    console.log("live chat support is toggled");
+                });
+
+                if (isShowLiveChat) {
+
+                    hipmob.show();
+                    hipmob.open();
+                    $("#btnLiveChat").addClass("On");
+                    $("#btnLiveChat").removeClass("Off");
+
+                } else {
+                    hipmob.hide();
+                    $("#btnLiveChat").addClass("Off");
+                    $("#btnLiveChat").removeClass("On");
+                }
+            });
+            if ($('#hipmob_info_message').length > 0) {
+                $("#hipmob_info_input_question").val("trigger to hide dialog only");
+                $("#hipmob_info_input_button").click();
+            }
+            $("#hipmob_input").attr("placeholder", "send us a message");
+
+        };
+
+        var _hmc = _hmc || [];
+        _hmc.push(['app', appId]);
+        _hmc.push(['on_load', loaded]);
+        _hmc.push(['uid', '@MySession.CustID']);
+        _hmc.push(['name', '@MySession.Cust.FullName']);
+        _hmc.push(['email', '@MySession.Cust.Email']);
+        _hmc.push(['title', '']);
+        _hmc.push(['settings', { 'hidebranding': true ,
+            'hide': true,
+            'width': '300px',
+            'border-width':"0px",
+            'background-color': '#E6E6E6',
+            'font-family':'Arial,Helvetica,sans-serif',
+            'color':'#8C8C8C',
+            'greeting':'hi! how can we help you today?'
+        }]);
+        _hmc.push(['tab', { 'height': '34px',
+            'background-color': '#000000',
+            'background-image': '/Images/LiveChat/livechat_tabTitle.jpg',
+            'background-postion': 'left top',
+            'background-repeat': 'no-repeat',
+
+        }]);
+        _hmc.push(['statusicons', {
+            'online': '/Images/LiveChat/livechat_statusOnline.jpg',
+            'offline': '/Images/LiveChat/livechat_statusOffline.jpg',
+            'disconnected': '/Images/LiveChat/livechat_statusOffline.jpg'
+        }]);
+        _hmc.push(['controlicons', { 'open': '/Images/LiveChat/livechat_controlOpen.jpg', 'close': '/Images/LiveChat/livechat_controlClose.jpg' }]);
+        _hmc.push(['input', { 'height': '40px','placeholder':'<div>ll</div>' }]);
+        (function() {
+            var hm = document.createElement('script');
+            hm.type = 'text/javascript';
+            hm.async = true;
+            hm.src = 'https://hipmob.s3.amazonaws.com/hipmobchat.min.js';
+            var b = document.getElementsByTagName('script')[0];
+            b.parentNode.insertBefore(hm, b);
+
+        })();
+
+        function showMessagereceived(self,from,text){
+            var txtmessage= '<p><strong>kuyam:</strong> <span>'+text+'</span></p>';
+            $("#textmessagerecived").append(txtmessage);
+            var view = $('#textmessagerecived');
+            var hight = view[0].scrollHeight;
+            view.scrollTop(hight);
+        }
+
+        function showTextmessagesent(self,text){
+            var message =text.split('|')[1];
+            var txtmessage= '<p><strong>me:</strong> <span>'+message+'</span></p>';
+            $("#textmessagerecived").append(txtmessage);
+        }
+
+
+        function sendmessages(){
+
+            var txtinput="";
+            if(companyname!='')
+                txtinput+=companyname+", ";
+            if(phoneNumber!='')
+                txtinput+=phoneNumber+", ";
+            if(companySite!='')
+                txtinput+=companySite ;
+
+            txtinput += "|"+$("#inputmsgchat").val();
+
+            var message =$("#inputmsgchat").val();
+            if(message!=''){
+                $("#hipmob_input").val(txtinput);
+                hipmob.removeListener('textmessagereceived', showMessagereceived);
+                hipmob.on('textmessagereceived', showMessagereceived);
+                hipmob.once('textmessagesent', showTextmessagesent );
+                hipmob.send_now();
+                $("#inputmsgchat").val("");
+                var view = $('#textmessagerecived');
+                var hight = view[0].scrollHeight;
+                view.scrollTop(hight);
+            }
+        }
+
+    </script>
+}

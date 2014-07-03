@@ -1,0 +1,216 @@
+﻿@{
+    string host = Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost().TrimEnd('/');
+    string date = String.Format("{0:dddd, MMMM d, yyyy}", DateTime.Now);
+}
+<!--[if gte mso 9]>
+    <style type="text/css">
+        .width21
+        {
+            width: 21px !important;
+        }    
+    </style>
+<![endif]-->
+<center>
+    <table cellpadding="0" cellspacing="0" border="0" width="550px" style="font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr style="background-color: black;">
+                        <td style="text-align: left;" height="64">
+                            <img alt="" src="@host/Images/header_logo_giftcard.jpg" usemap="#logo" style="border: solid 0px white;
+                                margin-top: 1px;" />
+                            <map name="logo" id="logo">
+                                <area shape="rect" coords="20,10,145,55" href="http://www.kuyam.com" alt="Kuyam"
+                                    title="Kuyam" />
+                            </map>
+                        </td>
+                        <td style="color: #c1d82f; text-align: right; font-size: 12px;" height="64">
+                            <div style="margin: 30px 20px 0px 0px; font-family: Arial, Helvetica, sans-serif;">
+                                @Model.DateSendEmail @*Thursday, August 30, 2012*@
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="line-height: 0px; font-size: 0px;">
+                            <img alt="" src="@host/Images/header_footer_giftcard.jpg" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/Images/tbox_giftcard.jpg" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td valign="top" style="background-color: #89bde0;" width="22">
+                            <img alt="" src="@host/Images/lbox_giftcard.jpg" width="22" height="590" />
+                        </td>
+                        <td class="width21" style="border-left: solid 1px #cccccc; width: 20px;">
+                            &nbsp;
+                        </td>
+                        <td valign="top" align="left" style="border-left: solid 8px #c1d82f; border-right: solid 1px #cccccc;
+                            padding-left: 14px;">
+                            <table cellpadding="0" cellspacing="0" border="0" width="460">
+                                <tr>
+                                    <td>
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                                <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                    padding-top: 10px; padding-left: 1px;">
+                                                    hi <b>@Model.RecipentNameFirsName!</b>
+                                                </td>
+                                                <td style="text-align: right; vertical-align: top; padding-right: 10px; padding-top: 5px;">
+                                                    <a href="@host" title="login" style="color: #29abe2; text-decoration: none; font-size: 12px;
+                                                                        font-family: Arial, Helvetica, sans-serif;">login</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding-top: 21px; padding-bottom: 30px; padding-right: 14px;">
+                                        <img alt="" src="@host/Images/your_friend_sent_you_a_kuyam_gift_card.png" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 17px; padding-left: 3px;">
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                                <td width="229" height="76" style="font-size: 18px; color: #000000; font-family: Arial, Helvetica, sans-serif;
+                                                    font-weight: bold;">
+                                                    <img src="@host/Images/a_gift_card_for_you.jpg" alt="" />
+                                                    <div style="margin-left: 18px;">
+                                                        @*134723487110341304*@
+                                                        @Model.GiftCardNumber
+                                                    </div>
+                                                </td>
+                                                <td style="padding-top: 2px; padding-left: 13px; padding-right: 13px; vertical-align: top;">
+                                                    <table cellpadding="0" cellspacing="0" border="0">
+                                                        <tr>
+                                                            <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                                padding-left: 2px;">
+                                                                you’ve received $@Model.AmoutNumber to book any appointment through kuyam. this
+                                                                gift card does not expire.
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 19px; padding-bottom: 22px; padding-left: 40px;">
+                                                                @{
+                                                                    var imageUrl = @host + "/Images/pricegiftcard" + @Model.AmoutNumber + ".png";
+                                                                    <img src='@imageUrl' alt="" />
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="@host" title="">
+                                                                    <img alt="" src="@host/Images/btnredeemnow.png" /></a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 18px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                        padding-top: 3px; padding-left: 6px;">To: @Model.FullNameRecipentName
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 18px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                        padding-top: 2px; padding-left: 6px; padding-bottom: 11px;">From: @Model.FullNameSender
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 6px;">
+                                        <table width="421" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td valign="top" style="width: 421px; height: 78px; border: 1px solid #808080;
+                                                                                                                                                                                                      font-size: 18px; color: #808080; font-family: Arial, Helvetica, sans-serif; padding-top: 6px;
+                                                                                                                                                                                                      padding-right: 9px; padding-bottom: 6px; padding-left: 9px; margin-top: 0; margin-right: 0;                                                                                                                        margin-bottom: 0; margin-left: 0; word-break:break-all;">
+                                                    @if (!string.IsNullOrEmpty(Model.Memo))
+                                                    {
+                                                        <span> “@Html.Raw(@Model.Memo)”</span>
+                                                    }else
+                                                     {
+                                                         <span>&nbsp;</span>
+                                                     }
+                                                   
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 19px; padding-bottom: 4px; padding-left: 4px; color: #000000;
+                                        font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
+                                        @*kuyam's gift cards can be used to book an appointment with ANY service provider
+                                        within the beauty, health & fitness and kids activities based in Los Angeles that
+                                        is booked through kuyam.*@
+                                        kuyam's gift cards can be used to book an appointment with ANY service provider within the beauty, health & fitness and kids activities based in Los Angeles that is booked through kuyam.  This gift card does not expire.  Gift cards will not be replaced or refunded if lost or stolen.  To check your balance, check online at kuyam.com or call 855-695-8926.
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td valign="top" style="background-color: #89bde0;" width="22">
+                            <img alt="" src="@host/Images/rbox_giftcard.jpg" width="22" height="590" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/Images/fbox_giftcard1.png" usemap="#social" style="border: solid 0px white;" />
+                <map name="social" id="social">
+                    <area shape="rect" coords="316,4,347,34" href="http://www.facebook.com/mykuyam" alt="Facebook" title="Facebook" />
+                    <area shape="rect" coords="350,4,381,34" href="https://twitter.com/mykuyam" alt="Twitter" title="Twitter" />
+                    <area shape="rect" coords="384,4,417,34" href="http://www.youtube.com/channel/UCei6RmG4G9jLgEHchRzR5jA" alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="420,4,448,34" href="http://kuyam.tumblr.com/" alt="Tumblr" title="Tumblr" />
+                    <area shape="rect" coords="451,4,482,34" href="http://pinterest.com/kuyam/" alt="Pinterest" title="Pinterest" />
+                    <area shape="rect" coords="485,4,518,35" href="https://plus.google.com/u/0/b/103779915573360185741/103779915573360185741" alt="Google+" title="Google+" />
+                </map>
+                @*<map name="social" id="social">
+                    <area shape="rect" coords="353,4,382,34" href="http://www.facebook.com/mykuyam" alt="Facebook"
+                        title="Facebook" />
+                    <area shape="rect" coords="388,4,417,34" href="https://twitter.com/mykuyam" alt="Twitter"
+                        title="Twitter" />
+                    <area shape="rect" coords="421,4,450,34" href="http://www.youtube.com/user/mykuyam"
+                        alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="455,4,485,34" href="http://kuyam.tumblr.com/" alt="Tumblr"
+                        title="Tumblr" />
+                    <area shape="rect" coords="488,4,518,34" href="http://pinterest.com/kuyam/" alt="Pinterest"
+                          title="Pinterest" />
+                    <area shape="rect" coords="521,4,551,34" href="https://plus.google.com/s/mykuyam" alt="Pinterest"
+                          title="Google+" />
+                </map>*@
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/Images/footer_giftcard.jpg" usemap="#footer" style="border: solid 0px white;" />
+                <map name="footer" id="footer">
+                    <area shape="rect" coords="110,8,198,35" href="https://itunes.apple.com/us/app/kuyam/id606531094?mt=8"
+                        alt="Iphone" title="Iphone" />
+                    <area shape="rect" coords="110,36,198,63" href="https://play.google.com/store/apps/details?id=com.kourosh.kuyam"
+                        alt="Android" title="Android" />
+                    <area shape="rect" coords="276,15,338,26" href="http://kuyam.com/home/howitworks_user"
+                        alt="how it works " title="how it works " />
+                    <area shape="rect" coords="355,15,380,26" href="http://kuyam.com/home/OurStory" alt="team"
+                        title="team" />
+                    <area shape="rect" coords="395,15,435,26" href="http://kuyam.com/home/contact" alt="contact"
+                        title="contact" />
+                    <area shape="rect" coords="448,15,525,26" href="http://kuyam.com/" alt="terms &amp; privacy"
+                        title="terms &amp; privacy" />
+                </map>
+            </td>
+        </tr>
+    </table>
+</center>

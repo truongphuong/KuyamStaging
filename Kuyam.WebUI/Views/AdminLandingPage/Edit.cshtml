@@ -1,0 +1,602 @@
+﻿@using System.Runtime.Remoting.Messaging
+@model Kuyam.WebUI.Models.LandingPage.LandingPageModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Scripts/GettyImages/css/popup.css" rel="stylesheet" />
+<link href="~/Scripts/GettyImages/css/jWindowCrop.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    var isFirstLoad = true;
+
+    function uploadImage() {
+        ShowLoanding();
+        $("#custPhotoUploadForm").submit();
+    }
+
+    function uploadImage_Complete() {
+        //Check to see if this is the first load of the iFrame
+        if (isFirstLoad == true) {
+            isFirstLoad = false;
+            return;
+        }
+
+        document.getElementById("custPhotoUploadForm").reset();
+        try {
+            var response = $("#UploadTarget").contents().find("pre")[0].innerHTML;
+
+            var newImg = $.parseJSON(response);
+            insertToLandingPage(newImg[0].kalturaid);
+        } catch(e) {
+            HideLoanding();
+            alert("sorry, your upload is fail");
+        }
+    }
+</script>
+
+<div id="contentmainpage" class="landingpage">
+    @if (Model != null)
+    {
+        <h2>@(Model.Id == 0 ? "create" : "edit") landing page</h2>
+        <div>
+            <a href="@Model.LinkReturn">back to list</a>
+        </div>
+    
+        <div id="landingPageEdit">
+            @{
+                Html.RenderPartial("_LandingPageEdit", Model);
+            }
+        </div>
+        
+    }
+    else
+    {
+    <h2>this landing page doesn't exist</h2>
+    }
+</div>
+
+@*Cust's image & search image on Getty*@
+<div id="custImagePanel" class="popupDialog popupGettyImage">
+    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+
+    <div class="companysetupimagebox">
+        <h2>your getty images</h2>
+        <div class="clear10">
+        </div>
+        <div class="wrapperGallery">
+            <div class="wrapperimageupload">
+                <a class="btnuploadimage" onclick="insertToLandingPage();">
+                    <img title="Insert to post" src="/Scripts/GettyImages/images/btn_insertToPost.png">
+                </a>
+                <div class="clear">
+                </div>
+            </div>
+            <div id="carousel_viewimage">
+                <span style="display: inline;"></span>
+                <img src="" style="display: inline;">
+                <div class="caption">
+                </div>
+            </div>
+            <div class="clear10">
+            </div>
+            <div class="carousel-gallery">
+                <div class="carousel groupr" id="my_carousel" style="width: 384px; height: 80px; visibility: visible; overflow: hidden; position: relative;">
+                    <div class=" carousel_btnprev">
+                    </div>
+                    <div class=" carousel_btnnext">
+                    </div>
+                    <div class="carousel-nav" id="GettyImagesClient">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companysetupimagebox1">
+            <h2>getty images</h2>
+            <div class="clear10">
+            </div>
+            <div class="wrapperGallery">
+                <div class="searchbar">
+                    <label for="search">
+                    </label>
+                    <input type="text" onfocus="if (this.value=='search stock photos for more...') {this.value = '';}"
+                           onblur="if (this.value==''){this.value='search stock photos for more...';}" value="search stock photos for more..."
+                           id="search" name="btnSearch">
+                    <input type="image" id="btnSearch" name="search" src="~/Scripts/GettyImages/images/btn_search.png">
+                </div>
+                <div class="clear10">
+                </div>
+                <div id="carousel_viewimage1">
+                    <span></span>
+                    <img src="/Scripts/GettyImages/images/preview-image.png">
+                    <div class="caption">
+
+
+                    </div>
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="carousel-wrapper-thumbs">
+                    <div class="carousel-gallery">
+                        <div class="carousel groupr" id="my_carousel1" style="width: 384px; height: 80px; visibility: visible; overflow: hidden; position: relative;">
+                            <div class=" carousel_btnprev1">
+                            </div>
+                            <div class=" carousel_btnnext1">
+                            </div>
+                            <div class="carousel-nav" id="GettyImagesSearch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Upload image panel*@
+<div id="uploadFilePanel" class="popupDialog">
+    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+    <form id="custPhotoUploadForm" name="custPhotoUploadForm" action="/Upload/CustPhotoUploadHandler.ashx" method="POST" target="UploadTarget" enctype="multipart/form-data">
+        <h2>
+            upload image
+        </h2>
+        <div>
+            <div>
+                <input type="file" id="imageUpload" name="imageUpload"/>
+            </div>
+
+            <div class="buttons">
+                <input type="button" value="Upload" id="ajaxUploadButton" onclick="uploadImage()"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<iframe id="UploadTarget" name="UploadTarget" onload="uploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>
+
+@*Crop image panel*@
+<div id="cropImagePanel" class="popupDialog">
+    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+    <div>
+        <h2>
+            crop image
+        </h2>
+        <div>
+            <img id="imgBannerCrop" src="#" alt="image is loading..." kalturaid="@Model.KalturaId" />
+            <div class="buttons">
+                <input type="button" value="save banner" onclick="saveCropImage();" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Search company panel*@
+<div id="searchCompanyPanel" class="popupDialog">
+    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+    <div>
+        <h2>
+            search company
+        </h2>
+        <div class="clear10">
+        </div>
+        
+        <div class="searchbar">
+            <input type="text" onfocus="if (this.value=='search company...') {this.value = '';}"
+                   onblur="if (this.value==''){this.value='search company...';}" value="search company..."
+                   id="txtSearchCompany" class="searchText">
+            <input type="image" id="btnSearchCompany" name="search" src="~/Scripts/GettyImages/images/btn_search.png">
+        </div>
+        <div class="clear10">
+        </div>
+        <div>
+            <select id="companySearchResult" multiple="multiple" class="listSearchResult"></select>
+        </div>
+        
+        
+        
+        <div class="clear10">
+        </div>
+        <div class="buttons">
+            <input type="button" value="insert" onclick="insertCompanies()" />
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="@Model.LinkReturn">back to list</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-jtemplates.js"></script>
+    <script src="~/Scripts/GettyImages/js/popup.js"></script>
+    <script src="~/Scripts/GettyImages/js/jquery.jWindowCrop.js"></script>
+
+    <script type="text/javascript">
+        var insertImageMode = 0; // 0: banner, 1: content
+        var insertCompanyMode = 0; // 0: landing page, 1: content
+        var cropX = @Model.CropX;
+        var cropY = @Model.CropY;
+        var frameW = @Model.FrameW;
+        var frameH = @Model.FrameH;
+        var relW = @Model.RelW;
+        var relH = @Model.RelH;
+        var zoom = @Model.Zoom;
+
+        $(function() {
+            @if (Model.ImageCrop == null || string.IsNullOrEmpty(Model.ImageCrop.LocationData))
+            {
+                @:$('#imgBanner').hide();
+                @:$('#btnCropBanner').hide();
+            }
+
+            LoadGettyImagesClient(true);
+
+            // Handle search Getty images
+            $('#btnSearch').click(function(e) {
+                //ShowLoanding();
+                LoadGettyImages(1);
+            });
+
+            $("#UrlName").change(function() { checkUrl(); });
+            $("#btnPreview").on("click", previewClick);
+
+            $("#txtSearchCompany").bind("keypress", function(event) {
+                if (event.which == 13) {
+                    $("#btnSearchCompany").click();
+                }
+            });
+
+            $("#btnSearchCompany").click(function(e) {
+                searchCompany();
+            });
+
+            $("#divCompanyRelated").sortable();
+
+            $("#btnDraft").on("click", function() { disableSubmit(this); });
+            $("#btnPublish").on("click", function() { disableSubmit(this); });
+            $("#btnUnpublish").on("click", function() { disableSubmit(this); });
+        });
+
+        // Handle insert image to banner/ content depend on current mode
+        function insertToLandingPage(imageId) {
+            var id = kalturaId;
+            if (imageId != null && imageId != "undefined")
+                id = imageId;
+            if (insertImageMode == 0) {
+                addImageToBanner(id);
+            } else {
+                addImageToContent(id);
+            }
+
+            hideDialog('custImagePanel');
+            hideDialog('uploadFilePanel');
+
+        }
+
+
+        function addImageToBanner(kalturaId) {
+            var url = "https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/" + kalturaId + "/type/1/width/" + frameW + "/height/" + frameH;
+            //$("#imgBanner").attr("src", url);
+            //$("#imgBanner").show();
+            url = "https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/" + kalturaId + "/type/1/width/0/height/0";
+
+            cropX = 0;
+            cropY = 0;
+            zoom = -1;
+            //$("#imgBannerCrop").attr("src", url);
+            $("#imgBannerCrop").attr("kalturaId", kalturaId);
+
+            hideDialog('custImagePanel');
+            window.setTimeout(function() { cropImage(url); }, 500);
+        }
+
+        function addImageToContent(kalturaId) {
+            var url = "https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/" + kalturaId + "/type/1/width/600";
+            var img = "<img src='" + url + "' />";
+            tinyMCE.activeEditor.execCommand("mceInsertContent", false, img);
+            hideLoading();
+        }
+
+
+        function showUploadDialog(mode) {
+            insertImageMode = mode;
+            $('#lightBox').css('z-index', '9998');
+            showDialog('uploadFilePanel', 'btnCloseloginPopup');
+        }
+
+        function showCustImageDialog(mode) {
+            insertImageMode = mode;
+            $('#lightBox').css('z-index', '9998');
+            showDialog('custImagePanel', 'btnCloseloginPopup');
+        }
+
+        function showSearchCompanyDialog(mode) {
+            insertCompanyMode = mode;
+            $('#lightBox').css('z-index', '9998');
+            showDialog('searchCompanyPanel', 'btnCloseloginPopup');
+        }
+
+
+        function cropImage(url) {
+
+            var myInstance = $('#imgBannerCrop').getjWindowCrop();
+            if (myInstance != null && myInstance !== 'undefined') {
+                myInstance.destroy();
+            }
+            showDialog('cropImagePanel', 'btnCloseloginPopup');
+
+            window.setTimeout(function() {
+                //console.log(cropX + " - " + cropY + " - " + zoom);
+                ShowLoanding();
+
+                $('#imgBannerCrop').attr("src", url).load(function() {
+                    //console.log("Image Loaded");
+                    if (zoom == -1) {
+                        zoom = frameW / $('#imgBannerCrop').width();
+                    }
+                    $('#imgBannerCrop').jWindowCrop({
+                        targetWidth: frameW,
+                        targetHeight: frameH,
+                        zoomPercent: zoom,
+                        left: cropX,
+                        top: cropY,
+                        //smartControls: false,
+                        //showControlsOnStart: false,
+                        onChange: function(result) {
+                            cropX = result.cropX;
+                            cropY = result.cropY;
+                            relW = result.cropW;
+                            relH = result.cropH;
+                        }
+                    });
+                    HideLoanding();
+
+                });
+
+            }, 500);
+
+        }
+
+
+        var oldKalturaId = '@Model.KalturaId';
+        var oldKalturaUrl = '@Model.BannerOriginalImage';
+        var oldCropX = @Model.CropX;
+        var oldCropY = @Model.CropY;
+        var oldZoom = @Model.Zoom;
+
+        function cropBannerImage() {
+            cropX = oldCropX;
+            cropY = oldCropY;
+            zoom = oldZoom;
+            //$("#imgBannerCrop").attr("src", "/images/logo_kuyam.png");
+            //$("#imgBannerCrop").attr("src", oldKalturaUrl);
+            $("#imgBannerCrop").attr("kalturaId", oldKalturaId);
+            cropImage(oldKalturaUrl);
+        }
+
+        function saveCropImage() {
+            ShowLoanding();
+
+            var zoomPercent = 1;
+            var windowCropInstance = $('#imgBannerCrop').getjWindowCrop();
+            if (windowCropInstance !== undefined && windowCropInstance != null) {
+                zoomPercent = windowCropInstance.workingPercent;
+            }
+            var currentKalturaId = $('#imgBannerCrop').attr("kalturaId");
+            var bannerId = $("#Banner").val();
+            var data = { imageId: bannerId, cropX: cropX, cropY: cropY, relW: relW, relH: relH, frameW: frameW, frameH: frameH, zoom: zoomPercent, kalturaId: currentKalturaId };
+            $.ajax({
+                url: "/Media/AddOrUpdateCropImage",
+                data: JSON.stringify(data),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                //beforeSend: onAjaxBeforeSend,
+                success: function(result) {
+
+                    if (result.result == true) {
+                        $("#imgBanner").attr("src", result.url);
+                        $("#imgBanner").show();
+                        $("#Banner").val(result.id);
+                        oldKalturaId = currentKalturaId;
+                        oldKalturaUrl = $('#imgBannerCrop').attr("src");
+                        oldCropX = cropX;
+                        oldCropY = cropY;
+                        oldZoom = zoomPercent;
+
+                        $("#btnCropBanner").show();
+                    }
+                    hideDialog('cropImagePanel');
+                    hideLoading();
+                }
+            });
+
+        }
+
+        function createUrl() {
+            var url = $("#Name").val().trim();
+            url = url.replace(/\W/g, '_');
+            $("#UrlName").val(url);
+            checkUrl();
+        }
+
+        function checkUrl() {
+            var urlName = $("#UrlName").val().trim();
+            if (urlName != '') {
+                var searchParameters = { id: $("#Id").val(), urlName: urlName };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(searchParameters),
+                        dataType: 'html',
+                        url: "@Url.Action("ValidateUrlName", "AdminLandingPage")"
+                    })
+                    .success(function(result) {
+                        if (result == 'false') {
+                            $("#urlAutoValid").html("url name is invalid.");
+                        } else {
+                            $("#urlAutoValid").html("");
+                        }
+                    });
+            }
+        }
+
+        function previewClick() {
+            //console.log("Preview Click");
+
+            if ($("#Id").val() == 0) {
+                if (confirm("new landing page must be saved before preview, do you want to save it?")) {
+                    postSaveDraft();
+                }
+            } else {
+                if (confirm("do you want to save your update before preview?")) {
+                    postSaveDraft();
+                } else {
+                    window.open('/AdminLandingPage/Preview/' + $("#Id").val(), '_blank');
+                }
+            }
+
+            return true;
+        }
+
+        function postSaveDraft() {
+            var mainContent = tinyMCE.activeEditor.getContent();
+
+            if (mainContent == "") {
+                showErrorMessage("please input content");
+                return false;
+            }
+
+            if (!$("#formLandingPage").valid() || $("#urlAutoValid").html() != '') {
+                showErrorMessage("data is invalid, please check again");
+                return false;
+            }
+
+            $(".error-messasge").html("");
+            var dataParameters = {
+                Id: $("#Id").val(),
+                Name: $("#Name").val(),
+                UrlName: $("#UrlName").val(),
+                Banner: $("#Banner").val(),
+                MainContent: mainContent,
+                Scripts: $("#Scripts").val(),
+                Submit: "save as draft"
+            };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataParameters),
+                    dataType: 'json',
+                    url: "@Url.Action("Edit", "AdminLandingPage")"
+                })
+                .success(function(result) {
+                    if (result.result == false) {
+                        showErrorMessage("update landing page fail, please try again");
+                    } else {
+                        $("#Id").val(result.id);
+                        window.open('/AdminLandingPage/Preview/' + $("#Id").val(), '_blank');
+                    }
+                })
+                .error(function() {
+                    showErrorMessage("update landing page fail, please try again");
+                });
+
+            return true;
+        }
+
+        function showErrorMessage(message) {
+            $(".error-messasge").html(message);
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+
+        function disableSubmit(button) {
+            pageBusy();
+            $("#Submit").val($(button).val());
+            var form = $("#formLandingPage");
+
+            if (!form.valid()) {
+                // allow user to correct validation errors and re-submit
+                //$(button).removeAttr("disabled");
+                pageActive();
+            } else {
+                //$(button).attr("disabled", "disabled");
+
+            }
+        }
+
+
+        function searchCompany() {
+            var key = $("#txtSearchCompany").val();
+            if (key == 'search company...') {
+                alert("please input name of company to search");
+                return false;
+            }
+
+            var dataParameters = { key: key };
+            ShowLoanding();
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataParameters),
+                    dataType: 'json',
+                    url: "@Url.Action("AjaxSearchCompanies", "Admin")"
+                })
+                .success(function(result) {
+                    $('#companySearchResult').empty();
+                    for (var index in result) {
+                        $('#companySearchResult').append('<option value="' + result[index].Id + '">' + result[index].Name + '</option>');
+                    }
+                })
+                .error(function() {
+                    showErrorMessage("search company fail, please try again");
+                })
+                .complete(function() {
+                    HideLoanding();
+                });
+
+            return true;
+        }
+
+        function insertCompanies() {
+            var companiesSeleted = $("#companySearchResult option:selected");
+            companiesSeleted.each(function(index, item) {
+                if (insertCompanyMode == 1) { // insert into content
+                    var url = '<div class="profileCompanyHtmlEdit" id="profile_' + item.value + '">' +
+                        item.text + 
+                        '</div><br/>';
+                    tinyMCE.activeEditor.execCommand("mceInsertContent", false, url);
+                } else {
+                    var oldItems = $("#divCompanyRelated input[type=hidden]").map(function() { return $(this).val(); }).get();
+                    if (jQuery.inArray(item.value, oldItems) < 0) {
+                        $("#divCompanyRelated").append(
+                            '<div class="sortItem" id="order_' + item.value + '">' +
+                            '<span class="ui-icon ui-icon-arrowthick-2-n-s"></span> ' + item.text +
+                            '<button class="delete" onclick="deleteCompany(this);">delete</button>' +
+                            '<input type="hidden" name="companiesRelated" value="' + item.value + '" />' +
+                            '</div>'
+                        );
+                    }
+                }
+            });
+            if ($(companiesSeleted).length > 0 && insertCompanyMode == 1) {
+                tinyMCE.activeEditor.execCommand("mceInsertContent", false, "<p></p>");
+            }
+                hideDialog('searchCompanyPanel');
+            //$("#divCompanyRelated").sortable();
+        }
+
+        function deleteCompany(item) {
+            $(item).parent().remove();
+        }
+
+    </script>
+}

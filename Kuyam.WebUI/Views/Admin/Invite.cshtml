@@ -1,0 +1,82 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "sms verification codes list";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="contentmainpage">
+    <div id="divList">
+        <h2>
+            sms verification codes list</h2>
+        <div class="boxsearch">
+            <center>
+                <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                    <tr class="odd">
+                        <td>
+                            <label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>
+                            @*@Html.Partial("_SearchBox")*@
+                            @*<select id="inviteType">
+                                <option value="-1" @(ViewBag.SearchType==-1? "selected='selected'":"")>select invite type</option>
+                                <option value="0" @(ViewBag.SearchType == 0 ? "selected='selected'" : "")>invite code</option>
+                                <option value="2" @(ViewBag.SearchType == 2 ? "selected='selected'" : "")>verification code</option>
+                            </select>*@
+                            &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+        <div id="listInvites">
+            @Html.Partial("_InviteResult")
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var type = $('#inviteType').val();
+        var searchParameters = { page: pageIndex, key: key };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/Invite/'
+            })
+            .success(function (result) {
+                $('#listInvites').html(result);
+            })
+            .error(function (error) {
+
+            });
+        };
+        
+    function FilterSearchResult() {
+        var key = $('#txtKey').val();
+        var type = $('#inviteType').val();        
+        //format the key before searching
+        key = $.trim(key);
+        var keySearch = key.replace(/\(/g, '').replace(/\) /g, '').replace(/\-/g, '').replace(/''/g, '');
+
+        var searchParameters = { key: keySearch };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/Invite/'
+            })
+            .success(function (result) {
+                $('#listInvites').html(result);
+            })
+            .error(function (error) {
+
+            });
+        }
+</script>

@@ -1,0 +1,716 @@
+﻿@using Kuyam.WebUI.Extension
+@using M2.Util
+@using M2.Util.MVC
+@using Kuyam.WebUI.Models
+@using Kuyam.Database;
+@using Kuyam.Domain;
+@using System.Configuration;
+@using Kuyam.Repository.Infrastructure;
+@{
+    List<Kuyam.Database.Service> parentCategories = DAL.GetParentService();
+    Profile profile = ViewBag.CompanyProfile;//EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(profileID != 0 ? profileID : MySession.ProfileID);
+    int categoryId = 0;
+    if (ViewBag.CategoryId != null)
+    {
+        categoryId = ViewBag.CategoryId;
+    }
+
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html itemscope=itemscope itemtype="http://schema.org/Article" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>kuyam @(ViewBag.Title != "" ? "- " + ViewBag.Title.ToLower() : "")</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @RenderSection("MetaSeoSection", required: false)
+    @RenderSection("SharingSection", required: false)
+    <link href="@Url.Content("~/css/style.css?v=21")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/kuyam.css?v=20")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/css/themes/base/jquery.ui.all.css")" />
+    <link type="text/css" href="@Url.Content("~/css/themes/base/jquery.ui.selectmenu.css")" rel="stylesheet" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>
+    <script language='javascript' src="@Url.Content("~/Scripts/js/detect_timezone.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-1.10.2.custom.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.widget.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.position.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.selectmenu.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.accordion.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.datepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/StickyScroller.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/GetSet.js")"></script>    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/ui.checkbox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.unobtrusive.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/css_browser_selector.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/purl.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/common.js?v=21")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/general.js?v=20")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/json2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.nicescroll.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/mobiscroll.core-2.0.3.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/mobiscroll.core-2.0.3.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/mobiscroll.jqm-2.0.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/mobiscroll.datetime-2.0.3.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/gallery/galleria-1.2.9.js")"></script>
+    <link rel="stylesheet" href="@Url.Content("~/css/themes/base/mobiscroll.core-2.0.3.css")" />
+    <link type="text/css" href="@Url.Content("~/css/themes/base/mobiscroll.jqm-2.0.2.css")" rel="stylesheet" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.dotdotdot.js")"></script>
+    <!--[if IE 7]>
+    <link href="/css/styleIE7.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <!--[if IE 8]>
+    <link href="/css/styleIE8.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <!--[if IE 9]>
+    <link href="/css/styleIE9.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script type="text/javascript">
+        var isAuthenticated = '@Request.IsAuthenticated.ToString().ToLower()' == 'true';
+        $(document).ready(function () {
+
+            //            $('.backtosearch').click(function () {
+            //                clearText();
+            //                showpopup("forgotpassword");
+            //            });
+
+            $('#backlogin').click(function () {
+                clearText();
+                $('#loginpopup').show();
+                $('#forgotpassword').fadeOut(400);
+                //showpopup("loginpopup");
+            });
+            $('#password').hide();
+            $('#passwordtext').focus(function () {
+                $('#passwordtext').hide();
+                $('#password').show();
+                $('#password').css('color', '#333333');
+                $('#password').focus();
+            });
+            $('#password').blur(function () {
+                if ($('#password').val() == '') {
+                    $('#passwordtext').show();
+                    $('#password').hide();
+                }
+            });
+
+            $('#forgotpass').click(function () {
+                clearText();
+                $('#forgotPass').hide();
+                $('#loginError').hide();
+                $('#signuppopup').hide();
+                $('#loginpopup').hide();
+                showDialog('forgotpassword', 'btnCloseloginPopup');
+            });
+
+            //forgot password
+            $("#forgotpassword").keypress(function (e) {
+                $('#forgotPass').hide();
+                kCode = e.keyCode || e.charCode;
+                if (kCode == 13) {
+                    forgotPassword();
+                    return false;
+                }
+            });
+            //signup
+
+            $("#signup2").keypress(function (e) {
+                kCode = e.keyCode || e.charCode;
+                if (kCode == 13) {
+                    singUpNow();
+                    return false;
+                }
+            });
+            $("#signup1").keypress(function (e) {
+                kCode = e.keyCode || e.charCode;
+                if (kCode == 13) {
+                    singUpNow1();
+                    return false;
+                }
+            });
+
+
+            $('.btnCloseloginPopup').click(function () { clearText(); });
+
+            function clearText() {
+                $('#loginform #username').val('enter e-mail address').css('color', '#B3B3B3');
+                $('#loginform #password').val('').hide();
+                $('#passwordtext').show();
+                $('#txtFirstname').val('first name').css('color', '#B3B3B3');
+                $('#txtLastname').val('last name').css('color', '#B3B3B3');
+                $('#txtEmailAddress').val('enter e-mail address').css('color', '#B3B3B3');
+
+                $('.errorarea #loginError').hide();
+                $('.errorarea #loginError1').hide();
+            };
+            //            $("#signuppopup").keypress(function (e) {
+            //                alert("Test");
+            //                kCode = e.keyCode || e.charCode;
+            //                if (kCode == 13) {
+            //                    singUpNow();
+            //                    return false;
+            //                }
+            //            });
+
+            $("#loginform").keypress(function (e) {
+                kCode = e.keyCode || e.charCode;
+                if (kCode == 13) {
+                    login();
+                    return false;
+                }
+            });
+
+            $('#forgotpassnotmember').click(function () {
+                clearText();
+                $('.loginError').hide();
+                $('#loginpopup').hide();
+                $('#forgotpassword').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+            });
+            $('#alreadymember1').click(function () {
+                clearText();
+                $('.loginError').hide();
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+            });
+
+            $('#alreadymember').click(function () {
+                clearText();
+                $('.loginError').hide();
+                $('#signuppopup').hide();
+                hideDialog("signupemailpopup");
+                showDialog('loginpopup', 'btnCloseloginPopup');
+            });
+
+
+            $('.btndiscover').click(function (e) {
+                redrectToResult();
+            });
+
+            $('select#category').selectmenu();
+
+            $('.homePageLogin').click(function () {
+                redirectUrl = "";
+                $('#loginform #username').val('enter e-mail address').css('color', '#B3B3B3');
+                $('#loginform #password').val('').hide();
+                $('#passwordtext').show();
+                ShowLoginPopup();
+            });
+
+            $('.linksignout').click(function (e) {
+                logout();
+            });
+
+            $('.btnLogin').click(function () {
+                login();
+            });
+
+            $('#signup').click(function () {
+                redirectUrl = "";
+                $('#txtFirstname').val('first name').css('color', '#B3B3B3');
+                $('#txtLastname').val('last name').css('color', '#B3B3B3');
+                $('#txtEmailAddress').val('enter e-mail address').css('color', '#B3B3B3');
+                $('#signuppopup #loginError1').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+            });
+
+            $("#signupByEmail").click(function () {
+                hideDialog('signuppopup');
+                showDialog('signupemailpopup', 'btnCloseloginPopup');
+            });
+
+        });
+        function forgotPassword() {
+
+            $('#forgotPass').hide();
+            var email = $('#forgotEmail').val();
+            var loginParameters = { email: email };
+
+            var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+            if (!reemail.test(email) || email == '') {
+                $('#forgotPass').show();
+                return false;
+            }
+
+
+            $('#loginform #imgLoaderContact1').show();
+            $('#lightBox').css('opacity', '0.6').fadeIn(200);
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(loginParameters),
+                    dataType: 'html',
+                    url: '/Account/ForgotPassword/'
+                })
+                .success(function (result) {
+                    if (result == 'false') {
+                        $('#forgotPass').show();
+                    } else {
+                        window.location.href = '/'
+                    }
+                })
+                .error(function (error) {
+
+                })
+        }
+        $(function () {
+            $("#accordion").accordion({
+                collapsible: true,
+                autoHeight: false
+            });
+
+            $("#datepicker").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dayNamesMin: $.datepicker._defaults.dayNamesShort
+            });
+            $('#cbemail').checkBox({ addVisualElement: false });
+            $('#cbsms').checkBox({ addVisualElement: false });
+        });
+
+        function ShowLoginPopup() {
+            $('#loginform #loginError').hide();
+            showDialog("loginpopup", "btnCloseloginPopup");
+        }
+        function ShowSignUpPopup() {
+            $('#loginform #loginError').hide();
+            showDialog("signuppopup", "btnCloseloginPopup");
+        }
+
+
+        function fullTrim(val) {
+            return val.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
+        };
+
+        function singUpNow1() {
+            $('#signuppopup #loginError1').hide();
+            var fname1 = $('#txtFirstname').val();
+            var lname1 = $('#txtLastname').val();
+            var email1 = $('#txtEmailAddress').val();
+            var err = "";
+            if (fullTrim(fname1) == '' || fname1 == 'first name') {
+                err = err + 'first name is required.<br/> ';
+            }
+            if (fullTrim(lname1) == '' || lname1 == 'last name') {
+                err = err + 'last name is required. <br/> ';
+            }
+            if (fullTrim(email1) == '' || email1 == "enter e-mail address") {
+                err = err + 'email is required.<br/>';
+            }
+            if (fullTrim(email1) != '' && email1 != "enter e-mail address" && !validateEmail(email1)) {
+                err = err + 'email is invalid.';
+            }
+
+            $('#signuppopup #loginError1').html("<div style='color: Red;padding-left: 7px;'>" + err + "</div>");
+            if (err == '') {
+                $('#signuppopup #loginError1').hide();
+                var param = "fname=" + fname1 + "&lname=" + lname1 + "&email=" + email1;
+                $('#signuppopup #imgLoaderContact1').show();
+                commonPostAjax("company", "SignUpNow", param, masterSignUpSuccess1, callbackError1);
+            } else {
+                $('#signuppopup #loginError1').show();
+            }
+        };
+
+        function callbackError1(error) {
+            $('#signuppopup #loginError1').html("<span style='color: Red;padding-left: 7px;'>" + error + "</span>");
+            $('#signuppopup #loginError1').show();
+        }
+
+        function masterSignUpSuccess1(result) {
+
+            $('#signuppopup #imgLoaderContact1').hide();
+            if (result.status == 1) {
+                self.location.href = "/Account/RegisterEmail";
+            } else {
+                callbackError1(result.message);
+            }
+
+        }
+
+        function redrectToResult() {
+            //var selected = document.getElementById('category');
+            //var categoryId = selected.options[selected.selectedIndex].value;
+            var categoryName = $("#category option:selected").attr("name");
+            var slug = generateSlug(categoryName);
+            var url = "/" + slug;         
+            window.location = url;
+            return false;
+        }
+
+
+    </script>
+</head>
+<body>
+    <input type="hidden" id="linkUrl" value="/company/companysearch/" />
+    <div class="wrap">
+        <div class="fixheaderposition">
+            @if (ViewBag.IsAdminOrAgent != null && ViewBag.IsAdminOrAgent)
+            {
+                @Html.Partial("_HybridHeaderNew")
+            }
+            else
+            {
+                <div class="header">
+                    <div class="hcontent h73">
+                        <a href="javascript:void(0);" class="logobooking" title="Kuyam">
+                            <img alt="Kuyam" src="/images/powerByKuyam.png" />
+                        </a>
+                        <!-- InstanceBeginEditable name="search" -->
+                        @* <a href="#" class="nameUser" title="Santa Monica, CA">Santa Monica, CA</a>*@
+                        <div class="date" id="datetitle">
+                            <script type="text/javascript">
+                                var stringdate = $.datepicker.formatDate('DD, MM dd yy', new Date());
+                                $("#datetitle").html(stringdate);
+                            </script>
+                        </div>
+                        <div class="boxSearch">
+                            <fieldset>
+                                @*<div class="fleft bo>searchcatagory">
+                                    <select name="category" id="category" class="selectcatagory" onchange="redrectToResult();">
+                                        <option value="0" style="font-weight: bold"><span>select a category</span></option>
+                                        @foreach (Kuyam.Database.Service parent in parentCategories)
+                                        {
+                                            <option style="font-weight: bold" @(parent.ServiceID == categoryId ? "selected=selected" : "")=) value="@parent.ServiceID" name="@parent.ServiceName">@Kuyam.Domain.UtilityHelper.TruncateText(parent.ServiceName, 30)</option>
+                                        }
+                                    </select>
+                                </div>*@
+                                <div class="fleft" style="@(!Request.IsAuthenticated ? "display: none;" : "")">
+                                    <a class="btnLiveChat @(MySession.ShowLiveChat ? "On" : "Off")" href="JavaScript:void(0);" title="live chat support" id="btnLiveChat">
+                                    </a>
+                                </div>
+                                <div class="fleft" style="display: none;">
+                                    <a href="#" class="btndiscover" id="btDiscover" title="discover"></a>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <ul class="menuHeader signout ">
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+
+                                Cust user = MySession.Cust; 
+
+                                <li class="accountname">
+                                    <div class="divaccount">
+                                        <span class="state">
+                                            <span>
+                                                hi, @(UtilityHelper.TruncateText(user.FirstName, 15))
+                                                !
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <ul class="the_menu">
+                                        @if (profile != null)
+                                        {
+                                            <li>
+                                                <a href="/company/companyemployeelisthour" title="list/edit hours">
+                                                    list/edit
+                                                    hours
+                                                </a>
+                                                <div class="clear">
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <a href="/CompanyAppointment/" title="company admin">company admin</a><div class="clear" />
+                                            </li>
+                                        }
+                                        else
+                                        {@*   <li><a href="/home/howitworks_user" title="list/edit hours">list/edit hours</a><div
+                                                class="clear">
+                                            </div>
+                                            </li>*@
+                                            <li>
+                                                <a href="/Company/SetupBasic" title="add company">add company</a><div class="clear" />
+                                            </li>
+                                        }
+                                        @*@if (User.IsInRole("Admin") || User.IsInRole("Agent") || User.IsInRole("HotelAdmin") || User.IsInRole("HotelStaff"))*@
+                                        @if (user.GetRole.Contains("Admin") || user.GetRole.Contains("HotelAdmin") || user.GetRole.Contains("HotelStaff"))
+                                        {
+                                            <li>
+                                                <a href="/hotel/HotelList" title="manage hotel">manage hotel</a><div class="clear" />
+                                            </li>
+                                        }
+                                        <li>
+                                            <a href="/setting/UserSetting" title="settings">settings</a><div class="clear" />
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="lastchild"><a class="linksignout" title="sign out">sign out</a></li>
+                            }
+                            else
+                            {
+                                @*<li><a href="/home/howitworks_user" title="how it works">how it works</a></li>
+                                <li><a href="#" id="signup" title="sign up">sign up</a></li>*@
+                                <li class="lastchild"><a class="homePageLogin" title="login">login</a></li>
+                            }
+                        </ul>
+                        <!-- InstanceEndEditable -->
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="clear">
+        </div>
+        <div class="content">
+            <!-- InstanceBeginEditable name="content" -->
+            @RenderBody()
+        </div>
+        <img id="imgLoadermain" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+        <div id="signuppopup" class="popup-facebook">
+            <div class="contentPopup">
+                <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="close"></a>
+                <div class="clear">
+                </div>
+                <a class="connectFacebook" href="@Url.Action("LogtoFacebook", "Account", new { returnUrl = "/Account/RegisterByFacebook" })" title="connect with Facebook">
+                </a><a id="signupByEmail" class="useEmail" href="JavaScript:void(0);" title="use email instead">
+                </a>
+            </div>
+        </div>
+        <div class="signuppopup" id="signupemailpopup">
+            <div class="contentloginPopup">
+                <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+                <h3>
+                    get invited to public beta:
+                </h3>
+                <div class="clear">
+                </div>
+                <div class="loginform" id="signuppopup">
+                    <div id="signup1" class="formForNotMember">
+                        <div class="clear h5">
+                        </div>
+                        <fieldset>
+                            <input id="txtFirstname" type="text" title="first name" value="first name" onblur="if (this.value==''){this.value='first name';this.style.color='#B3B3B3';}"
+                                   onfocus="if (this.value=='first name') {this.value = '';this.style.color='#333333';}" />
+                            <div class="clear8">
+                            </div>
+                            <input id="txtLastname" type="text" title="last name" value="last name" onblur="if (this.value==''){this.value='last name';this.style.color='#B3B3B3';}"
+                                   onfocus="if (this.value=='last name') {this.value = '';this.style.color='#333333';}" />
+                            <div class="clear8">
+                            </div>
+                            <input id="txtEmailAddress" type="text" title="enter e-mail address" value="enter e-mail address"
+                                   onblur="if (this.value==''){this.value='enter e-mail address';this.style.color='#B3B3B3';}"
+                                   onfocus="if (this.value=='enter e-mail address') {this.value = '';this.style.color='#333333';}" />
+                            <div class="clear8">
+                            </div>
+                            <input type="button" id="btnSignup" class="btnLogin" value="" title="sign up" onclick="singUpNow1();" />
+                            <div class="errorarea">
+                                <div id="loginError1" style="display: none;">
+                                    <span style="color: Red"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="invitecodearea">
+                        <a id="alreadymember" title="already a member?">already a member?</a><br />
+                        @* <a href="/Account/Register" title="have an invite code?">have an invite code?</a>*@
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <img id="imgLoadersingup" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+        </div>
+        <div class="loginpopup popup-facebook-login" id="loginpopup">
+            <div class="contentloginPopup">
+                <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a><a class="btnFBLogin" title="login with Facebook" href="@Url.Action("LogtoFacebook", "Account", new { returnUrl = "/Account/LoginByFacebook" })">
+                </a>
+                <h3>
+                    or login with e-mail:
+                </h3>
+                <div class="clear">
+                </div>
+                <div class="loginform" id="loginform">
+                    <div class="formForNotMember">
+                        <div class="clear h5">
+                        </div>
+                        <fieldset>
+                            <input type="text" id="username" title="enter e-mail address" value="enter e-mail address"
+                                   onblur="if (this.value==''){this.value='enter e-mail address';this.style.color='#B3B3B3';}"
+                                   onfocus="if (this.value=='enter e-mail address') {this.value = '';this.style.color='#333333';}" />
+                            <div class="clear8">
+                            </div>
+                            <input type="text" id="passwordtext" title="enter password" value="enter password" />
+                            <input type="password" id="password" title="enter password" value="" />
+                            <div class="clear8">
+                            </div>
+                            <input type="button" class="btnLogin" id="btnHomePageLogin" value="" title="login" />
+                        </fieldset>
+                        <div class="errorarea">
+                            <div id="loginError" style="display: none">
+                                <span style="color: Red;">
+                                    the user name or password is invalid
+                                    <br />
+                                    please try again.
+                                </span>
+                            </div>
+                            &nbsp;
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="invitecodearea">
+                        <a id="forgotpass" title="forgot your password">forgot your password</a><br />
+                        <a id="alreadymember1" title="not a member? sign up!">not a member? sign up!</a><br />
+                        @*<a href="/Account/Register" title="have an invite code?">have an invite code?</a>*@
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <img id="imgLoadersingup" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+        </div>
+        <div id="popupAlert" class="savechangepopup">
+            <div class="contentpopup">
+                <p class="error" id="alertMessage">
+                </p>
+                <div class="buttons">
+                    <button type="button" value="Ok" onclick="closeAlertMessage()" class="btnok">
+                        ok
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="loginpopup" id="forgotpassword">
+            <div class="contentloginPopup">
+                <a class="btnClose btnCloseloginPopup" href="JavaScript:void(0);" title="Close">
+                </a>
+                <h3>
+                    forgot your password?
+                </h3>
+                <div class="clear">
+                </div>
+                <div class="loginform">
+                    <div class="formForNotMember">
+                        <div class="clear h5">
+                        </div>
+                        <fieldset>
+                            <input id="forgotEmail" type="text" title="enter e-mail address" value="enter e-mail address"
+                                   onblur="if (this.value==''){this.value='enter e-mail address';this.style.color='#B3B3B3';}"
+                                   onfocus="if (this.value=='enter e-mail address') {this.value = '';this.style.color='#333333';}" />
+                            <div class="clear8">
+                            </div>
+                            <input type="button" class="btnContinue" value="" title="continue" onclick="forgotPassword();" />
+                        </fieldset>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="errorarea">
+                        <div id="forgotPass">
+                            &nbsp;check your e-mail for a reset password.
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="invitecodearea">
+                        <a id="backlogin" title="back to login">back to login</a><br />
+                        <a id="forgotpassnotmember" title="not a member? sign up!">not a member? sign up!</a><br />
+                        @*<a href="/Account/Register" title="have an invite code?">have an invite code?</a>*@
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        @*   <div class="loginpopup" id="loginpopup">
+                <div class="contentloginPopup">
+                    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+                    <h3>
+                        Please input your email & password:</h3>
+                    <div class="clear">
+                    </div>
+                    <div class="loginform" id="loginform">
+                        <div class="formForNotMember">
+                            <div class="clear h5">
+                            </div>
+                            <fieldset>
+                                <input type="text" title="e-mail address" id="usernamePopup" value="e-mail address"
+                                    onblur="if (this.value==''){this.value='e-mail address';this.style.color='#B3B3B3';}"
+                                    onfocus="if (this.value=='e-mail address') {this.value = '';this.style.color='#333333';}" />
+                                <div class="clear10">
+                                </div>
+                                <input type="text" id="passwordtextPopup" title="enter password" value="enter password" />
+                                <input type="password" id="passwordPopup" title="enter password" value="" />
+                                <div class="clear10">
+                                </div>
+                                <input type="button" class="btnLogin" value="" title="login now" />
+                            </fieldset>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="loginError" style="display: none">
+                        <center>
+                            <span style="color: Red">The user name or password is invalid </span>
+                            <br />
+                            <span style="color: Red">Please try again.</span>
+                        </center>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <img id="imgLoaderlogin" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+            </div>
+            <div class="loginpopup" id="signuppopup">
+                <div class="contentloginPopup">
+                    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+                    <h3>
+                        get invited to the public beta:</h3>
+                    <div class="clear">
+                    </div>
+                    <div class="loginform" id="signupform">
+                        <div class="formForNotMember">
+                            <div class="clear h5">
+                            </div>
+                            <fieldset>
+                                <input type="text" style="font-style: italic;" id="name" title="name" value="name"
+                                    onblur="if (this.value==''){this.value='name';this.style.color='#B3B3B3';this.style.fontStyle='italic';}"
+                                    onfocus="if (this.value=='name') {this.value = '';this.style.color='#333333';this.style.fontStyle='italic';}" />
+                                <div class="clear h5">
+                                </div>
+                                <input type="text" style="font-style: italic;" id="email" title="email" value="email"
+                                    onblur="if (this.value==''){this.value='email';this.style.color='#B3B3B3';this.style.fontStyle='italic';}"
+                                    onfocus="if (this.value=='email') {this.value = '';this.style.color='#333333';this.style.fontStyle='italic';}" />
+                                <div class="clear10">
+                                </div>
+                                <input type="button" id="btnSignup" class="btnSignUp" onclick="singUpNow();" />
+                            </fieldset>
+                            <div id="loginError" style="display: none;">
+                                <span style="color: Red"></span>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="invitelink" style="padding-right: 26px; padding-top: 172px; text-align: right;
+                        font-style: italic; color: #0071BC; font-size: 13px; font-weight: 400; color: #3a5070;
+                        font-size: 8pt; text-decoration: underline;">
+                        @Html.ActionLink("already a member?", "Login", "Account")
+                    </div>
+                </div>
+                <img id="imgLoadersingup" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+            </div>*@
+        <div class="clear">
+        </div>
+        <div class="footer">
+            @Html.Partial("_FooterNewBooking")
+        </div>
+    </div>
+    @Html.Partial("_LiveChat")
+    <div id="popupreviewappt" class="selectservicepopup" style="z-index: 99999;">
+        @Html.Partial("_AppointmentReview")
+    </div>
+</body>
+</html>

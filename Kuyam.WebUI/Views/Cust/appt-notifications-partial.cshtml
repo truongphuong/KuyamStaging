@@ -1,0 +1,47 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain
+@using M2.Util
+@{
+    List<AppointmentLogData> logs = DAL.GetAppointmentLogData(Kuyam.WebUI.Models.MySession.Username);
+}
+<div class="appt-notifications">
+    @if (logs.Count > 0)
+    {
+        foreach (AppointmentLogData log in logs.OrderByDescending(x => x.Log.LogDT))
+        {
+@*@Html.ActionLink("<b>" + log.Company.Name + "</b>" + " " + @log.Appointment.Start.ToString() + ": " + @log.Log.Message, "modify-appointment", "cust", new { id = log.Appointment.AppointmentID }, null)<br/>*@
+        <div style="width: 98%; border-bottom: 1px solid #bbb; padding: 5px 0px 5px 0px; overflow: auto" id="msg@(log.Log.AppointmentLogID)">
+            <div style="float: left; width: 90%">
+                <a href="@Url.Content("~/cust/modify-appointment/" + log.Appointment.AppointmentID)" class="modapptlink">
+                    <b>@log.Log.Message</b> (@log.ProfileName) @log.CompanyName on @log.Appointment.Start.ToCasual()</a>
+            </div>
+            <div style="float:right;position:relative; height: 100%">
+                <a href="javascript:removeMsg(@(log.Log.AppointmentLogID));" style="color:orange;font-size:1.2em;border:0px solid #666666;padding:2px;font-weight:bold;">
+                    <img src="@Url.Content("~/images/trash.png")" /></a>
+            </div>
+        </div>
+        }
+    }
+    else
+    {
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center">
+            Appointment updates will be shown here.
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(function() {
+    });
+
+    function removeMsg(msgID) {
+        $.ajax({
+            url: '@Url.Content("~/cust/msgviewed/")'+msgID,
+            success: function () {
+                $("#msg" + msgID).hide();
+            }
+        });
+    }
+</script>

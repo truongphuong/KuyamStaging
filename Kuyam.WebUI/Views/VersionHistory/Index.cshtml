@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Kuyam.Database.VersionHistory>
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Version History";
+}
+<h2>@ViewBag.Title</h2>
+<table class="grid caseAsEntered">
+    <tr>
+        <th>
+            Version
+        </th>
+        <th>
+            QA Release
+        </th>
+        <th>
+            Prod Release
+        </th>
+        <th>
+            Notes
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model.Where(x => x.Name != null))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(x => item.Name)
+            </td>
+            <td>
+                @Html.DisplayShortDate(item.QAStartDT)
+            </td>
+            <td>
+                @Html.DisplayShortDate(item.ReleaseDT)
+            </td>
+            <td style="text-align: left">
+                @Html.RawBreaks(item.Notes)
+            </td>
+        </tr>
+    }
+</table>

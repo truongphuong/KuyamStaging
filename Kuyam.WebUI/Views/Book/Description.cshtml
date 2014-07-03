@@ -1,0 +1,38 @@
+﻿@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+
+@{
+    ViewBag.Title = "map and information " + Model.CompanyName;
+    Layout = "~/Views/Shared/_MasterPageLayoutBooking.cshtml";
+    ViewBag.IsAllowOtherCompnies = false;
+}
+
+@section MetaSeoSection{
+    @Model.MetaTagExtension.MetaTag()
+}
+
+<style type="text/css">
+    .ybox, .newcompanyschedule .allviewing .personcalendar .activeperson {
+        behavior: url(PIE.htc);
+    }
+</style>
+
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight newcompanyschedule">
+            @Html.Partial("_HeaderCompanyProfile")
+            <div class="clear7">
+            </div>
+            <div class="companydescription">
+                @Html.Partial("_CompanyProfileDescription", Model)
+            </div>
+            <div class="clear23">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>

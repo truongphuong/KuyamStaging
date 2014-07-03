@@ -1,0 +1,71 @@
+.header{z-index:10;}
+.banner .bheader .col2 .r1{padding:4px 0 3px;}
+ul.menuHeader li .the_menu{float:none;z-index:20;position:relative;display:table-cell;}
+.companysetup .companysetupform .formcol2 .formcol2name, .companysetup .companysetupform .formcol2 .formcol2address{margin-left:4px;padding-left:2px;}
+.companysetup .radd{padding-top:26px !important;}
+.companysetup .rweb{padding-top:19px;}
+.companysetup .rperson{padding-top:24px;}
+.companysetup .businesshours{padding-top:12px;}
+.companysetup .rcompanylogo{padding-top: 100px}
+.companysetup .rcompanyphoto{padding-top: 20px}
+.companysetup .companysetupform .formcol2 .formcol2webverification .verificatiocheck{padding: 28px 0px 0px 9px}
+.usersettings .usersettingsboxmid .usersettingcol1 .useraccount h2{padding-top:10px;}
+.usersettings .usersettingsboxmid .usersettingcol1 .userreminders h2{padding-top:1px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .usercurrentpass{padding-top:23px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .userzipcode{padding-top:18px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .userremindme{padding-top:38px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .userical{padding-top:33px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .userpass{padding-top:22px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .userphonevalue{padding-top:72px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .usercontactvalue{padding-top:22px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .userfirstalert{padding-top:0px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .userggcaltext{padding-top:28px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .usericaltext{padding-top:6px;}
+#header-scroll-container{z-index:10;}
+.scroll{position:fixed;}
+/* Fix Calendar scroll over the header on IE7 */
+.fixheaderposition{z-index:9999;}
+#calendar{z-index:8888;}
+.price .ui-selectmenu-status{width:auto;}
+/* End fix scroll */
+.usersettings .usersettingsboxmid .usersettingcol3 .edituserpass{padding-top:9px;padding-left:7px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .editusercontactvalue{padding-top:14px;}
+.postinvitecode .media{height:39px;}
+.postinvitecode .invitebox .lpostinvitecode .postgender{padding-top:13px;}
+.postinvitecode .invitebox .lpostinvitecode .postemail{padding-top:29px;}
+.postinvitecode .invitebox .lpostinvitecode .zipcode{padding-top:31px;}
+.infopage .infopagecol1 .infofullname{height:48px;}
+.infopage .infopagecol1 .infophone{height:30px;}
+.infopage .infopagecol2 .infocol2checkbox{height:30px;}
+.infopage .infopagecol2 .infocol2checkbox{height:120px;}
+.infopage .infopagecol2 .orangebox{margin-top:35px;height:65px;}
+.infopage .infopagecol2 .infocol2chkemail{height:21px;padding-top:4px;}
+.infopage .infopagecol2 .infocol2chkcall{height:21px;}
+.infopage .infopagecol2 .infocol2chktext{height:21px;}
+.postinvitecode .rpostinvitecode .rpostformtext .txtcompanysetup input{line-height:23px;height:20px;}
+.usersettings .usersettingsboxmid .usersettingcol2{padding-top:1px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .edituserzipcodevalue .inputuserzipcodevalue{line-height:25px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .edituserphonevalue .inputuserphonevalue{line-height:25px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .usernewpass .inputpwd{line-height:25px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .usernewpass .textpwd{line-height:25px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .edituserpass .inputpwd{line-height:25px;}
+.usersettings .usersettingsboxmid .usersettingcol3 .edituseremailvalue .inputemail{line-height:25px;}
+.usersettings .usersettingsboxmid .usersettingcol1 .editaccount{line-height:22px;}
+.usersettings .usersettingsboxmid .usersettingcol1 .userpersonal h2{padding-top:141px;}
+.postsetup p{color:#000000;font-size:18px;width:600px;margin:19px 0px 24px 0px;padding:0px;}
+.employeeorservice{padding-top:23px;}
+.employeeorservice .boxemployee img{padding-bottom:0px;}
+.employeeorservice .boxemployee img{padding-bottom:0px;}
+.employeeorservice .boxservice p{line-height:19px;}
+.employeeorservice .boxemployee p{line-height:19px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .editusercurrentpass{padding-top:35px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .edituserzipcode{padding-top:27px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .editusercontact{padding-top:37px;}
+.usersettings .usersettingsboxmid .usersettingcol2 .edituserremindme{padding-top:31px;}
+.usersettings .usersettingsboxmid .usersettingcol1 .userpersonal .edith2{padding-top:230px;}
+.usersettings .usersettingsboxmid .usersettingcol1 .userreminders .edith2{padding-bottom:92px;}
+.postinvitecode .invitebox .lpostinvitecode .postpwd{padding-top:32px;}
+.postinvitecode .error{height:11px;line-height:8px;}
+.companysetup .editrcompanylogo{padding-top:103px;}
+.companysetup .rcompanyvideo{padding-top:137px;}
+.listservices .listservicescol1 .timedurationcol2{margin-right:20px;}

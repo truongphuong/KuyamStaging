@@ -1,0 +1,19 @@
+﻿@model Kuyam.Database.ProfileHour
+           @using Kuyam.Database
+           @using M2.Util
+           @using M2.Util.MVC
+@{
+    ViewBag.Title = "delete open hours";
+}
+<h2>
+    @ViewBag.Title</h2>
+<h3>
+    Are you sure you want to delete @(Types.GetTypeName(Types.TypeGroup.Day, Model.Day)) @Model.Start.ToHHMMString() - @Model.End.ToHHMMString()?</h3>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.HiddenFor(model => model.ProfileHoursID)
+        @Html.HiddenFor(model => model.ProfileID)
+        @Html.SaveCancelLC("Delete", "Deleting")
+    </p>
+}

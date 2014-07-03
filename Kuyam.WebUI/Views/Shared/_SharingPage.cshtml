@@ -1,0 +1,21 @@
+﻿@model Kuyam.WebUI.Models.EmailModel
+@{
+    var url = Model.Url;//Request.Url.AbsoluteUri;
+    var title = Model.FirstName + " has shared a kuyam article with you";
+    var linkFb = string.Format("http://www.facebook.com/sharer/sharer.php?u={0}", url);
+    var linkTwitter = string.Format("http://twitter.com/home?status={0}", url);
+    var linkGooglePus = string.Format("https://plus.google.com/share?url={0}", url);
+    var emailSubject = string.Format("{0} has shared a kuyam article with you", Model.FirstName);
+    var emailBody = string.Format("I read this article on kuyam, and I thought you might be interested in reading it too.%0D{0} {1}",Model.PostTitle+": ", Model.Url);    
+}
+<div style="float: right">
+    <a href="@linkFb" title="" target="_blank">
+        <img alt="" src="/images/iconFacebook.png"></a> <a href="@linkTwitter" title="" target="_blank">
+            <img alt="" src="/images/iconTwitter.png"></a> <a href="@linkGooglePus" title="" target="_blank">
+                <img alt="" src="/images/iconGooglePlus.png"></a>
+    @if (!Model.IsHidden)
+    {
+        <a href="mailto:?cc=@Model.UserName&Subject=@emailSubject&body=@emailBody" target="_top">
+            <img alt="" src="/images/iconEmail.png" />
+        </a>}
+</div>

@@ -1,0 +1,37 @@
+﻿@using Kuyam.Domain
+@using Kuyam.Domain.BlogServices
+@using Kuyam.Repository.Infrastructure
+@using Kuyam.Domain.Seo;
+@{
+    var categoryService = EngineContext.Current.Resolve<IBlogCategoryService>();
+    var categories = categoryService.GetCategoriesAtHomePage();
+    var isAuthenticated = Request.IsAuthenticated ? "true" : "false";
+}
+<div class="nav">
+    <ul id="blogCategory">
+        @foreach (var blogCategory in categories)
+        {
+            <li><a href="@Url.RouteUrl("HomePage", new { seName =blogCategory.GetSeName(blogCategory.CategoryRowID,"blog")})" id="@blogCategory.CategoryRowID" title="@blogCategory.CategoryName">@blogCategory.CategoryName</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".nav a").parent().removeClass("active");
+        $("#" + "@ViewBag.Id").parent().addClass("active");
+
+        $("#blogCategory a").on("click", function(event) {
+            event.preventDefault();
+            if (!@isAuthenticated) {
+                showDialog("signuppopup", "btnCloseloginPopup");
+
+            } else {
+                window.location.href = $(this).attr("href");
+            }
+            return false;
+        });
+    });
+    
+</script>

@@ -1,0 +1,1367 @@
+﻿@using Kuyam.Database
+@using Kuyam.Utility
+@model dynamic
+@{
+    ViewBag.Title = "company promo codes";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+
+    var profileCompany = ViewBag.ProfileCompany as ProfileCompany;
+    int profileId = ViewBag.companyId;
+    var profileLink = "/companyprofile/availability/" + profileCompany.ProfileID;
+    string promoName = string.Empty;
+}
+<!-- InstanceEndEditable -->
+<!--[if IE 7]>
+<link href="~/css/styleIE7.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<!--[if IE 8]>
+<link href="~/css/styleIE8.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<!--[if IE 9]>
+<link href="~/css/styleIE9.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-timepicker-addon.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.format.1.05.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.jstepper.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maxlength-min.js")"></script>
+<!-- InstanceBeginEditable name="head" -->
+<script type="text/javascript">
+    var processing = 0;
+
+    $(function () {
+        //accordionforadmin(0);
+        //createtopleftscroll();
+        $('#CompanyDiscountMenu').attr("class", "leftitem choose");
+
+        $("#btncreatepackage").click(function () {
+            showpopup("packagecreatepopup");
+        });
+
+        $("#btncreatediscount").click(function () {
+            resetcreatediscount();
+
+            //            var date = $.format.date(new Date(), "hh:mm a");
+            //            $("#ainpStartTime").val(date.toLowerCase());
+
+            showpopup("creatediscountcode");
+            $('body').css({ 'overflow': 'hidden', 'margin-right': '17px' });
+            $('.header').css('margin-right', '17px');
+        });
+
+        $(".dis3cbedit a").click(function () {
+            $('#currentdiscountid').val($(this).attr('idvalue'));
+            reseteditdiscount();
+            loaddiscount(this);
+            showpopup("editdiscountcode");
+        });
+
+        $('#allclient, #sltclient, #percent, #dollar, #epercent, #edollar').checkBox();
+
+        $("#selectquanlity, #selectduration, #dcselectservice, #edcselectservice").selectmenu();
+
+        $('.recipitem input[type="checkbox"], .servicelist ul li input[type="checkbox"]').checkBox();
+
+        $('#ainpStartDate, #ainpEndDate, #einpStartDate, #einpEndDate').datepicker({
+        });
+
+        $('#ainpStartTime, #ainpEndTime, #einpStartTime, #einpEndTime').timepicker({
+            ampm: true,
+            stepMinute: 15,
+            amNames: ['am', 'am'],
+            pmNames: ['pm', 'pm'],
+            showLeadingZero: false,
+            onHourShow: 10,
+            onMinuteShow: 30
+        });
+
+        //$('#ainpStartDate').datepicker('setDate', new Date());
+
+        $("#ainpDiscountAmount, #einpDiscountAmount").format({ precision: 2, allow_negative: false, autofix: true });
+        $("#ainpDiscountPercent, #einpDiscountPercent").format({ precision: 2, allow_negative: false, autofix: true });
+        $("#ainpDiscountPercent, #einpDiscountPercent").jStepper({ disableNonNumeric: true, maxValue: 100, minLength: 2, maxDecimals: 2 });
+        $("#ainpDiscountQuantity, #einpDiscountQuantity").jStepper({ minValue: 1, maxValue: 999, minLength: 3, allowDecimals: false });
+
+        $('#ainpDiscountName, #einpDiscountName').maxlength({
+            events: [], // Array of events to be triggerd   
+            maxCharacters: 50, // Characters limit  
+            status: false, // True to show status indicator bewlow the element   
+            statusClass: "status", // The class on the status div 
+            statusText: "character left", // The status text 
+            notificationClass: "notification",  // Will be added when maxlength is reached 
+            showAlert: false, // True to show a regular alert message   
+            alertText: "You have typed too many characters.", // Text in alert message  
+            slider: false // True Use counter slider   
+        });
+
+        $('#msgsend').maxlength({
+            events: [], // Array of events to be triggerd   
+            maxCharacters: 250, // Characters limit  
+            status: false, // True to show status indicator bewlow the element   
+            statusClass: "status", // The class on the status div 
+            statusText: "character left", // The status text 
+            notificationClass: "notification",  // Will be added when maxlength is reached 
+            showAlert: false, // True to show a regular alert message   
+            alertText: "You have typed too many characters.", // Text in alert message  
+            slider: false // True Use counter slider   
+        });
+
+        $('#ainpDiscountCode, #ainpReDiscountCode, #einpDiscountCode, #einpReDiscountCode').maxlength({
+            events: [], // Array of events to be triggerd   
+            maxCharacters: 20, // Characters limit  
+            status: false, // True to show status indicator bewlow the element   
+            statusClass: "status", // The class on the status div 
+            statusText: "character left", // The status text 
+            notificationClass: "notification",  // Will be added when maxlength is reached 
+            showAlert: false, // True to show a regular alert message   
+            alertText: "You have typed too many characters.", // Text in alert message  
+            slider: false // True Use counter slider   
+        });
+
+
+    });
+
+    function gotoStatus(status) {
+        window.location = "/CompanyAppointment/index/";
+    }
+   
+</script>
+<style type="text/css">
+    .discounttab a
+    {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<!-- InstanceEndEditable -->
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight">
+            <div class="editserviceform companypackageform">
+                <div class="companypackagebox">
+                    <div class="companypackageboxtext">
+                        <h1>
+                            promo codes</h1>
+                        <div class="clear3">
+                        </div>
+                        <p class="padd">
+                            create promo codes to promote your company’s services.
+                            <br />
+                            you can determine the discount, active dates and who can use it.
+                        </p>
+                    </div>
+                    <div class="companypackageboxbutton">
+                        <a href="#" title="create a promo code" id="btncreatediscount" class="btncreatepackage">
+                            create a promo code</a>
+                    </div>
+                    <div class="clear3">
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="clear6">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="discountbox">
+                    <div class="discounttab">
+                        <div class="activediscounttab">
+                            <a href="/company/companyactivediscountCode?companyId=@profileId" title="active (@ViewBag.ActiveNumber)" class="active">
+                                active (@ViewBag.ActiveNumber)</a>
+                        </div>
+                        <div class="updiscounttab">
+                            <a href="/company/companyupcomingdiscountCode?companyId=@profileId" title="upcoming (@ViewBag.UpcomingNumber)">
+                                upcoming (@ViewBag.UpcomingNumber)</a>
+                        </div>
+                        <div class="expirediscounttab">
+                            <a href="/company/companyexpireddiscountCode?companyId=@profileId" title="expired/depleted (@ViewBag.RemainNumber)">
+                                expired/depleted (@ViewBag.RemainNumber)</a>
+                        </div>
+                    </div>
+                    <div class="clear16">
+                    </div>
+                    <div class="discountcontent">
+                        @{
+                            if (ViewBag.ActiveDiscountList != null)
+                            {
+                                for (int i = 0; i < ViewBag.ActiveDiscountList.Count; i++)
+                                {
+                                    Kuyam.Database.Extensions.CompanyDiscountExt discount = ViewBag.ActiveDiscountList[i];
+                                    promoName = discount.Name;
+                                    string disShow = discount.Amount != 0 ? "$" + discount.Amount.ToString("0,0.00") : discount.Percent.ToString("0,0.00") + "%";
+                                    string numberleft = string.Empty;
+                                    if (discount.Quantity >= 0)
+                                    {
+                                        numberleft = (discount.Quantity - discount.NumberOfUsage).ToString() + " left";
+                                    }
+                                    else
+                                    {
+                                        numberleft = "unlimited";
+                                    }
+
+                                    string remain = string.Empty;
+                                    
+                                    DateTime startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
+                                    DateTime enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+                                    TimeSpan remainTime = new TimeSpan(enddate.AddTicks(-DateTime.Now.Ticks).Ticks);
+                                    //string startdate = discount.StartDate.ToString("MM/dd/yy");
+                                    //string starttime = discount.StartDate.ToString("hh:mm tt").ToLower();
+                                    //string enddate = string.Empty;
+                                    //string endtime = string.Empty;
+                                    remain = discount.EndDate.Date.Year == DateTime.MaxValue.Date.Year ? "no expiry date" : string.Format("{0} days {1} hrs {2}m {3}s", remainTime.Days, remainTime.Hours, remainTime.Minutes, remainTime.Seconds);
+                                    var expiryDate = discount.EndDate.Date.Year == DateTime.MaxValue.Date.Year ? string.Empty : string.Format("{0} days {1} hrs {2}m {3}s", remainTime.Days, remainTime.Hours, remainTime.Minutes, remainTime.Seconds);
+                                    string strLnkaddnumber = string.Format("lnkaddnumber{0}", discount.DiscountId);
+                            <div class="discountitem">
+                                <div class="dis1">
+                                    <div class="dis1content">
+                                        title: @Kuyam.Domain.UtilityHelper.TruncateText(discount.Name, 20)<br />
+                                        for: @Kuyam.Domain.UtilityHelper.TruncateText(discount.Description, 20)<br />
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="divdiscode">
+                                        <span class="discode">code: <span>@discount.Code</span></span>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dis2">
+                                    <div class="dis2title">
+                                        discount:</div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="dis2content">
+                                        @disShow
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="dis3">
+                                    <div class="dis3contenttop">
+                                        <div class="dis3ctq">
+                                            <div class="dis3ctqtitle">
+                                                quantity:</div>
+                                            <div class="clear">
+                                            </div>
+                                            <div class="dis3ctqcontent">
+                                                @discount.NumberOfUsage used<br />
+                                                @numberleft
+                                            </div>
+                                        </div>
+                                        <div class="dis3contenttopremain">
+                                            <div class="dis3ctqtitle">
+                                                remaining time:</div>
+                                            <div class="clear">
+                                            </div>
+                                            <div class="dis3ctrcontent">
+                                                @remain
+                                            </div>
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                    <div class="clear5">
+                                    </div>
+                                    <div class="dis3contentbot">
+                                        <div class="dis3cbsend">
+                                            @{
+                                    if (!discount.IsSent)
+                                    {
+                                                <a href="#" title="send to clients (@ViewBag.RegularClients.Count)" class="send">send
+                                                    to clients (@ViewBag.RegularClients.Count)</a>
+                                    }
+                                    else
+                                    {
+                                                <a href="#" idvalue="@discount.DiscountId" discountname="@discount.Name" discountcode="@discount.Code" 
+                                                       discountamount="@discount.Amount.ToString("0,0.00")" discountpercent="@discount.Percent" discountquantity="@discount.Quantity" title="recipients" id="@strLnkaddnumber" class="recipientsPopUp">
+                                                    recipients</a>
+                                    }
+                                            }
+                                        </div>
+                                        <div class="dis3cbedit">
+                                            @if (!discount.IsSent)
+                                            {
+                                                <a href="#" title="edit" idvalue="@discount.DiscountId" discountname="@discount.Name" discountcode="@discount.Code" 
+                                                       discountamount="@discount.Amount.ToString("0,0.00")" discountpercent="@discount.Percent" discountquantity="@discount.Quantity"
+                                                       startdate="@startdate.ToString("MM/dd/yy")" starttime="@startdate.ToString("hh:mm tt").ToLower()" enddate="@enddate.ToString("MM/dd/yy")" endtime="@enddate.ToString("hh:mm tt").ToLower()"
+                                                       serviceid="@discount.ServiceId" servicename="@Kuyam.Domain.UtilityHelper.TruncateText(discount.Description, 30)" expirydate="@expiryDate"
+                                                        >edit</a>
+                                            }
+                                        </div>
+                                        <div class="dis3cbdelete">
+                                            <a href="#" title="delete" idvalue="@discount.DiscountId">delete</a></div>
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="lightBox" class="lightBox">
+</div>
+<!--begin create promo code-->
+<div id="creatediscountcode" class="comfirmationpopup creatediscountcode">
+    <div class="contentPopup">
+        <a class="btnClose" onclick="hideScroll();" title="close"></a>
+        <h3>
+            <strong>create a promo code</strong></h3>
+        <div class="clear5">
+        </div>
+        <div class="cdctitle">
+            title</div>
+        <div class="clear8">
+        </div>
+        <div class="dctitleinput">
+            <input id="ainpDiscountName" type="text" value="e.g. christmas discount" onfocus="if (this.value=='e.g. christmas discount') {this.value = '';}"
+                onblur="if (this.value==''){this.value='e.g. christmas discount';}" /></div>
+        <div class="clear13">
+        </div>
+        <div class="cdctitle">
+            promo code: <i>(case sensitive, this is what clients will type to receive the discount)</i>
+        </div>
+        <div class="clear6">
+        </div>
+        <div class="entercode">
+            <input id="ainpDiscountCode" type="text" value="enter code" onfocus="if (this.value=='enter code') {this.value = '';}"
+                onblur="if (this.value==''){this.value='enter code';}" />
+            <input id="ainpReDiscountCode" type="text" class="reenter" value="re-enter code"
+                onfocus="if (this.value=='re-enter code') {this.value = '';}" onblur="if (this.value==''){this.value='re-enter code';}" />
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="dcamountquantity">
+            <div class="dcamount">
+                <div class="cdctitle">
+                    discount amount: <i>(amount clients save)</i>
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="discounttype">
+                    <div class="dollar">
+                        <input type="radio" id="dollar" name="client" checked="checked" />
+                        <label for="dollar">
+                            <span class="rdtitle">&nbsp;</span>
+                        </label>
+                        <span class="dctext">$</span>
+                        <input type="text" class="discountinput" id="ainpDiscountAmount" />
+                    </div>
+                    <div class="percent">
+                        <input type="radio" id="percent" name="client" />
+                        <label for="percent">
+                            <span class="rdtitle">&nbsp;</span>
+                        </label>
+                        <input type="text" class="discountinput" id="ainpDiscountPercent" />
+                        <span class="dctext dcpersent">%</span>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="dcquantity">
+                <div class="cdctitle">
+                    quantity:
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="dcquantityinput">
+                    <input type="text" id="ainpDiscountQuantity" />
+                    <span class="nolimittext">(leave blank if no limit)</span>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear5">
+        </div>
+        <div class="dccreatetime">
+            <div class="dcstartday">
+                <div class="cdctitle">
+                    start date and time:</div>
+                <div class="clear6">
+                </div>
+                <div class="startdaycontent">
+                    <input type="text" value="" id="ainpStartDate" readonly />
+                    <span class="at">at</span>
+                    <input type="text" value="" id="ainpStartTime" readonly />
+                </div>
+            </div>
+            <div class="dcexpiryday">
+                <div class="cdctitle">
+                    expiry date and time:</div>
+                <div class="clear6">
+                </div>
+                <div class="startdaycontent">
+                    <input type="text" value="" id="ainpEndDate" readonly />
+                    <span class="at">at</span>
+                    <input type="text" value="" id="ainpEndTime" readonly />
+                    <span class="nolimittext">(leave blank if no expiry)</span>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear16">
+        </div>
+        <div class="dcwhichservice">
+            <div class="cdctitle">
+                for which service?</div>
+            <div class="clear10">
+            </div>
+            <div class="selectdiscountcode">
+                <select id="dcselectservice" class="selectduration">
+                    <option value="0" selected="selected">all services</option>
+                    @{
+                        if (ViewBag.ServiceList != null)
+                        {
+                            for (int i = 0; i < ViewBag.ServiceList.Count; i++)
+                            {
+                                Kuyam.Database.Extensions.CompanyService service = ViewBag.ServiceList[i];
+                        <option value="@service.ID">@Kuyam.Domain.UtilityHelper.TruncateText(service.ServiceName, 20)</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divcreatediscount">
+            <a href="#" class="createpkg" id="btnpreviewpkg" title="create promo code"><span
+                class="lcreatepkg"></span><span class="ccreatepkg">create promo code</span> <span
+                    class="rcreatepkg"></span></a>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="errordiv" style="color: red">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!--end create promo code-->
+<!--begin edit promo code-->
+<div id="editdiscountcode" class="comfirmationpopup creatediscountcode editdiscountcode">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="close"></a>
+        <h3>
+            <strong>edit promo code</strong></h3>
+        <div class="clear5">
+        </div>
+        <div class="cdctitle">
+            title</div>
+        <div class="clear8">
+        </div>
+        <div class="dctitleinput">
+            <input id="einpDiscountName" type="text" value="e.g. christmas discount" onfocus="if (this.value=='e.g. christmas discount') {this.value = '';}"
+                onblur="if (this.value==''){this.value='e.g. christmas discount';}" /></div>
+        <div class="clear13">
+        </div>
+        <div class="cdctitle">
+            promo code: <i>(case sensitive, this is what clients will type to receive the discount)</i>
+        </div>
+        <div class="clear6">
+        </div>
+        <div class="entercode">
+            <input id="einpDiscountCode" type="text" value="enter code" onfocus="if (this.value=='enter code') {this.value = '';}"
+                onblur="if (this.value==''){this.value='enter code';}" />
+            <input id="einpReDiscountCode" type="text" class="reenter" value="re-enter code"
+                onfocus="if (this.value=='re-enter code') {this.value = '';}" onblur="if (this.value==''){this.value='re-enter code';}" />
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="dcamountquantity">
+            <div class="dcamount">
+                <div class="cdctitle">
+                    discount amount: <i>(amount clients save)</i>
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="discounttype">
+                    <div class="dollar">
+                        <input type="radio" id="edollar" name="client" checked="checked" />
+                        <label for="edollar">
+                            <span class="rdtitle">&nbsp;</span>
+                        </label>
+                        <span class="dctext">$</span>
+                        <input type="text" class="discountinput" id="einpDiscountAmount" />
+                    </div>
+                    <div class="percent">
+                        <input type="radio" id="epercent" name="client" />
+                        <label for="epercent">
+                            <span class="rdtitle">&nbsp;</span>
+                        </label>
+                        <input type="text" class="discountinput" id="einpDiscountPercent" />
+                        <span class="dctext dcpersent">%</span>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="dcquantity">
+                <div class="cdctitle">
+                    quantity:
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="dcquantityinput">
+                    <input type="text" id="einpDiscountQuantity" />
+                    <span class="nolimittext">(leave blank if no limit)</span>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear5">
+        </div>
+        <div class="dccreatetime">
+            <div class="dcstartday">
+                <div class="cdctitle">
+                    start date and time:</div>
+                <div class="clear6">
+                </div>
+                <div class="startdaycontent">
+                    <input type="text" value="" id="einpStartDate" readonly />
+                    <span class="at">at</span>
+                    <input type="text" value="" id="einpStartTime" readonly />
+                </div>
+            </div>
+            <div class="dcexpiryday">
+                <div class="cdctitle">
+                    expiry date and time:</div>
+                <div class="clear6">
+                </div>
+                <div class="startdaycontent">
+                    <input type="text" value="" id="einpEndDate" readonly />
+                    <span class="at">at</span>
+                    <input type="text" value="" id="einpEndTime" readonly />
+                    <span class="nolimittext">(leave blank if no expiry)</span>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear16">
+        </div>
+        <div class="dcwhichservice">
+            <div class="cdctitle">
+                for which service?</div>
+            <div class="clear10">
+            </div>
+            <div class="selectdiscountcode">
+                <select id="edcselectservice" class="selectduration">
+                    <option value="0" selected="selected">all services</option>
+                    @{
+                        if (ViewBag.ServiceList != null)
+                        {
+                            for (int i = 0; i < ViewBag.ServiceList.Count; i++)
+                            {
+                                Kuyam.Database.Extensions.CompanyService service = ViewBag.ServiceList[i];
+                        <option value="@service.ID">@Kuyam.Domain.UtilityHelper.TruncateText(service.ServiceName, 40)</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divcreatediscount">
+            <a href="#" class="createpkg" id="ebtnpreviewpkg" title="save changes"><span class="lcreatepkg">
+            </span><span class="ccreatepkg">save changes</span> <span class="rcreatepkg"></span>
+            </a>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="eErrordiv" style="color: red">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!--end edit promo code-->
+<!--begin delete promo confirmation-->
+<div id="loginpopupDelete" class="appPopup">
+    <div class="popUpAppoiment">
+        <div class="bgtopPopup">
+        </div>
+        <div class="bgmidPopup">
+            <h3>
+                are you sure you want to delete this discount?</h3>
+            <p class="pYesNo">
+                <a id="btnDelete" class="btnYes" href="JavaScript:void(0);" title="yes">yes</a>
+                <a class="btnNo" href="JavaScript:void(0);" title="no">no</a>
+            </p>
+            <div id="divDeleteError" class="contentQuestion">
+            </div>
+        </div>
+        <div class="bgbottomPopup">
+        </div>
+    </div>
+</div>
+<!--end delete discount confirmation-->
+<input type="hidden" id="currentdiscountid" name="currentdiscountid" value="0" />
+<!--begin SEND TO CLIENT popup-->
+<div id="sendmsgpopup" class="comfirmationpopup sendmsgpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="close"></a>
+        <h3>
+            <div id="smsDivTitle">
+            </div>
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="senddescription">
+            we’ll send a kuyam e-mail blast to your clients to promote your promo code.<br />
+            <span class="redc1272d">you have a limit of 1 email blast per promo code. use it
+                wisely!</span>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="contentmsgsend">
+            include a message from your company <i>(max 250 characters)</i>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="msgsend">
+            <textarea id="msgsend" cols="4" rows="4" onfocus="if (this.value=='enter message here....') {this.value = '';}"
+                onblur="if (this.value==''){this.value='enter message here....';}">enter message here....</textarea>
+        </div>
+        <div class="clear15">
+        </div>
+        <div class="typesend">
+            <div class="allclient">
+                <input type="radio" id="allclient" name="client" checked="checked" />
+                <label for="allclient">
+                    <span class="rdtitle">send to all regular clients</span>
+                </label>
+            </div>
+            <div class="selectclient">
+                <input type="radio" id="sltclient" name="client" />
+                <label for="sltclient">
+                    <span class="rdtitle">only select certain clients</span>
+                </label>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="recipient">
+            @{
+                //RegularClients
+                if (ViewBag.RegularClients != null)
+                {
+                    for (int i = 0; i < ViewBag.RegularClients.Count; i++)
+                    {
+                        Kuyam.Database.RegularClient regular = ViewBag.RegularClients[i];
+                        var id = string.Format("client{0}", i + 1);
+                        var stName = string.Format("{0} {1}", regular.FirstName, regular.LastName);
+                        if (stName.Length > 15)
+                        {
+                            stName = stName.Substring(0, 15);
+                        }
+                <div class="recipitem">
+                    <input type="checkbox" id="@id" idvalue="@regular.RegularClientId" />
+                    <label for="@id">
+                        @stName</label>
+                </div>
+                    }
+                }
+            }
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divpreviewemail">
+            <a href="#" class="createpkg" id="btnSendSMSReview" title="preview e-mail"><span
+                class="lcreatepkg"></span><span class="ccreatepkg">preview e-mail</span> <span class="rcreatepkg">
+                </span></a>
+        </div>
+        <div class="clear7">
+        </div>
+        <div id="errorDivSendSMS" style="color: red">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!--end SEND TO CLIENT popup-->
+<!--begin PREVIEW EMAIL popup-->
+<div id="previewemail" class="comfirmationpopup previewcontentpoup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="close"></a>
+        <h3>
+            <strong>preview e-mail to clients</strong></h3>
+        <div class="clear">
+        </div>
+        <div class="previewemailcontent1">
+            <div class="previewemailtop">
+                <table cellpadding="0" cellspacing="0" border="0" width="432" class="tblpreviewcontent">
+                    <tr>
+                        <td class="previewemailtitle">
+                            @profileCompany.Name is offering you a discount!
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="0" border="0" class="creenbox">
+                                <tr>
+                                    <td colspan="2" align="center" valign="top" class="titlesummer" style="">
+                                        <span>@promoName</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center" valign="top" class="descript1">
+                                        <div id="previewMessageTitle">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="113" height="107" class="giftimage" style="padding-left: 15px;" valign="top">
+                                        <a href="#" title="@promoName">
+                                            <img alt="" src="../../Images/giftbox.png" /></a>
+                                    </td>
+                                    <td valign="top" class="tdtime">
+                                        <div class="divtime" id="previewMessageTime">
+                                        </div>
+                                        <table cellpadding="0" cellspacing="0" border="0" class="prediscodebox" width="225">
+                                            <tr>
+                                                <td height="54" class="tdprediscode">
+                                                    <span>code:</span>
+                                                    <div id="previewMessageCode">
+                                                    </div>
+                                                    <span class="tdprediscodedescript">use this promo code at checkout.</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="previewemailcenter">
+                <table cellpadding="0" cellspacing="0" border="0" width="422">
+                    <tr>
+                        <td class="precompanymessage" style="" valign="top">
+                            <span>message from the company:</span><br />
+                            <div id="previewMessageDescription">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tdscheduleapp">
+                            click on the following link to schedule an appointment now:<br />
+                            <a href="@profileLink" target="_blank" title="@Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost()bookappoinment">
+                                @Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost()bookappoinment</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="previewemailbottom">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="sendmailarea">
+            <div class="change">
+                <a href="#" title="go back and change something" id="btnGoBackAndChange">< go back and
+                    change something</a>
+            </div>
+            <div class="divsendemail">
+                <a href="#" class="createpkg" id="btnSendPreviewEmail" title="send e-mail"><span
+                    class="lcreatepkg"></span><span class="ccreatepkg">send e-mail</span> <span class="rcreatepkg">
+                    </span></a>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!--end PREVIEW EMAIL popup-->
+<!--begin recipients popup-->
+<div id="recipientpopup" class="comfirmationpopup recipientpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="close"></a>
+        <h3>
+            <div id="divRecipientTitle">
+            </div>
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="recipient">
+            <div id="divRecipientContent">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear20">
+        </div>
+    </div>
+</div>
+<!--end recipients popup-->
+<script type="text/javascript">
+    var arrayServiceId = new Array();
+    var arrayServiceName = new Array();
+    var durationandservicename = '';
+    var companyId = '@ViewBag.companyId';
+
+    var m_names = new Array("Jan", "Feb", "Mar",
+                "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+                "Oct", "Nov", "Dec");
+
+    $(document).ready(function () {
+        $('.dis3cbdelete a').click(function () {
+            $('#currentdiscountid').val($(this).attr('idvalue'));
+            $('#divDeleteError').empty();
+            showpopup("loginpopupDelete");
+            $('#lightBox').css('opacity', '0.3').fadeIn(400);
+            $('#loginpopupDelete').fadeIn(400);
+            $('#loginpopupDelete').css('top', ($('#lightBox').height() - $('#loginpopupDelete').height()) / 2);
+            $('#loginpopupDelete').css('left', ($('#lightBox').width() - $('#loginpopupDelete').width()) / 2);
+            $('#divDeleteError').empty();
+            $('#loginpopupDelete .btnYes').click(function () {
+                $('#divDeleteError').empty();
+                var id = $('#currentdiscountid').val();
+                var parameters = { id: id };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(parameters),
+                        dataType: 'html',
+                        url: '/company/DeleteDiscountCompany/'
+                    })
+                    .success(function (result) {
+                        if (result == false || result == 'false') {
+                            $('#divDeleteError').empty();
+                            $('#divDeleteError').append("<p>cannot delete in-use discount<p/>");
+                            return false;
+                        }
+                        else {
+                            $('#loginpopupDelete').fadeOut(400);
+                            $('#lightBox').fadeOut(400);
+                            window.location.href = '/company/companyactivediscountCode?companyId=' + companyId;
+                        }
+                    })
+                    .error(function (error) {
+
+                    });
+
+            });
+        });
+
+        $('#loginpopupDelete .btnNo').click(function () {
+            $('#loginpopupDelete').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+
+        $("#btnpreviewpkg").click(function () {
+            $('#errordiv').hide();
+            $('#errordiv').empty();
+            var valid = true;
+            if ($('#ainpDiscountName').val() == '' || $('#ainpDiscountName').val() == 'e.g. christmas discount') {
+                valid = false;
+                $('#errordiv').append("title is a required field! <br/>");
+            }
+            if ($('#ainpDiscountCode').val() == '' || $('#ainpDiscountCode').val() == 'enter code') {
+                valid = false;
+                $('#errordiv').append("code is a required field! <br/>");
+            }
+
+            if ($('#ainpReDiscountCode').val() == '' || $('#ainpReDiscountCode').val() == 're-enter code') {
+                valid = false;
+                $('#errordiv').append("re-enter code is a required field! <br/>");
+            } else {
+                if ($('#ainpDiscountCode').val() != $('#ainpReDiscountCode').val()) {
+                    valid = false;
+                    $('#errordiv').append("re-enter code and enter code must be matched! <br/>");
+                }
+            }
+            if ($('#dollar').attr('checked')) {
+                if ($('#ainpDiscountAmount').val() == '') {
+                    valid = false;
+                    $('#errordiv').append("discount amount is a required field! <br/>");
+                }
+            }
+
+            if ($('#percent').attr('checked')) {
+                if ($('#ainpDiscountPercent').val() == '') {
+                    valid = false;
+                    $('#errordiv').append("discount percent is a required field! <br/>");
+                }
+            }
+
+            //start date and time:
+            if ($('#ainpStartDate').val() == '') {
+                valid = false;
+                $('#errordiv').append("start date is a required field! <br/>");
+            }
+            if ($('#ainpStartTime').val() == '') {
+                valid = false;
+                $('#errordiv').append("start time is a required field! <br/>");
+            }
+
+            var d = $('#ainpStartDate').datepicker('getDate');
+            var curr_date = d.getDate();
+            var curr_month = d.getMonth();
+            var curr_year = d.getFullYear();
+            var totalTime = curr_date + " " + m_names[curr_month] + " " + curr_year;
+            var jdt1 = Date.parse(totalTime + ' ' + $('#ainpStartTime').val());
+            var jdt2 = Date.parse(new Date());
+            if (jdt1 <= jdt2) {
+                valid = false;
+                $('#errordiv').append("start date and start time can not be in past! <br/>");
+            }
+
+
+            if ($('#ainpStartDate').val() != '' && $('#ainpEndTime').val() != '' && $('#ainpEndDate').val() != '' && $('#ainpEndTime').val() != '') {
+                var startDateTime = $('#ainpStartDate').datepicker('getDate');
+                var endDateTime = $('#ainpEndDate').datepicker('getDate');
+                if (startDateTime.getTime() > endDateTime.getTime()) {
+                    valid = false;
+                    $('#errordiv').append("end date must be greater than start date! <br/>");
+                }
+                else if (startDateTime.getTime() == endDateTime.getTime() && $('#ainpStartTime').val() >= $('#ainpEndTime').val()) {
+                    valid = false;
+                    $('#errordiv').append("end time must be greater than start time! <br/>");
+                }
+            }
+
+            if (!valid) {
+                $('#errordiv').show();
+                return false;
+            } else {
+                creatediscount();
+            }
+        });
+
+        $("#ebtnpreviewpkg").click(function () {
+            $('#eErrordiv').hide();
+            $('#eErrordiv').empty();
+            var valid = true;
+            if ($('#einpDiscountName').val() == '' || $('#einpDiscountName').val() == 'e.g. christmas discount') {
+                valid = false;
+                $('#eErrordiv').append("title is a required field! <br/>");
+            }
+            if ($('#einpDiscountCode').val() == '' || $('#einpDiscountCode').val() == 'enter code') {
+                valid = false;
+                $('#eErrordiv').append("code is a required field! <br/>");
+            }
+
+            if ($('#einpReDiscountCode').val() == '' || $('#einpReDiscountCode').val() == 're-enter code') {
+                valid = false;
+                $('#eErrordiv').append("re-enter code is a required field! <br/>");
+            } else {
+                if ($('#einpDiscountCode').val() != $('#einpReDiscountCode').val()) {
+                    valid = false;
+                    $('#eErrordiv').append("re-enter code and enter code must be matched! <br/>");
+                }
+            }
+
+            if ($('#edollar').attr('checked')) {
+                if ($('#einpDiscountAmount').val() == '') {
+                    valid = false;
+                    $('#eErrordiv').append("discount amount is a required field! <br/>");
+                }
+            }
+
+            if ($('#epercent').attr('checked')) {
+                if ($('#einpDiscountPercent').val() == '') {
+                    valid = false;
+                    $('#eErrordiv').append("discount percent is a required field! <br/>");
+                }
+            }
+
+            //start date and time:
+            if ($('#einpStartDate').val() == '') {
+                valid = false;
+                $('#eErrordiv').append("start date is a required field! <br/>");
+            }
+            if ($('#einpStartTime').val() == '') {
+                valid = false;
+                $('#eErrordiv').append("start time is a required field! <br/>");
+            }
+
+            //            var d = $('#einpStartDate').datepicker('getDate');
+            //            var curr_date = d.getDate();
+            //            var curr_month = d.getMonth();
+            //            var curr_year = d.getFullYear();
+            //            var totalTime = curr_date + " " + m_names[curr_month] + " " + curr_year;
+            //            var jdt1 = Date.parse(totalTime + ' ' + $('#einpStartTime').val());
+            //            var jdt2 = Date.parse(new Date());
+            //            if (jdt1 <= jdt2) {
+            //                valid = false;
+            //                $('#eErrordiv').append("start date and start time can not be in past! <br/>");
+            //            }
+
+            if ($('#einpStartDate').val() != '' && $('#einpEndTime').val() != '' && $('#einpEndDate').val() != '' && $('#einpEndTime').val() != '') {
+                var startDateTime = $('#einpStartDate').datepicker('getDate');
+                var endDateTime = $('#einpEndDate').datepicker('getDate');
+                if (startDateTime.getTime() > endDateTime.getTime()) {
+                    valid = false;
+                    $('#eErrordiv').append("end date must be greater than start date! <br/>");
+                }
+                else if (startDateTime.getTime() == endDateTime.getTime() && $('#einpStartTime').val() >= $('#einpEndTime').val()) {
+                    valid = false;
+                    $('#eErrordiv').append("end time must be greater than start time! <br/>");
+                }
+            }
+
+            if (!valid) {
+                $('#eErrordiv').show();
+                return false;
+            } else {
+                updatediscount();
+            }
+        });
+
+
+        //Preview SMS screen
+        $(".dis3cbsend .send").click(function () {
+            $('#smsDivTitle').empty();
+            $('#allclient').prop('checked', false);
+            $('#sltclient').prop('checked', true);
+            $('#sendmsgpopup .recipitem').find(':checkbox').prop('checked', false);
+            var aref = $(this).parent().parent().find('.dis3cbedit a');
+            if (aref.length > 0) {
+                $('#currentdiscountid').val(aref.attr('idvalue'));
+                var id = $('#currentdiscountid').val();
+                $('#smsDivTitle').append("<strong>send </strong>");
+                $('#smsDivTitle').append('"' + aref.attr('discountname') + '"');
+                $('#smsDivTitle').append("<strong> promo code to clients!</strong>");
+
+                //initiate for preview discount   
+                var messagename = aref.attr('servicename');
+                durationandservicename = aref.attr('servicename');
+                var discountnumber = '';
+                if (parseFloat(aref.attr('discountamount')) > 0) {
+                    discountnumber = aref.attr('discountamount') + '$';
+                } else {
+                    discountnumber = aref.attr('discountpercent')+ '%';
+                }
+                $('#previewMessageTitle').empty();
+                $('#previewMessageTitle').append("<span>save " + discountnumber + "</span><strong> on " + messagename + ".</strong>");
+
+                //preview messge time
+                var starttime = "starting " + aref.attr('startdate') + " at " + aref.attr('starttime');
+                var endtime = "until " + aref.attr('enddate') + " at " + aref.attr('endtime');
+                if (aref.attr('expirydate') == '') {
+                    endtime = "until no expiry date";
+                }
+                $('#previewMessageTime').empty();
+                $('#previewMessageTime').append(starttime + "<br/>" + endtime);
+
+                //previewcode
+                $('#previewMessageCode').empty();
+                $('#previewMessageCode').append('<span class="code">' + aref.attr('discountcode') + '</span><br />');
+
+                showpopup("sendmsgpopup");
+            }
+        });
+
+        $('#allclient').change(function () {
+            $('#sendmsgpopup .recipitem').find(':checkbox').prop('checked', true);
+        });
+        $('#sltclient').change(function () {
+            $('#sendmsgpopup .recipitem').find(':checkbox').prop('checked', false);
+        });
+
+        $("#btnSendSMSReview").click(function () {
+            $('#errorDivSendSMS').empty();
+            var valid = true;
+            if ($('#msgsend').val() == '' || $('#msgsend').val() == 'enter message here....') {
+                valid = false;
+                $('#errorDivSendSMS').append("message is a required field! <br/>");
+            }
+            //preview description
+            $('#previewMessageDescription').empty();
+            $('#previewMessageDescription').append(' <span class="precommescontent">' + $('#msgsend').val() + '<br /></span>');
+
+            if ($('#sendmsgpopup .recipitem :checkbox:checked').length == 0) {
+                valid = false;
+                $('#errorDivSendSMS').append("at least one regular client must be selected! <br/>");
+            }
+            if (!valid) {
+                $('#errorDivSendSMS').show();
+                return false;
+            } else {
+                previewemail();
+            }
+        });
+
+        $("#btnGoBackAndChange").click(function () {
+            $('#previewemail').hide();
+        });
+
+        $(".recipientsPopUp").click(function () {
+            var aref = $(this).parent().parent().find('.dis3cbsend a');
+            $('#divRecipientTitle').empty();
+            $('#divRecipientContent').empty();
+            if (aref.length > 0) {
+                $('#currentdiscountid').val(aref.attr('idvalue'));
+                $('#divRecipientTitle').append('<strong>recipients of </strong><i>“' + aref.attr("discountname") + '”</i> <strong>e-mail</strong>');
+                var discountid = $('#currentdiscountid').val();
+                var parameters = { id: discountid };
+                $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'json',
+                    url: '/company/LoadRegularClient/'
+                })
+                .success(function (result) {
+                    $('#divRecipientContent').append(result);
+                    showpopup("recipientpopup");
+                })
+                .error(function (error) {
+
+                });
+            }
+        });
+    });
+
+    function previewemail() {
+        showpopup("previewemail");
+        $("#btnGoBackAndChange").click(function () {
+            $('#previewemail').hide();
+        });
+        $('#btnSendPreviewEmail').click(function () {
+            var discountid = $('#currentdiscountid').val();
+            var messagecontent = $('#msgsend').val();
+            var arrayServiceId = new Array();
+            $('#sendmsgpopup .recipitem :checkbox:checked').each(function () {
+                if (arrayServiceId.indexOf($(this).attr("idvalue")) == -1)
+                    arrayServiceId.push($(this).attr("idvalue"));
+            });
+            var services = arrayServiceId.join(';');
+            var parameters = { id: discountid, message: messagecontent, clients: services, durationandservicename: durationandservicename };
+            if (processing == 0) {
+                processing = 1;
+                $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/DiscountSendEmail/'
+                })
+                .success(function (result) {
+                    window.location.href = '/company/companyactivediscountCode';
+                })
+                .error(function (error) {
+
+                });
+            }
+        });
+    }
+
+    function resetcreatediscount() {
+        $('#currentdiscountid').attr('value', 0);
+        $('#ainpDiscountName').val('');
+        $('#ainpDiscountCode').val('');
+        $('#ainpReDiscountCode').val('');
+        $('#dollar').attr('checked', true);
+        $('#ainpDiscountAmount').val('');
+        $('#percent').attr('checked', false);
+        $('#ainpDiscountPercent').val('');
+        $('#ainpDiscountQuantity').val('');
+        $("#dcselectservice").selectmenu("index", 0);
+        $('#errordiv').empty();
+    }
+
+    function creatediscount() {
+        var id = $('#currentdiscountid').attr('value');
+        var name = $('#ainpDiscountName').val();
+        var code = $('#ainpDiscountCode').val();
+        var isamount = $('#dollar').attr('checked') == 'checked';
+        var amount = 0;
+        if ($('#ainpDiscountAmount').val() != '')
+            amount = parseFloat($('#ainpDiscountAmount').val());
+        var ispercent = $('#percent').attr('checked') == 'checked';
+        var percent = 0;
+        if ($('#ainpDiscountPercent').val() != '')
+            percent = parseFloat($('#ainpDiscountPercent').val());
+        var quantity = -1;
+        if ($("#ainpDiscountQuantity").val() != '')
+            quantity = parseInt($("#ainpDiscountQuantity").val());
+        var serviceid = parseInt($("#dcselectservice").selectmenu("value"));
+        var startdate = $('#ainpStartDate').datepicker('getDate');
+        var enddate = $('#ainpEndDate').datepicker('getDate');
+        var starttime = $('#ainpStartTime').val();
+        var endtime = $('#ainpEndTime').val();
+
+        var parameters = {
+            id: id,
+            name: name,
+            code: code,
+            isamount: isamount,
+            amount: amount,
+            ispercent: ispercent,
+            percent: percent,
+            quantity: quantity,
+            serviceid: serviceid,
+            startdate: startdate,
+            starttime: starttime,
+            enddate: enddate,
+            endtime: endtime,
+            profileId: companyId
+        };
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/AdminCompanyCreateDiscountCode/'
+            })
+            .success(function (result) {
+                if (result != 'true')
+                    window.location.href = '/company/companyactivediscountCode?companyId=' + companyId;
+                else {
+                    $('#errordiv').show();
+                    $('#errordiv').append("promo code is used");
+                }
+            })
+            .error(function (error) {
+                //window.location.href = '/company/companyactivediscountCode';
+            });
+    }
+
+    function updatediscount() {
+        var id = $('#currentdiscountid').attr('value');
+        var name = $('#einpDiscountName').val();
+        var code = $('#einpDiscountCode').val();
+        var isamount = $('#edollar').attr('checked') == 'checked';
+        var amount = 0;
+        if ($('#einpDiscountAmount').val() != '')
+            amount = parseFloat($('#einpDiscountAmount').val());
+        var ispercent = $('#epercent').attr('checked') == 'checked';
+        var percent = 0;
+        if ($('#einpDiscountPercent').val() != '')
+            percent = parseFloat($('#einpDiscountPercent').val());
+        var quantity = -1;
+        if ($("#einpDiscountQuantity").val() != '')
+            quantity = parseInt($("#einpDiscountQuantity").val());
+        var serviceid = parseInt($("#edcselectservice").selectmenu("value"));
+        var startdate = $('#einpStartDate').datepicker('getDate');
+        var enddate = $('#einpEndDate').datepicker('getDate');
+        var starttime = $('#einpStartTime').val();
+        var endtime = $('#einpEndTime').val();
+
+        var parameters = {
+            id: id,
+            name: name,
+            code: code,
+            isamount: isamount,
+            amount: amount,
+            ispercent: ispercent,
+            percent: percent,
+            quantity: quantity,
+            serviceid: serviceid,
+            startdate: startdate,
+            starttime: starttime,
+            enddate: enddate,
+            endtime: endtime,
+            profileId: companyId
+        };
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/company/AdminCompanyCreateDiscountCode/'
+            })
+            .success(function (result) {
+                if (result == 'isused') {
+                    $('#eErrordiv').show();
+                    $('#eErrordiv').empty();
+                    $('#eErrordiv').append("cannnot edit in-use discount");
+                }
+                else if (result != false && result != 'false') {
+                    window.location.href = '/company/companyactivediscountCode?companyId=' + companyId;
+                }
+                else {
+                    $('#eErrordiv').show();
+                    $('#eErrordiv').empty();
+                    $('#eErrordiv').append("promo code is used");
+                }
+            })
+            .error(function (error) {
+                //window.location.href = '/company/companyactivediscountCode';
+            });
+    }
+
+    function reseteditdiscount() {
+        $('#einpDiscountName').val('');
+        $('#einpDiscountCode').val('');
+        $('#einpReDiscountCode').val('');
+        $('#edollar').attr('checked', true);
+        $('#einpDiscountAmount').val('');
+        $('#epercent').attr('checked', false);
+        $('#einpDiscountPercent').val('');
+        $('#einpDiscountQuantity').val('');
+        $("#edcselectservice").selectmenu("index", 0);
+        $('#eErrordiv').empty();
+    }
+
+    function loaddiscount(obj) {
+        $('#einpDiscountName').val($(obj).attr('discountname'));
+        $('#einpDiscountCode').val($(obj).attr('discountcode'));
+        $('#einpReDiscountCode').val($(obj).attr('discountcode'));
+        if (parseFloat($(obj).attr('discountamount')) > 0) {
+            $('#einpDiscountAmount').val($(obj).attr('discountamount'));
+            $('#edollar').prop('checked', true);
+            $('#epercent').prop('checked', false);
+        } else {
+            $('#einpDiscountPercent').val($(obj).attr('discountpercent'));
+            $('#edollar').prop('checked', false);
+            $('#epercent').prop('checked', true);
+        }
+        $('#einpDiscountQuantity').val($(obj).attr('discountquantity'));
+        if ($('#einpDiscountQuantity').val() == '-1')
+            $('#einpDiscountQuantity').val('');
+        $("#edcselectservice").selectmenu("value", $(obj).attr('serviceid'));
+        $('#einpStartDate').val($(obj).attr('startdate'));
+        $('#einpStartTime').val($(obj).attr('starttime'));
+        $('#einpEndDate').val($(obj).attr('enddate'));
+        $('#einpEndTime').val($(obj).attr('endtime'));
+        $('#eErrordiv').empty();
+    }
+</script>

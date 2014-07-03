@@ -1,0 +1,288 @@
+﻿@{
+    ViewBag.Title = "_ByGiftCardMailForm";
+    //DateTime time = DateTime.Now;
+    //DateTime compare = DateTime.Parse(time.ToShortDateString() + " 2:00PM");
+    //bool greater = (time > compare);
+    //var currentDate = DateTime.Now;
+    //var estimateDateFree = string.Empty;
+    //var estimateDatePremium = string.Empty;
+    //var formatDate = "MMM d";
+    //if (!greater)
+    //{
+    //    estimateDateFree = currentDate.AddDays(4).ToString(formatDate) + "-" + currentDate.AddDays(7).ToString(formatDate);
+    //    estimateDatePremium = currentDate.AddDays(3).ToString(formatDate);
+    //}
+    //else
+    //{
+    //    estimateDateFree = currentDate.AddDays(5).ToString(formatDate) + "-" + currentDate.AddDays(8).ToString(formatDate);
+    //    estimateDatePremium = currentDate.AddDays(4).ToString(formatDate);
+    //}
+}
+@*<h2>_ByGiftCardMailForm</h2>
+<div>
+    <label>recipient's name:</label>
+    <input id="iprecipientName" type="text"/>
+    <label>recipient address:</label>
+    <input id="iprecipientaddress1" type="text"/>
+    <input id="iprecipientaddress2" type="text"/>
+    <input id="iprecipientcity" type="text"/>
+    <input id="iprecipientstate" type="text"/>
+    <input id="iprecipientzipcode" type="text"/>
+    <input type="radio">FREE standard shipping
+    <input type="radio">preminium shipping
+    <label>estimate delivery date</label><label>10/10/2013</label>
+    <label>shipping cost:</label><label>$0.00</label>
+    <label>your name:</label>
+    <input id="ipyourname"/>
+    <label>your message:</label>
+    <input id="blyourMessage"></input>
+    <input id="btMailPayment" type="button" title="purchase with Paypal" value="purchase with Paypal"/>
+</div>*@
+<div class="boxdashboardmailright">
+    <div class="boxtop">
+    </div>
+    <div class="boxcenter">
+        <label for="txtname" class="labelblock">
+            recipient’s name:</label>
+        <div class="clear2">
+        </div>
+        <input type="text" class="txtxlarge" id="txtname" maxlength="255"/>
+        <span id="spanNameRequire1" class="requiresGiftCard">recipient’s name is required.</span>
+        <div class="boxaddress">
+            <label for="txtaddress" class="labelblock">
+                recipient address:</label>
+            <div class="clear1">
+            </div>
+            <input type="text" class="txtxlarge watermark" name="txtaddress" id="txtaddress1" value="address line 1" onblur="if (this.value==''){this.value='address line 1';this.style.color='#B3B3B3';}"
+                        onfocus="if (this.value=='address line 1') {this.value = '';this.style.color='#666666';}" maxlength="255"/>
+            <span id="spanAddressRequire1" class="requiresGiftCard">address is required.</span>
+            <div class="clear3">
+            </div>
+            <input type="text" class="txtxlarge watermark" name="txtaddress" id="txtaddress2" value="address line 2" onblur="if (this.value==''){this.value='address line 2';this.style.color='#B3B3B3';}"
+                        onfocus="if (this.value=='address line 2') {this.value = '';this.style.color='#666666';}" maxlength="255"/>
+            <div class="clear2">
+            </div>
+            <input type="text" class="fleft txtlarge watermark" name="txtaddress_city" id="txtaddress_city" value="city" onblur="if (this.value==''){this.value='city';this.style.color='#B3B3B3';}"
+                        onfocus="if (this.value=='city') {this.value = '';this.style.color='#666666';}" maxlength="255"/>
+            <input type="text" class="fleft txtsmall watermark" name="txtaddress_state" id="txtaddress_state" value="state" onblur="if (this.value==''){this.value='state';this.style.color='#B3B3B3';}"
+                        onfocus="if (this.value=='state') {this.value = '';this.style.color='#666666';}" maxlength="2"/>
+            <input type="text" class="fleft txtmedium watermark" name="txtaddress_zipcode" id="txtaddress_zipcode" value="zip code" onblur="if (this.value==''){this.value='zip code';this.style.color='#B3B3B3';}"
+                        onfocus="if (this.value=='zip code') {this.value = '';this.style.color='#666666';}" maxlength="5" />
+            <span id="spanCityRequire" class="requiresGiftCard">city is required.</span>
+            <div class="clear2">
+            </div>
+            <span id="spanZipCodeRequire" class="requiresGiftCard">zip code is required.</span>
+            <div class="clear2">
+            </div>
+            <span id="spanStateRequire" class="requiresGiftCard">state is required.</span>
+            <div class="clear13">
+            </div>
+            <div class="fleft">
+                <input type="radio" name="radioshipping" id="radiostandard" value="1" checked="checked" /><label
+                    for="radiostandard">FREE standard shipping</label>
+            </div>
+            <div class="fright cbpremium">
+                <input type="radio" name="radioshipping" id="radiopremium" value="2" /><label for="radiopremium">premium
+                    shipping</label>
+            </div>
+            <div class="clear20">
+            </div>
+            <div class="fleft">
+                estimated delivery date:
+            </div>
+            <div class="fright arangedate">
+                <span id="estimateDate"></span>
+            </div>
+            <div class="clear11">
+            </div>
+            <div class="fright shippcost">
+                shipping cost: $<span id="shippingcost">0.00</span>
+            </div>
+            <div class="clear19">
+            </div>
+        </div>
+        <label for="txtyourname" class="labelblock">
+            your name:</label>
+        <div class="clear2">
+        </div>
+        <input type="text" class="txtxlarge" id="txtyourname" maxlength="255"/>
+        <span id="spanYourNameRequire1" class="requiresGiftCard">your name is required.</span>
+        <div class="clear7">
+        </div>
+        <label for="txtmessage" class="labelblock">
+            your message (300 characters max):</label>
+        <div class="clear2">
+        </div>        
+        <div class="watermarkgiftcard">
+            <textarea cols="" rows="" id="txtmessage" maxlength ="300"></textarea>
+            <span class="watermark">hi friend!<br />
+                <br />
+                here’s a gift for you. thought you could use some relaxation :) </span>
+        </div>
+        <span id="spanMessageRequire1" class="requiresGiftCard">your message is required.</span>
+    </div>
+    <div class="boxbottom">
+    </div>
+</div>
+<input id="btMailPayment" type="submit" value="" class="btnpurchase" />
+<div class="clear">
+</div>
+<input type="hidden" id="hdinputTypeShipping" value="1" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitPageMail();
+
+        // begin wartermark for txtmessage
+        $("#txtmessage").focus(function () { $(this).css({ "background": "#ffffff" }); });
+        $("#txtmessage").blur(function () {
+            if ($("#txtmessage").val() == '') {
+                $(this).css({ "background": "transparent" });
+            }
+            else {
+                $(this).css({ "background": "#ffffff" });
+            }
+        });
+        // end wartermark for txtmessage
+
+        $("#btMailPayment").click(function () {
+            InitPageMail();
+            var amount = $("#amount").val();
+            var recipientName = $("#txtname").val();
+            var ownerName = $("#txtyourname").val();
+            var message = $("#txtmessage").val();
+            var city = $("#txtaddress_city").val();
+            var state = $("#txtaddress_state").val();
+            var zipcode = $("#txtaddress_zipcode").val();
+            var typeShipping = $("#hdinputTypeShipping").val();
+            var costShip = $("#shippingcost").text();
+            var estimateDate = $("#estimateDate").text();
+            var address1 = $("#txtaddress1").val();
+            var address2 = $("#txtaddress2").val();
+            var res = ValidateEmailForm1(amount, recipientName, address1, city, state, zipcode, ownerName, message);
+            if (!res) {
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            }
+            if (amount == '0') {
+                $("#errorAmount").show();
+            } else {
+                var option = {
+                    amount: amount,
+                    type: 2,
+                    recipientName: recipientName,
+                    recipientEmail: '',
+                    ownerName: ownerName,
+                    message: message.replace(/\n\r?/g, '<br />'),
+                    city: city,
+                    state: state,
+                    zipcode: zipcode,
+                    typeShipping: typeShipping,
+                    costShipping: costShip,
+                    estimateDate: estimateDate,
+                    address1: address1,
+                    address2: address2
+                };
+                PurchaseWithPaypal(amount, "mail", option);
+            }
+
+        });
+        $("input:radio[name='radioshipping']").click(function () {
+            if ($(this).attr("checked") == "checked") {
+                if ($(this).val() == '1') {
+                    $("#shippingcost").text("0.00");
+                    $("#hdinputTypeShipping").val('1');
+                    
+                }
+                if ($(this).val() == '2') {
+                    var amount = $("#amount").val();
+                    if (amount == '0') {
+                        $("#hdinputTypeShipping").val('2');
+                        $("#errorAmount").show();
+                        $("html, body").animate({ scrollTop: 0 }, 600);
+                        $("#shippingcost").text("25.00");
+                    } else {
+                        $("#shippingcost").text("25.00");
+                        $("#hdinputTypeShipping").val('2');
+                    }
+
+                }
+                GetEstimateDate();
+            }
+        });
+//        $("#amount").change(function () {
+//            var type = $("#hdinputTypeShipping").val();
+//            if (type == '2') {
+//                var amount = $("#amount").val();
+//                var shCost = parseFloat(amount) + 25;
+//                $("#shippingcost").text(shCost + ".00");
+//            }
+//        });
+    });
+    function GetEstimateDate() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetEstimateDate", "GiftCard")',
+            data: '',
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                //alert(data.isSuccess);
+                var type = $("#hdinputTypeShipping").val();
+                if (type == '1') {
+                    var estimateDateFree = data.estimateDateFree;
+                    $("#estimateDate").text(estimateDateFree);
+                } else {
+                    var estimateDatePremium = data.estimateDatePremium;
+                    $("#estimateDate").text(estimateDatePremium);
+                }
+            }
+         });
+    }
+    function InitPageMail() {
+        $("#errorAmount").hide();
+        $("#spanNameRequire1").hide();
+        $("#spanAddressRequire1").hide();
+        $("#spanCityRequire").hide();
+        $("#spanStateRequire").hide();
+        $("#spanZipCodeRequire").hide();
+        $("#spanYourNameRequire1").hide();
+        $("#spanMessageRequire1").hide();
+        GetEstimateDate();
+    }
+    function ValidateEmailForm1(amount, rName, address, city, state, zipcode, yourName, eMessage) {
+        var flag = true;
+        if (amount == '' || amount == '0') {
+            flag = false;
+            $("#errorAmount").show();
+        }
+        if (rName == '') {
+            flag = false;
+            $("#spanNameRequire1").show();
+        }
+        if (address == '' || address == 'address line 1') {
+            flag = false;
+            $("#spanAddressRequire1").show();
+        }
+        if (city == '' || city == 'city') {
+           
+            flag = false;
+            $("#spanCityRequire").show();
+        }
+        if (state == '' || state == 'state') {
+            flag = false;
+            $("#spanStateRequire").show();
+        }
+        if (zipcode == '' || zipcode == 'zip code') {
+            flag = false;
+            $("#spanZipCodeRequire").show();
+        }
+        if (yourName == '') {
+            flag = false;
+            $("#spanYourNameRequire1").show();
+        }
+//        if (eMessage == '') {
+//            flag = false;
+//            $("#spanMessageRequire1").show();
+//        }
+        return flag;
+    }
+</script>

@@ -1,0 +1,41 @@
+﻿
+.profileCompanyHtmlEdit {
+    background: url("/images/companyProfileHtmlEditor.jpg") no-repeat scroll 0 0 #FFFFFF;
+    color: #0071BC;
+    display: inline-block;
+    font: bold 22px/22px Arial,Helvetica,sans-serif;
+    height: 93px;
+    padding: 8px 0 0 110px;
+    position: relative;
+    width: 538px;
+    margin-top: 5px;
+    clear:both;
+}
+
+.profileCompanyHtmlEdit a {
+    text-decoration: none;
+}
+
+.profileCompanyHtmlEdit .companyIcon {
+    width: 86px;
+    margin: 5px 0 0 5px;
+    float: left;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #000000;
+}
+
+ .profileCompanyHtmlEdit .companyIcon img{
+    width: 86px;
+    height: 83px;
+}
+
+.profileCompanyHtmlEdit .content {
+    width: 400px;
+    float: left;
+ }
+.profileCompanyHtmlEdit .title {
+    color: #0071BC;
+    display: inline-block;
+    font: bold 22px/22px Arial,Helvetica,sans-serif;
+    margin: 5px 0 0 9px;
+}

@@ -1,0 +1,126 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain
+@model IList<Appointment>
+@{
+    ViewBag.Title = "agenda";
+}
+<style type="text/css">
+    .tabTable tr th {
+        padding-left: 10px;
+        font-size: 22px;
+    }
+    .tabTable tr td {
+        padding-left: 10px;
+    }
+</style>
+<style type="text/css" media="print">
+    .dontprint {
+        display: none;
+    }
+</style>
+
+<div class="contentMarketPlace">
+    <div class="colRight rightadmin" style="border: none;">
+        <h1>Agenda</h1>
+        <input id="prinButton" onclick="window.focus();window.print();window.close();" type="button"
+               value="print" class="dontprint" />
+        <input id="closeButton" onclick="window.close();" type="button" value="close" class="dontprint" />
+        <div class="clear">
+        </div>
+
+        <table class="tabTable" border='1' cellpadding="0" cellspacing="0" width="1024">
+            <tr style="text-align: left">
+                <th style="width: 341px;">Appoinment</th>
+                <th style="width: 341px;">Guest</th>
+                <th style="width: 341px;">Company</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                var fnHotelStaff = item.HotelStaff != null ? item.HotelStaff.Cust.FullName : string.Empty;
+            <tr>
+                <td style="width: 341px;">
+                    <span>Date: @item.Start.ToString("D")</span>
+                    <div class="clear">
+                    </div>
+                    <span>Time: @item.Start.ToString("h:mm tt")</span>
+                    <div class="clear">
+                    </div>
+                    <span>Booked By: @fnHotelStaff</span>                    
+                    <div class="clear">
+                    </div>
+                    <span>Price: @item.Price.Value.ToString("C0")</span>
+                    <div class="clear">
+                    </div>
+                    @{
+                        var  serviceName =!string.IsNullOrEmpty(@item.ServiceName)?@item.ServiceName: @item.ServiceCompany.Service != null ?
+                                @item.ServiceCompany.Service.ServiceName : string.Empty;
+                    }
+                   
+                    <span>Services: @serviceName</span>
+                    <div class="clear">
+                    </div>
+                    @{  
+                           var eplName =!string.IsNullOrEmpty(@item.EmployeeName)?@item.EmployeeName: @item.CompanyEmployee != null ?
+                                @item.CompanyEmployee.EmployeeName : string.Empty;
+                       
+                    }
+                    <span>Employee: @eplName</span>
+                </td>
+                <td style="width: 341px;">
+                @{
+                    var guestName = @item.Cust.FirstName;
+                //var guest = @item.Hotel != null && @item.Hotel.Cust != null 
+                //    &&@item.Hotel.Cust.HotelVisits.FirstOrDefault() != null ? @item.Hotel.Cust.HotelVisits.FirstOrDefault() : null;
+                //        var guestRoom = guest != null ? guest.RoomNumber:string.Empty;
+                //        var guestEmail = guest != null ? guest.Cust.Email:string.Empty;
+                //        var guestPhone = guest != null ? UtilityHelper.CleanPhone(guest.Cust.MobilePhone) : string.Empty;
+                var guest = @item.Cust!=null && @item.Cust.HotelVisits!=null?@item.Cust.HotelVisits.FirstOrDefault():null;
+                    var guestRoom = guest != null ? guest.RoomNumber : string.Empty;
+                    var guestEmail = guest != null ? guest.Cust.Email : string.Empty;
+                    var guestPhone = guest != null ? UtilityHelper.FormatPhone(guest.Cust.MobilePhone) : string.Empty;
+                    }
+                    <span>Name: @guestName</span>
+                    <div class="clear">
+                    </div>
+                    <span>Room: @guestRoom</span>
+                    <div class="clear">
+                    </div>
+                    <span>Email: @guestEmail</span>
+                    <div class="clear">
+                    </div>
+                    <span>Phone: @guestPhone</span>
+                    <div class="clear" style="height: 40px">
+                    </div>
+                <td style="width: 341px;">
+                    @{
+                        var profile = @item.GetProfileCompany();
+                        var companyName = profile != null ? profile.Name : string.Empty;
+                        var companyAddress = profile != null ? profile.Address : string.Empty;
+                        var companyCity = profile != null ? profile.City : string.Empty;
+                        var companyPhone = profile != null ? UtilityHelper.FormatPhone(profile.Phone) : string.Empty;
+                        
+                    }
+                    <span>Name: @companyName</span>
+                    <div class="clear">
+                    </div>
+
+                    <span>Address: @companyAddress</span>
+                    <div class="clear">
+                    </div>
+
+                    <span>City: @companyCity</span>
+                    <div class="clear">
+                    </div>
+                    <span>Phone: @companyPhone</span>
+                    <div class="clear" style="height: 40px">
+                    </div>
+                </td>
+            </tr>
+            }
+        </table>
+
+    </div>
+    <div class="clear">
+    </div>
+
+</div>

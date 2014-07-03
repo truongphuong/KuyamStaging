@@ -1,0 +1,197 @@
+﻿@using Kuyam.Database;
+@model Kuyam.WebUI.Models.CategoryModel
+@using Kuyam.WebUI.Models;
+<div class="apheader">
+    <div class="apheaderleft">
+        appointment history
+        <br />
+        <span>(most recent to oldest)</span>
+    </div>
+    <div class="apheadercenter">
+        <div class="arrowleft">
+            <a onclick="fillterByDate('@ViewBag.PrevDate')" title="previous" class="btnpreview">
+            </a>
+        </div>
+        <div class="historymonth">
+            <input type="hidden" id="historymonth" value="@ViewBag.DateCurrent" />
+            @ViewBag.DateCurrent
+        </div>
+        <div class="arrowright">
+            <a  onclick="fillterByDate('@ViewBag.NextDate')" title="next" class="btnnextyear">
+            </a>
+        </div>
+    </div>
+    <div class="apheaderright">
+        <a href="/appointment" class="back" title="back to current appointments">back to current
+            appointments</a>
+        <div class="clear">
+        </div>
+        <div class="scategory">
+            @*         @Html.DropDownListFor(m => m.ServiceID, Model.ServicesList, new { @id = "narrowcategory", @name = "narrowcategory", @class = "narrowcategory", @onchange = "fillterByCategory()" })*@
+            <select id="narrowcategory" class="narrowcategory" onchange = "fillterByCategory();">
+                <option value="0" "selected=selected">All</option>
+                @foreach (Service item in ViewBag.lstService)
+                {  
+                    <option value="@item.ServiceID" @( ViewBag.categoryId == item.ServiceID ? "selected=selected" : "")>@item.ServiceName</option>
+                }
+            </select>
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="apcontent">
+    @if (ViewBag.appoitnmentlist != null)
+    {
+        DateTime today = DateTime.Today;
+        foreach (Appointment item in ViewBag.appoitnmentlist)
+        {
+            if (today.ToString("M/d/yyyy") != item.Start.ToString("M/d/yyyy"))
+            {   
+        <h2>@String.Format("{0:dddd, MMM d}", item.Start).ToLower()</h2>
+                today = item.Start;
+            }
+        <div class="apcontentitem">
+            <div class="aptime">@String.Format("{0:t}", item.Start).ToLower()</div>
+            <div class="apcompanyname">
+                @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                {
+                    @item.ServiceCompany.ProfileCompany.Name
+                }
+                @if (item.Rating <= 0 || !item.Rating.HasValue)
+                {
+                    <a href="javascript:void(0);" rel="@item.AppointmentID" id="lnkaddreview"  title="submit a review" class="addreview">
+                    </a>
+                }
+            </div>
+            <div class="apdescript">
+                @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                {
+                    int? duration = item.ServiceCompany.Duration;
+                    decimal? price = item.ServiceCompany.Price;
+                    string serviceName = string.Empty;
+                    string employeeName = string.Empty;
+                    string note = string.Empty;
+                    string contactType = string.Empty;
+                    List<AppointmentLog> appointmentlog = item.AppointmentLogs.Where(m => m.CustID != MySession.CustID).OrderByDescending(o => o.LogDT).ToList();
+                    if (item.ServiceCompany.Service != null)
+                    {
+                        serviceName = item.ServiceCompany.Service.ServiceName;
+                    }
+
+                    if (appointmentlog != null && appointmentlog.Count > 0)
+                    {
+                        note = appointmentlog[0].Message;
+                    }
+
+                    if (item.CompanyEmployee != null)
+                    {
+                        employeeName = item.CompanyEmployee.EmployeeName;
+                    }
+
+                    if (item.ContactType == (int)Types.ContactType.Email)
+                    {
+                        contactType = "confirmation via Email";
+                    }
+                    else if (item.ContactType == (int)Types.ContactType.SMS)
+                    {
+                        contactType = "confirmation via SMS";
+                    }
+                    else if (item.ContactType == (int)Types.ContactType.EmailSMS)
+                    {
+                        contactType = "confirmation via Email and SMS";
+                    }
+                    @:@string.Format("{0}, {1} min, ${2} {3} {4} {5}", serviceName, duration, price, employeeName, note, contactType)
+                }
+                <a href="javascript:void(0);" id="lnkviewnotes" title="view notes" rel="@item.AppointmentID"  class="viewnotes" href="javascript:void(0);">
+                    view notes</a>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        }
+    }
+</div>
+<div class="apfooter">
+    <div class="contentPaging">
+        @if (ViewBag.TotalRecord >= 10)
+        {
+            <div class="fLeft">
+                <span>viewing @ViewBag.From -@ViewBag.To</span> of <span>@ViewBag.TotalRecord appointments</span>
+            </div>
+        }
+        <div class="paging">
+            @ViewBag.Paging
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<input type="hidden" id="index" value="@ViewBag.Index"/>
+<img id="aptImgLoader" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+<div id="lightBox" class="lightBox z499">
+</div>
+<div id="viewnotespopup" class="viewnotespopup">
+</div>
+<div id="formaddreview" class="formaddreview">
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('select#category').selectmenu();
+        $('select#narrowcategory').selectmenu();
+        $("#accordion").accordion("option", "active", 1);
+
+        $('.apdescript #lnkviewnotes').click(function () {
+            $("#viewnotespopup").load("/appointment/LoadAppointmentNotePopup?appointmentID=" + this.rel + "&nocache=" + getunixtime(), function () {
+
+                lengthofviewnote();
+                showDialog('viewnotespopup');
+            });
+
+        });
+        $('.apcontentitem #lnkaddreview').click(function () {
+            $("#formaddreview").load("/appointment/LoadAppointmentReviewPopup?appointmentID=" + this.rel + "&nocache=" + getunixtime(), function () {
+                lengthofviewnote();
+                showDialog('formaddreview');
+            });
+
+        });
+
+    });
+
+    function fillterByDate(date) {
+        var selected = document.getElementById('narrowcategory');
+        var categoryId = selected.options[selected.selectedIndex].value;       
+        var param = "page=1&date=" + date + "&categoryid=" + categoryId;
+        window.location = "/appointment/history?" + param;
+//        commonPostAjax("Appointment", "History", param, setlistAppoiontmentHistory, setError, "html");
+    }
+
+    function fillterByCategory(category) {
+        var date = $("#historymonth").val();
+        var selected = document.getElementById('narrowcategory');
+        var categoryId = selected.options[selected.selectedIndex].value;
+        var param = "page=1&date=" + date + "&categoryid=" + categoryId;
+        window.location = "/appointment/history?" + param;
+        //commonPostAjax("Appointment", "History", param, setlistAppoiontmentHistory, setError, "html");
+    }
+
+    function pagingEvent(pageIndex) {
+        var date = $("#historymonth").val();
+        var selected = document.getElementById('narrowcategory');
+        var categoryId = selected.options[selected.selectedIndex].value;
+        var param = "page=" + pageIndex + "&date=" + date + "&categoryId=" + categoryId;       
+        window.location = "/appointment/history?" + param;
+        //commonPostAjax("Appointment", "History", param, setlistAppoiontmentHistory, setError, "html");
+    }
+
+    function setlistAppoiontmentHistory(result) {
+        window.location = "/appointment/history";
+        //        $("#appointmenthistory").html(result);
+        //        activetab = 1;
+        //        domScript();       
+    }
+
+</script>

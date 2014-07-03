@@ -1,0 +1,666 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Utility;
+@using Kuyam.WebUI.Models;
+@{
+    ViewBag.Title = "Company Employee List Hours";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+    var instructorId = 0;
+    if (ViewBag.InstructorId!= null)
+    {
+        instructorId = (int)ViewBag.InstructorId;
+    }
+    
+
+    List<ServiceCompany> scList = new List<ServiceCompany>();
+    if (ViewBag.CompanyServices != null)
+    {
+        scList = ViewBag.CompanyServices;
+    }
+
+    List<ClassScheduler> previewHour = new List<ClassScheduler>();
+    string pIds = string.Empty;
+    if (ViewBag.previewHour != null)
+    {
+        previewHour = ViewBag.previewHour;
+        foreach(var pItem in previewHour)
+        {
+            pIds = pIds + pItem.ClassSchedulerID + ";";
+        }
+    }
+
+    int durationClass = 0;
+    int classId = 0;
+        
+    if(ViewBag.Class != null)
+    {
+        durationClass = ViewBag.Class.Duration;
+        classId = ViewBag.Class.ServiceCompanyID;
+    }
+
+    
+    string status1 = MySession.CompanyEmployeeBusyOnOff;
+
+    string stringFromHour = ViewBag.FromHour;
+    string stringToHour = ViewBag.ToHour;
+
+
+}
+<style type="text/css">
+    .boxselect, .boxselect1 {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<link rel="Stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar_listhours.css")" />
+<link rel="Stylesheet" type='text/css' href="@Url.Content("~/css/themes/base/fullcalendar.print_listhours.css")" media='print' />
+<script type="text/javascript" src="@Url.Content("~/Scripts/fullcalendar/fullcalendar.js")"></script>
+<link rel="stylesheet" media="all" type="text/css" href="@Url.Content("~/css/themes/base/jquery-ui-timepicker-addon.css")" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-timepicker-addon.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-sliderAccess.js")"></script>
+<script type="text/javascript">
+
+    var dayReview;
+    var status = '@status1';
+    $(function () {
+
+
+        //        $("#accordion").accordion({
+        //            collapsible: true,
+        //            autoHeight: false
+        //        });
+
+        $('#classList, #instructor').selectmenu();
+
+
+        if (status == 'on') {
+            $("#btnon").addClass("active");
+            $("#btnoff").removeClass("active");
+        } else {
+            $("#btnoff").addClass("active");
+            $("#btnon").removeClass("active");
+        }
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });
+
+        $("#btnon").click(function () {
+            status = 'on';
+            $('.fc-event-skin-red').show();
+            $(this).addClass("active");
+            $("#btnoff").removeClass("active");
+            $.post('/company/TurnOnOffEmployyCalendar', { status: 'on' }, function (data) { })
+        });
+        $("#btnoff").click(function () {
+            status = 'off';
+            $('.fc-event-skin-red').hide();
+            $(this).addClass("active");
+            $("#btnon").removeClass("active");
+            $.post('/company/TurnOnOffEmployyCalendar', { status: 'off' }, function (data) { })
+        });
+        $(".dayofweek a").click(function () {
+            if ($(this).attr("class") == "active") {
+                dayReview = document.querySelectorAll('.dayofweek .active');
+                $(this).removeClass("active");
+            }
+            else {
+                $(this).addClass("active");
+            }
+            LoadReview();
+        });
+
+        //createtopleftscroll();
+
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        if (agentID) {
+
+            $('#fromEditHours, #toEditHours').scroller({
+                preset: 'time',
+                theme: 'jqm',
+                display: 'modal',
+                mode: 'scroller'
+            });
+
+            $('#fromhours').scroller({
+                preset: 'time',
+                theme: 'jqm',
+                display: 'modal',
+                mode: 'scroller',
+                onClose: function () { LoadReview(); }
+            });
+        }
+        else {
+            $('#fromEditHours, #toEditHours').timepicker({
+                ampm: true,
+                stepMinute: 30,
+                amNames: ['am', 'a'],
+                pmNames: ['pm', 'p']
+            });
+
+            $('#fromhours').timepicker({
+                ampm: true,
+                stepMinute: 30,
+                amNames: ['am', 'a'],
+                pmNames: ['pm', 'p'],
+                onClose: function () { LoadReview(); }
+            });
+
+
+        }
+
+    });
+
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        var hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
+
+
+</script>
+<input type="hidden" id="hdnTest" />
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight">
+            <input type="hidden" id="previewIds" value="@pIds" />
+            <div class="editserviceform editschedule">
+                <h1>
+                    list/edit class scheduler
+                </h1>
+                <div class="line1">
+                </div>
+                <div class="clear10">
+                </div>
+                <div class="listhours">
+                    <div class="boxselect1">
+                    </div>
+                    <div class="selectcat fLeft">
+                        <select name="class" id="classList" class="selectcatagory">
+                            @{
+                                <option selected="selected" value="-1">select class</option>
+                                if (ViewBag.ServiceCompanys != null && ViewBag.ServiceCompanys.Count > 0)
+                                {
+                                    foreach (ServiceCompany item in ViewBag.ServiceCompanys)
+                                    {                                       
+                                        <option @(item.ServiceCompanyID == classId ? "selected=selected" : "") class="employeeName" value="@item.ServiceCompanyID" title="@item.Service.ServiceName">@string.Format("{0}, {1} min, ${2}, {3} person", UtilityHelper.TruncateAtWord(item.Service.ServiceName, 25), item.Duration, item.Price, item.AttendeesNumber)</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="selectcat fLeft">
+                        <select name="instructor" id="instructor" class="selectcatagory">
+                            @{
+                                <option selected="selected" value="0">all instructor (or select one)</option>
+                                if (ViewBag.EmployeeList != null && ViewBag.EmployeeList.Count > 0)
+                                {
+
+                                    for (int i = 0; i < ViewBag.EmployeeList.Count; i++)
+                                    {
+                                        CompanyEmployee obj = ViewBag.EmployeeList[i];
+                                        if (instructorId > 0 && obj.EmployeeID == instructorId)
+                                        {
+                                             <option class="employeeName" value="@obj.EmployeeID" selected="selected" title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
+                                        }
+                                        else
+                                        {
+                                            <option class="employeeName" value="@obj.EmployeeID" title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
+                                        }
+                                        
+
+                                    }
+                                }
+
+                            }
+                        </select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="boxselect">
+                        <div class="selectday">
+                            <div class="title">
+                                select days:
+                            </div>
+                            <div class="clear">
+                            </div>
+                            @if (previewHour != null)
+                            {
+                                DateTime now = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
+                                int dayOfWeek = (int)now.DayOfWeek;
+                                int detDay = 7 - dayOfWeek;
+                                int day = 0;
+
+                                <div class="dayofweek">
+                                    @for (int i = 0; i < 7; i++)
+                                    {
+                                        bool flag = false;
+                                        foreach (ClassScheduler item in previewHour)
+                                        {
+                                            if (item.DayOfWeek >= dayOfWeek)
+                                            {
+                                                day = item.DayOfWeek - dayOfWeek;
+                                            }
+                                            else
+                                            {
+                                                day = item.DayOfWeek + detDay;
+                                            }
+                                            if (day.ToString().Contains(i.ToString()))
+                                            {
+                                                flag = true;
+                                                break;
+                                            }
+
+                                        }
+                                        if (flag)
+                                        {
+                                            <a href="javascript:void(0);" id="@now.AddDays(i).Day" class="active" addday="@now.AddDays(i).DayOfWeek.ToString()" title="@now.AddDays(i).Day">@now.AddDays(i).ToString("ddd").ToLower()</a>
+
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" id="@now.AddDays(i).Day" addday="@now.AddDays(i).DayOfWeek.ToString()" title="@now.AddDays(i).Day">@now.AddDays(i).ToString("ddd").ToLower()</a>
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                DateTime now = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
+
+                                <div class="dayofweek">
+                                    <a href="javascript:void(0);" id="@now.Day" addday="@now.DayOfWeek.ToString()" title="@now.Day">@now.ToString("ddd").ToLower()</a>
+                                    <a href="javascript:void(0);" id="@now.AddDays(1).Day" addday="@now.AddDays(1).DayOfWeek.ToString()" title="@now.AddDays(1).Day">@now.AddDays(1).ToString("ddd").ToLower()</a>
+                                    <a href="javascript:void(0);" id="@now.AddDays(2).Day" addday="@now.AddDays(2).DayOfWeek.ToString()" title="@now.AddDays(2).Day">@now.AddDays(2).ToString("ddd").ToLower()</a>
+                                    <a href="javascript:void(0);" id="@now.AddDays(3).Day" addday="@now.AddDays(3).DayOfWeek.ToString()" title="@now.AddDays(3).Day">@now.AddDays(3).ToString("ddd").ToLower()</a>
+                                    <a href="javascript:void(0);" id="@now.AddDays(4).Day" addday="@now.AddDays(4).DayOfWeek.ToString()" title="@now.AddDays(4).Day">@now.AddDays(4).ToString("ddd").ToLower()</a>
+                                    <a href="javascript:void(0);" id="@now.AddDays(5).Day" addday="@now.AddDays(5).DayOfWeek.ToString()" title="@now.AddDays(5).Day">@now.AddDays(5).ToString("ddd").ToLower()</a>
+                                    <a href="javascript:void(0);" id="@now.AddDays(6).Day" addday="@now.AddDays(6).DayOfWeek.ToString()" title="@now.AddDays(6).Day">@now.AddDays(6).ToString("ddd").ToLower()</a>
+                                </div>
+                            }
+                        </div>
+                        <div class="available">
+                            <div class="title">
+                                available hours:
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="divaddhours">
+                                <div class="textbox">
+                                    <div class="ltxtaddhours">
+                                    </div>
+                                    <div class="ctxtaddhours" style="width: 57px !important;">
+                                        <input id="fromhours" type="text" readonly="readonly" value="" />
+                                    </div>
+                                    <div class="rtxtaddhours">
+                                    </div>
+                                </div>
+                                <div class="divto">
+                                    to
+                                </div>
+                                <script type="text/javascript">
+                                    $('#fromhours').val('@stringFromHour');
+                                </script>
+                                <div class="divbtnaddhours">
+                                    <input id="btnaddhours" class="addhours" type="button" value="+add hours" title="add hours" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="listhourscalendar">
+                    <div class="employeelisthours">
+                        <div id='calendar'>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                @if (ViewBag.Employee != null)
+                {
+                    CompanyEmployee employee = ViewBag.Employee;
+                    <h2 style="margin-left: 0px !important;">
+                        <span>@Kuyam.Domain.UtilityHelper.TruncateText(employee.EmployeeName, 20)</span>’s
+                        list of services
+                    </h2>
+                }
+                @if (scList.Count > 0)
+                {
+
+                    <div class="employeelisthourscol1">
+                        @for (int i = 0; (i * 2) < scList.Count; i++)
+                        {
+                            <span>
+                                @scList[i * 2].Service.ServiceName <span>@scList[i * 2].Duration</span>min, $<span>@scList[i * 2].Price</span>,
+                                <span>@scList[i * 2].AttendeesNumber</span>person
+                            </span> <br />
+                        }
+                    </div>
+                    <div class="employeelisthourscol2">
+                        @for (int i = 0; (i * 2) + 1 < scList.Count; i++)
+                        {
+                            <span>
+                                @Kuyam.Domain.UtilityHelper.TruncateText(scList[(i * 2) + 1].Service.ServiceName, 20)
+                                <span>@scList[(i * 2) + 1].Duration</span>min, $<span>@scList[(i * 2) + 1].Price</span>,
+                                <span>@scList[(i * 2) + 1].AttendeesNumber</span>person
+                            </span> <br />
+                        }
+                    </div>
+                }
+                <div class="clear86">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var companyId = '@ViewBag.companyId';
+    var currentDate ='@ViewBag.CurrentDate';
+    $(document).ready(function () {
+
+        $('#classList').change(function () {
+            var classId= $('#classList').val();
+            var instructorId =  $('#instructor').val();
+            url= "/company/classscheduler?instructorId=" + instructorId + "&classId=" + classId;
+            window.location.href = url;
+
+        });
+
+        $('#instructor').change(function () {
+            var classId= $('#classList').val();
+            var instructorId =  $('#instructor').val();
+            url= "/company/classscheduler?instructorId=" + instructorId + "&classId=" + classId;
+            window.location.href = url;
+
+        });
+
+        $('#employeeListHourMenu').attr("class", "leftItem choose");
+        $('#btnaddhours').click(function () {
+            var previewListHours = $('#previewIds').val();
+
+            if(previewListHours == null ||previewListHours=='')
+                return false;
+            var parameters = { previewHours: previewListHours };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/AddClassSheduler/'
+            })
+        .success(function (result) {
+            if(result == 'true')
+            {
+                window.location.href ="/company/classscheduler?instructorId=" + @instructorId + "&classId=" + @classId;
+            }
+            else
+            {
+                alert('you selected wrong time');
+            }
+
+        })
+        .error(function (error) {
+        })
+
+
+
+        });
+
+        $('.btnDeleteEmployeeHour').click(function () {
+            var employeeID = @instructorId;
+            var employeeHourID = $('#selectservice').attr("employeehourid");
+            var employeeHourEditDate = $('#selectservice').attr("employeehoureditdate");
+
+            var parameters = { employeeID: employeeID, employeeHourID: employeeHourID, employeeHourEditDate: employeeHourEditDate,companyId:companyId};
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/DeleteEmployeeHour/'
+            })
+        .success(function (result) {
+            window.location.href ="/company/companyemployeelisthour/" + @instructorId+"?companyId="+companyId;
+
+        })
+        .error(function (error) {
+        })
+        });
+
+        $('.btnSaveeditEmployeeHour').click(function () {
+            var employeeID = @instructorId;
+            var employeeHourID = $('#selectservice').attr("employeehourid");
+            var employeeHourEditDate = $('#selectservice').attr("employeehoureditdate");
+            var fromHour = $('.inputTime1').val();
+            var toHour = $('.inputTime2').val();
+
+            var parameters = { employeeID: employeeID,employeeHourID:employeeHourID, employeeHourEditDate: employeeHourEditDate,fromHour: fromHour, toHour: toHour,profileId:companyId};
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/company/EditEmployeeHour/'
+            })
+        .success(function (result) {
+            if (result == 'true' || result == true) {
+                window.location.href = "/company/companyemployeelisthour/" + @instructorId+"?companyId="+companyId;
+            } else if (result == 'false'|| result == false) {
+                alert('you selected wrong time');
+            } else {
+                alert(result);
+            }
+
+        })
+        .error(function (error) {
+        })
+
+        });
+
+        // gen calendar
+
+        var date = new Date(currentDate);
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+        var calendar = $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
+            header: {
+                left: '',
+                center: 'title',
+                right: ''
+            },
+            height: 800,
+            selectable: false,
+            selectHelper: true,
+            allDaySlot: false,
+            firstDay: date.getDay(),
+            minTime: 0,
+            maxTime: 24,
+            slotMinutes: 60,
+            disableDragging: true,
+            disableResizing: true,
+            columnFormat: {
+                week: 'ddd d'
+            },
+            select: function (start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+						{
+						    title: title,
+						    start: start,
+						    end: end,
+						    allDay: allDay
+						},
+						true // make the event "stick"
+					);
+                }
+                calendar.fullCalendar('unselect');
+            },
+            editable: true,
+            dayNamesShort: ['sun','mon', 'tue', 'wed', 'thu', 'fri', 'sat' ],
+            eventClick: function(calEvent, jsEvent, view) {
+                if(calEvent.className=="fc-event-skin-red"){return;};
+                $(".fc-event-skin").removeClass("fc-event-skin-active");
+
+                $(this).addClass("fc-event-skin-active");
+                if(calEvent.className != "fc-preview")
+                {
+                    //alert(formatAMPM(calEvent.start));
+                    //alert(calEvent.id);
+                    var suffix ='';
+                    if (calEvent.start.getDate()==1) suffix=("st");
+                    else if (calEvent.start.getDate()==2) suffix=("nd");
+                    else if (calEvent.start.getDate()==3) suffix=("rd");
+                    else if (calEvent.start.getDate()==21) suffix=("st");
+                    else if (calEvent.start.getDate()==22) suffix=("nd");
+                    else if (calEvent.start.getDate()==23) suffix=("rd");
+                    else if (calEvent.start.getDate()==31) suffix=("st");
+                    else suffix=("th");
+                    var stringDate = $.fullCalendar.formatDate( calEvent.start,'ddd').toLowerCase()+ ' ' + $.fullCalendar.formatDate(calEvent.start, 'MMM').toLowerCase() + ' ' + calEvent.start.getDate() + suffix;
+                    $('#employeeHourDayEdit').text(stringDate);
+                    $('.inputTime1').val($.fullCalendar.formatDate(calEvent.start,'hh:mm tt'));
+                    $('.inputTime2').val($.fullCalendar.formatDate(calEvent.end, 'hh:mm tt'));
+                    $('#selectservice').attr("employeeHourID", calEvent.id);
+                    $('#selectservice').attr("employeeHourEditDate",  $.fullCalendar.formatDate(calEvent.start,'MMMM dd yyyy'));
+
+                    showSelected(true);
+                }
+
+            },
+            //eventSources: ['/company/GetCompanyEmpoyeeBusyInfo?employeeid=@instructorId'],
+            events: [
+
+               @Html.Raw(ViewBag.StringEvent)
+                {
+                    title: 'Click for Google',
+                    start: new Date(y, m, 28),
+                    end: new Date(y, m, 29),
+                    url: 'http://google.com/'
+                }
+            ],
+
+            annotations: [
+				@Html.Raw(ViewBag.CompanyHours)
+            ],
+            eventAfterRender:function(element, view){
+                if(!status || status=='on'){
+                    $('.fc-event-skin-red').show();
+                }else{
+                    $('.fc-event-skin-red').hide();
+                }
+            }
+        });
+
+    });
+
+    function showSelected()
+    {
+        $('#selectservice').fadeIn(400);
+        $('#selectservice .btnClose').click(function () {
+            $('#selectservice').fadeOut(400);
+        });
+    }
+
+
+    function gotoStatus(status) {
+        window.location.href="/CompanyAppointment/?companyId=@ViewBag.companyId";
+    }
+
+    $(document).ready(function () {
+        $("#ui-accordion-accordion-header-2").click(function () {
+            if (window.location.href.indexOf("calendarview") == -1) {
+                window.location = "/calendarview/";
+            }
+        });
+    });
+
+    function LoadReview()
+    {
+        var employeeID = @instructorId;
+        var fromHour = $('#fromhours').val();
+        var duration = @durationClass;
+        var classId = @classId;
+
+        if(employeeID =='0')
+        {
+            return false;
+        }
+        if(fromHour == '' || duration == 0 ){
+            return false;
+        }
+
+
+        var listDays = document.querySelectorAll('.dayofweek .active');
+
+        var stringListDays = '';
+        if (listDays && listDays.length > 0) {
+            for (var i = 0; i < listDays.length; i++) {
+                if(stringListDays!=""&&listDays[i].attributes["AddDay"].value!="")
+                    stringListDays+=",";
+                stringListDays += listDays[i].attributes["AddDay"].value;
+            }
+        }else{
+            //               stringListDays=dayReview[0].attributes["AddDay"].value;
+            //               alert(stringListDays);
+        }
+
+        var parameters = { employeeID: employeeID,classId:classId, fromHour: fromHour, duration: duration, stringListDays: stringListDays,profileId:companyId };
+        $.ajax(
+        {
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/company/AddPreviewClassSheduler/'
+        })
+        .success(function (result) {
+            if(result == 'true')
+            {
+                window.location.href ="/company/classscheduler?instructorId=" + @instructorId+"&classId=" + classId + "&fromHour="+fromHour+"&duration="+duration +"&companyId="+companyId;
+            }
+
+        })
+        .error(function (error) {
+        })
+
+
+    }
+
+    function genEvent()
+    {
+        var fromHour = $('#fromhours').val();
+        if(fromHour != '' && toHour != '')
+        {
+            var tempEvents = '[';
+            var listDays = document.querySelectorAll('.dayofweek .active');
+            if (listDays && listDays.length > 0) {
+                var temp =''
+                for (var i = 0; i < listDays.length; i++) {
+                    temp = '{ title: \'preview\',';
+                    temp += 'start: new Date(y, m, d +' +  listDays[i].attributes["AddDay"].value + ', ' + fromHour + ', 0),';
+                    temp += 'end: new Date(y, m, d +' +  listDays[i].attributes["AddDay"].value + ', ' + toHour + ', 0),' ;
+                    temp += ' className: "fc-preview",';
+                    temp += 'allDay: false},';
+                    tempEvents += temp;
+                }
+                tempEvents += ']';
+                return tempEvents;
+            }
+        }
+    }
+</script>

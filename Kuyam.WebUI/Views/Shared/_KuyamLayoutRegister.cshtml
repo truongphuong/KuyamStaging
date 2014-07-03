@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:addthis="https://www.facebook.com/2008/fbml"
+xmlns:g="https://www.facebook.com/2008/fbml">
+<head>
+    <title>kuyam @(ViewBag.Title != "" ? "- " + ViewBag.Title.ToLower() : "")</title>
+    <link href="@Url.Content("~/css/style.css?v=21")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/kuyam.css?=20")" rel="stylesheet" type="text/css" />  
+    <link rel="stylesheet" href="@Url.Content("~/css/themes/base/jquery.ui.all.css")" />
+    <link type="text/css" href="@Url.Content("~/css/themes/base/jquery.ui.selectmenu.css")" rel="stylesheet" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.widget.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.position.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.selectmenu.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.accordion.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.datepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/StickyScroller.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/GetSet.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/ui.checkbox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/purl.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/common.js?v=21")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/general.js?v=20")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/json2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/css_browser_selector.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.unobtrusive.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maskedinput-1.3.min.js")"></script>
+    
+    <!--[if IE 7]>
+    <link href="/css/styleIE7.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <!--[if IE 8]>
+    <link href="/css/styleIE8.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <!--[if IE 9]>
+    <link href="/css/styleIE9.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <style type="text/css">
+        .invitecode .invitebox1,
+        .infopage .invitebox1,
+        .newpostinvitecode .invitebox1,
+        .postinvitecodeother .invitebox1, 
+        .postinvitecodeother .postinvitecodeotherbox .listonkuyamnotify, 
+        .postinvitecodeother .boxsyncyourcalendar,
+        .postinvitecodeother .postinvitecodeotherbox1
+        {
+            behavior: url(../../PIE.htc);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" style="height: 857px;">
+        <div>
+            <div id="header-scroll-container" style="width: 100%; height: 84px; position: absolute;">
+                <div class="fixheaderposition" style="position: fixed; top: 0px;">
+                    <div class="fixheaderposition">
+                        <div class="header">
+                            <div class="hcontent h73">
+                                <a href="/" class="logo" title="kuyam"> <img alt="Kuyam" src="/images/kuyam_logo.png" /></a> 
+                                @*<a href="#" class="nameUser" title="Santa Monica, CA">Santa Monica, CA</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            @RenderBody()
+        </div>
+        <div class="clear">
+        </div>
+        <div class="footer">
+            @Html.Partial("_FooterNew")
+        </div>
+        <div id="dialog">
+        </div>
+        <div id="PopUpDialog">
+        </div>
+    </div>
+    
+</body>
+</html>

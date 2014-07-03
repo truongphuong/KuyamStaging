@@ -1,0 +1,111 @@
+﻿@model Kuyam.WebUI.Models.AppointmentFeedbackModel
+@using M2.Util.MVC
+@using M2.Util
+@using Kuyam.Database;
+@using Kuyam.Domain;
+@{
+    Layout = "~/Views/Cust/custmaster.cshtml";
+    ViewBag.CustPage = "feedback";
+}
+@section Subhead
+{
+    <script type="text/javascript">
+        function declineAppt(apptID, calID) {
+            var answer;
+            $.alerts.okButton = '&nbsp;yes&nbsp;';
+            $.alerts.cancelButton = '&nbsp;no&nbsp;';
+
+            jConfirm('Are you sure you want to decline this appointment?', 'Decline Appointment', function (r) {
+                //answer = confirm("Decline appointment?")
+                if (r) {
+                    location.href = '@Url.Content("~/cust/decline-appointment")' + '/' + apptID + '?cal=' + calID;
+                    return false;
+                }
+            });
+
+            return true;
+        }
+
+
+    </script>
+}
+<div class="fcod-frame" style="height: 450px; overflow: auto;">
+    @*
+<div style="height:40px;overflow:auto; border: 1px solid #bbbbbb;">
+    test notification message #1 <a href="#" style="font-style: italic; color:red">x</a><br>
+    test notification message #2 <a href="#" style="font-style: italic; color:red">x</a><br>
+    test notification message #3 <a href="#" style="font-style: italic; color:red">x</a><br>
+    test notification message #4 <a href="#" style="font-style: italic; color:red">x</a><br>
+</div>
+<br />
+*@
+    @foreach (Kuyam.WebUI.Models.AppointmentFeedbackModel.APC apc in Model.APCs)
+    {
+        foreach (Calendar cal in apc.Calendars)
+        {
+            Appointment appt = apc.Appointment;
+        <div class="appt-tag rounded">
+            <div class="appt-tag-pic">
+                <img src="@Url.Content("~/images/appt-icon.png")" class="appt-tag-pic" alt="" /></div>
+            <div class="appt-tag-dt">
+                @if (!appt.ContactPerson.IsNullOrEmpty())
+                { 
+                    <div class="appt-tag-contactname">@appt.ContactPerson.SubstringSafe(0, 23)<br />
+                    </div>
+                }
+                @if (apc.ProfileCompany != null)
+                {
+                    <a href='@Url.Content("~/cust/company-view/" + apc.ProfileCompany.ProfileID)'>@apc.ProfileCompany.Name.SubstringSafe(0, 23)</a>
+                }
+                <br />
+                @appt.Start.ToCasual()
+                <br />
+                <span class="rounded" style="padding: 0px 2px 1px 2px;border:1px solid #666;background:#@cal.BackColor">@cal.Name.SubstringSafe(0, 32)</span>
+            </div>
+            @{
+                AppointmentParticipant ap = AppointmentParticipant.Load(appt.AppointmentID, cal.CalendarID);
+                switch (ap.ParticipantStatusID)
+                {
+                    case (int)Types.AppointmentStatus.Confirmed: <text><div class="appt-tag-status-confirmed">
+                        confirmed</div></text> break;
+                    case (int)Types.AppointmentStatus.CompanyModified: <text><div class="appt-tag-status-accepted">
+                        accepted</div></text> break;
+                    case (int)Types.AppointmentStatus.Pending: <text><div class="appt-tag-status-pending">
+                        pending</div></text> break;
+                    case (int)Types.AppointmentStatus.CompanyModified: <text><div class="appt-tag-status-na">
+                        not accepted, click details</div></text> break;
+                    case (int)Types.AppointmentStatus.Cancelled: <text><div class="appt-tag-status-na">
+                        declined</div></text> break;
+                }
+                <div class="appt-tag-buttonbar rounded-bottom">
+                    &nbsp;
+                    <div class="appt-tag-button rounded-bottom-left">@Html.ActionLink("modify", "modify-appointment", new { id = @appt.AppointmentID, cal = @cal.CalendarID })</div>
+                    <div class="appt-tag-button">
+                        <a href="#" onclick="return declineAppt(@appt.AppointmentID, @cal.CalendarID)">decline</a></div>
+                    <div class="appt-tag-buttonright rounded-bottom-right">
+                        @switch (ap.ParticipantStatusID)
+                        {
+                            case (int)Types.AppointmentStatus.CompanyModified:
+                            @:@Html.ActionLink("confirm", "confirm-appointment", new { id = @appt.AppointmentID, cal = @cal.CalendarID })
+                                break;
+
+                            case (int)Types.AppointmentStatus.CompanyModified:
+                            @:@Html.ActionLink("details", "modify-appointment", new { id = @appt.AppointmentID, cal = @cal.CalendarID })
+                                break;
+
+                            default:
+                                if (ap.ParticipantTypeID != (int)Types.AppointmentParticipantType.Owner)
+                                { 
+                                    @:@Html.ActionLink("accept", "accept-appointment", new { id = @appt.AppointmentID, cal = @cal.CalendarID })
+                                }
+                                break;
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="appt-tag-space">
+        </div>
+        }
+    }
+</div>

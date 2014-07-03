@@ -1,0 +1,970 @@
+﻿html, body, a, .ui-dialog .ui-dialog-content
+{
+	padding: 0;
+	color: #666666; /*#929396;*/
+	font-family: verdana, Arial, helvetica;
+	text-transform: lowercase;
+	height: 100%;
+	margin: 0 0 1px;
+	font-size: small;
+}
+
+body, .ui-dialog .ui-dialog-content
+{
+	background-color: white;
+}
+
+DIV.regTestimonials, DIV.regSteps
+{
+	/*background: url(../images/calfake.jpg);*/
+	padding: 30px 0 0 20px;
+	width: 400px;
+}
+
+DIV.testimonialPerson
+{
+	color: #339900;
+}
+
+DIV.regSteps
+{
+	font-size: 1.3em;
+	padding: 0px 0 0 0px;
+	width: 450px;
+}
+
+DIV.div-scrollinglist
+{
+	height: 160px;
+	width: 98%;
+	overflow: auto;
+	border: 1px solid #ddd;
+	padding-left: 3px;
+}
+
+h1
+{
+	font-size: 1.75em;
+	margin: 0;
+	padding: 0px 0px 12px 0px;
+}
+
+h2
+{
+	font-size: 1.25em;
+	margin: 0;
+	padding: 0px 0px 12px 0px;
+	border: 0px solid black;
+}
+
+h3
+{
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 0px 0px 6px 0px;
+	margin: 0;
+}
+/* COnflicts with timepicker - if needing these, qualify with div name/id
+dl
+{
+	border: 1px solid green;
+	padding: 0.5em;
+	width: 400px;
+	font-size: 16px;
+}
+dt
+{
+	float: left;
+	clear: left;
+	width: 10px;
+	text-align: left;
+	font-weight: bold;
+	background: #339900;
+	color: white;
+	padding: 5px;
+}
+dt:after
+{
+	content: "";
+}
+dd
+{
+	width: 370px;
+	margin: 0 0 0 20px;
+	padding: 5px 0 0.5em 10px;
+}
+*/
+p
+{
+	padding: 0 0 12px 0;
+	margin: 0px;
+}
+
+img
+{
+	border: none;
+	text-decoration: none;
+}
+
+textarea
+{
+	resize: none;
+}
+
+.caseAsEntered
+{
+	text-transform: none;
+}
+
+.text
+{
+	width: 600px;
+}
+
+.centered, .center
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rounded-border, .link-button, .rounded
+{
+	border-radius: 5px;
+}
+
+.rounded-bottom
+{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.rounded-bottom-left
+{
+	border-bottom-left-radius: 5px;
+}
+
+.rounded-bottom-right
+{
+	border-bottom-right-radius: 5px;
+}
+
+/*table, td
+{
+	border-radius: 5px;
+}
+*/
+
+input, textarea
+{
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+select
+{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+span, div
+{
+	border-radius: 5px;
+}
+
+.cool-corners-1
+{
+	-moz-border-radius: 1em 4em 1em 4em;
+	border-radius: 1em 4em 1em 4em;
+	padding-left: 40em;
+	padding-right: 4em;
+}
+
+.placeholderText
+{
+	font-style: italic;
+	color: #aaa;
+}
+
+/*---------- Search -----------*/
+.search
+{
+	float: right;
+}
+
+.searchOuter
+{
+	border: 1px solid #999;
+	padding-top: 1px;
+	width: 250px;
+	background: white;
+	height: 18px;
+	border-radius: 10px;
+}
+
+input.searchbox
+{
+	width: 86%;
+	border: none;
+	margin: -20px;
+	height: 15px;
+}
+
+.searchButton
+{
+	vertical-align: bottom;
+	background: url(../images/search-icon.gif) no-repeat;
+	margin-left: 20px;
+}
+
+.smallerText
+{
+	font-size: 0.8em;
+}
+
+/*input.smallerCheckbox
+{
+	width: 5px;
+	height: 5px;
+}*/
+
+/*--------- Layout -----------------*/
+
+DIV#page
+{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+DIV#mainheader, DIV#maincontent, DIV#mainfooter
+{
+	width: 100%;
+	margin: 0;
+	padding: 0; /*border: 1px solid red;*/
+}
+
+DIV#mainheader
+{
+	height: 90px;
+	background: url(../images/gray-grad.png) bottom left repeat-x;
+	background-position: bottom;
+}
+
+DIV#mainheaderbottom
+{
+	clear: both;
+	height: 0px;
+	background-color: Red;
+	margin: -4px; /*height: 35px; 	background-color: #999999; */
+	border: 2px solid green;
+}
+
+DIV#maincontent
+{
+	clear: both;
+	background-color: #94c93d; /*a4c74c;*/
+}
+
+DIV#maincontent .feedback-link
+{
+	position: absolute;
+	z-index: 1;
+	margin-top: 150px;
+}
+
+DIV#mainfooter
+{
+	clear: both;
+	background: white url(../images/gray-grad-rev.png) top left repeat-x;
+	overflow: auto; /* 	background-color: #eeeeee; 	clear: both; 	position: absolute; 	bottom: 0; 	left: 0; */
+}
+
+.footer-copyright
+{
+	padding-bottom: 25px;
+}
+
+DIV.headerframe, DIV.contentframe, DIV.footerframe
+{
+	width: 900px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	margin-bottom: 0; /*border: 1px solid blue;*/
+}
+
+DIV.headframe
+{
+	border: 1px solid purple;
+}
+
+div.contentframe
+{
+	width: 964px;
+	margin-top: 0;
+	margin-bottom: 0px;
+	padding: 0;
+	text-align: left; /*background: url(../images/bkgd-content-1186.png) top left repeat-y;*/
+	background: url(../images/bkgd-content-1086.png) top left repeat-y;
+	overflow: hidden;
+	padding-bottom: 20px; /*border: 1px solid red;*/
+	min-height: 500px;
+	height: auto !important;
+	height: 650px;
+	position: relative;
+	z-index: 0;
+}
+
+DIV.contentframeinner
+{
+	width: 860px;
+	background-color: White;
+	margin-left: 32px;
+	margin-right: 32px; /*xborder: 1px solid red;*/
+	padding-left: 19px;
+	padding-right: 19px;
+	padding-top: 10px;
+	padding-bottom: 10px; /*border: 1px solid pink;*/
+}
+
+DIV.footerframe
+{
+	margin-top: 10px; /*width: 960px;*/ /*font-size: 10px;*/
+}
+
+div.footer-links-left, div.footer-links-middle, div.footer-links-right
+{
+	float: left;
+	text-align: left;
+	height: 9.0em;
+}
+
+div.footer-links-left
+{
+	padding-right: 20px;
+	border-right: 1px solid #dddddd;
+}
+
+div.footer-links-middle
+{
+	padding-left: 20px;
+	padding-right: 20px;
+	border-right: 1px solid #dddddd;
+}
+
+div.footer-links-right
+{
+	padding-left: 20px;
+}
+
+div.footer-links-caption
+{
+	/*color: Black;*/
+	padding-bottom: 5px;
+}
+
+.center
+{
+	text-align: center;
+}
+
+.center table
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+DIV.message
+{
+	font-size: 1.5em;
+}
+
+DIV.link-button
+{
+	padding: 12px 0 12px 0;
+}
+
+DIV.agreeToTerms
+{
+	width: 100%;
+	margin-left: 0px;
+	text-indent: -20px;
+	text-align: left;
+}
+
+/*-------------- Links ---------------*/
+a
+{
+	color: black;
+}
+
+a:active
+{
+	color: red;
+	text-decoration: underline;
+}
+
+a:link
+{
+	text-decoration: none;
+}
+a:hover
+{
+	color: #339900; /*color: #333333;*/
+}
+
+a.link-button
+{
+	border: solid 1px #aaaaaa;
+	padding: 3px;
+	background-color: #eeeeee;
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+	color: #ff0000;
+	font-size: smaller;
+}
+
+.field-validation-valid
+{
+	display: none;
+}
+
+.input-validation-error
+{
+	border: 1px solid #ff0000;
+	background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+	font-weight: normal;
+	color: #ff0000;
+}
+
+.validation-summary-valid
+{
+	display: none;
+}
+
+.footnote
+{
+	font-size: 0.7em;
+}
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, .editor-label, .editor-label-min, .editor-label-wide, .editor-label-narrow, .display-label-cust, .editor-label-cust, .editor-label-5050, .editor-label-schedappt
+{
+	/*clear: both;*/
+	margin: 0.5em 0 0 0;
+	float: left;
+	text-align: right;
+	width: 200px; /*border: 1px solid blue;*/
+	color: #339900;
+	border: 0px solid purple;
+	padding-right: 10px;
+}
+
+.editor-label-min
+{
+	width: auto;
+	text-align: left;
+}
+
+
+#newCo .editor-label
+{
+	text-align: left;
+}
+
+.editor-label-schedappt, .editor-label-autowidth
+{
+	width: auto;
+	text-align: left;
+}
+
+.editor-label-5050
+{
+	width: 30%;
+}
+
+.editor-label-wide
+{
+	width: auto;
+}
+
+.editor-label-narrow
+{
+	width: 100px; /*margin: 0px;*/
+}
+
+.display-label-cust, .editor-label-cust
+{
+	clear: left;
+	width: 60px;
+}
+
+.display-label-companyview
+{
+	clear: left;
+	float: left;
+	font-weight: bold;
+	padding-bottom: 8px;
+	padding-right: 5px;
+}
+
+.display-field-companyview
+{
+	float: left;
+}
+
+.display-field, .editor-field, .editor-field-narrow, .editor-field-profile, .editor-field-profile-autowidth, .display-field-cust, .editor-field-cust, .editor-field-5050, .editor-field-schedappt
+{
+	margin: 0.5em 0 0 0;
+	float: left;
+	padding-left: 10px;
+	text-align: left;
+	width: 400px; /*border: 1px solid red;*/
+	border: 0px solid blue;
+}
+
+.editor-field-schedappt
+{
+	width: 100%;
+	padding-bottom: 12px;
+}
+
+.editor-field-narrow
+{
+	width: 100px;
+}
+
+.editor-field-narrow input
+{
+	width: 100px;
+}
+
+.editor-field-5050
+{
+	width: 50%;
+}
+
+.editor-field-5050 input
+{
+	width: 100%;
+}
+
+.editor-field-profile input
+{
+	width: 100%;
+}
+
+.editor-field-profile-autowidth input
+{
+	width: auto;
+}
+
+.display-field-cust, .editor-field-cust
+{
+	padding-left: 5px;
+	width: 200px;
+}
+
+/* Rounded corners - needs some work*/
+.xeditor-field-profile input
+{
+	width: 300px;
+	height: 14px;
+	background: url(../images/rounded.gif) no-repeat left top; /*	xbackground: url(../images/roundedgraybox.png) no-repeat; 	xbackground-size: contain; */
+	padding: 10px;
+	border: solid 0px white;
+}
+
+.editor-field-radiobuttonlist
+{
+	float: left;
+	padding-left: 5px;
+}
+
+.editor-row, .editor-rows-end
+{
+	clear: both;
+}
+
+.text-box-profile
+{
+	width: 30em;
+}
+
+.text-box.multi-line
+{
+	height: 6.5em;
+}
+
+.tri-state
+{
+	width: 6em;
+}
+
+.submit
+{
+	text-align: left;
+}
+
+/*------------- BUTTONS -------------*/
+a.rollover
+{
+	display: block;
+	width: 59px;
+	height: 23px;
+	text-decoration: none;
+}
+
+a.rollover:hover
+{
+	background-position: 0 -23px;
+}
+
+a.loginbutton
+{
+	background: url("../images/login-button.jpg");
+}
+
+/*-----------------*/
+table.grid
+{
+	border: 0px solid #666666;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top;
+	border-collapse: collapse;
+}
+
+table.grid th
+{
+	text-align: center;
+}
+
+table.grid td
+{
+	border: 1px solid #666666;
+	vertical-align: top;
+	text-align: center;
+	padding: 5px;
+}
+
+/*-------*/
+
+.clear-all, .clear
+{
+	clear: both;
+}
+
+/*--------------- FAQ and Static Pages ----------------*/
+
+.faq-cat
+{
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 6px 0px 6px 0px;
+}
+
+.faq-question
+{
+	font-weight: bold;
+	padding: 6px 0px 6px 20px;
+}
+
+.faq-answer
+{
+	padding: 0px 0px 6px 20px;
+}
+
+.team-member
+{
+	font-weight: bold;
+}
+
+/* ----------------- WebGrids -------------*/
+.webgrid, .webgrid-calendar
+{
+	width: 100%;
+	border: 1px solid black;
+	border-collapse: collapse;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.webgrid-calendar
+{
+	width: 60%;
+}
+
+.webgrid-icon-col
+{
+	width: 20px;
+}
+
+.xwebgrid a
+{
+	color: blue;
+}
+
+.webgrid-header th
+{
+	text-align: left;
+	padding: 6px 5px;
+	background-color: #dfdfdf;
+}
+
+.webgrid-header
+{
+	padding: 6px 5px;
+	text-align: center;
+	border-bottom: 2px solid #999999;
+	height: 30px;
+	border-top: 2px solid #999999;
+	border-left: 2px solid #999999;
+	border-right: 2px solid #999999;
+}
+
+.webgrid-footer
+{
+	padding: 6px 5px;
+	text-align: center;
+	background-color:  Maroon;
+	border-top: 2px solid #999999;
+	height: 30px;
+	border-bottom: 2px solid #999999;
+	border-left: 2px solid #999999;
+	border-right: 2px solid #999999;
+}
+
+
+
+.webgrid-alternating-row
+{
+	height: 25px;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #d2d2d2;
+	border-left: 2px solid #999999;
+	border-right: 2px solid #999999;
+}
+
+
+
+.webgrid-row-style
+{
+	height: 25px;
+	border-bottom: 1px solid #c1d72e;
+	border-left: 2px solid #999999;
+	border-right: 2px solid #999999;
+	background-color:Maroon;
+}
+
+.webgrid-selected-row
+{
+	font-weight: bold;
+}
+
+.admin-col
+{
+	float: left;
+	border: 0px solid #666666;
+	padding-right: 30px;
+	border: 1px solid black;
+	background-color: #eee;
+	border-collapse: collapse;
+	margin: 5px;
+	padding: 5px;
+}
+
+.adminStatusBoardData
+{
+	border: 1px solid #999;
+	border-collapse: collapse;
+	font-size: 0.8em;
+	font-weight: normal;
+	color: black;
+}
+
+.adminStatusBoardData-good
+{
+	/*xcolor: white; 	xbackground: green;*/
+}
+
+.adminStatusBoardData-bad
+{
+	color: white;
+	background: red;
+}
+
+
+.adminStatusBoardCaption
+{
+	color: white;
+	background: #999;
+	border: 1px solid #999;
+	font-size: 0.7em;
+}
+
+/* ------------- Spinner -----------*/
+.spinner2
+{
+	display: none;
+	width: 100px;
+	height: 100px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background: url(spinner.gif) no-repeat center #fff;
+	text-align: center;
+	padding: 10px;
+	font: normal 16px Tahoma, Geneva, sans-serif;
+	border: 1px solid #666;
+	margin-left: -50px;
+	margin-top: -50px;
+	z-index: 2;
+	overflow: auto;
+}
+
+.spinner
+{
+	position: relative;
+	top: 210px;
+	left: 300px;
+	text-align: center;
+}
+
+/*--------- jQueryUI popup dialog ---------*/
+x.ui-dialog-titlebar
+{
+	display: none;
+}
+
+x.ui-dialog
+{
+	font-size: 1.0em;
+}
+
+/*------------- Admin ---------------*/
+#adminTable td
+{
+	width: 33%;
+	vertical-align: top;
+}
+
+.admin-box
+{
+	float: left;
+	width: 273px;
+	height: 220px;
+	background-color: #e5e5e5;
+	border: 2px solid #bbb;
+	padding: 5px;
+	overflow: auto;
+	margin-left: -2px;
+	margin-top: -2px;
+	vertical-align: top;
+}
+
+.admin-box-title
+{
+	color: white;
+	font-weight: bold;
+	text-align: center; /*background: #777;*/
+	background: url(../images/appt-stat-green.png) repeat-x top left;
+	padding: 3px;
+	margin: 0px;
+	border: 0px solid #666;
+	border-left: 2px solid #666;
+	border-right: 2px solid #666;
+}
+
+.notification-count
+{
+	background: orange;
+	color: white;
+	font-size: 8px;
+	font-weight: bold;
+	width: 17px;
+	padding: 1px 3px 1px 3px;
+	text-align: center;
+	vertical-align: super;
+	margin-left: -4px;
+}
+
+.debug-info
+{
+	text-align: left;
+	font-family: lucida console, courier;
+	font-size: 0.9em;
+	background: black; 
+	border:1px solid black;
+	color: #99ff00;
+	padding: 4px;
+	margin: 4px;
+	line-height: 1.7em;
+	-moz-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	-webkit-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+}
+
+.debug-info .title
+{
+	color: white;
+	width: 65px;
+	display: inline-block;
+	/*padding: 1px;*/
+}
+
+.debug-info .caption
+{
+	color: #99ff00;
+	/*border: 1px solid #99ff00;*/
+	/*padding: 3px;*/
+}
+
+.debug-info .value
+{
+	color: orange;
+	/*border: 1px solid #99ff00;*/
+	/*padding: 3px;*/
+	/*margin-left: -1px;*/
+}
+
+.simple-color-button
+{
+	clear: right;
+}
+
+/*------------DIALOG------------*/
+.dialog-button, .ui-button, .ui-button-text-only .ui-button-text, a.button, button, .abutton, .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text, .ui-dialog .ui-dialog-buttonpane button
+{
+	font-size: 0.9em;
+	padding: 2px 6px 2px 6px;
+	color: black; 
+}
+
+.popup-dialog-frame
+{
+	padding: 5px;
+}
+
+.ui-dialog .ui-dialog-content
+{
+	padding: 10px;
+}
+
+.calendar-label
+{
+	width:150px;float:left;border:1px solid #aaa;padding:2px;text-align:center;margin:-1px 0px 0px -1px;font-size:0.9em;
+}

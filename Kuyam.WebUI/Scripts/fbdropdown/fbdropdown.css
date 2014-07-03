@@ -1,0 +1,61 @@
+﻿/**
+       * The Menu CSS
+       */
+.fb_dropdown
+{
+	padding: 0;
+	margin: 0;
+	width: 40px;
+	height: 22px;
+	text-decoration: none;
+	float: left;
+	display: block;
+	z-index: 999;
+	xbackground: url('/wordpress/images/privacy_anchor.png') 0 -22px;
+}
+
+.fb_dropdown:hover
+{
+	text-decoration: none;
+}
+
+.fb_dropdown.jdropdown-active
+{
+	background-position: 0 0;
+}
+
+#fb_menu
+{
+	background: #EEEEEE none repeat scroll 0 0;
+	border: 1px solid #656565;
+	padding: 3px 0;
+}
+
+#fb_menu ul
+{
+	list-style: none;
+}
+
+#fb_menu a
+{
+	display: block;
+	font-weight: normal;
+	width: 137px;
+	text-align: left;
+	overflow: hidden;
+	padding: 2px 4px 3px 19px;
+	color: #111111;
+	text-decoration: none;
+}
+
+#fb_menu a:hover
+{
+	background: #656565;
+	color: white;
+	text-decoration: none;
+}
+
+#fb_menu a:visited
+{
+	text-decoration: none;
+}

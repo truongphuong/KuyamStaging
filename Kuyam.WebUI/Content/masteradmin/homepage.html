@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="Kuyam" name="description" />
+<meta content="Kuyam" name="keywords" />
+<title>Kuyam - Master Admin</title>
+<link href="../images/favicon.ico" rel="shortcut icon" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="js/admin_js.js"></script>
+<script src="../js/jquery.nicescroll.min.js" type="text/javascript" ></script>
+</head>
+<body>
+	<div class="wrap">
+    	<div>
+    	<div class="fixheaderposition">
+        <div class="header">
+            <div class="hcontent h73">
+                <a href="http://kuyam.com/" class="logo" title="kuyam"><img alt="Kuyam" src="../images/kuyam_logo.png"/></a>
+                <!--<a href="#" class="nameUser" title="santa monica, ca">santa monica, ca</a>-->
+                <ul class="menuHeader">
+                   	<li><a href="http://kuyam.com/home/howitworks_user" title="how it works">how it works</a></li>
+                    <li class="lastchild"><a href="#" title="login" id="login">log in</a></li>                                 	
+              	</ul>
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="clear"></div>
+        <div class="content">
+			<div class="whitebackground">
+				Admin content here !!!
+			</div>
+			<div class="clear"></div>	
+			<div id="lightBox" class="lightBox"></div>
+            <div class="loginpopup" id="loginpopup">
+                <div class="contentloginPopup">
+                    <a class="btnClose btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>                    
+                    <h3>login to your account:</h3>  
+                    <div class="clear"></div> 
+                    <div class="loginform">
+                        <div class="formForNotMember">                        
+                            <div class="clear h5"></div>
+                            <fieldset>
+                                <input type="text" title="enter e-mail address" value="enter e-mail address" onblur="if (this.value==''){this.value='enter e-mail address';this.style.color='#B3B3B3';}" onfocus="if (this.value=='enter e-mail address') {this.value = '';this.style.color='#333333';}"/>
+                                <div class="clear8"></div>
+                                <input type="text" id="passwordtext" title="enter password" value="enter password"/>
+                                <input type="password" id="password" title="enter password" value=""/>
+                                <div class="clear8"></div>   
+                                <input type="button" class="btnLogin" value="" title="sign up now"/>  
+                            </fieldset>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="errorarea">
+                            &nbsp;
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>              
+                </div>	
+            </div>
+			<div id="termspopup" class="popupterms">
+                    <div class="contenttermpopup">
+                        <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>                     
+                        <div class="termspopupheader">
+                       		<a id="termsofuse" class="headerterms headeractive" title="terms of use">terms of use</a>
+                            <a id="privacy" class="headerprivacy" title="privacy policy">privacy policy</a>
+                            <a id="services" class="headerservices" title="services listings">services listings</a>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="termspopupbody" id="termspopupbody">
+                        	<div id="divtermsofuse">
+                            	<p>
+                                    Last Updated: September 6, 2011</p>
+                                <h3>
+                                    User Agreement:</h3>
+                                <p>
+                                    This User Agreement (the "Agreement") and the policies referred to herein contain
+                                    the complete terms and conditions that apply to your use of the appointment services
+                                    (the "Services") being offered at the URL: http://www.kuyam.com and all affiliated
+                                    web sites owned and operated solely by Kuyam (collectively, the "Website"). As used
+                                    in this Agreement, "Kuyam" refers to Kuyam Companies, Inc. and any of its subsidiaries,
+                                    and "User" or "you" refers to you. USE OF THE SERVICES AND THE WEBSITE CONSTITUTES
+                                    KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS USER AGREEMENT, KUYAM'S PRIVACY POLICY,
+                                    AND KUYAM'S TERMS AND CONDITIONS.
+                                </p>
+                                <p>
+                                    Kuyam may modify this Agreement's terms and conditions at any time without notice.
+                                    Continued use of the Services and the Kuyam site after a change in this Agreement,
+                                    a change in the Privacy Policy, or after implementation of any other new policy
+                                    constitutes acceptance of such change or policy.
+                                </p>
+                                <p>
+                                    The Service is offered subject to acceptance without modification of all of the
+                                    terms and conditions contained herein (the "Terms of Use"), which term also incorporates
+                                    the Privacy Policy available at www.kuyam.com/privacy, and all other operating rules,
+                                    policies and procedures that may be published from time to time on the Website,
+                                    each of which is incorporated by reference and each of which may be updated by Kuyam
+                                    from time to time without notice to you. In addition, some services offered through
+                                    the Service may be subject to additional terms and conditions promulgated by Kuyam
+                                    from time to time; your use of such services is subject to those additional terms
+                                    and conditions, which are incorporated into these Terms of Use by this reference.
+                                </p>
+                                <p>
+                                    The Service is available only to individuals who are at least 18 years old. You
+                                    represent and warrant that if you are an individual, you are of legal age to form
+                                    a binding contract, and that all registration information you submit is accurate
+                                    and truthful. Company may, in its sole discretion, refuse to offer the Service,
+                                    or suspend or terminate the Service to any person or entity and may change its eligibility
+                                    criteria at any time. This provision is void where prohibited by law and the right
+                                    to access the Service is revoked in such jurisdictions. IF YOU DO NOT AGREE TO THE
+                                    TERMS OF THIS AGREEMENT OR ANY REVISED VERSION OF THIS AGREEMENT, PLEASE DO NOT
+                                    USE THIS SITE.
+                                </p>
+                                <h3>
+                                    1. What we do</h3>
+                                <p>
+                                    Kuyam provides services to Users for the purpose of assisting Users in securing
+                                    appointments at participating Companies and independent contractors (individually,
+                                    a "company" and collectively, "Companies"). In addition, the Website provides an
+                                    online calendaring service that allows Users to keep track of the events in their
+                                    life. In response to a User's online request for an appointment, the Website or
+                                    Kuyam's employees directly contacts a third party company representative or a company's
+                                    computerized database of appointments. The availability of appointments is determined
+                                    at the time of User's query. Once an appointment is confirmed by a company, Kuyam
+                                    will provide confirmation of the appointment to User by email and/or other means
+                                    of mutually acceptable communications between Kuyam's platform and its Users. At
+                                    this time, Kuyam's Services will be free of charge to Users; however, Kuyam may
+                                    impose a service charge in the future. By using the Services, User agrees to receive
+                                    appointment confirmations by email and/or other means of mutually acceptable communications
+                                    after booking an appointment through the Website.</p>
+                                <h3>
+                                    2. No Show Policy</h3>
+                                <p>
+                                    To assist us in maintaining a consistently high level of service with the participating
+                                    Companies, Users are asked to review each third party company's cancellation policies
+                                    prior to scheduling an appointment with them through Kuyam. You may cancel your
+                                    appointment online via Kuyam or call the business directly. In cases where the business
+                                    has requested a credit card, there may be a cancellation charge. A same day cancellation,
+                                    unless otherwise provided for in the company's cancellation policy, is a violation
+                                    of Kuyam's terms of use and will be deemed a no-show.
+                                </p>
+                                <p>
+                                    If you are unable to keep your appointment and you fail to timely cancel the appointment,
+                                    Kuyam will send you an email and/or other means of mutually acceptable communications
+                                    letting you know that our records indicate that you were a no-show. By using the
+                                    Services, User agrees to receive no-show confirmations by email and/or other means
+                                    of mutually acceptable communications after a business and/or the Website reports
+                                    your appointment was not honored, whether or not that was in fact the case. Your
+                                    Kuyam account will be terminated if you are a no-show for three appointments within
+                                    the same twelve-month period. User agrees that a final no-show determination will
+                                    be made by Kuyam in its sole discretion.
+                                </p>
+                                <h3>
+                                    3. Privacy Policy</h3>
+                                <p>
+                                    Kuyam is committed to safeguarding your privacy online. Please review our privacy
+                                    policy.
+                                </p>
+                                <h3>
+                                    4. Usage Guidelines</h3>
+                                <p>
+                                    The Services are being offered to Users for User's personal use or the use of User's
+                                    immediate family or on behalf of authorized persons. User agrees to use the Services
+                                    only to book appointments at a participating business and to honor those appointments
+                                    by arriving at the business on time and paying for the services rendered. User further
+                                    agrees not to book more than one (1) appointment for a single User's personal use
+                                    during any one time slot. Resale or attempted resale of appointments is prohibited,
+                                    and is grounds for, among other things, cancellation of the appointment, in addition
+                                    to all rights and remedies under applicable state and federal law.
+                                </p>
+                                <p>
+                                    Any and all other uses which are unlawful or in violation of this Agreement's terms
+                                    and conditions are prohibited. Kuyam reserves the right, in its sole discretion,
+                                    to refuse service, suspend or terminate accounts, remove or edit content, or cancel
+                                    appointments.
+                                </p>
+                                <h3>
+                                    5. Email Policy</h3>
+                                <p>
+                                    You may receive periodic emails from Kuyam if you opted to receive such emails at
+                                    the time of registration with the Website. If you would rather not receive email
+                                    from Kuyam, please send an email to unsubscribe@kuyam.com and you will be unsubscribed
+                                    from receiving further mailings after your email has been processed. User acknowledges
+                                    and agrees, however, that User will still receive appointment confirmation emails,
+                                    no-show confirmation emails, appointment change confirmation emails, appointment
+                                    cancellation confirmation emails and other emails relating to appointments booked
+                                    by User through the Website, even if User has opted not to receive periodic email
+                                    from Kuyam. Please see our Privacy Policy for information as to when Kuyam shares
+                                    your personal information.
+                                </p>
+                                <h3>
+                                    6. Intellectual Property and Grant of Rights to User</h3>
+                                <p>
+                                    The materials and services provided for and depicted on the Website are protected
+                                    by copyright, trademark, patent and other intellectual property laws. All text,
+                                    graphics, video, data or other content on the Website ("Kuyam Content") is provided
+                                    to User by Kuyam for the sole purpose of using the Services. User shall not copy,
+                                    display, modify, create derivative works of, publish, or sell the Kuyam Content
+                                    or any information, software, or services provided by Kuyam hereunder. The Kuyam
+                                    Content may be modified from time to time by Kuyam in its sole discretion. Except
+                                    as expressly set forth herein, no license is granted to User for any other purpose,
+                                    and any other use of the Services or the Kuyam Content by User shall constitute
+                                    a material breach of this Agreement. Nothing in this Agreement shall affect any
+                                    rights of Kuyam or its licensors in the Services or Kuyam Content, and any associated
+                                    patents, trademarks, copyrights, mask work rights, trade secrets or other intellectual
+                                    property rights. No license, right or interest in any trademarks of Kuyam or any
+                                    third party is granted under this Agreement. Nothing in this Agreement shall affect
+                                    any rights of Kuyam or its licensors in the Services or Kuyam Content, and any associated
+                                    patents, trademarks, copyrights, mask work rights, trade secrets or other intellectual
+                                    property rights. No license, right or interest in any trademarks of Kuyam or any
+                                    third party is granted under this Agreement.
+                                </p>
+                                <h3>
+                                    7. Reviews, Comments, Communications, and Other Content</h3>
+                                <p>
+                                    At Kuyam's invitation User may submit reviews, comments, and ratings, send e-mails
+                                    and other communications; and submit suggestions, ideas, comments, questions, or
+                                    other information for publication and distribution to businesses and other third
+                                    parties, so long as the content is not illegal, threatening, obscene, racist, defamatory,
+                                    libelous, pornographic, infringing of intellectual property rights, promoting of
+                                    illegal activity or harm to groups and/or individuals, invasive of privacy, purposely
+                                    false or otherwise injurious to third parties or objectionable and does not consist
+                                    of or contain software, computer viruses, commercial solicitation, political campaigning,
+                                    chain letters, mass mailings, any form of "spam" or references to illegal activity,
+                                    malpractice, purposeful overcharging, or false advertising. You may not use a false
+                                    e-mail address, impersonate any person or entity, or otherwise mislead as to the
+                                    origin of content. Kuyam reserves the right (but not the obligation) to remove or
+                                    edit such content, but may not regularly review submitted content. /c If you do
+                                    submit material you grant Kuyam a nonexclusive, perpetual, royalty-free, irrevocable,
+                                    and fully sublicensable and transferrable right to use, modify, reproduce, adapt,
+                                    translate, publish, create derivative works from, distribute, and display such content
+                                    throughout the world in any media. You represent and warrant that you own or otherwise
+                                    control all of the rights to the content that you submit; that the content is accurate;
+                                    that use of the content you supply does not violate this policy and will not cause
+                                    injury to any person or entity; and that you will indemnify, defend and hold Kuyam
+                                    and its officers, directors, and employees, harmless from and against for all claims,
+                                    damages, costs and expenses resulting from content you supply. Kuyam has the right
+                                    but not the obligation to monitor and edit or remove any activity or content, including
+                                    but not limited to content that violates the standards of this Website, as determined
+                                    by Kuyam in its sole discretion. Kuyam takes no responsibility and assumes no liability
+                                    for any content submitted by you or any third party. /c You may browse the Website
+                                    and view Content without registering, but as a condition to using certain aspects
+                                    of the Service, you may be required to register with Kuyam. You agree to provide
+                                    Kuyam with accurate, complete, and updated registration information. Failure to
+                                    do so shall constitute a breach of the Terms of Use, which may result in immediate
+                                    suspension or termination of your account. You shall not (i) select or use as a
+                                    User ID or domain a name of another person with the intent to impersonate that person;
+                                    (ii) use as a User ID or domain a name subject to any rights of a person other than
+                                    you without appropriate authorization; or (iii) use as a User ID or domain a name
+                                    that is otherwise offensive, vulgar or obscene. Kuyam reserves the right to refuse
+                                    registration of, or cancel a User ID and domain in its sole discretion. You are
+                                    solely responsible for activity that occurs on your account and shall be responsible
+                                    for maintaining the confidentiality of your password. You shall never use another
+                                    User's account without such other User's express permission. You will immediately
+                                    notify Kuyam in writing of any unauthorized use of your account, or other account
+                                    related security breach of which you are aware.
+                                </p>
+                                <h3>
+                                    8. Access and Interference</h3>
+                                <p>
+                                    Much of the information on the Website is updated on a real time basis and is proprietary
+                                    or licensed to Kuyam by third parties. By using the Website, you agree not to: /c
+                                    * Use any robot, spider, scraper or other automatic device, process or means to
+                                    access the Website for any purpose without Kuyam's express written permission.
+                                    <br />
+                                    * Take any action that imposes or may impose, in Kuyam's sole discretion, an unreasonable
+                                    or disproportionately large load on our infrastructure.
+                                    <br />
+                                    * Implement any manual processes to monitor or copy the Kuyam Content from the Website
+                                    without Kuyam's express written permission.
+                                    <br />
+                                    * Utilize any device, software or routine that will interfere or attempt to interfere
+                                    with the functionality of the Website
+                                </p>
+                                <h3>
+                                    9. Liability Limitations</h3>
+                                <p>
+                                    IN NO EVENT SHALL KUYAM BE LIABLE FOR ANY INJURY, LOSS, CLAIM, DAMAGE OR ANY SPECIAL,
+                                    EXEMPLARY, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ANY KIND, WHETHER BASED
+                                    IN CONTRACT, TORT OR OTHERWISE, WHICH ARISES OUT OF OR IS ANY WAY CONNECTED WITH
+                                    (I) ANY USE OF THE SERVICES, THE WEBSITE OR THE KUYAM CONTENT, (II) ANY FAILURE
+                                    OR DELAY (INCLUDING, BUT NOT LIMITED TO, THE USE OR INABILITY TO USE ANY COMPONENT
+                                    OF THE SERVICES OR THE WEBSITEOR (III) THE PERFORMANCE OR NON-PERFORMANCE OF ANY
+                                    BUSINESS IN CONNECTION WITH THE SERVICES,OR (IV) A USER'S VISTING TO AN AFFILIATED
+                                    BUSINESS. IN ADDITION, ALL USERS SPECIFICALLY UNDERSTAND AND AGREE THAT ANY THIRD
+                                    PARTY DIRECTING USERS TO THE WEBSITE BY REFERRAL, LINK OR ANY OTHER MEANS IS NOT
+                                    LIABLE TO USER FOR ANY REASON WHATSOEVER, INCLUDING BUT NOT LIMITED TO DAMAGES OR
+                                    LOSS ASSOCIATED WITH THE USE OF THE SERVICES, THE WEBSITEOR THE KUYAM CONTENT. KUYAM
+                                    IS NEITHER AN AGENT OF NOR IS CONNECTED WITH ANY AFFILIATED BUSINESS IN WHICH A
+                                    USER HAS MADE AN APPOINTMENT. ASIDE FROM THE SERVICES PROVIDED ON THE KUYAM SITE.
+                                </p>
+                                <h3>
+                                    10. Disclaimer of Warranty
+                                </h3>
+                                <p>
+                                    THE INFORMATION, PROGRAMS, PRODUCTS, AND MATERIALS CONTAINED IN OR ACCESSED ON THE
+                                    WEBSITE, INCLUDING, WITHOUT LIMITATION, THE SERVICES AND THE KUYAM CONTENT, ARE
+                                    PROVIDED TO USER ON AN "AS IS" BASIS AND WITHOUT WARRANTY OF ANY KIND. KUYAM DISCLAIMS
+                                    ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THE SERVICES, THE WEBSITE,
+                                    THE KUYAM CONTENT AND RELATED MATERIALS PROVIDED HEREUNDER INCLUDING, WITHOUT LIMITATION,
+                                    ANY WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+                                    OR ARISING FROM A COURSE OF DEALING.
+                                </p>
+                                <h3>
+                                    11. Links to Third Party Sites
+                                </h3>
+                                <p>
+                                    The Website may contain hypertext links to websites operated by parties other than
+                                    Kuyam. Such hypertext links are provided for User's reference only and Kuyam does
+                                    not control such websites and is not responsible for their content. Kuyam's inclusion
+                                    of any hypertext links to such websites does not imply any endorsement of the material
+                                    on such websites or any association with their operators.
+                                </p>
+                                <h3>
+                                    12. Severability
+                                </h3>
+                                <p>
+                                    If any of the provisions, or portions thereof, of this Agreement are found to be
+                                    invalid under any applicable statute or rule of law, then, that provision notwithstanding,
+                                    this Agreement shall remain in full force and effect and such provision or portion
+                                    thereof shall be deemed omitted.
+                                </p>
+                                <h3>
+                                    13. No Assignment
+                                </h3>
+                                <p>
+                                    This Agreement and the rights granted and obligations undertaken hereunder may not
+                                    be transferred, assigned or delegated in any manner by User, but may be so transferred,
+                                    assigned or delegated by Kuyam.
+                                </p>
+                                <h3>
+                                    14. Waiver
+                                </h3>
+                                <p>
+                                    Any waiver of any provision of this Agreement, or a delay by any party in the enforcement
+                                    of any right hereunder, shall neither be construed as a continuing waiver nor create
+                                    an expectation of non-enforcement of that or any other provision or right.
+                                </p>
+                                <h3>
+                                    15. Jurisdiction
+                                </h3>
+                                <p>
+                                    This Agreement is made under and shall be governed by and construed in accordance
+                                    with the laws of State of California, U.S.A., without regard to any choice of law
+                                    provisions. The parties hereby consent to the jurisdiction of the state and federal
+                                    courts located in Los Angeles County, California.
+                                </p>
+                            </div>
+                            <div id="divprivacy">
+                            	<p>
+                                    Last Updated: September 6, 2011</p>
+                                <h3>
+                                    User Agreement:</h3>
+                                <p>
+                                    This User Agreement (the "Agreement") and the policies referred to herein contain
+                                    the complete terms and conditions that apply to your use of the appointment services
+                                    (the "Services") being offered at the URL: http://www.kuyam.com and all affiliated
+                                    web sites owned and operated solely by Kuyam (collectively, the "Website"). As used
+                                    in this Agreement, "Kuyam" refers to Kuyam Companies, Inc. and any of its subsidiaries,
+                                    and "User" or "you" refers to you. USE OF THE SERVICES AND THE WEBSITE CONSTITUTES
+                                    KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS USER AGREEMENT, KUYAM'S PRIVACY POLICY,
+                                    AND KUYAM'S TERMS AND CONDITIONS.
+                                </p>
+                                <p>
+                                    Kuyam may modify this Agreement's terms and conditions at any time without notice.
+                                    Continued use of the Services and the Kuyam site after a change in this Agreement,
+                                    a change in the Privacy Policy, or after implementation of any other new policy
+                                    constitutes acceptance of such change or policy.
+                                </p>
+                                <p>
+                                    The Service is offered subject to acceptance without modification of all of the
+                                    terms and conditions contained herein (the "Terms of Use"), which term also incorporates
+                                    the Privacy Policy available at www.kuyam.com/privacy, and all other operating rules,
+                                    policies and procedures that may be published from time to time on the Website,
+                                    each of which is incorporated by reference and each of which may be updated by Kuyam
+                                    from time to time without notice to you. In addition, some services offered through
+                                    the Service may be subject to additional terms and conditions promulgated by Kuyam
+                                    from time to time; your use of such services is subject to those additional terms
+                                    and conditions, which are incorporated into these Terms of Use by this reference.
+                                </p>
+                                <p>
+                                    The Service is available only to individuals who are at least 18 years old. You
+                                    represent and warrant that if you are an individual, you are of legal age to form
+                                    a binding contract, and that all registration information you submit is accurate
+                                    and truthful. Company may, in its sole discretion, refuse to offer the Service,
+                                    or suspend or terminate the Service to any person or entity and may change its eligibility
+                                    criteria at any time. This provision is void where prohibited by law and the right
+                                    to access the Service is revoked in such jurisdictions. IF YOU DO NOT AGREE TO THE
+                                    TERMS OF THIS AGREEMENT OR ANY REVISED VERSION OF THIS AGREEMENT, PLEASE DO NOT
+                                    USE THIS SITE.
+                                </p>
+                                <h3>
+                                    1. What we do</h3>
+                                <p>
+                                    Kuyam provides services to Users for the purpose of assisting Users in securing
+                                    appointments at participating Companies and independent contractors (individually,
+                                    a "company" and collectively, "Companies"). In addition, the Website provides an
+                                    online calendaring service that allows Users to keep track of the events in their
+                                    life. In response to a User's online request for an appointment, the Website or
+                                    Kuyam's employees directly contacts a third party company representative or a company's
+                                    computerized database of appointments. The availability of appointments is determined
+                                    at the time of User's query. Once an appointment is confirmed by a company, Kuyam
+                                    will provide confirmation of the appointment to User by email and/or other means
+                                    of mutually acceptable communications between Kuyam's platform and its Users. At
+                                    this time, Kuyam's Services will be free of charge to Users; however, Kuyam may
+                                    impose a service charge in the future. By using the Services, User agrees to receive
+                                    appointment confirmations by email and/or other means of mutually acceptable communications
+                                    after booking an appointment through the Website.</p>
+                            </div>
+                            <div id="divservices">
+                            	<p>
+                                    Last Updated: September 6, 2011</p>
+                                <h3>
+                                    User Agreement:</h3>
+                                <p>
+                                    This User Agreement (the "Agreement") and the policies referred to herein contain
+                                    the complete terms and conditions that apply to your use of the appointment services
+                                    (the "Services") being offered at the URL: http://www.kuyam.com and all affiliated
+                                    web sites owned and operated solely by Kuyam (collectively, the "Website"). As used
+                                    in this Agreement, "Kuyam" refers to Kuyam Companies, Inc. and any of its subsidiaries,
+                                    and "User" or "you" refers to you. USE OF THE SERVICES AND THE WEBSITE CONSTITUTES
+                                    KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS USER AGREEMENT, KUYAM'S PRIVACY POLICY,
+                                    AND KUYAM'S TERMS AND CONDITIONS.
+                                </p>
+                                <p>
+                                    Kuyam may modify this Agreement's terms and conditions at any time without notice.
+                                    Continued use of the Services and the Kuyam site after a change in this Agreement,
+                                    a change in the Privacy Policy, or after implementation of any other new policy
+                                    constitutes acceptance of such change or policy.
+                                </p>
+                                <p>
+                                    The Service is offered subject to acceptance without modification of all of the
+                                    terms and conditions contained herein (the "Terms of Use"), which term also incorporates
+                                    the Privacy Policy available at www.kuyam.com/privacy, and all other operating rules,
+                                    policies and procedures that may be published from time to time on the Website,
+                                    each of which is incorporated by reference and each of which may be updated by Kuyam
+                                    from time to time without notice to you. In addition, some services offered through
+                                    the Service may be subject to additional terms and conditions promulgated by Kuyam
+                                    from time to time; your use of such services is subject to those additional terms
+                                    and conditions, which are incorporated into these Terms of Use by this reference.
+                                </p>
+                                <p>
+                                    The Service is available only to individuals who are at least 18 years old. You
+                                    represent and warrant that if you are an individual, you are of legal age to form
+                                    a binding contract, and that all registration information you submit is accurate
+                                    and truthful. Company may, in its sole discretion, refuse to offer the Service,
+                                    or suspend or terminate the Service to any person or entity and may change its eligibility
+                                    criteria at any time. This provision is void where prohibited by law and the right
+                                    to access the Service is revoked in such jurisdictions. IF YOU DO NOT AGREE TO THE
+                                    TERMS OF THIS AGREEMENT OR ANY REVISED VERSION OF THIS AGREEMENT, PLEASE DO NOT
+                                    USE THIS SITE.
+                                </p>
+                                <h3>
+                                    1. What we do</h3>
+                                <p>
+                                    Kuyam provides services to Users for the purpose of assisting Users in securing
+                                    appointments at participating Companies and independent contractors (individually,
+                                    a "company" and collectively, "Companies"). In addition, the Website provides an
+                                    online calendaring service that allows Users to keep track of the events in their
+                                    life. In response to a User's online request for an appointment, the Website or
+                                    Kuyam's employees directly contacts a third party company representative or a company's
+                                    computerized database of appointments. The availability of appointments is determined
+                                    at the time of User's query. Once an appointment is confirmed by a company, Kuyam
+                                    will provide confirmation of the appointment to User by email and/or other means
+                                    of mutually acceptable communications between Kuyam's platform and its Users. At
+                                    this time, Kuyam's Services will be free of charge to Users; however, Kuyam may
+                                    impose a service charge in the future. By using the Services, User agrees to receive
+                                    appointment confirmations by email and/or other means of mutually acceptable communications
+                                    after booking an appointment through the Website.</p>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+        </div>
+        <div class="footer">
+            <div class="fcontent">
+                <a href="" class="logo" title="kuyam"><img alt="Kuyam" src="../images/kuyam_footer_logo.png" /></a>
+                <ul class="menu">
+                    <li><a href="http://kuyam.com/home/howitworks_user" target="_blank" title="how it works">how it works</a></li>
+                    <li><a href="http://kuyam.com/home/OurStory" target="_blank" title="our story">our story</a></li>
+                    <li><a href="http://kuyam.com/home/faq" target="_blank" title="faq">faq</a></li>
+                </ul>
+                <ul class="menu col2">
+                    <li><a href="http://kuyam.com/home/contactnew" target="_blank" title="contact">contact</a></li>
+                    <li><a href="JavaScript:void(0);" title="terms &amp; privacy" id="terms">terms &amp; privacy</a></li>
+                    <li><a href="http://kuyam.org/" target="_blank" title="kuyam.org">kuyam.org</a></li>
+                </ul>
+                
+                <span>copyright © 2012 kuyam companies, inc. all rights reserved patend pending.</span>
+                <ul class="medialogo">
+                    <li><a href="http://www.facebook.com/" class="fb" target="_blank" title="facebook"></a></li>
+                    <li><a href="https://twitter.com/" class="tw" target="_blank" title="twitter"></a></li>
+                    <li><a href="http://www.youtube.com/" target="_blank" class="yt" title="youtube"></a></li>
+                    <li><a href="http://www.tumblr.com/" target="_blank" class="tt"  title="tumblr"></a></li>
+                    <li><a href="http://pinterest.com/" target="_blank" class="na"  title="pinterest"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

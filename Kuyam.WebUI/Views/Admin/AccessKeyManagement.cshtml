@@ -1,0 +1,96 @@
+﻿@using Kuyam.Database;
+@{
+    ViewBag.Title = "AccessKeyManagement";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isOdd = false;
+}
+<script type="text/javascript">
+    function fillterByAdmin(value) {
+        window.location.href = "/Admin/AccessKeyManagement?email=" + value;
+    }
+
+    function deleteKey(value) {
+        var isdelete= confirm('Are you sure you want to delete?')
+        if (isdelete) {            
+            $("#AccessKeyManagement").attr("action", "/Admin/DeleteAccessKeyManagement");
+            $("#hdaAcessKeyid").val(value);
+            $("#AccessKeyManagement").submit();
+        }
+        
+        return isdelete;
+    }
+
+    function invite(emaillogin, key) {
+        $("#AccessKeyManagement").attr("action", "/Admin/InviteAccessKeyManagement");
+        $("#hdaAcessKeyid").val(key);
+        $("#hdaemailLogin").val(emaillogin);
+        $("#AccessKeyManagement").submit();       
+    } 
+</script>
+
+<div id="contentmainpage">
+<h2>access key management</h2>
+@using (Html.BeginForm("AccessKeyManagement", "Admin", FormMethod.Post, new { id = "AccessKeyManagement"}))
+{   
+    <input type="hidden" id="hdaAcessKeyid" name="acessKeyid" value="" />
+    <input type="hidden" id="hdaemailLogin" name="emailLogin" value="" />
+    
+    <table class="tbldata" cellspacing="0" cellpadding="0" border="0">
+        <tr class="odd">
+            <td valign="middle"> 
+                user account&nbsp;&nbsp;<select id="userlist" name="emailUser">
+                    @* <option value="0" selected="selected" >none</option>*@
+                    @foreach (MembershipUser item in ViewBag.ListUser)
+                    {
+                        <option value="@item.Email" @(ViewBag.EmailUser == item.Email ? "selected=selected" : "")>@item.Email</option>
+                    }
+                </select>
+            
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;admin account&nbsp;&nbsp;<select id="adminlist" name="emailAdmin" onchange="fillterByAdmin(this.value);">
+                    @*<option value="0" selected="selected">none</option>*@
+                    @foreach (var value in ViewBag.ListAdmin)
+                    {  
+                        <option value="@value" @(value == ViewBag.EmailAdmin ? "selected=selected" : "")>@value</option>
+                    }
+                </select>
+           
+                <input type="submit" value="create" />
+            </td>
+        </tr>        
+    </table>
+    if (ViewBag.ListAccessKey != null)
+    {
+        
+     <div id="grirddata">        
+        <table border='0' cellpadding="0" cellspacing="0" class="tbldata">
+           <tr >
+           <th style="width:100px">email</th>
+           <th style="width:300px">access key</th>           
+           <th style="width:65px">action</th>
+           </tr>
+            @foreach (AccessKeyManagement item in ViewBag.ListAccessKey)
+            {
+                string addClass = "";
+                if (isOdd)
+                {
+                    addClass = "class=odd";
+                    isOdd = false;
+
+                }
+                else
+                {
+                    isOdd = true;
+                }
+            <tr @addClass>
+              <td><a href='mailto:@item.EmailUser' title='@item.EmailUser'>@Kuyam.Domain.UtilityHelper.TruncateText(item.EmailUser, 30)</a></td>
+              <td ><div style="word-wrap:break-word;width:300px;">@item.Key</div></td>              
+              <td style="width:65px;">
+                 <a href="javascript:void(0)" onclick="return deleteKey('@item.AccessKeyID')">delete</a> | <a href="javascript:void(0)" onclick="invite('@item.EmailUser','@item.Key')">invite</a>
+              </td>
+            </tr>
+            }
+        </table>        
+    </div>
+    }
+}
+</div>

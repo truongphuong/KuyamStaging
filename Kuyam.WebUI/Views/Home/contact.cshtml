@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_KuyamLayoutYellow.cshtml";    
+    ViewBag.Title = "Contact Us";
+}
+
+<br />
+<table class="none" width="100%" border="1">
+    <tr class="none" >
+        <td class="none" valign="top" width="200px">
+            <img src="@Url.Content("~/images/Contact/Contact.png")" alt="Contact Us" />
+        </td>
+
+        <td class="none" valign="top">
+            <br /><br />
+            We love hearing your questions and feedback!<br />
+    
+            Email us at 
+            @if (User.Identity.IsAuthenticated)
+            { 
+                @:<a href="mailto:info@kuyam.com?subject=kuyam info from @(User.Identity.Name)">info@kuyam.com</a>
+            }
+            else
+            { 
+                @:<a href="mailto:info@kuyam.com">info@kuyam.com</a>
+            }
+
+            <br />
+            <br />
+    
+            Or if you prefer to talk, please call us at (310) 461-1515<br />
+    
+            <p>
+                Send us mail at:
+                <br /><br />
+                Kuyam<br />
+                1901 Avenue of the Stars, Suite 1900<br />
+                Los Angeles, CA 90067
+            </p>
+
+            <br />
+
+<!--
+            you can also simply fill out this form:
+
+            <div class="GreyBox">
+                <br /><br /><br /><br />
+            </div>
+-->
+
+        </td>
+    </tr>
+</table>
+
+<br /><br /><br />
+<br /><br /><br />
+<br />
+<img style="margin-top:15px;margin-left:600px;margin-bottom:20px;" src="@Url.Content("~/images/Contact/YellowLetter.gif")" alt="Letter"  />
+
+
+

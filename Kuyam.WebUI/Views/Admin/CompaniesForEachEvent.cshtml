@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "CompaniesForEachEvent";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var adminRole = ViewBag.IsAdmin;
+    Kuyam.Database.Event eventItem = ViewBag.Event;
+    
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                FilterSearchResult();
+                return false;
+            }
+        });
+    });
+</script>
+
+<div id="contentmainpage">
+    <h2>
+        companies list for event: @eventItem.Name
+    </h2> 
+    <input type="hidden" id="hdfEventId" value="@eventItem.EventID" />
+    <div class="boxsearch">
+        <center>
+            <table class="tbldata" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr class="odd">
+                        <td>
+                            <label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>                           
+                            <input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />   
+                            <select id="stateType">
+                                <option value="0">select status</option>
+                                <option value="1" selected ="selected" >participating companies</option>
+                                <option value="2">not Join</option>
+                               </select>                         
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </div>
+    <div>
+        <a href="@Url.Action("Events","Admin")">back to list events</a>
+    </div>
+    <div id="listCompany">
+      @Html.Partial("_AdminCompaniesEvent")
+    </div>
+    <div>
+        <a href="@Url.Action("Events","Admin")">back to list events</a>
+    </div>
+</div>
+<style type="text/css">
+    /* ------------- Spinner -----------*/
+    .spinner2 {
+        display: none;
+        width: 100px;
+        height: 100px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background: url(spinner.gif) no-repeat center #fff;
+        text-align: center;
+        padding: 10px;
+        font: normal 16px Tahoma, Geneva, sans-serif;
+        border: 1px solid #666;
+        margin-left: -50px;
+        margin-top: -50px;
+        z-index: 2;
+        overflow: auto;
+    }
+
+    .spinner {
+        /*position: relative;
+        top: 210px;
+        left: 300px;
+        text-align: center;*/
+    }
+
+    .PopUpDialog {
+        width: 500px;
+        height: 540px;
+        padding: 30px;
+        margin: 30px;
+        position: relative;
+        overflow: auto;
+    }
+
+    .ui-widget-overlay {
+        background: repeat scroll 100% 100% #AAAAAA;
+        height: 500%;
+        opacity: 0.3;
+    }
+
+    .ui-dialog .ui-dialog-titlebar-close span {
+        margin: -8px;
+    }
+</style>
+<div id="uploadpopup" class="popup-facebook">
+    <div class="contentPopup">
+        <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="close"></a>
+        <div class="clear">
+        </div>
+        <input id="fileSubmit" type="file" />
+        <input id="submit" type="submit" />
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+     
+        $('.quitEvent').live('click', function (e) {
+            var profileId = $(this).attr('profileId');
+            var eventId = $(this).attr('eventId');
+               
+
+            var Parameters = { profileId: profileId, eventId: eventId };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(Parameters),
+                        dataType: 'html',
+                        url: '/Admin/RemoveCompanyEvent/'
+                    })
+                    .success(function (result) {
+                        alert("remove success");
+                        location.reload();
+                    })
+                    .error(function (error) {
+
+                    });
+            
+        });
+
+
+        $('#stateType').live('change', function (e) {
+            var type = $("#stateType option:selected").val();
+            var id = $('#hdfEventId').val();
+
+            var Parameters = { id: id, type: type };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(Parameters),
+                    dataType: 'html',
+                    url: '/Admin/ShowCompaniesForEvent/'
+                })
+                .success(function (result) {
+                    $('#listCompany').html(result);
+                })
+                .error(function (error) {
+
+                });
+
+        });
+
+
+        $('#uploadpopup').dialog({
+            autoOpen: false,
+            dialogClass: 'PopUpDialog',
+            position: 'center',
+            resizable: false,
+            title: "Import data",
+            modal: true,
+            open: function (event, ui) {
+                //$(this).html(loadingHtml);
+                //$(this).load(url);
+
+            }
+        });
+        //$("#uploadpopup").dialog({autoOpen: false});
+        var importResult = $("#importResult").val();
+
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var id = $('#hdfEventId').val();
+        var searchParameters = { id:id, page: pageIndex, key: key};
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/CompaniesForEachEvent/'
+            })
+            .success(function (result) {
+                $('#listCompany').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function FilterSearchResult() {
+        $("#stateType").val("0");
+        var key = $('#txtKey').val();
+        var id = $('#hdfEventId').val();
+        var searchParameters = {id:id, key: key};
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/CompaniesForEachEvent/'
+                })
+                .success(function (result) {
+                    if (result == "false") {
+                        window.location.href = "/Admin/Login";
+                    }else{
+                    $('#listCompany').html(result);
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+    }
+
+
+</script>

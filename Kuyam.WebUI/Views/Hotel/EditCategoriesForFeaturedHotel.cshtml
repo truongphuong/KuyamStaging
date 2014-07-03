@@ -1,0 +1,45 @@
+﻿@using Kuyam.Database
+
+@{
+    ViewBag.Title = "Edit Categories for feature Hotel";
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+    int featuredHotelId = ViewBag.featuredHotelId;
+    IQueryable<be_Categories> categories = ViewBag.categories;
+    List<CategoryFeaturedHotel> categoriesFeatured = ViewBag.categoryFeatureHotels;
+    int hotelId = ViewBag.hotelId;
+}
+<div id="contentmainpage">
+    <h2>edit featured hotel</h2>
+    <div class="loginform">
+        @using(Html.BeginForm()){
+            @Html.Hidden("featuredId", featuredHotelId)
+            @Html.Hidden("hotelId", hotelId);
+        <table cellpadding="2" cellspacing="2" border="0" class="tbldata">
+            @{ 
+                foreach (be_Categories category in categories)
+                {
+                    var selected = categoriesFeatured.Where(t => t.BeCategoryId == category.CategoryRowID).Any()? "checked": "";
+                    <tr> 
+                        <td>@category.CategoryName</td>
+                        <td>
+                            <input type="checkbox" name="categories" @selected value="@category.CategoryRowID" />
+                        </td>
+                    </tr>
+                }
+            }
+        </table>        
+        <div>            
+            @if (hotelId == 0)
+            {
+                <a href="@Url.Content("~/Hotel/FeaturedHotel")">back to list</a>
+            }
+            else
+            {
+                <a href="@Url.Content(string.Format("~/Hotel/FeaturedHotel?hotelId={0}", hotelId))">back to list</a>
+            }
+            <span style="margin-left: 8em;"><input type="submit" value="Save" /></span>
+        </div>
+        }
+    </div>
+</div>
+

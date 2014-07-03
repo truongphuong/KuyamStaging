@@ -1,0 +1,66 @@
+﻿@model List<Kuyam.WebUI.Models.HotelListModel>
+@using Kuyam.Database
+@{
+    ViewBag.Title = "Hotel List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        hotels list</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                        <button class="button" id="btnAddHotel" type="button" onclick="addNewHotel();">
+                            add hotel</button>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="feddbacklist">
+        @Html.Partial("_HotelList", Model)
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#txtKey").val("@ViewBag.Key");
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+    
+    function addNewHotel() {
+        window.location.href = "/Admin/HotelAdd";
+    }
+
+    function pagingEvent(pageIndex) {
+        var key = $.trim($('#txtKey').val());
+        var searchParameters = { pageIndex: pageIndex, keyName: key };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/HotelList/'
+            })
+            .success(function (result) {
+                $('#feddbacklist').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>

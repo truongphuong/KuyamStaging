@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Kuyam.Database.ProfileHour>
+@using M2.Util
+@using M2.Util.MVC
+@using Kuyam.Database
+@{
+    ViewBag.Title = "open hours";
+}
+<div style="float: left">
+    <h2>
+        @ViewBag.Title</h2>
+</div>
+<div style="float: right">
+</div>
+<div class="clear">
+</div>
+<p>
+    @Html.ActionLink("Add Hours", "add-open-hours")
+</p>
+<table>
+    <tr>
+        <th>
+            Day
+        </th>
+        <th>
+            hours
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Types.GetTypeName(Types.TypeGroup.Day, item.Day)
+            </td>
+            <td>
+                @item.Start.ToHHMMString() - @item.End.ToHHMMString()
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "edit-open-hours", new { id = item.ProfileHoursID }) |
+                @Html.ActionLink("Delete", "delete-open-hours", new { id = item.ProfileHoursID })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+@Html.ActionLink("back", "companyprofile", "profile", new { id=Kuyam.WebUI.Models.MySession.CompanyProfileID }, null)

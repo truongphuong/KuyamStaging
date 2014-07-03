@@ -1,0 +1,82 @@
+@{
+    ViewBag.Title = "team kourosh";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        $('select#category').selectmenu();
+
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+    });
+</script>
+<div class="contentMarketPlace">
+    <div class="howitworks" style="background-position:0 100%;">
+        <div class="ourstory">
+            <div class="ourstoryleft teammember">
+                <ul>
+                    <li><a href="/home/ourstory" title="our story">our story</a> <span class="nonarrow">
+                    </span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <li class="meetingteam"><span class="active">meet the team</span> <span class="greenarrow">
+                    </span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ourstoryright">
+                <div class="teamcontent">
+                    <div class="imagemember">
+                        <img src="/images/todd.png" alt="todd" />
+                    </div>
+                    <div class="contentmember">
+                        <h1>
+                            todd zebert/ <span>“the sherpa”</span>
+                        </h1>
+                        <h2>
+                            Co-Founder and director of Information Technology</h2>
+                        <p>
+                            Todd is the company's macgyver, a swiss army knife of I.T. experience, entrepreneurship,
+                            and team leadership. Besides being the office wise guy, todd excels at critical
+                            thinking and getting the whole office to go out to happy hour.
+                        </p>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="teamline">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="othermembers">
+                    <a href="/home/teamkourosh" class="kourosh" title="kourosh"></a><a href="/home/teamtony"
+                        class="tony" title="tony"></a><span class="todd"></span><a href="/home/teamjackie"
+                            class="jackie" title="jackie"></a><a href="/home/teamcory" class="cory" title="cory">
+                            </a><a href="/home/teammonika" class="monika" title="monika"></a>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>

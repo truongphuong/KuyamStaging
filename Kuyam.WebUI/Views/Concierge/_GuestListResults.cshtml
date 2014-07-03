@@ -1,0 +1,219 @@
+﻿@{
+    int searchType = ViewBag.SearchType == null ? -1 : ViewBag.SearchType;
+    int totalRecord = 0;
+    bool isOdd = false;
+    if (ViewBag.UsersList != null)
+    {
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+}
+
+<table border='0' cellpadding="0" cellspacing="0" class="tbldata" width="500" id="ddlUsers">
+    <tr>
+        <th>
+            first name
+        </th>
+        <th>
+            last name
+        </th>
+        <th>
+            check-in
+        </th>
+        <th>
+            check-out
+        </th>
+        <th>
+            room number
+        </th>
+        <th>
+            email
+        </th>
+        <th>
+            cell phone
+        </th>
+
+        <th>
+            create date
+        </th>
+      
+        <th style="width: 121px;">
+            action
+        </th>
+    </tr>
+    @foreach (Kuyam.Database.HotelVisit user in ViewBag.UsersList)
+    {
+        string addClass = "";
+        if (isOdd)
+        {
+            addClass = "class=odd";
+            isOdd = false;
+
+        }
+        else
+        {
+            isOdd = true;
+        }
+        <tr @addClass>
+            <td>
+                <span id="firstName_@user.Id" title="@user.Cust.FirstName">@Kuyam.Domain.UtilityHelper.TruncateText(user.Cust.FirstName, 15)</span>
+            </td>
+            <td>
+                <span id="lastName_@user.Id" title="@user.Cust.LastName">@Kuyam.Domain.UtilityHelper.TruncateText(user.Cust.LastName, 15)</span>
+            </td>
+            <td>
+                <span id="checkInDate_@user.Id" title="@user.CheckInDate.ToString("MM/dd/yyyy")">@user.CheckInDate.ToString("MM/dd/yyyy")</span>
+            </td>
+            <td>
+                <span id="checkOutDate_@user.Id" title="@user.CheckOutDate.ToString("MM/dd/yyyy")">@user.CheckOutDate.ToString("MM/dd/yyyy")</span>
+            </td>
+            <td>
+                <span id="roomNumber_@user.Id" title="@user.RoomNumber">@user.RoomNumber</span>
+            </td>
+      
+            <td>
+                <a id="email_@user.Id" href='mailto:@user.Cust.Email' title='@user.Cust.Email'>@Kuyam.Domain.UtilityHelper.TruncateText(user.Cust.Email, 20)</a>
+            </td>
+            <td>
+                <span id="mobilePhone_@user.Id" title="@user.Cust.MobilePhone">@user.Cust.MobilePhone</span>
+            </td>
+            <td>
+                <span id="modify_@user.Id">@Kuyam.Database.DateTimeUltility.ConvertToUserTime(user.Cust.Created, DateTimeKind.Utc).ToString("MM/dd/yyyy")</span>
+            </td>
+            <td>
+                <a id="modify_@user.Id" itemid="@user.Id">modify</a>
+                   <span> | </span>
+                 @Html.ActionLink("impersonate user", "GuestImpersonal", "Concierge", new { id = user.CustID, formType = 2 }, new { })
+                    
+            </td>
+        </tr>
+    }
+</table>
+<table cellpadding="0" cellspacing="0" border="0" class="tbldata" style="background-color:#F7FBFF;">
+    <tr class="odd" style="border-bottom: 1px solid #E5EFF8;">
+        <td>
+            <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+            @{
+                int from = (ViewBag.Page - 1) * 10 + 1;
+                int to = ViewBag.Page * 10;
+                if (to > totalRecord)
+                {
+                    to = totalRecord;
+                }
+                int lastPage = 0;
+                if (totalRecord % 10 == 0)
+                {
+                    lastPage = totalRecord / 10;
+                }
+                else
+                {
+                    lastPage = totalRecord / 10 + 1;
+                }
+
+
+                <div class="fLeft mt4" style="float: left;">
+                    @if (totalRecord > 0)
+                    {
+                        <span>@from - @to of </span>
+                        <span><strong>@totalRecord results</strong></span>
+                    }
+                </div>
+            }
+        </td>
+        <td class="paging" style="text-align: right;">
+            @{
+                if (totalRecord > 0)
+                {
+                    <div class="paging">
+                        @if (ViewBag.Page > 1)
+                        {
+
+                            <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+                        }
+                        @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+                        {
+                            if (ViewBag.Page == 4)
+                            {
+                                <a onclick="pagingEvent(@(ViewBag.Page - 3))" pageindex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                            }
+                            if (ViewBag.Page > 4)
+                            {
+                                <a onclick="pagingEvent(1)" title="previous">1</a>
+                                <span class="borderNone p0 ml4 dotmore">...</span>
+
+                            }
+
+                            <a onclick="pagingEvent(@(ViewBag.Page - 2))" pageindex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                            <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                        }
+                        @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+                        {
+
+                            if (ViewBag.Page == 3)
+                            {
+                                <a onclick="pagingEvent(1)" title="previous">1</a>
+                            }
+                            if (ViewBag.Page > 3)
+                            {
+                                <a onclick="pagingEvent(1)" title="previous">1</a>
+                                <span class="borderNone p0 ml4 dotmore">...</span>
+
+                            }
+                            <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                        }
+                        <span class="active" title="@ViewBag.Page">@ViewBag.Page</span>
+                        @if (ViewBag.Page + 1 < lastPage)
+                        {
+                            <a onclick="pagingEvent(@(ViewBag.Page + 1))" pageindex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+                        }
+                        @if (ViewBag.Page + 2 < lastPage)
+                        {
+                            <a onclick="pagingEvent(@(ViewBag.Page + 2))" pageindex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+                        }
+                        @if (ViewBag.Page + 3 < lastPage)
+                        {
+                            <span class="borderNone p0 ml4 dotmore">...</span>
+                        }
+                        @if (ViewBag.Page < lastPage)
+                        {
+                            <a onclick="pagingEvent(@lastPage)" pageindex="@lastPage" title="@lastPage">@lastPage</a>
+                            <a onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+                        }
+                    </div>
+                    <div class="clear">
+                    </div>
+                }
+            }
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("[id^=modify_]").click(function () {
+            var id = $(this).attr("itemid");
+            var firstName = $("#firstName_" + id).attr("title");
+            var lastName = $("#lastName_" + id).attr("title");
+            var checkInDate = $("#checkInDate_" + id).attr("title");
+            var checkOutDate = $("#checkOutDate_" + id).attr("title");
+            var roomNumber = $("#roomNumber_" + id).attr("title");
+            var email = $("#email_" + id).attr("title");
+            var mobilePhone = $("#mobilePhone_" + id).attr("title");
+
+            $("#firstName").val(firstName);
+            $("#lastName").val(lastName);
+            $("#checkin").val(checkInDate);
+            $("#checkout").val(checkOutDate);
+            $("#roomNumber").val(roomNumber);
+            $("#email").val(email);
+            if (mobilePhone == '') {
+                mobilePhone = 'cellphone';
+            }
+            $("#cellphone").val(mobilePhone);
+            $("#addguess").val("edit guest");
+            $("#email").attr('readonly', true);
+            $('#email').addClass('input-disabled');
+            $("#guestId").val(id);
+            $("#gotoguess").show();
+        });
+    });
+</script>

@@ -1,0 +1,33 @@
+﻿@using Kuyam.Database
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    ViewBag.Title = "photos of " + Model.CompanyName;
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+
+@section MetaSeoSection{
+    @Model.MetaTagExtension.MetaTag()
+}
+
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight newcompanyschedule">
+            @Html.Partial("_HeaderCompanyProfile")
+            <div class="clear7">
+            </div>
+            <div class="companypackage">
+                @Html.Partial("_CompanyProfilePhoto", Model)
+            </div>
+            <div class="clear23">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+
+

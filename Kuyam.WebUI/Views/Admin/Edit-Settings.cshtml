@@ -1,0 +1,24 @@
+﻿@model Dictionary<string, string>
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Edit Settings";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("edit-settings", "admin"))
+{ 
+    <div class="caseAsEntered">
+        @foreach (string item in Model.Keys)
+        {
+            <div class="editor-row">
+                <div class="editor-label">
+                    @item
+                </div>
+                <div class="editor-field-5050">
+                    @Html.TextBox(item, Model[item])
+                </div>
+            </div>
+        }
+    </div>
+    <div class="clear"></div>
+    @Html.SaveCancelLC()
+}

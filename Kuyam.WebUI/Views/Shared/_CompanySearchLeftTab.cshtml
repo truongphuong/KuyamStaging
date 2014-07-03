@@ -1,0 +1,1032 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Domain.CompanyProfileServices;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.Domain.Seo;
+@using Kuyam.WebUI.Models;
+@{
+    string id = "0";
+    string packageId = "0";
+
+    if (Url.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = Url.RequestContext.RouteData.Values["id"].ToString();
+    }
+    DateTime today = DateTimeUltility.ConvertToUserTime(DateTime.Now);
+    ProfileCompany company = ViewBag.Company;
+    var appointmentservice = EngineContext.Current.Resolve<IAppointmentService>();
+    CompanyProfileService _companyProfileService = EngineContext.Current.Resolve<CompanyProfileService>();
+    List<ProfileCompany> favList = null;
+    List<Appointment> lstAppointment = null;
+    List<UserPackagePurchase> userPackages = null;
+    int numofProposed = 0;
+    int numofNewApp = 0;
+    int numofModApp = 0;
+    int numofConApp = 0;
+    int numofCanApp = 0;
+    if (MySession.CustID != 0)
+    {
+        userPackages = _companyProfileService.GetUserAvailablePackageByCustID(Kuyam.WebUI.Models.MySession.CustID);
+        favList = ProfileCompany.GetFavoriteListByCustID(Kuyam.WebUI.Models.MySession.CustID);
+        lstAppointment = appointmentservice.GetleftAppointmentByCustID(Kuyam.WebUI.Models.MySession.CustID);
+        numofNewApp = lstAppointment.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Pending);
+        numofModApp = lstAppointment.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Modified || a.AppointmentStatusID == (int)Types.AppointmentStatus.CompanyModified);
+        numofConApp = lstAppointment.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Confirmed);
+        numofCanApp = lstAppointment.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Cancelled);
+        var proposed = appointmentservice.GetProposedAppointmentsByCustId(MySession.CustID, null, today);
+        numofProposed = proposed.Count();
+    }
+    string companyName = string.Empty;
+}
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/jquery.ptTimeSelect.css")" media="screen" />
+<script type="text/javascript" language="JavaScript" src="@Url.Content("~/Scripts/js/jquery.ptTimeSelect.js")"></script>
+<script type="text/javascript" language="JavaScript" src="@Url.Content("~/Scripts/js/jquery.cookie.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var added = false;
+
+        $(window).scroll(function () {
+
+            if ($("#botMenu").length == 0 || $("#accordion").length == 0)
+                return;
+            var menuHeight = $("#botMenu").offset().top - $("#accordion").offset().top;
+            //            console.log(($(window).height() < menuHeight + 234)
+            //            + " " + ($(window).scrollTop() >= ($("body").height() - $(window).height() - 140))
+            //            + " " + ($(".footer").offset().top - $(window).scrollTop() - 84 < menuHeight));
+            if (($(window).height() < menuHeight + 234) &&
+            ($(window).scrollTop() >= ($("body").height() - $(window).height() - 140)) &&
+            ($(".footer").offset().top - $(window).scrollTop() - 84 < menuHeight)) {
+                if (!added) {
+                    $(".scroll").addClass("leftMenuBottom");
+                    $(".scroll").removeClass("leftMenuFloat");
+                    added = true;
+                }
+            }
+            else {
+                $(".scroll").addClass("leftMenuFloat");
+                $(".scroll").removeClass("leftMenuBottom");
+                added = false;
+            }
+
+        });
+
+        $("#spSchedulerError").hide();
+        $('#ui-accordion-accordion-panel-1 .pannelappointments').click(function (e) {
+            if (typeof slider != "undefined") {
+                slider.sliderTo(this.id);
+            } else {
+                self.location.href = "/Appointment/";
+            }
+        });
+
+        $("#customerScheduler1Day").datepicker({ dateFormat: 'mm/dd' });
+        $("#customerScheduler2Day").datepicker({ dateFormat: 'mm/dd' });
+        $("#customerScheduler3Day").datepicker({ dateFormat: 'mm/dd' });
+
+        $('#customerScheduler1Hour').ptTimeSelect({
+            containerClass: "timeCntr",
+            containerWidth: "350px",
+            setButtonLabel: "Select",
+            minutesLabel: "min",
+            hoursLabel: "Hrs"
+        });
+
+        $('#customerScheduler2Hour').ptTimeSelect({
+            containerClass: "timeCntr",
+            containerWidth: "350px",
+            setButtonLabel: "Select",
+            minutesLabel: "min",
+            hoursLabel: "Hrs"
+        });
+
+        $('#customerScheduler3Hour').ptTimeSelect({
+            containerClass: "timeCntr",
+            containerWidth: "350px",
+            setButtonLabel: "Select",
+            minutesLabel: "min",
+            hoursLabel: "Hrs"
+        });
+
+    });
+
+
+    // popup
+    $('.btnnext').click(function () {
+
+        $("#spSchedulerError").hide();
+        if (!validateScheduleTime()) {
+            return false;
+        }
+        bookAppointmentNow();
+        //        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+        //        $('#comfirmationpopup').fadeIn(200);
+        //        $('.contentPopupForm').show();
+        //        $('.contentPopupSuccess').hide();
+        //        $('.loginFormScheduler').hide();
+        //        $('.btnbook').show();
+        //        centerWindow();
+        //        $('#comfirmationpopup .btnClose').click(function () {
+        //            $('#comfirmationpopup').fadeOut(200);
+        //            $('#lightBox').fadeOut(200);
+
+        //            if ($('div .contentPopupSuccess').is(":visible")) {
+        //                window.location.reload();
+        //            }
+        //        });
+    });
+
+
+    function validateScheduleTime() {
+        var date1 = $('#customerScheduler1Day').val() + ' ' + $('#customerScheduler1Hour').val();
+        var date2 = $('#customerScheduler2Day').val() + ' ' + $('#customerScheduler2Hour').val();
+        var date3 = $('#customerScheduler3Day').val() + ' ' + $('#customerScheduler3Hour').val();
+        if ($.trim(date1) == '' && $.trim(date2) == '' && $.trim(date3) == '') {
+            //alert("please let us know your times. Thanks!")
+            document.getElementById("spSchedulerError").innerHTML = "Please let us know your dates. Thanks!";
+            $("#spSchedulerError").show();
+
+            return false;
+        }
+        if ($.trim($('#customerScheduler1Day').val()) == '' && $.trim($('#customerScheduler2Day').val()) == '' && $.trim($('#customerScheduler3Day').val()) == '') {
+            document.getElementById("spSchedulerError").innerHTML = "please let us know your dates. Thanks!";
+            $("#spSchedulerError").show();
+            return false;
+        }
+        if (($('#customerScheduler1Hour').val() != '' && $('#customerScheduler1Day').val() == '') || ($('#customerScheduler2Hour').val() != '' && $('#customerScheduler2Day').val() == '') || ($('#customerScheduler3Hour').val() != '' && $('#customerScheduler3Day').val() == '')
+        || ($('#customerScheduler1Hour').val() == '' && $('#customerScheduler1Day').val() != '') || ($('#customerScheduler2Hour').val() == '' && $('#customerScheduler2Day').val() != '') || ($('#customerScheduler3Hour').val() == '' && $('#customerScheduler3Day').val() != '')
+        ) {
+            document.getElementById("spSchedulerError").innerHTML = "please let us know your time. Thanks!";
+            $("#spSchedulerError").show();
+            return false;
+        }
+
+        return true;
+
+    }
+
+    window.onresize = function () {
+        centerWindow();
+    };
+
+    function centerWindow() {
+        $('#comfirmationpopup').css('top', ($('#lightBox').height() - $('#comfirmationpopup').height()) / 2);
+        $('#comfirmationpopup').css('left', ($('#lightBox').width() - $('#comfirmationpopup').width()) / 2);
+    };
+    $(function () {
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+    });
+    $('#signup').click(function () {
+        redirectUrl = "";
+        $('#loginError').html('');
+        showDialog('signuppopup', 'btnCloseloginPopup');
+    });
+    function fullTrim(val) {
+        return val.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
+    };
+
+    function singUpNow() {
+        $('#loginError').hide();
+        var fname = $('#firstname').val();
+        var lname = $('#lastname').val();
+        var email = $('#email').val();
+        var err = "";
+        if (fullTrim(fname) == '' || fname == 'first name') {
+            err = err + 'first name is required.<br/> ';
+        }
+        if (fullTrim(lname) == '' || lname == 'last name') {
+            //            if (err != 'Invalid')
+            //                err = err + " and ";
+            err = err + 'last name is required. <br/> ';
+        }
+        if (fullTrim(email) == '' || email == "enter e-mail address") {
+            /*if (err != 'Invalid')
+            err = err + " and ";*/
+            err = err + ' email is required.<br/>';
+        }
+        if (fullTrim(email) != '' && email != "enter e-mail address" && !validateEmail(email)) {
+            /*if (err != 'Invalid')
+            err = err + " and ";*/
+            err = err + 'email is invalid.';
+        }
+
+        $('#loginError').html("<div style='color: Red;padding-left: 20px;'>" + err + "</div>");
+        if (err == '') {
+            $('#loginError').hide();
+            var param = "fname=" + fname + "&lname=" + lname + "&email=" + email;
+            $('#signuppopup #imgLoaderContact1').show();
+            commonPostAjax("company", "SignUpNow", param, setHomeSignUpSuccess, setError);
+        } else {
+            $('#loginError').show();
+        }
+    };
+
+    function callbackError(error) {
+        $('#loginError').html("<span style='color: Red;padding-left: 20px;'>" + error + "</span>");
+        $('#loginError').show();
+    }
+
+    function showPopUpDialog(url, ptitle) {
+        var loadingHtml = '<img src="@Url.Content("~/images/spinner.gif")" class="spinner"/>';
+        $('#PopUpDialog').dialog({
+            autoOpen: true,
+            dialogClass: 'PopUpDialog',
+            position: 'center',
+            resizable: false,
+            title: ptitle,
+            width: 677,
+            height: 596,
+            modal: true,
+            open: function (event, ui) {
+                $(this).html(loadingHtml);
+                $(this).load(url);
+
+            }
+        });
+    };
+    function callbackError(error) {
+        $('#loginError').html("<span style='color: Red;padding-left: 20px;'>" + error + "</span>");
+        $('#loginError').show();
+    }
+
+    function setHomeSignUpSuccess(result) {
+
+        $('#signuppopup #imgLoaderContact1').hide();
+        if (result.status == 1) {
+            self.location.href = "/Account/RegisterEmail";
+
+        } else {
+            callbackError(result.message);
+        }
+    }
+
+</script>
+@if (!HttpContext.Current.User.Identity.IsAuthenticated && ViewBag.IsSchedule == null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            createleftscrollnonmember();
+        });
+    </script>
+    <div class="colLeft">
+        <div class="notmemberscroll">
+
+            <div id="signup2" class="formForNotMember">
+                @if (ViewBag.IsAllowOtherCompnies == null || ViewBag.IsAllowOtherCompnies == true)
+                {
+                    <h3>
+                        start your journey.
+                    </h3>
+                    <div class="clear h5">
+                    </div>
+
+                    <fieldset>
+                        <input type="text" id="firstname" title="first name" value="first name" onblur=" if (this.value == '') {this.value = 'first name';this.style.color = '#B3B3B3';} "
+                               onfocus=" if (this.value == 'first name') {this.value = '';this.style.color = '#333333';} " />
+                        <div class="clear h5">
+                        </div>
+                        <input type="text" id="lastname" title="last name" value="last name" onblur=" if (this.value == '') {this.value = 'last name';this.style.color = '#B3B3B3';} "
+                               onfocus=" if (this.value == 'last name') {this.value = '';this.style.color = '#333333';} " />
+                        <div class="clear h5">
+                        </div>
+                        <input type="text" id="email" title="e-mail address" value="e-mail address" onblur=" if (this.value == '') {this.value = 'e-mail address';this.style.color = '#B3B3B3';} "
+                               onfocus=" if (this.value == 'e-mail address') {this.value = '';this.style.color = '#333333';} " />
+                        <div class="clear h3">
+                        </div>
+                        <input type="button" class="btnSignUp" value="" title="sign up now" onclick="singUpNow();" />
+                        <div class="clear h3">
+                        </div>
+
+                        <div class="errorarea">
+                            <div id="loginError" style="display: none;">
+                                <span style="color: Red"></span>
+                            </div>
+                        </div>
+                        <div class="clear h3">
+                        </div>
+                    </fieldset>
+                }
+                <p>
+                    schedule appointments instantly or add your own listing. <b>it's free!</b>
+                </p>
+
+                <div class="imgFooter">
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+else if (ViewBag.IsSchedule == null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @if(ViewBag.IsAllowOtherCompnies == null || ViewBag.IsAllowOtherCompnies == true)
+            {
+               @:$('#ui-accordion-accordion-header-0').click(function () {window.location = "/";});
+            }
+            $('#ui-accordion-accordion-header-2').click(function () {
+                $("#ui-accordion-accordion-panel-1").css("display", "none");
+            });
+            var tags = $("#ui-accordion-accordion-header-0").hasClass("ui-state-active");
+            if (tags) {
+                $("#ui-accordion-accordion-panel-1").css("display", "block");
+            }
+            if (jQuery.browser.safari && (navigator.appVersion.indexOf('5.') != -1)) {
+                var roll = $(window).scroll(function () {
+                    $('#mid-scroll-container').addClass('clearTop');
+                });
+            }
+
+            //            createtopleftscroll();
+            $("#accordion").accordion({
+                collapsible: false,
+                autoHeight: false,
+                changestart: function (event, ui) {
+                    if (event.currentTarget != undefined) {
+                        if (event.currentTarget.id == "ui-accordion-accordion-header-3") {
+                            if (window.location.href.toLowerCase().indexOf("calendarview") == -1) {
+                                window.location = "/calendarview/";
+                                return false;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <div class="colLeft menuLeft">
+        <div class="scroll leftMenuFloat">
+            <div id="accordion">
+                @if(ViewBag.IsAllowOtherCompnies == null || ViewBag.IsAllowOtherCompnies == true)
+                {
+                    <h3 title="our blog">
+                        our blog
+                    </h3>
+                    <div>
+                    </div>
+                }
+                <h3 title="schedule">
+                    schedule
+                </h3>
+
+                <div>
+                    <div class="panelmanual searchschedule">
+                        <div class="clear h7">
+                        </div>
+                        @if (ViewBag.IsAllowOtherCompnies == null || ViewBag.IsAllowOtherCompnies == true) 
+                        {
+                            <input id="searchByName" type="text" class="bginputcompany color7fb8dd" value="@(!string.IsNullOrEmpty(ViewBag.Key) ? ViewBag.Key : "find a company")"
+                                   onblur=" if (this.value == '') {this.value = 'find a company';} " onfocus=" if (this.value == 'find a company') {this.value = '';} " />
+                            <input type="button" class="btnsearch" onclick="searchProfileCompanyWithName()" title="find a company" />
+                            <div class="clear h7">
+                            </div>
+                        }
+                        <div class="divfavorite" id="reloaddivfavorite">
+                            <a href="#" onclick='return false;' id="schedulefavorite" class="schedulefavorite"
+                               title="select a favorite"></a>
+                            <ul class="favorite" id="favorite">
+                                @if (favList != null)
+                                {
+                                    foreach (var fav in favList)
+                                    {
+                                        <li >
+                                            <a class="ellipsis" style="height: 19px; width:170px" href="@Url.RouteUrl("availability", new {sename = fav.GetSeName(fav.ProfileID)})" title="@fav.Name">@fav.Name.ToLower()
+
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                            <div class="">
+                            </div>
+                            <a href="return javascript:void(0);" id="favoritearrowup" onclick='return false;' class="schedulefavoritearrowup" title="up"></a>
+                            <a href="return javascript:void(0);" id="favoritearrowdown" onclick='return false;' class="schedulefavoritearrowdown" title="down"></a>
+                        </div>
+                        <div class="clear14">
+                        </div>
+                        <div style="position: relative;">
+                            <div class="divpackage" id="divpackage">
+                                <a href="javascript: return void(0);" id="schedulepackage" class="schedulepackage"
+                                   title="select a package"></a>
+                                <ul class="package" id="package">
+                                    @if (userPackages != null)
+                                    {
+                                        foreach (UserPackagePurchase userPackage in userPackages)
+                                        {
+
+                                            <li>
+                                                @if (userPackage.CompanyPackage != null)
+                                                {
+                                                    CompanyPackageService companyPackageService = _companyProfileService.GetCompanyPackageServiceByCompanyPackageId(userPackage.CompanyPackage.PackageId);
+                                                    if (companyPackageService != null && companyPackageService.CompanyPackage != null && companyPackageService.CompanyPackage.ProfileCompany != null)
+                                                    {
+                                                        companyName = string.Format("{0} - ", companyPackageService.CompanyPackage.ProfileCompany.Name);
+                                                    }
+                                                    <a href="javascript:void(0);" onclick="packageDetail(@userPackage.UserPackagePurchaseId, '@Url.RouteUrl("availability", new {sename = _companyProfileService.GetSeName(userPackage.CompanyPackage.ProfileCompanyId)})') " id="linkdetailPackage" title="@companyName@userPackage.CompanyPackage.PackageName">@companyName@userPackage.CompanyPackage.PackageName</a>
+                                                }
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                                <a href="javascript: return void(0);" id="packagearrowup" class="schedulepackagearrowup"
+                                   title="up"></a><a href="javascript: return void(0);" id="packagearrowdown" class="schedulepackagearrowdown"
+                                                     title="down"></a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="divpackageactive" id="divpackageactive" style="display: none;">
+                                <a href="#" id="schedulepackagedetail" class="schedulepackagedetail" title="select a package">
+                                </a>
+                                <div class="packagecontent">
+                                    <div class="packagetitle">
+                                        <label id="packageCompanyName">
+                                        </label>
+                                        -
+                                        <label id="packageName">
+                                        </label>
+                                        <br />
+                                        <label id="lbpackageremain" class="packageremain">
+                                        </label>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div id="pkgdescription" class="pkgdescription">
+                                        <div class="divbtnbuymore">
+                                            <div class="zindex1">
+                                                <a id="buymorepackage" value="" style="display: none;" href="javascript:void(0);"
+                                                   title="buy more package" class="buymore">buy more packages</a>
+                                            </div>
+                                            &nbsp;
+                                        </div>
+                                        @*   <div id="packageDescription">
+                                            </div>*@<div id="packageDescription">
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <a href="javascript:void(0);" value="" id="idpkgdetail" class="pkgdetail">package detail</a><br />
+                                        expires
+                                        <label id="packageExpiredDate">
+                                        </label>
+                                        <br />
+                                        $<label id="packagePrice"></label>
+                                        paid
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="uselater">
+                                        <a href="javascript:void(0);" id="uselater" style="display: none;" title="use later">
+                                            use later
+                                        </a> <a href="javascript:void(0);" value="" id="removefromlist" style="display: none;"
+                                                title="remove from list">remove from list</a>
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear14">
+                        </div>
+                        <div style="position: relative;">
+                            <div class="divgiftcard" id="divgiftcard">
+                                <a href="javascript: return void(0);" id="schedulegiftcard" class="schedulegiftcard" title="gift card">
+                                </a>
+                                <ul class="giftcard" id="giftcard">
+                                    <li>
+                                        <a href='@Url.Action("BuyGiftCard", "GiftCard")' class="buygiftcard" title="buy a gift card">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='@Url.Action("GiftCardBalance", "GiftCard")' class="giftcardbalance" title="my gift card balance">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="clear14">
+                        </div>
+                    </div>
+                </div>
+@if (ViewBag.IsAllowOtherCompnies == null || ViewBag.IsAllowOtherCompnies == true) { 
+                <h3 title="appointments">
+                    appointments
+                </h3>
+                <div class="panelapp">
+                    <div class="lualist">
+                        <ul>
+                            <li class="leftitem active" id="li1">
+                                <a href="javascript:void(0);" onclick="fillterBySattus(0, 'li1');" title="master agenda">master agenda</a>
+                            </li>
+                            <li class="leftitem" id="li9">
+                                <a href="javascript:void(0);" onclick="gotoProposed('li9');" title="new requests">
+                                    proposed appts
+                                </a>
+                                <a id="menuProp" href="javascript:void(0);" onclick="gotoProposed('li9');" class="yellow">@numofProposed</a>
+                            </li>
+                            <li class="leftitem" id="li2">
+                                <a href="javascript:void(0);" title="new requests">
+                                    newest
+                                    updates
+                                </a>
+                            </li>
+                            <li id="li3" data-status="@((int) Types.AppointmentStatus.Pending)">
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Pending)', 'li3') " title="pending">
+                                    pending
+                                </a> <a id="menuPen" href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Pending)', 'li3') " class="yellow">@numofNewApp</a>
+                            </li>
+                            <li id="li4" data-status="@((int) Types.AppointmentStatus.Modified)">
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Modified)', 'li4') " title="modified">
+                                    modified
+                                </a> <a id="menuMod" href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Modified)', 'li4') " class="orange">@numofModApp</a>
+                            </li>
+                            <li id="li5" data-status="@((int) Types.AppointmentStatus.Confirmed)">
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Confirmed)', 'li5') " title="confirmed">
+                                    confirmed
+                                </a> <a id="menuCon" href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Confirmed)', 'li5') " class="green">@numofConApp</a>
+                            </li>
+                            <li id="li6" data-status="@((int) Types.AppointmentStatus.Cancelled)">
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Cancelled)', 'li6') " title="cancellations">
+                                    cancellations
+                                </a> <a id="menuCan" href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Cancelled)', 'li6') " class="red">@numofCanApp</a>
+                            </li>
+                            <li class="leftitem" id="li7"><a href="/appointment/history" title="history">history</a></li>
+                            <li class="leftitem " id="li8"><a href="/appointment/receipt" title="receipt">receipt</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 title="calendar">
+                    calendar
+                </h3>
+
+                <div>
+                    <div id="datepicker">
+                    </div>
+                </div>
+
+                <div id="botMenu" class="clear">
+                    &nbsp;
+                </div>
+}
+            </div>
+        </div>
+    </div>
+}
+else if (ViewBag.IsSchedule != null && ViewBag.IsSchedule == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tags = $("#ui-accordion-accordion-header-0").hasClass("ui-state-active");
+            if (tags) {
+                $("#ui-accordion-accordion-panel-1").css("display", "block");
+            }
+            $("#accordion").accordion({
+                collapsible: false,
+                autoHeight: false,
+                changestart: function (event, ui) {
+
+                    if (event.currentTarget != undefined) {
+                        if (event.currentTarget.id == "ui-accordion-accordion-header-3") {
+                            if (window.location.href.toLowerCase().indexOf("calendarview") == -1) {
+                                window.location = "/calendarview/";
+                                return false;
+                            }
+                        }
+                    }
+                }
+            });
+
+            $("#datepicker").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dayNamesMin: $.datepicker._defaults.dayNamesShort
+            });
+            // createtopleftscroll();
+
+            $('#ui-accordion-accordion-panel-2 .pannelappointments').click(function (e) {
+                if (typeof slider != "undefined") {
+                    slider.sliderTo(this.id);
+                } else {
+                    self.location.href = "/Appointment/";
+                }
+            });
+        });
+    </script>
+    <div class="colLeft menuLeft">
+        <div class="scroll">
+            <div id="accordion">
+                <h3 title="our blog">
+                    our blog
+                </h3>
+                <div>
+                </div>
+                <h3 title="schedule">
+                    schedule
+                </h3>
+                <div>
+                    <div class="panelmanual">
+                        <b>company</b> <a href="#" class="linkreset" title="Reset">reset</a>
+                        <div class="clear h2">
+                        </div>
+                        <input type="text" class="bginputcompany1" value="@Kuyam.Domain.UtilityHelper.TruncateText(@company.Name, 18)" />
+                        <div class="clear h12">
+                        </div>
+                        <p>
+                            three times that work for you?
+                        </p>
+                        <div class="clear h6">
+                        </div>
+                        <span>1</span>
+                        <input type="text" class="bginputdate" id="customerScheduler1Day" value="" />
+                        <input type="text" class="bginputtime" id="customerScheduler1Hour" value="" readonly="readonly" />
+                        <div class="clear h3">
+                        </div>
+                        <span>2</span>
+                        <input type="text" class="bginputdate" id="customerScheduler2Day" value="" />
+                        <input type="text" class="bginputtime" id="customerScheduler2Hour" value="" readonly="readonly" />
+                        <div class="clear h3">
+                        </div>
+                        <span>3</span>
+                        <input type="text" class="bginputdate" id="customerScheduler3Day" value="" />
+                        <input type="text" class="bginputtime" id="customerScheduler3Hour" value="" readonly="readonly" />
+                        <div class="clear h10">
+                        </div>
+                        <a title="next" class="btnnext"></a>
+                        <p id="spSchedulerError" style="color: Red; display: none">
+                        </p>
+                    </div>
+                </div>
+                <h3 title="appointments">
+                    appointments
+                </h3>
+                <div class="panelapp">
+                    <div class="lualist">
+                        <ul>
+                            <li class="leftitem">
+                                <a href="javascript:void(0);" onclick="fillterBySattus(0);"  title="master agenda">master agenda</a>
+                            </li>
+                            <li class="leftitem">
+                                <a href="javascript:void(0);" title="new requests">newest updates</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Pending)') " title="new requests">
+                                    pending
+                                </a> <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Pending)') " class="yellow">@numofNewApp</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Modified)') " title="modified">
+                                    modified
+                                </a> <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Modified)') " class="orange">@numofModApp</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Confirmed)') " title="confirmed">
+                                    confirmed
+                                </a> <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Confirmed)') " class="green">@numofConApp</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Cancelled)') " title="cancellations">
+                                    cancellations
+                                </a> <a href="javascript:void(0);" onclick="fillterBySattus('@((int) Types.AppointmentStatus.Cancelled)') " class="red">@numofCanApp</a>
+                            </li>
+                            <li class="leftitem active"><a href="/appointment/history" title="history">history</a></li>
+                            <li class="leftitem active"><a href="/appointment/receipt" title="receipt">receipt</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 title="calendar">
+                    calendar
+                </h3>
+                <div>
+                    <div id="datepicker">
+                    </div>
+                </div>
+                <div id="botMenu" class="clear">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdnCompanyID" value="@company.ProfileID" />
+}
+
+<input type="hidden" id="activepackageId" value="" />
+<input type="hidden" id="packagename" value="" />
+<input type="hidden" id="packageremain" value="" />
+<div id="popupthanks" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            thank you! we’ll notify you when the company is available for scheduling.
+        </p>
+    </div>
+</div>
+<div id="popupthankcompanylisthours" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            thank you! we’ll notify you when the company is available for scheduling.
+        </p>
+    </div>
+</div>
+<div id="pkgdetailpopup" class="comfirmationpopup pkgdetail">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong id="packagename">‘5 Massage Pack’ details</strong>
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="pkgdetailinfo">
+            expires: <span id="expiresdate"></span>
+            <br />
+            applies to the following services:
+        </div>
+        <div class="clear">
+        </div>
+        <div class="deletecontent" id="deletecontent">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $('#datepicker').datepicker({
+        onSelect: function (dateStr) {
+            location.href = "/CalendarView?tick=" + Date.parse(dateStr);
+        }
+    });
+
+    $("#searchByName").keypress(function (e) {
+        kCode = e.keyCode || e.charCode;
+        if (kCode == 13) {
+            searchProfileCompanyWithName();
+            return false;
+        }
+    });
+
+
+    function searchProfileCompanyWithName() {
+
+        var compareValue = $('#within').val();
+        var price = $('#price').val();
+        var time = $('#time').val();
+        var isAvailableToday = $('#cbAvailable').is(':checked');
+        var id = '@id';
+        var sortBy = $('#sortBy').val();
+        var key = $('#searchByName').val()
+        $('#keyword').value = key;
+
+        if (typeof compareValue == 'undefined' || typeof price == 'undefined'
+        || typeof time == 'undefined' || typeof isAvailableToday == 'undefined'
+        || typeof id == 'undefined' || typeof sortBy == 'undefined' || typeof sortBy == 'undefined') {
+
+            if (key == 'find a company') {
+                key = '';
+            }
+            var param = "key=" + key;
+            var url = "/company/companysearch?" + param;
+            if (key == 'find a company' || key == '') {
+                url = "/company/companysearch";
+            }
+            self.location.href = url;
+            return false;
+        }
+        else {
+            if (key == 'find a company') {
+                key = '';
+            }
+            var param = "key=" + key;
+            var url = "/company/companysearch?" + param;
+            if (key == 'find a company' || key == '') {
+                url = "/company/companysearch";
+            }
+            self.location.href = url;
+            return false;
+        }
+
+        var searchParameters = { id: id, compare: compareValue, price: price, time: time, isAvailableToday: isAvailableToday, page: 1, sortBy: sortBy, key: key };
+        $('#imgLoaderListDetail').show();
+        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/company/CompanySearchWithDistanceAndPaging/'
+            })
+            .success(function (result) {
+                $('#lightBox').hide();
+                $('#imgLoaderListDetail').hide();
+                $('#companyList').html(result);
+                $('#searchByName').val(key);
+                $('#lbKeyword').text(key);
+
+            })
+            .error(function (error) {
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').show();
+            });
+
+    }
+
+    function popupThankYou() {
+        showDialog('popupthanks');
+        setTimeout("redirectTo()", 2000);
+    }
+
+    function redirectTo() {
+        window.location.href = "/company/companysearch/";
+        //        $('#popupthanks').fadeOut(200);
+        //        $('#lightBox').fadeOut(200);
+    }
+
+    //    Get package info
+    function packageDetail(packageId, url) {
+
+        if (typeof packageId == 'undefined') {
+            $('#divpackage').hide();
+            return;
+        }
+        $.cookie("kuyamweb_packageId", packageId, { expires: 1, path: '/' });
+        $("#activepackageId").val(packageId);
+
+        location.href = url;
+
+
+        /*
+        $('#divpackageactive').show();
+        $("#activepackageId").val(packageId);
+        $.get("/CompanyProfile/GetPackageInfo", { packageId: packageId }, function (response) {
+        $("#packageName").html(response.PackageName);
+        $("#packageDescription").html(response.PackageDesscription);
+        $("#packageExpiredDate").html(response.PackageExpiredDate);
+        $("#packagePrice").html(response.PackagePrice);
+        $("#packageCompanyName").html(response.PackageCompanyName);
+        var packageRemain = "";
+        if (response.PackageRemain != -1) {
+        packageRemain = response.PackageRemain + " remaining";
+        } else {
+        packageRemain = "unlimited booking(s)";
+        }
+        $("#lbpackageremain").html(packageRemain);
+        $("#packagename").val(response.PackageName);
+        $("#packageremain").val(response.PackageRemain);
+        });
+        */
+    }
+
+    $('#uselater').click(function () {
+        $("#activepackageId").val("");
+        $('#divpackageactive').hide();
+
+        //        $('#divpackage').show();
+        //        $('#packagearrowdown').show();
+        //        $('#packagearrowdown').css('display', 'block');
+    });
+
+    function fillterBySattus(status, liId) {
+
+        var flag = false;
+        var key = $("#hdfKey").val();
+        if (key != null && typeof key != "undefined") {
+            flag = true;
+        }
+        if (window.location.href.toLowerCase().indexOf("appointment") == -1
+          || window.location.href.toLowerCase().indexOf("invoices") != -1
+          || window.location.href.toLowerCase().indexOf("modify") != -1
+          || window.location.href.toLowerCase().indexOf("receipt") != -1
+          || window.location.href.toLowerCase().indexOf("proposed") != -1) {
+            self.location.href = "/Appointment/Index/" + status;
+            $.cookie('appointmentFilter', liId);
+        }
+        else {
+            $.get("/appointment/fillterByStatus?status=" + status + "&nocache=" + getunixtime() + "&flag=" + flag, function (result) {
+                $("#appointmentdetail").html(result);
+            });
+            $(".lualist li").removeClass("active");
+            $(".lualist #" + liId).addClass("active");
+        }
+    }
+
+    function gotoProposed(liId) {
+        if (window.location.href.toLowerCase().indexOf("proposed") == -1) {
+            self.location.href = "/Appointment/proposed";
+            $.cookie('appointmentFilter', liId);
+        }
+        else {
+            $.get("/appointment/proposed?calendarId=" + 0 + "&nocache=" + getunixtime(),
+                 function (result) {
+                     $("#appointmentdetail").html(result);
+                 });
+
+            $(".lualist li").removeClass("active");
+            $(".lualist #" + liId).addClass("active");
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var packageId = $.cookie("kuyamweb_packageId");
+        $.cookie("kuyamweb_packageId", null, { path: '/' });
+
+        $("#idpkgdetail").click(function (e) {
+            var id = $(this).attr("value");
+            loadDetailpackage(id);
+        });
+
+        $("#buymorepackage").click(function (e) {
+            var profileId = $(this).attr("value");
+            window.location.href = '/CompanyProfile/Package/' + profileId;
+        });
+
+        $('#removefromlist').click(function () {
+
+            $("#activepackageId").val("");
+            $('#divpackageactive').hide();
+            var param = "userPackageId=" + $("#removefromlist").attr("value");
+            commonPostAjax("CompanyProfile", "RemovePackageFromList", param, removefromlistCallback, setError);
+        });
+
+        if ($.isNumeric(packageId) && packageId > 0 && window.location.pathname.toLowerCase().indexOf('companyprofile/availability/') > 0) {
+            //            $('#divpackageactive').show();
+            $("#activepackageId").val(packageId);
+
+            $.get("/CompanyProfile/GetPackageInfo", { packageId: packageId }, function (response) {
+                $("#packageName").html(response.PackageName);
+                $("#packageDescription").html(response.PackageDesscription);
+                $("#packageExpiredDate").html(response.PackageExpiredDate);
+                $("#packagePrice").html(response.PackagePrice);
+                $("#packageCompanyName").html(response.PackageCompanyName);
+                var packageRemain = "";
+                if (response.PackageRemain != -1) {
+                    packageRemain = response.PackageRemain + " remaining";
+                } else {
+                    packageRemain = "unlimited booking(s)";
+                }
+                $("#idpkgdetail").attr("value", response.PackageID);
+                $("#removefromlist").attr("value", packageId)
+                $("#buymorepackage").attr("value", response.ProfileId);
+                $("#lbpackageremain").html(packageRemain);
+                $("#packagename").val(response.PackageName);
+                $("#packageremain").val(response.PackageRemain);
+                if (response.PackageRemain > 0 || response.PackageRemain == -1) {
+                    $("#removefromlist").hide();
+                    $("#uselater").show();
+                    $("#buymorepackage").hide();
+                } else {
+                    $("#buymorepackage").show();
+                    $("#removefromlist").show();
+                    $("#uselater").hide();
+                }
+
+                //$("#schedulepackage").hide();
+            });
+        }
+
+    });
+
+    function loadDetailpackage(packageId) {
+        $.get("/CompanyProfile/GetServiceByPackageId?packageId=" + packageId + "&nocache=" + getunixtime(), function (result) {
+            $("#pkgdetailpopup #packagename").html(result.packagename);
+            $("#deletecontent").html(result.content);
+            $("#expiresdate").html(result.expiresdate);
+            showpopup("pkgdetailpopup");
+            $("#pkgdetailscroll").niceScroll("#pkgdetailcontent", { cursorborder: "", cursoropacitymin: 1, cursorcolor: "#000000", boxzoom: false, cursorwidth: 14, cursorborderradius: 0 }).resize();
+        });
+    }
+
+    function removefromlistCallback(result) {
+
+        if (result.status == "true") {
+            window.location.href = "/CompanyProfile/availability/" + result.profileId;
+        }
+    }
+    
+    $(document).ready(function () {
+        $(".fivCompanyName").dotdotdot(
+            {
+                height: 17,
+                width: 175
+            });
+
+       
+    });
+</script>

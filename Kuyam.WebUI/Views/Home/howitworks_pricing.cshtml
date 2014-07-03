@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "how it works?";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<link href="../../css/howitworks.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+     $('#signuptop').click(function () {
+         var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if (!isLogin) {
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            window.location = "/Company/SetupBasic";
+    });
+    
+    });
+    $(function () {
+        $('select#category').selectmenu();
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+        createtopscroll();
+    });
+
+    function signuppopup() {
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#signuppopup').fadeIn(400);
+        $('#signuppopup').css('top', ($('#lightBox').height() - $('#signuppopup').height()) / 2);
+        $('#signuppopup').css('left', ($('#lightBox').width() - $('#signuppopup').width()) / 2);
+        $('#signuppopup .btnCloseloginPopup').click(function () {
+            $('#signuppopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+    };
+	
+</script>
+<div class="wrap">
+    <div class="clear">
+    </div>
+    <div class="content" style="padding: 0px;">
+        <!-- InstanceBeginEditable name="content" -->
+        <div class="contentMarketPlace">
+            <div class="howitworks">
+                <div class="howbanner">
+                    <img alt="" src="../../Images/howitworks-banner.png" usemap="#Map" />
+                    <map name="Map">
+                        <area shape="rect" coords="355,290,640, 220" href="/home/lifestyle" title="what is a lifestyle bussiness?">
+                        <area shape="rect" coords="670,290,940, 220" href="#" id="signuptop" title="sign me up">
+                    </map>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="howcontent">
+                    <div class="howcontentleft howcontentleftprice">
+                        <ul>
+                            <li><span class="nonarrow"></span><a href="/home/howitworks_user" title="users">users</a>
+                                <div class="clear">
+                                </div>
+                            </li>
+                            <li class="businesses"><span class="nonarrow"></span><a href="/home/howitworks" title="businesses">
+                                businesses</a>
+                                <div class="clear">
+                                </div>
+                            </li>
+                            <li class="pricing"><span class="greenarrow"></span><span class="active">pricing</span>
+                                <div class="clear">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="howcontentright">
+                        <div class="foruserbox">
+                            <div class="foruserboxtitle">
+                                <h2>
+                                    for user</h2>
+                            </div>
+                            <div class="foruserboxcontent">
+                                <div class="foruserboxcontentcol1">
+                                    free to use kuyam! <span>you only pay the price of the appointment. no extra fees.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="forbusinessbox">
+                            <div class="forbusinessboxtitle">
+                                <h2>
+                                    for businesses</h2>
+                            </div>
+                            <div class="forbusinessboxcontent">
+                                <div class="forbusinessboxcontentcol1">
+                                    <div class="fbbrow1">
+                                        free listings.<br />
+                                        small Appointment Fee<br />
+                                        per appointment booked.<br />
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="fbbrow2">
+                                        <span>5.0% plus $0.99</span><br />
+                                        per booked appointment<br />
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="fbbrow3">
+                                        we cap our Appointment Fee at $9.95 per booked appointment through kuyam.
+                                    </div>
+                                </div>
+                                <div class="forbusinessboxcontentcol2">
+                                    <div class="fbbrow1">
+                                        third party payment<br />
+                                        processing fee<br />
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="fbbrow2">
+                                        <span><b>paypal:</b> 2.9% of appointment<br />
+                                            value + $0.30 per transaction </span>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="trial">
+                            </div>
+                            <div class="sumicon">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div id="lightBox" class="lightBox">
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</div>

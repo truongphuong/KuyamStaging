@@ -1,0 +1,423 @@
+﻿@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@using Kuyam.Database.BlogModels;
+@using Kuyam.Domain;
+@using Kuyam.Utility;
+@using System.Globalization;
+@using Kuyam.Domain.Seo;
+@model PostModels
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    BlogUser user = ViewBag.User;
+    var sharingUrl = string.Format("~/Post/{0}", Model.Id);
+    var url = Request.Url;
+    sharingUrl = url.Scheme + "://" + url.Host + Url.Content(sharingUrl);
+    var description = UtilityHelper.StripTagsRegexCompiled(HttpUtility.HtmlDecode(Model.PostContent)).Trim();
+    if (description.Length > 100)
+    {
+        description = description.Substring(0, 100) + "...";
+    }
+    var sharingExtension = new Kuyam.WebUI.Extension.SharingExtension
+    {
+        Title = Model.Title,
+        Description = description,
+        Image = Model.CoverPhoto,
+        Url = sharingUrl
+    };
+    TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+    Cust currentUser = DAL.xGetCust(MySession.CustID);
+    var userModel = currentUser.ToUserModel();
+    var currentUserName = myTI.ToTitleCase(currentUser.FirstName) + " " + myTI.ToTitleCase(currentUser.LastName)[0] + ".";    
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight">
+            <div class="contentAuthor">
+                <div style="margin-left: 0;">
+                    @Html.Partial("_BlogCategoryNavigation")
+                </div>
+                <div class="clear40">
+                </div>
+                <div class="wrapperBlogArticle">
+                    <div class="titleBlog">
+                        <h1>
+                            @Model.Title</h1>
+                        <div class="tags">
+                            <span>categories: </span>
+                            @foreach (var category in Model.Categories)
+                            {
+                                var index = Model.Categories.IndexOf(category);
+                                if (index < Model.Categories.Count - 1)
+                                {
+                                <a href="@Url.RouteUrl("HomePage", new { seName = category.GetSeName(category.CategoryRowID, "blog") })" title="@category.CategoryName" style="color: #29ABE2;">@category.CategoryName</a><span
+                                    style="color: black;">, </span>}
+                                else
+                                {
+                                <a href="@Url.RouteUrl("HomePage", new { seName = category.GetSeName(category.CategoryRowID, "blog") })" title="@category.CategoryName" style="color: #29ABE2;">@category.CategoryName</a>
+                                }
+                            }
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="wrapperAdbox" style="margin-top: 45px;">
+                            <div class="linksSocial" style="width: 412px;">
+                                <a id="totalcomment" title="" class="viewcomments">view comments (@Model.TotalComments)</a>
+                                <div style="float: right;">
+                                    @Html.Partial("_SharingPage", new EmailModel
+                                        {
+                                            UserName = @ViewBag.Email,
+                                            FirstName = @ViewBag.UserName,
+                                            Url = sharingUrl,
+                                            PostTitle = Model.Title
+                                        })
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="adbox">
+                                <img style="width: 412px;height: 230px; margin-bottom: 47px;" src="@Model.CoverPhoto"  alt="@Model.Title" />
+                                <div class="captionAdbox">
+                                    @Model.Caption
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.IsEvent)
+                        {
+                            <div class="thumbnail-post" style="display: block;">
+                                <img alt="thumbnail logo" src="../images/thumbnail-logo.jpg" />
+                            </div>
+                        }
+                        <h4>by <span><a style="color: #29ABE2;" href="@Url.Content("~/Blog/Author/")@Model.Author.UserName.ToLower()" title="@user.FirstName @user.LastName">
+                            @user.FirstName @user.LastName</a></span> @Model.DateCreated.ToString("MM/dd/yy")</h4>
+
+                    </div>
+                    @*<div class="titleBlog">
+                        <h1>
+                            @Model.Title</h1>
+                        <div class="tags">
+                            <span>categories: </span>
+                            @foreach (var category in Model.Categories)
+                            {
+                                var index = Model.Categories.IndexOf(category);
+                                if (index < Model.Categories.Count - 1)
+                                {
+                                <a href="@Url.Content("~/Home/Index/")@category.CategoryRowID" title="@category.CategoryName" style="color: #29ABE2;">@category.CategoryName</a><span
+                                    style="color: black;">, </span>}
+                                else
+                                {
+                                <a href="@Url.Content("~/Home/Index/")@category.CategoryRowID" title="@category.CategoryName" style="color: #29ABE2;">@category.CategoryName</a>
+                                }
+                            }
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <h4>
+                            by <span><a style="color: #29ABE2;" href="@Url.Content("~/Blog/Author/")@Model.Author.UserName.ToLower()" title="@Model.Author">
+                                @user.FirstName @user.LastName</a></span> @Model.DateCreated.ToString("MM/dd/yy")</h4>
+                    </div>*@
+                    <div class="contentBlog">
+
+                        <div id="content" class="listSearch">@Html.Raw(Model.PostContent)</div>
+                        <div class="clear">
+                        </div>
+                        <div id="chattobook">
+                            @Html.Partial("_ChatToBook", new ChatToBookModels
+                            {
+                                AlowChatToBook = Model.AlowChatToBook
+                            })
+                        </div>
+                        <div class="clear15">
+                        </div>
+                        @*<div class="listSearch">
+                            @foreach (var item in Model.CompaniesRelated)
+                            {
+                                Html.RenderAction("CompanyProfileTimeSlots", "CompanyAppointment", new { companyId = item.ProfileId });
+                            }
+                        </div>*@
+                        @if (Model.OtherPosts != null && Model.OtherPosts.Count > 0)
+                        {
+                            <p class="alsoblogtext">
+                                also on our blog...
+                            </p>        
+                        }
+                        <div class="clear">
+                        </div>
+                        <div class="marketplaceblog blogarticle">
+                            <div class="itembox">
+                                @foreach (var ortherPost in Model.OtherPosts)
+                                {
+                                    <a href="@Url.RouteUrl("blogPost", new { seName = ortherPost.GetSeName(ortherPost.Id, "post") })" title="@ortherPost.Title">
+                                        <div class="activebox1">
+                                            <img style="width: 185px;height: 185px;" src="@ortherPost.CoverPhoto" alt="@ortherPost.Title" >
+                                            <div class="bgcaptionactive">
+                                                <div class="contentcaption">
+                                                    @ortherPost.Title
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="clear">
+                    </div>
+                    <div class="blogcolleft" ng-app="commentModule">
+                        <div ng-view>
+                        </div>
+                    </div>
+                    <div class="blogcolright">
+                        <div class="appBox">
+                            <img class="iconunknow" src="/images/ios7appicon117tilt.png" />
+                            <i>with our app,<br>
+                                book your<br>
+                                appointments<br>
+                                on-the-go.</i>
+                            <div class="clear">
+                            </div>
+                            <a href="@Kuyam.Database.Constants.iPhone" title="iPhone" target="_blank" class="btnIPhone">
+                                <img src="/images/btn-iphone.png">
+                            </a><a href="@Kuyam.Database.Constants.Android" title="Android" target="_blank" class="btnAndroid">
+                                <img src="/images/btn-android.png">
+                            </a>
+                        </div>
+                        <h3 class="headerComment">featured companies</h3>
+                        <div class="clear20">
+                        </div>
+                        @foreach (var featuredCompany in Model.FeaturedCompanies.Where(featuredCompany => featuredCompany != null))
+                        {
+                            Html.RenderPartial("_FeaturedCompany", featuredCompany, new ViewDataDictionary { { "BoxSize", "238" }, { "IsLogin", "true" } });
+                        }
+                    </div>
+                    <div class="clear29">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+@section SharingSection{
+    @sharingExtension.MetaTag()
+}
+<script type="text/javascript">
+    $("#totalcomment").on("click", function () {
+        $("html,body").animate({ scrollTop: $(".headerComment").offset().top - 140 }, 1000);
+    });
+</script>
+<script src="@Url.Content("~/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/scripts/encoder.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/js/companyProfileTimeslot.js")" type="text/javascript"></script>
+<script type="text/javascript">
+   
+    $(document).ready(function() {
+        $('.btnView').click(function (){
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if(!isLogin)
+            {
+                window.location = "/book"+$(this).attr('url');
+            }
+            else
+            {
+                window.location = $(this).attr('url');
+            }
+        });
+    });
+
+    var app = angular.module("commentModule", []);
+    app.config(function($routeProvider) {
+        $routeProvider
+            .when('/comment/:id', { 
+                controller: 'commentCtrl',
+                templateUrl: '/Templates/LoginCommentTemplate.html?v=1'
+            })
+            .otherwise({            
+                redirectTo: '/comment/0' 
+            });
+    });
+    app.filter("childrenFilter", function () {
+        return function(list, parentId) {
+            var result = [];
+            for(var i = 0; i < list.length; i++){
+                if(list[i].ParentCommentId == parentId){
+                    result.push(list[i]);
+                }
+            }
+            return result;
+        };
+    });
+    app.filter('breakFilter', function () {
+        return function (text) {
+            if (text !== undefined) return text.replace(/\n/g, '<br />');
+        };
+    });
+    app.directive('watermark', function(){
+        return {
+            restrict: 'A',
+            link: function($scope, iElm, iAttrs, controller) {                        
+                $(function(){
+                    var placeholder = iElm.prop('placeholder');
+                    iElm.prop("data-placeholder", placeholder);
+                    iElm.css('font-style', 'italic');
+                    iElm.css('color', '#cccccc');
+                    iElm.css('padding-left', '5px');
+                    iElm.val('');
+                    iElm.blur(function(){
+                        if (this.value == ''){
+                            iElm.prop('placeholder', iElm.prop("data-placeholder"));
+                            iElm.css('color', '#B3B3B3');
+                            iElm.css('font-style', 'italic');
+                        }
+                    });
+                    iElm.focus(function(){
+                        if (this.value == '') {
+                            iElm.prop('placeholder', '');
+                            iElm.css('color', '#333333');
+                            iElm.css('font-style', 'normal');
+                        }
+                    });
+                });
+            }
+        };
+    });
+
+    app.controller("commentCtrl", function ($scope, $http, $location ,$routeParams) {
+        $scope.url = '@Url.Content("~/Blog/Post/")@Model.Id';        
+        $scope.photoUrl = '@userModel.PhotoUrl';        
+        $scope.currentUser = '@Html.Raw(currentUserName)';
+        $scope.pageIndex = parseInt($routeParams.id); 
+        $scope.postId = @Model.Id;        
+        $scope.commentUrl = '@Url.Content("~/Blog/GetComments")';
+        $scope.limit = 10;
+        $scope.parentComments = 0;
+        $scope.commentOfParent = [];
+        $scope.commentOfChildren = [];
+        $scope.previewComment = {};
+        $scope.previewComment.isShow = false;
+        var url = $scope.commentUrl + '?postId=' + $scope.postId + "&pageIndex=" + $scope.pageIndex + "&limit=" + $scope.limit + '&uniq_param=' + (new Date()).getTime();
+        $http.get(url).success(function (data) {
+            for(var i = 0; i < data.data.comments.length; i++){
+                data.data.comments[i].Comment = Encoder.htmlDecode(data.data.comments[i].Comment);
+                var createDate = new Date(data.data.comments[i].CommentDate);
+                
+                data.data.comments[i].CommentDate = createDate.format("m/dd/yy h:MMtt");
+                  
+                if(data.data.comments[i].User != null && data.data.comments[i].User.LastName != null && data.data.comments[i].User.LastName.length > 0){
+                    data.data.comments[i].User.LastName = data.data.comments[i].User.LastName.substring(0, 1) + '.';
+                }
+                else{
+                    data.data.comments[i].Author.LastName = data.data.comments[i].Author.LastName.substring(0, 1) + '.';
+                }
+                if(data.data.comments[i].ParentCommentId == '00000000-0000-0000-0000-000000000000'){
+                    data.data.comments[i].isParent = true;
+                    $scope.parentComments++;
+                    $scope.commentOfParent.push(data.data.comments[i]);
+                    data.data.comments[i].previewComment = createChildReply(data.data.comments[i].PostCommentID);
+                }
+                else{
+                    $scope.commentOfChildren.push(data.data.comments[i]);
+                    data.data.comments[i].isParent = false;
+                }
+            }
+            $scope.comments = data.data.comments;
+            $scope.totalComments = data.data.totalComments;
+            $scope.totalPages = data.data.totalPages;            
+            Validate();
+        });
+
+        $scope.gotoPage = function(pageIndex){
+            var length = $location.absUrl().lastIndexOf('/');
+            var url = $location.absUrl().substring(0, length) + '/' + pageIndex;
+            window.location = url;
+        }
+
+        //Main Preview Comment
+        $scope.saveAsPreviewComment = function(){
+            var now = new Date();
+            $scope.previewComment.isShow = true;
+            $scope.previewComment.createDate = now.format("m/dd/yy h:MMtt");
+        }
+
+        $scope.showReply = function(comment){
+            comment.isShow = true;        
+            $.each($('.childrenForm'), function(index, value){
+                if($(value).prop("isValidate")) return;
+                $(value).prop("isValidate", true);
+                $(value).validate({
+                    rules: {                    
+                        comment: {
+                            required: true
+                        }
+                    },
+                    errorPlacement: function(error,element) {
+                        return true;
+                    }
+                });
+            });
+        }
+
+        $scope.submitCommentForm = function(){
+            $('#commentForm').submit();
+        }       
+        
+        function createChildReply(commentId){
+            return {
+                parentCommentId: commentId,
+                isShow: false,
+                comment: ''
+            };
+        }        
+    });
+
+    function Validate() {
+     
+        $("#commentForm").validate({
+            rules: {
+                comment: {
+                    required: true
+                }
+            },
+            errorPlacement: function(error,element) {
+                return true;
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $(".captionAdbox").dotdotdot({
+            height:50
+        });
+
+        $(".contentcaption").dotdotdot({
+            height:40
+        });
+        
+        $(".captionactivitive").dotdotdot({
+            height:40
+        });
+        $(".ellipsisCity").dotdotdot({
+            height:20
+        });
+        /* style css for add logo*/
+        //var newbusinesshours = $('.wrapperBlogArticle .wrapperAdbox'),
+        //    heightImg =$('.thumbnail-post img:visible').height();
+        //if (heightImg == null) {
+        //    heightImg = 0;
+        //    newbusinesshours.css('margin-top', heightImg);
+        //} else {
+        //    newbusinesshours.css('margin-top', -(heightImg + 40));
+        //}
+        
+    });
+    
+</script>

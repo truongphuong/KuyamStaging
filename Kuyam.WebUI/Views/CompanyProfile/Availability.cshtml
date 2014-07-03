@@ -1,0 +1,34 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain;
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    ViewBag.Title = "availability of " + Model.CompanyName;
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+
+}
+@section MetaSeoSection{
+    @Model.MetaTagExtension.MetaTag()
+}
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar_appts_calendar.css?v=17")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar.print_appts_calendar.css?v=17")" media="print" />
+<style type="text/css">
+    .ybox, .newcompanyschedule .allviewing .personcalendar .activeperson {
+        behavior: url(PIE.htc);
+    }
+</style>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight newcompanyschedule">
+            @Html.Partial("_HeaderCompanyProfile")
+            <div class="clear7">
+            </div>
+            @Html.Partial("_CompanyProfileAvailability", Model)
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>

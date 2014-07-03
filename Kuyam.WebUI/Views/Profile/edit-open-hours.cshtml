@@ -1,0 +1,43 @@
+﻿@model Kuyam.WebUI.Models.ProfileHoursEditModel
+@using M2.Util
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "change open hours";
+}
+<h2>@ViewBag.Title</h2>
+@section Head
+{
+    @Html.Partial("_DatePickerControlSetup")
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Hour.ProfileHoursID)
+    @Html.HiddenFor(model => model.Hour.ProfileID)
+    @Html.ValidationSummary(true)
+
+    <div class="editor-label-narrow">
+        day
+    </div>
+    <div class="editor-field-narrow">
+        @Html.DropDownListFor(model => model.Hour.Day, Model.DayList)
+        @Html.ValidationMessageFor(model => model.Hour.Day)
+    </div>
+
+    <div class="editor-label-narrow">
+        start time
+    </div>
+    <div class="editor-field-narrow">
+        @Html.TextBox("Start", Model.Start.ToString("h:mm tt"), new { placeholder = "hh:mm", type = "time", size = "10" })
+        @Html.ValidationMessageFor(model => model.Start)
+    </div>
+
+    <div class="editor-label-narrow">
+        end time
+    </div>
+    <div class="editor-field-narrow">
+        @Html.TextBox("End", Model.End.ToString("h:mm tt"), new { placeholder = "hh:mm", type = "time", size = "10" })
+        @Html.ValidationMessageFor(model => model.End)
+    </div>
+    <div class="clear"></div>    
+    @Html.SaveCancelLC()
+}

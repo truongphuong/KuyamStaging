@@ -1,0 +1,89 @@
+﻿@model Kuyam.WebUI.Models.CalendarCreateModel
+@{
+    ViewBag.Title = "Create Calendar";
+}
+@using M2.Util.MVC
+<h2>@ViewBag.Title</h2>
+<link href="@Url.Content("~/scripts/colorPicker/colorPicker.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/scripts/colorPicker/colorpicker.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="editor-row">
+        <div class="editor-label">
+            Who is this calendar for?
+        </div>
+        <div class="editor-field" style="width: 70%">
+            @Html.RadioButtonFor(x => x.WhoFor, "you")You<br />
+            <br />
+            @Html.RadioButtonFor(x => x.WhoFor, "person")Someone Else
+            <br />
+            <fieldset style="margin: 7px 0 0 21px">
+                who? @Html.DropDownListFor(x => x.NewProfileID, Model.ProfileList, "")<br />
+                <br />
+                If they are not in the list, please enter their name here:
+                @Html.EditorFor(x => x.NewPersonName)<br />
+                @Html.ValidationMessageFor(model => model.NewPersonName)
+                <br />
+                How is this person related to you? @Html.DropDownListFor(x => x.RelationshipID, Model.RelationshipList, "")
+            </fieldset>
+            <br />
+            @Html.RadioButtonFor(x => x.WhoFor, "company")Company
+            <fieldset style="margin: 7px 0 0 21px">
+                Which profile? @Html.DropDownListFor(x => x.NewCompanyProfileID, Model.ProfileList, "")<br />
+                <br />
+                if the company is not in the list, please enter the following:
+                <br /><br />
+                <div class="editor-label-wide">
+                    Name:
+                </div>
+                <div class="editor-field-autowidth" style="width: 70%">
+                    @Html.EditorFor(x => x.NewCompanyName)<br />
+                    @Html.ValidationMessageFor(model => model.NewCompanyName)
+                </div>
+                <br />
+                <div class="editor-label-wide">
+                    Phone:
+                </div>
+                <div class="editor-field-autowidth" style="width: 70%">
+                    @Html.EditorFor(x => x.NewCompanyPhone)<br />
+                    @Html.ValidationMessageFor(model => model.NewCompanyPhone)
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="editor-row">
+        <br />
+        <div class="editor-label">
+            calendar name
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(x => x.Calendar.Name)<br />
+            @Html.ValidationMessageFor(model => model.Calendar.Name)
+        </div>
+    </div>
+    <div class="editor-row">
+        <br />
+        <div class="editor-label">
+            color
+        </div>
+        <div class="editor-field">
+            <div id="jquery-colour-picker-example">
+                @Html.DropDownListFor(x => x.Calendar.BackColor, Model.CalendarColors)
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    @Html.SaveCancel("Create Calendar", "Creating")
+}
+<script type="text/javascript">
+    $(function () {
+        $('#jquery-colour-picker-example select').colourPicker({
+            ico: '@Url.Content("~/images/colorPicker.gif")',
+            title: false
+        });
+    });
+</script>

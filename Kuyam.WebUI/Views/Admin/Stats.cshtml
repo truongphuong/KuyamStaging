@@ -1,0 +1,21 @@
+﻿@model Dictionary<string, string>
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Stat's";
+}
+<h2>@ViewBag.Title</h2>
+@{
+    <table cellspacing="0" cellpadding="0">
+        @foreach (string key in Model.Keys)
+        {
+            <tr>
+                <td>@key:&nbsp;
+                </td>
+                <td>@Model[key]
+                </td>
+            </tr>       
+        }
+    </table>
+}
+<br />
+@Html.GoBackLink()

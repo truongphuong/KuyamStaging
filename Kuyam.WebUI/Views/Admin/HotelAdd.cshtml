@@ -1,0 +1,18 @@
+﻿@model Kuyam.WebUI.Models.HotelModel
+@using Kuyam.Database
+@{  
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "HotelAdd";
+}
+@using (Html.BeginForm("HotelAdd", "Admin", FormMethod.Post, new { id = "add", enctype = "multipart/form-data" }))
+{
+    <div id="contentmainpage">
+        <h2>
+            add hotel</h2>
+        @Html.Partial("_HotelAddEdit", Model)
+        <input id="btnAdd" type="submit" value="add" />
+        <p>
+            <a href="/Admin/HotelList">back to list</a>
+        </p>
+    </div>
+}

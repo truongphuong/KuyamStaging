@@ -1,0 +1,245 @@
+﻿@model Kuyam.WebUI.Models.CompanySetupModel
+@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@{
+    ViewBag.Title = "Company Setup Video";
+    Layout = "~/Views/Shared/_LayoutCompanySetup.cshtml";
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#companyinfo").mouseenter(function () {
+            $("#companysetupformtop").removeClass("companysetupformtop1").addClass("companysetupformtop");
+        }).mouseleave(function () {
+            $("#companysetupformtop").removeClass("companysetupformtop").addClass("companysetupformtop1");
+        });
+
+
+        $('#btnsubmit').click(function () {
+            getMedia();
+            $('#companysetup').submit();
+            showDialog('savechangepopup');
+            setTimeout("redirectTo()", 1000);
+        });
+    });
+
+    function getMedia() {
+
+        var videoid = $("#videocontentfile #hdmediaid").val();
+        var videodata = $("#videocontentfile #hdmediadata").val();
+
+        if (typeof videoid != "undefined")
+            $("#videoid").val(videoid);
+        $("#videodata").val(videodata);
+    }
+</script>
+<div class="companysetup newcompanysetup">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        @if (!ViewBag.IsAdminOrAgent)
+        {
+            <div class="textusersettings">
+                <a href="/setting/UserSetting" title="user settings">user settings</a></div>
+            <div class="textcalendarsettings">
+                <a href="/CalendarSetting" title="calendar settings">calendar settings</a></div>
+        }
+        <div class="textcompanysettings">
+            <a href="/Company/CompanySetting?companyId=@Model.ProfileID" title="company settings">
+                company settings</a></div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="leftcompanysetupform">
+        <div class="companyinfo">
+            <a href="/Company/SetupBasic?companyId=@Model.ProfileID" title="company information" id="companyinfo">
+                company information</a>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companyimages">
+            <a href="/companysetup/image?companyId=@Model.ProfileID" title="company images">company
+                images</a>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companyvideo">
+            <div class="companyactive">
+                company video
+            </div>
+        </div>
+@if (Model.CompanyStatusID == (int)Types.CompanyStatus.Active)
+        {
+        <div class="companyvideo">
+            <a href="/Company/GenerateCodeCompany?companyId=@Model.ProfileID" title="generate code">
+                company scripts
+            </a>
+        </div>
+}
+    </div>
+    <div class="companysetupform">
+        <div class="companysetupformtop1" id="companysetupformtop">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companysetupformmid">
+            <div class="videodescription">
+                we want to know your story not your sales pitch. how did you get into this business?
+                what are you passionate about? if you don’t have a video, you can <a href="/Home/ContactNew">
+                    contact kuyam</a> to shoot your company video.
+            </div>
+            <div class="clear">
+            </div>
+            <div class="videoupload">
+                <div class="formcol1">
+                    <div class="rcompanytitle relative">
+                        <form id="fileuploadvideo" action="/Upload/VideoUploadHandler.ashx" method="POST"
+                        enctype="multipart/form-data">
+                        <div class="row fileupload-buttonbar">
+                            <div class="span7">
+                                <span class="btnuploadvideo fileinput-button">
+                                    <input type="file" name="files[]" onchange="$('#photovideocontentfile').html('')" />
+                                </span>
+                                <div class="clear">
+                                </div>
+                                <span class="maxsize">max size 100mb</span>
+                            </div>
+                            <div id="imgLoadervideo" class="inprogress">
+                                <div>
+                                    <div class="busyIndicator">
+                                        <img src="/Images/BusyIndicator.gif" class="icon-loading" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="removevideo">
+                        @*<a href="#" id="removevideo" title="remove video">remove</a>*@
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="formcol2">
+                    <div class="companyphoto">
+                        <div class="newvideobox">
+                            <div class="video" id="videocontentfile">
+                                @if (!string.IsNullOrEmpty(Model.VideoData))
+                                {
+                                    @Model.FlashData
+                                    <input id="hdmediaid" class="in" type="hidden" value="@Model.VideoID" name="hdmediaid" />
+                                    <input id="hdmediadata" class="in" type="hidden" value="@Model.VideoData" name="hdmediadata" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="photoimg photovideo">
+                        <div class="video" id="videocontentfile">
+                        </div>
+                        <div class="waitingvideo">
+                            <img id="imgLoadervideo" src="../../Images/progress.gif" alt="progress..." />
+                        </div>
+                    </div>*@
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            @using (Html.BeginForm("SetupVideo", "company", FormMethod.Post, new { id = "companysetup" }))
+            {
+                <div class="videoyoutube">
+                    <div class="formcol1">
+                        <div class="videoyotubetitle">
+                            or youtube link:</div>
+                    </div>
+                    <div class="formcol2">
+                        <div class="videoyoutubelink">
+                            <div class="ltxtcompanysetup">
+                            </div>
+                            <div class="txtcompanysetup txtyoutubelink">
+                                @Html.TextBoxFor(m => m.Youtubelink)</div>
+                            <div class="rtxtcompanysetup">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <input type="hidden" id="videoid" name="VideoID" value="0" />
+                    <input type="hidden" id="videodata" name="VideoData" value="" />
+                    <input type="hidden" id="ProfileID" name="ProfileID" value="@Model.ProfileID" /> 
+                </div>
+            }
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companysetupformbot">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear6">
+    </div>
+    <div class="btnarea newbtncompanysetup">
+        @if (!ViewBag.IsAdminOrAgent)
+        {
+            <a href="/" class="btnusersetting btncanceluser"><span class="btnusersettingleft"></span>
+                <span class="btnusersettingcenter btncancelusersetting">cancel </span><span class="btnusersettingright">
+                </span></a>
+        }
+        <a href="#" id="btnsubmit" class="btnusersetting"><span class="btnusersettingleft"></span>
+            <span class="btnusersettingcenter btnsaveusersetting">save changes </span><span class="btnusersettingright">
+            </span></a>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="lightBox" class="lightBox">
+    </div>
+</div>
+<div id="savechangepopup" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            Your changes have been saved successfully.
+        </p>
+    </div>
+</div>
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}   
+        <div class="preview"><span class="fade"></span></div>       
+        {% if (file.error) { %}
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } %}      
+
+{% } %}
+
+</script>
+<script id="company-photo-template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %} <span class="boxcontentimg" style="height: 215px; width: 302px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/302/height/216"/></span></span> {% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.thumbnail_url%}" />
+        {% } %}
+{% } %}
+$('.photo').css('background-image', 'none');
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %}<span class="boxcontentimg" style="height: 99px; width: 99px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/99/height/100"/></span></span>{% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.kalturaid%}" />        
+        {% } %}
+{% } %}
+</script>

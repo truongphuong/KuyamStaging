@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Download Mobile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="~/css/dowloadmobileapp.css?v=7" />
+</head>
+
+<body>
+    <div class="downloadmobile">
+        <div class="bg">
+            <header>welcome to kuyam!</header>
+            <section>
+                <a class="logo" href="https://kuyam.com/" title="">
+                    <img class="img_100" src="~/images/DowloadMobileApp/downloadmobile_100_logo.png" alt="" />
+                    <img class="img_80" src="~/images/DowloadMobileApp/downloadmobile_80_logo.png" alt="" />
+                    <img class="img_60" src="~/images/DowloadMobileApp/downloadmobile_60_logo.png" alt="" />
+                    <img class="img_40" src="~/images/DowloadMobileApp/downloadmobile_40_logo.png" alt="" />
+                </a>
+                <a class="app_store" href="https://itunes.apple.com/us/app/razzoe/id606531094?ls=1&mt=8" title="">
+                    <img class="img_100" src="~/images/DowloadMobileApp/downloadmobile_100_app_store.png" alt="" />
+                    <img class="img_80" src="~/images/DowloadMobileApp/downloadmobile_80_app_store.png" alt="" />
+                    <img class="img_60" src="~/images/DowloadMobileApp/downloadmobile_60_app_store.png" alt="" />
+                    <img class="img_40" src="~/images/DowloadMobileApp/downloadmobile_40_app_store.png" alt="" />
+                </a>
+                <a class="google_play" href="https://play.google.com/store/apps/details?id=com.kourosh.kuyam" title="">
+                    <img class="img_100" src="~/images/DowloadMobileApp/downloadmobile_100_google_play.png" alt="" />
+                    <img class="img_80" src="~/images/DowloadMobileApp/downloadmobile_80_google_play.png" alt="" />
+                    <img class="img_60" src="~/images/DowloadMobileApp/downloadmobile_60_google_play.png" alt="" />
+                    <img class="img_40" src="~/images/DowloadMobileApp/downloadmobile_40_google_play.png" alt="" />
+                </a>
+                <div class="slogan">discover and schedule appointments<br />with local lifestyle businesses!</div>
+                @{
+                    string returnUrl = Request.Params["ReturnUrl"];
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        <a class="btn_continue" href="@returnUrl" title="">
+                            <span>continue to the website</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn_continue" href="@Url.Action("Index","Home")" title="">
+                            <span>continue to the website</span>
+                        </a>
+                    }
+                }
+
+            </section>
+        </div>
+    </div>
+</body>
+</html>

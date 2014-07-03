@@ -1,0 +1,255 @@
+﻿@using Kuyam.Database
+@{
+    string host = Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost().TrimEnd('/');
+    string date = String.Format("{0:dddd, MMMM d, yyyy}", DateTime.Now);
+}
+<!--[if gte mso 9]>
+    <style type="text/css">
+        .width21
+        {
+            width: 21px !important;
+        }
+    </style>
+<![endif]-->
+<center>
+    <table cellpadding="0" cellspacing="0" border="0" width="550px" style="font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr style="background-color: black;">
+                        <td style="text-align: left;" height="64">
+                            <img alt="" src="@host/images/header_logo_giftcardreceipt.jpg" usemap="#logo" style="border: solid 0px white;
+                                    margin-top: 1px;" />
+                            <map name="logo" id="logo">
+                                <area shape="rect" coords="20,12,145,55" href="http://www.kuyam.com" alt="Kuyam"
+                                    title="Kuyam" />
+                            </map>
+                        </td>
+                        <td style="color: #c1d82f; text-align: right; font-size: 12px;" height="64">
+                            <div style="margin: 30px 20px 0px 0px; font-family: Arial, Helvetica, sans-serif;">
+                                @Model.DateSendEmail
+                                @* Thursday, August 30, 2012*@
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="line-height: 0px; font-size: 0px;">
+                            <img alt="" src="@host/images/header_footer_giftcardreceipt.jpg" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/images/tbox_giftcardreceipt.jpg" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td valign="top" style="background-color: #8fc1e1;" width="22">
+                            <img alt="" src="@host/images/lbox_giftcardreceipt.jpg" width="22" height="477" />
+                        </td>
+                        <td class="width21" style="border-left: solid 1px #cccccc; width: 20px;">
+                            &nbsp;
+                        </td>
+                        <td valign="top" align="left" style="border-left: solid 8px #c1d82f; border-right: solid 1px #cccccc;
+                            padding-left: 14px;">
+                            <table cellpadding="0" cellspacing="0" border="0" width="460">
+                                <tr>
+                                    <td>
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                                <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                    padding-top: 10px; padding-left: 1px;">
+                                                    hi <b>@Model.SenderNameFirstName!</b> @*<b>Monika!</b>*@
+                                                </td>
+                                                <td style="text-align: right; vertical-align: top; padding-right: 11px; padding-top: 5px;">
+                                                    <a href="@host" title="login" style="color: #29abe2; text-decoration: none; font-size: 12px;
+                                                                            font-family: Arial, Helvetica, sans-serif;">login</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 20px; padding-bottom: 22px; padding-right: 14px; padding-left: 4px;
+                                        text-align: center;">
+                                        <img alt="" src="@host/images/you_have_purchased_a_kuyam_gift_card.jpg" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 66px; padding-bottom: 3px; padding-right: 62px; font-size: 12px;
+                                        color: #808080; font-family: Arial, Helvetica, sans-serif;">To: @Model.FullNameRecipentName@*Monika Meerkat*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 66px; padding-bottom: 7px; padding-right: 62px; font-size: 12px;
+                                        color: #808080; font-family: Arial, Helvetica, sans-serif;">From: @Model.FullNameSender @*Stacey Mack*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 65px; padding-right: 62px;">
+                                        <table width="309" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td valign="top" style="width: 309px; height: 54px; border: 1px solid #808080; font-size: 12px;
+                                                    color: #808080; font-family: Arial, Helvetica, sans-serif; padding-top: 6px;
+                                                    padding-right: 6px; padding-bottom: 6px; padding-left: 6px; margin-top: 0; margin-right: 0;
+                                                    margin-bottom: 0; margin-left: 0; word-break:break-all;">
+                                                    @if (!string.IsNullOrEmpty(Model.Memo))
+                                                    {
+                                                        <span> “@Html.Raw(Model.Memo)”</span>
+                                                    }else
+                                                     {
+                                                         <span>&nbsp;</span>
+                                                     }                                                  
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 23px; padding-bottom: 4px; color: #000000; font-size: 16px;
+                                        font-family: Arial, Helvetica, sans-serif;">
+                                        <strong style="margin-right: 5px;">receipt #:&nbsp;</strong><span>@Model.ReceiveNumber@*23481CMWH2*@</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table style="border: 1px solid #000000; margin-top: 2px;" cellpadding="0" cellspacing="0"
+                                            border="0" width="450">
+                                            <tr>
+                                                <td height="18" colspan="3">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="17">
+                                                </td>
+                                                <td>
+                                                    <table cellpadding="0" cellspacing="0" border="0" width="419">
+                                                        <tr>
+                                                            <td colspan="2" style="font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;
+                                                                border-bottom: 1px solid #000000; padding-bottom: 13px;">
+                                                                @Model.DateOfPurchase @*October 15, 2013*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="290" style="padding-top: 13px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                                                $@Model.AmoutNumber @*$25*@ kuyam gift card for @Model.FullNameRecipentName
+                                                            </td>
+                                                            <td width="127" style="padding-top: 14px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;
+                                                                text-align: right;">
+                                                                @Model.AmountGift @* $25.00*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 13px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                                                @*premium shipping*@
+                                                              @if (Model.CardType == (int)Types.GiftCardType.mail)
+                                                              {
+                                                                 <span>@Model.TypeShipping</span> 
+                                                              }
+                                                            </td>
+                                                            <td style="padding-top: 13px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;
+                                                                text-align: right;">
+                                                               @if (Model.CardType == (int)Types.GiftCardType.mail)
+                                                               {
+                                                                 <span> @Model.ShoppingCost</span> 
+                                                               }
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" style="padding-left: 74px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                                              @if (Model.CardType == (int)Types.GiftCardType.mail)
+                                                              {
+                                                                  <span>estimated arrival: @Model.GiftEstimateDate @*October16 - 17,2013*@</span>  
+                                                              }
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" style="padding-top: 13px; padding-bottom: 8px; font-size: 12px; color: #000000;
+                                                                font-family: Arial, Helvetica, sans-serif; text-align: right; font-weight: bold;
+                                                                border-bottom: 1px solid #000000;">
+                                                                Total: @Model.TotalCost @* $30.00*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 12px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                                                @* MASTERCARD ending in 4639*@
+                                                            </td>
+                                                            <td style="padding-top: 12px; font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif;
+                                                                text-align: right; font-weight: bold;">
+                                                                Paid: @Model.TotalCost @*$30.00*@
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td width="14">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="13" colspan="3">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td valign="top" style="background-color: #8fc1e1;" width="22">
+                            <img alt="" src="@host/images/rbox_giftcardreceipt.jpg" width="22" height="477" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/images/fbox_giftcard1.png" usemap="#social" style="border: solid 0px white;" />
+                <map name="social" id="social">
+                    <area shape="rect" coords="316,4,347,34" href="http://www.facebook.com/mykuyam" alt="Facebook" title="Facebook" />
+                    <area shape="rect" coords="350,4,381,34" href="https://twitter.com/mykuyam" alt="Twitter" title="Twitter" />
+                    <area shape="rect" coords="384,4,417,34" href="http://www.youtube.com/channel/UCei6RmG4G9jLgEHchRzR5jA" alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="420,4,448,34" href="http://kuyam.tumblr.com/" alt="Tumblr" title="Tumblr" />
+                    <area shape="rect" coords="451,4,482,34" href="http://pinterest.com/kuyam/" alt="Pinterest" title="Pinterest" />
+                    <area shape="rect" coords="485,4,518,35" href="https://plus.google.com/u/0/b/103779915573360185741/103779915573360185741" alt="Google+" title="Google+" />
+                </map>
+                @*<map name="social" id="social">
+                    <area shape="rect" coords="353,4,382,34" href="http://www.facebook.com/mykuyam" alt="Facebook"
+                        title="Facebook" />
+                    <area shape="rect" coords="388,4,417,34" href="https://twitter.com/mykuyam" alt="Twitter"
+                        title="Twitter" />
+                    <area shape="rect" coords="421,4,450,34" href="http://www.youtube.com/user/mykuyam"
+                        alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="455,4,485,34" href="http://kuyam.tumblr.com/" alt="Tumblr"
+                        title="Tumblr" />
+                    <area shape="rect" coords="488,4,518,34" href="http://pinterest.com/kuyam/" alt="Pinterest"
+                          title="Pinterest" />
+                    <area shape="rect" coords="521,4,551,34" href="https://plus.google.com/s/mykuyam" alt="Pinterest"
+                          title="Google+" />
+                </map>*@
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/images/footer_giftcardreceipt.jpg" usemap="#footer" style="border: solid 0px white;" />
+                <map name="footer" id="footer">
+                    <area shape="rect" coords="110,8,198,35" href="https://itunes.apple.com/us/app/kuyam/id606531094?mt=8"
+                        alt="Iphone" title="Iphone" />
+                    <area shape="rect" coords="110,36,198,63" href="https://play.google.com/store/apps/details?id=com.kourosh.kuyam"
+                        alt="Android" title="Android" />
+                    <area shape="rect" coords="276,15,338,26" href="http://kuyam.com/home/howitworks_user"
+                        alt="how it works " title="how it works " />
+                    <area shape="rect" coords="355,15,380,26" href="http://kuyam.com/home/OurStory" alt="team"
+                        title="team" />
+                    <area shape="rect" coords="395,15,435,26" href="http://kuyam.com/home/contact" alt="contact"
+                        title="contact" />
+                    <area shape="rect" coords="448,15,525,26" href="http://kuyam.com/" alt="terms &amp; privacy"
+                        title="terms &amp; privacy" />
+                </map>
+            </td>
+        </tr>
+    </table>
+</center>

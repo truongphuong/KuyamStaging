@@ -1,0 +1,83 @@
+﻿@using Kuyam.Database
+@using Kuyam.Repository.Infrastructure
+@using Kuyam.Domain
+@{
+    ViewBag.Title = "Manage Role";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    Cust user = ViewBag.User;
+    int pageIndex = ViewBag.PageIndex ?? 1;
+    var HotelList = ViewBag.HotelList;    
+    var defaultValue = "--select hotel--";
+    if (ViewBag.Hotel != null)
+    {
+        defaultValue = ViewBag.Hotel.Name;
+    }
+   
+}
+<div id="contentmainpage">
+    <h2>@Html.DisplayFor(model => user.FullName)</h2>
+    <fieldset>
+        <div class="loginform" style="width:480px">
+            <table cellpadding="2" cellspacing="2" border="0" class="tbldata">
+                @{ 
+                    var userInRole = Roles.GetRolesForUser(user.Username);
+                    foreach (aspnet_Roles role in ViewBag.Roles)
+                   {
+                     <tr> 
+                         <td>@role.LoweredRoleName</td>
+                         <td><input type="checkbox" id="@role.RoleName" @(userInRole.Contains(role.RoleName) ? "checked=true" : "") name="role" value="@role.RoleName" onclick="saveUserRole(this.checked,this.value)"/></td>
+                         @if (role.RoleName == Types.Role.Concierge.ToString())
+                         {
+                          <td> @Html.DropDownList("HotelID", new SelectList(HotelList, "HotelID", "Name", defaultValue), defaultValue, new { id = @"HotelId", style = @"width: 300px;float: left;" }) </td>
+                         }
+                     </tr>
+                     
+                    }
+                }
+            </table>
+            @*<input class="btnSave" type="button" value="save" onclick="saveUserRole(1); " />*@
+            <br />
+        </div>
+    </fieldset>
+    <p>
+        <a href="/Admin/AgentList?page=@(pageIndex)&key=@(ViewBag.key)&searchType=@(ViewBag.SearchType)">
+            back to list</a>
+    </p>
+    <input type="hidden" id="hdfUserId" value="@user.CustID" />    
+</div>
+<script type ="text/javascript">
+
+    function saveUserRole(checked,value) {
+        var id = $("#hdfUserId").val();
+        var hId = $('#HotelId').val();
+        if ('Concierge' == value && hId == 0 && checked) {     
+            $('#Concierge').removeAttr("checked");
+            alert('please select hotel');
+            return false;
+        }
+        var hotel = hId;
+        if (hId == "" || hId == null)
+        {
+            hotel = 0;
+        }
+        var searchParameters = { userId: id, isChecked: checked, role: value, hotelId: hotel };
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/ChangeUserRole/'
+                })
+                .success(function (result) {
+                    if (result == "true") {                       
+
+                    }
+                })
+                .error(function (error) {
+
+                });        
+    }
+</script>

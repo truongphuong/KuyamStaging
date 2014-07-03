@@ -1,0 +1,216 @@
+﻿/******Company settings page******/
+.companysettings{background:#a0cae6 url(../images/usersettings_bg.png) repeat-x left top;min-height:800px;padding:0px 62px 0px 58px;}
+.ie8 .companysettings{min-height:800px;}
+.usersettings .companysettingsboxtop{background:url(../images/companysettings_box_top_bot_bg.png) no-repeat left top;height:10px;display:block;}
+.usersettings .companysettingsboxbot{background:url(../images/companysettings_box_top_bot_bg.png) no-repeat left bottom;height:10px;display:block;}
+.usersettings .companysettingsboxmid{background:#69abd8 url(../images/companysettings__box_bg.png) repeat-x left top;border-left:solid 1px #7a9bad;border-right:solid 1px #7a9bad;width:839px;}
+.usersettings .companysettingsboxmid .usersettingcol1{color:#000;padding-left:11px;float:left;width:231px;}
+.usersettings .companysettingsboxmid .usersettingcol1 .companyaccount h2{margin:0px;padding:2px 0px 10px 0px;font-size:21px;font-weight:bold;}
+.usersettings .companysettingsboxmid .usersettingcol1 .companyaccount h2.payment{padding:19px 0px 0px 0px;}
+.usersettings .companysettingsboxmid .usersettingcol1 .companyreminders h2{margin:0px;padding:26px 0px 0px 0px;font-size:21px;font-weight:bold;}
+.usersettings .companysettingsboxmid .usersettingcol2{color:#000;padding-left:11px;float:left;font-size:18px;font-weight:bold;width:570px}
+.usersettings .companysettingsboxmid .usersettingcol2 .namearea{float:left;}
+.usersettings .companysettingsboxmid .usersettingcol2 .btnlistyourhours{float:right;padding-top:7px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .btnlistyourhours .listyourhours{display:block;width:155px;height:45px;background: url(../images/homepage_icon.png) no-repeat left -70px;float:right;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companysettingsname{padding-top:6px;height: 24px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companysettingseditbasic{padding-top:1px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companysettingseditbasic a{font-weight:bold;font-size:18px;color:#0071BC;text-decoration:none;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companysettingseditbasic a:hover{text-decoration:underline;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontacttext{padding-top:29px;float:left;width:277px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontacttext .companycontactpre{font-size:18px;font-weight:600;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontacttext .companycontactapp{font-weight:normal;font-size:14px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue{padding-top:30px;float:left;width:265px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyemail{padding-top:12px;font-weight:normal;font-size:14px;}
+.ie7 .usersettings .companysettingsboxmid .usersettingcol2 .companyemail{padding-top:0px;margin-top:12px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .contactpreferencesbox{height:95px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyemail .companyemailtext{float:left;width:276px;padding-top:11px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyemail .companyemailinput{float:right;padding:1px 5px 0px 0px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyemail .companyemailinput input{width:285px;border:solid 1px #999999;height:28px;font-size:18px;color:#808080;}
+.ie .usersettings .companysettingsboxmid .usersettingcol2 .companyemail .companyemailinput input{line-height:26px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companynumber{padding-top:12px;font-weight:normal;font-size:14px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companynumber .companynumbertext{float:left;width:278px;padding-top:11px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companynumber .companynumberinput{float:right;padding:1px 5px 0px 0px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companynumber .companynumberinput input{width:149px;border:solid 1px #999999;height:28px;font-size:18px;color:#808080;}
+.ie .usersettings .companysettingsboxmid .usersettingcol2 .companynumber .companynumberinput input{line-height:26px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyremind{padding-top:39px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyremind .companyremindme{float:left;width:185px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companyremind .companyremindmealert{float:left;width:380px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .userfirstalert{}
+.usersettings .companysettingsboxmid .usersettingcol2 .userfirstalert .firstalerttitle,
+.usersettings .companysettingsboxmid .usersettingcol2 .usersecondalert .secondalerttitle{float:left;width:145px;font-weight:600;padding:5px 0px 0px 4px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .userfirstalert .firstalertselect,
+.usersettings .companysettingsboxmid .usersettingcol2 .usersecondalert .secondalerttitle{float:left;}
+.usersettings .companysettingsboxmid .usersettingcol2 .userfirstalert .firstalertselect select,
+.usersettings .companysettingsboxmid .usersettingcol2 .usersecondalert .secondalertselect select{width:283px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .usersecondalert{padding-top:7px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue .chkcall{float:left;padding-right:71px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue .chktext{float:left;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-checkbox{padding: 2px 0 2px 23px;background:url(../images/homepage_icon.png) no-repeat -288px -977px;cursor:pointer;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-checkbox-state-hover{background-position: -288px -1254px;}			
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-checkbox-state-checked {background-position: -288px -952px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-checkbox-state-checked-hover {background-position: -288px -952px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-radio-state-checked {background-position: -288px -952px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-radio-state-checked-hover {background-position: -288px -952px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .userfirstalert{padding-top:46px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .userfirstalert .firstalerttitle,
+.usersettings .companysettingsboxmid .usersettingcol3 .usersecondalert .secondalerttitle{float:left;width:148px;font-weight:600;padding:7px 0px 0px 4px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .userfirstalert .firstalertselect,
+.usersettings .companysettingsboxmid .usersettingcol3 .usersecondalert .secondalerttitle{float:left;}
+.usersettings .companysettingsboxmid .usersettingcol3 .userfirstalert .firstalertselect select,
+.usersettings .companysettingsboxmid .usersettingcol3 .usersecondalert .secondalertselect select{width:231px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .usersecondalert{padding-top:7px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .userggcaltext{padding-top:29px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .userggcaltext input{width:401px;height:38px;border:solid 1px #999999;}
+.usersettings .companysettingsboxmid .usersettingcol3 .usericaltext{padding-top:11px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .usericaltext input[type=text]{width:258px;height:38px;border:solid 1px #999999;float:left;margin-right:5px;}
+.usersettings .companysettingsboxmid .usersettingcol3 .usericaltext input[type=button]{background:url(../images/appointment.png) no-repeat left -400px;height:40px;width:137px;border:solid 0px transparent;float:left;margin-top:1px;}
+.usersettings .usersettingsbox .btncompanysettingarea{float:right;padding-top:13px;}
+.usersettings .companysettingsboxmid .usersettingcol2 .contactpreferencesbox .error{color:#ff0000;font-size:12px;font-family:Arial, Helvetica, sans-serif;font-weight:400;text-align:right;padding:0px 5px 0px 0px;height:5px;}
+
+.cancellation{color:#000;padding-bottom:5px;}
+.cancellation .contentcancelbox2{position:absolute;}
+.cancellation .rdtitle{font-size:18px;font-weight:bold;font-style:normal;}
+.cancellation label{font-size:14px;font-style:italic;}
+.cancellation .cancelbox1{float:left;width:237px;font-size:14px;font-style:italic;padding-left:14px;}
+.cancellation .cancelbox1 h2{margin:0px;padding:0px;font-weight:bold;font-size:21px;font-style:normal;}
+.cancellation .cancelbox1 p{margin:0px;padding:0px 20px 0px 0px;}
+.cancellation .pcalcelcontent{padding:4px 10px 0px 30px;margin:0px;font-size:14px;font-style:italic;}
+.cancellation .cancelbox2{float:left;width:158px;margin-right:5px;height:170px;}
+.cancellation .cancelbox2 .cbox2content{width:158px;position:absolute;padding-top:4px;}
+.cancellation .cancelbox2 .cbox2content1{width:158px;background-color:white;border-radius:10px;opacity:0.25;filter: alpha(opacity=25);height:170px;position:absolute;}
+.cancellation .cancelbox3{float:left;width:208px;height:170px;margin-right:5px;}
+.cancellation .cancelbox3 .cbox3content{width:208px;position:absolute;padding-top:4px;}
+.cancellation .cancelbox3 .cbox3content1{width:208px;background-color:white;border-radius:10px;opacity:0.4;filter: alpha(opacity=40);height:170px;position:absolute;}
+.cancellation .cancelbox4{float:left;width:207px;height:170px;}
+.cancellation .cancelbox4 .cbox4content{width:207px;position:absolute;padding-top:4px;}
+.cancellation .cancelbox4 .cbox4content1{width:207px;background-color:white;border-radius:10px;opacity:0.5;filter: alpha(opacity=50);height:170px;position:absolute;}
+.reminderarea{position:relative;height:335px;width:585px;}
+.reminderarea .reminderbox{width:568px;position:absolute;height:275px;}
+.reminderarea .reminderbox1{width:590px;background-color:white;border-radius:10px;opacity:0.5;filter: alpha(opacity=50);height:275px;position:absolute;left:-10px;top:15px;}
+.ie9 .reminderarea .reminderbox1{height:295px;}
+.ie8 .reminderarea .reminderbox1{height:295px;}
+.cancellation label.ui-radio{padding: 0px 0px 2px 20px;background:url("../images/appts_sprite.png") no-repeat scroll -579px -554px transparent;cursor:pointer;}
+.cancellation label.ui-radio-state-hover{background-position: -579px -581px;}			
+.cancellation label.ui-radio-state-checked {background-position: -579px -529px;}
+.cancellation label.ui-radio-state-checked-hover {background-position: -579px -529px;}
+.reminderarea css3-container{filter: alpha(opacity=50);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";}
+.cancellation .cancelbox2 css3-container{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";filter: alpha(opacity=25);}
+.cancellation .cancelbox3 css3-container{filter: alpha(opacity=40);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";}
+.cancellation .cancelbox4 css3-container{filter: alpha(opacity=50);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";}
+
+/***Edit employee new***/
+.editserviceform .lineemployee{background-color: #b3b3b3;height: 2px;margin-top: 10px;}
+.privateinfo{font-size:14px;color:#000000;font-style:italic;}
+.privateinfo p{margin:0px;padding:0px 0px 0px 18px;background:url(../images/appts_sprite.png) no-repeat -582px -605px;}
+.btnverify{width:184px;height:28px;border:solid 0px transparent;background:url(../images/appts_sprite.png) no-repeat -415px -367px;margin-right:13px;}
+.divverify .btnverified {cursor:default; width:184px;height:28px;border:solid 0px transparent;background:url(../images/appts_sprite.png) no-repeat -415px -401px;margin-right:13px;}
+.divverify .btnsent{cursor:pointer; width:184px;height:28px;border:solid 0px transparent;background:url(../images/appts_sprite.png) no-repeat -415px -333px;margin-right:13px;}
+.leftaddnew .newphone{width:112px;}
+.leftaddnew .divmakedefault{font-size:14px;font-family:Arial, Helvetica, sans-serif;font-style:italic;}
+.leftaddnew .divmakedefault .defaultemployee{color:#0071bc;text-decoration:none;}
+.leftaddnew .divmakedefault .defaultemployee:hover{color:#0071bc;text-decoration:none;}
+.leftaddnew .divmakedefault label.ui-checkbox{padding: 2px 0 2px 28px;background:url(../images/homepage_icon.png) no-repeat -288px -1540px;cursor:pointer;}
+.leftaddnew .divmakedefault label.ui-checkbox-state-hover{background-position: -288px -1576px;}			
+.leftaddnew .divmakedefault label.ui-checkbox-state-checked {background-position: -288px -1605px;}
+.leftaddnew .divmakedefault label.ui-checkbox-state-checked-hover {background-position: -288px -1605px;}
+.leftaddnew .divmakedefault label.ui-radio-state-checked {background-position: -288px -954px;}
+.leftaddnew .divmakedefault label.ui-radio-state-checked-hover {background-position: -288px -954px;}
+.divappupdate{color:#333333;font-size:14px;}
+.listservices .newemployeebasedcol1{height:476px;}
+.listservices .newemployeebasedcol1 .leftaddnew .sync{padding-top:11px;}
+.listservices .newemployeebasedcol1 .leftaddnew1{width:218px;height:476px;border-radius:10px;background-color:white;opacity:0.8;filter: alpha(opacity=80);position:absolute;z-index:1;}
+.listservices .newemployeebasedcol1 .leftaddnew{width:218px;height:476px;padding:2px 0px 0px 0px;}
+.listservices .newemployeebasedcol2{height:476px;}
+.listservices .newemployeebasedcol2 .rightaddnew{height:476px;}
+.listservices .newemployeebasedcol2 .rightaddnew1{height:476px;}
+.listservices .newemployeebasedcol2 .rightaddnew .rightaddnewcontent{height:424px;}
+.listservices .newemployeebasedcol1 .leditemployee{padding-left:16px;}
+
+
+/*** New company setting ***/
+.usersettings .redcompanysettingsboxtop{background:url(../images/companysettings_box_top_bot_bg_red.png) no-repeat left top;height:10px;display:block;}
+.usersettings .redcompanysettingsboxbot{background:url(../images/companysettings_box_top_bot_bg_red.png) no-repeat left bottom;height:10px;display:block;}
+.usersettings .redcompanysettingsboxmid{background:#da8890 url(../images/companysettings__box_bg_red.png) repeat-x left top;min-height:306px;border-left:solid 1px #447998;border-right:solid 1px #447998;width:839px;}
+.iphone .usersettings .redcompanysettingsboxtop,
+.ipad .usersettings .redcompanysettingsboxtop{height:9px;}
+.iphone .usersettings .redcompanysettingsboxbot,
+.ipad .usersettings .redcompanysettingsboxbot{height:9px;}
+.iphone .usersettings .redcompanysettingsboxmid,
+.ipad .usersettings .redcompanysettingsboxmid{background-color:transparent;height:306px;}
+.usersettings .newcompanysettingsboxmid{min-height:480px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol1 .companyaccount h2{padding:0px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol1 .companyaccount h2.comaccount{padding-bottom:6px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol1 .companyaccount h2.payment{padding-top:25px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol1 .companyaccount h2.contactpre{padding-top:95px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol1 .companyaccount h2.contactper{font-size:18px;padding:145px 0px 3px 4px}
+.usersettings .newcompanysettingsboxmid .usersettingcol1 .deletecompany a{color:#0071bc;font-size:14px;text-decoration:none;font-weight:normal;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .btnlistyourhours{padding-top:27px;padding-right:3px;}
+.usersettings .newcompanysettingsboxmid a{color:#0071bc;font-size:18px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;text-decoration:none;}
+.usersettings .newcompanysettingsboxmid a:hover{text-decoration:none;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companysettingsname{float:left;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .ppemail{padding-top:10px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companysettingsname a{color:#000000;font-size:18px;font-style:italic;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .editpaypal{float:right;padding:10px 5px 0px 0px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companycontacttext{width:300px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companycontactvalue{width:220px;padding-left:40px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companycontactvalue label.ui-checkbox{font-weight:normal;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companyemail .companyemailtext,
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companynumber .companynumbertext{text-align:right;width:266px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companynumber .companynumberinput{float:left;padding-left:10px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companynumber .companynumberinput input{width:125px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companycontactvalue .chkcall{padding-right:77px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .userfirstalert .firstalertselect{width:285px;float:right;padding-right:19px;}
+.personfirstname, .personlastname{padding-top:7px;padding-left:4px;}
+.personfirstname input,
+.personlastname input{width:161px;height:27px;border:solid 1px #999999;color:#808080;font-size:18px;font-family:Arial, Helvetica, sans-serif;line-height:18px;padding-left:5px;}
+.userinfo{position: relative;height: 58px;}
+.userinfo .infoarea{width:568px;position:absolute;height:58px;}
+.userinfo .infoarea1{width:590px;background-color:white;border-radius:10px;opacity:0.5;filter: alpha(opacity=50);height:58px;position:absolute;left:-10px;}
+.paypalarea{position: relative;height: 104px;}
+.paypalarea .paypalbox{width:568px;position:absolute;height:104px;}
+.paypalarea .paypalbox1{width:590px;background-color:white;border-radius:10px;opacity:0.5;filter: alpha(opacity=50);height:104px;position:absolute;left:-10px;}
+.paypalarea .paypalbox .howdoaccept{padding-top:10px;}
+.paypalarea .paypalbox .paymenttype{padding:8px 0px 0px 3px;}
+.paypalarea .paypalbox .paymenttype .paypalonly{float:left;width:160px;}
+.paypalarea .paypalbox .paymenttype .payinperson{float:left;width:270px}
+.paypalarea .paypalbox .paymenttype .rdtitle{font-weight:normal;}
+.paypalarea .paypalbox .paymenttype label.ui-radio{padding-left:35px;}
+.comsettingmobile{padding-top:0px !important;}
+.divverify{padding-left:14px;float:left;}
+.divverify .btnverify{margin-right:7px;}
+.resendcode{float:left;font-size:12px;font-weight:normal;font-style:italic;color:#4d4d4d;}
+.resendcode a{font-size:12px !important;font-weight:normal !important;}
+.usersettings .newcompanysettingsboxmid .divtxtsend .txtcompanysetup input{font-size:12px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;font-style:normal;}
+.usersettings .newcompanysettingsboxmid .divtxtsend .txtbday{width:65px;}
+.companysms{padding:9px 0px 0px 128px;height: 50px;}
+.companysms .msmerror{color: #FF0000;font-family: Arial,Helvetica,sans-serif;font-size: 12px;font-weight: 400;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .howshouldkuyam{padding-top:26px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companyemail{padding-top:21px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companynumber{padding-top:17px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companyremind{padding-top:28px;}
+.usersettings .newcompanysettingsboxmid .usersettingcol2 .companyremind .companyremindmealert{width:580px;}
+.newcompanysettingsboxmid .reminderarea{height:318px;}
+.newcompanysettingsboxmid .reminderarea .reminderbox1{height:299px;}
+.redcompanysettingsboxmid .cancellation .cancelbox1{padding-top:5px;}
+.redcompanysettingsboxmid .cancellation .cancelbox1 p{padding-top:4px;padding-right:65px;}
+.cancellation .cancelbox5{float:left;width:585px;padding-top:12px;}
+.cancellation .cancelbox5 .rcancelhead{font-weight:bold;font-style:italic;font-size:14px;font-family:Arial, Helvetica, sans-serif;padding-bottom:2px;}
+.cancellation .cancelbox5 .rcancelitem{font-size:18px;font-weight:bold;position:relative;height:46px}
+.cancellation .cancelbox5 .rcancelitem .rcancelitembox{position:absolute;height:32px;padding-top:14px;}
+.cancellation .cancelbox5 .rcancelitem .rcancelitembox1{width:587px;background-color:white;border-radius:10px;opacity:0.5;filter: alpha(opacity=50);height:46px;position:absolute;left:-10px;}
+.cancellation .cancelbox5 .typepolicy{float:left;width:168px;padding-left:8px;}
+.cancellation .cancelbox5 .hoursprior{float:left;width:177px;text-align:center;}
+.cancellation .cancelbox5 .anyrefund{float:left;width:170px;text-align:center;padding-left:58px;}
+.cancellation .cancelbox5 .rcancelhead .anyrefund{text-align:left;padding:16px 0px 0px 91px;width:135px;}
+.cancellation .cancelbox5 .rcancelhead .typepolicy{padding:26px 0px 0px 20px;}
+.cancellation .cancelbox5 .rcancelhead .hoursprior{padding:0px 0px 0px 9px;text-align:left;width:150px;}
+.cancellation .cancelbox5 .rcancelitem .customcancel{padding-top:6px;}
+.cancellation .cancelbox5 .rcancelitem .customcancel .typepolicy{padding-top:8px;}
+.usersettings .usersettingsbox .btncompanysettingarea{padding-top:11px;}
+.redcompanysettingsboxmid css3-container,
+.newcompanysettingsboxmid css3-container{filter: alpha(opacity=50);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";}
+.companysmsverify{width:135px;float:left;}
+.deletecompanypopup .btndeletecompany{display:block;width:287px;height:39px;margin:0 auto;border:0;background:transparent url(../images/appointment.png) no-repeat -22px -948px;font-size:22px;color:#471a1a;font-weight:600;text-align:center;padding-top:13px;margin-top:11px;}
+.ie7 .usersettings .newcompanysettingsboxmid .usersettingcol2 .contactpreferencesbox{height:auto;}
+.ie7 .companysms{padding-left:127px;}
+.divtxtsend{ float: left;}

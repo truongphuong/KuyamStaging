@@ -1,0 +1,221 @@
+﻿@using Kuyam.Database.Extensions;
+@using Kuyam.Utility;
+@using Kuyam.Database;
+@{
+
+    List<CompanyInvoices> companyInvoiceList = null;
+    if (ViewBag.InvoicesList != null)
+    {
+        companyInvoiceList = ViewBag.InvoicesList;
+    }
+
+}
+@if (companyInvoiceList != null)
+{
+    bool flag = false;
+    int index = 0;
+    foreach (CompanyInvoices item in companyInvoiceList)
+    {
+        string classstring = string.Empty;
+        if (!flag)
+        {
+            classstring = "invoceitem";
+        }
+        else
+        {
+            classstring = "invoceitem invoceitemf2f2f2";
+        }
+
+        flag = !flag;
+        index++;
+        string cssClass = "invoceitem" + index;
+        <div id="@cssClass" class="@classstring">
+            <div class="activeitem">
+                <div class="invitemheader">
+                    <div class="invicon">
+                        <a href="#" class="plus"></a>
+                    </div>
+                    <div class="invdate">
+                        @if (!string.IsNullOrEmpty(item.ServiceStartDate.ToString()))
+                        {@DateTimeUltility.ConvertToUserTime(item.ServiceStartDate, DateTimeKind.Utc).ToString("MM/dd/yy")}
+                        else
+                        { <span>&nbsp;</span>}
+                    </div>
+                    <div class="invtime">
+                        @if (!string.IsNullOrEmpty(item.ServiceStartDate.ToString()))
+                        { @DateTimeUltility.ConvertToUserTime(item.ServiceStartDate, DateTimeKind.Utc).ToString("h:mmtt").ToLower()}
+                        else
+                        { <span>&nbsp;</span>}
+                    </div>
+                    <div class="invservice">
+                        @if (!string.IsNullOrEmpty(item.ServiceDescription))
+                        {@item.ServiceDescription }
+                        else
+                        {<span>&nbsp;</span>}
+                    </div>
+                    <div class="invemployee">
+                        @if (!string.IsNullOrEmpty(item.EmployeeName))
+                        { @Kuyam.Domain.UtilityHelper.TruncateText(item.EmployeeName, 15) }
+                        else
+                        { <span>&nbsp;</span>}
+                    </div>
+                    <div class="invcalendar">
+                        @if (!string.IsNullOrEmpty(item.ClientName))
+                        {@item.ClientName }
+                        else
+                        {<span>&nbsp;</span>}
+                    </div>
+                    <div class="invamount">
+                        @if (!string.IsNullOrEmpty(item.ServiceAmmount.ToString()))
+                        {@(item.OrderDiscount.HasValue ? item.OrderTotal.Value.ToString("0.00") : item.OrderSubtotal.Value.ToString("0.00"))}
+                        else
+                        {<span>&nbsp;</span>}
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="invitemcontent hidden">
+                    <div class="itemcontentwidth">
+                        <div class="inv1">
+                            <div>
+                                <div class="invdate">
+                                    <strong>receipt #:</strong>
+                                </div>
+                                <div class="invservice">@item.ReceiptNumber</div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            @if (item.PurchasedOn.HasValue)
+                            {
+                                <div>
+                                    <div class="invdate">
+                                        <strong>purchased on:</strong>
+                                    </div>
+                                    <div class="invservice">@DateTimeUltility.ConvertToUserTime(item.PurchasedOn.Value, DateTimeKind.Utc).ToString("M/dd/yyyy h:mm tt")</div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            }
+                            <div>
+                                <div class="invdate">
+                                    <strong>status:</strong>
+                                </div>
+                                <div class="invservice">
+                                    @( ((Kuyam.Database.Types.AppointmentStatus)item.AppointmentStatus).ToString().ToLower())
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div>
+                                <div class="invdate">
+                                    <strong>payment:</strong>
+                                </div>
+                                <div class="invservice">
+                                    @{ if (item.PaymentMethod == (int)Kuyam.Database.Types.PaymentMethod.Paypal)
+                                     {
+                                        <span>Paypal</span>
+                                     }
+                                     else
+                                     {
+                                        <span>pay in person</span>
+                                     }
+                                    }
+                                </div>
+                            </div>
+                            <div>
+                                <div class="invdate">
+                                    <strong>company:</strong>
+                                </div>
+                                <div class="invservice">
+                                    @item.CompanyName
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="inv2">
+                            <div class="billbox">
+                                <div class="billinfo">
+                                    @*  <div class="cardinfo">
+                                            MASTERCARD ending in 3209
+                                        </div>*@
+                                    <div class="clear">
+                                    </div>
+                                    <div>
+                                        <div class="fLeft">
+                                            company services
+                                        </div>
+                                        <div class="fRight">
+                                            @{
+                                                if (item.OrderSubtotal < 0 || item.OrderSubtotal == null)
+                                                {
+                                                    <span>0.0</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.OrderSubtotal.Value.ToString("0.00")</span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div>
+                                        @if (item.GiftCardCodeNumber!=null && item.GiftCardAmount > 0)
+                                        {
+                                            <div class="fLeft">
+                                                giftcard:@item.GiftCardCodeNumber
+                                            </div>
+                                            <div class="fRight">-@string.Format("{0:0.00}", item.GiftCardAmount)</div>
+                                        }
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div>
+                                        @if (item.OrderDiscount.HasValue && item.OrderDiscount.Value > 0)
+                                        {
+                                            <div class="fLeft">
+                                                promo code:@item.DiscountCodeNumber
+                                            </div>
+                                            <div class="fRight">-@string.Format("{0:0.00}", item.OrderDiscount)</div>
+                                        }
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="billtotal">
+                                    <div class="fLeft">
+                                        Total amount paid
+                                    </div>
+                                    <div class="fRight">@(item.OrderDiscount.HasValue ? item.OrderTotal.Value.ToString("0.00") : item.OrderSubtotal.Value.ToString("0.00"))</div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="printinvoce">
+                            <a href="javascript:void(0);" onclick="printContent('@cssClass');" title="print this invoice">
+                                print this invoice
+                            </a>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    }
+
+}

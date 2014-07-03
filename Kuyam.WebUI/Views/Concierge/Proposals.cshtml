@@ -1,0 +1,104 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@{
+    ViewBag.Title = "propalsals";
+    Layout = "~/Views/Shared/_MasterPageLayoutConcierge.cshtml";
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div class="colLeft menuLeft">
+            <div class="scroll">
+                <div id="accordion">
+                    <h3 title="our blog">
+                        guest
+                    </h3>
+                    <div>
+                    </div>
+                    <h3 title="schedule">
+                        appoinments
+                    </h3>
+                    <div>
+                    </div>
+                    <h3 title="appointments">
+                        proposals
+                    </h3>
+                    <div class="panelapp">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contentmainpage" class="colRight rightadmin" style="border-left:none">
+            <h3>concierge dashboard-proposals</h3>
+            <div class="boxsearch">
+                <center>
+                    <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                        <tr class="odd">
+                            <td>
+                                <label>
+                                    search&nbsp;&nbsp;
+                                    <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                                </label>
+                                &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+            <div id="apptlist">
+                @Html.Partial("_ProposalsConciergeResults")
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#ui-accordion-accordion-header-0").removeClass("ui-state-active");
+        $("#ui-accordion-accordion-header-2").addClass("ui-state-active");
+        $("#ui-accordion-accordion-header-0").click(function() {
+            window.location.href = "/Concierge/Index";
+        });
+        $("#ui-accordion-accordion-header-1").click(function() {
+            window.location.href = "/Concierge/Appointment";
+        });
+        $("#ui-accordion-accordion-header-2").click(function() {
+            window.location.href = "/Concierge/Proposals";
+        });
+
+        $("[id^=imper_]").click(function() {
+
+        });
+
+        $("#txtKey").focus();
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var searchParameters = { page: pageIndex, key: key};
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Concierge/Proposals/'
+            })
+            .success(function (result) {
+                $('#apptlist').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>

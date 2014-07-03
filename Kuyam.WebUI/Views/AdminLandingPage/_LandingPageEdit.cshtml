@@ -1,0 +1,125 @@
+﻿@using Kuyam.Database
+@model Kuyam.WebUI.Models.LandingPage.LandingPageModel
+           
+<div class="sucess-messasge">@TempData[Kuyam.Utility.Contants.SuccessMessageTempData]</div>
+<div class="error-messasge">@TempData[Kuyam.Utility.Contants.ErrorMessageTempData]</div>
+
+@using (Html.BeginForm("Edit", "AdminLandingPage",FormMethod.Post,new {id="formLandingPage"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <input type="hidden" value="@Model.Id" id="Id" name="Id"/>
+    <input type="hidden" value="@Model.KalturaId" id="KalturaId" name="KalturaId" />
+    <input type="hidden" value="@Model.LinkReturn" id="LinkReturn" name="LinkReturn" />
+
+
+    <table cellpadding="2" cellspacing="2" border="0" class="tbldata">
+        <tr class="odd">
+            <td style="width: 80px;">
+                name
+            </td>
+            <td>
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "error-text" })<br />
+                <input type="button" value="create url" onclick=" createUrl(); " />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                url name
+            </td>
+            <td>
+                @Html.EditorFor(model => model.UrlName)
+                @Html.ValidationMessageFor(model => model.UrlName, null, new { @class = "error-text" })
+                <label id="urlAutoValid" class="error-text"></label>
+            </td>
+        </tr>
+        <tr class="odd">
+            <td>
+                banner
+            </td>
+            <td>
+                @Html.HiddenFor(model => model.Banner)
+                <input type="button" value="crop image" onclick=" cropBannerImage(); " id="btnCropBanner" />
+                <input type="button" value="upload image" onclick=" showUploadDialog(0); " />
+                <input type="button" value="getty image" onclick=" showCustImageDialog(0); " /><br />
+                @Html.ValidationMessageFor(model => model.Banner, null, new { @class = "error-text" })
+            </td>
+        </tr>
+        <tr class="odd">
+            <td colspan="2">
+                <div style="overflow: auto; max-width: 714px;">
+                    <img id="imgBanner" src="@Model.BannerDisplayImage" alt="banner" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                content
+            </td>
+            <td>
+                <input type="button" value="upload image" onclick=" showUploadDialog(1); " />
+                <input type="button" value="getty image" onclick=" showCustImageDialog(1); " />
+                <input type="button" value="insert company" onclick="showSearchCompanyDialog(1); " />
+                @Html.EditorFor(model => model.MainContent)
+                @Html.ValidationMessageFor(model => model.MainContent, null, new { @class = "error-text" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                script
+            </td>
+            <td>
+                @Html.TextAreaFor(model => model.Scripts)
+                @Html.ValidationMessageFor(model => model.Scripts, null, new { @class = "error-text" })
+            </td>
+        </tr>
+        <tr style="display:none">
+            <td>
+                company <br/>related
+            </td>
+            <td>
+                <input type="button" value="insert company" onclick=" showSearchCompanyDialog(0); " />
+                <div id="divCompanyRelated" class="sortable">
+                    
+                    @foreach (var company in Model.CompanyAvaiableList)
+                    {
+                        <div class="sortItem" id="order_@(company.CompanyId)">
+                            <span class="ui-icon ui-icon-arrowthick-2-n-s"></span> @company.CompanyName
+                            <button class="delete" onclick="deleteCompany(this);">delete</button>
+                            <input type="hidden" name="companiesRelated" value="@company.CompanyId" />
+                        </div>
+                    }
+                    
+                </div>
+            </td>
+        </tr>
+        @if (Model.Id > 0)
+        {
+            <tr class="odd">
+                <td>
+                    status
+                </td>
+                <td>@Model.StatusEnum.ToString().ToLower()</td>
+            </tr>
+            <tr>
+                <td>last updated</td>
+                <td>@DateTimeUltility.ConvertToUserTime(Model.LastUpdated, DateTimeKind.Utc).ToString("MM/dd/yyyy")</td>
+            </tr>
+        }
+        <tr class="odd">
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <input type="hidden" value="draft" id="Submit" />
+                <input type="submit" value="save as draft" name="submit" id="btnDraft" />
+                &nbsp;<input type="submit" value="publish" name="submit" id="btnPublish" />
+                &nbsp;<input type="submit" value="unpublish" name="submit" id="btnUnpublish" />
+                &nbsp;&nbsp;
+                <input type="button" value="preview" name="submit" id="btnPreview" style="display:none;"/>
+            </td>
+        </tr>
+    </table>
+
+}

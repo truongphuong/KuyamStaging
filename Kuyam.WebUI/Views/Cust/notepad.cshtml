@@ -1,0 +1,23 @@
+﻿@model Kuyam.WebUI.Models.NotepadModel
+@{
+    Layout = "~/Views/Cust/custmaster.cshtml";
+    ViewBag.CustPage = "notepad";
+}
+@using M2.Util.MVC
+@using (Html.BeginForm())
+{
+    @Html.TextAreaFor(m => m.Notes, 23, 33, new { @class = "box-frame" })<br /><br />
+    <div style="float: left; width: 50px">
+        <a href="#" id="clearNotes">clear</a>
+    </div>
+    <div style="float: right">
+        @Html.SaveCustom("save", "saving", "undo", "undoChanges", "#", false)
+    </div>
+}
+<script type="text/javascript">
+    var orgText = jQuery('#Notes').val();
+    jQuery(function () {
+        jQuery('#clearNotes').click(function () { jQuery('#Notes').val(""); });
+        jQuery('#undoChanges').click(function () { jQuery('#Notes').val(orgText); });
+    });
+</script>

@@ -1,0 +1,39 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "staff add";
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        add staff</h2>
+    @using (Html.BeginForm("StaffAdd", "Hotel", FormMethod.Post, new { id = "add", enctype = "multipart/form-data" }))
+    {   <input type="hidden" name="hotelId" value="@ViewBag.HotelId"/>
+        <div class="boxsearch">
+            <center>
+                <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                    <tr class="odd">
+                        <td>
+                            <select id="userId" name="custId">
+                                @{      
+                                                     
+        if (ViewBag.Users != null)
+        {
+            foreach (Cust item in ViewBag.Users)
+            {                                  
+                                    <option value="@item.CustID" >@item.Email</option>
+            }
+        }                            
+                               
+                                }
+                            </select>
+                            <input class="button" id="btnAdd" value="add" type="submit" />
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+    }
+    <p>
+        <a href="/hotel/stafflist?hotelId=@ViewBag.HotelId">back to list</a>
+    </p>
+</div>

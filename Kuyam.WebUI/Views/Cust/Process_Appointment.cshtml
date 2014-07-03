@@ -1,0 +1,95 @@
+﻿@model Kuyam.WebUI.Models.ProcessAppointmentModel
+@using Kuyam.Database
+@section Head
+{
+    <link href="@Url.Content("~/Content/company.css")" rel="stylesheet" type="text/css" />
+}
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Process Appointment";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("process-appointment", "company"))
+{
+    @Html.HiddenFor(m => m.Appointment.AppointmentID)
+    @Html.HiddenFor(m => m.Referrer)
+    <div style="float: left; width: 600px; text-align: left">
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                Customer
+            </div>
+            <div class="editor-field">
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                @Html.LabelFor(model => model.Appointment.Title, "Title")
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Appointment.Title)
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                @Html.LabelFor(model => model.Appointment.ContactPerson, "Contact")
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Appointment.ContactPerson)
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                @Html.LabelFor(model => model.Appointment.Start)
+            </div>
+            <div class="editor-field date">
+                @Html.EditorFor(model => model.Appointment.Start)
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                @Html.LabelFor(model => model.Appointment.End)
+            </div>
+            <div class="editor-field date">
+                @Html.EditorFor(model => model.Appointment.End)
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                @Html.LabelFor(model => model.Appointment.AllDay, "All Day")
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Appointment.AllDay)
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="editor-label-narrow">
+                @Html.LabelFor(model => model.Appointment.Notes)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Appointment.Notes)
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div>
+            <div class="editor-label-narrow">
+                Action
+            </div>
+            <div class="editor-field">
+                @Html.RadioButtonForSelectList(x => x.Action, Model.Actions, 0, 1)
+                <br />
+                <br />
+                <div class="editor-label-autowidth">
+                    Message</div>
+                @Html.TextAreaFor(x => x.ActionMessage)
+            </div>
+        </div>
+    </div>
+    <div style="float: left; padding-left: 20px; border-left: 0px solid gray">
+    </div>
+    <div class="submit clear">
+        @Html.SaveCancelLC("submit changes", "submitting")
+    </div>
+}

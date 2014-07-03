@@ -1,0 +1,17 @@
+﻿@model Kuyam.WebUI.Models.NokuyamAppointmentModel
+@{
+    ViewBag.Title = "NonKuyamBook Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("NonKuyamBookEdit", "Admin", FormMethod.Post, new { id = "edit", enctype = "multipart/form-data" }))
+{
+    <div id="contentmainpage">
+        <h2>non-kuyam company-book</h2>
+        @Html.Partial("_NoKuyamAddEdit", Model)
+        <input id="btnbook" type="submit" value="save" />
+        <p>
+            <a href="/Admin/NonKuyamBookList">back to list</a>
+        </p>
+    </div>
+}

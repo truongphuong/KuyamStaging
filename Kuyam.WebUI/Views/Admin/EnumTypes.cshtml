@@ -1,0 +1,36 @@
+﻿@model M2.Util.StandardTypeList
+@using Kuyam.Database;
+@using M2.Util;
+@{
+    ViewBag.Title = "Types";
+}
+<h2>
+    Types</h2>
+<pre class="caseAsEntered">
+@{
+    @:public enum TypeGroup 
+    @:{
+        for (int ix = 0; ix < Model.Count; ix++)
+        {
+    @:    @(Model.Keys.ElementAt(ix).ToEnumCase())=@(Model.Values.ElementAt(ix))@(ix < Model.Count - 1 ? "," : "")
+    }
+    
+    @:};
+    @:
+    
+    foreach (var item in Model.Keys)
+    { 
+    @:
+    @:public enum @(item.ToEnumCase()) 
+    @:{
+        @:Unknown = -1,
+        StandardTypeList types = DAL.GetTypes(Model[item]);
+        for (int ix = 0; ix < types.Count; ix++)
+        {
+    @:    @(types.Keys.ElementAt(ix).ToEnumCase())=@(types.Values.ElementAt(ix))@(ix < types.Count - 1 ? "," : "")
+    }
+    
+    @:};
+    }
+}
+</pre>

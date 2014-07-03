@@ -1,0 +1,88 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "Import data";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    int userListPageIndex = ViewBag.UserListPageIndex ?? 1;
+    string key = ViewBag.Key;
+    int searchType = ViewBag.SearchType ?? -1;
+}
+<script type="text/javascript" src="../../Scripts/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../../Scripts/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<style type="text/css">
+    td {
+        width: 300px;
+        border: none !important;
+    }
+
+        td:first-child {
+            width: 90px;
+        }
+
+    tr {
+        border: none;
+    }
+
+    table {
+        border: none !important;
+    }
+</style>
+<div id="contentmainpage">
+    <h2>import company</h2>
+    <div id="divcompanydetail">
+        <fieldset>
+            <div class="loginform">
+                @using (Html.BeginForm("SubmitImportFile", "Admin", FormMethod.Post,
+                    new { enctype = "multipart/form-data",  id="importFormSubmit" }))
+                {
+                    <table cellpadding="2" cellspacing="2" border="0" class="tbldata" style="width: 160%">
+                        <tr>
+                            <td>select file import</td>
+                            <td>
+                                <input id="fileUpload" type="file" name="fileUpload" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input id="submitUpload" type="submit" value="submit" />
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </div>
+        </fieldset>
+        <p>
+            <a href="/Admin/AdminCompanyList?page=@(userListPageIndex)&key=@(key)&searchType=@(searchType)">
+                back to list
+            </a>
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitUpload").click(function() {
+            if (CheckFileName()) {
+                return true;
+                //CheckExistedPreviewPage();
+            }
+            return false;
+        });
+    });
+    function CheckFileName() {
+        var fileName = document.getElementById("fileUpload").value;//;$("#fileUpload").val;
+        if (fileName == "") {
+            alert("Browse to upload a valid File with xls / xlsx extension");
+            return false;
+        }
+        else if (fileName.split(".")[1].toUpperCase() == "XLS" || fileName.split(".")[1].toUpperCase() == "XLSX")
+            return true;
+        else {
+            alert("File with " + fileName.split(".")[1] + " is invalid. Upload a validfile with xls / xlsx extensions");
+            return false;
+        }
+        return true;
+    }
+   
+
+</script>

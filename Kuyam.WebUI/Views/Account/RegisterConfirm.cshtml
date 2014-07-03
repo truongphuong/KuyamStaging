@@ -1,0 +1,32 @@
+﻿@model Kuyam.WebUI.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Confirm";
+    Layout = "~/Views/Shared/_KuyamLayoutBlank.cshtml";    
+}
+
+<div class="RegisterDive">
+    <center>
+        <div style="position:absolute; left: 155px; top:112px; color:black; font-family:arial; font-size: 36pt; font-weight:bold;">2</div>
+        <div style="position:absolute; left: 190px; top:105px; color:black; font-family:arial; font-size: 12pt; font-weight:bold;">here's what your profile will look like...</div>
+
+        <br /><br />
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id="RegisterForm"} ))
+        {
+            <input type="hidden" name="DoSubmit" value="True" />
+            <img src="@Url.Content("~/Images/Homepage/ProfileSample.jpg")" alt="sample profile" />
+            
+            <br />
+            
+            <a href="javascript:$('#RegisterForm').submit()">
+                <img src="@Url.Content("~/Images/Homepage/NextButton.png")" alt="Next" />
+            </a>    
+        }
+    </center>
+</div>
+
+
+
+
+

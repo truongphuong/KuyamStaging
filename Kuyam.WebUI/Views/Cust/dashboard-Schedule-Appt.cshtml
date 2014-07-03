@@ -1,0 +1,31 @@
+﻿@model Kuyam.WebUI.Models.CompanySearchModel
+@using M2.Util.MVC
+@using M2.Util
+
+@{
+    int maxLen = 33;
+}
+           
+<div>
+  <div style="background-color:#f2f2f2; padding:5px 1px;">
+    <div style="background-color:#c1d72e; border-radius: 15px;">
+        Clan / company:
+        <br />
+    @foreach (Kuyam.Database.ProfileCompany pc in Model.PriorCompanies.OrderBy(x => x.Name))
+    { 
+    @Html.ActionLink((pc.Name + " " + Model.GetCityState(pc.City, pc.State)).SubstringSafe(0, maxLen), "schedule-appointment", "cust", new { id = pc.ProfileID }, null)
+    <br />
+    }
+
+        <select></select>
+        <br />
+
+        or look one up:<br />
+        <input type="text" name="companysearch" />
+    </div>
+  </div>
+    <div>
+	<img src="@Url.Content("~/images/Dashboard/MeerkatWelcome.png")" alt="Meerkatwelcome" />
+    </div>
+</div>
+

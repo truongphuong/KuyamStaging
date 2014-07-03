@@ -1,0 +1,71 @@
+﻿@using Kuyam.Database
+@using PagedList.Mvc
+@model Kuyam.WebUI.Models.LandingPage.LandingPageList
+
+<table border='0' cellpadding="0" cellspacing="0" class="tbldata" width="500">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                name
+            </th>
+            <th>
+                status
+            </th>
+            <th>
+                last updated
+            </th>
+            <th style="width: 124px;">
+                action
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (LandingPage p in Model.PagedList)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.StatusEnum.ToString().ToLower()</td>
+                <td>@DateTimeUltility.ConvertToUserTime(p.LastUpdated, DateTimeKind.Utc).ToString("MM/dd/yyyy")</td>
+                <td>
+                    @Html.ActionLink("edit", "Edit", "AdminLandingPage", new { id = p.Id, linkReturn = Model.LinkReturn }, null)
+                    @if (p.StatusEnum == Types.LandingPageStatus.Published)
+                    {
+                        @: |
+                        @Html.ActionLink("view", "index", "Landing", new {id = p.UrlName}, new {target = "_blank"})
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+    <tr class="odd">
+        <td>
+            <input type="hidden" id="currentPage" value="@Model.PagedList.PageNumber" />
+            <div class="fLeft mt4" style="float: left;">
+                @if (Model.PagedList.TotalItemCount > 0)
+                {
+                       
+                    <span>@Model.PagedList.FirstItemOnPage - @Model.PagedList.LastItemOnPage of </span><span><strong>@Model.PagedList.TotalItemCount results</strong></span>
+                }
+            </div>
+            
+        </td>
+        <td style="text-align: right;">
+            @if (Model.PagedList.TotalItemCount > 0)
+            {
+                <div class="paging">
+                    @Html.PagedListPager(Model.PagedList, page => Url.Action("Index", "AdminLandingPage",  new { page = page, key = Model.SearchKey, status=Model.Status}))
+                </div>
+            }
+        </td>
+    </tr>
+</table>
+
+  

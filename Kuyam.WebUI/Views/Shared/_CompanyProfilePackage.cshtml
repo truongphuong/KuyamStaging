@@ -1,0 +1,283 @@
+﻿@model Kuyam.WebUI.Models.ProfileCompaniesModels
+
+@Html.Raw(@ViewBag.CompanyPackage)
+
+<div id="lightBox" class="lightBox z499">
+</div>
+<div id="newpayment" class="comfirmationpopup newcheckoutpopup newcheckoutpackage">
+    <div class="contentPopup">
+        <a id="btnClose" class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="newcheckout">
+            <div class="newcheckoutcol1">
+                <h3>
+                    package summary:
+                </h3>
+                <div class="clear8">
+                </div>
+                <div class="blueinfo packageinfo">
+                    <span id="companyname"></span>
+                    <br />
+                    <strong id="despackagename">affasf</strong><br />
+                    applies to: <span id="servicename"></span>
+                    <br />
+                    <span id="expires"></span>@*expires <span id="expires"></span>after purchase*@
+                </div>
+                <div class="clear6">
+                </div>
+                <div class="notedescript">
+                    once purchased, this package will be immediately available under the schedule tab
+                    for easy access.
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="packagehelpimage">
+                    <img alt="" src="/images/package_image_help.jpg" />
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="newcheckoutcol2">
+                <div class="checkoutpopup2 checkoutpackage">
+                    <div class="paymentmethod">
+                        <div class="divtotaldue">
+                            <div class="totaldue" id="totaldue">
+                            </div>
+                            <input type="hidden" id="totaldue" value="" />
+                            <input type="hidden" id="price" value="" />
+                            <input type="hidden" id="discoutamountapply" value="" />
+                            <input id="discoutidapply" type="hidden" value="">
+                        </div>
+                        <div class="clear11">
+                        </div>
+                        <div class="discountcodebox">
+                            <div class="textdiscount">
+                                promo code?
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div>
+                                <input type="button" id="btnapply" class="btnapply" value="apply" title="apply" />
+                                <input type="text" id="txtdiscount" class="txtdiscount" />
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="applycodeError" style="color: Red;">
+                            &nbsp;
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="newpaymentmethod">
+                            please select your
+                            <br />
+                            method of payment:
+                        </div>
+                        <div class="clear16">
+                        </div>
+                        <div class="buttonbox">
+                            <div class="divpaypal">
+                                <a href="javascript:void(0)" onclick="buypackageNow()" title="paypal">
+                                    <img alt="" src="/images/btnpaypal.png" />
+                                </a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pkgdetailpopupservice" class="comfirmationpopup pkgdetail">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong id="packagename">‘5 Massage Pack’ details</strong>
+        </h3>
+        <div class="clear">
+        </div>
+        <div class="pkgdetailinfo">
+            applies to the following services:
+        </div>
+        <div class="clear">
+        </div>
+        <div class="deletecontent" id="deletecontent">
+
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var packageoject;
+    var iscomplete = true;
+    $(function () {
+
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });
+
+        //        $('#cbemail').checkBox({ addVisualElement: false });
+        //        $('#cbsms').checkBox({ addVisualElement: false });
+
+        $('#category').selectmenu();
+        $('#employee, #endtime, select#username').selectmenu();
+
+
+        $('.btnpurchase').click(function () {
+            if ('@(Request.IsAuthenticated?1:0)' == 0) {
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return;
+            }
+            var parent = $(this).parent().parent().parent();
+            loadDatacheckout(parent);
+            //showDialog('newpayment', 'btnClose');
+        });
+
+        $('#packagecheckout').click(function () {
+            showpopup("packagecheckoutpopup");
+        });
+
+        $('#packageoffer').click(function () {
+            showpopup("appointmentsummary");
+        });
+
+        $('.fakepackageimage').click(function () {
+            var parent = $(this).parent().parent();
+            loadDatacheckout(parent);
+        });
+
+        $('#btnapply').live('click', function () {
+            applyDiscount();
+        });
+
+
+        $('#txtdiscount').live('keyup', function () {
+            if (iscomplete) {
+                iscomplete = false;
+                setTimeout("applyDiscount()", 1500);
+            }
+        });
+
+
+    });
+
+    function loadDetailService(packageId) {
+        $.get("/CompanyProfile/GetServiceByPackageId?packageId=" + packageId + "&nocache=" + getunixtime(), function (result) {
+            $("#pkgdetailpopupservice #packagename").html(result.packagename);
+            $("#pkgdetailpopupservice  #deletecontent").html(result.content);
+            showpopup("pkgdetailpopupservice");
+            $("#pkgdetailscroll").niceScroll("#pkgdetailcontent", { cursorborder: "", cursoropacitymin: 1, cursorcolor: "#000000", boxzoom: false, cursorwidth: 14, cursorborderradius: 0 }).resize();
+        });
+    }
+
+    function loadDatacheckout(parent) {
+        packageoject = parent;
+        $("#txtdiscount").val("");
+        $("#applycodeError").html("&nbsp;");
+        var companyname = $("#hdfcompanyname").val();
+        var divPrice = parent.find('.txtprice');
+        var price = divPrice.attr("value");
+        var quantity = divPrice.attr("quantity");
+        var duration = divPrice.attr("duration");
+        var packagename = divPrice.attr("name");
+        var servicenumber = divPrice.attr("servicenumber");
+        packagename = packagename + " for $" + price;
+        var expires = "";
+        if (duration > 0) {
+            expires = duration + (duration > 1 ? ' months' : ' month');
+            if (duration >= 12)
+                expires = '1 year';
+            expires = "expires " + expires + " after purchase";
+            $('#expires-message').show();
+        }
+        else {
+            expires = "never expire";
+            $('#expires-message').hide();
+        }
+        servicenumber += " sevices";
+        $("#companyname").html(companyname);
+        $("#despackagename").html(packagename);
+        $("#servicename").html(servicenumber);
+        $("#expires").html(expires);
+        var totaldue = "<span>total due:</span><br /> $" + parseFloat(price).toFixed(2);;
+        $("#totaldue").html(totaldue);
+        $("#totaldue").val(price);
+        $("#price").val(price);
+        showDialog('newpayment', 'btnClose');
+    }
+
+    function buypackageNow() {
+        $("#newpayment").hide();
+        var divPrice = packageoject.find('.txtprice');
+        var price = divPrice.attr("value");
+        var packageId = divPrice.attr("packageid");
+        var param = "packageId=" + packageId + "&price=" + price;
+        var discountid = $("#discoutidapply").val();
+        if (discountid > 0)
+            param += "&discountCode=" + $("#txtdiscount").val();
+        commonPostAjax("CompanyProfile", "buyPackage", param, buyPackageSuccess, Error);
+    }
+
+    function buyPackageSuccess(result) {
+        pageBusy();
+        if (result == 'true') {
+            window.location.href = "/Paypal/PackagePreapprove";
+        }
+        else {
+            window.location.reload();
+        }
+    }
+
+    function applyDiscount() {
+        var divPrice = packageoject.find('.txtprice');
+        var code = $.trim($("#txtdiscount").val());
+        var packageId = divPrice.attr("packageid");
+        $("#applycodeError").html("&nbsp;");
+        if (code == "")
+            return;
+        $.get("/CompanyProfile/GetDiscountPackageCode?code=" + code + "&packageId=" + packageId + "&nocache=" + getunixtime(), function (result) {
+            var totaldue = $("#price").val();
+            var discountamount = 0;
+            if (result != null) {
+                var price = $("#price").val();
+                if (result.amount > 0) {
+                    discountamount = result.amount;
+
+                } else {
+                    discountamount = price * result.percent / 100;
+                }
+                totaldue = price - discountamount;
+                if (totaldue < 0)
+                    totaldue = 0;
+                var totalduetext = "<span>total due:</span><br> $" + parseFloat(totaldue).toFixed(2);
+                $(".totaldue").html(totalduetext);
+                $("#discoutamountapply").val(discountamount);
+                $("#totaldue").val(totaldue);
+                $("#discoutidapply").val(result.discountid);
+
+            } else {
+                var totalduetext = "<span>total due:</span><br> $" + parseFloat(totaldue).toFixed(2);
+                $("#discoutamountapply").val(0);
+                $(".totaldue").html(totalduetext);
+                $("#totaldue").val(totaldue);
+                $("#discoutidapply").val(0);
+                $("#applycodeError").html("invalid promo code or expired");
+            }
+
+        });
+
+        iscomplete = true;
+    }
+
+</script>

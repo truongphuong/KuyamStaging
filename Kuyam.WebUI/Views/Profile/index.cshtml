@@ -1,0 +1,172 @@
+﻿@model Kuyam.WebUI.Models.CustProfileModel
+@section Head
+{
+    <link href="@Url.Content("~/Content/personal.css")" rel="stylesheet" type="text/css" />
+    @Html.Partial("_DatePickerControlSetup")
+}
+@using M2.Util.MVC
+@using Kuyam.WebUI.Models
+@{
+    ViewBag.Title = "my profile";
+}
+<div style="float: left">
+    <h2>
+        @ViewBag.Title</h2>
+</div>
+<div style="float: right">
+    @if (Model.ProfileCompanyID > 0)
+    { 
+        @Html.ActionLink("Company Profile", "companyprofile", "profile", new { id = Model.ProfileCompanyID }, null);
+    }
+    else
+    {
+        @Html.ActionLink("Create Company Profile", "createcompanyprofile", "profile", new { id = Model.ProfileCompanyID }, null);
+    }
+    | @Html.ActionLink("home", "index", "cust")
+</div>
+<div class="clear">
+</div>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Cust.CustTypeID)
+    @Html.HiddenFor(model => model.Cust.Notes)
+    @Html.HiddenFor(model => model.Cust.CustStatusTypeID)
+    @Html.HiddenFor(model => model.Cust.CustStatusReasonTypeID)
+    @Html.HiddenFor(model => model.Cust.CustStatusNote)
+    @Html.HiddenFor(model => model.Cust.Created)
+    @Html.HiddenFor(model => model.Cust.LastVisit)
+
+    <div class="editor-row">
+    </div>
+    
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.FirstName, "first name")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.FirstName)<br />
+            @Html.ValidationMessageFor(model => model.Cust.FirstName)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.LastName, "last name")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.LastName)<br />
+            @Html.ValidationMessageFor(model => model.Cust.LastName)
+        </div>
+    </div>
+@*
+    <div class="editor-row">
+        <div class="editor-label">
+            profile photo
+        </div>
+        <div class="editor-field-profile">
+            <img src="@Url.Content("~/images/person_ph.jpg")" width=100 />&nbsp<a href="#">change</a>
+        </div>
+    </div>
+    *@
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.Street1, "street 1")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.Street1)<br />
+            @Html.ValidationMessageFor(model => model.Cust.Street1)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.Street2, "street 2")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.Street2)<br />
+            @Html.ValidationMessageFor(model => model.Cust.Street2)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.City, "city")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.City)<br />
+            @Html.ValidationMessageFor(model => model.Cust.City)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.State, "state")
+        </div>
+        <div class="editor-field-profile">
+            @Html.DropDownListFor(model => model.Cust.State, Model.StateList)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.Zip, "zip")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.Zip)<br />
+            @Html.ValidationMessageFor(model => model.Cust.Zip)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.MobilePhone, "mobile phone")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.MobilePhone)<br />
+            @Html.ValidationMessageFor(model => model.Cust.MobilePhone)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.HomePhone, "home phone")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.HomePhone)<br />
+            @Html.ValidationMessageFor(model => model.Cust.HomePhone)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.WorkPhone, "work phone")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.Cust.WorkPhone)<br />
+            @Html.ValidationMessageFor(model => model.Cust.WorkPhone)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.PreferredPhoneTypeID, "preferred phone")
+        </div>
+        <div class="editor-field-radiobuttonlist">
+            @Html.RadioButtonForSelectList(model => model.Cust.PreferredPhoneTypeID, Model.PreferredPhoneList)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cust.GenderTypeID, "gender")
+        </div>
+        <div class="editor-field-radiobuttonlist">
+            @Html.RadioButtonForSelectList(m => m.Cust.GenderTypeID, Model.GenderList)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Birthday, "birthday")
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("Birthday", Model.Birthday.HasValue ? Model.Birthday.Value.ToString("M/d/yyyy") : "", new { placeholder = "mm/dd/yyyy", type = "birthdate" })
+            @Html.ValidationMessageFor(model => model.Birthday)
+        </div>
+    </div>
+    <div class="editor-row">
+        <br />
+        @Html.ActionLink("change password", "changepassword", "account")
+    </div>
+    @Html.SaveCancelLC()
+}

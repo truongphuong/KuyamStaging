@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "contact us";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<style type="text/css">
+    .contactinfo .contactcontent .contactform1, .contactinfo .contactcontent .contactform .contactname .contactinput, .contactinfo .contactcontent .contactform .contactname .contactinput1, .contactinfo .contactcontent .contactform .contactemail .contactinput, .contactinfo .contactcontent .contactform .contactemail .contactinput1, .contactinfo .contactcontent .contactform .contactsubject .contactinput, .contactinfo .contactcontent .contactform .contactsubject .contactinput1, .contactinfo .contactcontent .contactform .contactmessage .contactinput, .contactinfo .contactcontent .contactform .contactmessage .contactinput1
+    {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<div class="contentMarketPlace">
+    <div class="howitworks">
+        <div class="contactinfo">
+            <div class="contactimage">
+                <img alt="contact us" src="/images/imgcontact.png" />
+            </div>
+            <div class="contactcontent">
+                <div class="contactaddress">
+                    <h1>
+                        contact us</h1>
+                    <p class="contact1">
+                        we love hearing your questions and feedback!
+                        <br />
+                        e-mail us at <a href='mailto:info@kuyam.com' title='info@kuyam.com'>info@kuyam.com</a><br />
+                        or if you prefer to talk, please call us at <span>(310) 461-1515</span><br />
+                        send us mail at:
+                    </p>
+                    <p class="contact2">
+                        kuyam<br />
+                        1901 avenue of the stars, suite 1900<br />
+                        los angeles, ca 90067
+                    </p>
+                    <p class="contact3">
+                        you can also simply fill out this form:
+                    </p>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="contactform1">
+                </div>
+                <div class="contactform">
+                    <div class="contactbox">
+                        <div class="divnamemail">
+                            <div class="contactname">
+                                <div class="contactinput1">
+                                </div>
+                                <div class="contactinput">
+                                    <input type="text" id="name" value="name" onblur="if (this.value==''){this.value='name';}"
+                                        onfocus="if (this.value=='name') {this.value = '';}" />
+                                </div>
+                            </div>
+                            <div class="contactemail">
+                                <div class="contactinput1">
+                                </div>
+                                <div class="contactinput">
+                                    <input type="text" id="email" value="your email" onblur="if (this.value==''){this.value='your email';}"
+                                        onfocus="if (this.value=='your email') {this.value = '';}" />
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="contactsubject">
+                            <div class="contactinput1">
+                            </div>
+                            <div class="contactinput">
+                                <input type="text" id="subject" value="subject" onblur="if (this.value==''){this.value='subject';}"
+                                    onfocus="if (this.value=='subject') {this.value = '';}" />
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="contactmessage">
+                            <div class="contactinput1">
+                            </div>
+                            <div class="contactinput">
+                                <textarea type="text" id="message" cols="3" rows="4" onblur="if (this.value==''){this.value='enter message here...';}"
+                                    onfocus="if (this.value=='enter message here...') {this.value = '';}">enter message here...</textarea>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="divsendmail">
+                            <input type="button" id="btnsend" title="send message" />
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div id="divSummaryError" style="margin-left: -25px; margin-top: 18px; width: 330px;">
+                            <div class="ui-state-error ui-corner-all">
+                                <div id="content" style="position: relative; margin-left: -30px; margin-right: 6px;
+                                    padding-top: 5px;">
+                                    <ul style="display: block; list-style-type: none; margin-top: 2px;">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="contactbottomarrow">
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+     <div id="emailepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                thanks for the message!
+            </p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $('#divSummaryError').hide();
+
+    $(function () {
+
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+
+        $('#btnsend').click(function () {
+            $("#content ul").empty();
+            var flag = true;
+            var email = $('#email').val();
+            var name = $('#name').val();
+            var subject = $('#subject').val();
+            var message = $('#message').val();
+
+            //name
+            if (name == '' || name == 'name') {
+                $("#content ul").append('<li>name is required.</li>');
+                flag = false;
+            } else {
+                if (name.length > 50) {
+                    $("#content ul").append('<li>name must be less than 50 characters.</li>');
+                    flag = false;
+                }
+            }
+
+            //subject
+            if (subject == '' || subject == 'subject') {
+                $("#content ul").append('<li>subject is required.</li>');
+                flag = false;
+            }
+
+            //message
+            if (message == '' || message == 'enter message here...') {
+                $("#content ul").append('<li>content message is required.</li>');
+                flag = false;
+            }
+
+            //email
+
+            if (email == '' || email == 'your email') {
+                $("#content ul").append('<li>your email is required.</li>');
+                flag = false;
+            } else {
+                if (email.length > 50) {
+                    $("#content ul").append('<li>email must be less than 50 characters.</li>');
+                    flag = false;
+                }
+                var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+                if (!reemail.test(email)) {
+                    $("#content ul").append('<li>invalid e-mail address.</li>');
+                    flag = false;
+                }
+            }
+            if (!flag) {
+                $('#divSummaryError').show();
+                return false;
+            } else {
+                $('#divSummaryError').hide();
+
+                var parameters = { name: name, email: email, subject: subject, message: message };
+                $.ajax(
+                        {
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(parameters),
+                            dataType: 'html',
+                            url: '/home/contactnew/'
+                        })
+                        .success(function (result) {
+                            showDialog('emailepopup');
+                            setTimeout('goToHomePage();', 2000);
+                        })
+                        .error(function (error) {
+                        });
+
+                return true;
+            }
+            return false;
+        });
+    });
+    function goToHomePage(){
+        window.location.href = "/";
+    }
+    
+</script>

@@ -1,0 +1,173 @@
+﻿@using System.Web.Security;
+@using Kuyam.Database;
+@using Kuyam.Database.BlogModels;
+@using Kuyam.WebUI.Models;
+@using Kuyam.Domain;
+@using Kuyam.Utility;
+@model BlogUser
+@{
+    Layout = Request.IsAuthenticated ? "~/Views/Shared/_MasterPageLayout.cshtml" : "~/Views/Shared/_HomePageLayout.cshtml";
+    ViewBag.Title = "Author";
+    var isAuthenticated = Request.IsAuthenticated ? "true" : "false";
+    var user = MySession.Cust;
+    var posts = ViewBag.Posts;
+    List<be_Categories> categories = ViewBag.Categories;
+    var previousLink = ViewBag.PreviousLink;
+    var description = UtilityHelper.StripTagsRegexCompiled(HttpUtility.HtmlDecode(Model.AboutMe));
+    if (description.Length > 100)
+    {
+        description = description.Substring(0, 100) + "...";
+    }
+    var sharingExtension = new Kuyam.WebUI.Extension.SharingExtension
+    {
+        Title = Model.FirstName + " " + Model.LastName,
+        Description = description,
+        Image = Model.PhotoUrl
+    };
+
+    var url = Request.Url;
+    var sharingUrl = url.Scheme + "://" + url.Host + url.AbsolutePath;    
+}
+<style type="text/css">
+    .description p
+    {
+        display: block;
+        margin: 0;
+    }
+</style>
+<div ng-app="myApp" ng-controller="authorCtrl">
+    <div class="contentMarketPlace">
+        <div class="bgMainContent">
+            @if (Request.IsAuthenticated)
+            {
+                @:@Html.Partial("_CompanySearchLeftTab")
+                                                }
+            <div ng-class="container">
+                <div class="contentAuthor">
+                    @Html.Partial("_BlogCategoryNavigation")
+                    <div class="clear40">
+                    </div>
+                    @if (!string.IsNullOrEmpty(previousLink))
+                    {
+                        <div class="headAuthor">
+                            <a href="@previousLink" title="">&lt; back to article</a>
+                        </div>
+                    }
+                    <div class="author">
+                        @if (string.IsNullOrEmpty(Model.PhotoUrl))
+                        {
+                            <img class="imgAuthor" alt="" src="@Url.Content("~/Images/noimg.jpg")" style="width: 100px; height: 100px;" />
+                        }
+                        else
+                        {
+                            <img class="imgAuthor" alt="" src="@Model.PhotoUrl" style="width: 100px; height: 100px;" />
+                        }
+                        <h1>@Kuyam.Domain.UtilityHelper.TruncateText(Model.FirstName, 20)<br />@Kuyam.Domain.UtilityHelper.TruncateText(Model.LastName, 20)</h1>
+                        @if (!string.IsNullOrEmpty(Model.Facebook) || !string.IsNullOrEmpty(Model.Twitter) || !string.IsNullOrEmpty(Model.Pinterest) || !string.IsNullOrEmpty(Model.Website))
+                        {
+                            <div class="linksSocial">
+                                <h2 style="text-align: right; margin-bottom: 4px; margin-right: -1px;">
+                                    connect with this author:</h2>
+                                <div style="text-align: right">
+                                    @if (!string.IsNullOrEmpty(Model.Facebook)) {
+                                    <a href="@Model.Facebook" title="" target="_blank">
+                                        <img alt="" src="/images/iconFacebook.png">
+                                    </a> 
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Twitter)) {
+                                    <a href="@Model.Twitter" title="" target="_blank">
+                                        <img alt="" src="/images/iconTwitter.png">
+                                    </a> 
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Pinterest)) {
+                                    <a href="@Model.Pinterest" title="" target="_blank">
+                                        <img src="/Images/author-afterlogin-pinterest.png" style="width: 41px; height: 37px;" />
+                                    </a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Website)) {
+                                    <a href="@Model.Website" title="" target="_blank">                                        
+                                        <img src="/Images/author-afterlogin-websiteicon.png" />
+                                    </a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <div class="clear">
+                        </div>
+                        <i class="description">@Html.Raw(Model.AboutMe)</i>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="listNews">
+                        <h2>
+                            more posts by @Model.FirstName @Model.LastName:</h2>
+                        <div class="itembox">
+                            @foreach (var post in posts)
+                            {
+                                <a href="@Url.Content("~/Blog/Post/")@post.PostRowID" title="@post.Title">
+                                    <div class="activebox1">
+                                        @if (string.IsNullOrEmpty(post.CoverPhoto))
+                                        {
+                                            <img src="@Url.Content("~/Images/noimg.jpg")" alt="No Image" style="width: 183px; height: 184px;" />
+                                        }
+                                        else
+                                        {
+                                            <img alt="" src="@KalturaHelper.GetKalturaUrl(post.CoverPhoto, 183, 184)" style="width: 183px; height: 184px;" />
+                                        }
+                                        <div class="bgcaptionactive">
+                                            <div class="contentcaption">
+                                                @post.Title
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="fb-root">
+</div>
+<script src="@Url.Content("~/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/scripts/login.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var app = angular.module('myApp', []);
+    app.controller("authorCtrl", function($scope){
+        $scope.isAuthenticated = @isAuthenticated;
+        if($scope.isAuthenticated){
+            $scope.container = "colRight";
+        }
+        else{
+            $scope.container = "contentinside";
+            $(".content").css("width", "764px");
+        }
+        $scope.gotoCategory = function(categoryId){
+            if(!$scope.isAuthenticated){
+                signuppopup()
+                return;
+            }
+            window.location = "/" + categoryId;
+        }
+    });
+
+    $(document).ready(function () {
+       
+        $(".contentcaption").dotdotdot({
+            height:65
+        });        
+      
+        
+    });
+</script>
+@section SharingSection{
+    @sharingExtension.MetaTag()
+}

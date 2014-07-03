@@ -1,0 +1,1290 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Database.Extensions
+@model dynamic
+@{
+    ViewBag.Title = "company packages";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+}
+@{
+    int countActive = 0;
+    if (ViewBag.CompanyPackages != null)
+    {
+        countActive = ViewBag.CompanyPackages.Count;
+    } 
+}
+<style>
+    .listservices .listservicescol1 .formaddlistservices1
+    {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<link href="@Url.Content("~/css/uploader/jquery.fileupload-ui.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/tmpl.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/canvas-to-blob.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/load-image.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/jquery.iframe-transport.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/jquery.fileupload.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/jquery.fileupload-ip.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/jquery.fileupload-ui.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploader/locale.js")"></script>
+<!--[if lt IE 9]><script src="@Url.Content("~/Scripts/uploader/html5.js")"></script><![endif]-->
+<script type="text/javascript">
+    $(function () {
+        $('.groupSelectName select,.selectMinute select,#category, #allcategories, #anypayment').selectmenu();
+
+        //        $(".txtprice").click(function () {
+        //            showpopup("editpackagepopup");
+        //        });
+
+        $('#allservice, #sltservice').checkBox();
+        $("#selectquanlity, #selectduration").selectmenu();
+
+        $('.idchkclass').checkBox
+		({
+		    addVisualElement: false,
+		    'change': function (e, ui) {
+		        if (ui.checked == true) {
+		            employee_edit_add_active($(this).attr('id'));
+		        }
+		        else {
+		            employee_edit_remove_active($(this).attr('id'));
+		        }
+		    }
+		});
+        $('#eallservice, #esltservice').checkBox();
+        $("#eselectquanlity, #eselectduration").selectmenu();
+    });
+</script>
+<input type="hidden" id="currentpackageid" name="currentpackageid" value="0" />
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight">
+            <div class="editserviceform companypackageform">
+                <div class="companypackagebox">
+                    <div class="companypackageboxtext">
+                        <h1>
+                            packages</h1>
+                        <div class="clear3">
+                        </div>
+                        <p class="padd">
+                            create packages to give your clients flexibility and discounts.
+                            <br />
+                            you can determine the prices, expiry and the applicable services.
+                        </p>
+                    </div>
+                    <div class="companypackageboxbutton">
+                        <a id="btncreatepackage" href="#" title="create a package" class="btncreatepackage">
+                            create a package</a>
+                    </div>
+                    <div class="clear3">
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="clear6">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="compkgtab">
+                    <div class="activecompkgtab">
+                        <a href="/company/companypackages?companyId=@ViewBag.companyId" title="active (@countActive)" class="active">
+                            active (@countActive)</a>
+                    </div>
+                    <div class="updiscounttab">
+                        <a href="/company/companypackagesInactive?companyId=@ViewBag.companyId" title="inactive (@ViewBag.CountInactive)">
+                            inactive (@ViewBag.CountInactive)</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="packageitembox">
+                    <div class="companypackage admincompanypackage">
+                        @if (ViewBag.CompanyPackages != null && ViewBag.CompanyPackages.Count > 0)
+                        {
+                            for (int i = 0; i < ViewBag.CompanyPackages.Count; i++)
+                            {
+                                CompanyPackageExt package = ViewBag.CompanyPackages[i];
+                                string unitPrice = string.Empty;
+                                int countPurchased = package.CountPurchase;
+                                var imageUrl = string.Empty;
+                                var lstService = string.Join(";", package.Services.Select(x => x.ToString()).ToArray());
+                                if (package.NumberOfBooking > 0)
+                                {
+                                    int tmp = (int)package.Price / package.NumberOfBooking;
+                                    if (tmp > 0)
+                                    {
+                                        unitPrice = string.Format("${0}/{1}", tmp, package.PackageName);
+                                    }
+
+                                }
+                                if (!string.IsNullOrEmpty(package.KalturaImageId))
+                                {
+                                    imageUrl = string.Format("<img width=\"212px\" height=\"133px\" imageid={0} " +
+                                                             "src=\"{1}/p/811441/thumbnail/entry_id/{0}/width/212/height/133\">",
+                                                             package.KalturaImageId, Types.KaturaDoman);
+                                }
+                            <div class="packageitem">
+                                <div class="">
+                                </div>
+                                <div class="pkgimage">
+                                    @{
+                                if (!string.IsNullOrEmpty(package.KalturaImageId))
+                                {
+                                        @Html.Raw(imageUrl);
+                                }
+                                    }
+                                </div>
+                                <div class="clear8">
+                                </div>
+                                <div class="pkgtitle" id="@("pkgtitle" + package.PackageId)">
+                                    @package.PackageName
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="pkgprice">
+                                    <div class="txtprice" id="@("pkgprice" + package.PackageId)" 
+                                                     value="@package.Price" quantity="@package.NumberOfBooking" duration="@package.DurationInMonth"
+                                                     services="@lstService">
+                                        $@package.Price
+                                    </div>
+                                    <div class="divpurchase">
+                                        <a href="javascript:void(0);" id="purchase90" price="@package.Price" name="@package.PackageName" value="@package.PackageId" class="btnpurchase" title="make inactive">
+                                            make inactive</a>
+                                    </div>
+                                </div>
+                                <div class="clear7">
+                                </div>
+                                <div class="pkgdescript">
+                                    @unitPrice
+                                    <br />
+                                    <a href="javascript:void(0);" title="package details" value="@package.PackageId" class="apkgservice" id="pkgdetail">
+                                        package details</a><br />
+                                    <a href="javascript:void(0);" title="@countPurchased packages purchased" value="@package.PackageId" id="pkghistorypurchase"
+                                        class="hapkgservice">@(countPurchased + (countPurchased > 1 ? " packages purchased" : " package purchased"))</a>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>                                   
+                               
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="packageitem nopkg">
+                                <div class="nopackageitem">
+                                </div>
+                                <div class="pkgimage">
+                                </div>
+                                <div class="clear8">
+                                </div>
+                                <div class="pkgtitle">
+                                    5-Massage Pack
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="pkgprice">
+                                    <div class="txtprice">
+                                        $90
+                                    </div>
+                                    <div class="divpurchase">
+                                        <a href="javascript: return void(0);" id="purchase90" class="btnpurchase" style=""
+                                            title="edit package">edit package</a>
+                                    </div>
+                                </div>
+                                <div class="clear7">
+                                </div>
+                                <div class="pkgdescript">
+                                    $18/massage<br />
+                                    applies to: 60min massages<br />
+                                    expires 1 year after purchase<br>
+                                    number of booking(s): 2<br />
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                                
+                            <div class="packageitem nopkg">
+                                <div class="nopackageitem">
+                                </div>
+                                <div class="pkgimage">
+                                </div>
+                                <div class="clear8">
+                                </div>
+                                <div class="pkgtitle">
+                                    10-Massage Pack
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="pkgprice">
+                                    <div class="txtprice">
+                                        $160
+                                    </div>
+                                    <div class="divpurchase">
+                                        <a href="#" class="btnpurchase" style="" title="edit package">edit package</a>
+                                    </div>
+                                </div>
+                                <div class="clear7">
+                                </div>
+                                <div class="pkgdescript">
+                                    $16/massage<br />
+                                    applies to: 60min massages<br />
+                                    expires 1 year after purchase.<br />
+                                    number of booking(s): 2<br />
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            
+                            <div class="packageitem nopkg">
+                                <div class="nopackageitem">
+                                </div>
+                                <div class="pkgimage">
+                                </div>
+                                <div class="clear8">
+                                </div>
+                                <div class="pkgtitle">
+                                    10-Massage Pack
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="pkgprice">
+                                    <div class="txtprice">
+                                        $160
+                                    </div>
+                                    <div class="divpurchase">
+                                        <a href="#" class="btnpurchase" style="" title="edit package">edit package</a>
+                                    </div>
+                                </div>
+                                <div class="clear7">
+                                </div>
+                                <div class="pkgdescript">
+                                    $16/massage<br />
+                                    applies to: 60min massages<br />
+                                    expires 1 year after purchase.<br />
+                                    number of booking(s): 2<br />
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            
+                        }
+                    </div>
+                    <input type="hidden" id="ilstImages" name="ilstImages" value="@ViewBag.ImageList" />
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="packagecreatepopup" class="comfirmationpopup packagecreate">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>create a package</strong></h3>
+        <div class="clear">
+        </div>
+        <div class="pkgcreatecontent">
+            <div class="pkgquanlity">
+                <div class="pkgquanlity1">
+                    <div class="pkgquanlitytitle">
+                        quantity:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="pkgquanlityselect">
+                        <select id="selectquanlity" class="selectduration">
+                            <option value="-1" selected="selected">select quantity</option>
+                            <option value="0">Unlimited</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="pkgservice">
+                    <div class="pkgservicetitle">
+                        package name:</div>
+                    <div class="clear">
+                    </div>
+                    <div class="pkgserviceinput">
+                        <input type="text" id="inpservice" value="" />
+                        <span>Pack!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="pkgduration">
+                <div class="pkgduration1">
+                    <div class="pkgdurationtitle">
+                        duration:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="pkgquanlityselect">
+                        <select id="selectduration" class="selectduration">
+                            <option value="-1" selected="selected">select duration</option>
+                            <option value="1">1 month</option>
+                            <option value="2">2 months</option>
+                            <option value="3">3 months</option>
+                            <option value="4">4 months</option>
+                            <option value="5">5 months</option>
+                            <option value="6">6 months</option>
+                            <option value="7">7 months</option>
+                            <option value="8">8 months</option>
+                            <option value="9">9 months</option>
+                            <option value="10">10 months</option>
+                            <option value="11">11 months</option>
+                            <option value="12">12 months</option>
+                        </select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="pkgservice">
+                    <div class="pkgpricetitle">
+                        package price:</div>
+                    <div class="clear10">
+                    </div>
+                    <div class="pkgpriceinput">
+                        <span class="iconcurrency">$</span>
+                        <input type="text" id="inpprice" value="" />
+                        <span class="perunit">per unit: N/A</span>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="whichservice">
+                for which services?</div>
+            <div class="clear10">
+            </div>
+            <div class="chooseservice">
+                <div class="allservices">
+                    <input type="radio" id="allservice" name="pay" />
+                    <label for="allservice">
+                        <span class="rdtitle">all services</span>
+                    </label>
+                </div>
+                <div class="sltservices">
+                    <input type="radio" id="sltservice" name="pay" />
+                    <label for="sltservice">
+                        <span class="rdtitle">select services</span>
+                    </label>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear10">
+            </div>
+            <div class="servicelist">
+                <ul>
+                    @{
+                        if (ViewBag.ServiceList != null)
+                        {
+                            for (int i = 0; i < ViewBag.ServiceList.Count; i++)
+                            {
+                                Kuyam.Database.Extensions.CompanyService service = ViewBag.ServiceList[i];
+                                var duration = @service.Duration + "min";
+                                var j = i + 1;
+                                var idli = "liidchk" + j;
+                                var idinput = "idchk" + j;                                
+                        <li id="@idli" class="iefirst">
+                            <input type="checkbox" id="@idinput" lblname="@service.ServiceName" lblid="@service.ID" class="idchkclass"/>
+                            <label for="@idinput">
+                             @Kuyam.Domain.UtilityHelper.TruncateText(service.ServiceName,25), @duration, $@service.Price, 1 person</label>
+                        </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divcreatepkg">
+            <a href="#" class="createpkg" id="btnpreviewpkg" title="preview package"><span class="lcreatepkg">
+            </span><span class="ccreatepkg">preview package</span> <span class="rcreatepkg"></span>
+            </a>
+            <div class="clear">
+            </div>
+            <div id="errordiv" style="color: red">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear12">
+        </div>
+    </div>
+</div>
+<div id="packagepreviewpopup" class="comfirmationpopup packagepreview">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>preview package</strong></h3>
+        <div class="clear">
+        </div>
+        <div class="packagereviewcontent">
+            <div class="pkguploadimage">
+                <div class="uploadform">
+                    <form id="fileuploadlogo" action="/Upload/CompanyAdminPackageHandler.ashx" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="uploadform">
+                        <span class="btnupload fileinput-button">
+                            <input type="file" name="files[]" />
+                        </span>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    </form>
+                    @*<a href="#" class="btnupload" id="uploadlogo" title="click here to upload company logo">
+                    </a>*@<span>max size 1mb</span>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="imgavailablelabel">
+                    or images available for 99¢ each
+                </div>
+                <div class="clear">
+                </div>
+                <div class="imgbox" id="logocontentfile">
+                    <div class="imgavailable" id="imageUpload1">
+                    </div>
+                    <div class="imgavailable" id="imageUpload2">
+                    </div>
+                    <div class="imgavailable" id="imageUpload3">
+                    </div>
+                    <div class="imgavailable" id="imageUpload4">
+                    </div>
+                    <div class="imgavailable" id="imageUpload5">
+                    </div>
+                    <div class="imgavailable" id="imageUpload6">
+                    </div>
+                </div>
+                <div class="waiting">
+                    <img id="imgLoaderlogo" src="../../Images/progress.gif" alt="progress..." />
+                </div>
+                <div class="clear3">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="pkgcreatepackage">
+                    <a href="#" title="< back to create a package" id="backtocreatepackage">< back to create
+                        a package</a>
+                </div>
+            </div>
+            <div class="pkgreviewinfo">
+                <div class="companypackage">
+                    <div class="packageitem">
+                        <div class="pkgimage" id="previewImage">
+                        </div>
+                        <div class="clear8">
+                        </div>
+                        <div class="pkgtitle" id="previewPackageTitle">
+                            10-Massage Pack
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="pkgprice">
+                            <div class="txtprice" id="previewPrice">
+                                $300
+                            </div>
+                            <div class="divpurchase">
+                                <a href="javascript:void(0);" class="btnpurchase" style="" title="edit package" id="btnEditPackage">
+                                    edit package</a>
+                            </div>
+                        </div>
+                        <div class="clear7">
+                        </div>
+                        <div class="pkgdescript">
+                            &nbsp;<br />
+                            applies to:
+                            <label id="previewDescript">
+                            </label>
+                            <br />
+                            <label id="previewExpired">
+                            </label>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="divcreatepkg">
+                    <a href="#" class="createpkg" id="btncreatepkg" title="create package"><span class="lcreatepkg">
+                    </span><span class="ccreatepkg">create package</span> <span class="rcreatepkg"></span>
+                    </a>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="editpackagepopup" class="comfirmationpopup packagecreate">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>create a package</strong></h3>
+        <div class="clear">
+        </div>
+        <div class="pkgcreatecontent">
+            <div class="pkgquanlity">
+                <div class="pkgquanlity1">
+                    <div class="pkgquanlitytitle">
+                        quantity:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="pkgquanlityselect">
+                        <select id="eselectquanlity" class="selectduration">
+                            <option value="-1" selected="selected">None</option>
+                            <option value="0">Unlimited</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="pkgservice">
+                    <div class="pkgservicetitle">
+                        service:</div>
+                    <div class="clear">
+                    </div>
+                    <div class="pkgserviceinput">
+                        <input type="text" id="einpservice" value="e.g. Yoga Classes" />
+                        <span>Pack!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="pkgduration">
+                <div class="pkgduration1">
+                    <div class="pkgdurationtitle">
+                        duration:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="pkgquanlityselect">
+                        <select id="eselectduration" class="selectduration">
+                            <option value="-1" selected="selected">None</option>
+                            <option value="1">1 month</option>
+                            <option value="2">2 months</option>
+                            <option value="3">3 months</option>
+                            <option value="4">4 months</option>
+                            <option value="5">5 months</option>
+                            <option value="6">6 months</option>
+                            <option value="7">7 months</option>
+                            <option value="8">8 months</option>
+                            <option value="9">9 months</option>
+                            <option value="10">10 months</option>
+                            <option value="11">11 months</option>
+                            <option value="12">12 months</option>
+                        </select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="pkgservice">
+                    <div class="pkgpricetitle">
+                        package price:</div>
+                    <div class="clear10">
+                    </div>
+                    <div class="pkgpriceinput">
+                        <span class="iconcurrency">$</span>
+                        <input type="text" id="einpprice" value="" />
+                        <span class="perunit">per unit: N/A</span>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="whichservice">
+                for which services?</div>
+            <div class="clear10">
+            </div>
+            <div class="chooseservice">
+                <div class="allservices">
+                    <input type="radio" id="eallservice" name="pay" />
+                    <label for="eallservice">
+                        <span class="rdtitle">all services</span>
+                    </label>
+                </div>
+                <div class="sltservices">
+                    <input type="radio" id="esltservice" name="pay" />
+                    <label for="esltservice">
+                        <span class="rdtitle">select services</span>
+                    </label>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear10">
+            </div>
+            <div class="servicelist">
+                <ul>
+                    @{
+                        if (ViewBag.ServiceList != null)
+                        {
+                            for (int i = 0; i < ViewBag.ServiceList.Count; i++)
+                            {
+                                Kuyam.Database.Extensions.CompanyService service = ViewBag.ServiceList[i];
+                                var duration = @service.Duration + "min";
+                                var j = i + 1;
+                                var idli = "eliidchk" + j;
+                                var idinput = "eidchk" + j;                                
+                        <li id="@idli" class="iefirst">
+                            <input type="checkbox" id="@idinput" lblname="@service.ServiceName" lblid="@service.ID"/>
+                            <label for="@idinput">
+                                @service.ServiceName, @duration, $@service.Price, 1 person</label>
+                        </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divcreatepkg diveditpackage">
+            <div class="divpreviewpkg">
+                <a href="#" class="createpkg" id="ebtnpreviewpkg" title="preview package"><span class="lcreatepkg">
+                </span><span class="ccreatepkg">preview package</span> <span class="rcreatepkg"></span>
+                </a>
+                <div class="clear">
+                </div>
+                <div id="eerrordiv" style="color: red">
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="divdeletepkg">
+                or <a href="#" title="delete package" class="lnkdeletepkg" id="btnDeletePackage">delete
+                    package</a>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear12">
+        </div>
+    </div>
+</div>
+<div id="pkgpurchasehistorypopup" class="comfirmationpopup pkgpurchasehistory">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong id="hstpackagename">‘5 Massage Pack’ purchase history</strong></h3>
+        <div class="clear">
+        </div>
+        <div class="deletecontent">
+            <div class="pkgpheader">
+                <div class="pkgpname">
+                    name</div>
+                <div class="pkgpqtyleft">
+                    qty left</div>
+                <div class="pkgpstartdate">
+                    start date</div>
+                <div class="pkgpexpirydate">
+                    expiry date</div>
+                <div class="clear">
+                </div>
+            </div>
+            <div id="deletescroll">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="totalpkgp">
+            <span id="totalPurchased"></span>@*&nbsp;packages purchased*@
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="pkgdetailpopup" class="comfirmationpopup pkgdetail">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong id="packagename">‘5 Massage Pack’ details</strong></h3>
+        <div class="clear">
+        </div>
+        <div class="pkgdetailinfo">
+            expires: <span id="expiresdate"></span></br> applies to the following services:
+        </div>
+        <div class="clear">
+        </div>
+        <div class="deletecontent" id="deletecontent">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="packagedeletepopup" class="comfirmationpopup packagedelete">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            <strong>make package <span class="red">inactive</span>?</strong></h3>
+        <div class="clear8">
+        </div>
+        <div class="deletetitle">
+            5 Massage Pack for $90
+        </div>
+        <div class="clear8">
+        </div>
+        <div class="deletemessage">
+            after inactivating users who have bought the package can still use it until their
+            expiry date. package won't be available for new purchases.
+        </div>
+        <div class="clear5">
+        </div>
+        <a href="javascript:void(0);" packageid="" class="btndelete" id="btninactive" title="inactive">
+            make inactive</a>
+        <div class="clear12">
+        </div>
+    </div>
+</div>
+<!-- InstanceEndEditable -->
+<script type="text/javascript">
+    var arrayServiceId = new Array();
+    var arrayServiceName = new Array();
+    var companyId = '@ViewBag.companyId';
+
+    $(document).ready(function () {
+        $('.servicelist ul li input[type="checkbox"]').checkBox
+        ({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                var serviceId = $(this).attr('lblid');
+                var serviceName = $(this).attr('lblname');
+                if (ui.checked == true) {
+                    arrayServiceId.push(serviceId);
+                    arrayServiceName.push(serviceName);
+                }
+                else {
+                    var index = arrayServiceId.indexOf(serviceId);
+                    if (index >= 0) {
+                        arrayServiceId.splice(index, 1);
+                        arrayServiceName.splice(index, 1);
+                    }
+                }
+            }
+        });
+
+        $('#CompanyPackagesMenu').attr("class", "leftitem choose");
+        $("#btncreatepackage").click(function () {
+            resetpackagecreatepopup();
+            showpopup("packagecreatepopup");
+        });
+        $('#allservice').change(function () {
+            $('#packagecreatepopup .servicelist').find(':checkbox').prop('checked', true);
+        });
+        $('#sltservice').change(function () {
+            $('#packagecreatepopup .servicelist').find(':checkbox').prop('checked', false);
+        });
+        $('#eallservice').change(function () {
+            $('#editpackagepopup .servicelist').find(':checkbox').prop('checked', true);
+        });
+        $('#esltservice').change(function () {
+            $('#editpackagepopup .servicelist').find(':checkbox').prop('checked', false);
+        });
+        $('#inpservice').keyup(function () {
+            var $this = $(this);
+            if ($this.val().length > 30)
+                $this.val($this.val().substr(0, 30));
+        });
+        $('#inpprice').keyup(function () {
+            var $this = $(this);
+            if ($this.val().length > 8)
+                $this.val($this.val().substr(0, 8));
+        });
+        $("#inpprice").keydown(function (event) {
+            // Allow: backspace, delete, tab, escape, and enter
+            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+            // Allow: Ctrl+A
+                (event.keyCode == 65 && event.ctrlKey === true) || event.keyCode == 110 ||
+            // Allow: home, end, left, right
+                    (event.keyCode >= 35 && event.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            } else {
+                // Ensure that it is a number and stop the keypress
+                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#btnpreviewpkg").click(function () {
+            $('#errordiv').hide();
+            $('#errordiv').empty();
+            var valid = true;
+            if ($('#inpservice').val() == '') {
+                valid = false;
+                $('#errordiv').append("package name is a required field! <br/>");
+            }
+            if ($('#inpprice').val() == '') {
+                valid = false;
+                $('#errordiv').append("price is a required field! <br/>");
+            }
+            else if (parseFloat($('#inpprice').val()) <= 0) {
+                valid = false;
+                $('#errordiv').append("price is greater than 0! <br/>");
+            }
+            if ($("#selectquanlity").selectmenu("index") == 0 || $("#selectduration").selectmenu("index") == 0) {
+                valid = false;
+                $('#errordiv').append("quantity and duration is a required field! <br/>");
+            }
+            if ($('.servicelist :checkbox:checked').length == 0) {
+                valid = false;
+                $('#errordiv').append("at least one service must be selected! <br/>");
+            }
+            if (!valid) {
+                $('#errordiv').show();
+                return false;
+            } else {
+                $("#packagecreatepopup .btnClose").click();
+                loadpreviewpackageinfo();
+                showpopup("packagepreviewpopup");
+            }
+        });
+
+        $("#ebtnpreviewpkg").click(function () {
+            $('#eerrordiv').hide();
+            $('#eerrordiv').empty();
+            var valid = true;
+            if ($('#einpservice').val() == '') {
+                valid = false;
+                $('#eerrordiv').append("package name is a required field! <br/>");
+            }
+            if ($('#einpprice').val() == '') {
+                valid = false;
+                $('#eerrordiv').append("price is a required field! <br/>");
+            }
+            else if (parseFloat($('#einpprice').val()) <= 0) {
+                valid = false;
+                $('#eerrordiv').append("price is greater than 0! <br/>");
+            }
+            if ($("#eselectquanlity").selectmenu("index") == 0 && $("#eselectduration").selectmenu("index") == 0) {
+                valid = false;
+                $('#eerrordiv').append("quantity or duration is a required field! <br/>");
+            }
+            if ($('.servicelist :checkbox:checked').length == 0) {
+                valid = false;
+                $('#errordiv').append("at least one service must be selected! <br/>");
+            }
+            if (!valid) {
+                $('#errordiv').show();
+                return false;
+            } else {
+                $("#editpackagepopup .btnClose").click();
+                loadepreviewpackageinfo();
+                showpopup("packagepreviewpopup");
+            }
+        });
+
+        $("#btnDeletePackage").click(function () {
+            if (confirm("Are you sure you want to delete this package?")) {
+                var id = $('#currentpackageid').attr('value');
+                var parameters = { id: id };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(parameters),
+                        dataType: 'html',
+                        url: '/company/AdminCompanyDeletePackage/'
+                    })
+                    .success(function (result) {
+                        window.location.href = '/company/companypackages';
+                    })
+                    .error(function (error) {
+                        window.location.href = '/company/companypackages';
+                    });
+            }
+        });
+
+        $('#fileuploadlogo').fileupload();
+        $('#fileuploadlogo').fileupload('option', {
+            //            maxFileSize: 500000000,
+            //            resizeMaxWidth: 1000,
+            //            resizeMaxHeight: 1920,
+            maxFileSize: 1000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            autoUpload: true,
+            filesContainer: "#logocontentfile",
+            callbackStart: showloadinglogo,
+            callbackSuccess: hideloadinglogo
+        });
+
+        $(".imgavailable").click(function () {
+            $('#previewImage').empty();
+            if ($(this).find("img").length > 0) {
+                var imgtag = '<img width="212px" height="133px" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/' + $(this).find("img").attr("imageid") + '/width/99/height/100" imageid="' + $(this).find("img").attr("imageid") + '" />';
+                $('#previewImage').append(imgtag);
+            }
+        });
+
+        $("#backtocreatepackage").click(function () {
+            $("#packagepreviewpopup .btnClose").click();
+            if ($('#currentpackageid').attr('value') > 0)
+                showpopup("editpackagepopup");
+            else
+                showpopup("packagecreatepopup");
+        });
+
+        $("#btnEditPackage").click(function () {
+            $("#packagepreviewpopup .btnClose").click();
+            if ($('#currentpackageid').attr('value') > 0)
+                showpopup("editpackagepopup");
+            else
+                showpopup("packagecreatepopup");
+        });
+
+
+        $("#btncreatepkg").click(function () {
+            var id = $('#currentpackageid').attr('value');
+            var name = $('#inpservice').val();
+            var price = parseFloat($('#inpprice').val());
+            var quantity = $("#selectquanlity").selectmenu("value");
+            var duration = $("#selectduration").selectmenu("value");
+            var services = arrayServiceId.join(';');
+            var imageUrl = $('#previewImage').find("img").attr("imageid");
+            if (id != '' && id != '0') {
+                name = $('#einpservice').val();
+                price = parseFloat($('#einpprice').val());
+                quantity = $("#eselectquanlity").selectmenu("value");
+                duration = $("#eselectduration").selectmenu("value");
+                services = arrayServiceId.join(';');
+            }
+
+            var parameters = { id: id, name: name, price: price, quantity: quantity, duration: duration, services: services, imageUrl: imageUrl, profileId: companyId };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/AdminCompanyCreatePackage/'
+            })
+            .success(function (result) {
+                window.location.href = '/company/companypackages?companyId=' + companyId;
+            })
+            .error(function (error) {
+                window.location.href = '/company/companypackages?companyId=' + companyId;
+            });
+        });
+
+        $(".contentMarketPlace .btnpurchase").click(function () {
+            loadDataMakeInactive(this);
+        });
+
+        $(".btndelete").click(function () {
+            makeInactive(this);
+        });
+
+        $(".hapkgservice").click(function (e) {
+            var id = $(this).attr("value");
+            loadDetailPackage(id);
+        });
+
+        $(".apkgservice").click(function (e) {
+            var id = $(this).attr("value");
+            loadDetailService(id);
+        });
+    });
+
+    function showpopup(popupid) {
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#' + popupid).fadeIn(400);
+        //document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+        //document.body.scroll = "no"; // ie only
+        $('#' + popupid).css('top', ($('#lightBox').height() - $('#' + popupid).height()) / 2);
+        $('#' + popupid).css('left', ($('#lightBox').width() - $('#' + popupid).width()) / 2);
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentId = deviceAgent.match(/(iphone|ipod|android)/);
+        if (agentId) {
+            $('#' + popupid).css('position', 'absolute');
+        }
+
+        $('#' + popupid + ' .btnClose').click(function () {
+            $('#' + popupid).fadeOut(400);
+            $('#lightBox').fadeOut(400);
+            //document.documentElement.style.overflow = 'auto';  // firefox, chrome
+            //document.body.scroll = "yes"; // ie only	
+        });
+    }
+
+    function resetpackagecreatepopup() {
+        arrayServiceId = new Array();
+        $('#currentpackageid').attr('value', 0);
+        $("#selectquanlity").selectmenu("index", 0);
+        $("#selectduration").selectmenu("index", 0);
+        $('#inpservice').val('');
+        $('#inpprice').val('');
+        $('.servicelist').find(':checkbox').prop('checked', false);
+        $('#allservice').prop('checked', false);
+        $('#sltservice').prop('checked', false);
+        var lstImages = $('#ilstImages').attr('value').split(';');
+        //image
+        $('#previewImage').empty();
+        for (var i = 1; i <= 6; i++) {
+            var imagename = '#imageUpload' + i;
+            $(imagename).empty();
+        }
+        if (lstImages.length > 0 && lstImages[0] != '') {
+            for (var i = 1; i <= lstImages.length; i++) {
+                var imagename = '#imageUpload' + i;
+                $(imagename).empty();
+                var str = '<img width="120px" height="75px" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/' + lstImages[i - 1] + '/width/99/height/100" imageid="' + lstImages[i - 1] + '"/>';
+                $(imagename).append(str);
+                imagecount = i;
+            }
+        }
+        else {
+            imagecount = 0;
+        }
+        imagecount++;
+        if (imagecount > 6)
+            imagecount = 1;
+    }
+
+    function resetpackageeditpopup() {
+        $("#eselectquanlity").selectmenu("index", 0);
+        $("#eselectduration").selectmenu("index", 0);
+        $('#einpservice').val('');
+        $('#einpprice').val('');
+        $('#editpackagepopup .servicelist').find(':checkbox').prop('checked', false);
+        $('#eallservice').prop('checked', false);
+        $('#esltservice').prop('checked', false);
+    }
+
+    function reloadpackageeditpopup(obj) {
+        var parent = $(obj).parent().parent().parent();
+        var id = $(obj).attr('id');
+        $('#currentpackageid').attr('value', id);
+        var packName = '#pkgtitle' + id;
+        var divPrice = parent.find('div.txtprice');
+        var divImage = parent.find('img');
+        var lstServices = divPrice.attr('services').split(';');
+        var lstImages = $('#ilstImages').attr('value').split(';');
+        arrayServiceId = new Array();
+        resetpackageeditpopup();
+        $('#einpservice').val(fulltrim($(packName).text()));
+        $('#einpprice').val(divPrice.attr('value'));
+        $('#eselectquanlity').selectmenu("value", divPrice.attr('quantity'));
+        $('#eselectduration').selectmenu("value", divPrice.attr('duration'));
+        if ($('#editpackagepopup .servicelist').find(':checkbox').length == lstServices.length) {
+            $("#eallservice").prop("checked", true);
+        }
+        $('.servicelist').find(':checkbox').each(function (index) { //lblid
+            if (lstServices.indexOf($(this).attr('lblid')) >= 0) {
+                arrayServiceId.push($(this).attr('lblid'));
+                $(this).prop('checked', true);
+            } else
+                $(this).prop('checked', false);
+        });
+        //image
+        $('#previewImage').empty();
+        if (divImage.length > 0) {
+            var imgtag = '<img width="212px" height="133px" src="' + divImage.attr("src") + '" imageid="' + divImage.attr("imageid") + '" />';
+            $('#previewImage').append(imgtag);
+        }
+        for (var i = 1; i <= 6; i++) {
+            var imagename = '#imageUpload' + i;
+            $(imagename).empty();
+        }
+        for (var i = 1; i <= lstImages.length; i++) {
+            var imagename = '#imageUpload' + i;
+            $(imagename).empty();
+            var str = '<img width="120px" height="75px" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/' + lstImages[i - 1] + '/width/99/height/100" imageid="' + lstImages[i - 1] + '"/>';
+            $(imagename).append(str);
+            imagecount = i;
+        }
+        imagecount++;
+        if (imagecount > 6)
+            imagecount = 1;
+        //text
+        $('#packagepreviewpopup .ccreatepkg').empty();
+        $('#packagepreviewpopup .ccreatepkg').text('update package');
+
+    }
+
+    function loadDataMakeInactive(obj) {
+        var packageId = $(obj).attr('value');
+        var divPrice = $(obj).attr('price');
+        var packageName = $(obj).attr('name');
+        $("#btninactive").attr("packageid", packageId);
+        packageName += " for $" + divPrice;
+        $("#packagedeletepopup .deletetitle").html(packageName);
+        showpopup("packagedeletepopup");
+    }
+
+    function makeInactive(obj) {
+        var packageId = $(obj).attr("packageid");
+        var parameters = { packageId: packageId };
+        $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(parameters),
+                        dataType: 'json',
+                        url: '/company/AdminCompanyMakeInactive/'
+                    })
+                    .success(function (result) {
+                        window.location.href = '/company/companypackages?companyId=' + companyId;
+                    })
+                    .error(function (error) {
+                        window.location.href = '/company/companypackages?companyId=' + companyId;
+                    });
+    }
+
+    function loadpreviewpackageinfo() {
+        $('#previewPackageTitle').empty();
+        $('#previewPackageTitle').append($('#inpservice').val());
+        $('#previewPrice').empty();
+        $('#previewPrice').append('$' + $('#inpprice').val());
+        $('#previewDescript').text('');
+        var applyto = ' ' + arrayServiceId.length + ' service(s)';
+        $('#previewDescript').text(applyto);
+        $('#previewExpired').text('');
+        if ($("#selectduration").selectmenu("index") != 0) {
+            $('#previewExpired').text('expires ' + $("#selectduration").selectmenu("value") + ' month(s) after purchase');
+        }
+        //text
+        $('#packagepreviewpopup .ccreatepkg').empty();
+        $('#packagepreviewpopup .ccreatepkg').text('create package');
+    }
+
+    function loadepreviewpackageinfo() {
+        $('#previewPackageTitle').empty();
+        $('#previewPackageTitle').append($('#einpservice').val());
+        $('#previewPrice').empty();
+        $('#previewPrice').append('$' + $('#einpprice').val());
+        $('#previewDescript').text('');
+        var applyto = ' ' + arrayServiceId.length + ' service(s)';
+        $('#previewDescript').text(applyto);
+        $('#previewExpired').text('');
+        if ($("#eselectduration").selectmenu("index") != 0) {
+            $('#previewExpired').text('expires ' + $("#eselectduration").selectmenu("value") + ' month(s) after purchase');
+        }
+    }
+
+    function loadDetailService(packageId) {
+        $.get("/CompanyProfile/GetServiceByPackageId?packageId=" + packageId + "&nocache=" + getunixtime(), function (result) {
+            $("#pkgdetailpopup #packagename").html(result.packagename);
+            $("#deletecontent").html(result.content);
+            $("#expiresdate").html(result.expiresdate);
+            showpopup("pkgdetailpopup");
+            $("#pkgdetailscroll").niceScroll("#pkgdetailcontent", { cursorborder: "", cursoropacitymin: 1, cursorcolor: "#000000", boxzoom: false, cursorwidth: 14, cursorborderradius: 0 }).resize();
+        });
+    }
+
+    function loadDetailPackage(packageId) {
+        $.get("/CompanyProfile/GetUserPuchasedByPackageId?packageId=" + packageId + "&nocache=" + getunixtime(), function (result) {
+            $("#pkgpurchasehistorypopup #totalPurchased").html(result.totalPurchased + (result.totalPurchased > 1 ? " packages purchased" : " package purchased"));
+            $("#pkgpurchasehistorypopup #hstpackagename").html(result.packagename);
+            $("#pkgpurchasehistorypopup #deletescroll").html(result.content);
+            showpopup("pkgpurchasehistorypopup");
+            $("#deletescroll").niceScroll("#pkgpcontent", { cursorborder: "", cursoropacitymin: 1, cursorcolor: "#000000", boxzoom: false, cursorwidth: 14, cursorborderradius: 0 }).resize();
+        });
+    }
+
+    var imagecount = 1;
+
+    function showloadinglogo() {
+        $("#imgLoaderlogo").show();
+    }
+
+    function hideloadinglogo() {
+        $("#imgLoaderlogo").hide();
+    }
+
+    function fulltrim(str) { return str.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' '); };
+
+    function gotoStatus(status) {
+        window.location = "/CompanyAppointment/index/";
+    }
+
+</script>
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}   
+        <div class="preview"><span class="fade"></span></div>       
+        {% if (file.error) { %}
+            <div class="error" style="color:Red;" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } %}      
+
+{% } %}
+
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">    
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { var imagename = '#imageUpload' + imagecount;  $(imagename).empty();%}        
+        {%  var str =  '<img width="120px" height="75px" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/' + file.kalturaid + '/width/99/height/100" imageid="' +file.kalturaid +'"/>'; $(imagename).append(str); %}                   
+        {%  imagecount++; if (imagecount > 6) imagecount = 1; %}     
+        {% } %}
+{% } %}
+{% var newimages = new Array(); %}
+          {%  $('#packagepreviewpopup div.imgavailable').each(function (index) { %}
+         {%       if ($(this).find('img').length > 0) { %}
+         {%           newimages.push($(this).find('img').attr('imageid')); %}
+        {%        } %}
+       {%     }); %}
+       {%     $('#ilstImages').attr('value', newimages.join(";"));    %}    
+</script>

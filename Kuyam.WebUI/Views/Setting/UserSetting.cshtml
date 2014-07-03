@@ -1,0 +1,291 @@
+﻿@model Kuyam.WebUI.Models.UserModel
+@using Kuyam.Database;
+@using Kuyam.WebUI.Models
+@{
+    ViewBag.Title = "User Setting";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    var facebookClass = string.IsNullOrEmpty(MySession.Cust.FacebookUserID) ? string.Empty : "facebook";
+}
+<style>
+    .file
+    {
+        display: inline-block;
+        width: 137px;
+        position: relative; /*background: #61c6f5;
+        border-bottom: solid 1px #59b8e4;*/
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin-bottom: 10px;
+    }
+    .file .button
+    {
+        background: url("/images/appointment.png") no-repeat scroll left -400px;
+        text-indent: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #555;
+        height: 40px;
+        line-height: 40px;
+        display: block;
+    }
+    .file input
+    {
+        cursor: pointer;
+        height: 41px;
+        position: absolute;
+        right: -4px;
+        top: 0;
+        filter: alpha(opacity=0);
+        -moz-opacity: 0;
+        opacity: 0;
+        font-size: 23px;
+        line-height: 35px;
+    }
+    .usercurrentpass.facebook {
+        display: none;
+    }
+    .userpass.facebook {
+        display: none;
+    }
+    .userphone.facebook {
+        padding-top: 16px !important;
+    }
+    .userphonevalue.facebook {
+        padding-top: 16px !important;
+    }
+    .userpersonal.facebook h2 {
+        padding: 42px 0 0 !important;
+    }
+    .usersettingsboxmid.facebook {
+        min-height: 300px !important;    
+    }
+</style>
+<!-- InstanceBeginEditable name="content" -->
+<div class="usersettings">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        <div class="textusersettings tabactive">
+            <a href="/Setting/UserSetting" title="user settings">user settings</a></div>
+        <div class="textcalendarsettings">
+            <a href="/CalendarSetting" title="calendar settings">calendar settings</a></div>
+        <div class="textcompanysettings">
+            <a href="/Company/CompanySetting" title="company settings">company settings</a></div>
+    </div>
+    <div class="clear">
+    </div>
+    @using (Html.BeginForm("UserSetting", "Setting", FormMethod.Post, new { id = "usersetting", enctype = "multipart/form-data" }))
+    {
+        <div class="usersettingsbox">
+            <div class="usersettingsboxtop">
+            </div>
+            <div class="usersettingsboxmid @facebookClass">
+                <div class="usersettingcol1">
+                    <div class="useraccount">
+                        <h2>
+                            user account</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="editaccount">
+                        @Kuyam.Domain.UtilityHelper.TruncateText(@Model.FirstName, 15)<br />
+                        <a href="/Setting/EditUser" class="edituserinfo" title="edit information">edit information</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div style="padding-top: 30px !important; height: @(string.IsNullOrEmpty(facebookClass)?"277px":"70px") !important;">
+                        <div class="userpersonal @facebookClass">
+                            <h2>
+                                personal
+                            </h2>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="userreminders" style="padding-bottom: 84px !important;">
+                            <h2 class="edith2">
+                                reminders</h2>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @*<div class="usercalendar" style="display:none;">
+                        <h2>
+                            calendar sync</h2>
+                    </div>*@
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="usersettingcol2">
+                    <div class="useremail">
+                        e-mail:</div>
+                    <div class="clear">
+                    </div>
+                    <div class="usercurrentpass @facebookClass">
+                        current password:</div>
+                    <div class="clear">
+                    </div>
+                    
+                    <div class="userphone @facebookClass">
+                        phone #</div>
+                    <div class="clear">
+                    </div>
+                    <div class="userzipcode">
+                        zip code:</div>
+                    <div class="clear">
+                    </div>
+                    <div class="usercontact" style="padding-top: 9px !important;">
+                        &nbsp;@*contact preferences:*@</div>
+                    <div class="clear">
+                    </div>
+                    <div class="userappointmentupdate">set reminders for all your appointment</div>
+                    <div class="clear">
+                    </div>
+                    <div class="userremindme" style="padding-top: 0px !important;">
+                        remind me:</div>
+                    <div class="clear">
+                    </div>
+                    @*<div class="userggcal" style="padding-top: 115px !important;">
+                        ical:</div>
+                    <div class="clear">
+                    </div>*@
+                    <div class="userical">
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="usersettingcol3">
+                    <div class="useremailvalue">@Model.Email&nbsp;</div>
+                    <div class="clear">
+                    </div>
+                    <div class="userpass @facebookClass">
+                        ••••••••••••</div>
+                    <div class="clear">
+                    </div>
+                    <div class="userphonevalue @facebookClass">@Kuyam.Domain.UtilityHelper.FormatPhone(@Model.MobilePhone)&nbsp;</div>
+                    <div class="clear">
+                    </div>
+                    <div class="userzipcodevalue">@Model.Zip&nbsp;</div>
+                    <div class="clear">
+                    </div>
+                    <div class="usercontactvalue" style="height: 20px">
+                         <div class="chkcall">
+                            <input type="checkbox" name="EmailType" id="mail" @(Model.EmailType? "checked=checked" : "") value="true" />
+                            <label for="mail">
+                                e-mail</label>
+                        </div>
+                        <div class="chktext" style="padding-right:77px;">
+                            <input type="checkbox" name="TextType" id="text" @(Model.TextType? "checked=checked" : "") value="true" />
+                            <label for="text">
+                                SMS</label>
+                        </div>                  
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="userfirstalert">
+                        <div class="firstalerttitle">
+                            first alert:
+                        </div>
+                        <div class="firstalertselect">
+                            @Html.DropDownListFor(m => m.FirstAlert, Model.FirstListItem)
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="usersecondalert">
+                        <div class="secondalerttitle">
+                            second alert:
+                        </div>
+                        <div class="secondalertselect">
+                            @Html.DropDownListFor(m => m.SecondAlert, Model.SecondListItem)
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="userggcaltext">
+                        @*<input type="text" id="txt" />*@
+                    </div>
+                    <div class="clear">
+                    </div>
+                  @*  <div class="usericaltext" style="padding-top: 30px !important;">
+                        <input type="text" id="txt" />
+                        <div class="file">
+                            <input type="file" id="fileUpload" name="file" title="upload" />
+                            <span class="button"></span>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>*@
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="usersettingsboxbot">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="btnarea">
+                <a href="/" class="btnusersetting btncanceluser" title="cancel"><span class="btnusersettingleft">
+                </span><span class="btnusersettingcenter btncancelusersetting">cancel </span><span
+                    class="btnusersettingright"></span></a><a href="javascript:" class="btnusersetting"
+                        title="save changes"><span class="btnusersettingleft"></span><span class="btnusersettingcenter btnsaveusersetting">
+                            save changes </span><span class="btnusersettingright"></span></a>
+            </div>
+        </div>
+    }
+    <div class="clear">
+    </div>
+</div>
+<div class="clear">
+</div>
+<!-- InstanceEndEditable -->
+<script type="text/javascript">
+    $.fn.fileName = function () {
+        var $this = $(this),
+        $val = $this.val(),
+        valArray = $val.split('\\'),
+        newVal = valArray[valArray.length - 1];
+        if (newVal !== '') {
+            $("#txt").val(newVal);
+        }
+    };
+
+    $(document).ready(function () {
+         @ViewBag.PopupString
+        $('input[type=file]').bind('change focus click', function () { $(this).fileName() });
+        $('select#category').selectmenu();
+        $('select#FirstAlert').selectmenu();
+        $('select#SecondAlert').selectmenu();
+        $('#text').checkBox({ addVisualElement: false });
+        $('#mail').checkBox({ addVisualElement: false });
+        $('#call').checkBox({ addVisualElement: false });
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+
+        $('.btnusersetting').click(function () {
+            $('#usersetting').submit();
+        });
+
+        $('#btnSucees').click(function () {
+            self.location.href="/";
+        });
+        
+        
+    });   
+    
+    function saveChange(){
+         showDialog('savechangepopup');
+         setTimeout("redirectTo()",1000);
+    }
+
+    function redirectTo(){
+      self.location.href="/";
+    }
+</script>
+<div id="savechangepopup" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            settings saved.
+        </p>
+    </div>
+</div>

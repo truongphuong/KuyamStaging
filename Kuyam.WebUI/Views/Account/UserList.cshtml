@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="listUsers">
+    @Html.Partial("_UserListResults")
+</div>
+<script type="text/javascript">
+
+    function pagingEvent(pageIndex) {
+
+        var searchParameters = { page: pageIndex };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/account/userlist/'
+            })
+            .success(function (result) {
+                //alert('fdsf');
+                $('#listUsers').html(result);
+            })
+            .error(function (error) {
+                //alert('sadas');
+            });
+        };
+        function FilterSearchResult() {
+
+            var key = $('#txtKey').val()
+            var searchParameters = {key: key };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/account/AdminSearchUsers/'
+                })
+                .success(function (result) {
+
+                    $('#listUsers').html(result);
+                   
+                    $('#searchByName').val(key)
+                })
+                .error(function (error) {
+
+                });
+        }
+
+
+        $('#btnSearch').click(function () {
+
+            FilterSearchResult();
+        });
+</script>

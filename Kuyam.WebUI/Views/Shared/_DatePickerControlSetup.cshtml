@@ -1,0 +1,37 @@
+﻿@{
+    // From http://www.htmldrive.net/items/show/511/Date-Time-Picker
+}
+@if (false)
+{ 
+    <script type="text/javascript" language="javascript" src='@Url.Content("~/scripts/datepicker/prototype-1.js")'></script>
+    <script type="text/javascript" language="javascript" src='@Url.Content("~/scripts/datepicker/prototype-base-extensions.js")'></script>
+    <script type="text/javascript" language="javascript" src='@Url.Content("~/scripts/datepicker/prototype-date-extensions.js")'></script>
+    <script type="text/javascript" language="javascript" src='@Url.Content("~/scripts/datepicker/behaviour.js")'></script>
+    <script type="text/javascript" language="javascript" src='@Url.Content("~/scripts/datepicker/datepicker.js")'></script>
+    <link rel="stylesheet" href='@Url.Content("~/scripts/datepicker/datepicker.css")'/>
+    <script type="text/javascript" language="javascript" src='@Url.Content("~/scripts/datepicker/behaviors.js")'></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            $(document.body).select("input[type='date']").each(
+                function (e) {
+                    new Control.DatePicker(e, { 'icon': '@Url.Content("~/scripts/datepicker/calendar.png")', timePicker: false });
+                }
+            );
+
+            $(document.body).select("input[type='time']").each(
+                function (e) {
+                    new Control.DatePicker(e, { 'icon': '@Url.Content("~/scripts/datepicker/calendar.png")', datePicker: false, timePicker: true });
+                }
+            );
+            $(document.body).select("input[type='datetime']").each(
+                function (e) {
+                    new Control.DatePicker(e, { 'icon': '@Url.Content("~/scripts/datepicker/calendar.png")', timePicker: true, timePickerAdjacent: true });
+                }
+            );
+        })
+    </script>
+}
+else
+{ 
+    @Html.Partial("_jQueryDatePickerControlSetup")
+}

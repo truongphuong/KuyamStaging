@@ -1,0 +1,654 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@using Kuyam.Domain;
+@{
+    int statusCancel = (int)Types.AppointmentStatus.Cancelled;
+    List<AppointmentParticipant> appoitnmentlist = ViewBag.appoitnmentlist;
+}
+@if (appoitnmentlist != null && appoitnmentlist.Count > 0)
+{
+ DateTime today = DateTime.Today;
+ for (int i = 0; i < 7; i++)
+ {   
+<div class="boxlist">
+    
+    <div class="title"> today, june 3</div>   
+    <div class="clear"> </div>
+
+    <div class="item">
+        <div class="colinfo">
+            <div class="colinfotitle">
+                <div class="hours">2:00pm</div>
+                <div class="divname">
+                    <div class="name">for monika</div>
+                    <div class="imgtime"></div>
+                </div>
+            </div>
+            <div class="clear"> </div>
+
+            <div class="turn">
+                <div class="yourturn">
+                    &nbsp;</div>
+                <div class="newrequest">
+                    pending</div>
+                <div class="button">
+                    <input type="button" title="" onclick value="confirm" class="confirm" />
+                </div>
+            </div>
+
+            <div class="clear"></div>
+
+            <div class="coltime">
+                <div class="ago">
+                    15 minutes ago</div>
+                <div class="modify">
+                    <a href="#" title="modify" id="btnmodify">modify</a> <a href="#" title="cancel" id="btncancel">
+                        cancel</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="coldescription">
+            <div class="divimg">
+                <img alt="wish" title="wish" src="images/imgWish.jpg" />
+            </div>
+            <div class="colcontent">
+                <h2> wish salon &amp; spa with george</h2>
+                <div class="clear"></div>
+                <div class="description">
+                    foot massage<br />
+                    60min, $40, 1 person
+                </div>
+                <div class="viewnote">
+                    <div class="lnkviewnote">
+                        <a href="#" id="btnviewnote">view notes</a>
+                    </div>
+                    <div class="nonviewnote">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    
+    <div class="item last">
+        <div class="colinfo">
+            <div class="colinfotitle">
+                <div class="hours">
+                    1:00pm</div>
+                <div class="divname">
+                    <div class="name">
+                        for angela</div>
+                    <div class="imgtime">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="turn">
+                <div class="nonturn">
+                    &nbsp;</div>
+                <div class="confirmed">
+                    confirmed</div>
+                <div class="button">
+                    <input type="button" title="" value="confirmed" class="btnconfirmed" />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="coltime">
+                <div class="ago">
+                    35 minutes ago</div>
+                <div class="modify">
+                    <a href="#" title="modify">modify</a> <a href="#" title="cancel">cancel</a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="coldescription">
+            <div class="divimg">
+                <img alt="wish" title="wish" src="images/imgWish.jpg" />
+            </div>
+            <div class="colcontent">
+                <h2>
+                    patty’s pet groomers</h2>
+                <div class="clear">
+                </div>
+                <div class="description">
+                    i need to get my dog cleaned by that handsome blond guy. he did a great job last
+                    time...
+                </div>
+                <div class="viewnote">
+                    <div class="lnkviewnote">
+                        <a href="#">view notes</a>
+                    </div>
+                    <div class="nonviewnote">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+</div>
+<div class="clear14"></div>
+ }
+}
+@if (appoitnmentlist != null && appoitnmentlist.Count > 10)
+{
+    <div class="loadmore">
+        <a href="#" title="load more...">load more...</a>
+    </div>
+    <div class="clear">
+    </div>
+}
+@*@if (appoitnmentlist != null && appoitnmentlist.Count > 0)
+{
+<div id="appointmentgallery" class="appointmentgallery">
+    <ul class="bjqs">
+        @if (ViewBag.appoitnmentlist != null)
+        {
+            foreach (Appointment item in appoitnmentlist)
+            {
+                int? duration = 0;
+                decimal? price = 0;
+                string serviceName = string.Empty;
+                string employeeName = string.Empty;
+                string note = string.Empty;
+                string contactType = string.Empty;
+                int profileId = 0;
+                if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                {
+                    duration = item.ServiceCompany.Duration.HasValue ? item.ServiceCompany.Duration : 0;
+                    price = item.ServiceCompany.Price.HasValue ? item.ServiceCompany.Price : 0;
+                    profileId = item.ServiceCompany.ProfileID;
+                    if (item.ServiceCompany.Service != null)
+                    {
+                        serviceName = item.ServiceCompany.Service.ServiceName;
+
+                    }
+
+                    note = item.Notes;
+
+                    if (item.CompanyEmployee != null)
+                    {
+                        employeeName = item.CompanyEmployee.EmployeeName;
+                    }
+
+                    if (item.ContactType == (int)Types.ContactType.Email)
+                    {
+                        contactType = "confirmation via Email";
+                    }
+                    else if (item.ContactType == (int)Types.ContactType.SMS)
+                    {
+                        contactType = "confirmation via SMS";
+                    }
+                    else if (item.ContactType == (int)Types.ContactType.EmailSMS)
+                    {
+                        contactType = "confirmation via Email and SMS";
+                    }
+                }
+
+                if ((Types.AppointmentStatus)item.AppointmentStatusID != Types.AppointmentStatus.Unknown)
+                {
+            <li id="@item.AppointmentID">
+                <div class="bordertop">
+                </div>
+                <div class="bordercenter">
+                    @if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Confirmed)
+                    {
+                        <div class="bandgreen">
+                            <div class="colleft">
+                                <div class="frameimg">
+                                    <img src="../images/imgappointment.png" alt="appointment image" />
+                                </div>
+                                <a href="javascript:void(0);" title="confirm" class="linkconfirm opacity6"></a><a href="javascript:void(0);" title="modify" id="modify" rev="@profileId" rel="@item.AppointmentID" class="fleft linkmodify">
+                                    modify</a> <a href="javascript:void(0);" title="cancel" id="cancel"  rel="@item.AppointmentID" rev="@statusCancel"  class="fright linkcancel">
+                                        cancel</a>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="colright">
+                                <div class="appointmentstatus">
+                                    <span class="icongreen"></span>confirmed</div>
+                                <div class="appointmenttime">@String.Format("{0:t}", item.Start) @String.Format("{0:dddd, MMMM d}", item.Start)</div>
+                                <div class="appointmenttitle">
+                                    @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                                    {
+                                        @item.ServiceCompany.ProfileCompany.Name
+                                    }
+                                </div>
+                                <div class="decript">
+                                    <b>@string.Format("{0}, {1} min, ${2}, {3}", serviceName, duration, price, employeeName)</b><br />
+                                    @if (!string.IsNullOrEmpty(note))
+                                    {
+                                        @string.Format("{0}.", note) <br />
+                                    }
+                                    @if (!string.IsNullOrEmpty(contactType))
+                                    {
+                                        @string.Format("{0}.", contactType) 
+                                    }
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    }
+                    else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Pending)
+                    {
+                        
+                        <div class="bandyellow">
+                            <div class="colleft">
+                                <div class="frameimg">
+                                    <img src="../images/imgappointment.png" alt="appointment image" />
+                                </div>
+                                <a href="javascript:void(0);" title="confirm" class="linkconfirm opacity6"></a><a href="javascript:void(0);" title="modify" id="modify" rev="@profileId" rel="@item.AppointmentID" class="fleft linkmodify">
+                                    modify</a> <a href="javascript:void(0);" title="cancel" id="cancel"  rel="@item.AppointmentID" rev="@statusCancel"  class="fright linkcancel">
+                                        cancel</a>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="colright">
+                                <div class="appointmentstatus">
+                                    <span class="icon"></span>pending confirmation</div>
+                                <div class="appointmenttime">@String.Format("{0:t}", item.Start) @String.Format("{0:dddd, MMMM d}", item.Start)</div>
+                                <div class="appointmenttitle">
+                                    @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                                    {
+                                        @item.ServiceCompany.ProfileCompany.Name
+                                    }
+                                </div>
+                                <div>
+                                    <b>@string.Format("{0}, {1} min, ${2}, {3}", serviceName, duration, price, employeeName)</b><br />
+                                    @if (!string.IsNullOrEmpty(note))
+                                    {
+                                        @string.Format("{0}.", note) <br />
+                                    }
+                                    @if (!string.IsNullOrEmpty(contactType))
+                                    {
+                                        @string.Format("{0}.", contactType) 
+                                    }
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    }
+                    else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Modified ||
+                        (Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Accepted)
+                    {
+                        <div class="bandorange">
+                            <div class="colleft">
+                                <div class="frameimg">
+                                    <img src="../images/imgappointment.png" alt="appointment image" />
+                                </div>
+                                @if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Modified)
+                                {  
+                                    <a  title="confirm" class="linkconfirm opacity6"></a>                                   
+                                }
+                                else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Accepted)
+                                {
+                                    <a href="javascript:void(0);" id="linkconfirmgallery" rel="@item.AppointmentID" rev="@item.AppointmentStatusID" class="linkconfirm" title="confirm">
+                                    </a>
+                                }
+                                <a href="javascript:void(0);" title="modify" id="modify" rel="@item.AppointmentID" rev="@profileId" class="fleft linkmodify">
+                                    modify</a> <a  href="javascript:void(0);" title="cancel" id="cancel"  rel="@item.AppointmentID" rev="@statusCancel"  class="fright linkcancel">
+                                        cancel</a>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="colright">
+                                @if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Modified)
+                                {
+                                    <div class="appointmentstatus">
+                                        <span class="iconorange"></span>modified time</div>
+                                    <div class="appointmenttime">@String.Format("{0:t}", item.Start) @String.Format("{0:dddd, MMMM d}", item.Start)</div>
+                                }
+                                else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Accepted)
+                                {
+                                    <div class="appointmentstatus">
+                                        <span class="iconorange"></span>modified time</div>
+                                    <div class="appointmenttime">
+                                        <span class="highlight">@String.Format("{0:t}", item.Start)</span> @String.Format("{0:dddd, MMMM d}", item.Start)</div> 
+                                }
+                                <div class="appointmenttitle">
+                                    @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                                    {
+                                        @item.ServiceCompany.ProfileCompany.Name
+                                    }
+                                </div>
+                                <div class="decript">
+                                    <b>@string.Format("{0}, {1} min, ${2}, {3}", serviceName, duration, price, employeeName)</b><br />
+                                    @if (!string.IsNullOrEmpty(note))
+                                    {
+                                        @string.Format("{0}.", note) <br />
+                                    }
+                                    @if (!string.IsNullOrEmpty(contactType))
+                                    {
+                                        @string.Format("{0}.", contactType) 
+                                    }
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="borderbottom">
+                </div>
+            </li>
+                }
+            }
+        }
+    </ul>
+</div>
+}
+<div class="appointmentlist">
+    <span class="appointmenttitle">appointment agenda:</span>
+    @if (ViewBag.appoitnmentlist != null)
+    {
+        DateTime today = DateTime.Today;
+        for (int i = 0; i < 7; i++)
+        {
+            bool flag = false;
+            for (int j = 0; j < appoitnmentlist.Count; j++)
+            {
+                int profileId = 0;
+
+                if (appoitnmentlist[j].Start.ToString("M/d/yyyy") == today.ToString("M/d/yyyy"))
+                {
+                    
+        <div class="appointmentitem">
+            @if (!flag)
+            { <div class="clear5">
+            </div>}
+            <span class="timedate">@(!flag ? String.Format("{0:dddd, MMMM d}", appoitnmentlist[j].Start).ToLower() : "")</span>
+            <div class="appointmentdetail">
+                <div class="fleft w271 pr27">
+                    @if ((Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Pending)
+                    {
+                        <div class="bgyellow">
+                            pending comfirmation</div>
+                        <div class="fleft w104 p0_11">
+                            <span>@String.Format("{0:t}", appoitnmentlist[j].Start).ToLower()
+                            </span>
+                        </div>
+                    }
+                    else if ((Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Confirmed)
+                    {
+                        <div class="bggreen">
+                            confirmed</div>
+                        <div class="fleft w104 p0_11">
+                            <span>@String.Format("{0:t}", appoitnmentlist[j].Start).ToLower()
+                            </span>
+                        </div>
+                    }
+                    else if ((Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Modified)
+                    {
+                        <div class="bgorange">
+                            modified time</div>
+                        <div class="fleft w104 p0_11">
+                            <span>@String.Format("{0:t}", appoitnmentlist[j].Start).ToLower()
+                            </span>
+                        </div>
+                    }
+                    else if ((Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Accepted)
+                    {
+                        <div class="bgorange">
+                            modified time</div>
+                        <div class="fleft w104 p0_11">
+                            <span class="heightlinetime">@String.Format("{0:t}", appoitnmentlist[j].Start).ToLower()
+                            </span>
+                        </div>
+                    }
+                    <div class="fleft w145">
+                        @if (appoitnmentlist[j].ServiceCompany != null && appoitnmentlist[j].ServiceCompany.ProfileCompany != null)
+                        {
+                            @appoitnmentlist[j].ServiceCompany.ProfileCompany.Name
+                        }
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="fleft w259">
+                    @if (appoitnmentlist[j].ServiceCompany != null && appoitnmentlist[j].ServiceCompany.ProfileCompany != null)
+                    {
+                        profileId = appoitnmentlist[j].ServiceCompany.ProfileID;
+                        int? duration = appoitnmentlist[j].ServiceCompany.Duration;
+                        decimal? price = appoitnmentlist[j].ServiceCompany.Price;
+                        string serviceName = string.Empty;
+                        string employeeName = string.Empty;
+                        string note = string.Empty;
+                        string contactType = string.Empty;
+
+                        if (appoitnmentlist[j].ServiceCompany.Service != null)
+                        {
+                            serviceName = appoitnmentlist[j].ServiceCompany.Service.ServiceName;
+
+                        }
+
+                        note = appoitnmentlist[j].Notes;
+
+                        if (appoitnmentlist[j].CompanyEmployee != null)
+                        {
+                            employeeName = appoitnmentlist[j].CompanyEmployee.EmployeeName;
+                        }
+
+                        if (appoitnmentlist[j].ContactType == (int)Types.ContactType.Email)
+                        {
+                            contactType = "confirmation via Email";
+                        }
+                        else if (appoitnmentlist[j].ContactType == (int)Types.ContactType.SMS)
+                        {
+                            contactType = "confirmation via SMS";
+                        }
+                        else if (appoitnmentlist[j].ContactType == (int)Types.ContactType.EmailSMS)
+                        {
+                            contactType = "confirmation via Email and SMS";
+                        }
+                        @string.Format("{0}, {1} min, ${2} {3}", serviceName, duration, price, employeeName) <br />
+                       
+                        if (!string.IsNullOrEmpty(note))
+                        {
+                        @string.Format("{0}.", UtilityHelper.TruncateText(note, 40)) <br />
+                        }
+                        if (!string.IsNullOrEmpty(contactType))
+                        {
+                        @string.Format("{0}.", contactType) 
+                        }
+                    }
+                    <div class="lnkviewnote">
+                        <a href="javascript:void(0);" title="view notes" rel="@appoitnmentlist[j].AppointmentID" id="lnkviewnotes">
+                            view notes</a>
+                    </div>
+                </div>
+                <div class="fleft w158 ml12">
+                    @if ((Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Confirmed || (Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Pending
+                        || (Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Modified)
+                    {  
+                        <a title="confirm" class="linkconfirm opacity6"></a>
+                                   
+                    }
+                    else if ((Types.AppointmentStatus)appoitnmentlist[j].AppointmentStatusID == Types.AppointmentStatus.Accepted)
+                    {
+                        <a href="javascript:void(0);" id="linkconfirm" rel="@appoitnmentlist[j].AppointmentID" rev="@appoitnmentlist[j].AppointmentStatusID" class="linkconfirm" title="confirm">
+                        </a>
+                    }
+                    <a href="javascript:void(0);" class="fleft linkmodify ml13" id="modify" rel="@appoitnmentlist[j].AppointmentID" rev="@profileId" title="modify">
+                        modify</a> <a  href="javascript:void(0);" class="fright linkcancel mr13" id="cancel" rel="@appoitnmentlist[j].AppointmentID" rev="@statusCancel" title="cancel">
+                            cancel</a>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+                    flag = true;
+                }
+                else if ((!flag) && (j == (appoitnmentlist.Count - 1)))
+                {
+                    
+        <div class="appointmentitem nodata">
+            <span class="timedate">@String.Format("{0:dddd, MMMM d}", today).ToLower()</span>
+            <div class="unappointment">
+                no appointments scheduled
+            </div>
+        </div>
+                }
+
+            }//end for
+            if (appoitnmentlist.Count < 1)
+            {
+                <div class="appointmentitem nodata">
+                    <span class="timedate">@String.Format("{0:dddd, MMMM d}", today).ToLower()</span>
+                    <div class="unappointment">
+                        no appointments scheduled
+                    </div>
+                </div>
+            }
+
+            today = today.AddDays(1);
+        }
+    }
+</div>
+<img id="aptImgLoader" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+<div id="lightBox" class="lightBox z499">
+</div>
+<div id="modifypopup" class="modifypopup">
+</div>
+<div id="cancelpopup" class="cancelpopup">
+</div>
+<div id="viewnotespopup" class="viewnotespopup">
+</div>*@
+     @*<script type="text/javascript">
+    var slider;
+    $(document).ready(function () {
+        slider = $('#appointmentgallery').bjqs({
+            'animation': 'slide',
+            'width': 507,
+            showControls: true,
+            automatic: false,
+            centerControls: false,
+            showMarkers: false
+        });
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });       
+        $("#accordion").accordion("option", "active", 1);
+
+    });
+	
+</script>
+<script type="text/javascript">
+
+    var process = 0;
+    $(document).ready(function () {
+        //mode =0 default, mode= 1 showhistory
+
+        $('.appointmentitem #linkconfirm').click(function (e) {
+            e.stopPropagation();
+            var param = "appointmentID=" + this.rel + "&status=" + this.rev + "&mode=" + document.getElementById("mode").value;
+            confirm(param);
+        });
+
+        $('.appointmentitem #cancel').click(function (e) {            
+            $("#cancelpopup").load("/appointment/LoadAppointmentCancelPopup?appointmentID=" + this.rel + "&nocache=" + getunixtime(), function () {
+                showDialog('cancelpopup');
+            });
+
+        });
+
+        $('#appointmentgallery #linkconfirmgallery').click(function (e) {
+            e.stopPropagation();
+            var param = "appointmentID=" + this.rel + "&status=" + this.rev + "&mode=" + document.getElementById("mode").value;
+            confirm(param);
+        });
+
+        $('#appointmentgallery #modify').click(function (e) {
+            e.stopPropagation();
+            $('#modifypopup').load("/appointment/LoadAppointment?appointmentID=" + this.rel + "&profileID=" + this.rev + "&nocache=" + getunixtime(), function () {
+                showDialog('modifypopup');
+            });
+
+        });
+
+        $('#appointmentgallery #cancel').click(function (e) {
+            e.stopPropagation();
+            $("#cancelpopup").load("/appointment/LoadAppointmentCancelPopup?appointmentID=" + this.rel + "&nocache=" + getunixtime(), function () {
+                showDialog('cancelpopup');
+            });
+
+        });
+
+        $('.appointmentitem #modify').click(function () {
+            $('#modifypopup').load("/appointment/LoadAppointment?appointmentID=" + this.rel + "&profileID=" + this.rev + "&nocache=" + getunixtime(), function () {
+                showDialog('modifypopup');
+            });
+
+        });
+
+        $('.appointmentitem #lnkviewnotes').click(function () {
+            $('#viewnotespopup').html("");
+            $("#viewnotespopup").load("/appointment/LoadAppointmentNotePopup?appointmentID=" + this.rel + "&nocache=" + getunixtime(), function () {
+                showDialog('viewnotespopup');
+                lengthofviewnote();
+            });
+
+        });
+
+    });
+       
+    function getServicebyEmployeeId(id) {
+        var param = "companyEmployeeID=" + id;
+        commonGetAjax("Appointment", "LoadServiceEmployee", param, sethtmloption, setError);
+    }
+
+    function sethtmloption(result) {
+        var html = '';
+        for (var i = 0; i < result.length; i++) {
+            html += "<option value=\"" + result[i].serviceid + "\" selected=\"selected\">" + result[i].servicename + "</option>";
+        }
+        $("#servicetype").html(html);
+        $('select#servicetype').selectmenu();
+    }
+
+    function loadHistory(param) {
+        if (process == 1)
+            return;
+        process = 1;
+        $('#lightBox').css('opacity', '0.1').fadeIn(200);
+        $('#aptImgLoader').show();
+        commonGetAjax("Appointment", "LoadHistory", param, setlistAppoiontment, setError, "html");
+
+    }
+
+    function confirm(param) {
+        if (process == 1)
+            return;
+        process = 1;
+        $('#lightBox').css('opacity', '0.1').fadeIn(200);
+        $('#aptImgLoader').show();
+        commonPostAjax("Appointment", "ChangeStatus", param, setlistAppoiontment, setError, "html");
+    }
+
+    function setlistAppoiontment(result) {
+        $('#lightBox').hide();
+        $('#aptImgLoader').hide();
+        $("#appointmentMain").html(result);
+        process = 0;          
+    }
+
+    function loadleftTab() {
+        var param = "nocahe=" + getunixtime();
+        commonGetAjax("Appointment", "LoadAppointmentLeftTab", param, setleftTab, setError, "html");
+    }
+
+    function setleftTab(result) {       
+        $('.appcontent').html(result);
+    } 
+
+</script>
+*@

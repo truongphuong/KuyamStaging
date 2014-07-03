@@ -1,0 +1,119 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+
+@{
+    Event eventItem = ViewBag.Event;
+    List<CompanyServiceEvent> cseList = ViewBag.CompanyServices;
+    var company = ViewBag.Company;
+    string url = ViewBag.Url;    
+}    
+
+<script src="/Scripts/jquery.ui.tabs.js"></script>
+<script>
+    $(function () {
+        $("#tabsgettheoffer").tabs();
+    });
+</script>
+
+
+<div class="contentPopup">
+        <div class="gettheofferheader">
+            <a class="logo" href="" title=""><img alt="" src="~/Images/gettheoffer_logo.png" /></a>
+           
+            <a class="btnClose" id="btnCloseOfferPopup" title="Close"></a>
+            @if (eventItem != null)
+{
+    <div class="event" title="@eventItem.Name">
+        @UtilityHelper.TruncateAtWord(eventItem.Name, 18)
+        <br />
+        @if (eventItem.StartDate.Value.Month == eventItem.EndDate.Value.Month)
+{
+    <span>@eventItem.StartDate.Value.ToString("MMM dd")  - @eventItem.EndDate.Value.ToString("dd, yyyy") </span>
+}
+else
+{
+ <span>@eventItem.StartDate.Value.ToString("MMM dd")  - @eventItem.EndDate.Value.ToString("MMM dd, yyyy") </span>
+}
+        
+    </div>
+}
+           
+            <div class="clear"></div>
+        </div>
+    @if( cseList != null && cseList.Count > 0 )
+    {        
+        <div id="tabsgettheoffer">
+            <ul class="gettheoffertab">
+                @for (int i = 0; i < cseList.Count; i++)
+                {
+                    var className = i == 0 ? "active" : ""; 
+                    <li class="@className">
+                        <a href="#tabs-@i">
+                            <i>@cseList[i].NewPrice.Value.ToString("c")</i>
+                            <span title="@cseList[i].ServiceCompany.Service.ServiceName"> @UtilityHelper.TruncateAtWord(cseList[i].ServiceCompany.Service.ServiceName,10) </span>
+                                <br />
+                            <span title="@cseList[i].ServiceCompany.Service.ParentName">
+                                @UtilityHelper.TruncateAtWord(cseList[i].ServiceCompany.Service.ParentName, 10)
+                               </span>
+</a>
+                    </li>
+                    
+                }                
+            </ul>
+
+            @for (int i = 0; i < cseList.Count; i++)
+            {
+                double percent = (double)(((cseList[i].ServiceCompany.Price.Value - cseList[i].NewPrice.Value) * 100) / cseList[i].ServiceCompany.Price.Value);
+                string percentDisplay = Math.Round(percent, 0).ToString() + '%';
+               <div id="tabs-@i" class="scrollcontent">
+                <div class="tabelstyle">
+                    <div class="tabelrow">
+                        <div class="tablecell gettheofferleft">
+                            <div class="setScroll">
+                                <img class="gettheofferdescription" alt="" src="~/Images/gettheoffer_description.png" />
+                                <p>@cseList[i].ServiceCompany.Description</p>
+                            </div>                        
+                        </div>
+                        <div class="tablecell gettheofferright">
+                            <h3>the offer</h3>
+                            <h4><del class="oldprice">$@cseList[i].ServiceCompany.Price</del> <span class="newprice">$@cseList[i].NewPrice.Value</span> <span class="saleoff">@percentDisplay off</span></h4>
+                            <input type="button" class="btnpurchasenow" servicecompanyid="@cseList[i].ServiceCompany.ServiceCompanyID" value="check for availability" />
+                            <p>promotional offers subject to <a class="linkterms" href="#" title="">terms</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            }           
+
+        </div>
+      
+    }
+    
+      <div class="clear"></div>
+    </div>
+
+
+<script>
+    $('#btnCloseOfferPopup').click(function (e) {
+        $('#gettheoffer').fadeOut(200);
+        $('#lightBox').fadeOut(200);
+        return false;
+    });
+    $('.linkterms').click(function (e) {
+        //$('#comfirmationpopup').fadeOut(400);
+        showpopup("gettheofferterms");
+    });
+    $(document).ready(function () {
+
+        $('.btnpurchasenow').click(function (e) {
+            //$('#comfirmationpopup').fadeOut(400);
+            var serviceCompanyId = $(this).attr('servicecompanyid');          
+            window.location.href = '@url' + "?serviceId=" + serviceCompanyId;
+        });
+    });
+    
+   
+</script>

@@ -1,0 +1,41 @@
+﻿@*
+    Setup a link as follows:
+
+     <a href="j avascript:showCompanyViewDialog(@(c.ProfileID), '@c.Name')" class="dialoglink">@c.Name</a>
+
+*@
+<script>
+    function showCompanyViewDialog(ProfileID, title) {
+        var loadingHtml = '<img src="@Url.Content("~/images/spinner.gif")" class="spinner"/>';
+        $('#dialog').dialog({
+            autoOpen: true,
+            width: 600,
+            height: 600,
+            position: 'center',
+            resizable: false,
+            title: title,
+            modal: true,
+            open: function (event, ui) {
+                $(this).html(loadingHtml);
+                $(this).load('@Url.Action("company-view", "cust")/' + ProfileID);
+                $(this).find('.ui-dialog-titlebar').hide();
+                //var buttons = $(event.target).parent().find('.ui-dialog-buttonset').children();
+                //buttons.css( "font-size", "1.0em");
+                //buttons.css( "padding",  "8" );
+                //buttons.addClass("dialog-button");
+            },
+            //close: function (event, ui) {
+            //    $(this).load('about:blank'); // html("hello");
+            //},
+            buttons: {
+                "Schedule Appointment": function () {
+                    $(this).dialog("destroy");
+                    location.href = '@Url.Action("schedule-appointment", "cust")/' + ProfileID;
+                },
+                "Close": function () {
+                    $(this).dialog("destroy");
+                }
+            }
+        });
+    };
+</script>

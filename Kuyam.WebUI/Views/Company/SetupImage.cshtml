@@ -1,0 +1,465 @@
+﻿@model Kuyam.WebUI.Models.CompanySetupModel
+@using Kuyam.WebUI.Models;
+@{
+    ViewBag.Title = "Company Setup Image";
+    Layout = "~/Views/Shared/_LayoutCompanySetup.cshtml";
+}
+<script type="text/javascript">
+
+    $(function () {
+        $("#companyinfo").mouseenter(function () {
+            $("#companysetupformtop").removeClass("companysetupformtop1").addClass("companysetupformtop");
+        }).mouseleave(function () {
+            $("#companysetupformtop").removeClass("companysetupformtop").addClass("companysetupformtop1");
+        });
+        $('#btnsubmit').click(function () {
+            getMedia();
+            $('#companysetup').submit();
+        });
+    });
+
+    function getMedia() {
+
+        var logoid = $("#logocontentfile #hdmediaid").val();
+        var photoid = $("#photocontentfile #hdmediaid").val();
+
+        var logdata = $("#logocontentfile #hdmediadata").val();
+        var photodata = $("#photocontentfile #hdmediadata").val();
+
+        if (typeof logoid != "undefined")
+            $("#logoid").val(logoid);
+        if (typeof photoid != "undefined")
+            $("#photoid").val(photoid);
+        $("#logodata").val(logdata);
+        $("#photodata").val(photodata);
+
+        var photoid2 = $("#photocontentfile2 #hdmediaid").val();
+        var photodata2 = $("#photocontentfile2 #hdmediadata").val();
+        if (typeof photoid2 != "undefined")
+            $("#photoid2").val(photoid2);
+        $("#photodata2").val(photodata2);
+
+        var photoid3 = $("#photocontentfile3 #hdmediaid").val();
+        var photodata3 = $("#photocontentfile3 #hdmediadata").val();
+        if (typeof photoid3 != "undefined")
+            $("#photoid3").val(photoid3);
+        $("#photodata3").val(photodata3);
+
+    }
+
+
+</script>
+<!-- InstanceBeginEditable name="content" -->
+<div class="companysetup newcompanysetup newcompanysetup1">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        @if (!ViewBag.IsAdminOrAgent)
+        {
+            <div class="textusersettings">
+                <a href="/Setting/UserSetting" title="user settings">user settings</a></div>
+            <div class="textcalendarsettings">
+                <a href="/CalendarSetting" title="calendar settings">calendar settings</a></div>
+        }
+        <div class="textcompanysettings">
+            <a href="/Company/CompanySetting?companyId=@Model.ProfileID" title="company settings">
+                company settings</a></div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="leftcompanysetupform">
+        <div class="companyinfo">
+            <a href="/Company/SetupBasic?companyId=@Model.ProfileID" title="company information" id="companyinfo">
+                company information</a>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companyimages">
+            <div class="companyactive">
+                company images</div>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="companyvideo">
+            <a href="/Company/SetupVideo?companyId=@Model.ProfileID" title="company video">company
+                video</a>
+        </div>
+    </div>
+    <div class="companysetupform">
+        <div class="companysetupformtop1" id="companysetupformtop">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companysetupformmid">
+            <div class="clear">
+            </div>
+            <div class="companylogoupload">
+                <div class="formcol1 newcompanylogo1">
+                    <div class="newcompanylogo">
+                        company<br />
+                        logo</div>
+                    <div class="clear6">
+                    </div>
+                    <div class="rcompanytitle relative">
+                        <form id="fileuploadlogo" action="/Upload/LogoUploadHandler.ashx" method="POST" enctype="multipart/form-data">
+                        <div class="row fileupload-buttonbar">
+                            <div class="span7">
+                                <span class="btnupload fileinput-button">
+                                    <input type="file" name="files[]" onchange="$('#logocontentfile').html('')" />
+                                </span>
+                                <div class="clear">
+                                </div>
+                                <span class="maxsize">max size 1mb</span>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="removephoto">
+                        @*<a href="#" title="remove photo">remove</a>*@
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="formcol2">
+                    <div class="rcompanytitle logoimage">
+                        <div class="companylogo">
+                            <div id="logocontentfile">
+                                @if (!string.IsNullOrEmpty(Model.LogoData))
+                                {                              
+                                    <img alt="logo" src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/@Model.LogoData"/>
+                                    <input id="hdmediaid" class="in" type="hidden" value="@Model.LogoID" name="hdmediaid" />
+                                    <input id="hdmediadata" class="in" type="hidden" value="@Model.LogoData" name="hdmediadata" />
+                                
+                                    <script type="text/javascript">
+                                        $('.companylogo').css('background-image', 'none');
+                                    </script>
+                                }
+                            </div>
+                            <div class="waiting">
+                                <img id="imgLoaderlogo" src="../../Images/progress.gif" alt="progress..." />
+                            </div>
+                        </div>
+                        @*<img alt="company logo" class="imagelogo" src="/images/logo_company_image1.png" />*@
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="companygalery">
+                <div class="companygalery1">
+                    <div class="photo1">
+                        <div class="photocol1">
+                            <div>
+                                company<br />
+                                photo galery
+                            </div>
+                            <div class="clear10">
+                            </div>
+                            <div>
+                                photo #1
+                            </div>
+                            <div class="clear3">
+                            </div>
+                            <div class="rcompanytitle relative">
+                                <form id="fileuploadphoto" action="/Upload/PhotoUploadHandler.ashx" method="POST"
+                                enctype="multipart/form-data">
+                                <div class="row fileupload-buttonbar">
+                                    <div class="span7">
+                                        <span class="btnupload fileinput-button">
+                                            <input type="file" name="files[]" onchange="$('#photocontentfile').html('')" />
+                                        </span>
+                                        <div class="clear">
+                                        </div>
+                                        <span class="maxsize">max size 1mb</span>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="clear7">
+                            </div>
+                            <div class="photodefaulttext">
+                                default image
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="removephoto">
+                                @*<a href="#" title="remove photo">remove</a>*@
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="photocol2">
+                            <div class="companyphoto">
+                                <div class="photonote">
+                                    only upload photos you’ve purchased or taken for your company. max size 1mb per
+                                    image.
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="photoimg">
+                                    <div class="photo" id="photocontentfile">
+                                        <img alt="photo" src="/images/photo_company_image1.png" />
+                                        @if (!string.IsNullOrEmpty(Model.PhotoData))
+                                        {                              
+                                            <input id="hdmediaid" class="in" type="hidden" value="@Model.PhotoID" name="hdmediaid" />
+                                            <input id="hdmediadata" class="in" type="hidden" value="@Model.PhotoData" name="hdmediadata" />
+                                            <script type="text/javascript">
+                                                $('.photo').css('background-image', 'none');
+                                            </script>
+                                        }
+                                    </div>
+                                    <div class="waitingphoto">
+                                        <img id="imgLoaderphoto" src="../../Images/progress.gif" alt="progress..." />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear10">
+                    </div>
+                    <div class="photo1">
+                        <div class="photocol1">
+                            <div class="clear">
+                            </div>
+                            <div>
+                                photo #2
+                            </div>
+                            <div class="clear3">
+                            </div>
+                            <div class="rcompanytitle relative">
+                                <form id="fileuploadphoto2" action="/Upload/PhotoUploadHandler.ashx" method="POST"
+                                enctype="multipart/form-data">
+                                <div class="row fileupload-buttonbar">
+                                    <div class="span7">
+                                        <span class="btnupload fileinput-button">
+                                            <input type="file" name="files[]" onchange="$('#photocontentfile2').html('')" />
+                                        </span>
+                                        <div class="clear">
+                                        </div>
+                                        <span class="maxsize">max size 1mb</span>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="removephoto">
+                                @*<a href="#" title="remove photo">remove</a>*@
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="photocol2">
+                            <div class="companyphoto">
+                                <div class="clear">
+                                </div>
+                                <div class="photoimg">
+                                    <div class="photo" id="photocontentfile2">
+                                        <img alt="photo" src="/images/photo_company_image1.png" />
+                                        @if (!string.IsNullOrEmpty(Model.PhotoData))
+                                        {                              
+                                            <input id="hdmediaid" class="in" type="hidden" value="@Model.PhotoID2" name="hdmediaid" />
+                                            <input id="hdmediadata" class="in" type="hidden" value="@Model.PhotoData2" name="hdmediadata" />
+                                            <script type="text/javascript">
+                                                $('.photo').css('background-image', 'none');
+                                            </script>
+                                        }
+                                    </div>
+                                    <div class="waitingphoto">
+                                        <img id="imgLoaderphoto2" src="../../Images/progress.gif" alt="progress..." />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear10">
+                    </div>
+                    <div class="photo1">
+                        <div class="photocol1">
+                            <div class="clear">
+                            </div>
+                            <div>
+                                photo #3
+                            </div>
+                            <div class="clear3">
+                            </div>
+                            <div class="rcompanytitle relative">
+                                <form id="fileuploadphoto3" action="/Upload/PhotoUploadHandler.ashx" method="POST"
+                                enctype="multipart/form-data">
+                                <div class="row fileupload-buttonbar">
+                                    <div class="span7">
+                                        <span class="btnupload fileinput-button">
+                                            <input type="file" name="files[]" onchange="$('#photocontentfile3').html('')" />
+                                        </span>
+                                        <div class="clear">
+                                        </div>
+                                        <span class="maxsize">max size 1mb</span>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="removephoto">
+                                @*<a href="#" title="remove photo">remove</a>*@
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="photocol2">
+                            <div class="companyphoto">
+                                <div class="clear">
+                                </div>
+                                <div class="photoimg">
+                                    <div class="photo" id="photocontentfile3">
+                                        <img alt="photo" src="/images/photo_company_image1.png" />
+                                        @if (!string.IsNullOrEmpty(Model.PhotoData))
+                                        {                              
+                                            <input id="hdmediaid" class="in" type="hidden" value="@Model.PhotoID3" name="hdmediaid" />
+                                            <input id="hdmediadata" class="in" type="hidden" value="@Model.PhotoData3" name="hdmediadata" />
+                                            <script type="text/javascript">
+                                                $('.photo').css('background-image', 'none');
+                                            </script>
+                                        }
+                                    </div>
+                                    <div class="waitingphoto">
+                                        <img id="imgLoaderphoto3" src="../../Images/progress.gif" alt="progress..." />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear6">
+                    </div>
+                </div>
+                @using (Html.BeginForm("SetupImage", "company", FormMethod.Post, new { id = "companysetup" }))
+                { 
+                    
+                    <input type="hidden" id="logoid" name="LogoID" value="0" />
+                    <input type="hidden" id="logodata" name="LogoData" value="" />
+                    
+                    <input type="hidden" id="photoid" name="PhotoID" value="0" />
+                    <input type="hidden" id="photodata" name="PhotoData" value="" />
+                    
+                    <input type="hidden" id="photoid2" name="PhotoID2" value="0" />
+                    <input type="hidden" id="photodata2" name="PhotoData2" value="" />
+                    
+                    <input type="hidden" id="photoid3" name="PhotoID3" value="0" />
+                    <input type="hidden" id="photodata3" name="PhotoData3" value="" /> 
+                    
+                    <input type="hidden" id="ProfileID" name="ProfileID" value="@Model.ProfileID" /> 
+                }
+                <div class="companygalery2">
+                    <div class="imgavailabletext">
+                        images available<br />
+                        for 99¢ each
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="imgavailable">
+                    </div>
+                    <div class="clear7">
+                    </div>
+                    <div class="availableviewmore">
+                        <a href="#">view more >></a>
+                    </div>
+                    <div class="clear7">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="companysetupformbot">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear6">
+    </div>
+    <div class="btnarea newbtncompanysetup">
+        @if (!ViewBag.IsAdminOrAgent)
+        {
+            <a href="/" class="btnusersetting btncanceluser"><span class="btnusersettingleft"></span>
+                <span class="btnusersettingcenter btncancelusersetting">cancel </span><span class="btnusersettingright">
+                </span></a>
+        }
+        <a href="#" class="btnusersetting"><span class="btnusersettingleft"></span><span
+            id="btnsubmit" class="btnusersettingcenter btnsaveusersetting">save changes </span>
+            <span class="btnusersettingright"></span></a>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="lightBox" class="lightBox">
+    </div>
+</div>
+<!-- InstanceEndEditable -->
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}   
+        <div class="preview"><span class="fade"></span></div>       
+        {% if (file.error) { %}
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } %}      
+
+{% } %}
+
+</script>
+<script id="company-photo-template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %} <span class="boxcontentimg" style="height: 215px; width: 361px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/302/height/216"/></span></span> {% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.thumbnail_url%}" />
+        {% } %}
+{% } %}
+$('.photo').css('background-image', 'none');
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %}<span class="boxcontentimg" style="height: 99px; width: 99px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/99/height/100"/></span></span>{% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.kalturaid%}" />        
+        {% } %}
+{% } %}
+</script>

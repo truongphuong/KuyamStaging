@@ -1,0 +1,268 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@using Kuyam.Utility;
+@using Kuyam.Domain.Seo
+@{
+    ProfileCompany company = ViewBag.company;
+    bool isViewAvailability = company.CompanyTypeID != (int)Types.CompanyType.NonKuyamBookIt;// DAL.isViewAvailability(company.ProfileID);
+    bool isSchedule = company.CompanyTypeID == (int)Types.CompanyType.NonKuyamBookIt;
+    string url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID) }); ;
+    List<CompanyMedia> companyMedia = company.CompanyMedias.ToList();
+    string logoId = string.Empty;
+    string photoId = string.Empty;
+    int videoId = 0;
+    string logopath = string.Empty;
+    string photopath = string.Empty;
+    string videopath = string.Empty;
+    string partnerId = ConfigManager.KULTURA_PARTNER_ID.ToString();
+    string kattalraentryId = string.Empty;
+
+
+    List<CompanyMedia> lstPhoto = companyMedia.Where(m => m.IsBanner && (m.IsHidden == false || !m.IsHidden.HasValue)).ToList();
+    CompanyMedia video = companyMedia.Where(m => m.IsVideo).FirstOrDefault();
+    if (lstPhoto != null && lstPhoto.Count > 0)
+    {
+        CompanyMedia defaultMedia = lstPhoto.Where(m => m.IsDefault).FirstOrDefault();
+
+        if (defaultMedia == null)
+        {
+            defaultMedia = lstPhoto.FirstOrDefault();
+        }
+        if (defaultMedia.Medium != null)
+        {
+            photoId = defaultMedia.Medium.LocationData;
+            photopath = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/231/height/143", defaultMedia.Medium.LocationData, Types.KaturaDoman);
+        }
+    }
+    if (video != null && video.Medium != null)
+    {
+        kattalraentryId = video.Medium.LocationData;
+        videoId = video.Medium.MediaID;
+        videopath = video.Medium.LocationPath;
+    }
+
+    //foreach (CompanyMedia item in companyMedia)
+    //{
+    //    if (item.IsLogo)
+    //    {
+    //        logoId = item.Medium.LocationData;
+    //        logopath = item.Medium.LocationPath;
+    //    }
+    //    else if (item.IsBanner)
+    //    {
+    //        photoId = item.Medium.LocationData;
+    //        photopath = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/231/height/143", item.Medium.LocationData,Types.KaturaDoman);  //item.Medium.LocationPath;
+    //    }
+    //    else if (item.IsVideo)
+    //    {
+    //        kattalraentryId = item.Medium.LocationData;
+    //        videoId = item.Medium.MediaID;
+    //        videopath = item.Medium.LocationPath;
+    //    }
+    //}
+}
+<script src="@Url.Content("~/Scripts/js/kWidget.getSources.js")" type="text/javascript"></script>
+<div class="toppopup">
+    <div class="bottompopup">
+        <div class="contentPopup">
+            <a id="btnClose" class="btnClose" href="JavaScript:void(0);" title="Close">x</a>
+            @if (company != null)
+            {
+                string state = string.Empty;
+                if (!string.IsNullOrEmpty(company.City) && !string.IsNullOrEmpty(company.State))
+                {
+                    state = string.Format("{0}, {1} {2}", company.City, company.State, company.Zip);
+                }
+                else
+                {
+                    state = string.Format("{0}{1} {2}", company.City, company.State, company.Zip);
+                }   
+                <h3>@(!string.IsNullOrEmpty(company.Name) ? Kuyam.Domain.UtilityHelper.TruncateText(company.Name, 45) : "")</h3>
+                <p style="text-transform: capitalize;">
+                    <span title="@company.Street1">@(Kuyam.Domain.UtilityHelper.TruncateText(company.Street1, 40))</span><span
+                        class="fright">@(!string.IsNullOrEmpty(company.Phone) ? Kuyam.Domain.UtilityHelper.FormatPhone(company.Phone) : "")</span><br>
+                    <span title="@(company.City), @(company.State) @(company.Zip)">@state</span>
+                </p>
+            }
+            <div class="frameImage">                
+                @if (!string.IsNullOrEmpty(photopath))
+                {
+                    <div class="divphoto" style="background-image: url(@photopath);"></div>
+                }
+                else
+                {
+                    <div class="divphoto" style="background-image: url(/images/photo_company_image.png);"></div>                    
+                }
+                <div class="divvideo">
+                    <div id="formobile" class="displaynone">
+                    </div>
+                    <div id="forweb">
+                        @if (videoId != 0)
+                        {
+                            @Html.Raw(KalturaHelper.GetEmbedVideothumbnail(videopath, videoId, 143, 231))
+                        }
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="divchoose">
+                    @if (!string.IsNullOrEmpty(photopath) && videoId != 0)
+                    {
+                        <a href="javascript:void(0);" id="tabvideo" class="tabvideo vactive"></a>
+                        <a href="javascript:void(0);" id="tabphoto" class="tabphoto">photo</a>
+                    }
+                </div>
+            </div>
+            <div class="description">
+                <a target="_blank" href="@Kuyam.Domain.UtilityHelper.UrlFormat(@company.Url)" title="@company.Url">
+                    website</a>
+                @if (company.CompanyHours != null && company.CompanyHours.Count > 0)
+                {
+                    <h5>
+                        business hours</h5>
+                    <div class="popuptimescroll">
+                        @foreach (var item in @company.CompanyHours)
+                        {
+                            string dayOfWeek = item.DayOfWeek.ToString();
+                            string fromDate = string.Empty;
+                            if (dayOfWeek.Length > 1)
+                            {
+                                string start = ((DayOfWeek)Int32.Parse(dayOfWeek.Substring(0, 1))).ToString().ToLower().Substring(0, 3);
+                                string end = ((DayOfWeek)Int32.Parse(dayOfWeek.Substring(dayOfWeek.Length - 1, 1))).ToString().ToLower().Substring(0, 3);
+                                fromDate = string.Format("{0}-{1}", start, end);
+                            }
+                            else
+                            {
+                                fromDate = ((DayOfWeek)item.DayOfWeek).ToString().ToLower().Substring(0, 3);
+                            }
+                            <div>
+                                <label>@fromDate</label>
+                                @String.Format("{0:t}", new DateTime().Add(item.FromHour)).ToLower() - @String.Format("{0:t}", new DateTime().Add(item.ToHour)).ToLower()</div>                                
+                            <div class="clear h2">
+                            </div>                          
+                                      
+                        }
+                    </div>                                             
+                    <div class="clear">
+                    </div>    
+                }
+                @if (isViewAvailability)
+{
+
+    <a url="@url" class="btnView" title="check for availabitily">check for availabitily</a>
+}
+else
+{
+                    <input class="btnSchedule" type="button" style="bottom:0; position:absolute; margin:auto auto -2px 15px" value="check for availabitily" title="check for availabitily" profileid="@company.ProfileID" companyname="@company.Name" phonenumber="@Kuyam.Domain.UtilityHelper.FormatPhone(company.Phone)" companysite="@company.Url" />
+
+
+                }
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   
+   function loadSources(partnerId,entryId){   
+        kWidget.getSources({
+            'partnerId':partnerId,'entryId':entryId,
+            'callback': function( data ){		
+                
+                for( var i in data['sources']){
+						var source = data['sources'][i];						
+                        //alert(source['src']);
+                        //alert(source['data-flavorid']);
+                        if(source['data-flavorid']=='iPad'){
+                           $("#formobile").append("<video height=\"143\" width=\"231\" controls=\"controls\"><source src=\""+ source['src'] + "\" type=\"video/mp4\"></video>");
+                           return;
+                        }else{
+                           $("#formobile").append("Video converting");
+                        }
+					}
+            }		
+        }) 
+    }
+
+    $(document).ready(function () {
+         
+        var kalturaPartnerId = '@partnerId'
+        var  kattalraentryId ='@kattalraentryId'
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);     
+        var hasVideo ="@videoId";
+        
+        if(hasVideo == 0){          
+           $(".divphoto").show();
+           $(".divvideo").hide();
+        }       
+
+        if (agentID) {            
+            loadSources(kalturaPartnerId,kattalraentryId);
+	        $("#formobile").show();
+	        $("#forweb").hide();
+        }   
+                   
+        $("#btnClose").click(function(e){
+             e.stopPropagation(); 
+            $('#formPopup').fadeOut(200);
+            $('#lightBox').fadeOut(200);
+            $('.listSearch div.item').removeClass("itemnormalactive");    
+        });
+
+        $('#tabvideo').click(function () {
+            $(this).addClass("vactive");
+            $("#tabphoto").removeClass("pactive");
+            $(".divphoto").hide();
+            $(".divvideo").show();
+        });
+
+        $('#tabphoto').click(function () {
+            $(this).addClass("pactive");
+            $("#tabvideo").removeClass("vactive");
+            $(".divphoto").show();
+            $(".divvideo").hide();
+        });
+    });
+
+    function closeDetailPoup() {        
+        $('#formPopup').fadeOut(200);
+        $('#lightBox').fadeOut(200);
+    }
+    
+    $('.btnView').click(function (){
+        var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+        if(!isLogin)
+        { 
+            ShowLoginPopup();              
+            return false;
+        }
+        else
+        {
+            window.location = $(this).attr('url');
+        }
+    });
+    
+    
+    $('.btnSchedule').click(function () {                         
+        window.clearInterval(chatInterval);           
+        companyname =$(this).attr("companyname");  
+        var companyaddress =$(this).attr("address");             
+        $("#companyinfo #companyname").html(companyname);
+        $("#companyinfo #companyaddress").html(companyaddress);
+        phoneNumber=$(this).attr("phoneNumber");
+        companySite=$(this).attr("companysite");        
+            hipmob.hide();
+        $("#btnLiveChat").addClass("Off");
+        $("#btnLiveChat").removeClass("On");
+       
+        $("#lightBox").css({'z-index':9901});
+        var profileId =$(this).attr("profileid");        
+        showDialog('dialogchat');
+        chatInterval= setInterval(getNonAppointment,3000,profileId);    
+                   
+        return false; 
+    });      
+             
+</script>

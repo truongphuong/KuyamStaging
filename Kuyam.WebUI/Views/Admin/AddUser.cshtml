@@ -1,0 +1,62 @@
+﻿@model Kuyam.WebUI.Models.AddUserModel
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.unobtrusive.min.js")"></script>
+@Html.ValidationSummary(true)
+@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { id = "add", enctype = "multipart/form-data" }))
+{
+    <div id="contentmainpage">
+        <h2>add new user</h2>
+        @Html.Partial("_UserAddEdit")
+        <input id="btnAdd" type="submit" value="add" />
+        <p>
+            <a href="/Admin/UserList">back to list</a>
+        </p>
+        @Html.ValidationMessage("existUser")
+       
+    </div>
+    <script type="text/javascript">
+
+        $.validator.addMethod('concierrole', function (value, element, params) {            
+            
+            if ('Concierge' == $(params).val() && value == '') {
+                $("#optionalHotelId").hide();
+                return false;
+            }           
+            return true;
+        });
+
+        $.validator.unobtrusive.adapters.add('concierrole', ["dependentproperty"], function (options) {           
+            options.rules["concierrole"] = "#" + options.params.dependentproperty;
+            options.messages['concierrole'] = options.message;
+        });
+
+        $(document).ready(function () {
+            @ViewBag.ShowMessage         
+
+        });
+
+        function ShowMessage() {
+            showAlertMessage('create user success');
+            setTimeout("redirectTo('/Admin/UserList')", 1000);
+        }
+
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+
+        function loadHotel(value) {
+            if (value == "Concierge") {
+                $("#optionalHotelId").hide();
+               
+            } else {
+                $("#optionalHotelId").show();
+            }
+        }
+
+        
+    </script>
+}

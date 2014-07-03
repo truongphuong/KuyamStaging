@@ -1,0 +1,5 @@
+﻿<select id="searchType">
+    @*<option value="-1" @(ViewBag.SearchType==-1? "selected":"")>select status</option>*@
+    <option value="-1" @(ViewBag.SearchType==-1? "selected":"")>current/future</option>
+    <option value="1" @(ViewBag.SearchType == 1 ? "selected" : "")>past</option>
+</select>

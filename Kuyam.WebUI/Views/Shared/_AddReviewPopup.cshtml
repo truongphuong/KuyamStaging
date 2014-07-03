@@ -1,0 +1,136 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain.CompanyProfileServices;
+@using Kuyam.WebUI.Models;
+@using Kuyam.Repository.Infrastructure
+@{
+    Appointment appoiontment = ViewBag.Appointment;
+    string companyName = ViewBag.CompanyName ?? string.Empty;
+    if (companyName.Length > 15)
+    {
+        companyName = companyName.Substring(0, 16) + "...";
+    }
+
+    CompanyProfileService _companyProfileService = EngineContext.Current.Resolve<CompanyProfileService>();
+    string imageUrl = string.Empty;
+    if (appoiontment != null && appoiontment.ServiceCompany != null)
+    {
+        Medium companyMedia = _companyProfileService.GetCompanyLogoByProfileID(appoiontment.ServiceCompany.ProfileID);
+        if (companyMedia != null)
+        {
+            imageUrl = companyMedia.LocationData;
+        }
+    }
+    
+}
+<div class="contentPopup">
+    <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('formaddreview');"
+        title="Close"></a>
+    <div class="clear">
+    </div>
+    <div class="addreviewinfo">
+        <div class="addreviewimg">
+            @if (imageUrl == string.Empty)
+            {
+                <span class="boxcontentimg" style="border: 1px solid #000000;"><span class="boximage">
+                    <img src="/Images/placeholder.png" title="no logo" alt="no logo" width="86px;" height="83px;"
+                        style="padding: 0px;" />
+                </span></span>
+            }
+            else
+            {
+                <span class="boxcontentimg" style="border: 1px solid #000000;"><span class="boximage">
+                    <img alt="@((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.ProfileCompany != null) ? appoiontment.ServiceCompany.ProfileCompany.Name : "")"title="@((appoiontment != null && appoiontment.ServiceCompany != null && appoiontment.ServiceCompany.ProfileCompany != null) ? appoiontment.ServiceCompany.ProfileCompany.Name : "")"src="@string.Format("{1}/p/811441/thumbnail/entry_id/{0}/width/86/height/83", imageUrl,Types.KaturaDoman)">
+                 </span></span>
+            }
+        </div>
+        <div class="addreviewcontent">
+            <h3>
+                submit a review for:</h3>
+            <h3 class="blue">
+                @companyName
+            </h3>
+            <div class="clear">
+            </div>
+            <div class="ratingstar">
+                <div>
+                    <input class="star required" type="radio" name="rating-5" value="1" />
+                    <input class="star" type="radio" name="rating-5" value="2" />
+                    <input class="star" type="radio" name="rating-5" value="3" />
+                    <input class="star" type="radio" name="rating-5" value="4" />
+                    <input class="star" type="radio" name="rating-5" value="5" />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="selectnumber">
+                <i>(select a number of stars)</i></div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <h3>
+        comments:</h3>
+    <div class="clear">
+    </div>
+    <div class="divreason">
+        <div class="boxreason">
+            <textarea cols="3" id="content" rows="4" onfocus="if (this.value=='350 characters max') {this.value = '';}"
+                onblur="if (this.value==''){this.value='350 characters max';}">350 characters max</textarea>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="errorreason" style="color: Red; position: absolute; display: none;">
+        please input content
+    </div>
+    <div id="errorcharactersmax" style="color: Red; position: absolute; display: none;">
+        max 350 characters
+    </div>
+    <a href="javascript:void(0);" class="lnksubmit" rel="@ViewBag.AppointmentID"  rev="@ViewBag.ServiceCompanyID"  id="submit" title="submit">
+        submit</a>
+</div>
+<script type="text/javascript" language="javascript">
+    $(function () {
+        $('.ratingstar :radio.star').rating();
+
+        $('#submit').click(function () {
+            $("#errorreason").hide();
+            $("#errorcharactersmax").hide();
+            var rate = 0;
+            $('.ratingstar input').each(function () {
+                if (this.checked) {
+                    rate = this.value;
+                }
+            });
+            if (rate == 0) {
+                rate = 1;
+                $("#errorreason").html("star is required field");
+                $("#errorreason").show();
+                return false;
+            }
+            $("#errorreason").html("please input content");
+            var content = $("#content").val();
+            if (content == '350 characters max') {
+                content = '';
+                $("#errorreason").show();
+                return false;
+            }
+            if (content.length > 350) {
+                $("#errorcharactersmax").show();
+                return false;
+            }
+            $('#aptImgLoader').show();
+            var param = "appointmentId=" + this.rel + "&serviceCompanyId=" + this.rev + "&content=" + content + "&ratingValue=" + rate
+            commonPostAjax("Appointment", "AddRating", param, callbacksucess, setError, "html");
+        });
+    });
+
+    function callbacksucess(result) {
+        window.location.href = "/Appointment/History/";
+    }
+
+</script>

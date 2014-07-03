@@ -1,0 +1,241 @@
+﻿@model Kuyam.WebUI.Models.ScheduleAppointmentModel
+@using Kuyam.Database
+@using M2.Util
+@using M2.Util.MVC
+@{
+    
+    //*************** create a cancel option that goes to home page
+    Layout = "~/Views/Cust/custmaster.cshtml";
+    ViewBag.CustPage = "sched";
+
+    bool usingCo = Model.Company != null;
+    bool newCo = usingCo ? Model.Company.CompanyStatusID != (int)Types.CompanyStatus.Active : false;
+    bool newAppt = Model.ActionTitle != "modify";
+
+}
+@section Subhead
+{
+    <script type="text/javascript" src="@Url.Content("~/scripts/date.js")"></script>
+    <script type="text/javascript">
+
+        jQuery(function () {
+
+            //alert('date: ' + jQuery("#ApptStartDate").val());
+
+            ShowTime(@Html.Bool(newCo || !usingCo || Model.ProfileSelectList.Count() > 1)); 
+
+            @if (newCo == false)
+            { 
+                <text>
+                jQuery("#ApptStartDate").change(GetOpenings);
+                jQuery("#Flexible").change(GetOpenings);
+                $("#btnFindOpenings").on("click", GetOpenings);
+                //GetOpenings();
+                </text>
+            }
+        });
+
+        function ShowTime(show)
+        {
+            if (show)
+            {
+                $("#ApptStartTime").show();
+                $("#apptDateCaption").html("appointment date and time");
+                $("#btnFindOpenings").hide();
+            }
+            else
+            {
+                $("#ApptStartTime").hide();
+                $("#apptDateCaption").html("appointment date");
+                $("#btnFindOpenings").show();
+            }
+        }
+
+        function GetOpenings() {
+            if (jQuery("#ApptStartDate").val() + "" == "")
+            {
+                return;
+            }
+
+            var qsdata = "count=1&dt=" + jQuery("#ApptStartDate").val();
+
+            var isFlexible = $("#Flexible").is(':checked');
+            var timeslotsFound = false;
+
+            if (isFlexible)
+            {
+                qsdata += "&daysout=1";
+            }
+
+            @if (usingCo)
+            {
+            <text>
+            jQuery.ajax({
+                url: '@Url.Content("~/cust/getopenings/" + Model.Company.ProfileID)',
+                data: qsdata,
+                cache: false,
+                beforeSend: function () { jQuery("#timeslotCaption").html("checking..."); jQuery("#timeslotData").html(null); timeslotsFound = false;},
+                complete: function () {
+                    var dt = jQuery("#ApptStartDate").val();
+                    //alert(dt + ": " + dt.substring(6,10) + "-" + dt.substring(0,2) + "-" + dt.substring(3,5));
+                    if (isFlexible)
+                        $('#calendar').fullCalendar('changeView', 'agendaWeek');
+                    else
+                        $('#calendar').fullCalendar('changeView', 'agendaDay');
+                    jQuery("#calendar").fullCalendar('gotoDate', dt.substring(6, 10), dt.substring(0, 2) - 1, dt.substring(3, 5));
+
+                    jQuery("#timeslotCaption").html("@(newAppt ? "" : "alternate ")openings");
+                    // jQuery("#calendar").fullCalendar.parseDate(jQuery("#ApptStartDate").val()));
+                },
+                success: function (result) {
+                    jQuery("#timeslotData").html(result.substring(1));
+                    timeslotsFound = (result.substring(0, 1) == '1');
+
+                    if (!timeslotsFound)
+                    {
+                        ShowTime(true);
+                    }
+                }
+            });
+            </text>
+            }
+
+        };
+
+        function confirmDate() {
+            var selDate = new Date(jQuery("#ApptStartDate").val());
+            var combined = selDate.toString("MM/dd/yyyy ") + jQuery("#ApptStartTime").val();
+            var selDT = Date.parse(combined);
+            var today = new Date();
+
+            //alert("today: " + today + "\r\nselDT:" + selDT);
+            var dayCount = subtractDate(selDT, today);
+            if (dayCount > 60)
+            {
+                jConfirm("Date is more than 60 days in the future.  Is this ok?", "alert", null, function(r) {
+                    return r;
+                });
+                return false;
+            }
+            else if (today > selDT)
+            {
+                jAlert("New appointments cannot be made in the past.  Please select another date.", "alert", function() {
+                    return false;
+                });
+                return false;
+            }
+           else
+            {
+                return true;
+            }
+        }
+    </script>
+}
+@using M2.Util.MVC
+@if (usingCo)
+{
+    @Html.Partial("_CompanySearch", (Model.CompanySearchModel));
+}
+@using (Html.BeginForm("schedule-appointment", "cust", FormMethod.Post, new { name = "schedappt", id = "schedappt" }))
+{
+    @Html.HiddenFor(m => m.Company.ProfileID)
+    @Html.HiddenFor(m => m.Appointment.AppointmentID)
+    @Html.HiddenFor(m => m.Appointment.End)
+    @Html.HiddenFor(m => m.OldCalendarID)
+    @Html.HiddenFor(m => m.AppointmentParticipant.AppointmentParticipantID)
+    <div class="sched-appt-box">
+        @*
+            <div style="float: left; padding-left: 100px; display: inline">
+                <img src="@Url.Content("~/images/business_logo_ph.jpg")" width=100/></div>  *@
+        @if (usingCo)
+        {
+            <div class="sched-appt-company">@Model.Company.Name
+                @if (Model.ActionTitle == "modify")
+                {
+                    @:<br />@(Model.ApptStartDate.ToStringNoSeconds())
+                                                                                    }
+            </div>
+        }
+        <div style="float: left; padding: 2px">
+            @if (usingCo)
+            { 
+                <div class="editor-row">
+                    <div class="editor-label-schedappt">
+                        contact person
+                    </div>
+                    <div class="editor-field-schedappt">
+                        @Html.EditorFor(model => model.Appointment.ContactPerson)
+                    </div>
+                </div>
+            }
+                <div class="editor-row">
+                    <div class="editor-label-schedappt">
+                        title/subject
+                    </div>
+                    <div class="editor-field-schedappt">
+                        @Html.EditorFor(model => model.Appointment.Title)
+                    </div>
+                </div>
+            @if (Model.ProfileSelectList.Count() > 0)
+            { 
+                <div class="editor-row">
+                    <div class="editor-label-schedappt">
+                        other participants
+                    </div>
+                    <div class="editor-field-schedappt">
+                        @Html.CheckBoxList("SelProf", Model.ProfileSelectList, Model.SelectedProfileIDs)
+                    </div>
+                </div>
+            }
+            @if (Model.CalendarSelectList.Count() > 1)
+            { 
+                <div class="editor-row">
+                    <div class="editor-label-schedappt">
+                        calendar
+                    </div>
+                    <div class="editor-field-schedappt">
+                        @Html.DropDownListFor(model => model.NewCalendarID, Model.CalendarSelectList)
+                    </div>
+                </div>
+            }
+            <div class="editor-row">
+                <div class="editor-label-schedappt" id="apptDateCaption" style="width: 300px">
+                </div>
+                <div class="editor-field-schedappt">
+                    @Html.TextBox("ApptStartDate", Model.ApptStartDate.ToString("M/d/yyyy"), new { placeholder = "mm/dd/yyyy", type = "date", size = 15 })
+                    @Html.TextBox("ApptStartTime", Model.ApptStartTime.ToString("h:mm tt"), new { placeholder = "hh:mm", type = "time", size = "10" })<br />
+                    @Html.CheckBoxFor(model => model.Flexible)I'm flexible<br />
+                    <br />
+                    @if (usingCo || Model.ProfileSelectList.Count() > 1)
+                    { 
+                        <a href="#" id="btnFindOpenings" class="button">find openings</a>
+                    }
+                </div>
+            </div>
+            <div class="clear editor-row" id="timeslotPanel" style="">
+                <div class="editor-label-schedappt" id="timeslotCaption">
+                </div>
+                <div class="editor-field-schedappt" id="timeslotData">
+                </div>
+            </div>
+            <div class="editor-row">
+                @Html.TextAreaFor(model => model.Appointment.Notes, new { placeholder = "notes for appointment", cols = 32, rows = 5 })
+            </div>
+        </div>
+        <div style="width: 100%">
+            @if (newAppt)
+            {
+                <div class="submit clear" style="margin-left: 20px">
+                    @Html.SaveCancelLC("schedule appointment", "scheduling", "cancel", script: "return confirmDate();")
+                </div>
+            }
+            else
+            {
+                <div class="submit clear" style="padding-left: 35px">
+                    @Html.SaveCancelLC("modify appointment", "modifying", "go back", script: "return confirmDate();")
+                </div>
+            }
+        </div>
+        @*<a href="#" onclick="alert('1');document.schedappt.submit();return true;" class="sched-appt-submit">request appointment</a>*@
+    </div>
+}

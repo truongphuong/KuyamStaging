@@ -1,0 +1,218 @@
+﻿@{
+    int totalRecord = 0;
+    bool isOdd = false;
+    if (ViewBag.Data != null)
+    {
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#txtKey").val("@ViewBag.Key");
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                FilterSearchResult();
+
+                return false;
+            }
+        });
+    });
+    
+</script>
+<table border='0' cellpadding="0" cellspacing="0" class="tbldata" id="tblServices">
+    <tr>
+        <th>
+            type
+        </th>
+        <th>
+            name
+        </th>
+        <th>
+            description
+        </th>
+        <th>
+            status
+        </th>
+        <th>
+            sequence
+        </th>
+        <th>
+            icon
+        </th>
+        <th style="display: none;">
+            parent
+        </th>
+        <th style="width: 100px;">
+            action
+        </th>
+    </tr>
+    @foreach (Kuyam.Database.Service service in ViewBag.Data)
+    {
+        string urlIcon = string.Empty;
+        if (!string.IsNullOrEmpty(service.kalturaId))
+        {
+            urlIcon = string.Format("{0}/p/1094702/thumbnail/entry_id/{1}//type/2/quality/100/width/50/height/49/bgcolor/FFFFFF", Kuyam.Database.Types.KaturaDoman, service.kalturaId);
+           
+        }
+        
+        string addClass = "";
+        if (isOdd)
+        {
+            addClass = "class=odd";
+            isOdd = false;
+
+        }
+        else
+        {
+            isOdd = true;
+        }
+        <tr id="@service.ServiceID" @addClass>
+            <td>
+                @(service.ParentServiceID.HasValue ? "service" : "category")
+            </td>
+            <td>
+                @service.ServiceName
+            </td>
+            <td>
+                @service.Desc
+            </td>
+            <td>
+                @if (!service.Status.HasValue || service.Status.Value)
+                {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }
+            </td>
+            <td>
+                @service.Sequence
+            </td>
+            <td>
+               <img  src="@urlIcon"  title="icon"/>                
+            </td>
+            <td style="display: none;">
+                @service.ParentServiceID
+            </td>
+            <td style="width: 100px;">
+                <a class="modifyService" href="javascript:void(0)">modify</a>&nbsp; <span>| </span>
+                <a class="deleteService" href="javascript:void(0)">delete</a>
+                @if (!service.ParentServiceID.HasValue && service.Service1.Any())
+                {
+                    <span>| &nbsp;</span>
+                    <a class="detailCategory" href="javascript:void(0)">detail</a>
+                }
+@*@if (user.aspnet_Users != null)
+                {
+                    @Html.ActionLink("reset password", "ResetPasswordConfirm", new { email = user.aspnet_Users.UserName, page = ViewBag.Page, key = ViewBag.Key, searchType = ViewBag.SearchType }, new { onclick = "return confirm('are you sure you want to reset password for this email?');" })
+                    <span> | </span>
+                    @Html.ActionLink("detail", "AdminUserDetail", new { id = user.CustID, userListPageIndex = ViewBag.Page, key = ViewBag.Key, searchType = searchType })
+                }*@
+            </td>
+        </tr>
+    }
+</table>
+<table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+    <tr class="odd" style="width: 50%;">
+        <td>
+            <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+            @{ 
+                int from = (ViewBag.Page - 1) * 10 + 1;
+                int to = ViewBag.Page * 10;
+                if (to > totalRecord)
+                {
+                    to = totalRecord;
+                }
+                int lastPage = 0;
+                if (totalRecord % 10 == 0)
+                {
+                    lastPage = totalRecord / 10;
+                }
+                else
+                {
+                    lastPage = totalRecord / 10 + 1;
+                }
+               
+            
+                <div class="fLeft mt4" style="float: left; padding-left: 0px;">
+                    @if (totalRecord > 0)
+                    {
+                        <span>@from - @to of </span>
+                        <span><strong>@totalRecord results</strong></span>
+                    }
+                </div>
+            }
+        </td>
+        <td class="paging" style="text-align: right; width: 50%;">
+            @{
+                if (totalRecord > 0)
+                {
+                <div class="paging">
+                    @if (ViewBag.Page > 1)
+                    {
+                    
+                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+                    }
+                    @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+                    {
+                        if (ViewBag.Page == 4)
+                        {
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 3))" pageIndex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                        }
+                        if (ViewBag.Page > 4)
+                        {
+                        <a onclick="pagingEvent(1)" title="previous">1</a>
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                        
+                        }
+                    
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 2))" pageIndex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 1))" pageIndex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                    }
+                    @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+                    {
+
+                        if (ViewBag.Page == 3)
+                        {
+                        <a onclick="pagingEvent(1)" title="previous">1</a>
+                        }
+                        if (ViewBag.Page > 3)
+                        {
+                        <a onclick="pagingEvent(1)" title="previous">1</a>
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                        
+                        }
+                        <a  onclick="pagingEvent(@(ViewBag.Page - 1))" pageIndex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                    }
+                    <span class="active" title="@ViewBag.Page">@ViewBag.Page</span>
+                    @if (ViewBag.Page + 1 < lastPage)
+                    {
+                        <a  onclick="pagingEvent(@(ViewBag.Page + 1))" pageIndex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+                    }
+                    @if (ViewBag.Page + 2 < lastPage)
+                    {
+                        <a  onclick="pagingEvent(@(ViewBag.Page + 2))" pageIndex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+                    }
+                    @if (ViewBag.Page + 3 < lastPage)
+                    {
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                    }
+                    @if (ViewBag.Page < lastPage)
+                    {
+                        <a  onclick="pagingEvent(@lastPage)" pageIndex="@lastPage" title="@lastPage">@lastPage</a>
+                        <a  onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+                    }
+                </div>
+                <div class="clear">
+                </div>
+                }
+            }
+        </td>
+    </tr>
+</table>
+<div style="width: 100%">
+</div>

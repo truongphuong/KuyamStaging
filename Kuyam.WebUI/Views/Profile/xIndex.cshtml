@@ -1,0 +1,115 @@
+﻿@model Kuyam.WebUI.Models.VendorHomeModel
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "my company";
+}
+@section Head
+{
+    <link href="@Url.Content("~/Content/company.css")" rel="stylesheet" type="text/css" />
+    @Html.Partial("_FullcalendarSetup")
+    <script type='text/javascript'>
+
+        function SetupCalendar() {
+
+            $('#calendar').fullCalendar({
+                dayClick: function (date, allDay, jsEvent, view) {
+                    if (allDay == true) {
+                        $('#calendar').fullCalendar('changeView', 'agendaDay');
+                        $('#calendar').fullCalendar('gotoDate', date);
+                    }
+                    else {
+                        location.href = '@Url.Content("~/vendor/schedule-appointment/?date=")' + date;
+                    }
+                },
+                events: '@Url.Content("~/vendor/calendarfeed/" + Model.Vendor.ProfileID)',
+                eventClick: function (calEvent, jsEvent, view) {
+                    location.href = '@Url.Content("~/vendor/process-appointment/")' + calEvent.id;
+                    return false;
+                },
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                buttonText: {
+                    week: '&nbsp;week&nbsp;',
+                    day: '&nbsp;&nbsp;day&nbsp;&nbsp;&nbsp;'
+                },
+                titleFormat: {
+                    week: "MMM d[, yyyy]{ '&#8212;'[ MMM] d, yyyy}"
+                },
+                columnFormat: {
+                    week: 'ddd dd',
+                    day: ''
+                },
+                weekMode: 'variable',
+                editable: true,
+                disableDragging: false,
+                disableResizing: false
+            });
+
+        }
+
+        $(document).ready(function () {
+
+            SetupCalendar();
+
+            $('div.cust-main-right').height($('#calendar').height);
+
+            $('a.hidenohide').click(function (eventObject) {
+                var target = $(eventObject.target);
+
+                // will add or remove the class automatically
+                target.toggleClass('unhide');
+
+                var rightHeight = $('div.cust-main-right').height();
+                $('div.cust-main-right').height(rightHeight);
+
+                $('div.cust-main-right').animate({
+                    width: ['toggle', 'linear']
+                }
+                ,
+                {
+                    step: function (currentRight) {
+                        //$('div.cust-main-left').width(820 - currentRight);
+                        $('#calendar').width(820 - currentRight);
+                        $('#calendar').fullCalendar('render');
+                    }
+
+                }, 5000);
+
+                //$('div.cust-main-right').height($('#calendar').height);
+
+                if (target.hasClass('unhide')) {
+                    target.text('unhide');
+                }
+                else {
+                    target.text('hide');
+                }
+            });
+        });
+
+    </script>
+    <style type='text/css'>
+        #calendar
+        {
+            /*xwidth: 600px;*/
+            height: 600px;
+        }
+    </style>
+}
+<div style="float: left">
+    <h2>
+        Home</h2>
+</div>
+<div style="float: right">
+    <br />
+    @Html.ActionLink("company profile", "profile", "vendor")
+</div>
+<br />
+<div style="width: 100%">
+    <div class="company-main-left">
+        <div id='calendar' style='margin: 0em 0; font-size: 12px;'>
+        </div>
+    </div>
+</div>

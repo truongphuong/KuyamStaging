@@ -1,0 +1,37 @@
+﻿@model Kuyam.WebUI.Models.CalendarManageModel
+@using System.Web.Mvc
+@{
+    ViewBag.Title = "Manage Calendars";
+}
+<h2>@ViewBag.Title</h2>
+@Html.ActionLink("Create Calendar", "create", "calendar")
+<br /><br />
+@foreach (Kuyam.Database.Calendar cal in Model.Calendars.OrderBy(x => x.Name))
+{ 
+    <div class="calendar-label" style="background:#@(cal.BackColor);clear:both"><a href="@Url.Content("~/calendar/edit/" + cal.CalendarID)">@(cal.Name)</a></div><br />
+}
+
+
+<div id="grid">
+    @{
+        var grid = new System.Web.Helpers.WebGrid(source: Model.Calendars.OrderBy(x => x.Name),
+                                                  rowsPerPage: 20,
+                                                  ajaxUpdateContainerId: "grid",
+                                                  canPage: true,
+                                                  canSort: true,
+                                                  ajaxUpdateCallback: "fixLinks()");    
+    }
+    @(grid.GetHtml(
+            tableStyle: "webgrid-connections",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "webgrid-selected-row",
+            rowStyle: "webgrid-row-style",
+            columns: grid.Columns(
+                                    grid.Column("Name", null, (item) => (MvcHtmlString.Create("<div class='calendar-label' style='background:#" + (item).BackColor + "'>" + (item).Name + "</div>"))
+                                 )
+                  )
+    ))
+
+</div>

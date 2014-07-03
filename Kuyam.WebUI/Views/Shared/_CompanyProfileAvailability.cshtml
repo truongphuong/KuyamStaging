@@ -1,0 +1,1056 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain;
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+
+<div class="profilechart">
+    <div class="chartselect">
+        <div class="fleft">
+            <select name="service" id="service" class="selectmessage">
+                @Html.Raw(Model.ServiceString)
+            </select>
+        </div>
+        <div id="titledate" class="titleDate">
+            @{
+                DateTime dtNow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
+                DateTime dtTo = dtNow.AddDays(6);
+                string dt = string.Empty;
+                if (dtNow.Month == dtTo.Month)
+                {
+                    @:@string.Format("{0} {1} - {2}", dtNow.ToString("MMMM"), dtNow.Day, dtNow.AddDays(6).Day)
+                }
+                else
+                {
+                    @:@string.Format("{0} {1} - {2} {3}", dtNow.ToString("MMM"), dtNow.Day, dtTo.ToString("MMM"), dtTo.Day)
+                }
+
+            }
+        </div>
+        <div class="fleft mright7">
+            <select name="message" id="message" class="selectmessage">
+                @{
+                    <option selected="selected" value="0">all employees (or select one)</option>
+                    if (ViewBag.EmployeeList != null && ViewBag.EmployeeList.Count > 0)
+                    {
+
+                        for (int i = 0; i < ViewBag.EmployeeList.Count; i++)
+                        {
+                            CompanyEmployee obj = ViewBag.EmployeeList[i];
+                            <option class="employeeName" value="@obj.EmployeeID" @*@(obj.IsDefault ? "selected=selected" : "")*@ title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
+
+                        }
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div class="clear8"></div>
+<div id="selectedemployee" class="calendarlist">
+    <div class="avaibox">
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="calendar">
+    </div>
+    <div class="clear">
+    </div>
+    <div class="allviewing">
+        <div class="personcalendar">
+            @{ if (ViewBag.ListCal != null)
+             {
+                 foreach (Calendar cal in ViewBag.ListCal)
+                 {
+                    <a class="calendarName" style="border:1px solid #@cal.BackColor;padding:3px 18px;border-radius:7px;" color="@cal.BackColor" id="@cal.CalendarID" href="javascript:void(0);" onclick="fillterByCalendar('@cal.CalendarID');" title="@cal.Name" @*@(index == 0 ? "class=activeperson" : "")*@>@cal.Name</a>
+
+                 }
+             }
+            }
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<input type="hidden" id="hdfemployeeId" value="" />
+<div id="lightBox" class="lightBox z499"></div>
+<img id="imgloading" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+<div id="selectservice" class="selectservicepopup packagecheckout">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('selectservice');"
+           title="Close"></a>
+        <h3>
+            you’ve selected:
+        </h3>
+
+        <div class="clear">
+        </div>
+        <div class="ybox newybox">
+            <div class="ycomname" id="companyName" title="">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="yname" id="generaltimeslotId" title="">
+            </div>
+            <div class="yname" id="employeeName" title="">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="ystart" id="divystart">
+            </div>
+            <div class="ystarttime" id="divystarttime">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="yend">
+                &nbsp;
+            </div>
+            <div class="yendtime" id="yendtime">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="selectacalendar">
+            <div class="selecttext">
+                select a calendar:
+            </div>
+            <div class="selectcontent">
+                <select name="username" id="username" class="endtime"></select>
+            </div>
+        </div>
+        <div class="clear8">
+        </div>
+        <div id="remainingPkg" style="display: none;">
+            <div class="usingpkginfo">
+                using: <span class="txtpackage" id="txtpackage"><span class="colorred"></span></span>
+            </div>
+            <div class="clear8">
+            </div>
+        </div>
+        <h3 id="hnote">
+            to book, select from ’s services:
+        </h3>
+        <div class="clear h7">
+        </div>
+        <div class="selectend">
+            <select name="endtime" id="servicetype" class="endtime"></select>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="ydescript">
+            <div id="messageNotify" style="display: none; background-color: #F7941E; color: #FFFFFF; font-size: 16px; font-weight: bold; width: 245px;">
+            </div>
+
+            <div id="massageexperience" style="display: none;">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <a href="javascript:void(0);" class="btnbook" id="bookcheckout" title="proceed to checkout">
+            proceed to checkout
+        </a>
+        <div class="clear">
+        </div>
+        <div class="diverr">
+            <span style="color: red" id='spanError'></span>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="selectcategory" class="selectservicepopup packagecheckout">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('selectcategory');"
+           title="Close"></a>
+        <h3>
+            select a category
+        </h3>
+        <div class="clear-20">
+        </div>
+        <div id="listcategoryId">
+        </div>
+    </div>
+</div>
+<div id="cancellationpopup" class="selectservicepopup cancellationpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('cancellationpopup')"
+           title="Close"></a>
+        <div class="cancellationbox">
+            this appointment has a <span id='policyType' style="font-weight: bold;"></span>-hour
+            cancellation policy.
+            <br />
+            <br />
+            if you modify or cancel <span id="cancelhour" style="font-weight: bold;"></span>
+            hours before this appointment or later, you will be charged <span id='returnpercent' style="font-weight: bold;">50%</span> of the total amount.
+        </div>
+        <div class="clear15">
+        </div>
+        <a href="javascript:void(0);" class="btnbook btncancelcontinue" id="bookme" onclick="checkout();"
+           title="continue">continue</a>
+    </div>
+</div>
+
+<div id="newpayment" class="giftcardpopup"></div>
+<div id="delayclock" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            do you need more time?
+        </p>
+        <div>
+            <center>
+                <input type="button" class="btnok" id="btnok" value="yes" onclick="changeTime();" />
+                <input type="button" class="btncancel" id="btnno" value="no" onclick="cancelbooking();" />
+            </center>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/fullcalendar_new_company_schedule.js?v=17")"></script>
+
+<script type="text/javascript">
+
+    var iscomplete = true;
+    var showed = false;
+    var _startDate = '';
+    var _startTime = '';
+    var getserviceparam = '';
+
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    var currentDate = "@ViewBag.CurrentDate";
+    var companyType = $("#hdfCompanytype").val();
+    $(function () {
+
+
+        if (companyType == '@((int) Types.CompanyType.NonKuyamBookIt)' || companyType == '@((int) Types.CompanyType.GeneralAvailability)') {
+
+            $("#calendar").append("<div class=\"paging\"><a id=\"timeslot1\" timeslotId=\"0\" timevalue=\"\" isactive=\"0\" href=\"javascript:void(0);\" title=\"\">1</a><a id=\"timeslot2\" timeslotId=\"0\" timevalue=\"\" isactive=\"0\" href=\"javascript:void(0);\" title=\"\">2</a> <a id=\"timeslot3\" timeslotId=\"0\"  timevalue=\"\" isactive=\"0\" href=\"javascript:void(0);\" title=\"\">3</a><div style=\"float:left;\"> <a id=\"btnnextrequest\" class=\"btn-controls btn-next\" onclick=\"getRequestAppoinment();\" href=\"javascript:void(0);\" title=\"\">&nbsp;</a></div></div>");
+            $("#calendar").css({ "position": "relative" });
+            $("#fc-agenda-container").css({ "padding-bottom": "100px" });
+            $("#message").hide();
+        }
+
+        if (companyType == '@((int) Types.CompanyType.HybridKuyamBookIt)') {
+            $("#bookcheckout").attr("title", "book it");
+            $("#bookcheckout").html("book it");
+        } else if (companyType == '@((int) Types.CompanyType.KuyamInstantBook)') {
+            $("#bookcheckout").attr("title", "instant book");
+            $("#bookcheckout").html("instant book");
+        }
+        if (companyType == '@((int) Types.CompanyType.GeneralAvailability)') {
+            $("#bookcheckout").attr("title", "request appointment");
+            $("#bookcheckout").html("request appointment");
+        }
+        var policy = $("#hdfPolicy").val();
+        var cncelHour = $("#hdfCancelHour").val();
+        var percent = $("#hdfCancelPercent").val();
+        if (policy > 0) {
+            if (policy == 1) {
+                $('#standardpopup').html("standard");
+                $('#hourprior').html('24 hours prior or 50% refund');
+            } else if (policy == 2) {
+                $('#standardpopup').html("strict");
+                $('#hourprior').html('72 hours prior or 50% refund');
+            } else if (policy == 3) {
+
+                if (cncelHour == '0') {
+                    cncelHour = "anytime";
+                }
+                if (percent == '0') {
+                    percent = "100";
+                }
+
+                $('#standardpopup').html("custom");
+                $('#hourprior').html(cncelHour + ' hours prior or ' + percent + '% refund');
+            }
+        }
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });
+        $("#ctcontent").niceScroll({ cursorborder: "", cursoropacitymin: 1, cursorcolor: "#c1d82f", boxzoom: false, cursorwidth: '8px' }).resize();
+
+        $("#nonselectedemployee").hide();
+        $("#selectedemployee").show();
+        $("#selectedemployeeright").show();
+        $("#selectedthisweek").show();
+        $("#ctcontentascrail2000").show();
+
+        //Calendar Script
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        var calendar = $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
+            header: {
+                left: '',
+                center: 'title',
+                right: ''
+            },
+            selectable: false,
+            selectHelper: true,
+            allDaySlot: false,
+            height: 495,
+            firstDay: date.getDay(),
+            firstHour: 7,
+            minTime: 0,
+            maxTime: 24,
+            slotMinutes: 30,
+            disableDragging: true,
+            disableResizing: true,
+            columnFormat: {
+                week: 'ddd d'
+            },
+            select: function (start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+                        {
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay
+                        },
+                        true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+            titleFormat: '\'' + monthNames[new Date().getMonth()] + ' ' + new Date().getFullYear() + '\'',
+            editable: true,
+            dayNamesShort: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            monthNamesShort: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
+            eventClick: function (calEvent, jsEvent, view) {
+                if (calEvent.className == "fc-black") {
+
+                    if ('@(Request.IsAuthenticated?1:0)' == 0) {
+                        showDialog('signuppopup', 'btnCloseloginPopup');
+                        redirectUrl = '@(!string.IsNullOrEmpty(Request.RawUrl) ? (Request.RawUrl.IndexOf("?") != -1 ? Request.RawUrl.Substring(0, Request.RawUrl.IndexOf("?")) : Request.RawUrl) : "")';
+                        var startTime = $.fullCalendar.formatDate(calEvent.start, "yyyy/MM/dd hh:mm tt")
+                        redirectUrl += "?start=" + startTime + "&book=true"
+                    }
+                    else if (companyType == '@((int) Types.CompanyType.KuyamBookIt)' || companyType == '@((int) Types.CompanyType.KuyamInstantBook)' || companyType == '@((int) Types.CompanyType.HybridKuyamBookIt)') {
+                        var startDate = $.fullCalendar.formatDate(calEvent.start, "ddd, MMM dd");
+                        var startTime = $.fullCalendar.formatDate(calEvent.start, "hh:mm tt");
+                        $("#hdfCurrentDate").val(calEvent.start);
+                        $("#hdfemployeeId").val(calEvent.id);
+                        var employeeId = $("#message option:selected").val();
+
+                        if (employeeId == 0) {
+                            employeeId = calEvent.id;
+
+                        }
+
+                        selectCheckout(employeeId, startDate, startTime);
+
+                    } else if (companyType == '@((int) Types.CompanyType.GeneralAvailability)') {
+                        $("#hdfCurrentDate").val(calEvent.start);
+                        var date = $.fullCalendar.formatDate(calEvent.start, "ddd, MMM dd");
+                        var startTime = $.fullCalendar.formatDate(calEvent.start, "hh:mm tt");
+                        var endTime = $.fullCalendar.formatDate(calEvent.end, "hh:mm tt");
+
+                        var textdate = date + " " + startTime + " to " + endTime;
+
+                        var isactiveslot1 = $("#timeslot1").attr("isactive");
+                        var isactiveslot2 = $("#timeslot2").attr("isactive");
+                        var isactiveslot3 = $("#timeslot3").attr("isactive");
+
+                        var timeslotId1 = $("#timeslot1").attr("timeslotId");
+                        var timeslotId2 = $("#timeslot2").attr("timeslotId");
+                        var timeslotId3 = $("#timeslot3").attr("timeslotId");
+
+
+                        if (calEvent.id == timeslotId1 || calEvent.id == timeslotId2 || calEvent.id == timeslotId3) {
+
+                            if (isactiveslot1 == 1 && calEvent.id == timeslotId1) {
+                                $("#timeslot1").attr("timeslotId", 0);
+                                $("#timeslot1").attr("isactive", "0");
+                                $("#timeslot1").html("1");
+                                $("#timeslot1").css({ "background": "#ffffff", "border": "1px solid #7F7F7F", "color": "#808080" });
+                                $(this).removeClass("fc-blue");
+                                $("#timeslot1").attr("timevalue", "");
+
+                            } else if (isactiveslot2 == 1 && calEvent.id == timeslotId2) {
+                                $("#timeslot2").attr("timeslotId", 0);
+                                $("#timeslot2").attr("isactive", "0");
+                                $("#timeslot2").html("2");
+                                $("#timeslot2").css({ "background": "#ffffff", "border": "1px solid #7F7F7F", "color": "#808080" });
+                                $(this).removeClass("fc-blue");
+                                $("#timeslot2").attr("timevalue", "");
+                            } else if (isactiveslot3 == 1 && calEvent.id == timeslotId3) {
+                                $("#timeslot3").attr("timeslotId", 0);
+                                $("#timeslot3").attr("isactive", "0");
+                                $("#timeslot3").html("3");
+                                $("#timeslot3").css({ "background": "#ffffff", "border": "1px solid #7F7F7F", "color": "#808080" });
+                                $(this).removeClass("fc-blue");
+                                $("#timeslot3").attr("timevalue", "");
+                            }
+
+
+                        } else {
+
+                            if (isactiveslot1 == 0) {
+                                $("#timeslot1").attr("timeslotId", calEvent.id);
+                                $("#timeslot1").attr("isactive", "1");
+                                var textValue = "<span>" + textdate + "</span>";
+                                $("#timeslot1").html(textValue);
+                                $("#timeslot1").css({ "border": "1px solid #29ABE2", "color": "#29ABE2" });
+                                $(this).addClass("fc-blue");
+                                $.fullCalendar.formatDate(calEvent.start, "yyyy-MM-dd hh:mm tt")
+                                var time = $.fullCalendar.formatDate(calEvent.start, "yyyy/MM/dd HH:mm") + "|" + $.fullCalendar.formatDate(calEvent.end, "yyyy/MM/dd HH:mm");
+                                $("#timeslot1").attr("timevalue", time);
+                            } else if (isactiveslot2 == 0) {
+                                $("#timeslot2").attr("timeslotId", calEvent.id);
+                                $("#timeslot2").attr("isactive", "1");
+                                var textValue = "<span>" + textdate + "</span>";
+                                $("#timeslot2").html(textValue);
+                                $("#timeslot2").css({ "border": "1px solid #29ABE2", "color": "#29ABE2" });
+                                $(this).addClass("fc-blue");
+                                var time = $.fullCalendar.formatDate(calEvent.start, "yyyy/MM/dd HH:mm") + "|" + $.fullCalendar.formatDate(calEvent.end, "yyyy/MM/dd HH:mm");
+                                $("#timeslot2").attr("timevalue", time);
+
+                            } else if (isactiveslot3 == 0) {
+                                $("#timeslot3").attr("timeslotId", calEvent.id);
+                                $("#timeslot3").attr("isactive", "1");
+                                var textValue = "<span>" + textdate + "</span>";
+                                $("#timeslot3").html(textValue);
+                                $("#timeslot3").css({ "border": "1px solid #29ABE2", "color": "#29ABE2" });
+                                $(this).addClass("fc-blue");
+                                var time = $.fullCalendar.formatDate(calEvent.start, "yyyy/MM/dd HH:mm") + "|" + $.fullCalendar.formatDate(calEvent.end, "yyyy/MM/dd HH:mm");
+                                $("#timeslot3").attr("timevalue", time);
+
+                            } else {
+                                showAlertMessage("choose at most 3 times. to remove one, simply tap on one you previously selected.");
+                            }
+
+                        }
+                        chekActive();
+                    }
+                }
+            },
+            readyState: function () {
+                $(".fc-orange").css("background-color", "#" + calendarColor);
+                $(".fc-orange").css("border-color", "#" + calendarColor);
+                $(".fc-orange").css("color", "#" + calendarColor);
+                if (companyType == '@((int)Types.CompanyType.GeneralAvailability)') {
+
+                    $(".fc-blue").css({ "background": "#" + calendarColor });
+                    $("#calendar").css({ "position": "relative" });
+                    $("#fc-agenda-container").css({ "padding-bottom": "100px" });
+
+                }
+
+            },
+            events: "/CompanyProfile/GetCalendars/?serviceId=" + $("#service option:selected").val() + "&employeeId=" + $("#message option:selected").val() + "&calendarId=" + $("#calendarid").val() + "&profileId=" + $("#profileid").val() + "&companyType=" + companyType
+        });
+
+
+        if (companyType == '@((int)Types.CompanyType.NonKuyamBookIt)') {
+            $("#calendar").hide();
+            $(".profilechart").hide();
+        }
+
+        //$('#calendar').fullCalendar({ firstHour: 7});
+        //$('#calendar').fullCalendar('scrollToHour',7);
+        //End calendar script
+
+        //    Get services hour
+        $('#message').live('change', function () {
+            var employeeeId = $("#message option:selected").val()
+            var serviceId = $("#service option:selected").val()
+            populateServiceHour(employeeeId, serviceId, true);
+            if ($(this).val() == "0") {
+                $(document).scrollTop(0);
+            } else {
+                $(document).scrollTop($('.profilechart').position().top - 60);
+            }
+        });
+
+        $('#service').live('change', function () {
+            var employeeeId = $("#message option:selected").val()
+            var serviceId = $("#service option:selected").val()
+            populateServiceHour(employeeeId, serviceId, true);
+            if ($(this).val() == "0") {
+                $(document).scrollTop(0);
+            } else {
+                $(document).scrollTop($('.profilechart').position().top - 60);
+            }
+        });
+
+        $('#bookcheckout').click(function () {
+            var serviceId = $("#servicetype option:selected").val()
+            var calendarId = $("#username option:selected").val();
+            if (typeof calendarId == 'undefined') {
+                showAlertMessage("not available user calendar");
+                $("#selectservice").hide();
+                return false;
+            }
+            if (serviceId == '0' || serviceId == '') {
+                $('#spanError').text('please select a service');
+                return;
+            }
+
+            if (companyType == '@((int)Types.CompanyType.KuyamBookIt)' || companyType == '@((int)Types.CompanyType.KuyamInstantBook)' || companyType == '@((int)Types.CompanyType.HybridKuyamBookIt)') {
+
+                //checkTimeSlot(continueCheckout);
+                continueCheckout(serviceId);
+            } else if (companyType == '@((int)Types.CompanyType.GeneralAvailability)') {
+
+                addTimeslotRequest(serviceId, calendarId);
+            }
+        });
+
+
+        $('#servicetype').change(function () {
+            $('#spanError').text('');
+            if (companyType == '@((int)Types.CompanyType.KuyamBookIt)' || companyType == '@((int)Types.CompanyType.KuyamInstantBook)' || companyType == '@((int)Types.CompanyType.HybridKuyamBookIt)') {
+                $('#divYdescript').text($("#endtime option:selected").attr('desc'));
+                if ($("#servicetype option:selected").attr('value') != '0') {
+                    var duration = parseInt($("#servicetype option:selected").attr('duration'));
+                    var startDate = new Date($("#hdfCurrentDate").val());
+                    var minutes = parseInt(startDate.getMinutes());
+                    duration += minutes;
+                    startDate.setMinutes(duration);
+                    var endtime = "<span>ends:&nbsp;</span>" + $.fullCalendar.formatDate(startDate, "hh:mm tt");
+                    $("#yendtime").html(endtime);
+                    var serviceName = $("#servicetype option:selected").attr('txt');
+                    if (serviceName != "" && serviceName.length > 15) {
+
+                        serviceName = $.trim(serviceName).substring(0, 15) + "...";
+                    }
+                    var message = "our " + serviceName +
+                        " experience will leave you with chills and the most relaxed back of your whole life. don’t pass this up!"
+                    $("#massageexperience").html(message);
+
+                    var eployeeName = $("#servicetype option:selected").attr('employeename');
+                    $('#employeeName').text(eployeeName);
+
+                } else {
+                    $("#yendtime").html("");
+                    $("#massageexperience").html("");
+                }
+            }
+
+            var offer = $("#servicetype option:selected").attr('offerPercent');
+            if (offer != '0' && offer != null) {
+                $("#messageNotify").html(" this service is discounted " + offer + "%");
+                $("#messageNotify").show();
+            }
+            else {
+                $("#messageNotify").hide();
+            }
+
+        });
+
+    });
+
+    function chekActive() {
+        var isactiveslot1 = $("#timeslot1").attr("isactive");
+        var isactiveslot2 = $("#timeslot2").attr("isactive");
+        var isactiveslot3 = $("#timeslot3").attr("isactive");
+        if (isactiveslot1 == 1 | isactiveslot2 == 1 || isactiveslot3 == 1) {
+            $("#btnnextrequest").show();
+        } else {
+            $("#btnnextrequest").hide();
+        }
+    }
+
+    var inervalId;
+    var countsecond = 30; // 30 second
+    var extend5MinuteMore = 300; // 5 minute
+    var countDownFrom = 600; // 10 minute
+    var isTimeExtendMode = false;
+    var lastCheckTimeSlot = new Date().getTime();
+
+    function startCountDown(selector) {
+        inervalId = window.setInterval('updateClock("' + selector + '");', 1000);
+    }
+
+    function formatNumber(number) {
+        if (number < 10) {
+            return "0" + number;
+        }
+        return "" + number;
+    }
+
+    function updateClock(selector) {
+        if (countDownFrom <= 0 && isTimeExtendMode === false) {
+            showDelayPopup();
+            return;
+        } else if (countDownFrom <= 0) {
+            hideDialog('newpayment');
+            hideDialog('delayclock');
+            window.clearInterval(inervalId);
+            cancelbooking();
+            return;
+        }
+        var minute = parseInt(countDownFrom / 60);
+        var second = countDownFrom % 60;
+        $(selector).html(formatNumber(minute) + ":" + formatNumber(second));
+
+        if (countDownFrom <= 0) {
+            window.clearInterval(inervalId);
+        }
+        countDownFrom -= 1;
+    }
+
+    function showDelayPopup() {
+        showDialog('delayclock');
+        countDownFrom = countsecond;
+        isTimeExtendMode = true;
+    }   
+
+    function dateDiff(start, end) {
+        var days = (end.getTime() - start.getTime()) / 1000 / 60;
+        return days;
+    }
+
+    function continueCheckout(seviceId) {
+        var policy = $("#hdfPolicy").val();
+        var cncelHour = $("#hdfCancelHour").val();
+        var percent = $("#hdfCancelPercent").val();
+        hideDialog('selectservice');
+        if (policy > 0) {
+            var dateNow = new Date();
+            var endDate = new Date($("#hdfCurrentDate").val());
+            var total = dateDiff(dateNow, endDate);
+            var canceltime = cncelHour * 60;
+            if (total <= canceltime) {
+                $(".cancellationbox").css({ 'background-color': '#FF7F7F' })
+            } else {
+                $(".cancellationbox").css({ 'background-color': '#FEFBC7' })
+            }
+
+            $("#cancelhour").html(cncelHour);
+            if (policy == 1) {
+                $('#policyType').html(cncelHour);
+            } else if (policy == 2) {
+                $('#policyType').html(cncelHour);
+            } else if (policy == 3) {
+                $('#policyType').html(cncelHour);
+                $("#returnpercent").html(percent);
+                if (cncelHour == '0') {
+                    $('#policyType').html("anytime");
+                    $("#cancelhour").html("anytime");
+                }
+                if (percent == '0') {
+                    percent = "100";
+                } else if (percent == "25") {
+                    percent = "75";
+                } else if (percent == "50") {
+                    percent = "50";
+                } else if (percent == "75") {
+                    percent = "25";
+                }
+                $("#returnpercent").html(percent + "%");
+            }
+            setTimeout("showDialog('cancellationpopup')", 700);
+
+        } else { checkout(); }
+    }
+
+    function checkout() {
+        checkTimeSlot(checkoutHandle);
+    }
+
+    function checkoutHandle() {
+        hideDialog('cancellationpopup');
+        loaddataCheckout();        
+        isTimeExtendMode = false;
+        countDownFrom = 600; //10 minute
+        window.clearInterval(inervalId);
+        startCountDown('.countdownclock');
+    }
+
+    function loaddataCheckout() {
+        $("#applycodeError").html("");
+        var selected = document.getElementById('servicetype');
+        var seviceId = selected.options[selected.selectedIndex].value;
+        var calendar = document.getElementById('username');
+        var calendarId = calendar.options[calendar.selectedIndex].value;
+        var startDate = new Date($("#hdfCurrentDate").val());
+        var expectedDate = $.fullCalendar.formatDate(startDate, "yy/MM/dd hh:mm tt");
+        var packageId = $("#activepackageId").val()
+        var employeeId = $("#servicetype option:selected").attr('employeeid');
+        var param = "serviceId=" + seviceId + "&employeeId=" + employeeId + "&calendarId=" + calendarId + "&startDate=" + expectedDate + "&packageId=" + packageId;
+        commonGetAjax("PayPal", "GetDataCheckoutByServiceId", param, setDataCheckout, loadError);
+    }
+
+    function setDataCheckout(result) {
+        $("#newpayment").html("");
+        $("#newpayment").html(result.content);
+        $('#cbemail').checkBox({ addVisualElement: false });
+        $('#cbsms').checkBox({ addVisualElement: false });
+        var descriptionpkg = $("#packagename").val();
+        var packageremain = $("#packageremain").val();
+        if (packageremain != -1) {
+            packageremain -= 1;
+            descriptionpkg += "<br><span>" + packageremain + " remaining after booking</span>";
+        } else {
+            descriptionpkg += "<br><span>unlimited booking(s)</span>";
+        }
+        $("#pkginfo").html(descriptionpkg);
+        setTimeout("showDialog('newpayment')", 100);
+    }
+
+    function checkTimeSlot(nextFunction) {
+        lastCheckTimeSlot = new Date().getTime();
+        var selected = document.getElementById('servicetype');
+        var seviceId = selected.options[selected.selectedIndex].value;
+        var employeeId = $("#servicetype option:selected").attr('employeeid');
+        var calendar = document.getElementById('username');
+        var calendarId = calendar.options[calendar.selectedIndex].value;
+        var startDate = new Date($("#hdfCurrentDate").val());
+        var expectedDate = $.fullCalendar.formatDate(startDate, "yy/MM/dd hh:mm tt");
+        var packageId = $("#activepackageId").val();
+        var param = "serviceId=" + seviceId + "&employeeId=" + employeeId + "&calendarId=" + calendarId + "&startDate=" + expectedDate + "&packageId=" + packageId;
+        commonGetAjax("CompanyProfile", "CheckTimeSlot",
+            param,
+            function (result) {
+                if (result == false) {
+                    showAlertMessage("it looks like this time has already been booked. please refresh the page and select a different employee or time.", reloadPage);
+
+                } else {
+                    nextFunction();
+                }
+
+            },
+            setError);
+    }
+        
+    function selectCheckout(employeeId, startDate, startTime) {
+        _startDate = startDate;
+        _startTime = startTime;
+        startTime = "starts: " + startTime;
+        $('#divystart').text(startDate);
+        $('#divystarttime').text(startTime);
+        getServicebyEmployeeId(employeeId);
+    }
+
+    function getServicebyEmployeeId(id) {
+        window.isShowIconLoadingAjax = true;
+        var packageId = $("#activepackageId").val();
+        var startDate = new Date($("#hdfCurrentDate").val());
+        var expectedDate = $.fullCalendar.formatDate(startDate, "yy/MM/dd hh:mm tt");
+        var calendarId = $(".personcalendar .activeperson").attr("id");
+        var serviceId = $("#service option:selected").val();
+        getserviceparam = "profileId=" + $("#profileid").val() + "&employeeId=" + id + "&serviceId=" + serviceId + "&packageId=" + packageId + "&startDate=" + expectedDate + "&calendarId=" + calendarId;
+        commonGetAjax("CompanyProfile", "GetServiceByEmployeeId", getserviceparam, sethtmloption, loadError);
+    }
+
+    function getServicebyStartTime(start) {
+        window.isShowIconLoadingAjax = true;
+        var startDate = new Date(start);
+        var formatDate = $.fullCalendar.formatDate(startDate, "yy/MM/dd hh:mm tt");
+        $("#hdfCurrentDate").val(startDate);
+        var divystart = $.fullCalendar.formatDate(startDate, "ddd, MMM dd");
+        var divystarttime = $.fullCalendar.formatDate(startDate, "hh:mm tt");
+        _startDate = divystart;
+        _startTime = divystarttime;
+        $('#divystart').text(divystart);
+        var txtstarttime = "starts: " + divystarttime;
+        $('#divystarttime').text(txtstarttime);
+        var serviceId = $("#service option:selected").val();
+        getserviceparam = "profileId=" + $("#profileid").val() + "&employeeId=0" + "&serviceId" + serviceId + "&startDate=" + formatDate;
+        commonGetAjax("CompanyProfile", "GetServiceByEmployeeId", getserviceparam, sethtmloption, loadError);
+    }
+    
+    function loadError() {
+        showed = false;
+    }
+
+    function sethtmloption(result) {
+        if (!result.filltercatagory) {
+            if (typeof result.invalidtime != 'undefined') {
+                showAlertMessage("please select a different time because this slot is not enough duration.");
+                return;
+            }
+
+            $("#servicetype").html("");
+            $("#servicetype").html(result.sevice);
+            $('#servicetype option:selected').next('option').attr('selected', 'selected');
+            var eployeeName = $("#servicetype option:selected").attr('employeename');
+            var employeeNameTruncate = eployeeName;
+            if (typeof employeeNameTruncate != 'undefined' && employeeNameTruncate.length > 15) {
+                employeeNameTruncate = employeeNameTruncate.substring(0, 15) + "...";
+            }
+            $('#employeeName').text(eployeeName);
+            var companyName = $('#hdfcompanyname').val();
+
+            var cName = companyName;
+            if (cName != null && cName.length > 10)
+                cName = cName.substring(0, 10) + "...";
+
+
+            $("#companyName").text(companyName);
+            var note = "to book, select from " + cName + "’s services:";
+            $("#hnote").text(note);
+            $('#companyName').attr('title', companyName);
+            $('#employeeName').attr('title', eployeeName);
+
+            $("#username").html(result.calendar);
+            var packageId = $("#activepackageId").val();
+            var packageremain = $("#packageremain").val();
+            if (packageId != '' && packageremain != 0) {
+                var descriptionpkg = $("#packagename").val() + " - ";
+
+                if (packageremain != -1) {
+                    packageremain += " remaining";
+                } else {
+                    packageremain = "unlimited booking(s)";
+                }
+                descriptionpkg += "<span id=\"maxusespkg\" class=\"colorred\">" + packageremain + "</span>";
+                $("#txtpackage").html(descriptionpkg);
+                $("#remainingPkg").show();
+                $("#massageexperience").show();
+
+            } else {
+                $("#remainingPkg").hide();
+                $("#massageexperience").hide();
+            }
+            $('select#servicetype').selectmenu();
+            $('select#username').selectmenu();
+
+            $("#yendtime").html("");
+
+            var offer = $("#servicetype option:selected").attr('offerPercent');
+            if (offer != '0') {
+                $("#messageNotify").html(" this service is discounted " + offer + "%");
+                $("#messageNotify").show();
+            }
+            else {
+                $("#messageNotify").hide();
+            }
+
+            showDialog("selectservice");
+
+        } else if (result.filltercatagory) {
+            var content = "";
+            var categorys = result.category;
+            for (var i = 0; i < categorys.length; i++) {
+                var url = '';
+                if (categorys[i].kalturaId == '' || categorys[i].kalturaId == null) {
+                    url = "/images/icon_waiting.png";
+                } else {
+                    url = "https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/" + categorys[i].kalturaId + "/type/2/quality/100/width/80/height/79/bgcolor/FFFFFF";
+                }
+                content += "<div onclick='getServiceByCategory(" + categorys[i].ServiceID + ")' title=\"" + categorys[i].ServiceName + "\" class=\"categorytitle\" ><image src='" + url + "'  /><span>" + categorys[i].ServiceName.substring(0, 18) + "</span></div>"
+            }
+
+            if (categorys.length > 12) {
+
+            }
+            $("#listcategoryId").html(content);
+            showDialog("selectcategory");
+        }
+
+    }
+
+    function getServiceByCategory(categoryId) {
+        $("#selectcategory").hide();
+        window.isShowIconLoadingAjax = true;
+        getserviceparam = getserviceparam + "&categoryId=" + categoryId;
+        if (companyType == '@((int)Types.CompanyType.GeneralAvailability)') {
+            var startDate = new Date($("#hdfCurrentDate").val());
+            var formatDate = $.fullCalendar.formatDate(startDate, "yy/MM/dd hh:mm tt");
+            getserviceparam = getserviceparam + "&startDate=" + formatDate;
+            commonGetAjax("CompanyProfile", "GetGeneralServiceByCategoryId", getserviceparam, sethtmloption, loadError);
+        } else {
+            $('#divystart').text(_startDate);
+            var txtstarttime = "starts: " + _startTime;
+            $('#divystarttime').text(txtstarttime);
+            commonGetAjax("CompanyProfile", "GetServiceByEmployeeId", getserviceparam, sethtmloption, loadError);
+        }
+    }
+
+    function populateServiceHour(employeeId, serviceId, flag) {
+        if (typeof serviceId == 'undefined' || typeof employeeId == 'undefined') {
+            return;
+        }
+        $('#calendar').fullCalendar('removeEvents');
+        var calendarId = $(".personcalendar .activeperson").attr("id");
+        $('#calendar').fullCalendar('addEventSource', "/CompanyProfile/GetCalendars/?serviceId=" + serviceId + "&employeeId=" + employeeId + "&calendarId=" + calendarId + "&profileId=" + $("#profileid").val() + "&companyType=" + companyType);
+        //$('#calendar').fullCalendar('refetchEvents');
+    }
+
+    var calendarColor = "FBB03B";
+    function fillterByCalendar(calendarId) {
+        clearSelectedTimeslot();
+        $('#calendar').fullCalendar('removeEvents');
+        var classname = $('.personcalendar #' + calendarId).attr("class");
+        var corlor = $('.personcalendar #' + calendarId).attr("color");
+        if (classname != "activeperson") {
+            $('.personcalendar a').removeClass("activeperson");
+            $('.personcalendar #' + calendarId).addClass("activeperson");
+            $('.personcalendar a').css({ "background-color": "#FFFFFF" });
+            $('.personcalendar #' + calendarId).css({ 'background-color': "#" + corlor });
+            var url = "/CompanyProfile/GetCalendars/?employeeId=" + $("#message option:selected").val() + "&calendarId=" + calendarId + "&profileId=" + $("#profileid").val() + "&companyType=" + companyType;
+            calendarColor = corlor;
+        } else {
+            $('.personcalendar a').removeClass("activeperson");
+            $('.personcalendar a').css({ "background-color": "#FFFFFF" });
+            var url = "/CompanyProfile/GetCalendars/?employeeId=" + $("#message option:selected").val() + "&calendarId=0" + "&profileId=" + $("#profileid").val() + "&companyType=" + companyType;
+            calendarColor = "FBB03B";
+        }
+        $('#calendar').fullCalendar('addEventSource', url);
+
+    }
+
+    function getProposedDataCheckout(apptId) {
+        $.get("/Paypal/GetProposedDataCheckoutByAppId?nocache=" + getunixtime(), { apptId: apptId },
+            function (data) {
+                if (data.content != '') {
+                    $('#newpayment').html(data.content);
+                    $('#cbemail').checkBox({ addVisualElement: false });
+                    $('#cbsms').checkBox({ addVisualElement: false });
+                    showDialog('newpayment');
+                }
+            });
+    }
+
+    function getRequestAppoinment() {
+        var timeslotRequest = getTimeslotRequest();
+        if (timeslotRequest != '') {
+
+            window.isShowIconLoadingAjax = true;
+            var calendarId = $(".personcalendar .activeperson").attr("id");
+            getserviceparam = "profileId=" + $("#profileid").val();
+            getserviceparam = getserviceparam + "&timeSlots=" + timeslotRequest + "&calendarId=" + calendarId;
+            commonGetAjax("CompanyProfile", "GetGeneralServiceByCategoryId", getserviceparam, sethtmloption, loadError);
+
+            var arrTimeSlot = timeslotRequest.split(',');
+            var txtTimeSlot = '';
+            var previusDate = '';
+            for (var i = 0; i < arrTimeSlot.length; i++) {
+                if (txtTimeSlot != '')
+                    txtTimeSlot += "<div class='clear'></div>";
+                var timeslots = arrTimeSlot[i].split('|');
+                var startDate = $.fullCalendar.formatDate(new Date(timeslots[0]), "ddd, MMM dd");
+                var startTime = $.fullCalendar.formatDate(new Date(timeslots[0]), "h:mmtt");
+                var endTime = $.fullCalendar.formatDate(new Date(timeslots[1]), "h:mmtt");
+
+                if (previusDate == startDate)
+                    txtTimeSlot += "<div class='divTime'>" + startTime + " - " + endTime + "</div>";
+                else
+                    txtTimeSlot += "<div class='divDate'>" + startDate + "</div><div class='divTime'>" + startTime + " - " + endTime + "</div>";
+
+                previusDate = startDate;
+            }
+            $("#generaltimeslotId").css({ "font-size": "16px" });
+            $("#generaltimeslotId").css({ "text-align": "right" });
+            $("#generaltimeslotId").html(txtTimeSlot);
+        }
+    }
+
+    function getTimeslotRequest() {
+
+        var timeslotId1 = $("#timeslot1").attr("timeslotId");
+        var timeslotId2 = $("#timeslot2").attr("timeslotId");
+        var timeslotId3 = $("#timeslot3").attr("timeslotId");
+        var timeSlots = "";
+        if (timeslotId1 > 0) {
+            //if (timeSlots != "")
+            //    timeSlots += ",";
+            timeSlots += $("#timeslot1").attr("timevalue");
+        }
+        if (timeslotId2 > 0) {
+            if (timeSlots != "")
+                timeSlots += ","
+            timeSlots += $("#timeslot2").attr("timevalue");
+        }
+        if (timeslotId3 > 0) {
+            if (timeSlots != "")
+                timeSlots += ","
+            timeSlots += $("#timeslot3").attr("timevalue");
+        }
+        return timeSlots;
+    }
+
+    function addTimeslotRequest(serviceId, calendarId) {
+        window.isShowIconLoadingAjax = true;
+        var timeslotRequest = getTimeslotRequest();
+
+        var param = "ServiceId=" + serviceId + "&profileId=" + $("#profileid").val() + "&calendarId=" + calendarId + "&timeSlots=" + timeslotRequest;
+
+        commonPostAjax("CompanyProfile", "AddRequestAppointment", param, requestSuccess, loadError);
+    }
+
+    function requestSuccess(result) {
+        if (result) {
+            hideDialog('selectservice');
+            clearSelectedTimeslot();
+            var calendarId = $(".personcalendar .activeperson").attr("id");
+            $('#calendar').fullCalendar('removeEvents')
+            $('#calendar').fullCalendar('addEventSource', "/CompanyProfile/GetCalendars/?employeeId=" + $("#message option:selected").val() + "&calendarId=" + calendarId + "&profileId=" + $("#profileid").val() + "&companyType=" + companyType);
+            showAlertMessage("your request has been received. we'll be back with you shortly with an update.")
+
+        } else {
+            showAlertMessage("request appointment fail.")
+        }
+    }
+
+    function clearSelectedTimeslot() {
+
+        $("#btnnextrequest").hide();
+        $("#timeslot1").attr("timeslotId", 0);
+        $("#timeslot1").attr("isactive", "0");
+        $("#timeslot1").html("1");
+        $("#timeslot1").css({ "background": "#ffffff", "border": "1px solid #7F7F7F", "color": "#808080" });
+        $(this).removeClass("fc-blue");
+        $("#timeslot1").attr("timevalue", "");
+
+        $("#timeslot2").attr("timeslotId", 0);
+        $("#timeslot2").attr("isactive", "0");
+        $("#timeslot2").html("2");
+        $("#timeslot2").css({ "background": "#ffffff", "border": "1px solid #7F7F7F", "color": "#808080" });
+        $(this).removeClass("fc-blue");
+        $("#timeslot2").attr("timevalue", "");
+
+        $("#timeslot3").attr("timeslotId", 0);
+        $("#timeslot3").attr("isactive", "0");
+        $("#timeslot3").html("3");
+        $("#timeslot3").css({ "background": "#ffffff", "border": "1px solid #7F7F7F", "color": "#808080" });
+        $(this).removeClass("fc-blue");
+        $("#timeslot3").attr("timevalue", "");
+
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        @if (Model.IsBookDirect)
+        {
+            @:$("#ui-accordion-accordion-header-0").css({ "cursor": "default" });
+                   @:$("html, body").animate({ scrollTop: $(".profileschedule").height() + 15 }, "slow");
+                }
+
+        $('#message, #service').selectmenu();
+        //$('#service-button').addClass("ui-state-active ui-corner-top");
+        //var html ='<span class="ui-selectmenu-status">'+"a"+'</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span>';
+        //$('#service-button').html(html);
+
+    });
+
+    $(document).ready(function () {
+        $(".employeeName").dotdotdot(
+            {
+                height: 18,
+                width: 230
+            });
+
+        $(".calendarName").dotdotdot(
+            {
+                height: 17,
+                width: 90
+            });
+    });
+</script>

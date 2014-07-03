@@ -1,0 +1,126 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "user role list";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+       user roles list</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        <select id="roleName">
+                            @{       
+                                <option value="all">all</option>                           
+                                foreach (aspnet_Roles item in  ViewBag.Roles)
+                                {                                  
+                                    <option value="@item.RoleName" @(ViewBag.SearchType == item.RoleName ? "selected" : "")>@item.LoweredRoleName</option>
+                                }                                
+                               
+                            }
+                        </select>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="listUsers">
+        @Html.Partial("_UserAgentListResults")
+    </div>
+</div>
+<script type="text/javascript">
+    var latestParamenters = { page: 1, key: '', searchType: 1 };
+
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, searchType: searchType };
+        UpdateData(searchParameters);
+    };
+
+    function FilterSearchResult() {
+        var key = $('#txtKey').val();
+        var searchType = $("#roleName option:selected").val();
+        var searchParameters = { page: 1, key: key, searchType: searchType };
+        UpdateData(searchParameters);
+    }
+
+    function ReloadPage() {
+        UpdateData(latestParamenters);
+    }
+
+    function UpdateData(parameters) {
+        latestParamenters = parameters;
+        window.isUseDefaultAjaxHandle = true;
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Admin/AgentList/'
+            })
+            .success(function (result) {
+
+                $('#listUsers').html(result);
+
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function GrantAgentRole(custId) {
+        var parameters = { custId: custId };
+        window.isUseDefaultAjaxHandle = true;
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/Admin/GrantAgentRole/'
+            })
+            .success(function (result) {
+
+                if (result) {
+                    ReloadPage();
+                } else {
+                    alert("sorry, can't grant agent role for this user");
+                }
+
+            });
+    }
+
+    function RevertAgentRole(custId) {
+        var parameters = { custId: custId };
+        window.isUseDefaultAjaxHandle = true;
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/Admin/RevertAgentRole/'
+            })
+            .success(function (result) {
+
+                if (result) {
+                    ReloadPage();
+                } else {
+                    alert("sorry, can't revert agent role for this user");
+                }
+
+            });
+    }
+
+</script>

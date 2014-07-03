@@ -1,0 +1,239 @@
+﻿@model Kuyam.WebUI.Models.CompanySearchModel
+
+@{
+    ViewBag.Title = "dashboardviewcompanysearch";
+    Layout = null;
+}
+
+@*
+
+Company Search Dialog
+=======================
+Shows a text box, a listbox beneath it, and a 'content' box on the right.
+The dialog cannot be associated with a model, due to the Ajax-ness of it all.
+When the user types in the edit box, refresh the listbox with customers found.
+When the user selects an item in the listbox, refresh the content box.
+When the user selects 'schedule', save in the session the selected company,
+returning to the schedule newappt which moves on to next step.
+
+*@
+
+ <script type="text/javascript">
+
+     $(document).ready(function () {
+         setSearchTextBox();
+         setScheduleButton();
+
+         //since the View no longer does the search, after all is said and done,
+         //execute a search.
+         fetchAndShowCompanies();
+
+         //call googlemap last in case it fails
+         setGoogleMap();
+     });
+
+    //event hookups
+    var typingTimer;
+    var lastSearch = "";
+
+    function setSearchTextBox() {
+        $('#CompanySearchText').keyup(function () {
+            typingTimer = setTimeout(fetchAndShowCompanies, 1000);
+        });
+
+        $('#CompanySearchText').keydown(function () {
+            clearTimeout(typingTimer);
+        });
+    }
+
+    function setScheduleButton() {
+        $('#ScheduleButtonLink').click(function (event) {
+            event.preventDefault();
+            var selectedCompanyId = $('#CompanyId').text();
+            $.post(
+                '@Url.Action("SetCurrentAppointmentCompany")',
+                { companyProfileId: selectedCompanyId },
+                function (data) { $('#companysearch').dialog('close') }
+            );
+            $('#CompanySearchDialog').dialog('close');
+        });
+    }
+
+    function fetchAndShowCompanies() {
+        var currentSearch = $('#CompanySearchText').val();
+        if (lastSearch != currentSearch && currentSearch != "") {
+            lastSearch = currentSearch;
+            $('#CompanyListWorking').show();
+            $.getJSON(
+                '@Url.Action("company-search2")',
+                { searchTerms: currentSearch },
+                function (data) { showCompanies(data); }
+            );
+        }
+    }
+
+    function showCompanies(companies) {
+        clearCompanyList();
+        $('#CompanyListWorking').hide();
+        $('#CompanyInfoEmpty').show();
+        $('#CompanyInfo').hide();
+
+        if (companies == null) {
+            //do nothing
+        }
+        else if (companies.length == 0) {
+            //do nothing
+        }
+        else {
+            $.each(companies, function (index) { addCompanyToList(companies[index]); });
+        }
+    }
+
+    function addCompanyToList(company) {
+        var companyDiv = $('<div />', {
+            text: company.Name,
+            style: "cursor: pointer;",
+            onclick:"javascript:CompanySelectClick(this);"
+        });
+
+        companyDiv.append($('<div />', { 
+            class: "ProfileId", 
+            style: "display:none;", 
+            text: company.ProfileID
+        }));
+
+        $('#CompanyList').append(companyDiv);
+    }
+
+    function clearCompanyList() {
+        $('#CompanyList').empty();
+    }
+
+    function CompanySelectClick(event) {
+        var ProfileId = $('div', event).text();
+        console.log(ProfileId);
+
+        //reset all color to white, the selected to green
+        $('#CompanyList div').css('background-color', 'White');
+        $(event).css('background-color', '#e0eb96');
+
+        fetchAndShowCompany(ProfileId);
+    }
+
+    function fetchAndShowCompany(profileId) {
+        $('#CompanyInfoWorking').show();
+        $.getJSON(
+            '@Url.Action("Company")',
+            { id: profileId },
+            function (data) { showCompany(data); }
+        );
+    }
+
+    function showCompany(company) {
+        $('#CompanyInfoWorking').hide();
+        $('#CompanyInfoEmpty').hide();
+        $('#CompanyInfo').show();
+
+        $('#CompanyId').text(company.ProfileID);
+        $('#CompanyName').text(company.Name);
+        $('#CompanyAddress').text(company.AddressLine);
+        $('#CompanyCitySelect').html("<option selected>" + company.CityState + "</option>");
+
+        $('#CompanySchedule').empty();
+        $('#CompanySchedule').append('<table>');
+        $.each(company.ProfileHours, function(index) { $('#CompanySchedule').append('<tr><td width="30px"><b>' + company.ProfileHours[index].Day + '</b></td><td><center><b>' + company.ProfileHours[index].Time + '</b></center></td>') });
+        $('#CompanySchedule').append('</table>');
+
+        //showGoogleMap(company.AddressLine);
+    }
+
+
+
+    var map;
+    var geocoder;
+
+    function mapsLoaded() {
+        geocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var myOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("GoogleMap"), myOptions);
+    }
+
+    function loadMaps() {
+        google.load("maps", "2", { "callback": mapsLoaded });
+    }
+
+    function setGoogleMap() {
+
+        var script = document.createElement("script");
+        script.src = "https://www.google.com/jsapi?callback=loadMaps";
+        script.type = "text/javascript";
+        document.getElementsByTagName("head")[0].appendChild(script);
+    } 
+
+    function showGoogleMap(address) {
+/*
+        geocoder.geocode(
+            { 'address': address },
+            function (results, status) { 
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({ map: map, position: results[0].geometry.location });
+                }
+                else { 
+                    alert("Map could not be found for company address: " + status);
+                }
+            }
+        ); 
+*/
+    }  
+
+</script>
+
+@* For some reason the body of the dialog is... off. This div tries to reset it *@
+    <div class="CompanySearchDialogContent">
+        <input type="text" name="CompanySearch" id="CompanySearchText" value="@Model.SearchTerms" />
+        <br />
+
+        <div id="CompanyList" class="div-scrollinglist" style="background-color:White;height:350px; width:235px; overflow:auto;">
+        </div>
+
+        @*
+        Can't find a company?
+        <a href="">add a company</a>
+        *@
+    </div>
+        
+    <div id="CompanyInfo" class="CompanySearchDialogInfo" style="display:none;">
+        <div id="CompanyId" style="display:none;" />
+        <div id="CompanyName" style="position:absolute; left:20px; top:10px; font-weight:bolder; font-size:12pt;" />
+        <select id="CompanyCitySelect" style="position:absolute; left:20px; top:40px;" />
+        <a id="AddToFavs" href="" style="position:absolute; top:30px; right:20px; border-radius:5px; padding:5px 10px 5px 10px; border: 1px solid silver; background-color:transparent;">add to favs</a>
+        <div id="GoogleMap" style="position:absolute; top:50px; width:417px; height:191px;" />
+        <div id="CompanyAddress" style="position:absolute; top:66px; font-size:8pt; font-weight:bold; opacity:0.6; filter:alpha(opacity=60); background-color:Lime; width:415px; height:25px;" />
+        <div id="ImageBackground" style="position:absolute; bottom: 60px; left: 40px; width:148px; height:157px; background-color:Gray; opacity:0.6; filter:alpha(opacity=60);" />
+        <img id="CompanyImage" style="position:absolute; bottom:70px; left:50px; width:128px; height:137px;" src="@Url.Content("~/images/Dashboard/BlankProfile.png")" alt="Profile Image" />
+        <div id="ScheduleButtonDiv" style="position:absolute; bottom:13px; height:55; width:196; left:20px;">
+            <a id="ScheduleButtonLink" href="javascript:void(0);">
+                <img src="@Url.Content("~/images/Dashboard/ScheduleButton.png")" alt="Schedule" />
+            </a>
+        </div>
+        <div id="CompanySchedule" style="position:absolute; top:255px; left:255px; font-weight:bold;" />
+    </div>
+
+    <div id="CompanyInfoEmpty" class="CompanySearchDialogInfo">
+    </div>
+
+    <div id="CompanyListWorking" style="background-color:Red;border:1px solid gray;width:100px; position:absolute; left: 10px; top: 40px; display:none;">
+        <img src="@Url.Content("~/images/wait-snake-16.gif")" alt="wait" />working...
+    </div>
+
+    <div id="CompanyInfoWorking" style="background-color:Red;border:1px solid gray;width:100px; position:absolute; left: 250px; top: 70px; display:none;">
+        <img src="@Url.Content("~/images/wait-snake-16.gif")" alt="wait" />working...
+    </div>
+

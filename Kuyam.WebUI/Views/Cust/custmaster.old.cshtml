@@ -1,0 +1,228 @@
+﻿@using M2.Util
+@using M2.Util.MVC
+@using Kuyam.WebUI.Models
+@using Kuyam.Domain
+@using Kuyam.Database
+@{
+    //Layout = "~/Views/shared/_layout.cshtml";
+    Layout = "~/Views/Shared/_KuyamLayoutBlank.cshtml";
+    ViewBag.Title = "";
+}
+@section Head
+{
+    <link href="@Url.Content("~/Content/personal.css")" rel="stylesheet" type="text/css" />
+    @Html.Partial("_FullcalendarSetup")
+    @Html.Partial("_DatePickerControlSetup")
+    <script type='text/javascript'>
+
+        var _calClicked = "";
+        function SetupCalendar() {
+            $("#loadingCal").show();
+            jQuery('#calendar').fullCalendar({
+                eventRender: function (event, element) {
+                    element.bind('dblclick', function () {
+                        //alert('double click!');
+                    })
+                },
+                @if (MySession.ViewName != null)
+                {
+                    @:defaultView: '@MySession.ViewName',
+
+                }
+                events: {
+                    url: '@Url.Content("~/cust/calendarfeed")',
+                    type: 'POST',
+                    beforeSend: function() {
+                        $("#calendar, #showing, #calError").hide();
+                        $("#loadingCal").show();
+                    },
+                    success: function() {
+                        $("#loadingCal").hide();
+                        $("#calendar, #showing").show();
+                    },
+                    error: function() {
+                        $("#loadingCal").hide();
+                        $("#calError").html("Error loading calendar.").show();
+                    }
+                },
+                dayClick: function (date, allDay, jsEvent, view) {
+                    // Ignore second click using a 300ms timer and "recursive" code
+                    // Based on http://code.google.com/p/fullcalendar/issues/detail?id=328
+                    if (_calClicked != "day") {
+                        _calClicked = "day";
+                        setTimeout(function () { _calClicked = ""; }, 300);
+                    }
+                    else {
+                        _calClicked = "";
+                        return;
+                    }
+
+                    if (allDay == true) {
+                        jQuery('#calendar').fullCalendar('changeView', 'agendaDay');
+                        jQuery('#calendar').fullCalendar('gotoDate', date);
+                    }
+                    else {
+                        location.href = '@Url.Content("~/cust/schedule-appointment-ondate/?dateTime=")' + date;
+                    }
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    location.href = '@Url.Content("~/cust/modify-appointment/")' + calEvent.id;
+                    return false;
+                },
+                viewDisplay: function (view) {
+                    var d = $('#calendar').fullCalendar('getDate').toString();
+                    $.get('@Url.Content("~/cust/setcalendarview")', { view: view.name, date: d });
+                },
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                buttonText: {
+                    week: '&nbsp;week&nbsp;',
+                    day: '&nbsp;&nbsp;day&nbsp;&nbsp;&nbsp;'
+                },
+                titleFormat: {
+                    week: "MMM d[, yyyy]{ '&#8212;'[ MMM] d, yyyy}"
+                },
+                columnFormat: {
+                    week: 'ddd dd',
+                    day: ''
+                },
+                weekMode: 'variable',
+                editable: false,
+                disableDragging: true,
+                disableResizing: true,
+                theme: false,
+                defaultEventMinutes: 60
+            });
+
+            @if (MySession.ViewDate != null)
+            {
+                @:jQuery('#calendar').fullCalendar('gotoDate', new Date('@MySession.ViewDate'));
+            }
+        }
+
+        jQuery(document).ready(function () {
+            SetupCalendar();
+            //jQuery('#lhs').height(jQuery('#calendar').height()+35);
+
+            var calStartWidth = jQuery('#calendar').width();
+            //var calStartLeft = jQuery('#calendar').left();
+            var lhsStartWidth = jQuery('#lhs').width();
+
+            jQuery('#hideCalendar').click(function () {
+                if (jQuery(this).html() == "unhide") {
+                    // Unhide it
+                    jQuery(this).html("hide");
+                    jQuery('#lhs').show();
+                    jQuery('#rhs').css({ width: "65%", "float": "right" });
+                }
+                else {
+                    // Hide it
+                    jQuery(this).html("unhide");
+                    jQuery('#lhs').hide();
+                    jQuery('#rhs').css({ width: "100%", "float": "left" });
+
+                }
+                //jQuery('#calendar').css({ width: "100%" });
+                $('#calendar').fullCalendar('render');
+            });
+        });
+    </script>
+    @RenderSection("Subhead", required: false)
+}
+<div style="float: left; padding-top: 0.0em; margin-top: -1px">
+    <a href="#" id="hideCalendar" class="cust-inactive-page rounded">hide</a>
+</div>
+<div style="float: right; padding-top: 0.0em; margin-top: -1px; padding-bottom: 3px;">
+    @Html.ActionLink("my home", "index", "cust", null, new { @class = ViewBag.CustPage == "home" ? "cust-active-page rounded" : "cust-inactive-page rounded" })
+    @Html.ActionLink("notepad", "notepad", "cust", null, new { @class = ViewBag.CustPage == "notepad" ? "cust-active-page rounded" : "cust-inactive-page rounded" })
+    @Html.ActionLink("schedule appointment", "company-search", "cust", null, new { @class = ViewBag.CustPage == "sched" ? "cust-active-page rounded" : "cust-inactive-page rounded" })
+    @Html.ActionLink("appointment feedback", "appointment-feedback", "cust", null, new { @class = ViewBag.CustPage == "feedback" ? "cust-active-page rounded" : "cust-inactive-page rounded" })
+    <a href="javascript:showDialog('@Url.Content("~/calendar/select")', 'view calendars')" class="dialoglink cust-inactive-page rounded"">
+        calendars</a> @*
+    <a href="#" id="notepadlink">notepad</a> | 
+    <a href="#" id="schedapptlink">schedule appointment</a> | 
+    <a href="#" id="apptfeedbacklink">appointment feedback</a> | 
+    <a href="#" id="fcodlink">featured company</a>
+*@
+</div>
+<div style="width: 100%; margin-top: 25px;">
+    <div id="lhs" class="cust-main-left">
+        @RenderBody()
+        @*        <div id="notepad">
+            @@Html.Partial("notepad_partial", Model.NotepadModel)   // todo ajax postback???
+        </div>
+        <div id="schedappt">
+            @@Html.Partial("schedule_appointment_partial", Model.ScheduleAppointmentModel)
+        </div>
+        <div id="apptfeedback">
+            @@Html.Partial("appointment_feedback_partial", Model.AppointmentFeedbackModel)
+        </div>
+        <div id="fcod">
+            @@Html.Partial("featured_Company_partial", Model.FeaturedCompanyModel)
+        </div>
+*@
+    </div>
+    <div id="rhs" class="cust-main-right" style="border: red">
+        <div id="loadingCal" style="position: absolute; top: 13px; left: 302px">
+            <img src="@Url.Content("~/images/spinner.gif")" class="spinner"/>
+        </div>
+        <div id="calError" style="position: absolute; top: 13px; left: 202px">
+        </div>
+        <div id='calendar' style='margin: 0em 0; font-size: 12px; border: 2px solid #ccc;
+            xbackground: #eeeeee; padding: 0px'>
+        </div>
+        <br />
+        <div id="showing">
+            <div style="float: left">
+                showing calendars:
+            </div>
+            <div class="clear"></div>
+            <br />
+            <div style="float: left">
+                @{
+                    foreach (Kuyam.Database.Calendar c in MySession.Cust.GetSelectedCalendars().OrderBy(x => x.Name))
+                    {
+                    @:<div class="calendar-label" style="background:#@(c.BackColor);float:left">@Html.ActionLink(c.Name, "edit", "calendar", new { id = c.CalendarID }, null)</div>
+                }
+                }
+            </div>
+        </div>
+    </div>
+@*
+<script type="text/javascript">
+    jQuery('#notepadlink').click(function (event) {
+        jQuery('#apptfeedback').hide();
+        jQuery('#schedappt').hide();
+        jQuery('#fcod').hide();
+        jQuery('#notepad').show();
+        event.preventDefaut();
+    });
+
+    jQuery('#schedapptlink').click(function (event) {
+        jQuery('#notepad').hide();
+        jQuery('#fcod').hide();
+        jQuery('#apptfeedback').hide();
+        jQuery('#schedappt').show();
+        event.preventDefaut();
+    });
+
+    jQuery('#apptfeedbacklink').click(function (event) {
+        jQuery('#notepad').hide();
+        jQuery('#schedappt').hide();
+        jQuery('#fcod').hide();
+        jQuery('#apptfeedback').show();
+        event.preventDefaut();
+    });
+
+    jQuery('#fcodlink').click(function (event) {
+        jQuery('#notepad').hide();
+        jQuery('#schedappt').hide();
+        jQuery('#apptfeedback').hide();
+        jQuery('#fcod').show();
+        event.preventDefaut();
+    });
+</script>
+*@

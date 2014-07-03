@@ -1,0 +1,89 @@
+﻿@using M2.Util.MVC
+<br />
+@if (Request.IsAuthenticated && false)
+{
+    @:<a href='@Url.Content("~/")'><img src="@Url.Content("~/images/person_ph.jpg")" width=24 style="display:inline;" /></a>
+}
+<span style="position: relative; top: -7px">
+    @if (Request.IsAuthenticated)
+    {
+        int notificationCount = Kuyam.WebUI.Models.Util.GetUnviewedNotificationCount();
+        @:Welcome <a href='@Url.Content("~/")'><b>@Kuyam.Database.Cust.Load(Kuyam.WebUI.Models.MySession.CustID).FirstName</b></a>
+        if (notificationCount > 0)
+        { 
+            <a href="@Url.Content("~/cust")"> <span class="notification-count rounded" id="notification-count">@(notificationCount)</span>
+        </a>
+        }
+        @:|&nbsp;<a href='@Url.Content("~/profile")'>profile</a>
+        if (User.IsInRole("support"))
+        {
+        @: | @Html.ActionLink("admin", "Index", "Admin")
+        }
+        if (Kuyam.WebUI.Models.MySession.Impersonating)
+        {
+        @: | @Html.ActionLink("End Impersonation", "StopImpersonating", "Admin")
+        }
+        @:| @Html.ActionLink("help", "help", "cust") | @Html.ActionLink("logout", "logout", "account")
+            }
+@*    <select> <text></text> <option>profile</option> <option>admin</option> <option>help</option>
+    <option>logout</option> </select> </span>
+<div class='second_box' style=";xfloat: left">
+    <a href='#' class='fb_dropdown fb_dropdown_w_data' data-items='[{"label": "Everyone"}, {"label": "Friends"}, {"label": "Only Me"}, {"label": "Customize"}]'>
+        fb</a>
+    <div class='clearer'>
+    </div>
+</div>
+<div id='fb_menu' style='display: none;'>
+    fb</div>
+    *@
+    @if (!Request.IsAuthenticated)
+    {
+        <form action="@(Kuyam.WebUI.Models.MyApp.Settings.UseSSL ? "https://kuyam.com/account/login" : @Url.Content("~/account/login"))" method="post">
+        <div style="text-align: left;">
+            <div style="float: right">
+                <!-- <input type="submit" value="login" /> -->
+                <br />
+                <a class="loginbutton rollover" href="javascript:document.forms[0].submit()" tabindex="3">
+                </a>
+            </div>
+            <div style="float: right; width: 175px">
+                password<br />
+                <input id="password" name="password" type="password" tabindex="2" onkeypress="return submitLogin(this,event)"><br />
+                <div style="margin-top: 0.3em; font-size: 0.8em">
+                    <a href="@Url.Content("~/account/resetpassword")">Forgot your password?</a></div>
+            </div>
+            <div style="float: right; width: 175px">
+                email<br />
+                <input id="username" name="username" type="text" value="" tabindex="1" placeholder="you@gmail.com" /><br />
+                <div style="font-size: 0.8em; float: left">
+                    <input id="remember_me" name="remember_me" type="checkbox" checked value="true" tabindex="4" /></div>
+                <input name="remember_me" type="hidden" value="true" />
+                <div style="font-size: 0.8em; margin-top: 0.3em; float: left" id="keepLoggedIn">
+                    <a href="#">keep me logged in</a></div>
+            </div>
+        </div>
+        </form>
+    
+        <script type="text/javascript">
+
+            $(function () {
+                $("#keepLoggedIn").click(function () {
+                    $('#remember_me').click();
+                });
+            });
+
+            function submitLogin(myfield, e) {
+                var keycode;
+                if (window.event) keycode = window.event.keyCode;
+                else if (e) keycode = e.which;
+                else return true;
+
+                if (keycode == 13) {
+                    myfield.form.submit();
+                    return false;
+                }
+                else
+                    return true;
+            }
+        </script>
+    }

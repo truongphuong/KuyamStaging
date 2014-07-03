@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "_ByGiftCardMailForm";
+}
+@*<h2>
+    _ByGiftCardEMailForm</h2>*@ @*<div>
+    <label>recipient's name:</label>
+    <input id="iprecipientName" type="text"/>
+    <label>recipient's e-mail:</label>
+    <input id="iprecipientEmail" type="text"/>
+    <label>your name:</label>
+    <input id="ipOwnerName"/>
+    <label>your message:</label>
+    <input id="ipMessage"></input>
+    <input id="btEmailPayment" type="button" title="purchase with Paypal" value="purchase with Paypal"/>
+</div>*@
+<div class="boxdashboardmailright">
+    <div class="boxtop">
+    </div>
+    <div class="boxcenter" id="emailBox">
+        <label for="txtname" class="labelblock" style="margin-top: -2px;">
+            recipient’s name:</label>
+        <div class="clear2">
+        </div>
+        <input type="text" class="txtxlarge" id="txtname" name="field" maxlength="255" />
+        <span id="spanNameRequire" class="requiresGiftCard">recipient’s name is required.</span>
+        <div class="clear5">
+        </div>
+        <label for="txtemail" class="labelblock">
+            recipient’s e-mail:</label>
+        <div class="clear2">
+        </div>
+        <input type="text" class="txtxlarge" id="txtemail" maxlength="50"/>
+        <span id="spanEmailRequire" class="requiresGiftCard">recipient's e-mail is required.</span>
+        <div class="clear3">
+        </div>
+        <label for="txtyourname" class="labelblock">
+            your name:</label>
+        <div class="clear2">
+        </div>
+        <input type="text" class="txtxlarge" id="txtyourname" maxlength="255"/>
+        <span id="spanYourNameRequire" class="requiresGiftCard">your name is required.</span>
+        <div class="clear13">
+        </div>
+        <label for="txtmessage" class="labelblock">
+            your message (300 characters max):</label>
+        <div class="clear2">
+        </div>
+        <div class="watermarkgiftcard">
+            <textarea cols="" rows="" id="txtmessage" maxlength ="300"></textarea>
+            <span class="watermark">hi friend!<br />
+                <br />
+                here’s a gift for you. thought you could use some relaxation :) </span>
+        </div>
+        <span id="spanMessageRequire" class="requiresGiftCard">your message is required.</span>
+        <div class="clear2">
+        </div>
+        <div class="textassurance">
+            upon purchase, the gift card will be delivered immediately.</div>
+    </div>
+    <div class="boxbottom">
+    </div>
+</div>
+<div class="clear2">
+</div>
+<input id="btEmailPayment" type="submit" value="" class="btnpurchase" />
+<div class="clear">
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitPageEmail();
+        //$("#spanEmailRequire").hide();
+
+        // begin wartermark for txtmessage
+        $("#txtmessage").focus(function () { $(this).css({ "background": "#ffffff" }); });
+        $("#txtmessage").blur(function () {            
+            if ($("#txtmessage").val() == '') {
+                $(this).css({ "background": "transparent" });
+            }
+            else {
+                $(this).css({ "background": "#ffffff" });
+            }
+        });
+        // end wartermark for txtmessage
+
+        $("#btEmailPayment").click(function () {
+            InitPageEmail();
+            var amount = $("#amount").val();
+            var recipientName = $("#txtname").val();
+            var ownerName = $("#txtyourname").val();
+            var message = $("#txtmessage").val();
+            var recipientEmail = $("#txtemail").val();
+            var res = ValidateEmailForm(amount, recipientName, recipientEmail, ownerName, message);
+            if (!res) {
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            }
+            if (amount == '0') {
+                $("#errorAmount").show();
+            } else {
+                var flag = CheckEmail(recipientEmail);
+                if (flag == 0) {
+                    var option = {
+                        amount: amount,
+                        type: 1,
+                        recipientName: recipientName,
+                        recipientEmail: recipientEmail,
+                        ownerName: ownerName,
+                        message: message.replace(/\n\r?/g, '<br />'),
+                        city: "",
+                        state: "",
+                        zipcode: "",
+                        typeShipping: "",
+                        costShipping: "",
+                        estimateDate: "",
+                        address1: "",
+                        address2: ""
+                    };
+                    PurchaseWithPaypal(amount, "email", option);
+                } else {
+                    if (flag == 1) {
+                        $("#spanEmailRequire").text("email is required.");
+                        $("#spanEmailRequire").show();
+                    } else {
+                        if (flag == 3){
+                            $("#spanEmailRequire").text("email invalid.");
+                            $("#spanEmailRequire").show();
+                        }
+                    }
+                }
+
+            }
+        });
+        $('#txtmessage').on('input propertychange', function () {
+            var propMaxLength = $(this).prop('maxLength');
+            if (!propMaxLength || typeof propMaxLength != 'number') {
+                var maxLength = $(this).attr('maxlength'), txt = $(this).val();
+                if (txt.length > maxLength) {
+                    $(this).val(txt.substr(0, maxLength));
+                }
+            }
+        });
+    });
+
+    function InitPageEmail() {
+        $("#errorAmount").hide();
+        $("#spanNameRequire").hide();
+        $("#spanEmailRequire").hide();
+        $("#spanYourNameRequire").hide();
+        $("#spanMessageRequire").hide();
+    }
+    function ValidateEmailForm(amount, rName, eMail, yourName, eMessage) {
+        InitPageEmail();
+        var flag = true;
+        if (amount == '' || amount == '0') {
+            flag = false;
+            $("#errorAmount").show();
+        }
+        if (rName == '') {
+            flag = false;
+            $("#spanNameRequire").show();
+        }
+        if (eMail == '') {
+            flag = false;
+            $("#spanEmailRequire").show();
+        }
+        if (yourName == '') {
+            flag = false;
+            $("#spanYourNameRequire").show();
+        }
+//        if (eMessage == '') {
+//            flag = false;
+//            $("#spanMessageRequire").show();
+//        }
+        return flag;
+    }
+    function ShowMessageError(element, text) {
+        $("#" + element).text(text);
+        $("#" + element).show();
+    }
+//    function ValidateEmailForm(rName, eMail, yourName, eMessage) {
+//        InitPageEmail();
+//        var flag = true;      
+//        if (rName.length >  255) {
+//            flag = false;
+//            ShowMessageError("errorAmount", "");
+//            $("#spanNameRequire").show();
+//        }
+//        if (eMail == '') {
+//            flag = false;
+//            $("#spanEmailRequire").show();
+//        }
+//        if (yourName == '') {
+//            flag = false;
+//            $("#spanYourNameRequire").show();
+//        }
+//        if (eMessage == '') {
+//            flag = false;
+//            $("#spanMessageRequire").show();
+//        }
+//        return flag;
+//    }
+    
+</script>

@@ -1,0 +1,67 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "GiftCardReceipt";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div id="divLoadForm" class="GiftCardReceipt">
+                <div class="imgpurchased">
+                    <img alt="" src="/images/GiftCardReceipt.png" />
+                </div>
+                <div class="receiptid">
+                    <strong>receipt #: </strong>23481CMWH2
+                </div>
+                <div class="receipttable">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <span>October 15, 2013</span>
+                                </th>
+                            </tr>
+                            <tr class="odd">
+                                <td>
+                                    <span class="span1">$25 kuyam gift card for Kourosh Gohar</span>
+                                </td>
+                                <td align="right">
+                                    $25.00
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td>
+                                    premium shipping <span class="span2">estimated arrival: October 16-17, 2013</span>
+                                </td>
+                                <td align="right">
+                                    $10.00
+                                </td>
+                            </tr>
+                            <tr class="receipttotal">
+                                <td colspan="2" align="right">
+                                    <strong>Total: $30.00</strong>
+                                </td>
+                            </tr>
+                            <tr class="receiptpaid">
+                                <td>
+                                    MASTERCARD ending in 4639
+                                </td>
+                                <td align="right">
+                                    <strong>Paid: $30.00</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="receiptcopy">
+                    a copy of this receipt has been sent to your e-mail.
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

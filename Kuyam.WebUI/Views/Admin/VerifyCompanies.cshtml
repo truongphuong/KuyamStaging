@@ -1,0 +1,39 @@
+﻿@model Kuyam.WebUI.Models.VerifyCompanyListModel
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Verify Companies";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="grid">
+    @{
+        var grid = new System.Web.Helpers.WebGrid(source: Model.Companies,
+                                                  rowsPerPage: 18,
+                                                  ajaxUpdateContainerId: "grid",
+                                                  canPage: true,
+                                                  canSort: true,
+                                                  ajaxUpdateCallback: "fixLinks()");    }
+    @(grid.GetHtml(
+            tableStyle: "webgrid-connections",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "webgrid-selected-row",
+            rowStyle: "webgrid-row-style",
+            columns: grid.Columns(
+                            grid.Column(style: "webgrid-icon-col", format: (item) => @Html.ImageLink("companyprofile", "profile", Url.Content("~/images/edit.png"), "Edit", 14, 14, new { id = item.ProfileID })),
+                            grid.Column("Name"),
+                            grid.Column("City"),
+                            grid.Column("State")
+                            )
+                  )
+    )
+</div>
+<br />
+@Html.GoBackLink()
+<script type="text/javascript">
+    function fixLinks() {
+        $('#grid a').removeAttr('href');
+    }
+</script>

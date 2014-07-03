@@ -1,0 +1,332 @@
+﻿@using Kuyam.WebUI.Models
+<style type="text/css">
+    .liadd {
+        background-color: #DEEDD9;
+        padding-bottom: 8px;
+        padding-left: 5px;
+        padding-top: 8px;
+        padding-right: 7px;
+        word-break: break-all;
+        word-wrap: break-word;
+        font-size: 14px;
+        padding-bottom: 5px;
+    }
+
+    .liadd1 {
+        font-size: 11px;
+    }
+
+    .liodd {
+        background-color: #CFDEF8;
+        padding-bottom: 8px;
+        padding-left: 5px;
+        padding-top: 8px;
+        padding-right: 7px;
+        word-break: break-all;
+        word-wrap: break-word;
+        font-size: 14px;
+        padding-bottom: 5px;
+    }
+
+    .liodd1 {
+        font-size: 11px;
+    }
+
+    .liodd2 {
+        background-color: #CFDEF8;
+        padding-left: 5px;
+        padding-right: 7px;
+    }
+
+    .tbldata1 {
+        color: #353535;
+        height: auto;
+        padding: 0.3em 1em;
+        text-align: left;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    #contentMessage {
+        border: 1px solid #A5A5A5;
+        width: 360px;
+        overflow: auto;
+        height: 250px;
+    }
+
+    .adminItemContent {
+        height: auto;
+        margin-left: 30px;
+    }
+
+        .adminItemContent li {
+            width: 251px;
+        }
+
+    .adminItemContent1 {
+        height: auto;
+        margin-left: -30px;
+    }
+
+        .adminItemContent1 li {
+            width: 251px;
+        }
+
+    .validateTips1 {
+        border: 1px solid transparent;
+        padding: 0.3em;
+        color: red !important;
+    }
+</style>
+<table class="tbldata1" style="border: none;">
+    <tr>
+        <td colspan="2">
+            <h2 style="font-size: 25px;">SMS Messages</h2>
+        </td>
+    </tr>
+    <tr style="height: 2px;"></tr>
+    <tr>
+        <td colspan="2">
+            <div id="contentMessage">
+                @Html.Partial("AdminSMSItems")
+            </div>
+            <input id="totalRecord" type="hidden" value="@ViewBag.TotalMessage" />
+        </td>
+    </tr>
+    <tr style="height: 0px;">
+        <td style="height: 0px;" colspan="2"></td>
+    </tr>
+    <tr style="height: 30px;">
+        <td colspan="2" style="height: 50px;">
+            <p class="validateTips"></p>
+            @*<input id="messContent" style="width: 100%;height: 50px;" class="btnActivate" type="text" />*@
+            @*<textarea id="messContent" style="height: 67px; width: 339px;" onkeyup="countChar(this)"
+                          onblur="if (this.value == '') this.value = 'Send a message';"
+                          onclick="if(this.value == 'Send a message') this.value = '';">
+                    Send a message
+                </textarea>*@
+            <textarea id="messContent" maxlength="160" style="height: 67px; width: 358px; border:1px solid #A5A5A5; " onkeyup="countChar(this)"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: none"><span id="countCharacter">0</span> characters in message</td>
+        <td style="border: none"><input id="messSend" style="float:right;" class="btnActivate" type="button" value="Send" /></td>
+    </tr>
+</table>
+<script type="text/javascript">
+    var timerAutoLoading = null;
+    $("#messContent").focus();
+    $("#messContent").val('');
+    var sendMessag = false;
+    var timeloading = 10000;
+    $(document).ready(function () {
+        MoveBottomContent();       
+        setTimeout(LoadMessage, timeloading);
+        $("#messSend").click(function () {
+            var mess = $("#messContent").val();
+            $('#messContent').removeClass("ui-state-error");
+            $(".validateTips").hide();
+            var flag = ValidateMess(mess);
+            if (!flag) {
+                $(".validateTips").show();
+                return false;
+            }
+            if (!sendMessag) {
+                sendMessag = true;                
+                SendMessage(mess);
+            }
+            return false;
+        });
+        $('#messContent').keydown(function (event) {
+            $('.validateTips').hide();
+            $('#messContent').removeClass("ui-state-error");
+        });
+       
+    });
+
+    function TryaginMessage(seft) {
+        $(".validateTips").hide();
+        myStopAutoLoading(timerAutoLoading);
+        var userId = $("#hdfUserId").val();
+        var messageId = seft.id;
+        var postData = {
+            userId: userId,
+            messageId: messageId
+        };
+        $("#li_" + messageId).hide();
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/TrySendMessage/'
+            })
+            .success(function (result) {
+                //alert(result);
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    if (result.result == true) {
+                        $("#messageId").hide();
+                        MoveBottomContent();
+                    } else {
+
+                        $("#li_" + messageId).show();
+                        showAlertMessage("Can not retry.");                       
+                        //don't load message
+                    }
+                    //$("#contentMessage").html(result.pView);
+                }               
+            })
+            .error(function (error) {
+                showAlertMessage(error);
+            });
+
+    }
+
+    function MoveBottomContent() {
+        var elem = document.getElementById('contentMessage');
+        elem.scrollTop = elem.scrollHeight;
+    }
+
+    function autoLoadMessage() {
+        LoadMessage();
+    }
+
+    function myStopAutoLoading(idItem) {
+        clearInterval(idItem);
+    }
+
+    function LoadMessage() {        
+        var userId = $("#hdfUserId").val();
+        var totalRecord = $("#totalRecord").val();
+        var postData = {
+            userId: userId,
+            totalRecord: totalRecord
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/LoadMessage/'
+            })
+            .success(function (result) {
+                
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    if (result.result == true) {
+                        if (result.totalRecord > totalRecord) {
+                            $("#contentMessage").html(result.pView);
+                            MoveBottomContent();
+                            $("#totalRecord").val(result.totalRecord);
+                        }
+                    } 
+                }
+                setTimeout(LoadMessage, timeloading);
+              
+            })
+            .error(function (error) {
+                setTimeout(LoadMessage, timeloading);
+            });
+    }
+    function SendMessage(mess) {
+        var userId = $("#hdfUserId").val();
+        var postData = {
+            userId: userId,
+            message: mess,
+            destinationAdress: $("#hdMobilePhone").val()
+        };
+        var today = new Date();
+        var dateFormat = formattedDate(today);
+        // var html = '<div class="odd"><ul style="list-style: none"><li>' + dateFormat + '</li><li>'+ mess +'</li></ul></div><br/>';
+
+        var html = '<ul class="adminItemContent" style="list-style: none"><li class="liodd1">' + dateFormat + '</li><li class="liodd">' + mess + '</li></ul >';
+
+        //ResetSendMessage();
+        $("#contentMessage").append(html);
+        ResetSendMessage();
+        MoveBottomContent();
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/SendMessage/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    if (result.result == true) {
+                        //$("#contentMessage").html(result.pView);
+                    } else {
+                        showAlertMessage("message can't not send: " + result.message);                       
+                    }
+                }
+                sendMessag = false;               
+
+            })
+    .error(function (error) {
+        sendMessag = false;        
+        showAlertMessage(error);
+    });
+    }
+    
+    function CallAutoLoading(flag, time1, time2) {
+        var time = flag ? time1 : time2;
+        timerAutoLoading = window.setInterval(autoLoadMessage, time);
+    }
+
+    function countChar(val) {
+        var len = val.value.length;
+        $('#countCharacter').text(len);
+    };
+
+    function ResetSendMessage() {
+        $('#countCharacter').text(0);
+        $("#messContent").val("");
+        MoveBottomContent();
+    }
+
+    function ValidateMess(mess) {
+        if (mess == '') {
+            $('#messContent').focus();
+            $('#messContent').addClass('ui-state-error');
+            updateTips("please type a message");
+            return false;
+        } else {
+            $('#messContent').removeClass("ui-state-error");
+            return true;
+        }
+
+        return false;
+
+    }
+
+    function formattedDate(date) {
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+        var d = new Date(date || Date.now()),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        //if (month.length < 2) month = '0' + month;
+        var strmonth = monthNames[parseInt(month) - 1].substr(0, 3);
+        // alert(strmonth);
+        if (day.length < 2) day = '0' + day;
+        return strmonth + " " + day + "," + year + " " + GetTime(date);
+        //return [strmonth,day, year].join('.');
+        // return [day, month, year].join('/');
+    }
+
+    function GetTime(date) {
+        return ((date.getHours() < 10) ? "0" : "") + ((date.getHours() > 12) ? (date.getHours() - 12) : date.getHours()) + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + " " + ((date.getHours() > 12) ? ('PM') : 'AM');
+        //return ((date.getHours() < 10) ? "0" : "") + ((date.getHours() > 12) ? (date.getHours() - 12) : date.getHours()) + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds() + ((date.getHours() > 12) ? ('PM') : 'AM');
+    }
+
+</script>

@@ -1,0 +1,384 @@
+﻿@{
+    ViewBag.Title = "hotel admin";
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+}
+<div>
+    <!-- InstanceBeginEditable name="content" -->
+    <div class="contentMarketPlace">
+        <div class="bgMainContent">
+            @Html.Partial("_HotelLeftTab")
+            <div class="colRight">
+                <div class="companyinvoices">
+                <div class="tophead">
+                 hotel admin
+                </div>          
+                  @*  <div class="rightcol">
+                        <div id="divAppointment">
+                            @Html.Raw(@ViewBag.Data)
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>*@
+                    @Html.Partial("_HotelStaffList")                    
+               </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!-- InstanceEndEditable -->    
+</div>
+
+@*<script type="text/javascript">
+    var companyId = '@ViewBag.companyId';
+    $(function () {
+        $("#accordion").accordion({
+            collapsible: false,
+            autoHeight: false,
+            active: 1,
+            changestart: function (event, ui) {
+                if (event.currentTarget != undefined) {
+                    if (event.currentTarget.id == "ui-accordion-accordion-header-2") {
+                        if (window.location.href.toLowerCase().indexOf("calendarview") == -1) {
+                            window.location = "/calendarview/";
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#inputTime').timepicker({
+            ampm: true,
+            stepMinute: 15
+        });
+
+        $("#inputMonth").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dayNamesMin: $.datepicker._defaults.dayNamesShort
+        });
+
+        //createtopleftscroll();
+    });
+</script>
+<script type="text/javascript">
+
+    $('#divErrorReason').hide();
+    $('#divErrorPass').hide();
+
+    //script select employee
+    var employeelistcount = $('#employeeslist li').length;
+    var employeelistli = 1;
+
+    function btnemployeesdownreset() {
+        $('#employeeslistarrowdown').css('border-top-width', '1px');
+        $('#employeeslistarrowdown').css('border-top-color', '#999999');
+    }
+
+    $('#employees').click(function () {
+        $('#employeeslist').slideToggle('normal', function () {
+            if ($('#employeeslist').is(':hidden')) {
+                $('#employees').removeClass('schedulefavoriteactive');
+                $('#employees').addClass('schedulefavorite');
+                $('#employeeslistarrowdown').css('display', 'none');
+                $('#employeeslistarrowup').css('display', 'none');
+                $('#employeeslistarrowdown').css('border-top-color', '#999999');
+            } else {
+
+                $('#employees').removeClass('schedulefavorite');
+                $('#employees').addClass('schedulefavoriteactive');
+
+                if (employeelistcount >= 3) {
+                    $('#employeeslistarrowdown').css('display', 'block');
+                    btnemployeesdownreset();
+                }
+                else {
+                    $('#employeeslistarrowdown').css('display', 'none');
+                    $('#employeeslist').css('border-bottom', '1px solid #999999');
+                }
+
+            }
+        });
+    });
+
+    $("#employeeslist li").click(function () {
+        var index = $("#employeeslist li a").index($('a[class="active"]'));
+        if (index != -1) {
+            $("#employeeslist li a").eq(index).removeClass("active");
+        }
+        var objA = $("#employeeslist li a").eq($("#employeeslist li").index(this));
+        objA.addClass("active");
+        $("#employees").attr("title", objA.text()).text(objA.text());
+        //server code
+        var employeeId = objA.attr("value");
+        if (typeof employeeId == 'undefined') {
+            employeeId = 0;
+        }
+        $('#hdfEmployeeId').attr("value", employeeId);
+        $.get('@Url.Action("GetAppointmentByEmployee")', { employeeId: employeeId, profileId: companyId }, function (response) {
+            $('#divAppointment').html(response);
+        });
+    });
+
+    $('#employeeslistarrowdown').click(function () {
+        if (employeelistli < employeelistcount) {
+            $('#employeeslistarrowup').css('display', 'block');
+            $('#employeeslistarrowdown').css({ 'border-top-color': 'transparent', 'border-top-width': '0px' });
+            if ((employeelistli + 3) <= employeelistcount) {
+                $('#employeeslist li:nth-child(' + employeelistli + ')').slideToggle();
+                employeelistli++;
+                $('#employeeslistarrowup').show();
+            }
+        }
+        if (employeelistli + 3 > employeelistcount) {
+            $('#employeeslistarrowdown').hide();
+            $('#employeeslistarrowup').removeClass('schedulefavoritearrowup').addClass('schedulefavoritearrowup1');
+        }
+
+    });
+    $('#employeeslistarrowup').click(function () {
+        if (employeelistli > 1) {
+            if ((employeelistli + 3) >= 1) {
+                employeelistli--;
+                $('#employeeslist li:nth-child(' + employeelistli + ')').slideToggle();
+                $('#employeeslistarrowdown').show();
+                $('#employeeslistarrowup').removeClass('schedulefavoritearrowup1');
+                $('#employeeslistarrowup').addClass('schedulefavoritearrowup');
+            }
+        }
+        if (employeelistli == 1) {
+            $('#employeeslistarrowup').hide();
+            btnemployeesdownreset();
+        }
+
+    });
+
+    $('.calendarClass').click(function () {
+        window.location = "/CompanyAppointmentCalendar/index/" + $(this).attr('val');
+    });
+
+
+    //end script select employee
+    function modifyApp(value, empId, appId) {
+        if (value == '') return false;
+        //server code
+        var employeeId = empId.substring(6);
+        if (typeof employeeId == 'undefined') {
+            employeeId = 0;
+        }
+        var id = '#' + empId;
+        var obj = $(id);
+
+        $('#modifypopup').load("/appointment/LoadCompanyAppointment?appointmentID=" + appId);
+        showDialog('modifypopup');
+    }
+
+    function cancelApp(value, empId) {
+        if (value == '') return false;
+        //server code
+        $('#txtCancelReason').attr("value", '');
+        $('#txtpwd').attr("value", '');
+        var employeeId = $('#hdfEmployeeId').attr("value");
+        if (typeof employeeId == 'undefined') {
+            employeeId = 0;
+        }
+        var id = '#' + empId;
+
+        var obj = $(id);
+        $('#lbldatetime').text(obj.attr('datetime'));
+        $('#lblcustname').text(obj.attr('custname'));
+        $('#lblcompname').text(obj.attr('compname'));
+        $('#lblempname').text(obj.attr('empname'));
+        $('#lblsername').text(obj.attr('sername'));
+        $('#lblnote').text(obj.attr('note'));
+        $('#hdfAppointmentCode').attr('value', value);
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#cancelpopup').fadeIn(400);
+        $('#cancelpopup').css('top', ($('#lightBox').height() - $('#cancelpopup').height()) / 2);
+        $('#cancelpopup').css('left', ($('#lightBox').width() - $('#cancelpopup').width()) / 2);
+        $('#cancelpopup .btnClose').click(function () {
+            $('#cancelpopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+    }
+
+    //end script select employee
+    function actionApp(value, empId, appId) {
+        if (empId == 'Remove') {
+            $.get('@Url.Action("ActionAppointment")', { appId: appId, appCode: 'Remove', profileId: companyId }, function (response) {
+                $('#divAppointment').html(response);
+                $.get('@Url.Action("LoadMasterAgenda")', { profileId: companyId }, function (response) {
+                    var arr = response.split('#');
+                    $('#divNewApp').text(arr[0]);
+                    $('#divModApp').text(arr[1]);
+                    $('#divConApp').text(arr[2]);
+                    $('#divCanApp').text(arr[3]);
+                });
+            });
+        }
+        else if (empId == 'confirm' && value != '') {
+            $.get('@Url.Action("ActionAppointment")', { appId: appId, appCode: 'Confirm', profileId: companyId }, function (response) {
+                $('#divAppointment').html(response);
+                $.get('@Url.Action("LoadMasterAgenda")', { profileId: companyId }, function (response) {
+                    var arr = response.split('#');
+                    $('#divNewApp').text(arr[0]);
+                    $('#divModApp').text(arr[1]);
+                    $('#divConApp').text(arr[2]);
+                    $('#divCanApp').text(arr[3]);
+                });
+            });
+        }
+        return false;
+    }
+
+    $("#btnCancelApp").click(function () {
+        //server code
+        var employeeId = $('#hdfEmployeeId').attr("value");
+        if (typeof employeeId == 'undefined') {
+            employeeId = 0;
+        }
+        var appCode = $('#hdfAppointmentCode').attr("value");
+        var reason = $('#txtCancelReason').attr("value");
+        var password = $('#txtpwd').attr("value");
+        //check reason is not empty
+        var flag = true;
+        if (!reason || jQuery.trim(reason) == '') {
+            $('#divErrorReason').text('please input reason');
+            $('#divErrorReason').show();
+            flag = false;
+        }
+        else {
+            $('#divErrorReason').hide();
+        }
+        //check password is valid
+        if (!password || jQuery.trim(password) == '') {
+            $('#divErrorPass').text('please input password.');
+            $('#divErrorPass').show();
+            flag = false;
+        }
+        else {
+            $.get('@Url.Action("VerifyPassword")', { pass: password }, function (response) {
+                if (response.length != 0) {
+                    $('#divErrorPass').text(response);
+                    $('#divErrorPass').show();
+                    flag = false;
+                } else {
+                    if (!flag) return false;
+                    $('#divErrorPass').hide();
+                    if (appCode && jQuery.trim(appCode) != '') {
+                        $('#hdfEmployeeId').attr("value", employeeId);
+                        $.get('@Url.Action("CancelAppointment")', { employeeId: employeeId, appCode: appCode, reason: reason, pass: password }, function (response) {
+                            $('#divAppointment').html(response);
+                            $('#cancelpopup').fadeOut(400);
+                            $('#lightBox').fadeOut(400);
+                            $.get('@Url.Action("LoadMasterAgenda")', { profileId: companyId }, function (response) {
+                                var arr = response.split('#');
+                                $('#divNewApp').text(arr[0]);
+                                $('#divModApp').text(arr[1]);
+                                $('#divConApp').text(arr[2]);
+                                $('#divCanApp').text(arr[3]);
+                            });
+                        });
+
+                    }
+                }
+            });
+        }
+        return false;
+    });
+
+    function gotoCalendar(id) {
+        window.location = "/CompanyAppointmentCalendar/index/" + id;
+    }
+
+    function gotoStatus(status) {
+        $.get('@Url.Action("ActionStatus")', { status: status, profileId: companyId, nocache: getunixtime() }, function (response) {
+            $('#divAppointment').html(response);
+            $('.calendarClass').click(function () {
+                window.location = "/CompanyAppointmentCalendar/index/" + $(this).attr('val');
+            });
+        });
+
+        switch (status) {
+            case "app":
+                $("#liNew").removeClass("active");
+                $("#liMod").removeClass("active");
+                $("#liCon").removeClass("active");
+                $("#liCan").removeClass("active");
+                $("#liApp").addClass("active");
+                break;
+            case "new":
+                $("#liNew").addClass("active");
+                $("#liMod").removeClass("active");
+                $("#liCon").removeClass("active");
+                $("#liCan").removeClass("active");
+                $("#liApp").removeClass("active");
+                break;
+            case "mod":
+                $("#liMod").addClass("active");
+                $("#liNew").removeClass("active");
+                $("#liCon").removeClass("active");
+                $("#liCan").removeClass("active");
+                $("#liApp").removeClass("active");
+                break;
+            case "con":
+                $("#liCon").addClass("active");
+                $("#liNew").removeClass("active");
+                $("#liCan").removeClass("active");
+                $("#liMod").removeClass("active");
+                $("#liApp").removeClass("active");
+                break;
+            case "can":
+                $("#liCan").addClass("active");
+                $("#liMod").removeClass("active");
+                $("#liNew").removeClass("active");
+                $("#liCon").removeClass("active");
+
+                break;
+        }
+    }
+
+    $('#lnkmodify').click(function () {
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#modifypopup').fadeIn(400);
+        $('#modifypopup').css('top', ($('#lightBox').height() - $('#modifypopup').height()) / 2);
+        $('#modifypopup').css('left', ($('#lightBox').width() - $('#modifypopup').width()) / 2);
+        $('#modifypopup .btnClose, #closemodify').click(function () {
+            $('#modifypopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+    });
+    $('.groupSelectName select,.selectMinute select,#category').selectmenu();
+
+    $(document).ready(function () {
+        $('#divErrorReason').hide();
+        $('#divErrorPass').hide();
+        $("#accordion").accordion("option", "active", 1);
+    });
+
+    function getServicebyEmployeeId(id) {
+        var param = "companyEmployeeID=" + id;
+        commonGetAjax("Appointment", "LoadServiceEmployee", param, sethtmloption, setError);
+    }
+
+    function sethtmloption(result) {
+        var html = '';
+        for (var i = 0; i < result.length; i++) {
+            html += "<option value=\"" + result[i].serviceid + "\" selected=\"selected\">" + result[i].servicename + "</option>";
+        }
+        $("#servicetype").html(html);
+        $('select#servicetype').selectmenu();
+    }
+
+    function viewNote(appointmentId) {
+        $('#viewnotespopup').html("");
+        $("#viewnotespopup").load("/appointment/LoadAppointmentNotePopup?appointmentID=" + appointmentId + "&nocache=" + getunixtime(), function () {
+            showDialog('viewnotespopup');
+            lengthofviewnote();
+        });
+    }
+</script>
+*@

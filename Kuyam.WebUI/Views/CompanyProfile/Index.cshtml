@@ -1,0 +1,963 @@
+﻿@using Kuyam.Database;
+@model Kuyam.WebUI.Models.ProfileCompaniesModels
+@{
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    ViewBag.Title = "Company Profile Schedule";
+    DateTime beginOfWeek = DateTime.Now;
+    DateTime endOfWeek = beginOfWeek.AddDays(6);
+    if (beginOfWeek.Month == endOfWeek.Month)
+    {
+        ViewBag.DateRange = beginOfWeek.ToString("MMM").ToLower() + " " + beginOfWeek.Day + " - " + endOfWeek.Day + "," + beginOfWeek.Year;
+    }
+    else
+    {
+        ViewBag.DateRange = beginOfWeek.ToString("MMM").ToLower() + " " + beginOfWeek.Day + " - " + endOfWeek.ToString("MMM").ToLower() + " " + endOfWeek.Day + "," + beginOfWeek.Year;
+    }
+    var phone = @Model.CompanyPhone ?? "";
+}
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+
+@*<script src="http://html5.kaltura.org/js" type="text/javascript" />
+    <script type="text/javascript">
+        mw.setConfig('EmbedPlayer.EnableIpadHTMLControls', false);
+    </script>*@
+<script src="@Url.Content("~/Scripts/js/kWidget.getSources.js")" type="text/javascript"></script>
+<!-- InstanceBeginEditable name="content" -->
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight">
+            <div class="profileschedule">
+                <div class="profile">
+                    <div style="line-height: 21px;">
+                        <a href="@Url.Content("~/company/companysearch/0")" id="favorite" class="backtosearch" title="back to search results">
+                            &lt; back to search results
+                        </a>
+                        <div class="clear10">
+                        </div>
+                        <h2 class="texttitle">
+                            @Model.CompanyName
+                        </h2>
+                        <h3 class="textlocation">
+                            @Model.Stress.ToLower(), @Model.State.ToLower() @Model.Zip.ToLower(). @Kuyam.Domain.UtilityHelper.FormatPhone(@phone.ToLower())
+                        </h3>
+                    </div>
+                    <div class="clear6">
+                    </div>
+                    <div class="profileimage">
+                        @{
+                            if (string.IsNullOrEmpty(ViewBag.BannerURL))
+                            {
+                                <div class="divphoto">
+                                    <img alt="wish salon &amp; spa" src="../../images/imgProfile.jpg" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="divphoto">
+                                    <img alt="@Model.CompanyName.ToLower()" src="@ViewBag.BannerURL" />
+                                </div>
+                            }
+
+                            if (!string.IsNullOrEmpty(ViewBag.VideoURL))
+                            {
+                                <div class="divvideo">
+                                    <div id="formobile" class="displaynone">
+                                        @*<video height="143" width="231" controls="controls">
+                                                <source src="http://cdnbakmi.kaltura.com/p/1094702/sp/109470200/playManifest/entryId/0_6ru2uvab/flavorId/0_xrz7lcmi/format/url/protocol/http/a.mp4" type="video/mp4">
+                                            </video>*@
+                                    </div>
+                                    <div id="forweb">
+                                        @Html.Raw(@ViewBag.VideoURL)
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="divchoose">
+                                    <a href="#" id="tabvideo" class="tabvideo vactive"></a><a href="#" id="tabphoto"
+                                                                                              class="tabphoto">photo</a>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="profileinfo">
+                        <div>
+                            <a href="@Kuyam.Domain.UtilityHelper.UrlFormat(@Model.CompanyUrl)" target="_blank" class="weburl" title="@Model.CompanyUrl">@Kuyam.Domain.UtilityHelper.TruncateText(string.IsNullOrWhiteSpace(@Model.CompanyUrl) ? "" : @Model.CompanyUrl.ToLower(), 25)</a>
+                            <div class="clear7">
+                            </div>
+                            @{
+
+                                decimal totalReview = 0;
+                                decimal valueRanting = 0;
+                                decimal agvValue = 0;
+                                if (Model.ListServiceCompany != null && Model.ListServiceCompany.Count > 0)
+                                {
+                                    foreach (ServiceCompany item in Model.ListServiceCompany)
+                                    {
+                                        totalReview += item.Ratings.Count;
+                                        valueRanting += item.Ratings.Sum(m => m.RatingValue).Value;
+                                    }
+                                }
+                                if (totalReview > 0)
+                                {
+                                    agvValue = Math.Round(valueRanting / totalReview);
+                                }
+                                switch (agvValue.ToString())
+                                {
+                                    case "0":
+                                        {
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            break;
+                                        }
+                                    case "1":
+                                        {
+                                            <span class="greenstar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            break;
+                                        }
+                                    case "2":
+                                        {
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            break;
+                                        }
+                                    case "3":
+                                        {
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="graystar"></span>
+                                            <span class="graystar"></span>
+                                            break;
+                                        }
+                                    case "4":
+                                        {
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="graystar"></span>
+                                            break;
+                                        }
+                                    case "5":
+                                        {
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            <span class="greenstar"></span>
+                                            break;
+                                        }
+                                }
+                                <a href="javascript:viewReview('@Model.ProfileCompanyID')" class="review" id="review">(@totalReview reviews)</a>
+                            }
+                        </div>
+                        <div class="clear5">
+                        </div>
+                        <div class="businesshours">
+                            <div class="bstitle">
+                                business hours
+                            </div>
+                            <div class="clear5">
+                            </div>
+                            <div class="timescroll">
+                                @{ string dayOfWeek; }
+                                @foreach (var item in @Model.ListHours)
+                                {
+                                    { dayOfWeek = @item.DayOfWeek.ToString(); }
+                                    string fromDate;
+                                    if (dayOfWeek.Length > 1)
+                                    {
+                                        string start = ((DayOfWeek)Int32.Parse(dayOfWeek.Substring(0, 1))).ToString().ToLower().Substring(0, 3);
+                                        string end = ((DayOfWeek)Int32.Parse(dayOfWeek.Substring(dayOfWeek.Length - 1, 1))).ToString().ToLower().Substring(0, 3);
+                                        fromDate = string.Format("{0}-{1}", start, end);
+                                    }
+                                    else
+                                    {
+                                        fromDate = ((DayOfWeek)item.DayOfWeek).ToString().ToLower().Substring(0, 3);
+                                    }
+
+                                    //string fromTime = string.Empty;
+                                    //if (item.FromHour.Hours > 12)
+                                    //{
+                                    //    fromTime = string.Format("{0}:{1}{2}", item.FromHour.Hours - 12, item.FromHour.Minutes.ToString("00"), "pm");
+                                    //}
+                                    //else
+                                    //{
+                                    //    fromTime = string.Format("{0}:{1}{2}", item.FromHour.Hours, item.FromHour.Minutes.ToString("00"), "am");
+                                    //}
+
+                                    //string toTime;
+                                    //if (item.ToHour.Hours > 12)
+                                    //{
+                                    //    toTime = string.Format("{0}:{1}{2}", item.ToHour.Hours - 12, item.FromHour.Minutes.ToString("00"), "pm");
+                                    //}
+                                    //else
+                                    //{
+                                    //    toTime = string.Format("{0}:{1}{2}", item.ToHour.Hours, item.FromHour.Minutes.ToString("00"), "am");
+                                    //}
+
+                                    <div class="bsdate">@fromDate</div>
+                                    <div class="bshour">@String.Format("{0:t}", new DateTime().Add(item.FromHour)).ToLower() - @String.Format("{0:t}", new DateTime().Add(item.ToHour)).ToLower()</div>
+                                    <div class="clear5">
+                                    </div>
+                                }
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="profilemap">
+                    <div>
+                        <a href="#" class="addfavaritesactive" id="addfavarites" title="add to favorites">
+                            add
+                            to favorites
+                        </a>
+                        <div class="addfavarites" id="favarited" title="favorite" style="">
+                            favorite
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="gmap">
+                        <div id="map_canvas">
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="profilechart">
+                <div class="chartselect">
+                    <div class="title">
+                        select an employee to view their calendar:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="fleft">
+                        <div id="employee">
+                            <select name="selectemployee" id="selectemployee" class="selectmessage">
+                                <option value='0'>select an employee</option>
+                                @{
+                                    foreach (var emp in @Model.ListEmployees)
+                                    {
+                                        <option value='@emp.EmployeeID'>@emp.EmployeeName.ToLower()</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="divCharttext" class="charttext">
+                    <div class="cttitle">
+                        list of services:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="ctcontent" id="divCtContent">
+                    </div>
+                </div>
+                <div class="clear14">
+                </div>
+                <div id="divThisweek" class="thisweek">
+                    <div class="chartavailability">
+                        <span>availability this week </span>(click time to schedule)
+                    </div>
+                </div>
+            </div>
+            <div class="clear10">
+            </div>
+            <div id="nonselectedemployee">
+                <div class="nonselected">
+                    <div class="blueuparrow">
+                    </div>
+                    <ul>
+                        <li>select an employee above to view their availability calendar</li>
+                        <li>click on a time that works for you</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="divCalendarList" class="calendarlist">
+                <div class="tblhead">
+                    <a class="linktoday" href="#" title="Today">today</a> @ViewBag.DateRange
+                    <div class="chartavailhour">
+                        <div class="seeyourcalendar">
+                            see your calendar:
+                        </div>
+                        <div id="hfDivOn" class="divon divactive">
+                            <a href="#" title="on" id="lnkon">on</a>
+                        </div>
+                        <div id="hfDivOff" class="divoff">
+                            <a href="#" title="off" id="lnkoff">off</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tbl">
+                    <div class="col0">
+                        <div class="coltime">
+                            &nbsp;
+                        </div>
+                        <div class="coltime transparentbordertop">
+                            7am
+                        </div>
+                        <div class="coltime">
+                            8am
+                        </div>
+                        <div class="coltime">
+                            9am
+                        </div>
+                        <div class="coltime">
+                            10am
+                        </div>
+                        <div class="coltime">
+                            11am
+                        </div>
+                        <div class="coltime">
+                            12pm
+                        </div>
+                        <div class="coltime">
+                            1pm
+                        </div>
+                        <div class="coltime">
+                            2pm
+                        </div>
+                        <div class="coltime">
+                            3pm
+                        </div>
+                        <div class="coltime">
+                            4pm
+                        </div>
+                        <div class="coltime">
+                            5pm
+                        </div>
+                        <div class="coltime">
+                            6pm
+                        </div>
+                        <div class="coltime">
+                            7pm
+                        </div>
+                        <div class="coltime">
+                            8pm
+                        </div>
+                        <div class="coltime">
+                            9pm
+                        </div>
+                        <div class="coltime">
+                            10pm
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div id="serviceText">
+                        @Html.Raw(@ViewBag.Services)
+                    </div>
+                    <div class="clear" style="border-top: 1px solid #C8D434;">
+                    </div>
+                </div>
+            </div>
+            <div class="clear23">
+            </div>
+            <div id="lightBox" class="lightBox z499">
+            </div>
+            <div id="selectservice" class="selectservicepopup">
+                <div class="contentPopup">
+                    <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+                    <h3>
+                        you’ve selected:
+                    </h3>
+                    <div class="clear">
+                    </div>
+                    <div class="ybox">
+                        <div class="ycomname" id="divYcomname">@Model.CompanyName.ToLower()</div>
+                        <div class="clear">
+                        </div>
+                        <div class="yname" id="divYname">
+                            george smith
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="ystart" id="divYstart">
+                            aa
+                        </div>
+                        <div class="ystarttime" id="divYstarttime">
+                            12:00pm
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="yend" id="divYend">
+                            aa
+                        </div>
+                        <div class="yendtime" id="divYendtime">
+                            <!--Add time of select service here. Do not add into span tag-->
+                            @*<span>(select service)</span>*@
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <h3>
+                        to book, select from
+                        <label id="divName">
+                        </label>
+                        ’s services:
+                    </h3>
+                    <div class="clear h7">
+                    </div>
+                    <div class="selectend">
+                        <select name="endtime" id="endtime" class="endtime"></select>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="ydescript" id="divYdescript">
+                        &nbsp; <span style="color: red" id='spanError'></span>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <a href="javascript:void(0);" class="btnbook" id="bookme" title="continue booking">
+                        continue
+                        booking
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <input type="hidden" id="profileid" value='@Model.ProfileCompanyID' />
+        <input type="hidden" id="checkFavorite" value='@Model.Favorite' />
+        <input id="hdfActiveOnOff" value="on" type="hidden" />
+        <input id="hdfListService" value="" type="hidden" />
+        <input id="hdfCurrentSlot" value="" type="hidden" />
+    </div>
+    <!-- InstanceEndEditable -->
+</div>
+<div id="informedPopup" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            another user is scheduling the time. it may become available, so keep an eye for
+            it.
+        </p>
+    </div>
+</div>
+<div id="viewReviewpopup" class="viewnotespopup">
+</div>
+<script type="text/javascript">
+
+    function loadSources(partnerId,entryId){
+
+        kWidget.getSources({
+            'partnerId':partnerId,'entryId':entryId,
+            'callback': function( data ){
+
+                for( var i in data['sources']){
+                    var source = data['sources'][i];
+                    //alert(source['src']);
+                    //alert(source['data-flavorid']);
+                    if(source['data-flavorid']=='iPad'){
+                        $("#formobile").append("<video height=\"134\" width=\"231\" controls=\"controls\"><source src=\""+ source['src'] + "\" type=\"video/mp4\"></video>");
+                        return;
+                    }
+                }
+
+            }
+        })
+    }
+
+    function AppointmentPreview(value) {
+        $.post("/AppointmentPreview/" + value);
+    };
+
+    var employee;
+    var flag=true;
+    //Get Defautl values
+    $(document).ready(function () {
+        kalturaPartnerId = '@ViewBag.PartnerId'
+        var  kattalraentryId ='@ViewBag.EntryId'
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        if (agentID) {
+            $("#formobile").show();
+            $("#forweb").hide();
+            loadSources(kalturaPartnerId,kattalraentryId);
+        }
+
+
+        if ($(".bsdate").val()!="") {
+            $(".businesshours").hide();
+        };
+
+        $(".chartavailhour div").click(function(){
+            $(".chartavailhour div").removeClass("divactive");
+            $(this).addClass("divactive");
+        });
+
+        $("#accordion").accordion({
+            changestart: function (event, ui) {
+                if (event.currentTarget.id == "ui-accordion-accordion-header-2") {
+                    window.location = "/calendarview/";
+                    return false;
+                }
+            }
+        });
+
+        $('select#time').selectmenu();
+        $('select#within').selectmenu();
+        $('select#price').selectmenu();
+        $('select#sortBy').selectmenu();
+
+        employee = $('select#selectemployee').selectmenu().val("0");
+        $("#duration").html("0");
+        $("#price").html("0");
+        $("#attendees").html("0");
+
+        $("div.yellowavailable").mouseover(function(){
+            $(this)[0].innerHTML = $(this).attr('val');
+        });
+
+        $("div.yellowavailable").mouseout(function(){
+            $(this)[0].innerHTML = "";
+        });
+
+        $("#hfDivOn").click(function() {
+            if ($("#hdfActiveOnOff").attr("value") != "on") {
+                $("#hdfActiveOnOff").attr("value", 'on');
+                populateServiceHour($("#selectemployee option:selected").val(), 0, true);
+                return false;
+            }
+        });
+
+        $("#hfDivOff").click(function() {
+            if ($("#hdfActiveOnOff").attr("value") != "off") {
+                $("#hdfActiveOnOff").attr("value", 'off');
+                populateServiceHour($("#selectemployee option:selected").val(), 0, false);
+                return false;
+            }
+        });
+
+        $('#tabvideo').click(function(){
+            $(this).addClass("vactive");
+            $("#tabphoto").removeClass("pactive");
+            $(".divphoto").hide();
+            $(".divvideo").show();
+        });
+
+        $('#tabphoto').click(function(){
+            $(this).addClass("pactive");
+            $("#tabvideo").removeClass("vactive");
+            $(".divphoto").show();
+            $(".divvideo").hide();
+        });
+
+        $("#description").html("");
+
+        $('#favarited').click(function () {
+            var valu2 = $('#profileid').val();
+            var searchParameters = { profileid: valu2 };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/CompanyProfile/RemoveFromFavorite/'
+                })
+                .success(function (result) {
+                    $('#favarited').hide();
+                    $('#addfavarites').show();
+                    var href=$('#favorite a[href="/CompanyProfile/index/'+valu2+'"]');
+                    if(href && href.parent()){
+                        $(href.parent()).hide();
+                    }
+                })
+                .error(function (error) {
+                    $('#favarited').hide();
+                    $('#addfavarites').show();
+                    reloadFavorites();
+                });
+        });
+
+
+        if ($('#checkFavorite').val() == "True") {
+            $('#favarited').show();
+            $('#addfavarites').hide();
+        } else {
+            $('#favarited').hide();
+            $('#addfavarites').show();
+        }
+
+
+    });
+
+    $(function () {
+
+        $("#datepicker").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dayNamesMin: $.datepicker._defaults.dayNamesShort
+        });
+
+
+    });
+
+    //
+    //Favorite
+    $('#addfavarites').click(function () {
+        //        var valu1 = $('#custid').val();
+        var valu2 = $('#profileid').val();
+
+        var searchParameters = { profileid: valu2 };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/CompanyProfile/AddToFavorite/'
+            })
+            .success(function (result) {
+                $('#favarited').show();
+                $('#addfavarites').hide();
+                reloadFavorites();
+            })
+
+            .error(function (error) {
+
+                alert('error');
+            });
+    });
+    //    Get service info
+    function populateService(serviceId) {
+
+        if (typeof serviceId == 'undefined') {
+            return;
+        }
+
+        $.get('@Url.Action("GetServicesInfo")', { serviceId: serviceId }, function (response) {
+            $("#duration").html(response.Duration);
+            $("#price").html(response.Price);
+            $("#attendees").html(response.AttendeesNumber);
+            $("#description").html(response.Description);
+            $("div.yellowavailable").mouseover(function(){
+                $(this)[0].innerHTML = $(this).attr('val');
+            });
+
+            $("div.yellowavailable").mouseout(function(){
+                $(this)[0].innerHTML = "";
+            });
+            if ($('#selectservices').val()==-1) {
+                $(".charttext span").hide();
+            }else{
+                $(".charttext span").show();
+            }
+        });
+    }
+
+
+
+    function populateEmployees(serviceId, callback) {
+
+        $('#selectemployee').empty();
+        if (typeof serviceId == 'undefined') {
+            return;
+        }
+        $.get('@Url.Action("GetEmployeeInfo")', { serviceId: serviceId }, function (response) {
+            addSelectListItems($('#selectemployee'), response);
+            if (callback) { callback(); }
+        });
+    }
+
+    //    Get services hour
+    $('#selectemployee').change(function () {
+        populateServiceHour($("#selectemployee option:selected").val(), 0, $("#hdfActiveOnOff").attr("value") == "on");
+        if ($(this).val() == "0"){
+            $(document).scrollTop(0);
+        }else{
+            $(document).scrollTop($('.profilechart').position().top - 60);
+        }
+    });
+
+    function populateServiceHour(employeeId,serviceId,flag) {
+        if (typeof serviceId == 'undefined' || typeof employeeId == 'undefined' || employeeId == 0) {
+            $('#divThisweek').hide();
+            $('#divCharttext').hide();
+            $('#divCalendarList').hide();
+            $('#nonselectedemployee').show();
+            return;
+        }
+        $.get('@Url.Action("GetServiceHour")', { employeeId: employeeId, servicesId: serviceId, flag: flag }, function(response) {
+            if (response.length == 0) {
+                $("#serviceText").html('No Results Found');
+                return;
+            }
+            $('#divThisweek').show();
+            $('#divCharttext').show();
+            $('#divCalendarList').show();
+            $('#nonselectedemployee').hide();
+            $("#serviceText").html(response);
+
+            updatetopleftscroll();
+            $(".boxSearch a#category-button").hide();
+            $('select#category').selectmenu();
+            $("#accordion").accordion({
+                collapsible: true,
+                autoHeight: false
+            });
+            $("#datepicker").datepicker("destroy");
+            $("#datepicker").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dayNamesMin: $.datepicker._defaults.dayNamesShort,
+                onSelect: function(dateStr) {
+                    location.href = "/CalendarView?tick=" + Date.parse(dateStr);
+                }
+            });
+
+            $("#accordion").accordion({
+                changestart: function (event, ui) {
+                    if (event.currentTarget.id == "ui-accordion-accordion-header-2") {
+                        window.location = "/calendarview/";
+                        //                event.stop();
+                        return false;
+                    }
+                }
+            });
+
+            $('.pannelappointments').click(function(e) {
+                self.location.href = "/Appointment/";
+            });
+
+            $("#searchByName").keypress(function (e) {
+                kCode = e.keyCode || e.charCode;
+                if (kCode == 13) {
+                    searchProfileCompanyWithName();
+                    return false;
+                }
+            });
+
+            $("div.yellowavailable").mouseover(function() {
+                $(this)[0].innerHTML = $(this).attr('val');
+            });
+
+            $("div.yellowavailable").mouseout(function() {
+                $(this)[0].innerHTML = "";
+            });
+            $('#favarited').click(function () {
+                var valu2 = $('#profileid').val();
+                var searchParameters = { profileid: valu2 };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(searchParameters),
+                        dataType: 'html',
+                        url: '/CompanyProfile/RemoveFromFavorite/'
+                    })
+                    .success(function (result) {
+                        $('#favarited').hide();
+                        $('#addfavarites').show();
+                        reloadFavorites();
+                    })
+                    .error(function (error) {
+                        $('#favarited').hide();
+                        $('#addfavarites').show();
+                        reloadFavorites();
+                    });
+            });
+            $('.linksignout').click(function (e) {
+                logout();
+            });
+
+            $('.btndiscover').click(function (e) {
+                var selected = document.getElementById('category');
+                var categoryId = selected.options[selected.selectedIndex].value;
+                var url = "/company/companysearch/" + categoryId;
+                self.window.location = url;
+                return false;
+            });
+            $("div.yellowavailablepending").click(function(){
+                showDialog('informedPopup');
+                window.setTimeout("hideDialog('informedPopup');",5000);
+            });
+
+            $("div.yellowavailable").click(function(){
+
+                var startDate = $(this).attr('expecteddate');
+                var start = 'start: ' + $(this).attr('start');
+                var end = 'end: ';
+                var startime = $(this).attr('starttime');
+                var expectDate = new Date(startDate);
+                $("#hdfCurrentSlot").attr("value", expectDate);
+                $.get('@Url.Action("GetServiceByEmployee")', { employeeId: employeeId, expectedDate: startDate}, function(response2) {
+                    if (response2.length == 0) {
+                        return;
+                    }
+                    $('#endtime').html(response2);
+                    $('#divYname').text($("#selectemployee option:selected").text());
+                    $('#divName').text($("#selectemployee option:selected").text());
+                    //                    $('#divYcomname').text($("#endtime option:selected").attr('txt'));
+
+                    $('#divYstart').text(start);
+                    $('#divYend').text(end);
+                    $('#divYstarttime').text(startime);
+                    $('#lightBox').css('opacity', '0.3').fadeIn(400);
+                    $('#selectservice').fadeIn(400);
+                    $('#selectservice').css('top', ($('#lightBox').height() - $('#selectservice').height()) / 2);
+                    $('#selectservice').css('left', ($('#lightBox').width() - $('#selectservice').width()) / 2);
+                    $("body").css({ overflow: 'hidden' });
+                    $('#selectservice .btnClose').click(function () {
+                        $('#selectservice').fadeOut(400);
+                        $('#lightBox').fadeOut(400);
+                        $("body").css({ overflow: 'auto' });
+                    });
+                    $('select#endtime').selectmenu();
+                    $('#endtime').change(function(){
+                        $('#spanError').text('');
+                        //$('#divYcomname').text($("#endtime option:selected").attr('txt'));
+                        $('#divYdescript').text($("#endtime option:selected").attr('desc'));
+                        //                        $('#divName').text($("#endtime option:selected").attr('txt'));
+                        if ($("#endtime option:selected").attr('value')!= '0') {
+                            var duration = $("#endtime option:selected").attr('duration');
+                            var currentslot = new Date($("#hdfCurrentSlot").attr("value"));
+                            currentslot.setMinutes(expectDate.getMinutes() + duration);
+                            var a_p = "";
+                            var curr_hour = currentslot.getHours();
+
+                            if (curr_hour < 12) {
+                                a_p = "am";
+                            } else {
+                                a_p = "pm";
+                            }
+                            if (curr_hour == 0) {
+                                curr_hour = 12;
+                            }
+                            if (curr_hour > 12) {
+                                curr_hour = curr_hour - 12;
+                            }
+                            var curr_min = currentslot.getMinutes();
+                            if (curr_min=="0") {curr_min='0'+curr_min;}
+                            $('#divYendtime').text(curr_hour + ":" + curr_min + a_p);
+                        }
+                        else {
+                            $('#divYendtime').text('');
+                        }
+                    });
+
+                    $('#bookme').click(function () {
+                        var code = $("#endtime option:selected").attr('code');
+                        if (code == '0' || code == '') {
+                            $('#spanError').text('Please select a service');
+                            return;
+                        }
+                        var href = "/AppointmentPreview/Index?genre=" + $("#endtime option:selected").attr('code');
+                        window.location = href;
+                    });
+
+
+                });
+            });
+        });
+
+        $.get('@Url.Action("GetServiceList")', { employeeId: employeeId}, function(response) {
+            if (response.length == 0) {
+                $('#divCtContent').text('no services found');
+                return;
+            }
+            $('#divCtContent').text(response);
+        });
+
+
+        // createtopleftscroll();
+    }
+
+    function addSelectListItems(selectList, results) {
+        alert("aa");
+        selectList.empty();
+        if (results.length == 0) {
+            selectList.html('<option value="-1">any employee</option>');
+            return;
+        }
+        selectList.append($("<option></option>")
+                .attr("value", "0")
+                .attr("selected", true)
+                .text("any employee"));
+
+        if (results.length == 1) {
+            selectList
+                .append($("<option></option>")
+                        .attr("value", results[0].Id)
+//                    .attr("selected", true)
+                        .text(results[0].Name));
+            selectList.change();
+            return;
+        }
+        $.each(results, function (i, value) {
+            selectList
+                .append($("<option></option>")
+                        .attr("value", value.I3d)
+                        .text(value.Name));
+        });
+    }
+
+    var map;
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(@Model.Latitude,@Model.Longitude);
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var myLatLng = new google.maps.LatLng(@Model.Latitude,@Model.Longitude);
+        var beachMarker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function  reloadFavorites(){
+        commonGetAjax("CompanyProfile", "GetFavorite", "", setFavoritesSuccess, setError);
+    }
+
+    function setFavoritesSuccess(result){
+        var sthtml="";
+        for( var i=0; i< result.length;i++){
+            sthtml+='<li><a href="/CompanyProfile/index/'+result[i].ProfileID+'" title="'+result[i].Name +'">'+ truncateText(result[i].Name,14)+'</a></li>';
+        }
+        $("#reloaddivfavorite #favorite").html(sthtml);
+    }
+
+    function truncateText(input,length){
+        if(input.length<=length)
+            return input.toLowerCase();
+        return input.substring(0, length).toLowerCase() + "...";
+    }
+
+    function viewReview(profileId) {
+        //alert(profileId);
+        $('#viewReviewpopup').html("");
+        $("#viewReviewpopup").load("/Company/ReviewDetail?profileId=" + profileId + "&nocache=" + getunixtime(), function () {
+            showDialog('viewReviewpopup');
+            //lengthofviewnote();
+        });
+    }
+
+</script>

@@ -1,0 +1,779 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@{
+    ViewBag.Title = "Appointment Preview";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+@{
+    ProfileCompany company = ViewBag.ProfileCompany;
+    var appointmentservice = EngineContext.Current.Resolve<IAppointmentService>();
+    List<Appointment> lstAppointment = appointmentservice.GetListAppointmentByCustID(Kuyam.WebUI.Models.MySession.CustID);
+    List<ProfileCompany> favList = ProfileCompany.GetFavoriteListByCustID(Kuyam.WebUI.Models.MySession.CustID);
+    DateTime beginOfWeek = DateTime.Now;
+    DateTime endOfWeek = beginOfWeek.AddDays(6);
+    string profileId = company != null ? company.ProfileID.ToString() : "0";
+    string resetRef = string.Format("/companyprofile/index/{0}", profileId);
+    string dateTime = String.Format("{0:ddd MMM d}", @ViewBag.StartTime);
+    string startTime = String.Format("{0:t}", @ViewBag.StartHour).Replace(" ", string.Empty).ToLower();
+    string endTime = String.Format("{0:t}", @ViewBag.EndHour).Replace(" ", string.Empty).ToLower();
+    string calendarHeader = string.Empty;
+    if (beginOfWeek.Month == endOfWeek.Month)
+    {
+        calendarHeader = beginOfWeek.ToString("MMM").ToLower() + " " + beginOfWeek.Day + " - " + endOfWeek.Day + "," + beginOfWeek.Year;
+    }
+    else
+    {
+        calendarHeader = beginOfWeek.ToString("MMM").ToLower() + " " + beginOfWeek.Day + " - " + endOfWeek.ToString("MMM").ToLower() + " " + endOfWeek.Day + "," + beginOfWeek.Year;
+    }
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div class="colLeft menuLeft">
+            <div class="scroll">
+                <div id="accordion">
+                    <h3 title="schedule">
+                        schedule</h3>
+                    <div>
+                        <div class="panelDisplay appointmentreview">
+                            <div class="apcompany">
+                                appointment</div>
+                            <div class="apreset">
+                                <a href="@resetRef">reset</a></div>
+                            <div class="clear4">
+                            </div>
+                            <div class="checkoutinfobox">
+                                <div class="checkoutinfo" style="background-color: White;">
+                                    <div>
+                                        <div class="checkoutcalendar">
+                                            <span class="cktitle">calendar:</span><br />
+                                            @ViewBag.UserName
+                                        </div>
+                                        <div class="checkoutemployee">
+                                            <span class="cktitle">employee:</span><br />
+                                            @ViewBag.Employee
+                                        </div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="serviceinfo ckservice">
+                                        <span class="cktitle">service:</span><br />
+                                        @ViewBag.Servicename<br />
+                                        <div>
+                                            @ViewBag.Detail
+                                        </div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="serviceinfo cktime">
+                                        <span class="cktitle">time:</span><br />
+                                        @dateTime.ToLower()<br />
+                                        @startTime - @endTime
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="btncheckout">
+                                <input type="button" title="proceed to checkout" class="btnnext appointmentPreViewNext" />
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="timecontent">
+                                <p class="lefttime countdownclock">
+                                    10:00</p>
+                                <p class="ptime">
+                                    please complete your request in 10:00 minutes. otherwise this time will be released
+                                    to others.
+                                </p>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 title="appointments">
+                        appointments</h3>
+                    <div>
+                        @if (lstAppointment != null)
+                        {
+                            foreach (Appointment item in lstAppointment)
+                            {
+                            <div id="@item.AppointmentID" class="pannelappointments">
+                                <div class="pending">
+                                    @if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Pending)
+                                    {
+                                        <div class="top">
+                                            <span class="icon"></span>pending confirmation</div>
+                                    }
+                                    else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Confirmed)
+                                    {
+                                        <div class="top">
+                                            <span class="icon"></span>confirmed</div>
+                                    }
+                                    else if ((Types.AppointmentStatus)item.AppointmentStatusID == Types.AppointmentStatus.Modified)
+                                    {
+                                        <div class="top">
+                                            <span class="icon"></span>modified time
+                                        </div>   
+                                    }
+                                    <div class="center">
+                                        <div class="info">
+                                            <h6>@String.Format("{0:t}", item.Start) @String.Format("{0:ddd MMM d}", item.Start)</h6>
+                                            @if (item.ServiceCompany != null && item.ServiceCompany.ProfileCompany != null)
+                                            {
+                                                @item.ServiceCompany.ProfileCompany.Name
+                                            }
+                                        </div>
+                                        <a href="#" class="linkdetail" title="detail"></a>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                    <div class="bottom">
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        }
+                    </div>
+                    <h3 title="calendar">
+                        calendar</h3>
+                    <div>
+                        <div id="datepicker">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="colRight">
+            <div class="appointmentreviewright">
+                <div class="divbacktosearch">
+                    <a href="#" class="backtosearch" onclick="javascript:goback();" title="back to company
+                    profile">&lt; back to company profile</a>
+                </div>
+                <div class="nextschedule">
+                    <strong>appointment preview</strong><br />
+                    <i>click "next" to schedule</i>
+                </div>
+                <div class="clear6">
+                </div>
+                <div class="appointmentcalendar">
+                    <div class="calendarrow1">
+                        <div class="calendarpaging">
+                            <a href="#" class="calendarbtntoday" title="Today">today</a>
+                        </div>
+                        <div class="calendarcurrent">
+                            @calendarHeader
+                        </div>
+                        <div class="calendartime">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="apcalendar">
+                        <div class="apcalendarcol time">
+                            <div class="nonbotapcalendaritem">
+                            </div>
+                            <div class="timetext">
+                                7am
+                            </div>
+                            <div class="timetext">
+                                8am
+                            </div>
+                            <div class="timetext">
+                                9am
+                            </div>
+                            <div class="timetext">
+                                10am
+                            </div>
+                            <div class="timetext">
+                                11am
+                            </div>
+                            <div class="timetext">
+                                12pm
+                            </div>
+                            <div class="timetext">
+                                1pm
+                            </div>
+                            <div class="nonbottimetext">
+                                2pm
+                            </div>
+                            <div class="timetext">
+                                3pm
+                            </div>
+                            <div class="timetext">
+                                4pm
+                            </div>
+                            <div class="timetext">
+                                5pm
+                            </div>
+                            <div class="nonbottimetext">
+                                6pm
+                            </div>
+                            <div class="timetext">
+                                7pm
+                            </div>
+                            <div class="timetext">
+                                8pm
+                            </div>
+                            <div class="timetext">
+                                9pm
+                            </div>
+                            <div class="timetext">
+                                10pm
+                            </div>
+                        </div>
+                        @Html.Raw(@ViewBag.Services)
+                    </div>
+                    <div class="clear15">
+                    </div>
+                    <div class="viewingcalendar">
+                        <div>
+                            <span class="viewingtext">viewing calendars:</span>
+                            @{
+                                if (ViewBag.IsGoogleConnected)
+                                {
+                                <a href="#" title="google calendar" id="ggcalendar" ispopup="true"><span class="viewinggcal">
+                                </span></a>
+                                }
+                                else
+                                {
+                                <a href="#" title="google calendar" id="ggcalendar" ispopup="false"><span class="viewinggcal">
+                                </span></a>
+                                }
+                            }
+                            <a href="#" title="kuyam appointment" id="kyapp"><span class="viewingkuyamappointment">
+                            </span></a>
+                            @{
+                                if (ViewBag.IsFBConnected)
+                                {
+                                <a href="#" title="facebook events" id="fbevents" ispopup="true"><span class="viewingfbappointment">
+                                </span></a>
+                                }
+                                else
+                                {
+                                <a href="#" title="facebook events" id="fbevents" ispopup="false"><span class="viewingfbappointment">
+                                </span></a>
+                                }
+                            }
+                            <a href="#" title="iCal" id="icalapp"><span class="viewingicalappointment"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="newpayment" class="comfirmationpopup checkoutpopup newcheckoutpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('newpayment');"
+            title="Close"></a>
+        <div class="newcheckout">
+            <div class="newcheckoutcol1">
+                <h3>
+                    appointment summary:</h3>
+                <div class="clear8">
+                </div>
+                <div class="blueinfo">
+                    <div class="brow">
+                        <div class="bcol1" style="text-transform: capitalize;">
+                            @company.Name
+                        </div>
+                        <div class="bcol2">
+                            &nbsp;
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="brow">
+                        <div class="bcol1" style="text-transform: capitalize;">
+                            @ViewBag.Employee
+                        </div>
+                        <div class="bcol2" style="text-transform: capitalize;">
+                            for @ViewBag.UserName
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="brow">
+                        <div class="bcol1">
+                            @dateTime
+                        </div>
+                        <div class="bcol2">
+                            @startTime - @endTime
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="brow">
+                        <div class="bcol1">
+                            @ViewBag.ServicenamePopup
+                        </div>
+                        <div class="bcol2">
+                            @ViewBag.DetailPopup
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="confirmarea">
+                    <h3>
+                        how would you like confirmation?</h3>
+                    <div class="clear16">
+                    </div>
+                    <div class="chkboxemail">
+                        <input type="checkbox" id="cbemail" name="verification" checked="checked" />
+                        <label class="cbcheck" for="cbemail">
+                            email?</label>
+                    </div>
+                    <div class="chkboxsms">
+                        <input type="checkbox" id="cbsms" name="verification" />
+                        <label class="smscheck" for="cbsms">
+                            SMS?</label>
+                    </div>
+                    </center>
+                    <div class="clear10">
+                    </div>
+                    <h3>
+                        appointment notes?</h3>
+                    <div class="clear h7">
+                    </div>
+                    <textarea cols="" id="txtCustomerScheduleLog" rows=""></textarea>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear12">
+                </div>
+                <div class="timecontentpopup">
+                    <div class="lefttime countdownclock">
+                        9:45</div>
+                    <div class="ptime">
+                        please complete your request in 10:00 minutes. otherwise this time will be released
+                        to others.
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="newcheckoutcol2">
+                <div class="checkoutpopup2">
+                    <div class="paymentmethod">
+                        <div class="divtotaldue">
+                            <div class="totaldue">
+                                <span>total due:</span><br />
+                                $@ViewBag.Price
+                            </div>
+                        </div>
+                        <div class="clear11">
+                        </div>
+                        <div class="discountcodebox">
+                            <div class="textdiscount">
+                                promo code?
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div>
+                                <input type="button" id="btnapply" class="btnapply" value="apply" title="apply" />
+                                <input type="text" id="txtdiscount" class="txtdiscount" />
+                            </div>
+                        </div>
+                        <div class="clear7">
+                        </div>
+                        <div class="newpaymentmethod">                           
+                                <div> please select your method of payment:</div>                            
+                        </div>
+                        <div class="clear16">
+                        </div>
+                        <div class="buttonbox">
+                            <div class="divpaypal">
+                                <a href="javascript:bookAppointmentNow();" title="paypal">
+                                    <img alt="" src="/images/btnpaypal.png" />
+                                </a>
+                            </div>
+                            <div class="clear14">
+                            </div>
+                           
+                                <div class="divamazon">
+                                     @{ if (company != null && company.PaymentMethod == (int)Types.PaymentMethod.PayInPerson)
+                                        {
+                                            <a href="javascript:cashPayment();" title="amazon">
+                                                <img alt="" src="/images/btnpayperson.png" />
+                                            </a>
+                                         }else{
+                                            <img alt="" src="/images/btnpayperson_non.png" />
+                                         }
+                                    }                                    
+                                    
+                                </div>
+                                <div class="clear">
+                                </div>
+                              
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @*
+    <div id="comfirmationpopup" class="comfirmationpopup checkoutpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close" onclick="hideDialog('comfirmationpopup');" ></a>
+        <div class="checkoutpopup1">
+            <h3>
+                how should we give you confirmation?</h3>
+            <div class="clear10">
+            </div>
+            <center>
+                <input type="checkbox" id="cbemail" name="verification" checked="checked" />
+                <label class="cbcheck" for="cbemail">
+                    email?</label>
+                <input type="checkbox" id="cbsms" name="verification" />
+                <label class="smscheck" for="cbsms">
+                    SMS?</label>
+            </center>
+            <div class="clear10">
+            </div>
+            <h3>
+                appointment notes? <span>(specify reason, contact person, etc)</span></h3>
+            <div class="clear h7">
+            </div>
+            <textarea id="txtCustomerScheduleLog" cols="" rows=""></textarea>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear15">
+        </div>
+        <div class="checkoutpopup2">
+            <div class="paymentmethod">
+                <div class="totaldue">
+                    <span>total due:</span><br />
+                    $@ViewBag.Price
+                </div>
+                <div class="discountcodebox">
+                    <div class="textdiscount">
+                        promo code?
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div>
+                        <input type="button" id="btnapply" class="btnapply" value="apply" title="apply" />
+                        <input type="input" id="txtdiscount" class="txtdiscount" />
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="choosepayment">
+                    <h3>
+                        how would you like to pay?</h3>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="buttonbox">
+                    <div class="divpaypal">
+                        <a href="#" onclick="bookAppointmentNow();" title="paypal">
+                            <img alt="" src="/images/paypal.png" />
+                        </a>
+                    </div>
+                    <div class="divamazon" style="display:none;">
+                        <a href="#" title="amazon">
+                            <img alt="" src="/images/amazon.png" />
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="timecontentpopup">
+                    <div class="lefttime countdownclock">
+                        10:00</div>
+                    <div class="ptime">
+                        please complete your request in 10:00 minutes. otherwise this time will be released
+                        to others.
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>*@
+    <div id="delayclock" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                do you need more time?
+            </p>
+            <div>
+                <center>
+                    <input type="button" class="btnok" id="btnok" value="yes" onclick="changeTime();" />
+                    <input type="button" class="btncancel" id="btnno" value="no" onclick="goback();" />
+                </center>
+            </div>
+        </div>
+    </div>
+    <div id="continuescheckout" class="savechangepopup continuepopup">
+        <div class="contentpopup" style='background: none repeat scroll 0 0 #EFC9CA!important;
+            color: #454141!important; font-weight: 400!important;'>
+            <p>
+                This company's cancellation policy is set to <span id='policyType' style="font-weight: bold;">
+                    standard</span>. the requested appointment is within the cancellation policy
+                period. so if you proceed to checkout and later you modify or cancel the requested
+                appointment you will be charged 50% of the Total Fees.
+            </p>
+            <div>
+                <center>
+                    <input type="button" class="btnok" id="btncontinue" value="continue" onclick="checkout();" />
+                    <input type="button" class="btnok" id="btncancel" value="cancel" onclick="goback();" />
+                </center>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="price" value="@ViewBag.Price"/>
+    <script type='text/javascript'>
+    $('#datepicker').datepicker({ onSelect: function (dateStr) {
+        location.href = "/CalendarView?tick=" + Date.parse(dateStr);
+    }
+});
+
+$(function () {
+    $(document).ready(function () {
+        createtopleftscroll();
+        startCountDown('.countdownclock');
+    });
+     $('#icalapp').click(function () {
+            var currentClass = $("#icalapp span").attr("class");
+            if (currentClass == "viewingicalappointment") {
+                $("#icalapp span").removeClass("viewingicalappointment");
+                $("#icalapp span").addClass("viewingicalappointmenttext");
+                $(".ical").hide();
+            }
+            else if (currentClass == "viewingicalappointmenttext") {
+                $("#icalapp span").removeClass("viewingicalappointmenttext");
+                $("#icalapp span").addClass("viewingicalappointment");
+                $(".ical").show();
+            }
+            return false;
+        });
+    $('#ggcalendar').click(function () {
+
+        var currentClass = $("#ggcalendar span").attr("class");
+        if (currentClass == "viewinggcal") {
+            $("#ggcalendar span").removeClass("viewinggcal");
+            $("#ggcalendar span").addClass("viewinggcaltext");
+            $(".googlecal").hide();
+        }
+        else if (currentClass == "viewinggcaltext") {
+            $("#ggcalendar span").removeClass("viewinggcaltext");
+            $("#ggcalendar span").addClass("viewinggcal");
+            $(".googlecal").show();
+        }
+
+        return false;
+    });
+
+    $('#kyapp').click(function () {
+        var currentClass = $("#kyapp span").attr("class");
+        if (currentClass == "viewingkuyamappointment") {
+            $("#kyapp span").removeClass("viewingkuyamappointment");
+            $("#kyapp span").addClass("viewingkuyamappointmenttext");
+            $(".kuyamcal").hide();
+        }
+        else if (currentClass == "viewingkuyamappointmenttext") {
+            $("#kyapp span").removeClass("viewingkuyamappointmenttext");
+            $("#kyapp span").addClass("viewingkuyamappointment");
+            $(".kuyamcal").show();
+        }
+        return false;
+    });
+
+    $('#fbevents').click(function() {
+        var currentClass = $("#fbevents span").attr("class");
+        if (currentClass == "viewingfbappointment") {
+            $("#fbevents span").removeClass("viewingfbappointment");
+            $("#fbevents span").addClass("viewingfbappointmenttext");
+            $(".fbcal").hide();
+        } else if (currentClass == "viewingfbappointmenttext") {
+            $("#fbevents span").removeClass("viewingfbappointmenttext");
+            $("#fbevents span").addClass("viewingfbappointment");
+            $(".fbcal").show();
+        }
+        return false;
+    });
+});
+
+function bookAppointmentNow() {    
+    if ($(location).attr('href').indexOf("companysearch") == -1) {
+        var mess=$('#txtCustomerScheduleLog').val();        
+        if (mess.length>1000) {
+            alert("note must be less than 1000 characters.");
+            return false;
+        }
+            var param = "email=" + $('#cbemail').attr('checked') + "&sms=" + $('#cbsms').attr('checked') + "&mess=" + $('#txtCustomerScheduleLog').val() +"&price="+$("#price").val();
+            $('#imgLoadersingup').show();
+            commonPostAjax("AppointmentPreview", "BookAppointment", param, bookAppointmentSuccess, bookAppointmentError);            
+    }
+    else {
+        var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+        if (!isLogin) {
+            $('.contentPopupForm').hide();
+            $('.loginFormScheduler').show();
+            return false;
+        }
+
+        var companyId = $('#hdnCompanyID').val();
+        var date1 = $('#customerScheduler1Day').val() + ' ' + $('#customerScheduler1Hour').val();
+        var date2 = $('#customerScheduler2Day').val() + ' ' + $('#customerScheduler2Hour').val();
+        var date3 = $('#customerScheduler3Day').val() + ' ' + $('#customerScheduler3Hour').val();
+        var mess = $('#txtCustomerScheduleLog').val();
+        $('.btnbook').hide();
+        $('#imgLoaderListDetail').show();
+        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+        var scheduleParameters = { id: companyId, dateTime1: date1, dateTime2: date2, dateTime3: date3, messageLog: mess };
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(scheduleParameters),
+                dataType: 'html',
+                url: '/company/AddCustomerSchedules/'
+            })
+            .success(function(result) {
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').hide();
+                $('.contentPopupForm').hide();
+                $('.contentPopupSuccess').show();
+            })
+            .error(function(error) {
+                $('.btnbook').show();
+                $('#imgLoaderListDetail').hide();
+                $('#lightBox').hide();
+                $('#comfirmationpopup').hide();
+
+            });
+    }
+}
+
+
+function cashPayment()
+{        var mess=$('#txtCustomerScheduleLog').val();        
+        if (mess.length>1000) {
+            alert("note must be less than 1000 characters.");
+            return false;
+        }
+        var param = "email=" + $('#cbemail').attr('checked') + "&sms=" + $('#cbsms').attr('checked') + "&mess=" + $('#txtCustomerScheduleLog').val() +"&price="+$("#price").val();
+        $('#imgLoadersingup').show();
+        commonPostAjax("AppointmentPreview", "BookAppointmentCash", param, cashAppointmentSuccess, bookAppointmentError); 
+      
+  }
+    
+function cashAppointmentSuccess(result){
+     if(result=='true')
+        window.location.href = "/Appointment";
+}
+
+function bookAppointmentSuccess() {
+    $('#comfirmationpopup').hide();
+    window.location.href = "/Appointment/Preapprove";
+}
+
+function bookAppointmentError() {
+    $('#comfirmationpopup').hide();
+}
+
+function goback() {        
+    window.location = '/companyprofile/index/' + @profileId;
+}
+
+var inervalId;
+var countsecond =30; // 30 second
+var extend5MinuteMore =300; // 5 minute
+var countDownFrom = 600; // 10 minute
+var isTimeExtendMode=false;
+function startCountDown(selector) {
+    var inervalId= window.setInterval('updateClock("'+selector+'");', 1000);
+    $.post("/AppointmentPreview/SetLockedTimeSlot", {key:'@ViewBag.LockKey',minute:10});
+}
+
+function formatNumber(number){
+    if(number<10){
+        return "0"+number;
+    }
+    return ""+number;
+}
+
+function updateClock(selector) {
+    if(countDownFrom<=0 && isTimeExtendMode===false){
+        showDelayPopup();
+        return;
+    }else if(countDownFrom<=0){
+        goback();
+        return;
+    }        
+    var minute = parseInt(countDownFrom/60);
+    var second=countDownFrom%60;        
+    $(selector).html(formatNumber(minute) + ":" + formatNumber(second));
+        
+    if (countDownFrom <= 0) {
+        $.post('/AppointmentPreview/RemoveLockedTimeSlot',{key:'@ViewBag.LockKey'},function(){});
+        window.clearInterval(inervalId);
+        document.location='@resetRef';
+    }
+    countDownFrom-=1;
+}
+
+$('.appointmentPreViewNext').click(function(){            
+        var policy =@ViewBag.Policy;       
+     if(policy>0){
+            if(policy==72){
+                $('#policyType').html('strict');
+            }
+            showDialog("newpayment");
+        }else{ checkout();}
+});
+
+function checkout(){
+        hideDialog('continuescheckout');           
+        setTimeout("showDialog('newpayment')",500);         
+}
+
+function showDelayPopup(){
+    showDialog('delayclock');      
+    countDownFrom=countsecond;      
+    isTimeExtendMode=true;
+}
+
+function changeTime(){
+    hideDialog('delayclock');
+    countDownFrom=extend5MinuteMore;      
+    isTimeExtendMode=true;
+    $.post("/AppointmentPreview/SetLockedTimeSlot", {key:'@ViewBag.LockKey',minute:5});
+    $('.ptime').html("please complete your request in 05:00 minutes. otherwise this time will be released to others.");      
+}
+  
+    </script>

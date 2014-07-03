@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "error";
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+    string errorMessage = TempData["Error"] as string;
+    if (string.IsNullOrEmpty(errorMessage))
+    {
+        errorMessage = "<a href='/' title='return to home'>return to home</a>";
+    }
+}
+
+<div class="wrap">
+    <div class="clear">
+    </div>
+    <div class="content" style="padding-top:0px;">
+        <!-- InstanceBeginEditable name="content" -->
+        <div class="errorpage">
+            <div class="clear">
+            </div>
+            <div class="messageerror">
+                @Html.Raw(errorMessage)
+            </div>
+            <div class="clear">
+            </div>
+            
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</div>

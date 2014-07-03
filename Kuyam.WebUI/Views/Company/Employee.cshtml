@@ -1,0 +1,780 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models
+@{
+    ViewBag.Title = "Company Employees";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+
+    List<ServiceCompany> scList = new List<ServiceCompany>();
+    if (ViewBag.CompanyServices != null)
+    {
+        scList = ViewBag.CompanyServices;
+    }
+    string scListIDs = string.Empty;
+    if (ViewBag.StringSCListIDs != null)
+    {
+        scListIDs = ViewBag.StringSCListIDs;
+    }
+    CompanyEmployee employee = null;
+    if (ViewBag.Employee != null)
+    {
+        employee = ViewBag.Employee;
+    }
+    string id = "0";
+    if (Url.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = Url.RequestContext.RouteData.Values["id"].ToString();
+    }
+    Profile profileCompany = ViewBag.ProfileCompany;
+    string email = string.Empty;
+    string firstName = string.Empty;
+    string lastName = string.Empty;
+
+    if (profileCompany != null && profileCompany.Cust != null)
+    {
+        email = profileCompany.Cust.Email;
+        firstName = profileCompany.Cust.FirstName;
+        lastName = profileCompany.Cust.LastName;
+    }
+}
+<link href="/css/uploader/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<script src="/Scripts/uploader/jquery.fileupload.js" type="text/javascript"></script>
+<script src="/Scripts/uploader/jquery.fileupload-ui.js" type="text/javascript"></script>
+<script src="/Scripts/uploader/jquery.fileupload-ip.js" type="text/javascript"></script>
+<script src="/Scripts/uploader/jquery.fileupload-fp.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.form.js" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maskedinput-1.3.min.js")"></script>
+<script type="text/javascript">
+
+    var companyId = '@ViewBag.companyId';
+    var email="@(email)";
+    var firstName= "@(firstName)";
+    var lastName= "@lastName";
+    var isVerified = '@(ViewBag.Verified)'
+
+    $(function () {
+
+        if (isVerified=='@((int)Kuyam.Database.Types.FlagInvite.Verified)') {
+            $('#smserrormessage').hide();
+            $("#verifiycode").hide();
+            $('#btnsendsms').removeClass('btnsend').addClass('btnverified');
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").prop('title',"verification phone number");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#smsinviteCode').val("enter code");
+            $('#forget').hide();
+            $('.field-validation-error').hide();
+            $('#btnsendsms').show();
+        }else{
+            $("#btnsendsms").prop('disabled', false);
+            $('#btnsendsms').removeClass('btnverified').addClass('btnsend');
+            $("#verifiycode").hide();
+            $('#forget').hide();
+        }
+        $('#divErrorBox').hide();
+        jQuery(function ($) {
+            $("#rpostphone").mask("(999) 999-9999");
+        });
+
+        $("#accordion").accordion({
+            collapsible: true,
+            autoHeight: false
+        });
+
+        $("#defaultemployee").click(function () {
+            showpopup("popupdefaultemp");
+        });
+
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });
+
+        $('#makedefault').checkBox();
+
+        $('#tagservicelist li input[type="checkbox"]').checkBox();
+
+        $('#category, #service, #mobilecarrier').selectmenu();
+        createtopleftscroll();
+    });
+
+    function addemployee () {
+        $('.btnaddemployee').hide();
+        $('#imgLoaderListDetail').show();
+
+        var employeeName = $('#rpostename').val();
+        var email = $('#rpostemail').val();
+        var phone = $('#rpostphone').val();
+        var paypal = $('#rpostpaypalemail').val();
+        var employeeDefault=false;
+        var err='';
+
+        if ($('#makedefault').is(':checked')) {
+            employeeDefault=true;
+        }
+
+        //employee name
+        if (employeeName == '') {
+            err=err+'employee name is required.</br>';
+
+        } else {
+            if (employeeName.length > 50) {
+                err=err+'employee name must be less than 50 characters.</br>';
+            }
+        }
+
+        //phone number
+        if (phone == '') {
+            //                err=err+'phone number is required.</br>';
+        } else {
+
+            if (phone.length > 50) {
+                err=err+'phone number must be less than 50 characters.</br>';
+            }
+            var re = /^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})$/;
+            if (!phone.match(re)) {
+                err=err+'invalid phone.</br>';
+            }else if (isVerified=='@((int)Kuyam.Database.Types.FlagInvite.Unverified)') {
+                err=err+'phone number is unverified.</br>';
+            }
+        }
+
+        //email
+        if (email == '') {
+            err=err+'email is required.</br>';
+
+        } else {
+            if (email.length > 50) {
+                err=err+'email must be less than 50 characters.</br>';
+            }
+            var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+            if (!reemail.test(email)) {
+                err=err+'invalid e-mail address.</br>';
+
+            }
+        }
+        //
+        if (err=='') {
+            var listServiceCompanyLi = document.querySelectorAll('.ckServiceCompany')
+            var stringServiceCompanyIDList = '';
+            if (listServiceCompanyLi && listServiceCompanyLi.length > 0) {
+                for (var i = 0; i < listServiceCompanyLi.length; i++) {
+                    if (listServiceCompanyLi[i].checked == true) {
+                        stringServiceCompanyIDList += listServiceCompanyLi[i].attributes["serviceCompanyID"].value + ',';
+                    }
+                }
+            }
+
+            var parameters = { employeeName: employeeName, email: email, phone: phone, stringServiceCompanyIDs: stringServiceCompanyIDList,
+                employeeDefault:employeeDefault,paypal:paypal,profileId:companyId };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/AddEmployeeInfoNew/'
+                })
+                .success(function (result) {
+                    $('.btnaddemployee').show();
+                    $('#imgLoaderListDetail').hide();
+                    showDialog('addemployeepopup');
+                    setTimeout( window.location.href ="/company/employee?companyid="+companyId, 1000);
+                })
+                .error(function (error) {
+                    $('#imgLoaderListDetail').hide();
+                });
+        }else{
+            $('.btnaddemployee').show();
+            $('#imgLoaderListDetail').hide();
+            $('#divErrorBox').show();
+            $('#errorlist').html(err);
+
+        }
+
+    }
+
+    function updateemployee() {
+
+        var employeeID = @id;
+        var employeeName = $('#rpostename').val();
+        var email = $('#rpostemail').val();
+        var phone = $('#rpostphone').val();
+        var paypal = $('#rpostpaypalemail').val();
+        var employeeDefault=false;
+        var err='';
+
+        if ($('#makedefault').is(':checked')) {
+            employeeDefault=true;
+        }
+        //employee name
+        if (employeeName == '') {
+            err=err+'employee name is required.</br>';
+
+        } else {
+            if (employeeName.length > 50) {
+                err=err+'employee name must be less than 50 characters.</br>';
+            }
+        }
+
+        //phone number
+        if (phone == '') {
+            //err=err+'phone number is required.</br>';
+        } else {
+            if (phone.length > 50) {
+                err=err+'phone number must be less than 50 characters.</br>';
+            }
+            var re = /^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})$/;
+            if (!phone.match(re)) {
+                err=err+'invalid phone.</br>';
+            }else if (isVerified=='@((int)Kuyam.Database.Types.FlagInvite.Unverified)') {
+                err=err+'phone number is unverified.</br>';
+            }
+        }
+
+        //email
+        if (email == '') {
+            err=err+'email is required.</br>';
+
+        } else {
+            if (email.length > 50) {
+                err=err+'email must be less than 50 characters.</br>';
+            }
+            var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+            if (!reemail.test(email)) {
+                err=err+'invalid e-mail address.</br>';
+
+            }
+        }
+        if (err=='') {
+            var listServiceCompanyLi = document.querySelectorAll('.ckServiceCompany');
+            var stringServiceCompanyIDList = '';
+            if (listServiceCompanyLi && listServiceCompanyLi.length > 0) {
+                for (var i = 0; i < listServiceCompanyLi.length; i++) {
+                    if (listServiceCompanyLi[i].checked == true) {
+                        stringServiceCompanyIDList += listServiceCompanyLi[i].attributes["serviceCompanyID"].value + ',';
+                    }
+                }
+            }
+
+            var parameters = { employeeID:employeeID, employeeName: employeeName, email: email, phone: phone, stringServiceCompanyIDs: stringServiceCompanyIDList,employeeDefault: employeeDefault,paypal: paypal,profileid:companyId };
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/company/EditEmployeeInfoNew/'
+            })
+            .success(function (result) {
+
+                showDialog('savechangepopup');
+                setTimeout( "timeOut();",1000);
+            })
+            .error(function (error) {
+            });
+        }else{
+            $('#divErrorBox').css('margin-top', '-87px').css('margin-bottom', '47px')
+            $('#divErrorBox').show();
+            $('#errorlist').html(err);
+        }
+    }
+    function timeOut(){
+        window.location.href ="/company/employee/" +@id+"?companyid="+companyId;
+    }
+    function delemployee () {
+
+        var employeeID = @id;
+        var parameters = { employeeID:employeeID,profileId:companyId};
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/company/DeleteEmployeeInFo/'
+        })
+        .success(function (result) {
+            if(result == 'true'){
+                showDialog('deletecompanychangepopup');
+                setTimeout( window.location.href ="/company/employee/?companyId="+companyId,1000);
+            }
+            else{
+                alert('this employee is not allowed to delete!');
+            }
+        })
+        .error(function (error) {
+        });
+    }
+    function SendInviteCode() {
+
+        var phoneNumber = $("#rpostphone").val();
+        var param = "phoneNumber=" + phoneNumber+"&email="+email+"&firstName="+firstName+"&lastName="+lastName;
+        if (phoneNumber == "")
+            return
+        commonPostAjax("Account", "SendInviteCode", param, sendcallbacksucess, setError, "html");
+        $('#btnsendsms').hide();
+        $('.busyIndicator').show();
+    }
+    function sendcallbacksucess(result) {
+
+        if (result == "true") {
+            $("#verifiycode").show();
+            $('#btnsendsms').removeClass('btnsend')
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").prop('title',"sent! check your messages");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#forget').show();
+            $('.busyIndicator').hide();
+        }
+        if (result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)') {
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+        }
+    }
+
+    function VerifyInviteCode() {
+        var inviteCode = $("#smsinviteCode").val();
+        if (inviteCode == "" || inviteCode == "enter code") {
+            $('#smserrormessage').show();
+            return;
+        }
+        var param = "inviteCode=" + inviteCode;
+        commonPostAjax("Account", "SMSVerifyInviteCode", param, verifycallbacksucess, setError, "html");
+    }
+
+    function verifycallbacksucess(result) {
+        if (result == "true") {
+            $('#smserrormessage').hide();
+            $("#verifiycode").hide();
+            $('#btnsendsms').addClass('btnverified');
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").prop('title',"verification phone number");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#smsinviteCode').val("enter code");
+            $('#forget').hide();
+            $('.field-validation-error').hide();
+            $('#btnsendsms').show();
+            isVerified = '@((int)Kuyam.Database.Types.FlagInvite.Verified)'
+        } else {
+            $('#smserrormessage').show();
+            isVerified = '@((int)Kuyam.Database.Types.FlagInvite.Unverified)'
+        }
+    }
+
+    function resendCode() {
+
+        $("#verifiycode").hide();
+        $('#btnsendsms').addClass('btnsend');
+        $("#btnsendsms").prop('disabled', false);
+        $("#btnsendsms").prop('title',"send SMS verification code");
+        $('#forget').hide();
+        $('#btnsendsms').show();
+        $('.busyIndicator').hide();
+        $('#smserrormessage').hide();
+    }
+
+    function resendCodecallbacksucess(result) {
+        if (result == "true") {
+            $('#btnsendsms').removeClass('btnverified');
+            $("#verifiycode").show();
+            $("#btnsendsms").prop('title',"sent! check your messages");
+            setTimeout("hideDialog('resended')",1000);
+            $('.busyIndicator').hide();
+        }
+    }
+
+    function setDefaultvalue() {
+
+        $("#verifiycode").show();
+        $('#btnsendsms').removeClass('btnsend');
+        $("#btnsendsms").prop('disabled', true);
+        $("#btnsendsms").hide();
+        $('#forget').show();
+    }
+
+    function checkPhoneNumber(phoneNumber)
+    {
+        var param = "phoneNumber=" + phoneNumber+ "&email="+ email+"&nocache=" + getunixtime();
+
+        commonGetAjax("Setting", "CheckPhoneNumber", param, checkPhoneNumbercallbacksucess, setError, "html");
+    }
+
+    function checkPhoneNumbercallbacksucess(result)
+    {
+        if(result=="true"){
+            isverification();
+            $("#verifiycode").hide();
+            $('#forget').hide();
+            $('.field-validation-error').hide();
+        }
+        else if(result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)'){
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+        }
+        else{
+            $("#btnsendsms").prop('disabled', false);
+            $('#btnsendsms').removeClass('btnverified').addClass('btnsend');
+            $("#verifiycode").hide();
+            $('#forget').hide();
+        }
+    }
+
+    function isverification() {
+        $('#btnsendsms').removeClass('btnsend').addClass('btnverified');
+        $("#btnsendsms").prop('disabled', true);
+
+    }
+    function gotoStatus(status) {
+        window.location = "/CompanyAppointment/index/";
+    }
+</script>
+<style type="text/css">
+    .listservices .employeebasedcol1 .leftaddnew1, .listservices .employeebasedcol2 .rightaddnew1 {
+        behavior: url(PIE.htc);
+    }
+</style>
+<div class="contentMarketPlace ml2">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight">
+            <div class="editserviceform">
+                <h1>
+                    add/edit your employees and tag their services
+                </h1>
+                <p class="padd">
+                    per employee, please check all the services they provide.<br />
+                    to edit employees, select their name from the drop-down on the left.
+                </p>
+                <div class="line1">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="listservices">
+                    <div class="employeebasedcol1 newemployeebasedcol1">
+                        <div class="leftaddnew1">
+                        </div>
+                        <div class="leftaddnew">
+                            <div class="leditemployee">
+                                <div class="title">
+                                    employee name
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div id="employeename" class="textbox">
+                                    <div class="ltxtaddnewemployee editformtextboxyellowbgleft">
+                                    </div>
+                                    <div class="ctxtaddnewemployee editformtextboxyellowbgmid">
+                                        @if (employee != null)
+                                        {
+                                            <input id="rpostename" type="text" value="@employee.EmployeeName" />
+                                        }
+                                        else
+                                        {
+                                            <input id="rpostename" type="text" value="" />
+                                        }
+                                    </div>
+                                    <div class="rtxtaddnewemployee editformtextboxyellowbgright">
+                                    </div>
+                                </div>
+                                <div class="clear7">
+                                </div>
+                                <div class="divmakedefault">
+                                    @if (employee != null && employee.IsDefault != false)
+                                    {
+                                        <input type="checkbox" id="makedefault" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="makedefault" />
+                                    }
+                                    <label for="makedefault">
+                                        make
+                                    </label>
+                                    <a href="javascript:return false;" class="defaultemployee" id="defaultemployee">
+                                        default
+                                        employee
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clear3">
+                            </div>
+                            <div class="lineemployee">
+                            </div>
+                            <div class="clear6">
+                            </div>
+                            <div class="leditemployee">
+                                <div class="privateinfo">
+                                    <p>
+                                        private information below
+                                    </p>
+                                </div>
+                                <div class="clear3">
+                                </div>
+                                <div class="title addemail">
+                                    e-mail
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div id="emailname" class="textbox">
+                                    <div class="ltxtaddnewemployee editformtextboxyellowbgleft">
+                                    </div>
+                                    <div class="ctxtaddnewemployee editformtextboxyellowbgmid">
+                                        @if (employee != null)
+                                        {
+                                            <input id="rpostemail" type="text" value="@employee.Email" />
+                                        }
+                                        else
+                                        {
+                                            <input id="rpostemail" type="text" value="" />
+                                        }
+                                    </div>
+                                    <div class="rtxtaddnewemployee editformtextboxyellowbgright">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="title addphone">
+                                    phone number
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="divappupdate">
+                                    for SMS appointment updates
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div id="phonename" class="textbox">
+                                    <div class="ltxtaddnewemployee editformtextboxyellowbgleft">
+                                    </div>
+                                    <div class="ctxtaddnewemployee phone editformtextboxyellowbgmid" style="width: 175px;">
+                                        @if (employee != null)
+                                        {
+                                            <input id="rpostphone" type="text" value="@employee.Phone" onchange="checkPhoneNumber(this.value);" />
+                                        }
+                                        else
+                                        {
+                                            <input id="rpostphone" type="text" value="" onchange="checkPhoneNumber(this.value);" />
+                                        }
+                                    </div>
+                                    <div class="rtxtaddnewemployee editformtextboxyellowbgright">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="ddlmobilecarrier">
+                                    <select name="SelectCarrier" id="mobilecarrier">
+                                        <option value="none">none</option>
+                                        @foreach (var item in DAL.GetCarrier((int)Types.TypeGroup.Carrier))
+                                        {
+                                            <option value="@item.Data">@item.Name.ToLower()</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="clear8">
+                                </div>
+                                @*<div class="divsendverifiy">
+                                        <input type="button" class="btnverify" title="send SMS verification code" />
+                                    </div>*@
+                                <div class="smsarea smsusersetting">
+                                    <div class="smscontent">
+                                        <div class="divbtnsend">
+                                            <input type="button" id="btnsendsms" class="btnsend" onclick="SendInviteCode();"
+                                                   title="send SMS verification code" />
+                                            <div class="busyIndicator" style="display: none; height: 28px; width: 184px; background-color: orange;
+                                                border: green; background-image: url('/Images/sendcode.png')">
+                                                <img src="/Images/BusyIndicator.gif" alt="" style="margin: 4px 5px 0 14px;" />
+                                            </div>
+                                        </div>
+                                        <div id="verifiycode" style="display: none;">
+                                            <div class="postphoneverify postusersetting" style="padding-top:0px;float:left;">
+                                                <div id="forget">
+                                                    didn’t get it?<br />
+                                                    <a href="javascript:void(0);" onclick="resendCode();" title="resend code">resend code</a>
+                                                </div>
+                                            </div>
+                                            <div class="divtxtsend">
+                                                <div class="rpostformtext">
+                                                    <div class="ltxtcompanysetup">
+                                                    </div>
+                                                    <div class="txtcompanysetup txtbday" style="width:60px;font-size:12px;">
+                                                        <input style="font-size:12px;" type="text" id="smsinviteCode" value="enter code" onfocus="if (this.value=='enter code') {this.value = '';}this.className = 'inputactive';"
+                                                               onblur="if (this.value==''){this.value='enter code';this.className = '';}" />
+                                                    </div>
+                                                    <div class="rtxtcompanysetup">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="divbtnverify">
+                                                <input type="button" class="verifysms" onclick="VerifyInviteCode();" title="verify" />
+                                            </div>
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                        <div>
+                                            @Html.ValidationMessage("VerifiPhoneNumber")
+                                            <span id="smserrormessage" style="display: none; color: Red;">wrong code</span>
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="title sync" style="padding-top: 0px;">
+                                    paypal e-mail
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="divappupdate">
+                                    leave blank if not applicable or the same as company paypal
+                                </div>
+                                <div class="clear4">
+                                </div>
+                                <div id="paypalemail" class="textbox">
+                                    <div class="ltxty">
+                                    </div>
+                                    <div class="ctxty txtggcal">
+                                        @if (employee != null)
+                                        {
+                                            <input id="rpostpaypalemail" type="text" value="@employee.PaymentAccount" />
+                                        }
+                                        else
+                                        {
+                                            <input id="rpostpaypalemail" type="text" value="" />
+                                        }
+                                    </div>
+                                    <div class="rtxty">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="employeebasedcol2 newemployeebasedcol2">
+                        <div class="rightaddnew1">
+                        </div>
+                        <div class="rightaddnew">
+                            <div class="title">
+                                tag services
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="rightaddnewcontent">
+                                <ul id="tagservicelist">
+                                    @foreach (ServiceCompany service in scList)
+                                    {
+                                        string liID = "li" + service.ServiceCompanyID;
+                                        string inputID = service.ServiceCompanyID.ToString();
+
+                                        if (scListIDs != string.Empty && scListIDs.Contains(service.ServiceCompanyID.ToString()))
+                                        {
+                                            <li id="@liID" class="iefirst liactive">
+                                                <input type="checkbox" checked="checked" class="ckServiceCompany" id="@inputID" liid="@liID" servicecompanyid="@service.ServiceCompanyID" />
+                                                <label for="@inputID">
+                                                    @Kuyam.Domain.UtilityHelper.TruncateText(service.Service.ServiceName, 25) , @(service.Duration ?? 0)
+                                                    min, @(service.Price.HasValue ? service.Price.Value.ToString("C2") : string.Empty)
+                                                    , @(service.AttendeesNumber ?? 0) person
+                                                </label>
+                                            </li>
+
+                                        }
+                                        else
+                                        {
+
+                                            <li id="@liID" class="iefirst">
+                                                <input type="checkbox" class="ckServiceCompany" id="@inputID" liid="@liID" servicecompanyid="@service.ServiceCompanyID" />
+                                                <label for="@inputID">
+                                                    @Kuyam.Domain.UtilityHelper.TruncateText(service.Service.ServiceName, 25) , @(service.Duration ?? 0)
+                                                    min, @(service.Price.HasValue ? service.Price.Value.ToString("C2") : string.Empty)
+                                                    , @(service.AttendeesNumber ?? 0) person
+                                                </label>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="btnareaemployeebased">
+                    @if (employee != null)
+                    {
+                        <input type="button" value="save changes" id="btnaddemployee" onclick="updateemployee();"
+                               class="btnaddemployee" title="save changes" />
+                        <div class="clear">
+                        </div>
+                        <input type="button" value="delete this employee" class="btndelemployee" onclick="delemployee();"
+                               title="delete this employee" />
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#employeename").addClass("editformtextboxyellowbg");
+                                $("#phonename").addClass("editformtextboxyellowbg");
+                                $("#emailname").addClass("editformtextboxyellowbg");
+                                $("#paypalemail").addClass("editformtextboxyellowbg");
+                            });
+                        </script>
+                    }
+                    else
+                    {
+                        <input type="button" value="add employee" class="btnaddemployee" title="add employee"
+                               onclick="addemployee();" />
+                    }
+                    <img id="imgLoaderListDetail" src="../../Images/progress.gif" style="display: none"
+                         alt="loading..." />
+                </div>
+                <div class="clear">
+                </div>
+                <div id="divErrorBox" style="width: 218px; margin-top: -40px; color: Red;">
+                    <div class="ui-state-error ui-corner-all">
+                        <div style="position: relative;">
+                            <div id='errorlist' style="padding: 4px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear300">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="addemployeepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                added a new employee successfully...
+            </p>
+        </div>
+    </div>
+    <div id="savechangepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                your changes are saved...
+            </p>
+        </div>
+    </div>
+    <div id="deletecompanychangepopup" class="savechangepopup">
+        <div class="contentpopup">
+            <p>
+                Delete Success.
+            </p>
+        </div>
+    </div>
+</div>
+<div id="lightBox" class="lightBox">
+</div>
+<div id="popupdefaultemp" class="comfirmationpopup
+popupdefaultemp">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            a default employee is the availability calendar that shows first on your company
+            profile.
+        </h3>
+    </div>
+</div>

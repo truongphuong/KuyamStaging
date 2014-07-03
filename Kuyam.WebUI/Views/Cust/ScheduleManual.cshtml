@@ -1,0 +1,191 @@
+﻿@using Kuyam.Database;
+@using System.Configuration;
+
+@{
+    ViewBag.Title = "Schedule Manual";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";    
+}
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/js/popup.js")"></script>*@
+
+<script type="text/javascript">
+    $(function () {
+        $('select#category').selectmenu();
+        $('select#time').selectmenu();
+        $('select#within').selectmenu();
+        $('select#price').selectmenu();
+        $('select#sortBy').selectmenu();
+    });
+
+    var map;
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(34.0906351, -118.374025);
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var myLatLng = new google.maps.LatLng(34.0906351, -118.374025);
+        var beachMarker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    $(function () {
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+    });
+</script>
+
+ <script type="text/javascript">
+     $(document).ready(function () {
+         $('#within').change(function () {
+             var compareValue =$('#within').val();
+             var id = @Url.RequestContext.RouteData.Values["id"].ToString();
+             var searchParameters ={ id: id, compare:compareValue };
+             $('#imgLoaderContact').show();
+             $('#lightBox').css('opacity', '0.6').fadeIn(200);
+             $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/company/CompanySearchWithDistance/'
+                 })
+                    .success(function (result) { 
+                      $('#companyList').html(result);
+                      $('#imgLoaderContact').hide();
+                      })
+                                    
+                    .error(function (error) {
+                    $('#imgLoaderContact').hide();
+                    $('#lightBox').show();
+                    alert('error');                    
+                    });
+                });
+
+//                $('#companyList').load('/company/CompanySearchWithDistance/', { id: id, compare:compareValue }, function(){
+//               
+//                });
+
+            
+        });
+    </script>
+
+
+<!-- InstanceBeginEditable name="content" -->
+            
+                <div class="contentMarketPlace">
+            	<div class="bgMainContent"> 
+                     @Html.Partial("_CompanySearchLeftTab")   
+                                                                 
+                    
+                    <div class="colRight">    
+                    	<div class="w741 p10_8">
+                        	<div class="map">
+                            	<div id="map_canvas"></div>  
+                                <div class="formSearch">
+                                	<fieldset>
+                                    	<div class="fLeft time">                                           
+                                       		<select name="time" id="time" class="selectTime">
+                                              	<option>anytime</option>
+                                          	</select>                                            
+                                        </div>  
+                                        <div class="fRight"><p><input id="cbAvailable" onfocus="this.blur();" type="checkbox" /><label for="cbAvailable">available today?</label></p></div>
+                                        <div class="clear h3"></div>
+                                        <div class="fLeft">
+                                            <span>within?</span>                                        
+                                        </div>
+                                        <div class="fLeft ml11 within">
+                                        	<select name="within" id="within"    class="selectWithin">
+                                                <option value="0">any</option>
+                                             	<option value="2">2 miles</option>
+                                                <option value="3">3 miles</option>
+                                                <option value="4">4 miles</option>
+                                           	</select>
+                                       	</div>
+                                        <div class="fRight ml11 price">
+                                        	<select name="price" id="price" class="selectPrice">
+                                         		<option>any</option>
+                                          	</select>
+                                        </div>
+                                        <div class="fRight">
+                                       	 	<span>price?</span>                                             
+                                        </div>
+                                        <div class="clear"></div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="headerResults">
+                                @if (ViewBag.TypeName != null)
+                                {
+                                    <span>
+                            	    search results for '@ViewBag.TypeName' in santa monica, ca
+                                    </span>                                    
+                                }
+                                <ul class="sortBy">
+                                    <li>sort by</li>
+                                    <li>
+                                    	<fieldset>
+                                            <select name="sortBy" id="sortBy" class="selectSortBy">
+                                                <option value="Select a catagory" selected="selected">autoschedule</option>
+                                                <option value="Select a catagory 1">autoschedule</option>
+                                                <option value="Select a catagory 2">autoschedule</option>
+                                                <option value="Select a catagory 3">autoschedule</option>
+                                                <option value="Select a catagory 4">autoschedule</option>
+                                            </select>
+                                        </fieldset>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="companyList">
+                                @Html.Partial("_ProfileCompanies")
+                            </div>
+                            
+                        </div>            
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <img id="imgLoaderContact" src="../../Images/progress.gif" class="waiting" alt="loading..." />  
+
+        <script type="text/javascript">
+            function pagingEvent(pageIndex) {
+             var compareValue =$('#within').val();
+             var id = @Url.RequestContext.RouteData.Values["id"].ToString();
+             var searchParameters ={ id: id, compare:compareValue, page: pageIndex };
+             $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/company/CompanySearchWithDistanceAndPaging/'
+                 })
+                    .success(function (result) { 
+                      $('#companyList').html(result);
+                      })
+                                    
+                    .error(function (error) {
+                    alert('error');                    
+                    });
+                };               
+            
+</script>

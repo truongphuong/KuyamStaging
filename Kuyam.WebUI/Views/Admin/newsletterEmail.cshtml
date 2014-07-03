@@ -1,0 +1,227 @@
+﻿@{
+    string host = Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost().TrimEnd('/');
+    string date = String.Format("{0:dddd, MMMM d, yyyy}", DateTime.Now);
+}
+<style type="text/css">
+    .kuyam * {
+        line-height: 0;
+    }
+
+    .kuyam .content td * {
+        line-height: 142%;
+    }
+</style>
+<center>
+    <table class="kuyam" cellpadding="0" cellspacing="0" border="0" width="550px" style="font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td valign="top" height="70">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr style="background-color: black; height: 61px;">
+                        <td style="text-align: left;">
+                            <img alt="" src="@host/images/header_logo.png" usemap="#logo" style="border: solid 0px white;" />
+                            <map name="logo" id="logo">
+                                <area shape="rect" coords="20,5,148,50" href="http://www.kuyam.com" alt="Kuyam" title="Kuyam" />
+                            </map>
+                        </td>
+                        <td style="color: #c1d82f;  text-align: right; font-size: 12px;padding-right: 17px;">
+                            <div style="font-family: Arial, Helvetica, sans-serif; padding-top: 25px;">
+                                <div>
+                                    @Model.Date
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" height="15" style="line-height: 0px; font-size: 0px;">
+                            <img alt="" src="@host/images/header_footer_newsletter.jpg" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px; clear: both;">
+                <img alt="" src="@host/images/tbox_newsletter.png" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td valign="top" style="background-color: #7fb7dd;" width="22">
+                            <img alt="" src="@host/images/lbox_newsletter.png" />
+                        </td>
+                        <td valign="top" style="border-left: solid 1px #c1d82f; border-right: solid 1px #c1d82f; padding-left: 20px;
+                            width: 506px;" width="506" align="left">
+                            <div style="border-left: solid 8px #c1d82f;">
+                                <table cellpadding="0" cellspacing="0" border="0" class="content">
+                                    <tr>
+                                        <td style="padding-left: 8px;" height="872" valign="top">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="432" style="padding-left: 5px;">
+                                                <tr>
+                                                    <td style="text-align: right; padding-left: 2px;">
+                                                        <a href="@host" title="login" style="color: #29abe2; text-decoration: none; font-size: 12px;
+                                                            line-height: 10px; font-family: Arial, Helvetica, sans-serif;">login</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                        padding-left: 2px;">
+                                                        hi <b>@Model.UserName!</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 21px 0px 2px;text-align:center;">
+                                                        <img alt="" src="@host/images/TopLaSpot_LetterTitle.png" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                                                                                                                                                       padding: 0px 0px 3px 2px;">
+                                                        at kuyam, we have all the best places in your community to help you live a healthy
+                                                        and balanced lifestyle. we want to keep you up to date on the top picks of the community
+                                                        in each of our main categories.
+                                                    </td>
+                                                </tr>
+                                                @if (Model != null && Model.InfoGroups != null)
+                                                {
+                                                    foreach (var infogroup in Model.InfoGroups)
+                                                     {
+                                                         @*if (!string.IsNullOrEmpty(@infogroup.Name))
+                                                         {
+                                                             <tr>
+                                                                 <td style="font-size: 36px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; padding: 0px 0px 0px 5px;">
+                                                                     @infogroup.Name
+                                                                 </td>
+                                                             </tr>
+                                                         }*@
+                                                         if(@infogroup.InfoDetails != null)
+                                                         {
+                                                             <tr>
+                                                                 <td style="padding-bottom: 8px;">
+                                                                     <table cellpadding="0" cellspacing="0" border="0">
+                                                                         <tr>
+                                                                             @for (int i = 0; i < @infogroup.InfoDetails.Count; i++)
+                                                                             {
+                                                                                 var infoDetail = @infogroup.InfoDetails[i];
+                                                                                 <td @(i == 0 ? "style='padding-right: 10px;'" : "") valign="top">
+                                                                                     <div style="border-right: solid 1px #e1e1e1; border-bottom: solid 1px #e1e1e1;">
+                                                                                         <table cellpadding="0" cellspacing="0" border="0" style="background-color: #fff9c6; border-right: solid 1px #bdbdbd; border-bottom: solid 1px #bdbdbd; border-top: solid 1px #f7f7f7 border-left: solid 1px #f7f7f7;" width="219">
+                                                                                             <tr>
+                                                                                                 <td style="padding: 13px 0px 0px 2px; background-color: #fff9c6; text-align: center;"
+                                                                                                     width="224" valign="top">
+                                                                                                     <a href="#" style="border: solid 0px white;" title="">
+                                                                                                         <img alt="@infoDetail.CompanyName" title="@infoDetail.CompanyName" src="@infoDetail.CompanyImage" style="border: solid 0px white;"
+                                                                                                              width="202" height="141" />
+                                                                                                     </a>
+                                                                                                 </td>
+                                                                                             </tr>
+                                                                                             <tr>
+                                                                                                 <td style="font-size: 12px; color: #333333; padding: 5px 7px 0px 7px; font-family: Arial, Helvetica, sans-serif; height: 110px;"
+                                                                                                     valign="top">
+                                                                                                     <p style="color: #000000; font-weight: bold; margin: 0px; font-size: 16px;">
+                                                                                                         @infoDetail.CompanyName
+                                                                                                     </p>
+                                                                                                     <p style="margin: 5px 0px 0px 0px; line-height: 17px; height: 85px; overflow: hidden">
+                                                                                                         @infoDetail.DescriptionTruncate
+                                                                                                     </p>
+                                                                                                 </td>
+                                                                                             </tr>
+                                                                                             <tr>
+                                                                                                 <td align="center" style="padding: 11px 0px 8px 0px;">
+                                                                                                     <a href="@host/companyprofile/index/@infoDetail.CompanyId" style="border: solid 0px white;" title="view availability">
+                                                                                                         <img style="border: solid 0px white;" alt="view availability" src="@host/images/view_availability.png" />
+                                                                                                     </a>
+                                                                                                 </td>
+                                                                                             </tr>
+                                                                                         </table>
+                                                                                     </div>
+                                                                                 </td>
+                                                                             }
+                                                                         </tr>
+                                                                     </table>
+
+                                                                 </td>
+                                                             </tr>
+                                                         }
+                                                     }
+                                                }
+                                                <tr>
+                                                    <td style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;
+                                                        padding: 9px 1px 10px 1px" valign="top">
+                                                        kuyam is not affiliated with these companies and does not endorse, sponsor, or guaranty
+                                                        their services. kuyam has no responsibility or liability whatsoever for their services.
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td valign="top" style="background-color: #7fb7dd;" width="22">
+                            <img alt="" src="@host/images/lbox_newsletter.png" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img style="border: solid 0px white;" usemap="#social" src="@host/images/fbox_newsletter1.png" alt="">
+                <map name="social" id="social">
+                    <area shape="rect" coords="222,18,272,30" href="http://www.kuyam.org" alt="Kuyam" title="Kuyam" />
+                    <area shape="rect" coords="279,4,313,34" href="http://www.facebook.com/mykuyam" alt="Facebook" title="Facebook" />
+                    <area shape="rect" coords="316,4,344,34" href="https://twitter.com/mykuyam" alt="Twitter" title="Twitter" />
+                    <area shape="rect" coords="349,4,379,34" href="http://www.youtube.com/channel/UCei6RmG4G9jLgEHchRzR5jA" alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="382,4,412,34" href="http://kuyam.tumblr.com/" alt="Tumblr" title="Tumblr" />
+                    <area shape="rect" coords="415,4,445,34" href="http://pinterest.com/kuyam/" alt="Pinterest" title="Pinterest" />
+                    <area shape="rect" coords="448,4,482,35" href="https://plus.google.com/u/0/b/103779915573360185741/103779915573360185741" alt="Google+" title="Google+" />
+                    <area shape="rect" coords="483,4,515,35" href="http://instagram.com/kuyamsocial" alt="Instagram" title="Instagram" />
+                </map>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;" valign="top">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="line-height: 0px; font-size: 0px;">
+                            <img alt="" src="@host/images/footer_newsletter2.png" style="border: solid 0px white;" />
+                        </td>
+                        <td style="line-height: 0px; font-size: 0px;">
+                            <a href="[YourEmail]" title="[YourEmail]">
+                                <img alt="" src="@host/images/footer_newsletter2a.png" style="border: solid 0px white;" />
+                            </a>
+                        </td>
+                        <td style="line-height: 0px; font-size: 0px;">
+                            <img alt="" src="@host/images/footer_newsletter2b.png" style="border: solid 0px white;"
+                                 usemap="#kuyam" />
+                            <map name="kuyam" id="kuyam">
+                                <area shape="rect" coords="79,10,135,22" href="@host" alt="kuyam.com"
+                                      title="kuyam.com" />
+                            </map>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px; font-size: 0px;">
+                <img alt="" src="@host/images/footer_newsletter1.png" usemap="#footer" style="border: solid 0px white;" />
+                <map name="footer" id="footer">
+                    <area shape="rect" coords="465,3,525,13" href="%unsubscribe_url%" alt="unsubscribe" title="unsubscribe" />
+                    <area shape="rect" coords="183,17,242,26" href="@host/home/howitworks_user"
+                          alt="how it works " title="how it works " />
+                    <area shape="rect" coords="266,17,307,26" href="@host/home/OurStory" alt="our story"
+                          title="our story" />
+                    <area shape="rect" coords="338,17,354,26" href="@host/home/faq" alt="faq"
+                          title="faq" />
+                    <area shape="rect" coords="378,17,424,26" href="@host/home/contact" alt="contact us"
+                          title="contact us" />
+                    <area shape="rect" coords="454,17,525,26" href="@host/" alt="terms &amp; privacy"
+                          title="terms &amp; privacy" />
+                </map>
+            </td>
+        </tr>
+    </table>
+</center>

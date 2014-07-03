@@ -1,0 +1,76 @@
+﻿@using Kuyam.Database
+@using Kuyam.Utility
+@using Kuyam.WebUI.Models
+@using System.Web
+@{   
+    int profileID = ViewBag.companyId;
+}
+<div class="colLeft menuLeft activeblue">
+    <div class="scroll">
+        <div id="accordion">
+            <h3 title="manage">
+                manage</h3>
+            <div class="panelmanual searchschedule">
+                <div class="editservices">
+                    <div class="clear">
+                    </div>                   
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyInvoicesMenu">
+                        <a href="/companyappointment/CompanyInvoices?companyId=@profileID" title="invoice">invoice</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyPackagesMenu">
+                        <a href="/company/companypackages?companyId=@profileID" title="packages">packages
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyRegularClientMenu">
+                        <a href="/company/CompanyRegularClients?companyId=@profileID" title="regular clients">
+                            regular clients</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyDiscountMenu">
+                        <a href="/company/companyactivediscountCode?companyId=@profileID" title="promo codes">
+                            promo codes</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="editservices">
+                    <div class="clear">
+                    </div>                   
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyInvoicesMenu">
+                        <a href="/companyappointment/CompanyInvoices?companyId=@profileID" title="invoice">invoice</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyPackagesMenu">
+                        <a href="/company/companypackages?companyId=@profileID" title="packages">packages
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyRegularClientMenu">
+                        <a href="/company/CompanyRegularClients?companyId=@profileID" title="regular clients">
+                            regular clients</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyDiscountMenu">
+                        <a href="/company/companyactivediscountCode?companyId=@profileID" title="promo codes">
+                            promo codes</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

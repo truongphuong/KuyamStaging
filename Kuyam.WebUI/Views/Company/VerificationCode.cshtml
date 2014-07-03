@@ -1,0 +1,54 @@
+﻿@model Kuyam.WebUI.Models.VerificationCode
+@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@{
+    ViewBag.Title = "VerificationCode";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    string strStatus = ViewBag.CompanyStatus;
+}
+<link href="@Url.Content("~/css/verification.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnsubmit').click(function () {
+            if (!validationdata()) {
+                return false;
+            }
+            $('#verificationcode').submit();
+        });
+    });
+
+    function clearError() {
+        $("#errotverifi").hide();
+    }
+
+    function validationdata() {
+
+        var isValid = true;
+        isValid = $('#verificationcode').validate().element($('#verificode'))       
+        return isValid;
+    }    
+</script>
+@using (Html.BeginForm("VerificationCode", "company", FormMethod.Post, new { id = "verificationcode" }))
+{
+    <div class="verification">
+        <div class="verititle">
+
+            your company is @(!string.IsNullOrEmpty(strStatus)?strStatus.ToLower():"not exits")
+        </div>
+        <div class="clear">
+        </div>
+        <div class="veriform" style="display:none;">
+            @Html.TextBoxFor(m => m.Code, new { @class = "txtveri", @onfocus = "clearError()" ,@id="verificode" })
+            <input type="button" title="next" id="btnsubmit" class="inputveri" />
+            <div class="clear">
+            </div>
+            <div class="error">
+                @Html.ValidationMessageFor(m => m.Code) <div id="errotverifi">@Html.ValidationMessage("activated")</div>&nbsp;
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+}

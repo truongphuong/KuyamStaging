@@ -1,0 +1,59 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@{
+    List<AppointmentLog> appoiontmentNotes = ViewBag.appointmentNotes;
+    Appointment appointment = ViewBag.Appointment;
+}
+@if (appoiontmentNotes != null && appoiontmentNotes.Count > 0)
+{
+    foreach (AppointmentLog item in appoiontmentNotes)
+    {
+        if (item.CustID == MySession.CustID)
+        {
+    <div class="noteitem">
+        <div class="noteturn">
+        </div>
+        <div class="notecontent">
+            <div class="notedate">
+                <div class="txtnotedate">@DateTimeUltility.ConvertToUserTime(@item.LogDT, DateTimeKind.Utc).ToString("M/d/yyyy h:mm:ss tt").ToLower()</div>
+                @*@if (!item.Viewed)
+                        {<div class="new"></div>}*@
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="notedescription last">
+                @Html.Raw(item.Message)
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>       
+        }
+        else
+        {   <div class="noteitem">
+            <div class="theirturn">
+            </div>
+            <div class="notecontent">
+                <div class="notedate">
+                    <div class="txtnotedate">@DateTimeUltility.ConvertToUserTime(@item.LogDT, DateTimeKind.Utc).ToString("M/d/yyyy h:mm:ss tt").ToLower()</div>
+                    @if (!item.Viewed)
+                    {<div class="new">
+                            </div>}
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="notedescription theysay">@Html.Raw(item.Message)
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        }
+    }
+}
+<div class="clear">
+</div>

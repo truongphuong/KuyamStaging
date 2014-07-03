@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "CropImage";
+}
+<link href="../../css/jWindowCrop.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/js/jquery-1.7.2.js" type="text/javascript"></script>
+<script src="../../Scripts/js/jquery.jWindowCrop.js" type="text/javascript"></script>
+<script src="../../Scripts/js/common.js" type="text/javascript"></script>
+<img id="target3" class="crop_me" alt="" src="https://cdnsecakmi.kaltura.com/p/811441/thumbnail/entry_id/1_xmsu8qyp/width/0/height/0" />
+
+<div id="results">
+    <b>X</b>: <span id="crop_x"></span>
+    <br />
+    <b>Y</b>: <span id="crop_y"></span>
+    <br />
+    <b>W</b>: <span id="crop_w"></span>
+    <br />
+    <b>H</b>: <span id="crop_h"></span>
+    <br />
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.crop_me').jWindowCrop({
+            targetWidth: 400,
+            targetHeight: 300,
+            onChange: function (result) {
+                $('#crop_x').text(result.cropX);
+                $('#crop_y').text(result.cropY);
+                $('#crop_w').text(result.cropW);
+                $('#crop_h').text(result.cropH);
+            }
+        });
+    });
+//    var date = new Date("2013-10-09T08:36:19Z");
+//    alert(date);
+//    alert(date.format("ddd mmm dd yyyy HH:MM:ss", true));
+
+    function sendMail() {
+        var link = "mailto:me@example.com"
+             + "?cc=myCCaddress@example.com"
+             + "&subject=" + escape("This is my subject")
+             + "&body=" + escape(document.getElementById('myText').value)
+    ;
+
+        window.location.href = link;
+    }
+</script>
+
+<textarea id="myText">
+   <a style="color: #7759ae; text-decoration: none;" href="http://h20435.www2.hp.com/t5/The-Next-Bench-Blog/HP-Chromebook11-Made-with-Google/ba-p/83539">HP introduced</a>
+</textarea>
+<button onclick="sendMail(); return false">Send</button>

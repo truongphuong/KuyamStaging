@@ -1,0 +1,123 @@
+﻿@using Kuyam.Database
+@using Kuyam.Database.Extensions
+@model List<UserStaff>
+@{
+    ViewBag.Title = "staff list";
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+}
+@{
+    ViewBag.Page = 1;
+}
+<div id="contentmainpage">
+    <h2>
+        staff list</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        <select id="roleName">
+                            @{       
+                                <option value="0">all</option>                           
+                                if (ViewBag.Hotels != null)
+                                {
+                                    foreach (Hotel item in ViewBag.Hotels)
+                                    {                                  
+                                <option value="@item.HotelID" @(ViewBag.HotelId == item.HotelID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }
+                        </select>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                        <input class="button" id="btnAdd" value="add staff" type="button" onclick="addStaff();" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="listUsers">
+        @Html.Partial("_HotelStaffList")
+    </div>
+</div>
+<script type="text/javascript">
+    var latestParamenters = { page: 1, key: '', hotelId: 1 };
+
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var id = $("#roleName option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, hotelId: id };
+        UpdateData(searchParameters);
+    };
+
+    function FilterSearchResult() {
+        var key = $('#txtKey').val();
+        var searchType = $("#roleName option:selected").val();
+        var searchParameters = { page: 1, key: key, hotelId: searchType };
+        UpdateData(searchParameters);
+    }
+
+    function ReloadPage() {
+        UpdateData(latestParamenters);
+    }
+
+    function UpdateData(parameters) {
+        latestParamenters = parameters;
+        window.isUseDefaultAjaxHandle = true;
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'html',
+                url: '/Hotel/StaffList/'
+            })
+            .success(function (result) {
+
+                $('#listUsers').html(result);
+
+            })
+            .error(function (error) {
+
+            });
+        }
+
+        function addStaff() {
+            var hotelId = $("#roleName option:selected").val();
+            if (hotelId == 0) {
+                alert("please  select hotel");
+                return false;
+            }
+            window.location.href = "/Hotel/StaffAdd?hotelId=" + hotelId;
+        }
+
+        function removeStaff(id) {
+            
+            var cfm=confirm("do you want to delete this staff?")
+            if(!cfm)
+            return false;
+            var hotelId = $("#roleName option:selected").val();
+            var deletparameters = { hotelId: hotelId, id: id, page: @ViewBag.Page };
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(deletparameters),
+                dataType: 'html',
+                url: '/Hotel/StaffDelete/'
+            })
+            .success(function (result) {
+
+                $('#listUsers').html(result);
+
+            })
+            .error(function (error) {
+
+            });
+        }   
+
+</script>

@@ -1,0 +1,230 @@
+﻿@using Kuyam.Database
+@model Kuyam.Database.RequestAppointment
+@{
+    ViewBag.Title = "request appointment detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<style type="text/css">
+    .tbldata td span {
+        text-align: left;
+    }
+</style>
+<div id="contentmainpage">
+    <h2>request appointment company-book</h2>
+
+    <fieldset>
+        <div style="width:100%">
+            <table cellpadding="1" cellspacing="1" border="0" class="tbldata" width="100%">
+                <tr class="odd">
+                    <td style="width:130px;">
+                        company
+                    </td>
+                    <td>
+                        <span>@Model.ProfileCompany.Name</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90px; ">
+                        services name
+                    </td>
+                    <td>
+                        @if (Model.ServiceCompany != null && Model.ServiceCompany.Service != null && !string.IsNullOrEmpty(Model.ServiceCompany.Service.ServiceName))
+                        {
+                            <span> @Model.ServiceCompany.Service.ServiceName </span>;
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 90px; ">
+                        customer
+                    </td>
+                    <td>
+                        <span>@Model.Cust.FullName</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90px; ">
+                        calendar
+                    </td>
+                    <td>
+                        @if (Model.Calendar != null)
+                        {
+                            <span>@Model.Calendar.Name</span>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 90px; ">
+                        hotel name
+                    </td>
+                    <td>
+
+
+                        <span>@(Model.Hotel != null ? Model.Hotel.Name : string.Empty)</span>
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td style="width: 90px; ">
+                        concierge name
+                    </td>
+                    <td>
+
+
+                        <span>@(Model.HotelStaff != null ? Model.HotelStaff.Cust.FirstName : string.Empty)</span>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        request start date
+                    </td>
+                    <td>
+                        @{
+                            var startdate = Model.Start;
+                        }
+                        <span id="reqStartDate">@startdate.ToString("MM/dd/yyyy hh:mm tt")</span>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td>
+                        request end date
+                    </td>
+                    <td>
+                        @{
+                            var enddate = Model.End;
+                        }
+                        <span id="reqEndDate">@enddate.ToString("MM/dd/yyyy hh:mm tt")</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90px; ">
+                        duration
+                    </td>
+                    <td>
+                        @if (Model.ServiceCompany != null)
+                        {
+                            <span id="reqDuration"> @Model.ServiceCompany.Duration</span>;
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90px; ">
+                        price
+                    </td>
+                    <td>
+                        @if (Model.ServiceCompany != null)
+                        {
+                            <span id="reqDuration"> @Model.ServiceCompany.Price</span>;
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90px; ">
+                        appointment date
+                    </td>
+                    <td>
+                        <input id="Date" style="width: 300px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90px; ">
+                        appointment start time
+                    </td>
+                    <td>
+                        <input id="Starttime" style="width: 300px;" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 90px; ">
+                        employee name
+                    </td>
+                    <td>
+                        <input id="employeeName" style="width: 300px;" />
+                    </td>
+                </tr>
+
+            </table>
+            <br />
+            <input type="hidden" id="reqaDetail" value="@Model.Id" />
+            @Html.HiddenFor(model => model.Id)
+        </div>
+    </fieldset>
+    <p>
+        <input id="btnbookrapm" type="submit" value="book it" />
+
+    </p>
+    <p>
+
+        <a href="/Admin/RequestAppoinmentList?companyId=@Model.ProfileId">back to list</a>
+    </p>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Date").datepicker({
+            dateFormat: 'mm/dd/y'
+        });
+        $('#Starttime').timepicker({
+            ampm: true,
+            stepMinute: 15,
+            amNames: ['am', 'a'],
+            pmNames: ['pm', 'p']
+        });
+        $("#btnbookrapm").click(function () {
+            var date = $("#Date").val();
+            if (date == '') {
+                showAlertMessage("date is required.");
+                return false;
+            }
+            var st = $("#Starttime").val();
+            if (st == '') {
+                showAlertMessage("start time is required.");
+                return false;
+            }
+
+            var epl = $("#employeeName").val();
+            if (epl == '') {
+                showAlertMessage("employee is required.");
+                return false;
+            }
+            var appointmentStart = date + " " + st;
+            var rqId = $("#reqaDetail").val();
+            var employeeName = $("#employeeName").val();
+
+            var searchParameters = {
+                Id: rqId,
+                appointmentStart: appointmentStart,
+                employeeName: employeeName
+            };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'json',
+                    url: '/Admin/RequestAppoimentBook/'
+                })
+                .success(function (results) {
+                    if (results.result == false && results.isCheckDate == false) {
+                        showAlertMessage("appointment time is invalid");
+                    } else {
+                        window.location.href = "/Admin/ProposedAppointmentList";
+                    }
+                })
+                .error(function (error) {
+
+                });
+            return false;
+        });
+    });
+
+</script>

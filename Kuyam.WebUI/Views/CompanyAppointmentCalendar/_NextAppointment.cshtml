@@ -1,0 +1,61 @@
+﻿@model dynamic
+
+<div class="boxlist">
+    <div class="title">
+        <div class="txttitle">
+            @ViewBag.datetime
+        </div>
+        <a href="#" class="nextappointment">next appointment ></a>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="item last">
+        <div class="colarrow">
+            <div class="redarrow">
+                &nbsp;</div>
+        </div>
+        <div class="coltime">
+            <div class="hours">
+                @ViewBag.time</div>
+            <div class="clear">
+            </div>
+            <div class="newrequest">
+                new request</div>
+            <div class="clear">
+            </div>
+            <div class="ago redhours">
+                @ViewBag.minuteAgo</div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="colconfirm">
+            <div class="name">
+                @ViewBag.username</div>
+            <div class="clear">
+            </div>
+            <div class="button">
+                <input type="button" title="" value="confirm" class="@ViewBag.confirmButtonStatus" />
+            </div>
+            <div class="clear">
+            </div>
+            <div class="modify">
+                <a href="#" title="modify" id="lnkmodify" class="@ViewBag.modifiedButton">modify</a> <a href="#" title="cancel" id="lnkcancel" class="@ViewBag.cancelButton">
+                    cancel</a>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="coldescription">
+            <h2>
+                with @ViewBag.employeeName</h2>
+            <div class="clear">
+            </div>
+            <div class="description">
+                @ViewBag.appDesc 
+                @ViewBag.appNote
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>

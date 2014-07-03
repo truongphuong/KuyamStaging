@@ -1,0 +1,54 @@
+﻿@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    ViewBag.Title = "reviews of " + Model.CompanyName;
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+@section MetaSeoSection{
+    @Model.MetaTagExtension.MetaTag()
+}
+<script type="text/javascript">
+    function pagingEvent(pageIndex) {
+        var id = '@Model.ProfileId';
+        var searchParameters = { page: pageIndex, id: id };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/CompanyProfile/Review/'
+            })
+            .success(function (result) {
+                $('#companyreview').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+
+</script>
+<style type="text/css">
+    .ybox, .newcompanyschedule .allviewing .personcalendar .activeperson {
+        behavior: url(PIE.htc);
+    }
+</style>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight newcompanyschedule">
+            @Html.Partial("_HeaderCompanyProfile")
+            <div class="clear7">
+            </div>
+            <div class="companyreview" id="companyreview">
+                @Html.Partial("_RatingList")
+            </div>
+            <div class="clear23">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>

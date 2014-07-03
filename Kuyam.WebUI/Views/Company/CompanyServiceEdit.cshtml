@@ -1,0 +1,366 @@
+﻿@using Kuyam.Database;
+@{
+    ViewBag.Title = "Company Service Edit";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+
+    List<Service> categories = DAL.GetParentService();
+    ServiceCompany serviceCompany = ViewBag.ServiceCompany;
+    string id = string.Empty;
+    if (Url.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = Url.RequestContext.RouteData.Values["id"].ToString();
+    }
+    List<ServiceCompany> scList = new List<ServiceCompany>();
+    if (ViewBag.CompanyServices != null)
+    {
+        scList = ViewBag.CompanyServices;
+    }
+
+    List<Service> services = new List<Service>();
+
+    if (ViewBag.CategoryId != null)
+    {
+        services = DAL.GetServicesByCategoryID(ViewBag.categoryId);
+    }   
+    
+}
+<script type="text/javascript">
+    var companyId = '@ViewBag.companyId';
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+</script>
+<div class="contentMarketPlace ml2">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight w760">
+            <div class="editserviceform">
+                <h1>
+                    list/edit all your services</h1>
+                <p class="padd">
+                    please add or edit what services your company provides.</p>
+                <div class="line">
+                </div>
+                <h2>
+                    company’s list of services</h2>
+                <div class="listservices">
+                    <div class="listservicescol1">
+                        <div class="formaddlistservices1">
+                        </div>
+                        <div class="formaddlistservices">
+                            <div class="selectcat">
+                                <select name="category" id="category1" class="selectcatagory">
+                                    @{                                  
+                                        <option value="select from categories">select from categories</option>
+                                        foreach (Service category in categories)
+                                        {                                           
+                                            <option value="@category.ServiceName" serviceID="@category.ServiceID" @(ViewBag.CategoryId != null && category.ServiceID == ViewBag.CategoryID?"selected=selected":"") >@Kuyam.Domain.UtilityHelper.TruncateText(category.ServiceName, 30)</option>                                          
+                                        }
+                                   
+                                    }
+                                </select>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="selectservice" id="serviceSelect">
+                                <select name="category" id="service" class="selectservice">
+                                    <option value="select from service" selected="selected">select from service</option>
+                                    @foreach (Service service in services)
+                                    {                                        
+                                        <option value="@service.ServiceID" serviceID="@service.ServiceID" @(service.ServiceID == serviceCompany.ServiceID?"selected=selected":"") >@Kuyam.Domain.UtilityHelper.TruncateText(service.ServiceName, 30)</option>
+                                        
+                                    }
+                                </select>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="timeduration">
+                                <div class="timedurationcol1">
+                                    time duration
+                                </div>
+                                <div class="timedurationcol2">
+                                    <div class="formtext">
+                                        <div class="ltxty">
+                                        </div>
+                                        <div class="ctxty">
+                                            <input id="txtTimeDuration" onkeypress="return isNumberKey(event)" value="@serviceCompany.Duration" type="text" />
+                                        </div>
+                                        <div class="rtxty">
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        minutes:
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="price">
+                                <div class="timedurationcol1">
+                                    price
+                                </div>
+                                <div class="timedurationcol2">
+                                    <div class="formtext">
+                                        <div class="ltxty">
+                                        </div>
+                                        <div class="ctxty">
+                                            <input id="txtPrice" onkeypress="return isNumberKey(event)" value="@serviceCompany.Price" type="text" />
+                                        </div>
+                                        <div class="rtxty">
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        $
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="maxpeople">
+                                <div class="timedurationcol1">
+                                    max people per slot
+                                </div>
+                                <div class="timedurationcol2">
+                                    <div class="formtext">
+                                        <div class="ltxty">
+                                        </div>
+                                        <div class="ctxty">
+                                            <input id="txtMaxPeople" onkeypress="return isNumberKey(event)" value="@serviceCompany.AttendeesNumber" type="text" />
+                                        </div>
+                                        <div class="rtxty">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="bried">
+                                <div class="title">
+                                    brief description
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="formtextareyelow">
+                                    <textarea id="txtDescription" type="text" col="5" row="2">@serviceCompany.Description</textarea>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div id="divErrorBox" style="width: 292px; margin-top: 20px; color: Red;">
+                                <div class="ui-state-error ui-corner-all">
+                                    <div style="position: relative;">
+                                        <div id='errorlist' style="padding: 4px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listservicescol2">
+                        <input type="button" value="save edits" class="btnsave" title="save edits" />
+                        <div class="clear7">
+                        </div>
+                        <input type="button" value="delete" class="btnDeleteServiceCompany" title="Delete" />
+                    </div>
+                    <div class="listservicescol3">
+                        <div class="boxadd1">
+                        </div>
+                        <div class="boxadd">
+                            <ul>
+                                @foreach (ServiceCompany sc in scList)
+                                {
+                                    if (sc.ServiceCompanyID == int.Parse(id))
+                                    {
+                                    <li class="serviceCompany active"  serviceCompanyID="@sc.ServiceCompanyID">@Kuyam.Domain.UtilityHelper.TruncateText(sc.Service.ServiceName, 10),
+                                        @sc.Duration min, $@sc.Price, @sc.AttendeesNumber person</li>
+                                    }
+                                    else
+                                    {
+                                    <li class="serviceCompany"  serviceCompanyID="@sc.ServiceCompanyID">@Kuyam.Domain.UtilityHelper.TruncateText(sc.Service.ServiceName, 10),
+                                        @sc.Duration min, $@sc.Price, @sc.AttendeesNumber person</li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+       $('#divErrorBox').hide();
+     $('#serviceSelect').attr("class", "selectservice selectserviceactive");
+     $('#CompanyServicesMenu').attr("class", "leftitem choose");
+        $('#category1').change(function () {
+        
+//            var categoryID = $('#category').val();
+            var categoryID=$('#category1 option:selected').attr('serviceID')
+            var parameters = { categoryID: categoryID };
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/GetServices/'
+                })
+                .success(function (result) {
+//                    if (result != '') {
+//                        var result = JSON.parse(result);
+//                        $('#serviceSelect').html('');
+//                        $('#serviceSelect').html(result);
+//                        $('select#service').selectmenu();
+//                    }
+                    var result = JSON.parse(result);
+                    if (result != "") {
+                        $('#serviceSelect').html('');
+                        $('#serviceSelect').html(result);
+                        $('select#service').selectmenu();
+                        $('#serviceSelect').attr("class", "selectservice selectserviceactive");
+                    } else {
+                        $('#serviceSelect').html("<select name=\"category\" id=\"service\" class=\"selectservice selectserviceactive\"><option value=\"select from service\" selected=\"selected\">select from service</option>");
+                        $('select#service').selectmenu();
+                        $('#service-button').attr("aria-disabled", "true");
+                        $('#serviceSelect').attr("class", "selectservice");
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+        });
+
+
+        $('.btnsave').click(function () {
+            var serviceCompanyID = @id;
+            var serviceID=$('#service option:selected').attr('serviceid')
+            var timeDuration = $('#txtTimeDuration').val();
+            var price = $('#txtPrice').val();
+            var maxPeople = $('#txtMaxPeople').val();
+            var description = $('#txtDescription').val();
+            var category = $('#category1').val();
+            var err = "";
+            if (category == '' || category == '-1') {
+                err = err + 'select category first.<br/>';
+            } else {
+
+                if (serviceID == '' || serviceID == 'select from service') {
+                    err = err + 'please select service.<br/>';
+                } else {
+                    if (timeDuration == '' || timeDuration <= 0) {
+                        err = err + 'time duration is required.<br/>';
+                    }
+                    if (timeDuration >= 2147483647) {
+                        err = err + 'invalid time duration value.<br/>';
+                    }
+                    if (maxPeople >= 2147483647) {
+                        err = err + 'invalid max people value.<br/>';
+                    }
+                    if (price == '' || price <= 0) {
+                        err = err + 'price is required.<br/>';
+                    }
+                    if (price >= 2147483647) {
+                        err = err + 'invalid price value.<br/>';
+                    }
+                    if (maxPeople == '' || maxPeople <= 0) {
+                        err = err + 'max people per slot are required.<br/>';
+                    }
+                    if (description == "150 max characters") {
+                        description = '';
+                    }
+
+                }
+            }
+
+            if (err == '') {
+            var parameters = { serviceCompanyID: serviceCompanyID,serviceID:serviceID, time: timeDuration, price: price, maxPeople: maxPeople, description: description };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/UpdateServiceCompany/'
+                })
+                .success(function (result) {
+                if (result=="false") {
+                    alert("can not update the service");
+                    return false;
+                }else{
+                    window.location.href = '/company/CompanyServices/';
+                    return true;
+                    }
+                })
+
+                .error(function (error) {
+
+                });
+                 } else {
+                $('#divErrorBox').show();
+                $('#errorlist').html(err);
+            }
+        });
+
+        $('.btnDeleteServiceCompany').click(function () {
+            var serviceCompanyID = @id;            
+            var parameters = { serviceCompanyID: serviceCompanyID, profileId:companyId};
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/DeleteServiceCompany/'
+                })
+                .success(function (result) {
+                if (result=='false') {
+                    alert("can not delete this service");
+                    return false;
+                }else{
+                    window.location.href = '/company/CompanyServices/?companyId='+companyId;
+                    return true;
+                }
+                })
+
+                .error(function (error) {
+
+                });
+        });
+
+         $('.serviceCompany').click(function () {
+
+            var id = $(this).attr('serviceCompanyID');
+            window.location.href = "/Company/CompanyServiceEdit/" + id+"?companyId="+companyId;
+            return false;          
+
+        });
+
+
+    });
+
+         function gotoStatus(status) {
+            window.location.href="/CompanyAppointment/";
+    }   
+     $(document).ready(function () {
+      $('select#category1').selectmenu();
+        $("#ui-accordion-accordion-header-2").click(function () {            
+            if (window.location.href.indexOf("calendarview") == -1) {
+                window.location = "/calendarview/";
+            }
+        });
+    });
+
+</script>

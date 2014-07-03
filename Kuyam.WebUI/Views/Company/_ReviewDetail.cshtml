@@ -1,0 +1,51 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@{
+    List<ServiceCompany> ListServiceCompany = ViewBag.ListServiceCompany;   
+}
+<div class="contentPopup">
+    <a class="btnClose" onclick="hideDialog('viewReviewpopup');" href="JavaScript:void(0);"
+        title="Close"></a>
+    <h3>
+        Reviews</h3>
+    <div class="clear">
+    </div>
+    <div class="boxappointmentnotes1">
+    </div>
+    <div class="boxappointmentnotes">
+        @if (ListServiceCompany != null && ListServiceCompany.Count > 0)
+        {
+            foreach (ServiceCompany item in ListServiceCompany)
+            {
+                if (item.Ratings!=null && item.Ratings.Count > 0)
+                {
+            <div class="noteitem noteitemcompanysearch">
+                <div class="notecontent">
+                    <div class="notedescription last">
+                        @Html.Raw(item.ProfileCompany.Name.ToString()) @Html.Raw(item.Service.ServiceName.ToString())
+                    </div>
+                    <div class="notedescription last">
+                        @foreach (Rating rt in item.Ratings)
+                        {
+                            if (!string.IsNullOrEmpty(rt.Content))
+                            {
+                                @Html.Raw(rt.Content.ToString()) <br />
+                            }else 
+                            {
+                                @Html.Raw("no comment") <br />
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>  
+                }
+            }
+        }
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>

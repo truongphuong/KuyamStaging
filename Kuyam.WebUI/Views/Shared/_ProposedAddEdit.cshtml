@@ -1,0 +1,216 @@
+﻿@model Kuyam.WebUI.Models.ProposedAppointmentModel
+@using Kuyam.Database
+@Html.ValidationSummary(true)
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.unobtrusive.min.js")"></script>
+
+<style type="text/css">
+    body {
+        color: red;
+    }
+
+    .tbldata td span {
+        color: red;
+        text-align: left;
+    }
+</style>
+<fieldset>
+    <div style="width: 100%">
+        <table cellpadding="1" cellspacing="1" border="0" class="tbldata" width="100%">
+            <tr>
+                <td style="width: 100px;">
+                    company
+                </td>
+                <td>
+                  
+                    @Html.DropDownListFor(model => model.ProfileId, new SelectList(Model.ProfileCompanys, "ProfileId", "Name"), new { id = @"companyId", style = @"width:500px;" })
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    for user
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.CustID, new SelectList(Model.CustList, "CustID", "Email"), new { id = @"userId", style = @"width: 500px;", onchange = @"loadCalendar();" })
+                  
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    calendar
+                </td>
+                <td>
+                   
+                    @Html.DropDownListFor(model => model.CalendarId, new SelectList(Model.CalendarList, "CalendarID", "Name"), new { id = @"CalendarId", style = @"width: 500px;" })
+                    </br>
+                    @Html.ValidationMessageFor(m => m.CalendarId)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    hotel
+                </td>
+                <td>
+                    <div style="float:left;">
+                        @Html.DropDownListFor(model => model.HotelId, new SelectList(Model.HotelList, "HotelID", "Name"), "--select hotel--", new { id = @"hotelId", style = @"width: 300px;", onchange = @"loadConcierByHotelId();" })
+                    </div>
+                    <div style="float:left;">
+                        @Html.DropDownListFor(model => model.ConciergeId, new SelectList(Model.ConciergeList, "StaffID", "ConciergeName"), "--select concierge--", new { id = @"conciergeId", style = @"width: 150px;" })
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    service
+                </td>
+                <td>
+                   
+                    @Html.DropDownListFor(model => model.ServiceId, new SelectList(Model.ServiceList, "ServiceID", "ServiceName"), new { id = @"serviceId", style = @"width: 500px;" })
+                    @*</br>
+                    @Html.ValidationMessageFor(m => m.ServiceCompanyId)*@
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    date
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Date, new { maxlength = 100, @style = "width:300px;", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Date)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    start time
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Start, new { maxlength = 100, @style = "width:300px;", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Start)
+                </td>
+            </tr>
+           
+            <tr>
+                <td style="width: 100px;">
+                    duration
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Duration, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.Duration)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    price
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Price, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.Price)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    employee name
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.EmployeeName, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.EmployeeName)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    description
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Description, new { maxlength = 100, @style = "width:300px;" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    @Html.HiddenFor(model => model.AppointmentID)
+</fieldset>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Start, #End').timepicker({
+            ampm: true,
+            stepMinute: 15,
+            amNames: ['am', 'a'],
+            pmNames: ['pm', 'p']
+        });
+
+        $("#Date").datepicker({
+            dateFormat: 'mm/dd/y'
+        });
+    });
+
+
+    function loadCalendar() {
+        var custId = $("#userId option:selected").val();
+        var searchParameters = { custId: custId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'json',
+                url: '/Admin/GetCalendarByCustId/'
+            })
+            .success(function (result) {
+
+                $('#CalendarId').html(result);
+
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function loadServcieCompany() {
+        var companyId = $("#companyId option:selected").val();
+        var searchParameters = { companyId: companyId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'json',
+                url: '/Admin/GetServiceCompanyById/'
+            })
+            .success(function (result) {
+                $('#serviceId').html(result);
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function loadConcierByHotelId() {
+        var hotelId = $("#hotelId option:selected").val();
+        if (hotelId > 0) {
+            var parameters = { hotelId: hotelId };
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'json',
+                    url: '/Admin/GetConciergeByHotelId/'
+                })
+                .success(function (result) {
+                    if (result != "") {
+                        $('#conciergeId').html(result);
+                    } else {
+                        $('#conciergeId').html("<option value=\"\">--select concierge--</option>");
+                    }
+                })
+                .error(function (error) {
+
+                });
+        } else {
+            $('#conciergeId').html("<option value=\"\">--select concierge--</option>");
+        }
+    }
+</script>

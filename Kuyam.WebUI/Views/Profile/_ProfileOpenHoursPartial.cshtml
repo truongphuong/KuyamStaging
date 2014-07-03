@@ -1,0 +1,33 @@
+﻿@model Kuyam.Database.ProfileHour
+@using M2.Util.MVC
+@*
+@using (Html.BeginCollectionItem("openhours"))
+{ 
+    @Html.LabelFor(model => model.ProfileHoursID)
+    @Html.EditorFor(model => model.ProfileID)
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Day)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Day)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Start)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Start)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.End)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.End)
+        </div>
+    </div>
+}
+*@

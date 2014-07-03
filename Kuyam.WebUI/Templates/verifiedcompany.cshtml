@@ -1,0 +1,166 @@
+﻿@{
+    string host = Kuyam.WebUI.Helpers.EmailHelper.GetStoreHost();
+    string date = String.Format("{0:dddd, MMMM d, yyyy}", DateTime.UtcNow);
+}
+<center>
+    <table cellpadding="0" cellspacing="0" border="0" width="550px" style="font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr style="background-color: black;">
+                        <td style="text-align: left;" height="61">
+                            <img alt="" src="@host/images/header_logo.png" usemap="#logo" style="border: solid 0px white;" />
+                            <map name="logo" id="logo">
+                                <area shape="rect" coords="20,5,148,50" href="@host" alt="Kuyam" title="Kuyam" />
+                            </map>
+                        </td>
+                        <td style="color: #c1d82f; text-align: right; font-size: 12px; padding-right: 17px;">
+                            <div style="font-family: Arial, Helvetica, sans-serif; padding-top: 25px;">
+                                @date
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="line-height: 0px;">
+                            <img alt="" src="@host/images/header_footer_surprise.png" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;">
+                <img alt="" src="@host/images/tbox_surprise.png" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td valign="top" style="background-color: #c9e1f1;" width="21">
+                            <img alt="" src="@host/images/lbox_surprise.png" width="21" height="259" />
+                        </td>
+                        <td valign="top" style="border-left: solid 1px #c1d82f; border-right: solid 1px #c1d82f;
+                            width: 506px;" width="506" align="left">
+                            <div style="border-left: solid 8px #e6e6e6; margin-left: 21px;">
+                                <table cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td style="padding-left: 19px;" height="262" valign="top">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="438" style="padding-left: 5px;">
+                                                <tr>
+                                                    <td style="text-align: right; padding-left: 12px;">
+                                                        <a href="@host/" title="login" style="color: #29abe2; text-decoration: none;
+                                                            font-size: 12px; line-height: 10px; font-family: Arial, Helvetica, sans-serif;">
+                                                            login</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                        padding-left: 12px;">
+                                                        hi <b>@Model.UserName !</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 22px 0px 8px 0px;">
+                                                        <img alt="" src="@host/images/verified.png" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left" style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;
+                                                        padding-left: 12px;">
+                                                        welcome to the business side of kuyam!
+                                                        <br />
+                                                        <br />
+                                                        your unique company verification code is: <strong style="color: black;">@Model.Verified</strong>
+                                                        <br />
+                                                        click the following link now to start listing your hours:
+                                                        <br />
+                                                        <a href="@host/Company/VerificationCode/" title="" style="text-decoration: none;
+                                                            color: #0071bc;">@host/verificationcode</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td valign="top" style="background-color: #c9e1f1;" width="23">
+                            <img alt="" src="@host/images/rbox_surprise.png" width="23" height="259" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;">
+                <img alt="" src="@host/images/fbox_surprise1.png" usemap="#social" style="border: solid 0px white;" />
+                <map name="social" id="social">
+                    <area shape="rect" coords="222,18,272,30" href="http://www.kuyam.org" alt="Kuyam" title="Kuyam" />
+                    <area shape="rect" coords="279,4,313,34" href="http://www.facebook.com/mykuyam" alt="Facebook" title="Facebook" />
+                    <area shape="rect" coords="316,4,344,34" href="https://twitter.com/mykuyam" alt="Twitter" title="Twitter" />
+                    <area shape="rect" coords="349,4,379,34" href="http://www.youtube.com/channel/UCei6RmG4G9jLgEHchRzR5jA" alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="382,4,412,34" href="http://kuyam.tumblr.com/" alt="Tumblr" title="Tumblr" />
+                    <area shape="rect" coords="415,4,445,34" href="http://pinterest.com/kuyam/" alt="Pinterest" title="Pinterest" />
+                    <area shape="rect" coords="448,4,482,35" href="https://plus.google.com/u/0/b/103779915573360185741/103779915573360185741" alt="Google+" title="Google+" />
+                    <area shape="rect" coords="483,4,515,35" href="http://instagram.com/kuyamsocial" alt="Instagram" title="Instagram" />
+                </map>
+                @*<map name="social" id="social">
+                    <area shape="rect" coords="293,18,346,30" href="http://www.kuyam.org" alt="Kuyam"
+                        title="Kuyam" />
+                    <area shape="rect" coords="355,4,384,34" href="https://www.facebook.com/mykuyam"
+                        alt="Facebook" title="Facebook" />
+                    <area shape="rect" coords="391,4,420,34" href="https://twitter.com/mykuyam" alt="Twitter"
+                        title="Twitter" />
+                    <area shape="rect" coords="424,4,453,34" href="http://www.youtube.com/user/mykuyam"
+                        alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="457,4,487,34" href="http://kuyam.tumblr.com/" alt="Tumblr"
+                        title="Tumblr" />
+                    <area shape="rect" coords="491,4,520,34" href="http://pinterest.com/kuyam/" alt="Pinterest"
+                        title="Pinterest" />
+                </map>*@
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;" valign="top">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="line-height: 0px;">
+                            <img alt="" src="@host/images/footer_surprise2.png" style="border: solid 0px white;" />
+                        </td>
+                        <td style="line-height: 0px;">
+                            <a href="mailto:@Model.Email" title="@Model.Email">
+                                <img alt="" src="@host/images/footer_surprise2a.png" style="border: solid 0px white;" /></a>
+                        </td>
+                        <td style="line-height: 0px;">
+                            <img alt="" src="@host/images/footer_surprise2b.png" style="border: solid 0px white;" usemap="#kuyam" />
+                            <map name="kuyam" id="kuyam">
+                                <area shape="rect" coords="79,10,135,22" href="@host" alt="kuyam.com"
+                                    title="kuyam.com" />
+                            </map>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;">
+                <img alt="" src="@host/images/footer_surprise11.png" usemap="#footer" style="border: solid 0px white;" />
+                <map name="footer" id="footer">
+                    <area shape="rect" coords="470,3,525,10" href="%unsubscribe_url%" alt="unsubscribe"
+                        title="unsubscribe" />
+                    <area shape="rect" coords="183,17,242,26" href="@host/home/howitworks_user"
+                        alt="how it works " title="how it works " />
+                    <area shape="rect" coords="266,17,307,26" href="@host/home/OurStory" alt="our story"
+                        title="our story" />
+                    <area shape="rect" coords="338,17,354,26" href="@host/home/faq" alt="faq"
+                        title="faq" />
+                    <area shape="rect" coords="378,17,424,26" href="@host/home/contactnew" alt="contact us"
+                        title="contact us" />
+                    <area shape="rect" coords="454,17,525,26" href="@host/" alt="terms &amp; privacy"
+                        title="terms &amp; privacy" />
+                </map>
+            </td>
+        </tr>
+    </table>
+</center>

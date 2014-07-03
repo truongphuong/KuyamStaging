@@ -1,0 +1,89 @@
+﻿@model Kuyam.WebUI.Models.CompanySearchModel
+@{
+    ViewBag.CustPage = "sched";
+    Layout = "~/Views/Cust/custmaster.cshtml";
+}
+@using M2.Util.MVC
+@Html.Partial("_CompanySearch")
+@using (Html.BeginForm("newCompanySchedAppt", "cust"))
+{ 
+    @Html.ValidationSummary(true)
+    @Html.ValidationMessageFor(model => model.NewCompany.Name)<br />
+    @Html.ValidationMessageFor(model => model.NewCompany.Phone)
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Name, "company name")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.Name)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Phone, "phone")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.Phone)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Street1, "street 1")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.Street1)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Street2, "street 2")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.Street2)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.City, "city")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.City)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.State, "state")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.NewCompany.State, Model.StateList)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Zip, "zip")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.Zip)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Email, "email")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewCompany.Email)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewCompany.Url, "website")
+        </div>
+        <div class="editor-field">
+            http://@Html.TextBoxFor(model => model.NewCompany.Url)
+        </div>
+    </div>
+    <br />
+    <div class="editor-row">
+        @Html.SaveCancelLC("submit", "submitting")
+    </div>
+}

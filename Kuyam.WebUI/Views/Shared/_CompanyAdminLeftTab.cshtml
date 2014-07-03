@@ -1,0 +1,395 @@
+﻿@using Kuyam.Database
+@using Kuyam.Utility
+@using Kuyam.WebUI.Models
+@using System.Web
+@{
+    int profileID = ViewBag.companyId;
+    ProfileCompany pc = DAL.GetProfileCompany(profileID);
+    List<Appointment> lstApp = ProfileCompany.GetAppointmentByProfileId(profileID != 0 ? profileID : MySession.ProfileID);
+    //Session[Contants.COMPANY_APPOINTMENT_LISTAPPOINTMENT] = lstApp;
+    int numofNewApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Pending);
+    int numofModApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Modified || a.AppointmentStatusID == (int)Types.AppointmentStatus.CompanyModified);
+    int numofConApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Confirmed);
+    int numofCanApp = lstApp.Count(a => a.AppointmentStatusID == (int)Types.AppointmentStatus.Cancelled);
+    string rawURL = Request.RawUrl;
+    CompanyEmployee employee = null;
+    if (ViewBag.Employee != null)
+    {
+        employee = ViewBag.Employee;
+    }
+}
+<div class="colLeft menuLeft activeblue">
+    <div class="scroll">
+        <div id="accordion">
+            <h3 title="manage">
+                manage
+            </h3>
+            <div class="panelmanual searchschedule">
+                <div class="editservices">
+                    <div class="leftitem" id="employeeListHourMenu">
+                        <a href="/company/companyemployeelisthour?companyId=@profileID" title="list/edit hours">
+                            list/edit hours
+                        </a>
+                    </div>
+                </div>
+                @if (rawURL.Contains("/company/companyemployeelisthour"))
+                {
+                    <div class="clear h3">
+                    </div>
+                    <div class="employeefavorite">
+                        <div class="divfavorite ">
+                            @if (employee != null)
+                            {
+                                <a href="#" id="schedulefavorite" class="chooseemployeeactive" title="@employee.EmployeeName">
+                                    @employee.EmployeeName
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" id="schedulefavorite" class="schedulefavorite" title="select employee">
+                                    select
+                                    employee
+                                </a>
+                            }
+                            <ul class="favorite" id="favorite">
+                                @if (ViewBag.CompanyEmployees != null)
+                                {
+                                    List<CompanyEmployee> ceList = ViewBag.CompanyEmployees;
+                                    foreach (CompanyEmployee employeeTemp in ceList)
+                                    {
+                                        string url = "/company/companyemployeelisthour/" + employeeTemp.EmployeeID + "?companyId=" + profileID;
+                                        <li class="employeeNameTemp"><a href="@url" title="@employeeTemp.EmployeeName">@employeeTemp.EmployeeName</a></li>
+                                    }
+                                }
+                            </ul>
+                            <a href="#" id="favoritearrowup" class="schedulefavoritearrowup" title="up"></a>
+                            <a href="#" id="favoritearrowdown" class="schedulefavoritearrowdown" title="down">
+                            </a>
+                        </div>
+                    </div>
+                    <div id="selectservice" class="popupSelected">
+                        <div class="contentPopup">
+                            <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+                            <div class="formSelected">
+                                <h6>
+                                    selected:
+                                </h6>
+                                <h5>
+                                    <label id="employeeHourDayEdit">
+                                    </label>
+                                </h5>
+                                <p class="questionYellow">
+                                    ?
+                                </p>
+                                <p>
+                                    <input type="text" value="12:00pm" class="inputTime1" id="fromEditHours" />
+                                    <label>
+                                        to
+                                    </label>
+                                    <input type="text" value="2:00pm" class="inputTime2" id="toEditHours" />
+                                </p>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="formInput">
+                                <a href="javascript:void(0);" class="btnDeleteEmployeeHour" id="bookme" title="delete">
+                                    delete
+                                </a> <a href="javascript:void(0);" class="btnSaveeditEmployeeHour" id="bookme"
+                                        title="save edits">save edits</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clear">
+                </div>
+
+                <div class="editservices">
+                    <div class="leftitem" id="CompanyServicesMenu">
+                        <a href="/company/companyservices?companyId=@profileID" title="edit services">
+                            edit services
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @if (rawURL.Contains("/company/companyemployee") && !rawURL.Contains("/company/companyemployeelisthour"))
+                    {
+                        <div class="leftitem choosenonbg">
+                            edit employees
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="leftitem choose1">
+                            <a href="/company/employee/?companyId=@profileID" class="addnewemployee" title="add new employee">
+                                + add new employee
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="leftitem" id="EmployeeMenu">
+                            <a href="/company/employee/?companyId=@profileID" title="edit employees">edit employees</a>
+                        </div>
+                    }
+                </div>
+                @if (rawURL.Contains("/company/employee") && !rawURL.Contains("/company/companyemployeelisthour"))
+                {
+                    <div class="clear h3">
+                    </div>
+                    <p class="or1">
+                        or
+                    </p>
+                    <div class="clear h6">
+                    </div>
+                    <div class="employeefavorite">
+                        <div class="divfavorite">
+                            @if (employee != null && (employee.EmployeeTypeId == null || employee.EmployeeTypeId != (int)Types.EmployeeType.instructor))
+                            {
+                                <a href="#" id="schedulefavorite" class="chooseemployeeactive" title="@employee.EmployeeName">
+                                    @employee.EmployeeName
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" id="schedulefavorite" class="schedulefavorite" title="select employee">
+                                    select
+                                    employee
+                                </a>
+                            }
+                            <ul class="favorite" id="favorite">
+                                @if (ViewBag.CompanyEmployees != null)
+                                {
+                                    List<CompanyEmployee> ceList = ViewBag.CompanyEmployees;
+                                    foreach (CompanyEmployee employeeTemp in ceList)
+                                    {
+                                        string url = "/company/employee/" + employeeTemp.EmployeeID + "?companyId=" + profileID;
+                                        <li><a href="@url" title="@employeeTemp.EmployeeName">@Kuyam.Domain.UtilityHelper.TruncateAtWord(employeeTemp.EmployeeName, 20)</a></li>
+                                    }
+                                }
+                            </ul>
+                            <a href="#" id="favoritearrowup" class="schedulefavoritearrowup" title="up"></a>
+                            <a href="#" id="favoritearrowdown" class="schedulefavoritearrowdown" title="down">
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                @if (pc != null && pc.IsClass.HasValue && pc.IsClass.Value)
+                {
+                    <div class="editservices">
+                        <div class="clear">
+                        </div>
+                        <div class="grayline"></div>
+                        <div class="clear"></div>
+                        <div class="leftitem">
+                            <a href="javascript:void(0);" style="cursor:text" title="classes">
+                                classes
+                            </a>
+                            <div class="clear"></div>
+                        </div>
+
+                        @if (rawURL.Contains("/company/class"))
+                        {
+                            <div class="leftitem choose" id="CompanyServicesMenu">
+                                <a class="class" href="/company/class?profileID=@profileID" title="edit class">
+                                    edit class
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="leftitem" id="CompanyServicesMenu">
+                                <a class="class" href="/company/class?profileID=@profileID" title="edit class">
+                                    edit class
+                                </a>
+                            </div>
+                        }
+
+                        <div class="clear">
+                        </div>
+                        @if (rawURL.Contains("/company/instructor"))
+                        {
+                            <div class="leftitem choose">
+                                <a class="intructor" href="/company/instructor/?companyId=@profileID" title="edit intructor">
+                                    edit instructor
+                                </a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="leftitem" id="intructorMenu">
+                                <a class="intructor" href="/company/instructor/?companyId=@profileID" title="edit intructor">edit instructor</a>
+                            </div>
+                        }
+
+
+                        @if (rawURL.Contains("/company/instructor"))
+                        {
+                            <div class="clear h3">
+                            </div>
+                            <p class="or1">
+                                or
+                            </p>
+                            <div class="clear h6">
+                            </div>
+                            <div class="employeefavorite">
+                                <div class="divfavorite">
+                                    @if (employee != null)
+                                    {
+                                        <a href="#" id="schedulefavorite" class="chooseemployeeactive" title="@employee.EmployeeName">
+                                            @employee.EmployeeName
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" id="schedulefavorite" class="schedulefavorite" title="select employee">
+                                            select
+                                            instructor
+                                        </a>
+                                    }
+                                    <ul class="favorite" id="favorite">
+                                        @if (ViewBag.CompanyEmployees != null)
+                                        {
+                                            List<CompanyEmployee> ceList = ViewBag.CompanyEmployees;
+                                            foreach (CompanyEmployee employeeTemp in ceList)
+                                            {
+                                                string url = "/company/instructor/" + employeeTemp.EmployeeID + "?companyId=" + profileID;
+                                                <li><a href="@url" title="@employeeTemp.EmployeeName">@Kuyam.Domain.UtilityHelper.TruncateAtWord(employeeTemp.EmployeeName, 20)</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                    <a href="#" id="favoritearrowup" class="schedulefavoritearrowup" title="up"></a>
+                                    <a href="#" id="favoritearrowdown" class="schedulefavoritearrowdown" title="down">
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        <div class="clear">
+                        </div>
+@if (rawURL.Contains("/company/schedulerforclasses"))
+{
+    <div class="leftitem choose" id="CompanyServicesMenu">
+                            <a class="scheduler" href="/company/schedulerforclasses?companyId=@profileID" title="class scheduler">
+                                class scheduler
+                            </a>
+                        </div>
+}
+else
+{
+    <div class="leftitem" id="CompanyServicesMenu">
+                            <a class="scheduler" href="/company/schedulerforclasses?companyId=@profileID" title="class scheduler">
+                                class scheduler
+                            </a>
+                        </div>
+}
+                        
+
+
+
+                    </div>
+
+
+                }
+
+
+                <div class="editservices">
+                    <div class="clear">
+                    </div>
+                    <div class="grayline">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyInvoicesMenu">
+                        <a href="/companyappointment/CompanyInvoices?companyId=@profileID" title="invoice">invoice</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyPackagesMenu">
+                        <a href="/company/companypackages?companyId=@profileID" title="packages">
+                            packages
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyRegularClientMenu">
+                        <a href="/company/CompanyRegularClients?companyId=@profileID" title="regular clients">
+                            regular clients
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="leftitem" id="CompanyDiscountMenu">
+                        <a href="/company/companyactivediscountCode?companyId=@profileID" title="promo codes">
+                            promo codes
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <h3 title="appointments">
+                appointments
+            </h3>
+            <div class="panelapp">
+                <div class="appts">
+                    <ul>
+                        <li id="liApp" class="active">
+                            <a href="#" id="divApp" title="master agenda" onclick="javascript:gotoStatus('app')">
+                                master agenda
+                            </a>
+                        </li>
+                        <li id="liNew">
+                            <a href="#" id="divNew" title="new requests" onclick="javascript:gotoStatus('new')">
+                                new requests
+                            </a> <a href="#" id="divNewApp" class="yellow" onclick="javascript:gotoStatus('new')">@numofNewApp</a>
+                        </li>
+                        <li id="liMod">
+                            <a href="#" id="divMod" title="modified" onclick="javascript:gotoStatus('mod')">
+                                modified
+                            </a> <a href="#" id="divModApp" class="orange" onclick="javascript:gotoStatus('mod')">@numofModApp</a>
+                        </li>
+                        <li id="liCon">
+                            <a href="#" id="divCon" title="confirmed" onclick="javascript:gotoStatus('con')">
+                                confirmed
+                            </a> <a href="#" id="divConApp" class="green" onclick="javascript:gotoStatus('con')">@numofConApp</a>
+                        </li>
+                        <li id="liCan">
+                            <a href="#" id="divCan" title="cancellations" onclick="javascript:gotoStatus('can')">
+                                cancellations
+                            </a> <a href="#" id="divCanApp" class="red" onclick="javascript:gotoStatus('can')">@numofCanApp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @if (!ViewBag.IsAdminOrAgent)
+            {
+                <h3 title="calendar">
+                    calendar
+                </h3>
+                <div class="panelcal">
+                    <div id="datepicker">
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".chooseemployeeactive").dotdotdot(
+            {
+                height: 25,
+                width: 140
+            });
+
+        $(".employeeNameTemp").dotdotdot(
+          {
+              height: 19,
+              width: 140
+          });
+    });
+</script>

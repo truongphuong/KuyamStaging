@@ -1,0 +1,630 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "categories & services list";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style type="text/css">
+    .error
+    {
+        color: red;
+        text-align: left;
+    }
+</style>
+<div id="contentmainpage">
+    <div id="divList">
+        <h2>
+            categories & services list</h2>
+        <div class="boxsearch">
+            <center>
+                <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                    <tr class="odd">
+                        <td>
+                            <label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>
+                            @*@Html.Partial("_SearchBox")*@
+                            <select id="searchType">
+                                <option value="-1" @(ViewBag.SearchType == -1 ? "selected='selected'" : "")>all</option>
+                                <option value="1" @(ViewBag.SearchType == 1 ? "selected='selected'" : "")>category</option>
+                                <option value="2" @(ViewBag.SearchType == 2 ? "selected='selected'" : "")>service</option>
+                                <option value="3" @(ViewBag.SearchType == 3 ? "selected='selected'" : "")>sequence</option>
+                            </select>
+                            &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                            <button class="button" id="btnNewCategory" type="button">
+                                add category</button>
+                            <button class="button" id="btnNewService" type="button">
+                                add service</button>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+        <div id="listServices" style="overflow-x: scroll; display: block">
+            @Html.Partial("_ServiceResult")
+        </div>
+    </div>
+    <div id="dialog-form" style="display: none;">
+        <h2 id="formTitle">
+        </h2>
+        <p class="validateTips">
+        </p>
+        <form id="form-data" enctype="multipart/form-data">
+        <input type="hidden" id="hdfServiceId" />
+        <table border='0' cellpadding="0" cellspacing="0" class="tbldata">
+            <tr id="trParentCategory">
+                <td>
+                    <label for="serviceParent">
+                        category</label><br />
+                </td>
+                <td>
+                    <select id="serviceParent" name="serviceParent">
+                        <option value="-1" selected="selected">select a category</option>
+                        @foreach (Service service in ViewBag.Categories)
+                        {
+                            <option value="@service.ServiceID">@service.ServiceName</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 90px;">
+                    <label for="txtServiceName">
+                        category name</label>
+                </td>
+                <td>
+                    <input type="text" name="txtServiceName" id="txtServiceName" class="text" maxlength="150" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtServiceDescription">
+                        description</label>
+                </td>
+                <td>
+                    <input type="text" name="txtServiceDescription" id="txtServiceDescription" value=""
+                        class="text" maxlength="150" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtServiceDescription">
+                        status</label>
+                </td>
+                <td>
+                    <select id="status">
+                        <option value="1" @(ViewBag.SearchType == 1 ? "selected='selected'" : "")>active</option>
+                        <option value="0" @(ViewBag.SearchType == 0 ? "selected='selected'" : "")>inactive</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="uploadRow" style="display: none;">
+                <td>
+                    <label for="txtServiceDescription">
+                        icon</label>
+                </td>
+                <td>
+                    <input type="file" name="fileicon" id="fileicon" />
+                </td>
+            </tr>
+            <tr id="divsequence" style="display: none;">
+                <td>
+                    <label for="txtServiceSequence">
+                        sequence</label>
+                </td>
+                <td>
+                    <input type="text" name="txtServiceSequence" id="txtServiceSequence" style="width: 67px;"
+                        value="" class="text" maxlength="150" onkeypress="return isNumberKey(event)" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <center>
+                        <button id="btnSave">
+                            create</button>
+                        <button id="btnCancel">
+                            cancel</button>
+                    </center>
+                </td>
+            </tr>
+        </table>
+        </form>
+        <a id="lnkBack" href="javascript:void(0)">back to list</a>
+    </div>
+</div>
+<style>
+    /*#dialog-form label,*/#dialog-form input:text
+    {
+        display: block;
+    }
+    #dialog-form input.text
+    {
+        width: 99%; /*margin-bottom:12px; width:95%; padding: .4em;*/
+    }
+    #dialog-form fieldset
+    {
+        padding: 0;
+        border: 0;
+        margin-top: 25px;
+    }
+    #dialog-form .ui-state-error
+    {
+        border-color: red;
+    }
+    #dialog-form .validateTips
+    {
+        border: 1px solid transparent;
+        padding: 0.3em;
+        color: red;
+    }
+</style>
+@*<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js" type="text/javascript"></script>*@
+<script src="/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+@*<script src="/Scripts/validation/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>*@
+<script type="text/javascript">
+    var currentType;
+    var TYPE_CATEGORY = 1;
+    var TYPE_SERVICE = 2;
+    var currentRow;
+
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var type = $('#searchType').val();
+        var searchParameters = { page: pageIndex, key: key, type: type };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/Category/'
+            })
+            .success(function (result) {
+                $('#listServices').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function FilterSearchResult() {
+
+        var key = $('#txtKey').val();
+        var type = $('#searchType').val();
+        var searchParameters = { key: key, type: type };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/Category/'
+            })
+            .success(function (result) {
+                if (result == "false") {
+                    window.location.href = "/Admin/Login";
+                } else {
+                    $('#listServices').html(result);
+                }
+
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    $(document).ready(function () {
+
+        $('#txtKey').keypress(function (e) {
+            if (e.which == 13) {
+                e.stopPropagation();
+                e.preventDefault();
+                $('#btnSearch').click();
+            }
+        });
+
+        $('#btnNewCategory').click(function (e) {
+            e.preventDefault();
+            currentType = TYPE_CATEGORY;
+            resetFormFields();
+            $("#uploadRow").show();
+            $('#trParentCategory').hide();
+            $('#txtServiceSequence').val('');
+            $("#divsequence").show();
+            $('label[for="txtServiceName"]').text('category name');
+            $('#divList').hide();
+            $('#dialog-form').show();
+            $('#formTitle').text('add category');
+        });
+
+        $('#btnNewService').click(function (e) {
+            e.preventDefault();
+            currentType = TYPE_SERVICE;
+            resetFormFields();
+            $('#trParentCategory').show();
+            $("#divsequence").hide();
+            //$('#serviceParent').show();
+            //$('label[for="serviceParent"]').show();
+            $('label[for="txtServiceName"]').text('service name');
+            $('#divList').hide();
+            $('#dialog-form').show();
+            $('#formTitle').text('add service');
+        });
+
+        $('#btnSave').live('click', function (e) {
+            e.preventDefault();
+            window.isUseDefaultAjaxHandle = true;
+            var formData = new FormData($('form')[0]);           
+            var filename = $("#fileicon").val();
+            if (filename != "") {
+                $.ajax({
+                    url: '/Upload/IconUploadHandler.ashx',  //server script to process data
+                    type: 'POST',
+                    dataType: 'json',
+                    xhr: function () {  // custom xhr
+                        myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) { // check if upload property exists
+                            myXhr.upload.addEventListener('progress', function () { }, false); // for handling the progress of the upload
+                        }
+                        return myXhr;
+                    },
+                    //Ajax events
+                    beforeSend: function () {
+                    },
+                    success: function (result) {
+                        if ($.trim($('#hdfServiceId').val()) == "") {
+                            createService(result.kalturaid);
+                        } else {
+                            modifyService(result.kalturaid);
+                        }
+                    },
+                    error: function () {
+                    },
+                    // Form data
+                    data: formData,
+                    //Options to tell JQuery not to process data or worry about content-type
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            } else {
+                if ($.trim($('#hdfServiceId').val()) == "") {
+                    createService();
+                } else {
+                    modifyService();
+                }
+            }
+
+
+
+        });
+
+        $('#btnCancel, #lnkBack').click(function (e) {
+            e.preventDefault();
+            $('#divList').show();
+            $('#dialog-form').hide();
+        });
+
+
+        $('.modifyService').live('click', function (e) {
+            var tr = $(this).closest('tr');
+            currentRow = tr;
+            $('#hdfServiceId').val($.trim(tr.prop('id')));
+            $('#txtServiceName').val($.trim(tr.find('td:nth-child(2)').text()));
+            $('#txtServiceDescription').val($.trim(tr.find('td:nth-child(3)').text()));
+            $('#txtServiceSequence').val($.trim(tr.find('td:nth-child(5)').text()));
+            var status = $.trim(tr.find('td:nth-child(4)').text());
+            if (status == 'active') {
+                $('#status').val(1);
+            } else {
+                $('#status').val(0);
+            }
+            var parrentId = $.trim(tr.find('td:nth-child(7)').text());
+
+            console.log("ParentID: " + parrentId);
+            if (parrentId != "" && $.isNumeric(parrentId)) {
+                //$('#serviceType').val("2");
+                currentType = TYPE_SERVICE;
+                $("#divsequence").hide();
+                $("#uploadRow").hide();
+                $('#trParentCategory').show();
+                $('#serviceParent').val(parrentId);
+                $('#formTitle').text('modify service');
+                $('label[for="txtServiceName"]').text('service name');
+                //$('label[for="serviceParent"]').show();
+            }
+            else {
+                currentType = TYPE_CATEGORY;
+                $("#divsequence").show();
+                $("#uploadRow").show();
+                $('#formTitle').text('modify category');
+                $('#trParentCategory').hide();
+                $('label[for="txtServiceName"]').text('category name');
+                //$('#serviceParent').hide();
+                //$('label[for="serviceParent"]').hide();
+            }
+            $('#divList').hide();
+            $('#dialog-form').show();
+            $('#btnSave').text('save');
+        });
+
+        $('.deleteService').live('click', function (e) {
+            currentRow = $(this).closest('tr');
+            deleteService(currentRow.prop('id'));
+        });
+
+
+        $('.detailCategory').live('click', function () {
+            var self = this;
+            var tr = $(this).closest('tr');
+            if (tr.attr('isExpanded') != "1") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({ categoryId: tr.prop('id') }),
+                        dataType: 'json',
+                        url: '/Admin/ListServicesByCategory/'
+                    })
+                    .success(function (result) {
+                        if (result.status) {
+                            if (result.data.length > 0) {
+                                collapseAll();
+                                tr.attr('isExpanded', 1);
+                                var target = $('<tr></tr>').insertAfter(tr);
+                                target.html('<td colspan="5"><table class="tbldata"></table><td>');
+                                //target.html('<td colspan="5">123555555</table><td>');
+                                $("#serviceTemplate").tmpl(result.data).appendTo(target.find('table.tbldata'));
+                                $(self).text('hide');
+                            } else {
+                                alert('there is no service belong to this category');
+                            }
+                        }
+                    })
+                    .error(function (error) {
+
+                    });
+            }
+            else {
+                tr.next().remove();
+                tr.removeAttr('isExpanded');
+                $(self).text('detail');
+            }
+        });
+    });
+
+    function collapseAll() {
+        $('tr[isExpanded] + tr').remove();
+        $('tr[isExpanded]').removeAttr('isExpanded').find('.detailCategory').text('detail');
+    }
+
+    function resetFormFields() {
+        $('#txtServiceName').val('').removeClass("ui-state-error");
+        $('#txtServiceDescription').val('').removeClass("ui-state-error");
+        $('#serviceParent').val('-1').removeClass("ui-state-error");
+        //$('label[for="serviceParent"]');
+        $('#hdfServiceId').val('');
+        $('.validateTips').empty();
+        $('#formTitle').text('add category');
+        $('#btnSave').text('create');
+    }
+
+    function updateTips(t) {
+        $('.validateTips')
+            .text(t)
+            .addClass("ui-state-highlight");
+        setTimeout(function () {
+            $('.validateTips').removeClass("ui-state-highlight", 1500);
+        }, 500);
+    }
+
+    function validateData() {
+        if ($.trim($('#txtServiceName').val()) == "") {
+            $('#txtServiceName').addClass('ui-state-error');
+            updateTips("name could not be blank.");
+            return false;
+        }
+
+        if ($.trim($('#txtServiceDescription').val()) == "") {
+            $('#txtServiceDescription').addClass('ui-state-error');
+            updateTips("description could not be blank.");
+            return false;
+        }
+
+        if (currentType == TYPE_SERVICE && $('#serviceParent').val() == "-1") {
+            $('#serviceParent').addClass('ui-state-error');
+            updateTips("please select the category.");
+            return false;
+        }
+
+        if ($.trim($('#hdfServiceId').val()) == "") {
+
+        }
+        else {
+            if (currentType == TYPE_SERVICE && $('#serviceParent').val() == "-1" && $('#serviceParent').val() == $.trim($('#hdfServiceId').val())) {
+                $('#serviceParent').addClass('ui-state-error');
+                updateTips("the parent could not be the same as the current.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function createService(id) {
+        if (!validateData()) {
+            return;
+        }
+        if (!$("#form-data").validate().form())
+            return;
+        var type = 1;
+        var serviceName = $('#txtServiceName').val();
+        var description = $('#txtServiceDescription').val();
+        var sequence = $('#txtServiceSequence').val();
+        var status = $('#status option:selected').val();
+        var statusData;
+        if (status == '0') {
+            statusData = false;
+        } else {
+            statusData = true;
+        }
+        var postData = {
+            ServiceName: serviceName,
+            Desc: description,
+            Status: statusData,
+            Sequence: sequence,
+            kalturaId: id
+        };
+        if (currentType == TYPE_SERVICE) {
+            postData.ParentServiceID = parseInt($('#serviceParent').val());
+            type = 2;
+        }
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/CategoryCreate/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    $('#divList').show();
+                    $('#dialog-form').hide();
+                    alert("added " + (type == 1 ? "category" : "service") + " successfully.");
+                    window.location = "/Admin/Category?" + $.param({ key: $.trim($('#txtKey').val()), type: $('#searchType').val(), page: parseInt($('.paging .active').text()) });
+                }
+                else {
+                    alert(result.message);
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function modifyService(id) {
+        if (!validateData()) {
+            return;
+        }
+
+        var type = 1;
+        var serviceId = currentRow.prop('id');
+        var serviceName = $('#txtServiceName').val();
+        var description = $('#txtServiceDescription').val();
+        var status = $('#status option:selected').val();
+        var sequence = $('#txtServiceSequence').val();
+        var statusData;
+        if (status == '0') {
+            statusData = false;
+        } else {
+            statusData = true;
+        }
+        var postData = {
+            ServiceID: serviceId,
+            ServiceName: serviceName,
+            Desc: description,
+            Status: statusData,
+            Sequence: sequence,
+            kalturaId: id
+        };
+        if (currentType == TYPE_SERVICE) {
+            postData.ParentServiceID = parseInt($('#serviceParent').val());
+            type = 2;
+        }
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/CategoryModify/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    $('#divList').show();
+                    $('#dialog-form').hide();
+                    alert("modified " + (type == 1 ? "category" : "service") + " successfully.");
+                    window.location = "/Admin/Category?" + $.param({ key: $.trim($('#txtKey').val()), type: $('#searchType').val(), page: parseInt($('.paging .active').text()) });
+                }
+                else {
+                    alert(result.message);
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function deleteService(serviceId) {
+        var type = 1;
+        if ($.trim(currentRow.find('td:nth-child(4)').text()) != "")
+            type = 2;
+        var postData = { serviceId: serviceId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/CategoryDelete/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    alert("deleted " + (type == 1 ? "category" : "service") + " successfully.");
+                    if ($('#tblServices tbody tr:gt(0)').length == 1 && parseInt($('.paging .active').text()) > 1) {
+                        pagingEvent(parseInt($('.paging .active').text()) - 1);
+                    }
+                    else {
+                        pagingEvent(parseInt($('.paging .active').text()));
+                    }
+                }
+                else {
+                    alert(result.message);
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+</script>
+<script id="serviceTemplate" type="text/x-jquery-tmpl">
+    <tr id="${ServiceID}">
+        <td>
+            ->
+        </td>
+        <td>
+            ${ServiceName}
+        </td>
+        <td>
+            ${Desc}
+        </td>        
+       
+        <td>
+            ${StatusStr}
+        </td>
+        <td>
+            ${Sequence}
+        </td>
+        <td style="display: none;">
+            ${kalturaId}
+        </td>
+         <td style="display: none;">
+            ${ParentServiceID}
+        </td>
+        <td>
+            <a class="modifyService" href="javascript:void(0)">modify</a>
+            <span> | </span>
+            <a class="deleteService" href="javascript:void(0)">delete</a>
+        </td>
+    </tr>
+</script>

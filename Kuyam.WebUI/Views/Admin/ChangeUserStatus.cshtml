@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "change user status";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div>
+    @Html.Partial("_SearchBox")
+    <input class="button" id="btnSubmit" value="change" type="button" onclick="changeUserStatus();" />
+    <p>
+        @Html.ActionLink("back to detail page", "AdminUserDetail", new { id = ViewBag.UserId })
+    </p>
+</div>
+<script type="text/javascript">
+
+    function changeUserStatus() {
+        var searchType = $("#searchType option:selected").val();
+        var id=@ViewBag.UserId;
+        var searchParameters = {id:id, searchType: searchType };
+        if (searchType==-1) {
+            alert("please select one status.");
+        }else{
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/ChangeUserStatus/'
+                })
+                .success(function (result) {
+                    if (result=="true") {
+                     window.location.href = "/Admin/AdminUserDetail/" + id;
+                    }
+                })
+                .error(function (error) {
+
+                });
+        }
+    };
+</script>

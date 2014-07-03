@@ -1,0 +1,663 @@
+﻿@model Kuyam.WebUI.Models.CompanySearchModel
+@using M2.Util.MVC
+@using M2.Util
+
+
+@*
+
+Schedule Appt
+====================
+This page is meant to be displayed in the nav bar on the 
+dashboard. It allows a user to schedule a new appt in a
+multi-step fashion, displaying a little bit at a time.
+
+To allow for this, we store in the Session the new appt 
+being created. The page will then on load via Ajax get
+this Appt object from the session, and perform the following
+logic:
+
+if AppointmentHasNoCustomer
+  DisplayCustomerSelectPanel
+  HideTimePanels
+  HideContactPanels
+  HideConfirmationPanels
+else
+  DisplaySelectedCustomerPanel
+  if AppointmentHasNoTime
+    DisplayTimeSelectPanel
+    HideContactPanels
+    HideConfirmationPanels
+  else
+    DisplaySelectedTimePanel
+    if AppointmentHasNotContact
+      DisplayContactSelectPanel
+      HideConfirmationPanels
+    else
+      DisplaySelectedContactPanel
+      DisplayConfirmationPanels
+
+Each "select" panel will have its own 'form' with some kind
+of submit button that will, via ajax, push to the server
+what the user chose for that step of the appointment. The
+page will then call the function that does the above logic
+(i.e. ajax the appt from the session and reset everything).
+
+The final "form" will be to simply schedule the sessioned appt
+(and not send any info about the appt).
+
+*@
+
+<script type="text/javascript" src="@Url.Content("~/scripts/date.js")"></script>
+<script type="text/javascript">
+
+    //after doc has loaded, go get the current appointment
+    $(document).ready(function () {
+        fetchAndShowAppointment();
+        setTimeNextButton();
+        setContactNextButton();
+        setCompleteButton();
+        setResetLink();
+        setEditTimeLink();
+        setEditContactLink();
+        setDateTimePickers();
+        setCompanySearch();
+        setEnterEvents();
+        setDateEditEvent();
+        //setDurationSlider();
+    });
+
+    //get the current Appt from the session as a JSON object
+    //and pass it along to the showAppointment method to display it
+    function fetchAndShowAppointment() {
+        showWorking();
+        $.getJSON(
+            '@Url.Action("CurrentAppointment")',
+            function(data) { showAppointment(data); }
+        );
+    }
+
+    //Each 'schedule' box has a non-visible 'working' image
+    //this function displays them, and they should be hidden later
+    function showWorking() {
+        $('#CustomerSelectWorking').show();
+        $('#TimeSelectWorking').show();
+        $('#ContactSelectWorking').show();
+    }
+
+    function hideWorking() {
+        $('#CustomerSelectWorking').hide();
+        $('#TimeSelectWorking').hide();
+        $('#ContactSelectWorking').hide();
+    }
+
+    //results of the appointment fetch are passed here
+    //This function just does the first 'search box'
+    function showAppointment(appt) {
+
+        hideWorking();   
+        populateCalendarDropDown(appt);
+
+        if (appointmentHasNoCustomer(appt)) {
+            hideConfirmation();
+            hideContact();
+            hideTime();
+            showCustomerSelect();
+        }
+        else {
+            showSelectedCustomer(appt);
+            showTime(appt);
+        }
+    }
+
+    //show the select a customer box
+    function showCustomerSelect() {
+        //hide the selected customer div
+        $('#SelectedCustomer').hide();
+
+        //show the select stuff
+        $('#WelcomeDate').show();
+        $('#WelcomeImage').show();
+        $('#WelcomeAgenda').show();
+        $('#CustomerSelect').show();
+    }
+
+    //show the selected customer's box (and data)
+    function showSelectedCustomer(appt) {
+        //hide the select stuff
+        $('#WelcomeDate').hide();
+        $('#WelcomeImage').hide();
+        $('#WelcomeAgenda').hide();
+        $('#CustomerSelect').hide();
+
+        //now show the selected customer
+        $('#NewApptCustomerName').html(appt.Company.Name);
+        $('#NewApptCustomerCityState').html(appt.Company.City + ", " + appt.Company.State);
+        $('#SelectedCustomer').show();
+    }
+
+    //determine if use needs to select time or show it
+    function showTime(appt) {
+        hideTime();
+        if (appointmentHasNoTime(appt)) {
+            showTimeSelect(appt);
+        }
+        else {
+            showSelectedTime(appt);
+            showContact(appt);
+        }
+    }
+
+    //refresh the User's calendar list
+    function populateCalendarDropDown(appt) {
+        $('#NewApptCalendarSelect').find('option').remove();
+        $.each(appt.Calendars, function (key, value) {
+            $('#NewApptCalendarSelect')
+                .append($('<option>', { value: key })
+                .text(value));
+        });
+    }
+
+    //show the main box
+    function showTimeSelect(appt) {
+        $('#TimeSelect').show();
+        $('#TimeNext').show();
+    }
+
+    function showSelectedTime(appt) {
+        $('#NewApptSelectedDateBox H1').text(appt.StartDateDisplay);
+        $('#NewApptSelectedDateBox H2').text(appt.StartDateDay);
+        $('#NewApptSelectedDateBox H3').text(appt.StartTimeDisplay);
+        $('#NewApptSelectedDateBox H4').text(getDurationDisplay(appt.Duration));
+
+        $('#NewApptSelectedCalendar').text('for ' + appt.CalendarName);
+
+        if (appt.Flexible)
+            $('#NewApptSelectedFlexible').show();
+        else
+            $('#NewApptSelectedFlexible').hide();
+
+        $('#SelectedTime').show();
+    }
+
+    function getDurationDisplay(duration) {
+        switch (duration) {
+            case 15: return "15 min";
+            case 30: return "30 min";
+            case 45: return "45 min";
+            case 60: return "1hr";
+            case 75: return "1hr 15min";
+            case 90: return "1hr 30min";
+            case 105: return "1hr 45min";
+            case 120: return "2hr";
+            case 135: return "2hr 15min";
+            case 150: return "2hr 30min";
+            case 165: return "2hr 45min";
+            case 180: return "3hr";
+            case 195: return "3hr 15min";
+            case 210: return "3hr 30min";
+            case 225: return "3hr 45min";
+            case 240: return "4hr";
+            default: return "0min";
+        }
+    }
+
+    function showContact(appt) {
+        hideContact();
+        if (appointmentHasNoContact(appt)) {
+            showContactSelect(appt);
+        }
+        else {
+            showSelectedContact(appt);
+            showConfirmation();
+        }
+    }
+
+    function showContactSelect(appt) {
+        $('#ContactSelect').show();
+        $('#ContactNext').show();
+    }
+
+    function showSelectedContact(appt) {
+//        console.log(appt.ContactName);
+//        console.log(appt.ContactReason);
+
+        $('#NewApptSelectedContactName').text(appt.ContactName);
+        $('#NewApptSelectedContactReason').text(appt.ContactReason);
+
+        $('#SelectedContact').show();
+    }
+
+    function showConfirmation() {
+        $('#NewApptConfirmation').show();
+    }
+
+    //Reseting the appointment sets everything back to null
+    function setResetLink() {
+        $('#NewApptResetLink').click(function (event) {
+            event.preventDefault();
+            resetAppointment();
+        });
+    }
+
+    function resetAppointment() {
+        $.post('@Url.Action("ResetCurrentAppointment")', function (data) { showAppointment(data); });
+    }
+
+    //Reseting the appointment sets everything back to null
+    function setEditTimeLink() {
+        $('#NewApptEditTimeLink').click(function (event) {
+            event.preventDefault();
+            hideConfirmation();
+            hideContact();
+            hideTime();
+            $('#TimeSelect').show();
+            $('#TimeNext').show();
+        });
+    }
+
+    function setDateTimePickers() {
+        $("#NewApptStartDate").datetimepicker({ampm:true});
+        $("#NewApptStartTime").timepicker({});
+    }
+
+    function setEditContactLink() {
+        $('#NewApptEditContactLink').click(function (event) {
+            event.preventDefault();
+            hideConfirmation();
+            hideContact();
+            $('#ContactSelect').show();
+            $('#ContactNext').show();
+        });
+    }
+
+    //hide routines, to hide different divs
+    function hideConfirmation() {
+        $('#NewApptConfirmation').hide();
+    }
+
+    function hideContact() {
+        $('#ContactSelect').hide();
+        $('#SelectedContact').hide();
+        $('#ContactNext').hide();
+    }
+
+    function hideTime() {
+        $('#TimeSelect').hide();
+        $('#TimeNext').hide();
+        $('#SelectedTime').hide();
+    }
+
+    //logical routines, for descriptive names
+    function appointmentHasNoCustomer(appt) {
+        return (appt.Company.ProfileID == 0);
+    }
+
+    function appointmentHasNoTime(appt) {
+        return (appt.Duration == 0);
+    }
+
+    function appointmentHasNoContact(appt) {
+//        console.log(appt.ContactName);
+        return (appt.ContactName == null || appt.ContactName == "");
+    }
+
+    //When the company dropdown box is changed, if it's not the "select a company" or 
+    //"no company to select" assume the user meant that company and AJAX to the server
+    //which company the user selected
+    function CompanySelectChange(sender) {
+        var selectedCompanyId = $('#CompanySelect').val();
+        if (selectedCompanyId > 0) {
+            $.post(
+                '@Url.Action("SetCurrentAppointmentCompany")',
+                {companyProfileId: selectedCompanyId},
+                function (data) { showAppointment(data); }
+            );
+        }
+    }
+
+    function setDateEditEvent() {
+        $('#NewApptStartDate').change(function () { DateEditChanged(); });
+        $('#NewApptStartTime').change(function () { DateEditChanged(); });
+        $('#NewApptDurationSelect').change(function () { DateEditChanged(); });
+    }
+
+    function DateEditChanged() {
+        $.post(
+                '@Url.Action("GetParsedDate")',
+                { date: $('#NewApptStartDate').val() + ' ' + $('#NewApptStartTime').val(), duration: $('#NewApptDurationSelect').val() },
+                function (data) {
+                    $('#NewApptCalendarDateBox H1').text(data.DateDisplay);
+                    $('#NewApptCalendarDateBox H2').text(data.DateDay);
+                    $('#NewApptCalendarDateBox H3').text(data.TimeDisplay);
+                    $('#NewApptCalendarDateBox H4').text(getDurationDisplay(data.Duration));
+                }
+            );
+    }
+
+    function NewApptDurationSelectChange(sender) {
+        $('#NewApptCalendarDateBox H4').text($('#NewApptDurationSelect option:selected').text());
+    }
+
+    function setTimeNextButton() {
+        $('#TimeNext').click(function (event) {
+            event.preventDefault();
+            setAppointmentTime();
+        });
+    }
+
+    function setAppointmentTime() {
+
+//        console.log("calendarId: " + $('#NewApptCalendarSelect').val());
+//        console.log("flexible: " + $('#NewApptFlexible').is(':checked'));
+//        console.log("apptStartDate: " + $('#NewApptStartDate').val());
+//        console.log("apptStartTime: " + $('#NewApptStartTime').val());
+//        console.log("duration: " + $('#NewApptDurationSelect').val());
+
+        $.post(
+            '@Url.Action("SetCurrentAppointmentTime")',
+            {
+                calendarId: $('#NewApptCalendarSelect').val(),
+                flexible: $('#NewApptFlexible').is(':checked'),
+                apptStartDate: $('#NewApptStartDate').val(),
+                apptStartTime: $('#NewApptStartTime').val(),
+                duration: $('#NewApptDurationSelect').val()
+            },
+            function (data) { showAppointment(data); }
+        );
+    }
+
+    function setContactNextButton() {
+        $('#ContactNext').click(function (event) {
+            event.preventDefault();
+            setAppointmentContact();
+        });
+    }
+
+    function setCompanySearch() {
+        $('#CompanySearchButton').click(function (event) {
+            event.preventDefault();
+            var searchTerms = $('#companysearch').val();
+            showCompanySearchDialog('@Url.Content("~/cust/dashboardviewcompanysearch/?companysearch=")' + searchTerms, '', fetchAndShowAppointment);
+        });
+    }
+
+    function setAppointmentContact() {
+//        console.log('name: ' + $('#NewApptContactName').val());
+//        console.log('type: ' + $('#NewApptContactType').val());
+//        console.log('reason: ' + $('#NewApptContactReason').val());
+
+        $.post(
+            '@Url.Action("SetCurrentAppointmentContact")',
+            {
+                name: $('#NewApptContactName').val(),
+                type: $('#NewApptContactType').val(),
+                reason: $('#NewApptContactReason').val()
+            },
+            function (data) { showAppointment(data); }
+        );
+    }
+
+    function setCompleteButton() {
+        $('#NewApptComplete').click(function (event) {
+            event.preventDefault();
+            setAppointmentComplete();
+        });
+    }
+
+    function setAppointmentComplete() {
+        $.post(
+            '@Url.Action("SetCurrentAppointmentComplete")',
+            function (data) {
+                //refresh calendar
+                //show dialog
+                SetupCalendar();
+                showAppointment(data);
+            }
+        );
+    }
+
+    function setDurationSlider() {
+        $("#NewApptDurationSlider").slider({
+            value: 240,
+            min: 0,
+            max: 240,
+            step: 15,
+            slide: function (event, ui) {
+                $("#NewApptDuration").val(ui.value + " min");
+            }
+        });
+        $("#NewApptDuration").val($("#NewApptDurationSlider").slider("value"));
+    }
+
+    function setEnterEvents() {
+        $('#companysearch').keyup(function (event) {
+            if (event.keyCode == 13) {
+                $('#companysearchimage').click();
+                return false;
+            }
+        });
+    }
+
+
+</script>
+
+
+<div class="DashboardScheduleAppt">
+
+
+@******************************************************@
+@* Customer Select section                            *@
+@******************************************************@
+<div id="CustomerSelect" class="DashboardScheduleApptContent">
+  Clan / company:<br />
+  &nbsp;
+  <select id="CompanySelect" style="width:210px;" onchange="CompanySelectChange(this)">
+    <option value="-1">select from favorites...</option>
+    @if (Model.PriorCompanies != null && Model.PriorCompanies.Count > 0)
+    {
+        foreach (Kuyam.Database.ProfileCompany pc in Model.PriorCompanies.OrderBy(x => x.Name))
+        { 
+        <option value="@pc.ProfileID">
+            @pc.Name  @Model.GetCityState(pc.City, pc.State)
+        </option>
+        }
+    }
+    else
+    {
+        <option value="-2">No previous companies found.</option>
+    }
+  </select>
+  <br />
+  or look one up:
+  <br />
+    <input id="companysearch" style="max-width:180px;" type="text" name="companysearch" /> 
+    <a href="javascript:void(0);" id="CompanySearchButton">
+        <img id="companysearchimage" src="@Url.Content("~/images/Dashboard/ArrowButton.png")" alt="Select" />
+    </a>
+
+    
+  <div id="CustomerSelectWorking" style="display:none;float:left; position:absolute; left:5px;top:5px;width:235px;height:93px;background-color:white;opacity:0.8;filter:alpha(opacity=80);">
+    <center>
+        <br />
+        <img src="@Url.Content("~/images/wait-green.gif")" alt="working" />
+        <br />
+        working...
+    </center>
+  </div>
+</div>
+
+<img id="WelcomeImage" src="@Url.Content("~/images/Dashboard/MeerkatWelcome.png")" alt="Meerkatwelcome" style="position:absolute; bottom:0px; left:5px;"/>
+<img id="WelcomeAgenda" src="@Url.Content("~/images/Dashboard/viewagenda.png")" alt="Agenda" style="position:absolute; bottom:50px; right:10px;"/>
+<div id="WelcomeDate" style="color:black; font-size:12pt; position: absolute; top:200px; left:20px;">
+    hi @(Kuyam.WebUI.Models.MySession.FirstName)! today is<br />
+    <b>@DateTime.Now.ToString("ddd"), @DateTime.Now.ToString("MMMM d")</b>
+</div>
+
+
+@******************************************************@
+@* Selected Customer section                          *@
+@******************************************************@
+<div id="SelectedCustomer" class="DashboardScheduleApptContent" style="display:none;">
+    <div style="float:left;">with:</div>
+    <div style="float:right;"><a href="javascript:void(0);" id="NewApptResetLink" style="color:White;">reset</a></div>
+    <div class="DashboardScheduleApptCustInfo">
+      <div id="NewApptCustomerName">customer name</div>
+      <div id="NewApptCustomerCityState" style="text-align:right; font-style:italic;">city, state</div>
+    </div>
+</div>
+
+@******************************************************@
+@* Time Select section                                *@
+@******************************************************@
+<div id="TimeSelect" class="DashboardScheduleApptContentGray" style="display:none;position:relative;">
+  for: 
+  <select id="NewApptCalendarSelect"></select>
+  <br />
+  date and time:<br />
+  <div id="NewApptCalendarDateBox" class="CalendarSquare" style="float:left;">
+    <h1>feb 10</h1>
+    <h2>fri</h2>
+    <h3>12pm</h3>
+    <h4>1hr</h4>
+  </div>
+
+  <div>
+      <input type="checkbox" name="flexible" id="NewApptFlexible" />I'm flexible <br />
+      <input type="text" class="hasDatepicker" placeholder="mm/dd/yy" name="NewApptStartDate" id="NewApptStartDate" style="width:75px" />
+      <input type="text" class="hasDatepicker" placeholder="hh:mm" name="NewApptStartTime" id="NewApptStartTime" style="width:50px" />
+
+      <select id="NewApptDurationSelect" onchange="NewApptDurationSelectChange(this)">
+        <option value="15">15 min</option>
+        <option value="30">30 min</option>
+        <option value="45">45 min</option>
+        <option value="60">1hr</option>
+
+        <option value="75">1hr 15 min</option>
+        <option value="90">1hr 30 min</option>
+        <option value="105">1hr 45 min</option>
+        <option value="120">2hr</option>
+
+        <option value="135">2hr 15 min</option>
+        <option value="150">2hr 30 min</option>
+        <option value="165">2hr 45 min</option>
+        <option value="180">3hr</option>
+
+        <option value="195">3hr 15 min</option>
+        <option value="210">3hr 30 min</option>
+        <option value="225">3hr 45 min</option>
+        <option value="240">4hr</option>
+      </select>
+      <!--
+      <div style="width:100px;" id="NewApptDurationSlider"></div>
+      <input type="text" id="NewApptDuration" style="font-size:6pt; color:gray; background-color: transparent; border:0; width:80px; font-weight:bold;" />
+      -->
+  </div>
+    
+  <div id="TimeSelectWorking" style="display:none;float:left; position:absolute; left:2px;top:5px;width:234px;height:117px;background-color:white;opacity:0.8;filter:alpha(opacity=80);">
+    <center>
+        <br />
+        <br />
+        <img src="@Url.Content("~/images/wait-green.gif")" alt="working" />
+        <br />
+        working...
+    </center>
+  </div>
+</div>
+
+<a href="javascript:void(0);" id="TimeNext" style="clear:both; display:none; margin-top:30px;margin-left:55px">
+  <img src="@Url.Content("~/images/Dashboard/NextButton.png")" alt="Next" />
+</a>
+
+
+@******************************************************@
+@* Selected Time section                              *@
+@******************************************************@
+<div id="SelectedTime" class="DashboardScheduleApptContent" style="display:none; padding-bottom:5px;">
+  <div style="text-align: right; width:100%">
+    <a href="javascript:void(0);" id="NewApptEditTimeLink" style="color:White">edit</a>
+  </div>
+
+  <div id="NewApptSelectedDateBox" class="CalendarSquare" style="float:left;">
+    <h1>feb 10</h1>
+    <h2>fri</h2>
+    <h3>12pm</h3>
+    <h4>1hr</h4>
+  </div>
+
+  <div id="NewApptSelectedCalendar" style="font-weight:bold; font-size: 14pt; width: 230px; text-align:center; margin-top:20px;">
+    for monica
+  </div>
+
+  <div style="font-weight:bold; font-size: 10pt; width: 230px; text-align:center;">
+    <img src="@Url.Content("~/images/Dashboard/checkmark.png")" alt="Check" id="NewApptSelectedFlexible" />
+    flexible
+  </div>
+
+</div>
+
+@******************************************************@
+@* Contact Select section                             *@
+@******************************************************@
+<div id="ContactSelect" class="DashboardScheduleApptContentGray" style="display:none;position:relative;">
+    contact person: <br />
+    <input type="text" name="NewApptContactName" id="NewApptContactName" style="width:100px" />
+    <select id="NewApptContactType">
+        <option>in-person</option>
+        <option>phone</option>
+    </select>
+
+    <br />
+
+    <textarea id="NewApptContactReason" rows="4" cols="26" style="margin-top:5px;" placeholder="reason for appointment and notes..."></textarea>
+
+  <div id="ContactSelectWorking" style="display:none;float:left; position:absolute; left:2px;top:5px;width:234px;height:120px;background-color:white;opacity:0.8;filter:alpha(opacity=80);">
+    <center>
+        <br />
+        <br />
+        <img src="@Url.Content("~/images/wait-green.gif")" alt="working" />
+        <br />
+        working...
+    </center>
+  </div>
+</div>
+
+<a href="javascript:void(0);" id="ContactNext" style="clear:both; display:none; margin-top:30px;margin-left:60px">
+  <img src="@Url.Content("~/images/Dashboard/NextButton.png")" alt="Next" />
+</a>
+
+
+@******************************************************@
+@* Selected Contact section                           *@
+@******************************************************@
+<div id="SelectedContact" class="DashboardScheduleApptContent" style="display:none;">
+    <div style="text-align: right; width:100%">
+       <a href="javascript:void(0);" id="NewApptEditContactLink" style="color:White;">edit</a>
+    </div>
+
+    <img src="@Url.Content("~/images/Dashboard/personicon.png")" alt="in-person" />
+    <img src="@Url.Content("~/images/Dashboard/phoneicon.png")" alt="on phone" style="display:none;" />
+    <span id="NewApptSelectedContactName" style="font-weight:bold; font-size:12pt;">jasper</span>
+
+    <div id="NewApptSelectedContactReason" style="background-color:white; border:1px solid gray; border-radius:3px; padding:3px; margin: 7px 0px; min-height: 30px;">blah</div>
+</div>
+
+
+@******************************************************@
+@* Confirmation section                               *@
+@******************************************************@
+<div id="NewApptConfirmation" style="display:none; width:230px; text-align:center; font-size:12pt; font-weight:bold;">
+    <div style="margin:10px; font-weight:bold;">looking good?</div>
+    <a href="javascript:void(0);" id="NewApptComplete">
+        <img src="@Url.Content("~/images/Dashboard/completebutton.png")" alt="complete" />
+    </a>
+</div>
+
+
+</div> @* end of main div *@
+
+
+@******************************************************@
+@* Dialg div section                                  *@
+@******************************************************@
+
+<div id="CompanySearchDialog"></div>

@@ -1,0 +1,55 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "generate item company";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var importResult = ViewBag.ImportResult;
+}
+<link rel="stylesheet" type="text/css" href="../../Content/themes/base/jquery.ui.tabs.css" />
+<script type="text/javascript" src="../../Scripts/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../../Scripts/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script type="text/javascript" src="../../Scripts/js/jquery-ui.min.js"></script>
+<style type="text/css">
+    .loginform {
+        width: 100%;
+    }
+</style>
+
+
+<div id="contentmainpage">
+    <h2>Generate</h2>
+    <div id="divcompanydetail">
+        <fieldset>
+            <div class="loginform">
+                <input id="insertCompany" type="button" value="generat code insert company"/>
+                <div id="tabs">
+                    <ul>
+                        <li><a href="#tabs-1">preview</a></li>
+                        <li><a href="#tabs-2">code</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+                    </div>
+                    <div id="tabs-2">
+                        <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <p>
+            <a href="/Admin/AdminCompanyList">
+                back to list
+            </a>
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tabs").tabs();
+    });
+    $("#insertCompany").click(function() {
+
+    });
+
+</script>

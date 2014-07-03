@@ -1,0 +1,47 @@
+﻿    @*<div class="HeaderBasic">
+
+      <div class="HeaderBasicContent">
+          <a href="@(Request.IsAuthenticated ? Url.Content("~/cust") : Url.Content("~/"))">
+            <img src="@Url.Content("~/images/Header/KuyamLogoHeaderSmall.png")" alt="kuyam" />
+          </a>
+        
+        @if (Request.IsAuthenticated)
+        { 
+            <div class="FloatRight PageLinkLine">
+            <span style="color:#cccccc;">today is </span><span class="KuyamGreen"> @System.DateTime.Now.ToString("dddd, MMMM d, yyyy")</span> <br />
+            @Html.ActionLink("My Profile", "Index", "Profile") | 
+            @Html.ActionLink("Company Profile", "CompanyProfile", "Profile") | 
+            @Html.ActionLink("Logout", "logout", "home") 
+            </div>
+        }
+        else
+        {
+            <div class="FloatRight PageLinkLine">
+            <a href="@Url.Content("~/")">Home</a> | 
+            @Html.ActionLink("our story", "haircut", "home") | 
+            @Html.ActionLink("about", "about", "home") | 
+            @Html.ActionLink("faq", "faq", "home") |  
+            @Html.ActionLink("contact", "contact", "home")
+            </div>
+        }
+       </div>
+    </div>*@
+
+    <div class="fixheaderposition">
+        <div class="header">
+            <div class="hcontent h73">
+                <a href="/" class="logo" title="Kuyam"><img alt="Kuyam" src="../../images/kuyam_logo.png"/></a>
+                <!-- InstanceBeginEditable name="search" -->
+                    @*<a href="#" class="nameUser" title="santa monica, ca">santa monica, ca</a>*@
+                    <div class="date">wednesday, june 20 2013</div>
+                    
+                    <ul class="menuHeader">
+                   	    <li><a href="#" title="how it works">how it works</a></li>
+                        <li><a href="#" title="sign up">sign up</a></li>
+                        <li class="lastchild"><a href="#" title="login">log in</a></li>                                 	
+              	    </ul>
+                <!-- InstanceEndEditable -->
+            </div>
+        </div>
+    </div>
+

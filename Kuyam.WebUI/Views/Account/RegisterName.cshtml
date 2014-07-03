@@ -1,0 +1,505 @@
+﻿@model Kuyam.WebUI.Models.RegisterName
+@{
+    ViewBag.Title = "RegisterName";
+    Layout = "~/Views/Shared/_KuyamLayoutRegister.cshtml";    
+}
+<script type="text/javascript">
+    $(function () {
+        $('#infochkyes').checkBox({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                if (ui.checked == true) {
+                    $("#checkyes").show();
+                }
+                else {
+                    $("#checkyes").hide();
+                }
+            }
+        });
+        $("#txtother1").val("_Other");
+        $('#infochkno').checkBox({ addVisualElement: false });
+        $('#infochkemail').checkBox({ addVisualElement: false });
+        $('#infochkcall').checkBox({ addVisualElement: false });
+        $('#infochktext').checkBox({
+            addVisualElement: false,
+            'change': function (e, ui) {
+                if (ui.checked == true) {
+                    $("#txtother1").val("");
+                    $(".txtother").show();
+                    $("#diverror").show();
+                    $("#lbinfochktext").text("other :");
+                }
+                else {
+                    $(".txtother").hide();
+                    $("#diverror").hide();
+                    $("#lbinfochktext").text("other");
+                    $("#txtother1").val("_Other");
+                }
+            }
+        });
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+    });
+</script>
+<!--<style>
+	#jquery-lightbox{position:fixed; left:0; width:100%; z-index:999; text-align:center; line-height:0;}
+</style>-->
+<style>
+    .file
+    {
+        display: inline-block;
+        width: 95px;
+        position: relative;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin-bottom: 10px;
+    }
+    .file .button
+    {
+        background: url("../images/appointment.png") no-repeat scroll -244px -500px transparent;
+        text-indent: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #555;
+        height: 32px;
+        line-height: 40px;
+        display: block;
+    }
+    .file input
+    {
+        cursor: pointer;
+        font-size: 15px;
+        height: 33px;
+        position: absolute;
+        right: 42px;
+        top: 0;
+        color: Transparent;
+        background-color: Transparent;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+</style>
+<!-- InstanceBeginEditable name="content" -->
+<div class="postinvitecodeother">
+    <div class="clear">
+    </div>
+    @using (Html.BeginForm("RegisterName", "Account", FormMethod.Post, new { @id = "RegisterForm", enctype = "multipart/form-data" }))
+    {
+        <div class="boxsyncyourcalendar">
+            sync your calendar with us so we can easily see your availabilities!
+        </div>
+        <div class="boxinvite">
+            <div class="invitebox1">
+            </div>
+            <div class="invitebox">
+                <div class="calendarsync">
+                    <div class="title">
+                        calendars to sync:</div>
+                    <div class="clear">
+                    </div>
+                    <div class="ggcalcol">
+                        Google Cal:<br />
+                        <input type="button" id="btngoogle" class="btngoogle" title="Connect with Google Cal" />
+                    </div>
+                    <div class="fbcalcol">
+                        Facebook Events:<br />
+                        <input type="button" id="btnfacebook" class="btnfacebook" title="connect with Facebook" />
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="infoical">
+                    iCal:
+                </div>
+                <div class="clear">
+                </div>
+                <div class="usericaltext">
+                    <div class="divuploadtext">
+                        <div class="rpostformtext">
+                            <div class="ltxtcompanysetup">
+                            </div>
+                            <div class="txtcompanysetup infouptext" style="width: 210px;">
+                                <input type="text" id="txtFileName" class="selectfile" value="select file..." onfocus="if (this.value=='select file...') {this.value = '';this.className = '';}"
+                                    onblur="if (this.value==''){this.value='select file...';this.className = 'selectfile';}" />
+                            </div>
+                            <div class="rtxtcompanysetup" style="margin-right: 3px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divupload">
+                        <div class="file" title="browse">
+                            <input type="file" name="UploadUrl" id="UploadUrl" />
+                            <span class="button" title="browse"></span>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="divifnot">
+                    if not, which other calendars do you use?
+                </div>
+                <div class="clear">
+                </div>
+                <div class="infocol2checkbox">
+                    <div class="infocol2chkemail">
+                        <div class="chkcall">
+                            <div>
+                                @*<input type="checkbox" id="infochkemail" name="verification" />*@
+                                @Html.CheckBoxFor(m => m.DoOutlookCalendar, new { @id = "infochkemail" })
+                                <label for="infochkemail">
+                                    Outlook</label>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="infocol2chkcall">
+                        <div class="chkcall">
+                            <div>
+                                @*<input type="checkbox" id="infochkcall" name="verification" />*@
+                                @Html.CheckBoxFor(m => m.DoYahooCalendar, new { @id = "infochkcall" })
+                                <label for="infochkcall">
+                                    Yahoo! Calendar</label>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="infocol2chktext">
+                        <div class="chkcall">
+                            <div class="othercheck">
+                                <input type="checkbox" id="infochktext" name="verification" />
+                                <label for="infochktext" id="lbinfochktext">
+                                    other</label>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="txtother" style="margin-bottom: 4px;">
+                            @*<input type="text" id="txtother" name="" />*@
+                            @Html.TextBoxFor(m => m.OtherCalendar, new { @id = "txtother1" })
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div id="diverror" style="width: 229px; font-size: 12px; float: right;">
+                        @Html.ValidationMessageFor(m => m.OtherCalendar, "", new { @style = "color: red;" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="boxinvite1">
+            <div class="postinvitecodeotherbox1">
+            </div>
+            <div class="postinvitecodeotherbox">
+                <div class="listonkuyam">
+                    <div class="title">
+                        do you have a company to list on kuyam?
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="pcheckbox">
+                        <div class="ctextbox">
+                            <div class="chkcall">
+                                <div>
+                                    @*<input type="radio" id="infochkyes" name="IsCompany" />*@
+                                    @Html.CheckBoxFor(m => m.IsCompany, new { @id = "infochkyes" })
+                                    <label for="infochkyes">
+                                        yes, i want a free listing</label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            @*<div class="chktext">
+                            <div>
+                                <input type="radio" id="infochkno" name="IsCompany" />
+                                <label for="infochkno">
+                                    no, i just want to book appointments</label>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>*@
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                @*<div id="checkyes">
+                    <div class="listonkuyamnotify">
+                        <div class="notifycontent">
+                            great! next, we’ll set up your company profile and then you can start listing your
+                            hours.
+                        </div>
+                    </div>
+                </div>*@
+                <div class="divcheckyes">
+                    <div id="checkyes">
+                        <div class="listonkuyamnotify">
+                            <div class="notifycontent">
+                                great! next, we’ll set up your company profile and then you can start listing your
+                                hours.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divnext">
+            @*<input type="button" title="let's dive in!" class="btninvitenext" />*@ <a id="submitFormName">
+                <input class="btninvitenext" type="button" title="let's dive in!">
+            </a>
+        </div>
+    }
+</div>
+<div class="clear">
+</div>
+@*<div class="infopage">
+    <div class="clear">
+    </div>
+    @using (Html.BeginForm("RegisterName", "Account", FormMethod.Post, new { @id = "RegisterForm", enctype = "multipart/form-data" }))
+    {
+        <div class="boxinvite">
+            <div class="invitebox1">
+            </div>
+            <div class="invitebox">
+                <div class="infopagecol1">
+                    <div class="infofullname">
+                        <div class="fntitle">
+                            full name
+                        </div>
+                        <div class="fntextbox">
+                            <div class="rpostformtext">
+                                <div class="ltxtcompanysetup">
+                                </div>
+                                <div class="txtcompanysetup infousername">
+                               
+                                    @Html.TextBoxFor(m => m.FullName, new { @Value = @Html.DisplayFor(x => Kuyam.WebUI.Models.MySession.RegisterModel.FullName) })
+                                </div>
+                                <div class="rtxtcompanysetup">
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="error">
+                                    @Html.ValidationMessageFor(m => m.FullName)&nbsp;
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="infophone">
+                        <div class="ptitle">
+                            phone #
+                        </div>
+                        <div class="ptextbox">
+                            <div class="rpostformtext">
+                                <div class="ltxtcompanysetup">
+                                </div>
+                                <div class="txtcompanysetup infousername">
+                                    <input type="text" id="fninput" name="ICalUrl" value="" />
+                                </div>
+                                <div class="rtxtcompanysetup">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="infocompany">
+                        <div class="ctitle">
+                            are you a company?
+                        </div>
+                        <div class="ctextbox">
+                            <div class="chkcall">
+                                <div>
+                                    @Html.CheckBoxFor(m => m.IsCompany, new { @id = "infochkyes" })
+                                    <label for="infochkyes">
+                                        yes</label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="infocalendar">
+                        calendars to sync:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="infopaste">
+                        paste the link's from your calendars' export page
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="infoical">
+                        iCal:
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="usericaltext">
+                        <div class="divuploadtext">
+                            <div class="rpostformtext">
+                                <div class="ltxtcompanysetup">
+                                </div>
+                                <div class="txtcompanysetup infouptext" style="width: 170px;">
+                                    
+                                    <input type="text" id="txtFileName" class="selectfile" value="select file..." onfocus="if (this.value=='select file...') {this.value = '';this.className = '';}"
+                                        onblur="if (this.value==''){this.value='select file...';this.className = 'selectfile';}" />
+                                </div>
+                                <div class="rtxtcompanysetup" style="margin-right: 3px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divupload">
+                           
+                            <div class="file">
+                                <input type="file" name="UploadUrl" id="UploadUrl" />
+                                <span class="button"></span>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="infopagecol2">
+                    <div class="infotitle">
+                        contact preferences
+                        <br />
+                        <span>for important appointment updates</span>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="infocol2checkbox">
+                        <div class="infocol2chkemail">
+                            <div class="chkcall">
+                                <div>
+                                    @Html.CheckBoxFor(m => m.DoContactEmail, new { @id = "infochkemail" })
+                                    <label for="infochkemail">
+                                        email</label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="infocol2chkcall">
+                            <div class="chkcall">
+                                <div>
+                                    @Html.CheckBoxFor(m => m.DoContactCall, new { @id = "infochkcall" })
+                                    <label for="infochkcall">
+                                        call</label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="infocol2chktext">
+                            <div class="chkcall">
+                                <div>
+                                    @Html.CheckBoxFor(m => m.DoContactText, new { @id = "infochktext" })
+                                    <label for="infochktext">
+                                        text</label>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="orangebox">
+                        sync your calendar with us so we can easily see your availabilities!
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divnext">
+            <a id="submitFormName">
+                <input class="btninvitenext" type="button" title="let's dive in!">
+            </a>
+        </div>
+    }
+</div>*@
+<script type="text/javascript">
+
+    $('#btnfacebook').click(function () {
+
+        location.href = "/Home/fbCalendar";
+    });
+    $('#btngoogle').click(function () {
+
+        location.href = "/Home/ggCalendar";
+    });
+    $('#submitFormName').click(function () {
+        $('#RegisterForm').submit();
+    });
+    $.fn.fileName = function () {
+        var $this = $(this),
+        $val = $this.val(),
+        valArray = $val.split('\\'),
+        newVal = valArray[valArray.length - 1];
+        if (newVal !== '') {
+            $("#txtFileName").val(newVal);
+        }
+    };
+    $(function () {
+        $('input[type=file]').bind('change focus click', function () { $(this).fileName() });
+        $('#infochkyes').checkBox({ addVisualElement: false });
+        $('#infochkno').checkBox({ addVisualElement: false });
+        $('#infochkemail').checkBox({ addVisualElement: false });
+        $('#infochkcall').checkBox({ addVisualElement: false });
+        $('#infochktext').checkBox({ addVisualElement: false });
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+
+    });
+</script>

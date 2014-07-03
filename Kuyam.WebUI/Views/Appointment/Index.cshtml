@@ -1,0 +1,178 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@{
+    ViewBag.Title = "Appointments";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<link rel="stylesheet" href="@Url.Content("~/css/appointment.css")" />
+<script src="@Url.Content("~/Scripts/js/appointment.js?v=1")" type="text/javascript"></script>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div class="ualist">
+                <div class="leftcol">
+                    <div class="title">
+                        select a calendar</div>
+                    <div class="clear">
+                    </div>
+                    <div class="divfavorite">
+                        <a href="javascript:void(0);" onclick="fillterByCalendar('0');" id="employees" class="schedulefavorite"
+                            title="all employees">all calendars </a>
+                        <ul class="favorite" id="employeeslist">
+                            @if (ViewBag.CalendarList != null)
+                            {
+                                foreach (Calendar item in ViewBag.CalendarList)
+                                {
+                                <li><a href="javascript:void(0);" onclick="fillterByCalendar('@item.CalendarID');" title="@item.Name">@Kuyam.Domain.UtilityHelper.TruncateAtWord(item.Name, 15)</a></li>                            
+                                }
+                            }
+                        </ul>
+                        <a href="#" id="employeeslistarrowup" class="schedulefavoritearrowup" title="up">
+                        </a><a href="#" id="employeeslistarrowdown" class="schedulefavoritearrowdown" title="down">
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="viewoption">
+                        <div class="divviewoption">
+                            view options:</div>
+                        <div class="clear">
+                        </div>
+                        <div class="chooseoption">
+                            <a href="/appointment" id="idlist" class="activeoptionlist">list</a>
+                            <div class="lineoption">
+                            </div>
+                            <a href="/appointment/IndexCalendar" id="idcalendar" class="optioncalendar">calendar</a>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="rightcol">
+                    <div class="tophead">
+                        <div class="toptitle">
+                            scroll to date:</div>
+                        <div class="topday">
+                            <div class="arrowleft">
+                                <a class="btnpreview" title="Previous" href="javascript:void(0);"></a>
+                            </div>
+                            <input type="text" id="searchDate" class="textday" style="border: none; text-align: center;
+                                color: #808080; font-size: 12px; font-family: Arial,Helvetica,sans-serif;" />
+                            <div class="arrowright">
+                                <a class="btnnext" title="Next" href="javascript:void(0);"></a>
+                            </div>
+                        </div>
+                        <div class="topselect">
+                            <select name="message" id="allcategories" class="selectcategories">
+                                <option value="0" selected="selected">all categories</option>
+                                @if (ViewBag.Category != null)
+                                {
+                                    foreach (Service item in ViewBag.Category)
+                                    {
+                                    <option value="@item.ServiceID" >@item.ServiceName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="topviewhistory">
+                            @* <a href="/appointment/history" title="view appointment history">view appointment history</a>*@
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="appointmentdetail">
+                        @Html.Raw(ViewBag.HtmlData)
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="viewnotespopup" class="viewnotespopup">
+</div>
+<img id="aptImgLoader" src="../../Images/progress.gif" class="waiting" alt="loading..." />
+<div id="lightBox" class="lightBox z499">
+</div>
+<div id="cancelpopup" class="cancelpopup">
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+    var appoimentID=@(Kuyam.WebUI.Models.MySession.AppoimentID)
+        if (appoimentID!=null&&appoimentID!=''&&appoimentID>0) {
+                showpopup("popuppushtocal");
+        };
+    $("#ui-accordion-accordion-panel-1").css("display", "none");
+    $( "#accordion" ).accordion( "option", "active", 2);
+})
+
+function TurnOffPopupPushToCalendar() {
+    hideDialog("popuppushtocal");
+    $.post('/Appointment/TurnOffPopupPushToCalendar', function (data) { })
+}
+function downloadInvoicesList() {
+    var url = '/appointment/PushOniCal';
+    window.location = url ;
+    hideDialog("popuppushtocal");
+}
+</script>
+<div id="lightBox" class="lightBox z499">
+</div>
+<div id="popuppushtocal" class="selectservicepopup">
+    <div class="contentPopup">
+        <a class="btnClose" onclick="TurnOffPopupPushToCalendar();" title="Close"></a>
+        <div class="clear">
+        </div>
+        <img src="/images/imgpopuppushtocal.png" class="imgpopuppushtocal" />
+        <div class="clear">
+        </div>
+        <div class="popupdescript newydescript">
+            would you like to put this kuyam<br />
+            appointment in your personal calendar?
+        </div>
+        <div class="clear">
+        </div>
+        <a href="@Url.Action("GoogleInfoConnService", "CalendarSetting")" class="btngooglecalendar" title="sync with Google Calendar">
+            <img src="/images/btn_googe_calendar.png"></a>
+        <div class="clear">
+        </div>
+        <a href="#" onclick="downloadInvoicesList();" class="btnapplecalendar" title="sync with Apple Calendar">
+            <img src="/images/btn_apple_calendar.png"></a>
+        <div class="clear">
+        </div>
+        <a href="@Url.Action("ConnectToFacebook", "Account", new { returnUrl = "/Account/PushOnFacebook" })" class="btnfbcalendar" title="sync with Facebook Calendar">
+            <img src="/images/btn_fb_calendar.png"></a>
+        <div class="clear">
+        </div>
+        <a href="#" onclick="TurnOffPopupPushToCalendar();" class="btnnothanks" title="no thanks">no thanks</a>
+        <div class="clear">
+        </div>
+        <div id="errordiv" class="msgerror">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {        
+        var status = @ViewBag.Id;
+        if(status != 0){
+            var liActive = $('li[data-status="' + status + '"]').first();
+            if (liActive != undefined) {
+                liId = $(liActive).attr('Id'); 
+                $(".lualist li").removeClass("active");
+                $(".lualist #" + liId).addClass("active");
+            }
+        }
+    });
+</script>

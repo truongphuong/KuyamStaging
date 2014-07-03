@@ -1,0 +1,107 @@
+﻿@model Kuyam.WebUI.Models.RegisterModel
+
+@{
+    ViewBag.Title = "RegisterName";
+    Layout = "~/Views/Shared/_KuyamLayoutBlank.cshtml";    
+}
+
+<div class="RegisterFloat">
+    <center>
+        <div style="position:absolute; left: 155px; top:112px; color:black; font-family:arial; font-size: 36pt; font-weight:bold;">1</div>
+        <div style="position:absolute; left: 190px; top:105px; color:black; font-family:arial; font-size: 12pt; font-weight:bold;">let's build your personal profile!</div>
+
+        <br /><br />
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id="RegisterForm"} ))
+        {
+            @Html.HiddenFor(m => m.TestKey)
+            @Html.HiddenFor(m => m.GenderTypeID)
+            @Html.HiddenFor(m => m.Birthday)
+            @Html.HiddenFor(m => m.UserName)
+            @Html.HiddenFor(m => m.Password)
+            @Html.HiddenFor(m => m.ConfirmPassword)
+            @Html.HiddenFor(m => m.ZipCode)
+            <div class="TransparentWhite" style="width:575px">
+
+                <table>
+                    <tr>
+                        <td width="90" height="35">full name</td>
+                        <td width="120">@Html.EditorFor(m => m.FullName)</td>
+                        <td width="20">title</td>
+                        <td width="120" style="font-weight:normal;">"the <input name="Title" placeholder="e.g. genius, supermom" value="@Model.Title" />"</td>
+                    </tr>
+
+                    <tr>
+                        <td>local area</td>
+                        <td colspan="3" height="35"><select style="width:200px;"><option>select neighborhood</option></select></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" height="35">how should we contact you for appointment requests/updates?</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="position:relative; height:60px;">
+                            <div style="font-style:italic;font-weight:normal;font-size:10pt;float:left;">(choose one or both)</div>
+                            <div style="position:absolute;left:140px;">
+                                <input name="DoContactEmail" type="checkbox" value="@Model.DoContactEmail" />
+                                e-mail
+                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input name="ContactEmail" type="text" value="@(String.IsNullOrEmpty(Model.ContactEmail) ? Model.UserName : Model.ContactEmail)" />
+                            </div>
+                            <div style="position:absolute;left:340px;">
+                                <input name="DoContactText" type="checkbox" value="@Model.DoContactText" />
+                                text
+                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input name="ContactText" type="text" value="@Model.ContactText" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>website</td>
+                        <td colspan="3" height="35"><input name="Website" value="@Model.Website" style="width:400px;margin-left:52px;" /></td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top" height="35" rowspan="3">social<br />media</td>
+                        <td valign="top"><img src="@Url.Content("~/Images/Homepage/SocialTwitter.png")" alt="twitter" align="left" />&nbsp;&nbsp;@Html.EditorFor(m => m.SocialTwitter)</td>
+                        <td valign="top"></td>
+                        <td valign="top"><img src="@Url.Content("~/Images/Homepage/SocialPinterest.png")" alt="pinterest" align="left" />&nbsp;&nbsp;@Html.EditorFor(m => m.SocialPinterest)</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><img src="@Url.Content("~/Images/Homepage/SocialFacebook.png")" alt="facebook" align="left" />&nbsp;&nbsp;@Html.EditorFor(m => m.SocialFacebook)</td>
+                        <td valign="top"></td>
+                        <td valign="top"><img src="@Url.Content("~/Images/Homepage/SocialBlogger.png")" alt="blogger" align="left" />&nbsp;&nbsp;@Html.EditorFor(m => m.SocialBlogger)</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><img src="@Url.Content("~/Images/Homepage/SocialTumblr.png")" alt="tumblr" align="left" />&nbsp;&nbsp;@Html.EditorFor(m => m.SocialTumblr)</td>
+                        <td valign="top"></td>
+                        <td valign="top"><img src="@Url.Content("~/Images/Homepage/SocialWordpress.png")" alt="wordpress" align="left" />&nbsp;&nbsp;@Html.EditorFor(m => m.SocialWordpress)</td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top">profile picture</td>
+                        <td valign="top">
+                            <img src="@Url.Content("~/Images/Homepage/ProfileBlank.png")" alt="profile" style="float:left;" />
+                            <button style="font-size:9pt;float:right;padding:0px;width:112px;">upload image</button>
+                            <i>max size 1mb</i>
+                        </td>
+                        <td></td>
+                        <td valign="top">
+                            brief blurb<br />
+                            <textarea name="Notes" rows="4" placeholder="150 characters max">@Model.Notes</textarea>
+                        </td>
+                    </tr>
+                </table>              
+            </div>
+            
+            <br />
+            
+            <a href="javascript:$('#RegisterForm').submit()">
+                <img src="@Url.Content("~/Images/Homepage/NextButton.png")" alt="Next" />
+            </a>
+    
+        }
+    </center>
+</div>
+
+

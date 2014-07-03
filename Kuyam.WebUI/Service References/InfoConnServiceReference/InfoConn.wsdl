@@ -1,0 +1,1333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://kuyam.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://kuyam.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://kuyam.com/">
+      <s:element name="ExportEvents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="events" type="tns:ArrayOfEvent" />
+            <s:element minOccurs="0" maxOccurs="1" name="filepath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEvent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Event" nillable="true" type="tns:Event" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Event">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseEntity">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="EventId" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ConnectorSourceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CalendarId" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Summary" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="UId" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseEntity" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExportEventsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExportEventsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveEvents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchInfo" type="tns:SearchOption" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SearchOption">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ConnectorSource" type="tns:ConnectorSourceType" />
+          <s:element minOccurs="0" maxOccurs="1" name="ICSString" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ICSFilePath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EventId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ICSStream" type="tns:Stream" />
+          <s:element minOccurs="0" maxOccurs="1" name="Owner" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Venue" />
+          <s:element minOccurs="0" maxOccurs="1" name="Privacy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="RSVStatus" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CalendarId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ConnectorSourceType" type="tns:ConnectorSourceType" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ConnectorSourceType">
+        <s:restriction base="s:string">
+          <s:enumeration value="All" />
+          <s:enumeration value="Google" />
+          <s:enumeration value="Facebook" />
+          <s:enumeration value="iCalendar" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Stream" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MarshalByRefObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Position" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="ReadTimeout" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WriteTimeout" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MarshalByRefObject" abstract="true" />
+      <s:element name="SaveEventsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SaveEventsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchInfo" type="tns:SearchOption" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEventsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEventsResult" type="tns:ArrayOfEvent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="eventId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="calendarId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEventResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEventResult" type="tns:Event" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRangeEvent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRangeEventResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRangeEventResult" type="tns:ArrayOfEvent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostEvent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="connectorSourceType" type="tns:ConnectorSourceType" />
+            <s:element minOccurs="0" maxOccurs="1" name="postEventPara" type="tns:Event" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostEventResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostEventResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteEvent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="eventId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="calendarId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteEventResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteEventResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCalendars">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCalendar">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Calendar" nillable="true" type="tns:Calendar" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Calendar">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseEntity">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CalendarId" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ConnectorSourceId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Summary" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetCalendarsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCalendarsResult" type="tns:ArrayOfCalendar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCalendar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sourceType" type="tns:ConnectorSourceType" />
+            <s:element minOccurs="0" maxOccurs="1" name="calendarId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCalendarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCalendarResult" type="tns:Calendar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddConnectorSource">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="connectorSource" type="tns:ConnectorSource" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ConnectorSource">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseEntity">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ConnectorSourceType" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FeedUrl" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AccessToken" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="RefressToken" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModified" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExpiresDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsUpdateRunning" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="Events" type="tns:ArrayOfEvent" />
+              <s:element minOccurs="1" maxOccurs="1" name="CacheLastUpdate_Short" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CacheLastUpdate_Medium" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CacheLastUpdate_Longer" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="DoCacheUpdate_Short" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="DoCacheUpdate_Medium" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="DoCacheUpdate_Longer" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AddConnectorSourceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddConnectorSourceResult" type="tns:ArrayOfCalendar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConnectorSource">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="connectorSourceType" type="tns:ConnectorSourceType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConnectorSourceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetConnectorSourceResult" type="tns:ConnectorSource" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddIncomingRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="incomingRequest" type="tns:IncomingRequest" />
+            <s:element minOccurs="1" maxOccurs="1" name="requestType" type="tns:IncommingRequestType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="IncomingRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseEntity">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="GuiId" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EntityId" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="EntityType" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RequestType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Decription" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastRequestedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="Retry" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MaxRetry" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastRetryDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CustId" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="PreviousAlert" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DateAlert" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="AppointmentId" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ApptStartDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Data" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="IncommingRequestType">
+        <s:restriction base="s:string">
+          <s:enumeration value="SEND_EMAIL" />
+          <s:enumeration value="SEND_SMS" />
+          <s:enumeration value="PAYMENT_PAYPAL" />
+          <s:enumeration value="PAYMENT_AMAZON" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ServiceResponseOfBoolean">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsSuccess" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Response" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ServiceErrorOfBoolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServiceErrorOfBoolean">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddIncomingRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddIncomingRequestResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserSetting">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="incomingRequest" type="tns:IncomingRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserSettingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateUserSettingResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateAppointment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="incomingRequest" type="tns:IncomingRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateAppointmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateAppointmentResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefreshUserCalendars">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cacheHorizon" type="tns:CacheType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="CacheType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Short" />
+          <s:enumeration value="Medium" />
+          <s:enumeration value="Longer" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="RefreshUserCalendarsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RefreshUserCalendarsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefreshUserCalendarsAllCaches">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefreshUserCalendarsAllCachesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RefreshUserCalendarsAllCachesResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBusyInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchOption" type="tns:SearchOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BusyInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SourceType" type="tns:ConnectorSourceType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBusyInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BusyInfo" nillable="true" type="tns:BusyInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetBusyInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBusyInfoResult" type="tns:ArrayOfBusyInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExternalFeed">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="events" type="tns:ArrayOfEvent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExternalFeedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExternalFeedResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Event" nillable="true" type="tns:Event" />
+      <s:element name="ArrayOfEvent" nillable="true" type="tns:ArrayOfEvent" />
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="ArrayOfCalendar" nillable="true" type="tns:ArrayOfCalendar" />
+      <s:element name="Calendar" nillable="true" type="tns:Calendar" />
+      <s:element name="ConnectorSource" nillable="true" type="tns:ConnectorSource" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ExportEventsSoapIn">
+    <wsdl:part name="parameters" element="tns:ExportEvents" />
+  </wsdl:message>
+  <wsdl:message name="ExportEventsSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveEventsSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveEvents" />
+  </wsdl:message>
+  <wsdl:message name="SaveEventsSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEventsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEvents" />
+  </wsdl:message>
+  <wsdl:message name="GetEventsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEventSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEvent" />
+  </wsdl:message>
+  <wsdl:message name="GetEventSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRangeEventSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRangeEvent" />
+  </wsdl:message>
+  <wsdl:message name="GetRangeEventSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRangeEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostEventSoapIn">
+    <wsdl:part name="parameters" element="tns:PostEvent" />
+  </wsdl:message>
+  <wsdl:message name="PostEventSoapOut">
+    <wsdl:part name="parameters" element="tns:PostEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteEvent" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCalendars" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCalendarsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCalendar" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCalendarResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddConnectorSourceSoapIn">
+    <wsdl:part name="parameters" element="tns:AddConnectorSource" />
+  </wsdl:message>
+  <wsdl:message name="AddConnectorSourceSoapOut">
+    <wsdl:part name="parameters" element="tns:AddConnectorSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetConnectorSourceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetConnectorSource" />
+  </wsdl:message>
+  <wsdl:message name="GetConnectorSourceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetConnectorSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddIncomingRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:AddIncomingRequest" />
+  </wsdl:message>
+  <wsdl:message name="AddIncomingRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:AddIncomingRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSettingSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUserSetting" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSettingSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserSettingResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateAppointmentSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateAppointment" />
+  </wsdl:message>
+  <wsdl:message name="UpdateAppointmentSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateAppointmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsSoapIn">
+    <wsdl:part name="parameters" element="tns:RefreshUserCalendars" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsSoapOut">
+    <wsdl:part name="parameters" element="tns:RefreshUserCalendarsResponse" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsAllCachesSoapIn">
+    <wsdl:part name="parameters" element="tns:RefreshUserCalendarsAllCaches" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsAllCachesSoapOut">
+    <wsdl:part name="parameters" element="tns:RefreshUserCalendarsAllCachesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBusyInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBusyInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetBusyInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBusyInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExternalFeedSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExternalFeed" />
+  </wsdl:message>
+  <wsdl:message name="GetExternalFeedSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExternalFeedResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEventHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="eventId" type="s:string" />
+    <wsdl:part name="calendarId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEventHttpGetOut">
+    <wsdl:part name="Body" element="tns:Event" />
+  </wsdl:message>
+  <wsdl:message name="GetRangeEventHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="startDate" type="s:string" />
+    <wsdl:part name="endDate" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetRangeEventHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfEvent" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="eventId" type="s:string" />
+    <wsdl:part name="calendarId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarsHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCalendar" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+    <wsdl:part name="calendarId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarHttpGetOut">
+    <wsdl:part name="Body" element="tns:Calendar" />
+  </wsdl:message>
+  <wsdl:message name="GetConnectorSourceHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="connectorSourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetConnectorSourceHttpGetOut">
+    <wsdl:part name="Body" element="tns:ConnectorSource" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="cacheHorizon" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsAllCachesHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsAllCachesHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetEventHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="eventId" type="s:string" />
+    <wsdl:part name="calendarId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEventHttpPostOut">
+    <wsdl:part name="Body" element="tns:Event" />
+  </wsdl:message>
+  <wsdl:message name="GetRangeEventHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="startDate" type="s:string" />
+    <wsdl:part name="endDate" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetRangeEventHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfEvent" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="eventId" type="s:string" />
+    <wsdl:part name="calendarId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarsHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCalendar" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="sourceType" type="s:string" />
+    <wsdl:part name="calendarId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCalendarHttpPostOut">
+    <wsdl:part name="Body" element="tns:Calendar" />
+  </wsdl:message>
+  <wsdl:message name="GetConnectorSourceHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="connectorSourceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetConnectorSourceHttpPostOut">
+    <wsdl:part name="Body" element="tns:ConnectorSource" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="cacheHorizon" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsAllCachesHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RefreshUserCalendarsAllCachesHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="InfoConnSoap">
+    <wsdl:operation name="ExportEvents">
+      <wsdl:input message="tns:ExportEventsSoapIn" />
+      <wsdl:output message="tns:ExportEventsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveEvents">
+      <wsdl:input message="tns:SaveEventsSoapIn" />
+      <wsdl:output message="tns:SaveEventsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <wsdl:input message="tns:GetEventsSoapIn" />
+      <wsdl:output message="tns:GetEventsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvent">
+      <wsdl:input message="tns:GetEventSoapIn" />
+      <wsdl:output message="tns:GetEventSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <wsdl:input message="tns:GetRangeEventSoapIn" />
+      <wsdl:output message="tns:GetRangeEventSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostEvent">
+      <wsdl:input message="tns:PostEventSoapIn" />
+      <wsdl:output message="tns:PostEventSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <wsdl:input message="tns:DeleteEventSoapIn" />
+      <wsdl:output message="tns:DeleteEventSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <wsdl:input message="tns:GetCalendarsSoapIn" />
+      <wsdl:output message="tns:GetCalendarsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <wsdl:input message="tns:GetCalendarSoapIn" />
+      <wsdl:output message="tns:GetCalendarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddConnectorSource">
+      <wsdl:input message="tns:AddConnectorSourceSoapIn" />
+      <wsdl:output message="tns:AddConnectorSourceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <wsdl:input message="tns:GetConnectorSourceSoapIn" />
+      <wsdl:output message="tns:GetConnectorSourceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddIncomingRequest">
+      <wsdl:input message="tns:AddIncomingRequestSoapIn" />
+      <wsdl:output message="tns:AddIncomingRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserSetting">
+      <wsdl:input message="tns:UpdateUserSettingSoapIn" />
+      <wsdl:output message="tns:UpdateUserSettingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAppointment">
+      <wsdl:input message="tns:UpdateAppointmentSoapIn" />
+      <wsdl:output message="tns:UpdateAppointmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <wsdl:input message="tns:RefreshUserCalendarsSoapIn" />
+      <wsdl:output message="tns:RefreshUserCalendarsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <wsdl:input message="tns:RefreshUserCalendarsAllCachesSoapIn" />
+      <wsdl:output message="tns:RefreshUserCalendarsAllCachesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBusyInfo">
+      <wsdl:input message="tns:GetBusyInfoSoapIn" />
+      <wsdl:output message="tns:GetBusyInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalFeed">
+      <wsdl:input message="tns:GetExternalFeedSoapIn" />
+      <wsdl:output message="tns:GetExternalFeedSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="InfoConnHttpGet">
+    <wsdl:operation name="GetEvent">
+      <wsdl:input message="tns:GetEventHttpGetIn" />
+      <wsdl:output message="tns:GetEventHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <wsdl:input message="tns:GetRangeEventHttpGetIn" />
+      <wsdl:output message="tns:GetRangeEventHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <wsdl:input message="tns:DeleteEventHttpGetIn" />
+      <wsdl:output message="tns:DeleteEventHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <wsdl:input message="tns:GetCalendarsHttpGetIn" />
+      <wsdl:output message="tns:GetCalendarsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <wsdl:input message="tns:GetCalendarHttpGetIn" />
+      <wsdl:output message="tns:GetCalendarHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <wsdl:input message="tns:GetConnectorSourceHttpGetIn" />
+      <wsdl:output message="tns:GetConnectorSourceHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <wsdl:input message="tns:RefreshUserCalendarsHttpGetIn" />
+      <wsdl:output message="tns:RefreshUserCalendarsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <wsdl:input message="tns:RefreshUserCalendarsAllCachesHttpGetIn" />
+      <wsdl:output message="tns:RefreshUserCalendarsAllCachesHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="InfoConnHttpPost">
+    <wsdl:operation name="GetEvent">
+      <wsdl:input message="tns:GetEventHttpPostIn" />
+      <wsdl:output message="tns:GetEventHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <wsdl:input message="tns:GetRangeEventHttpPostIn" />
+      <wsdl:output message="tns:GetRangeEventHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <wsdl:input message="tns:DeleteEventHttpPostIn" />
+      <wsdl:output message="tns:DeleteEventHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <wsdl:input message="tns:GetCalendarsHttpPostIn" />
+      <wsdl:output message="tns:GetCalendarsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <wsdl:input message="tns:GetCalendarHttpPostIn" />
+      <wsdl:output message="tns:GetCalendarHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <wsdl:input message="tns:GetConnectorSourceHttpPostIn" />
+      <wsdl:output message="tns:GetConnectorSourceHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <wsdl:input message="tns:RefreshUserCalendarsHttpPostIn" />
+      <wsdl:output message="tns:RefreshUserCalendarsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <wsdl:input message="tns:RefreshUserCalendarsAllCachesHttpPostIn" />
+      <wsdl:output message="tns:RefreshUserCalendarsAllCachesHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InfoConnSoap" type="tns:InfoConnSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExportEvents">
+      <soap:operation soapAction="http://kuyam.com/ExportEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveEvents">
+      <soap:operation soapAction="http://kuyam.com/SaveEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <soap:operation soapAction="http://kuyam.com/GetEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvent">
+      <soap:operation soapAction="http://kuyam.com/GetEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <soap:operation soapAction="http://kuyam.com/GetRangeEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostEvent">
+      <soap:operation soapAction="http://kuyam.com/PostEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <soap:operation soapAction="http://kuyam.com/DeleteEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <soap:operation soapAction="http://kuyam.com/GetCalendars" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <soap:operation soapAction="http://kuyam.com/GetCalendar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddConnectorSource">
+      <soap:operation soapAction="http://kuyam.com/AddConnectorSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <soap:operation soapAction="http://kuyam.com/GetConnectorSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIncomingRequest">
+      <soap:operation soapAction="http://kuyam.com/AddIncomingRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserSetting">
+      <soap:operation soapAction="http://kuyam.com/UpdateUserSetting" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAppointment">
+      <soap:operation soapAction="http://kuyam.com/UpdateAppointment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <soap:operation soapAction="http://kuyam.com/RefreshUserCalendars" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <soap:operation soapAction="http://kuyam.com/RefreshUserCalendarsAllCaches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusyInfo">
+      <soap:operation soapAction="http://kuyam.com/GetBusyInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalFeed">
+      <soap:operation soapAction="http://kuyam.com/GetExternalFeed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InfoConnSoap12" type="tns:InfoConnSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExportEvents">
+      <soap12:operation soapAction="http://kuyam.com/ExportEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveEvents">
+      <soap12:operation soapAction="http://kuyam.com/SaveEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <soap12:operation soapAction="http://kuyam.com/GetEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvent">
+      <soap12:operation soapAction="http://kuyam.com/GetEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <soap12:operation soapAction="http://kuyam.com/GetRangeEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostEvent">
+      <soap12:operation soapAction="http://kuyam.com/PostEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <soap12:operation soapAction="http://kuyam.com/DeleteEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <soap12:operation soapAction="http://kuyam.com/GetCalendars" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <soap12:operation soapAction="http://kuyam.com/GetCalendar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddConnectorSource">
+      <soap12:operation soapAction="http://kuyam.com/AddConnectorSource" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <soap12:operation soapAction="http://kuyam.com/GetConnectorSource" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIncomingRequest">
+      <soap12:operation soapAction="http://kuyam.com/AddIncomingRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserSetting">
+      <soap12:operation soapAction="http://kuyam.com/UpdateUserSetting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAppointment">
+      <soap12:operation soapAction="http://kuyam.com/UpdateAppointment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <soap12:operation soapAction="http://kuyam.com/RefreshUserCalendars" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <soap12:operation soapAction="http://kuyam.com/RefreshUserCalendarsAllCaches" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusyInfo">
+      <soap12:operation soapAction="http://kuyam.com/GetBusyInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalFeed">
+      <soap12:operation soapAction="http://kuyam.com/GetExternalFeed" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InfoConnHttpGet" type="tns:InfoConnHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetEvent">
+      <http:operation location="/GetEvent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <http:operation location="/GetRangeEvent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <http:operation location="/DeleteEvent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <http:operation location="/GetCalendars" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <http:operation location="/GetCalendar" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <http:operation location="/GetConnectorSource" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <http:operation location="/RefreshUserCalendars" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <http:operation location="/RefreshUserCalendarsAllCaches" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InfoConnHttpPost" type="tns:InfoConnHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetEvent">
+      <http:operation location="/GetEvent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRangeEvent">
+      <http:operation location="/GetRangeEvent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEvent">
+      <http:operation location="/DeleteEvent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendars">
+      <http:operation location="/GetCalendars" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <http:operation location="/GetCalendar" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectorSource">
+      <http:operation location="/GetConnectorSource" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendars">
+      <http:operation location="/RefreshUserCalendars" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshUserCalendarsAllCaches">
+      <http:operation location="/RefreshUserCalendarsAllCaches" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InfoConn">
+    <wsdl:port name="InfoConnSoap" binding="tns:InfoConnSoap">
+      <soap:address location="http://localhost:3670/InfoConn.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InfoConnSoap12" binding="tns:InfoConnSoap12">
+      <soap12:address location="http://localhost:3670/InfoConn.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InfoConnHttpGet" binding="tns:InfoConnHttpGet">
+      <http:address location="http://localhost:3670/InfoConn.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InfoConnHttpPost" binding="tns:InfoConnHttpPost">
+      <http:address location="http://localhost:3670/InfoConn.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

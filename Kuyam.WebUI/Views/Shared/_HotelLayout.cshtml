@@ -1,0 +1,118 @@
+﻿@using Kuyam.Database
+@using Kuyam.WebUI.Models
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:addthis="https://www.facebook.com/2008/fbml"
+      xmlns:g="https://www.facebook.com/2008/fbml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="Kuyam" name="description" />
+    <meta content="Kuyam" name="keywords" />
+    <title>kuyam @(ViewBag.Title != "" ? "- " + ViewBag.Title.ToLower() : "")</title>
+    <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" />
+    <link href="@Url.Content("~/Content/masteradmin/css/style.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>
+    <script language='javascript' src="@Url.Content("~/Scripts/js/detect_timezone.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/masteradmin/js/admin_js.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.nicescroll.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/css_browser_selector.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/purl.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/common.js?v=20")"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div>
+            <div class="fixheaderposition">
+                <div class="header">
+                    <div class="hcontent h73">
+                        <a href="/" class="logo" title="kuyam">
+                            <img alt="Kuyam" src="/images/kuyam_logo.png" />
+                        </a>
+                        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            Cust user = MySession.Cust;
+                            var name = string.Empty;
+
+                            if (user.GetRole.Contains("Admin") || user.GetRole.Contains("HotelAdmin"))
+                            {
+                                name = "admin";
+                            }
+                            else if (User.IsInRole("Agent"))
+                            {
+                                name = "agent";
+                            }
+                            else if (user.GetRole.Contains("HotelStaff"))
+                            {
+                                name = "hotel staff";
+                            }
+
+                            @* <span style="margin-left: 8px; line-height: 16px;" class="nameUser" title="admin">@name</span>*@
+                            <ul class="menuHeader">
+                                <li>
+                                    <span style="font: 16px/28px Arial,Helvetica,sans-serif;color: #CCCCCC;margin-left: 12px;text-decoration: none;" title="@Kuyam.Domain.UtilityHelper.TruncateText(user.FirstName, 15)">
+                                        hi, @Kuyam.Domain.UtilityHelper.TruncateText(user.FirstName, 15)
+                                    </span>
+                                </li>
+                                <li class="lastchild">
+                                    <a href="javascript:void(0);" title="logout" id="logout" onclick="logout();">
+                                        log out
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="content">
+            <div class="whitebackground">
+                <div class="leftadmin">
+                    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        Cust user = MySession.Cust;
+                        if (user.GetRole.Contains("HotelAdmin") || user.GetRole.Contains("Admin") || user.GetRole.Contains("Agent"))
+                        {
+                            <h2 class="adminleftmn">
+                                hotel admin menu
+                            </h2>
+                            <ul>
+                                <li><a href="/Hotel/HotelList">hotels list</a> </li>
+                                <li><a href="/Hotel/StaffList">staff list</a> </li>
+                                <li><a href="/Hotel/HotelCodeList">hotel codes list</a> </li>
+                                <li><a href="/Hotel/Appointment">appointment status</a> </li>
+                                <li><a href="/Hotel/FeaturedHotel">edit featured company of hotel</a> </li>
+                            </ul>
+                        }
+                        else if (User.IsInRole("HotelStaff"))
+                        {
+                            <h2 class="adminleftmn">
+                                hotel staff menu
+                            </h2>
+                            <ul>
+                                <li><a href="/Hotel/HotelCodeList">hotel codes list</a> </li>
+                                <li><a href="/Hotel/Appointment">appointment status</a> </li>
+                            </ul>
+                        }
+                    }
+                </div>
+                <div class="rightadmin">
+                    @RenderBody()
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="lightBox" class="lightBox">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="footer" style="text-decoration: none !important;">
+            @Html.Partial("_FooterNew")
+        </div>
+    </div>
+</body>
+</html>

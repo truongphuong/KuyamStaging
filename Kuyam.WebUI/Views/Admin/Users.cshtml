@@ -1,0 +1,62 @@
+﻿@model Kuyam.WebUI.Models.UserAdminModel
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Administer User";
+}
+<h2>@ViewBag.Title</h2>
+@if (User.IsInRole("support"))
+{
+    using (Html.BeginForm())
+    {
+    @Html.ValidationSummary(true)
+    
+    @:Select User: @Html.EditorFor(x => x.Username)
+    <select name="UserAction" id="UserAction">
+        <option value="Impersonate" selected="selected">Impersonate</option>
+        @if (User.IsInRole("admin"))
+        {
+            <option value="MakeSupport">Make Support</option>
+        }
+        @if (User.IsInRole("god"))
+        {
+            <option value="MakeAdmin">Make Admin</option>
+            <option value="MakeGod">Make God</option>
+            <option value="ResetPassword">Reset Password</option>
+            <option value="Delete">Delete</option>
+            <option value="Encrypt (may cause irreparable harm)">Encrypt</option>
+        }
+    </select>
+    <br />
+    @Html.SaveCustom("submit", "submitting", "admin home", "goHome", Url.Content("~/admin"))
+    }
+    <div class="centered">
+        <div class="admin-box">
+            <h3>
+                God Level</h3>
+            @foreach (string s in Model.Gods)
+            {
+                @(s)<br />
+            }
+        </div>
+        <div class="admin-box">
+            <h3>
+                Admin Level</h3>
+            @foreach (string s in Model.Admins)
+            {
+                @(s)<br />
+            }
+        </div>
+        <div class="admin-box">
+            <h3>
+                Support Level</h3>
+            @foreach (string s in Model.Supports)
+            {
+                @(s)<br />
+            }
+        </div>
+    </div>
+}
+else
+{ 
+    @:You are not authorized for this page.
+}

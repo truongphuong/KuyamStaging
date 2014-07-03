@@ -1,0 +1,84 @@
+@{
+    ViewBag.Title = "team kourosh";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        $('select#category').selectmenu();
+        
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+    });
+</script>
+<div class="contentMarketPlace">
+    <div class="howitworks" style="background-position:0 100%;">
+        <div class="ourstory">
+            <div class="ourstoryleft teammember">
+                <ul>
+                    <li><a href="/home/ourstory" title="our story">our story</a> <span class="nonarrow">
+                    </span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <li class="meetingteam"><span class="active">meet the team</span> <span class="greenarrow">
+                    </span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ourstoryright">
+                <div class="teamcontent">
+                    <div class="imagemember">
+                        <img src="/images/jackie.png" alt="jackie" />
+                    </div>
+                    <div class="contentmember">
+                        <h1>
+                            jackie chang / <span>“the maestro”</span>
+                        </h1>
+                        <h2>
+                            creative director</h2>
+                        <p>
+                            jackie is the whimsical meerkat maestro who uses her tablet as a powerful design
+                            weapon. When she's not making graphics or animations, she's conquering mobile word
+                            games, brewing wicked ideas and dreaming of becoming an independent graphic novelist.
+                        </p>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="teamline">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="othermembers">
+                 <a href="/home/teamkourosh" class="kourosh" title="kourosh"></a>
+                 <a href="/home/teamtony" class="tony" title="tony"></a>
+                 <a href="/home/teamtodd" class="todd" title="todd"></a>
+                 <span class="jackie"></span>
+                 <a href="/home/teamcory" class="cory" title="cory"></a>
+                 <a href="/home/teammonika" class="monika" title="monika"></a>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>

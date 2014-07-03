@@ -1,0 +1,187 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "request appoinment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Scripts/GettyImages/css/popup.css" rel="stylesheet" />
+<div id="contentmainpage">
+    <h2>proposed appointments</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <select id="companyId" name="companyName" style="width:260px;">
+                            @{
+                                <option value="0">all</option>
+                                if (ViewBag.Companys != null)
+                                {
+                                    foreach (ProfileCompany item in ViewBag.Companys)
+                                    {
+                                        <option value="@item.ProfileID" @(ViewBag.profileID == item.ProfileID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }
+
+                            }
+                        </select>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                        <input id="btnAddApt" class="button" onclick="bookit();" type="button" value="book" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="apptlist" style="overflow-x:scroll">
+        @Html.Partial("_ProposedAppointmentList")
+    </div>
+</div>
+<div id="pushnotificationpopup" class="popupDialog">
+    <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+    
+    <br />
+    <div>
+        <div>
+            <textarea style="width: 300px; height: 100px; max-width: 300px; min-width: 300px;" id="txtmessage" name="txtmessage" onblur="if (this.value == '') { this.value = 'please type message to push notification'; this.style.color = '#B3B3B3'; }"
+                      onfocus="if (this.value == 'please type message to push notification') { this.value = ''; this.style.color = '#333333 !important'; }">please type message to push notification</textarea>
+        </div>
+
+        <div class="buttons">
+            <input type="button" value="send" id="btnsend" onclick="pushNotificationMessage();" />
+        </div>
+    </div>
+   
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-timepicker-addon.js")"></script>
+<script type="text/javascript">
+
+    function bookit() {
+        window.location.href = "/Admin/ProposedBook";
+    }
+
+    $(document).ready(function () {
+        $("#txtmessage").css({ 'color': '#B3B3B3' });
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+
+
+    function proposeSendSms(apptId) {
+        window.isUseDefaultAjaxHandle = true;
+        var parameters = {
+            apptId: apptId
+        };
+        $.ajax(
+           {
+               type: 'POST',
+               contentType: 'application/json; charset=utf-8',
+               data: JSON.stringify(parameters),
+               dataType: 'html',
+               url: '/Admin/ProposeSendSms/'
+           })
+           .success(function (result) {
+               showAlertMessage("send sms success.");
+           })
+           .error(function (error) {
+
+           });
+
+    }
+
+
+    function proposeSendEmail(apptId) {
+        window.isUseDefaultAjaxHandle = true;
+        var parameters = {
+            apptId: apptId
+        };
+        $.ajax(
+           {
+               type: 'POST',
+               contentType: 'application/json; charset=utf-8',
+               data: JSON.stringify(parameters),
+               dataType: 'html',
+               url: '/Admin/ProposeSendEmail/'
+           })
+           .success(function (result) {
+               showAlertMessage("send email success.");
+           })
+           .error(function (error) {
+
+           });
+    }
+
+    var _deviceId;
+    var _apptId;
+    function showSendDialog(deviceId, apptId) {        
+        _deviceId = deviceId;
+        _apptId = apptId;       
+        //$('#lightBox').css('z-index', '9998');
+        //showDialog('pushnotificationpopup', 'btnCloseloginPopup');
+        pushNotificationMessage(deviceId, apptId);
+    }
+
+    function pushNotificationMessage(deviceId, apptId) {
+        
+        //var message = $.trim($("#txtmessage").val());
+        //if (message == 'please type message to push notification')
+        //    return false;
+        //$('#lightBox').hide();
+        window.isUseDefaultAjaxHandle = true;
+
+        var parameters = {
+            proposedId: apptId,
+            deviceId: deviceId,
+            message: ""
+        };
+        //hideDialog('pushnotificationpopup');
+        $.ajax(
+           {
+               type: 'POST',
+               contentType: 'application/json; charset=utf-8',
+               data: JSON.stringify(parameters),
+               dataType: 'html',
+               url: '/Admin/PushNotificationMessage/'
+           })
+           .success(function (result) {
+               if (result) {
+                   showAlertMessage("push message is sent successfully");
+               } else {
+                   showAlertMessage("can't sent message.");
+               }
+               
+           })
+           .error(function (error) {
+
+           });
+    }
+
+    function pagingEvent(pageIndex) {
+        var companyId = $('#companyId option:selected').val();
+        var searchParameters = {
+            companyId: companyId,
+            pageIndex: pageIndex
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/ProposedAppointmentList/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    $('#apptlist').html(result);
+                }
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>

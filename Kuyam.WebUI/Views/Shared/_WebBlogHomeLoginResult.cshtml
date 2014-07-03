@@ -1,0 +1,161 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain
+@using Kuyam.WebUI.Models;
+@using Kuyam.Utility;
+@using Kuyam.Domain.Seo;
+@using Kuyam.Database.Extensions;
+@{
+    WebBlogModels companiesPostsFeatured = ViewBag.CompaniesPostsFeatured;
+    var isOdd = false;
+    var index = 6;
+
+
+    List<ProfileCompany> companies = ViewBag.Companies;
+    List<PostExt> posts = ViewBag.Posts;
+    var i = 0;
+    var j = 0;
+    var step = 8;
+}
+<div class="bannerBlogAfterLogin">
+    <div class="marketplaceblog">
+        @if (companiesPostsFeatured.FeaturedPost != null)
+{
+    <a href="@Url.RouteUrl("blogPost", new { seName = companiesPostsFeatured.GetSeName(companiesPostsFeatured.FeaturedPost.PostRowID, "post") })" title="@companiesPostsFeatured.FeaturedPost.Title">
+        @if (string.IsNullOrEmpty(companiesPostsFeatured.FeaturedPost.CoverPhoto))
+        {
+            <img alt="@companiesPostsFeatured.FeaturedPost.Title" src="/images/photo_company_image.png" style="width: 762px; height: 385px; margin-top: 40px;" />
+        }
+        else
+        {
+            <img alt="@companiesPostsFeatured.FeaturedPost.Title" src="@KalturaHelper.GetKalturaUrl(companiesPostsFeatured.FeaturedPost.PostRowID, companiesPostsFeatured.FeaturedPost.CoverPhoto, (int)Types.MediaCropType.HomeAfterLogin, 762, 385)" style="width: 762px; height: 385px; margin-top: 40px;" />
+        }
+        <div class="bgcaption">
+            <h1 class="textCaption">
+                @companiesPostsFeatured.FeaturedPost.Title
+            </h1>
+        </div>
+    </a>
+}
+else
+{
+            <img alt="" src="/images/photo_company_image.png" style="width: 762px; height: 425px;" />
+            <div class="bgcaption">
+                <h1 class="textCaption"></h1>
+            </div>
+        }
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="listNews">
+    <div class="itembox">
+        @while (i < companies.Count || j < posts.Count)
+        {
+            if (i < companies.Count)
+            {
+
+                var templCompany = companies[i];
+                var isViewAvailability = templCompany.CompanyTypeID != (int)Types.CompanyType.NonKuyamBookIt;//DAL.isViewAvailability(templCompany.ProfileID);
+                //var pUrl = templCompany.GetSeName(templCompany.ProfileID, "availability") + "/availability";//"/companyprofile/availability/" + templCompany.Profile.ProfileCompany.ProfileID;
+                var pcImageUrl  = "/images/photo_company_image.png";
+                var pcImage = DAL.GetCompanyPhotoByCompanyID(templCompany.ProfileID);
+                if (pcImage != null)
+                {
+                    pcImageUrl = KalturaHelper.GetKalturaUrl(pcImage.LocationData, 372, 185);
+                }
+                <div class="activitivedouble">
+                    <a @(isViewAvailability ? "href=" + Url.RouteUrl("availability",new { seName = templCompany.GetSeName(templCompany.ProfileID) }) : "class=btnSchedule title=schedule")
+                       profileid="@templCompany.ProfileID"
+                       companyname="@templCompany.Name"
+                       phonenumber="@UtilityHelper.FormatPhone(templCompany.Phone)"
+                       companysite="@templCompany.Url"
+                       address="@string.Format("{0}.{1}, {2} {3}. </br>{4}", templCompany.Street1, templCompany.City,
+                                     templCompany.State, templCompany.Zip, UtilityHelper.FormatPhone(templCompany.Phone))">
+                        <div class="featured">
+                        </div>
+                        <img src="@pcImageUrl" alt="" style="width: 372px; height: 185px;">
+                        <div class="bgcaptionactive">
+                            <div class="contentcaption captionactivitive" title="@templCompany.Name">
+                                @templCompany.Name
+                            </div>
+                            <span class="btnarrow">
+                                <img src="/images/arrow-right.png">
+                            </span>
+                        </div>
+                    </a>
+                    <div class="rankingstar">
+                        <div class="clear5">
+                        </div>
+                        @{
+                Html.RenderPartial("_ProfileCompanyRating", new ProfileCompanyRating(templCompany,templCompany.Rate, templCompany.TotalReview));
+                        }
+                        <span class="addr">
+                            <a href="@Url.RouteUrl("availability", new { seName = templCompany.GetSeName(templCompany.ProfileID) })" style="color: white;">
+                                @UtilityHelper.TruncateText(templCompany.City, 15),
+                                @templCompany.State
+                            </a>
+                        </span>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                i += 1;
+            }
+            if (j < posts.Count)
+            {
+
+                var tempPosts = posts.Skip(j).Take(step);
+                foreach (var tempPost in tempPosts)
+                {
+                    <a href="@Url.RouteUrl("blogPost", new { seName = tempPost.GetSeName(tempPost.PostRowID,"post") })">
+
+                        <div class="activebox1">
+                            @if (string.IsNullOrEmpty(tempPost.CoverPhoto))
+                            {
+                                <img alt="no image" src="/images/noimg.jpg" />
+                            }
+                            else
+                            {
+                                <img alt="@tempPost.Title" src="@KalturaHelper.GetKalturaUrl(tempPost.PostRowID, tempPost.CoverPhoto, (int)Types.MediaCropType.DetailAfterLogin, 183, 184)" style="width: 183px; height: 184px;" />
+                            }
+                            <div class="bgcaptionactive">
+                                <div class="contentcaption">                                    
+                                    @tempPost.Title                                   
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+
+                j += step;
+                step = step == 8 ? 4 : 8;
+            }
+        }
+    </div>
+    <div class="clear5"> </div>
+</div>
+<div id="chattobook">
+    @Html.Partial("_ChatToBook", new ChatToBookModels
+                            {
+                                AlowChatToBook = false
+                            })
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {       
+        $(".contentcaption").dotdotdot({
+            height: 44
+        });
+
+        $(".textCaption").dotdotdot(
+           {
+               height: 120,
+               width: 789
+           });
+        
+        $(".contentcaption captionactivitive").dotdotdot({
+            height: 31
+        });
+    });
+
+</script>

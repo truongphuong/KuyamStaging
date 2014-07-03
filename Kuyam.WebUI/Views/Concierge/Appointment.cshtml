@@ -1,0 +1,120 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@{
+    ViewBag.Title = "appointment";
+    Layout = "~/Views/Shared/_MasterPageLayoutConcierge.cshtml";
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div class="colLeft menuLeft">
+            <div class="scroll">
+                <div id="accordion">
+                    <h3 title="our blog">
+                        guest
+                    </h3>
+                    <div>
+                    </div>
+                    <h3 title="schedule">
+                        appoinments
+                    </h3>
+                    <div>
+                    </div>
+                    <h3 title="appointments">
+                        proposals
+                    </h3>
+                    <div class="panelapp">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="colRight rightadmin" style="border-left:none">
+            <h3>concierge dashboard-appointments</h3>
+            <div id="contentmainpage">
+                <div class="boxsearch">
+                    <center>
+                        <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                            <tr class="odd">
+                                <td>
+                                    <label>
+                                        search&nbsp;&nbsp;
+                                        <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                                    </label>
+                                    <select id="companyType" style="width:150px">
+                                        @*<option value="0" selected="selected">
+                                            any status
+                                        </option>*@
+                                        <option value="1">current/future</option>
+                                        <option value="2">past</option>
+                                    </select>
+                                    <input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                                    <input class="button" id="btnPrinAgenda" style="float: right" value="print agenda" type="button" onclick="printAgenda();" />
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+                <div id="listAppointments">
+                    @Html.Partial("_AppointmentConciergeResults")
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#ui-accordion-accordion-header-0").removeClass("ui-state-active");
+        $("#ui-accordion-accordion-header-1").addClass("ui-state-active");
+        $("#ui-accordion-accordion-header-0").click(function() {
+            window.location.href = "/Concierge/Index";
+        });
+        $("#ui-accordion-accordion-header-1").click(function() {
+            window.location.href = "/Concierge/Appointment";
+        });
+        $("#ui-accordion-accordion-header-2").click(function() {
+            window.location.href = "/Concierge/Proposals";
+        });
+        $("#txtKey").focus();
+        $("#contentmainpage").keypress(function(e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var type = $("#companyType option:selected").val();
+        var status = $("#appointmentStatus option:selected").val();
+        var hotelId = $("#hotelId option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, type: type, status: status, hotelId: hotelId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Concierge/Appointment/'
+            })
+            .success(function (result) {
+                $('#listAppointments').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function printAgenda() {
+        //        620 X 877
+        var type = $("#companyType option:selected").val();
+            var left = ($(window).width() / 2) - (900 / 2),
+                         top = ($(window).height() / 2) - (300 / 2),
+                       popup = window.open("/Concierge/Agenda?type=" + type, "popup", "scrollbars=1,menubar=0,width=1024, height=877, top=" + top + ", left=" + left);
+        
+    }
+
+</script>

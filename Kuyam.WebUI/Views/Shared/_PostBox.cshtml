@@ -1,0 +1,110 @@
+﻿@using System.Globalization
+@model Kuyam.WebUI.Models.FeaturedCompanyModels
+@{  
+    var isAuthenticated = Request.IsAuthenticated ? "true" : "false";
+}
+<div class="listNews" style="padding: 0;">
+    <div class="activitivedouble" style="width: @ViewData["BoxSize"]px; height: @ViewData["BoxSize"]px;">
+        <a title="@Model.CompanyName" href="@Model.FeaturedUrl">
+            <div >
+                <img style="width: @ViewData["BoxSize"]px;height: @ViewData["BoxSize"]px;" alt="@Model.CompanyName" src="@Model.ImagesUrl">
+            </div>
+            <div class="featured">
+            </div>
+            <div class="bgcaptionactive" style="width: @(int.Parse(@ViewData["BoxSize"].ToString()) - 20)px;">
+                <div class="contentcaption captionactivitive" style="width: 215px; bottom: 45px !important">
+                    @Model.CompanyName
+                </div>
+                <span class="btnarrow">
+                    <img src="/images/arrow-right.png" alt=""></span>
+            </div>
+        </a>
+        <div class="rankingstar" style="bottom: 5px; line-height: 20px; margin-left: 10px;">
+            <div style="float: left;">
+                <a href="/CompanyProfile/review/@Model.ProfileId" style="margin-left: 5px;" >
+                    @switch (Model.Rate.ToString(CultureInfo.InvariantCulture))
+                    {
+                        case "0":
+                            { 
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>                                    
+                                break;
+                            }
+                        case "1":
+                            { 
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>                                    
+                                break;
+                            }
+                        case "2":
+                            {
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span> 
+                                <span class="graystar"></span>
+                                break;
+                            }
+                        case "3":
+                            { 
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                break;
+                            }
+                        case "4":
+                            {
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                break;
+                            }
+                        case "5":
+                            { 
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                break;
+                            }
+                    }
+                </a>
+                <a href="/CompanyProfile/review/@Model.ProfileId"  class="weburl" id="review">(@Model.TotalReview
+                        @(Model.TotalReview > 1 ? "reviews" : "review"))</a>
+            </div>
+            <br />
+            <div style="float: left;">
+                <a style="color: #fff" title="@Model.CompanyName" href="@Model.FeaturedUrl">
+                    <span class="addr1">@Model.City, @Model.State</span> 
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".activitivedouble a").on("click", function(event) {
+            event.preventDefault();
+            if (!@isAuthenticated) {
+                showDialog("signuppopup", "btnCloseloginPopup");
+
+            } else {
+                window.location.href = $(this).attr("href");
+            }
+            return false;
+        });
+    });
+    
+</script>
+

@@ -1,0 +1,2 @@
+drop table dbo.ClassInstructorScheduler
+drop table dbo.ClassScheduler

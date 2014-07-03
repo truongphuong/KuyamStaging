@@ -1,0 +1,36 @@
+﻿@{
+    List<Kuyam.Database.GettyImage> imagesPending = ViewBag.ImagesPending;
+    int tolal = imagesPending.Count;
+    decimal totalPrice = (decimal)(tolal * 0.99);
+}
+
+    <div class="clear10">
+    </div>
+    <span class="colorblack"><b>@tolal photo(s) in cart ($@totalPrice)</b></span>
+    <div class="clear10">
+    </div>
+    <div class="carousel-gallery">
+        <div id="my_carousel2" class="carousel groupr">
+            <div class=" carousel_btnprev2">
+            </div>
+            <div class=" carousel_btnnext2">
+            </div>
+            <div class="carousel-nav">
+                <div class="carousel-thumbs">
+                    <ul class="carousel-apps group">
+                        @foreach (Kuyam.Database.GettyImage image in imagesPending)
+                        {
+                            <li><a href="@image.UrlPreview">
+                                <input type="hidden" id="@("hdftype_" + @image.Id)" value="pending" />
+                                 <div class="center-thumb"><span></span> 
+                                <img id="@image.Id" src="@image.UrlPreview" title="@image.Title" alt="size: 	@image.PixelWidth x @image.PixelHeight </br>price:	$0.99 </br>tags: @image.Tags"
+                                                            class="image0">
+                                                            </div>
+                            </a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+

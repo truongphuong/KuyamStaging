@@ -1,0 +1,881 @@
+﻿.wrap .content{margin:0px auto;width:961px;z-index:-1;min-height:500px;padding-top:84px;background-color:#b8d3e6;}
+.waiting{position:absolute;top:35px;left:35px;z-index:9999;display:none;}
+.waiting img{display:none;}
+.waitingvideo{position:absolute;top:118px;left:135px;z-index:9999;}
+.waitingvideo img{display:none;}
+.waitingphoto{position:absolute;top:95px;left:165px;z-index:9999;}
+.waitingphoto img{display:none;}
+.inprogress{display:none;left: 2px;position: absolute;top: 3px;}
+.busyIndicator{height: 28px; width: 104px; border: green; background: url('/Images/in_progress.png') no-repeat top left; margin-right: 13px;}
+.busyIndicator .icon-loading{margin: 4px 5px 0 8px;}
+/******Company Setup page******/
+.companysetup{background:#c3d9e7 url(../images/companysetup.jpg) no-repeat left top;height:1335px;padding-top:28px;padding-left:69px;}
+.companysetup h1{margin:0px;padding:0px;color:#1B1464;font-weight:bold;font-size:24px;}
+.companysetup .rcompanytitle{color:#333333;font-weight:bold;font-size:18px;padding-top:10px;}
+.ie7 .companysetup .rcompanytitle{padding-top:10px;min-height:10px;}
+.companysetup .radd{padding-top:25px;}
+.companysetup .rcomemail{padding-top:28px;}
+.companysetup .paypal{padding:16px 0px 13px 0px;}
+.ie .companysetup .paypal{padding:16px 0px 13px 0px;}
+.ie7 .companysetup .rcomemail{padding-top:27px;}
+.companysetup .rweb{padding-top:25px;}
+.ie7 .companysetup .rweb{padding-top:28px;}
+.companysetup .rwebcompanysetup{padding-top:50px;}
+.ie .companysetup .rwebcompanysetup{padding-top:45px;}
+.ie7 .companysetup .rwebcompanysetup{padding-top:52px;}
+.companysetup .rphone{padding-top:19px;}
+.ie7 .companysetup .rphone{padding-top:19px;}
+.companysetup .rperson{padding-top:21px;}
+.ie7 .companysetup .rperson{padding-top:24px;}
+.companysetup .businesshours{padding-top:6px;}
+.companysetup .youtubelink{padding-top:20px;}
+.companysetup .rcompanyoutube{color:#333333;font-weight:400;font-size:16px;padding-top:129px;}
+.companysetup .rcompanylogo{color:#333333;font-weight:bold;font-size:18px;padding-top:115px;}
+.companysetup .rcompanyphoto{color:#333333;font-weight:bold;font-size:18px;padding-top:28px;}
+.companysetup .rcompanyvideo{color:#333333;font-weight:bold;font-size:18px;padding-top:138px;}
+.ie8 .companysetup .createcompanysetup{padding-top:115px;}
+.ie7 .companysetup .rcompanyvideo{padding-top:118px;}
+.companysetup .editradd{padding-top:10px;}
+.ie7 .companysetup .editradd{padding-top:13px;}
+.companysetup .editrcompanylogo{padding-top:103px;}
+.companysetup .editrcompanyphoto{padding-top:26px;}
+.ie7 .companysetup .editrcompanyphoto{padding-top:7px;}
+
+.companysetup .rcompanymaxsize{padding:5px 0px 0px 5px;}
+.companysetup .logoimage{padding:9px 0px 0px 0px;}
+.companysetup .logoimage .logonote{float:left;font-size:14px;font-weight:normal;padding:4px 0px 0px 36px;}
+.companysetup .companysetupform{margin:17px 0px 0px 25px;float:left;width:725px;}
+.companysetup .companysetupbutton{margin:1150px 0px 0px 9px;float:left;width:150px;}
+.companysetup .companysetupbutton .btnsubmit{display:block;width:169px;height:40px;background:url(../images/homepage_icon.png) no-repeat right -856px;text-align:center;font-size:26px;color:#4D4D4D;font-weight:bold;padding-top:5px;}
+.companysetup .companysetupform .formcol1{float:left;width:140px;}
+.companysetup .companysetupform .btnupload{display:block;width:101px;height:27px;background:url(../images/homepage_icon.png) no-repeat right -912px;margin-left:2px;}
+.companysetup .companysetupform .btnuploadgalery{display:block;width:129px;height:50px;background:url(../images/btn_upload_image.png) no-repeat right;margin-left:2px;}
+
+.companysetup .companysetupform .btnuploadvideo{display:block;width:101px;height:27px;background:url(../images/homepage_icon.png) no-repeat -76px -1071px;margin-left:2px;}
+.companysetup .companysetupform .formcol2 .companylogo{width:82px;height:82px;border:solid 1px #333333;float:left;background-image:url("../images/logo_company_image.png");position:relative;}
+.companysetup .companysetupform .formcol2 .photo{width:302px;height:216px;border:solid 1px #333333; background-image:url("../images/photo_company_image.png");}
+.companysetup .companysetupform .formcol2 .video{width:471px;height:289px;border:solid 1px #333333; background-image:url("../images/video_company_image1.png");}
+.companysetup .companysetupform .maxsize{font-size:14px;font-style:italic;color:#333333;font-weight:normal; padding-left: 3px;}
+.companysetup .companysetupform .formcol2{float:left;width:505px;margin-top:9px;}
+.companysetup .companysetupform .formcol2 .photoform{width:143px;float:left;padding-left:40px;}
+.companysetup .companysetupform .formcol2 .photoimg{float:left;width:302px;height: 216px;padding-top:23px;position:relative;}
+.companysetup .companysetupform .formcol2 .photovideo{padding-top:19px;}
+.companysetup .companysetupform .formcol2 .photonote{float:left;font-size:14px;font-weight:normal;padding:16px 0px 0px 20px;color:#333333;line-height:18px;}
+.companysetup .companysetupform .formcol2 .videonote{padding-top:14px;}
+.companysetup .companysetupform .formcol2 .formcol2txt{padding-left:5px;}
+.companysetup .companysetupform .formcol2 .ltxtcompanysetup{float:left;width:6px;display:block;height:29px;background: url(../images/txtbg_company_setup.png) no-repeat left top;}
+.companysetup .companysetupform .formcol2 .txtcompanysetup{float:left;width:100px;display:block;height:28px;background: url(../images/txtbg_company_setup.png) repeat-x 0px -30px;padding-top:1px;}
+.companysetup .companysetupform .formcol2 .txtyoutubelink{width:469px;}
+.companysetup .companysetupform .formcol2 .txtcompanysetup input{border:solid 0px white;height:24px;width:100%;color:#333333;font-size:18px;}
+.companysetup .companysetupform .formcol2 .txtcompanysetup .txtcompanyname{color: #cccccc;}
+.companysetup .companysetupform .formcol2 .txtcompanysetup .txtcomactive{color: #333333;}
+.companysetup .companysetupform .formcol2 .rtxtcompanysetup{float:left;width:6px;display:block;height:29px;background: url(../images/txtbg_company_setup.png) no-repeat left bottom;}
+.companysetup .companysetupform .formcol2 .txtcompanyname{width:468px;}
+.companysetup .companysetupform .formcol2 .txtcompanyemail{width:300px;}
+.companysetup .companysetupform .formcol2 .txtsaddress{width:144px;}
+.companysetup .companysetupform .formcol2 .txtcity{width:201px;}
+.companysetup .companysetupform .formcol2 .txtzip{width:86px;}
+.companysetup .companysetupform .formcol2 .txtweb{width:160px;}
+
+
+.createpaypal{padding:5px 0 0 5px;}
+.createpaypal a{text-decoration:none;font-size:12px;color:#0071BC;}
+.companysetup .companysetupform .formcol2 .editformcol2webtxt .createpaypal a:hover{text-decoration:none;}
+
+.companysetup .companysetupform .formcol2 .formcol2saddress{float:left;margin-right:7px;margin-left:6px;}
+.companysetup .companysetupform .formcol2 .formcol2city{float:left;margin-right:5px;}
+.companysetup .companysetupform .formcol2 .formcol2zip{float:left;}
+.companysetup .companysetupform .formcol2 .formcol2webtxt{float:left;width:214px;margin-left:6px;}
+.companysetup .companysetupform .formcol2 .formcol2webverification{float:left;width:249px;background:url(../images/companysetup_redbox.png) no-repeat left 2px;height:104px;}
+.companysetup .companysetupform .formcol2 .formcol2name,.companysetup .companysetupform .formcol2 .formcol2address{margin-left:6px;}
+.companysetup .companysetupform .formcol2 .formcol2address .divtxtemail{float:left;width:312px;}
+.companysetup .companysetupform .formcol2 .formcol2address .divcompanyemail{font-size:14px;color:#333333;font-style:italic;margin:10px 0px 0px 5px;float:left;width:165px;}
+.companysetup .companysetupform .formcol2 .formcol2webverification .verificatiotext strong{font-weight:bold;font-style:normal;font-size:18px;padding-bottom:2px;}
+.companysetup .companysetupform .formcol2 .formcol2webverification .verificatiotext{float:left;color:#333333;font-style:italic;padding:12px 0px 0px 11px;line-height:18px;font-size:14px;}
+.companysetup .companysetupform .formcol2 .formcol2webverification .verificatiocheck{float:left;width:65px;color:#333333;font-size:18px;padding:25px 0px 0px 13px;}
+.companysetup .companysetupform .formcol2 .btnaddhours{float:left;width:210px;padding-top:5px;}
+.companysetup .companysetupform .formcol2 .addhours{display:block;background:url(../images/homepage_icon.png) no-repeat right -621px;width:95px;height:35px;}
+.companysetup .companysetupform .formcol2 .categories{float:left;width:269px;color:#333333;padding:12px 0px 0px 10px;height:155px;background:url(../images/companysetup_bluebox.png) no-repeat left 5px;}
+.companysetup .companysetupform .formcol2 .categories strong{font-size:18px;font-weight:bold;}
+.companysetup .companysetupform .formcol2 .categories i{font-size:14px;}
+.companysetup .companysetupform .formcol2 .categories .addcategories ul{list-style-type:none;padding:0px;margin:0px;overflow:auto;}
+.companysetup .companysetupform .formcol2 .categories .addcategories ul li{padding:0px 0px 10px 0px;margin:0px;}
+.companysetup .companysetupform .formcol2 .categories .addcategories select{width:191px;}
+.companysetup .companysetupform .formcol2 .categories .titlecategories{padding-bottom:8px;}
+.companysetup .companysetupform .formcol2 .categories .addcategories{float:left;width:195px;}
+.companysetup .companysetupform .formcol2 .categories .divaddselect{float:left;width:50px;padding-top:0px;}
+.companysetup .companysetupform .formcol2 .categories .divaddselect a{color:#0071BC;font-weight:bold;font-size:14px;}
+.companysetup .rcompanytitle .reset{color:#0071BC;font-weight:bold;font-size:17px;text-decoration:none;}
+.uploadhide{position: absolute;left: 2px;top: 10px;width: 101px;height: 27px;-moz-opacity: 0;filter: alpha(opacity: 0);opacity: 0;z-index: 2;cursor:pointer;}
+
+.contactareabox .contactareainput label.ui-checkbox{padding: 2px 0 2px 30px;background:url(../images/homepage_icon.png) no-repeat -288px -977px;cursor:pointer;}
+		
+.contactareabox .contactareainput label.ui-checkbox-state-checked {background-position: -288px -952px;}
+
+.contactareabox .contactareainput label.ui-radio-state-checked {background-position: -288px -952px;}
+
+.companysetup .button-style label {display: inline-block;margin: 3px 0;border: 1px solid #999;padding: 4px;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;background: #434f56;cursor: pointer;}
+
+.companysetup .button-style label.ui-radio-checked,
+.companysetup .button-style label.ui-checkbox-checked {background: #5db0e6;}
+.companysetup .companysetupform .formcol2 .categories .catresult{font-style:italic;font-size:18px;width:250px;overflow-x:auto;height:70px;}
+.companysetup .companysetupform .formcol2 .categories .catresult span{cursor:pointer;}
+.companysetup .companysetupform .formcol2 .categories .catresult .choose{background-color:#c1d82f;}
+.companysetup .companysetupform .formcol2 .addhourspopup{display: none;left: -15px;position: absolute;top: -130px;z-index: 1;}
+#logocontentfile img{
+    height: 82px;
+    width: 82px
+}
+#photocontentfile img{}
+#videocontentfile object{height: 289px; width: 471px;}
+#videocontentfile img{height: 216px; width: 302px;}
+
+
+/******Edit Company setup page******/
+.companysetup .companysetupform .formcol2 .editformcol2webtxt{float:left;margin-left:6px;}
+.companysetup .companysetupform .formcol2 .edittxtweb{width:468px;}
+.companysetup .companysetupform .formcol2 .editaddhours{font-size:18px;color:#333333;padding:2px 5px 0 4px;height:110px;overflow:auto;}
+.companysetup .editbusinesshours{padding-top:20px;}
+.ie7 .companysetup .editbusinesshours{padding-top:22px;}
+.companysetup .companysetupform .formcol2 .editbtnaddhours{float: left;padding-top: 15px;width: 209px;position:relative;}
+.companysetup .companysetupform .formcol2 .editcategories{padding-top:21px;background-position:left 14px;height:155px;}
+.companysetup .editbasicinfo{float:left;width:490px;}
+.companysetup .editdelcompany{float:left;font-size:18px;color:#0071BC;font-weight:bold;padding-top:7px;}
+.companysetup .companysetupform .formcol2 .formcol2name .editcompanyname{font-size:18px;color:#333333; height:24px; padding:1px 0px 4px 2px;}
+.companysetup .editcompanysetupbutton{margin:1145px 0px 0px 7px;float:left;width:150px;}
+.companysetup .editcompanysetupbutton .btnsavechange{display:block;width:199px;height:42px;background:url(../images/homepage_icon.png) no-repeat left -1628px;text-align:center;font-size:26px;color:#4D4D4D;font-weight:bold;padding-top:10px;}
+.companysetup .editcompanysetupbutton .btncancelchange{display:block;width:199px;height:40px;background:url(../images/homepage_icon.png) no-repeat left -1687px;text-align:center;font-size:26px;color:#4D4D4D;font-weight:bold;padding-top:5px;margin-top:2px;}
+.companysetup .companysetupform .formcol2 .addhours{position:relative}
+.companysetup .companysetupform .formcol2 .addhourspopup{position:absolute;left:-10px;top:-130px;z-index:1;display:none;}
+.companysetup .companysetupform .formcol2 .addhourspopup .hourspopup{width:246px;height:133px;display:block;background:url(../images/homepage_icon.png) no-repeat left -1740px;padding:20px 18px 0px 16px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .hourspopup .dayofweek{width:245px;height:25px;border-left:solid 1px #232323;background:url(../images/btnbackground.png) repeat-x left top;}
+.companysetup .companysetupform .formcol2 .addhourspopup .hourspopup .dayofweek a{width:34px;display:block;border-right:solid 1px #232323;float:left;color:white;text-align:center;font-size:12px;height:21px;padding-top:4px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .hourspopup .dayofweek a:hover{background:url(../images/btnbackground.png) repeat-x left -75px;color:#333333;}
+.companysetup .companysetupform .formcol2 .addhourspopup .hourspopup .dayofweek .active{background:url(../images/btnbackground.png) repeat-x left -75px;color:#333333;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto{padding-top:6px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .ltxtcompanysetup{float:left;width:6px;display:block;height:29px;background: url(../images/txtbg_company_setup.png) no-repeat left top;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .txtcompanysetup{float:left;width:100px;display:block;height:28px;background: url(../images/txtbg_company_setup.png) repeat-x 0px -30px;padding-top:1px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .txtcompanysetup input{border:solid 0px white;height:24px;width:100%;color:#333333;font-size:18px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .rtxtcompanysetup{float:left;width:6px;display:block;height:29px;background: url(../images/txtbg_company_setup.png) no-repeat left bottom;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .txtfrom{width:48px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .fromtitle{float:left;width:37px;font-size:14px;padding:7px 0px 0px 1px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .fromto .totitle{float:left;width:17px;font-size:14px;padding:7px 0px 0px 6px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .daily{padding-top:7px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .daily .dailytitle{float:left;font-size:14px;padding:3px 0px 0px 4px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .daily .btndaily{float:right;}
+.companysetup .companysetupform .formcol2 .addhourspopup .daily label.ui-checkbox,
+.companysetup .companysetupform .formcol2 .addhourspopup .daily label.ui-radio{padding:2px 26px 2px 0;background:url(../images/homepage_icon.png) no-repeat right -1233px;cursor:pointer;font:14px/17px Arial, Helvetica, sans-serif;color:#333333;}
+		
+.companysetup .companysetupform .formcol2 .addhourspopup .daily label.ui-checkbox-state-checked{background-position:right -1191px;}
+
+.companysetup .companysetupform .formcol2 .addhourspopup .daily .btndaily .btndailyadd{background:url(../images/btnbackground.png) repeat-x left -50px;width:44px;height:20px;display:block;float:left;border:solid 1px #6e7c3c;text-align:center;color:#333333;font-size:14px;font-weight:bold;padding-top:5px;margin-right:6px;}
+.companysetup .companysetupform .formcol2 .addhourspopup .daily .btndaily .btndailycancel{background:url(../images/btnbackground.png) repeat-x left -25px;width:60px;height:20px;display:block;float:left;border:solid 1px #6e7c3c;text-align:center;color:#333333;font-size:14px;font-weight:bold;padding-top:5px;}
+.companysetup .companysetupform .formcol1 .rcompanyoutube{color:#333333;font-weight:400;font-size:16px;padding-top:146px;}
+.ie8 .companysetup .companysetupform .formcol1 .rcompanyoutube{padding-top:150px;}
+.ie7 .companysetup .companysetupform .formcol1 .rcompanyoutube{padding-top:123px;}
+.deletecompanypopup{font-size:21px;color:#666666;line-height:26px;padding-top:3px;}
+.deletecompanypopup a{color:#0071BC;text-decoration:none;}
+.deletecompanypopup .deltitle{font-weight:bold;padding-left:4px;}
+.deletecompanypopup .delcancel{padding-top:4px;padding-left:4px;}
+.deletecompanypopup .delyes{padding-top:6px;padding-left:4px;}
+.deletecompanypopup .deltxt{padding-top:9px;padding-left:4px;}
+.deletecompanypopup .deltxt input[type="password"]{height:34px;width:225px;}
+.deletecompanypopup .delreason{padding-top:6px;padding-left:4px;}
+.deletecompanypopup .delreasontext{padding-top:6px;}
+.deletecompanypopup .delreasontext .textarea{height:96px;width:475px;}
+.deletecompanypopup .btncancel{display:block;width:289px;height:53px;margin:0 auto;border:0;background:transparent url(../images/homepage_icon.png) no-repeat left -1902px;margin-top:19px;}
+.companysetup .error{color:#ff0000;font-size:12px;font-family:Arial, Helvetica, sans-serif;font-weight:400;height:15px;padding-top:4px;}
+.errordelete{display:none;}
+.default {display:none;}
+.waitingPaypal {  display: none;  left: 50%;  position: fixed; top: 50%; z-index: 9999;}
+
+/******New Company Setup page******/
+.newcompanysetup{background:#c3d9e7 url(../images/companysetup_new.jpg) no-repeat left top;padding-left:61px;height:963px;}
+.newcompanysetup .leftcompanysetupform{float:left;width:175px;font-size:21px;font-family:Arial, Helvetica, sans-serif;font-weight:bold;color:#000000;}
+.newcompanysetup .leftcompanysetupform .companyinfo,
+.newcompanysetup .leftcompanysetupform .companyimages,
+.newcompanysetup .leftcompanysetupform .companyvideo{height:59px;width:175px;}
+.newcompanysetup .leftcompanysetupform .companyactive{height:55px;width:135px;background:url(../images/companysetuptab.png) no-repeat left top;padding:4px 20px 0px 20px;}
+.newcompanysetup .leftcompanysetupform a{color:#0071bc;display:block;height:55px;width:135px;padding:4px 20px 0px 20px;}
+.newcompanysetup .leftcompanysetupform a:hover{color:#0071bc;display:block;background:url(../images/companysetuptab.png) no-repeat left top;color:black;}
+.newcompanysetup .companysetupform .companysetupformtop{background:url(../images/companysetupbg1.png) no-repeat left top;height:9px;width:670px;}
+.newcompanysetup .companysetupform .companysetupformtop1{background:url(../images/companysetupbg1.png) no-repeat left -18px;height:9px;width:670px;}
+.newcompanysetup .companysetupform .companysetupformmid{width:670px;min-height:300px;background:url(../images/companysetupbg2.png) repeat-y left top;}
+.newcompanysetup .companysetupform .companysetupformbot{background:url(../images/companysetupbg1.png) no-repeat left -9px;height:9px;width:670px;}
+.newcompanysetup .companysetupform{margin:0px;}
+.newcompanysetup .companysetupform .formcol1{padding-left:25px;padding-right:10px;}
+.newcompanysetup .companysetupform .formcol2{width:480px;margin-top:3px;}
+.newcompanysetup .usersettingstab{height:51px;padding:0px 0px 0px 4px;}
+.newcompanysetup .usersettingstab .textusersettings{float:left;margin-right:88px;}
+.newcompanysetup .usersettingstab .textusersettings a{font-size:21px;font-weight:600;text-decoration:none;color:#0071BC;}
+.newcompanysetup .usersettingstab .textusersettings a:hover{font-size:21px;font-weight:600;text-decoration:none;}
+.newcompanysetup .usersettingstab .textcompanysettings{float:left;}
+.newcompanysetup .usersettingstab .textcompanysettings a{font-size:21px;font-weight:600;text-decoration:none;color:#0071BC;}
+.newcompanysetup .usersettingstab .textcompanysettings a:hover{font-size:21px;font-weight:600;text-decoration:none;}
+.newcompanysetup .usersettingstab .tabactive{padding-bottom:4px;}
+.newcompanysetup .rcompanytitle{color:#333333;font-weight:bold;font-size:18px;padding-top:4px !important;}
+.newcompanysetup .companysetupform .formcol2 .txtcity{width:202px;}
+.newcompanysetup .companysetupform .formcol2 .editbtnaddhours{float: left;padding-top: 0px;width: 189px;position:relative;}
+.newcompanysetup .comdescription{background:url(../images/textarea_bg.png) no-repeat left top;height: 236px;width: 477px;}
+.newcompanysetup .comdescription textarea{border:solid 0px #b7b7b7;height: 216px;width: 457px;margin:10px;font-size:14px;font-family:Arial, Helvetica, sans-serif;overflow:auto;}
+.newcompanysetup .editcompanysetupbutton{margin:0px;float: right;width: auto;padding:15px 53px 0px 0px;}
+.newcompanysetup .editcompanysetupbutton .btncancelchange{float:left;padding-right:9px;}
+.newcompanysetup .editcompanysetupbutton .btnsavechange{float:left;}
+.newcompanysetup .companysetupform .formcol2 .editaddhours{font-size:14px;}
+.newcompanysetup .resultaddhours{padding-bottom:5px;}
+.newcompanysetup .resultaddhours .dayaddhours{float:left;width:90px;}
+.newcompanysetup .resultaddhours .timeaddhours{float:left;width:89px;}
+.newcompanysetup .phonearea{float:left;width:210px;}
+.newcompanysetup .companysetupform .formcol2 .editcategories{background-position: left top;height: 225px;padding-top: 6px;margin-top:9px;width:260px;}
+.newcompanysetup .companysetupform .formcol2 .formcol2name,.newcompanysetup .companysetupform .formcol2 .formcol2address{margin-left:0px;}
+.newcompanysetup .companysetupform .formcol2 .formcol2saddress{float:left;margin-right:7px;margin-left:0px;}
+.newcompanysetup .companysetupform .formcol2 .editformcol2webtxt{float:left;margin-left:0px;}
+.newcompanysetup .rcompanyaddress{padding-top:4px;}
+.newcompanysetup .editradd{padding-top:6px;}
+.newcompanysetup .rphone{padding-top:10px;}
+.newcompanysetup .rcompanytitle .reset{color: #0071BC;font-size: 14px;font-weight: normal;text-decoration: none;}
+.newcompanysetup .companysetupform .formcol2 .categories .addcategories{padding:2px 2px 0px 0px;}
+.newcompanysetup .companysetupform .formcol2 .categories .divaddselect{padding:7px 0px 0px 5px;}
+.newcompanysetup .companysetupform .formcol2 .categories .divaddselect a{font-size:16px;}
+.newcompanysetup .charactermax{font-size:14px;color:black;font-family:Arial, Helvetica, sans-serif;}
+.newcompanysetup .companysetupform .formcol2 .editaddhours{font-size:14px;color:#333333;padding:2px 0px 0px 4px;height:110px;overflow:auto;height:145px;}
+.newcompanysetup .companysetupform .formcol2 .addhourspopup{top:-142px;}
+.newcompanysetup .companysetupform .formcol2 .categories .catresult{font-style:italic;font-size:18px;width:250px;overflow-x:auto;height:135px;}
+.newcompanysetup .companysetupform .formcol2 .categories .addcategories ul li{padding:0px 0px 3px 0px;}
+.newcompanysetup #boxTags {width: 230px;margin:10px 0px 0px 0px;}
+.newcompanysetup #ulTags {padding: 0;margin: 0;clear:both;}
+.newcompanysetup #ulTags .li_tags {background-color: #d1e1eb;display: inline;float: left;list-style: none;padding: 0 3px 1px 5px;border-radius:3px;font-size:15px;margin:0px 3px 5px 0px;}
+.newcompanysetup #newTagInput {display: inline;float: left;list-style: none;margin: 0 10px 10px 0; padding: 0 2px 2px 0;width: 23px;}
+.newcompanysetup .a_tag {color: #333333;text-decoration: none;font-size: 14px;font-style:normal;}
+.newcompanysetup .a_tag:hover {color: #333333;}
+.newcompanysetup .del {font-size: 14px;text-decoration: none;font-weight: normal;color: #0071bc;position: relative;font-family:Arial, Helvetica, sans-serif;font-style:normal;padding-right:3px;}
+.newcompanysetup .del:hover {}
+.newbtncompanysetup{padding-right:55px;padding-bottom:25px;}
+
+/***Company setup video***/
+.videodescription{color:#333333;font-size:14px;font-family:Arial, Helvetica, sans-serif;padding:10px 20px 27px 29px;}
+.videodescription a{color:#0071bc;text-decoration:none;}
+.removevideo{padding:7px 0px 0px 4px;}
+.removevideo a{text-decoration:none;color:#0071bc;font-size:14px;}
+.removevideo a:hover{text-decoration:none;}
+.companysetup .videoyotubetitle{color:#333333;font-weight:400;font-size:16px;padding:8px 0px 0px 5px;}
+.companysetup .companysetupform .formcol2 .videoyoutubelink .txtyoutubelink{width:460px;}
+.newvideobox{width:471px;position:relative;}
+/*.videoyoutube{margin:37px 0px 14px 0px;}*/
+.videoyoutube{padding: 37px 0 14px;}
+
+/***Company setup image***/
+.newcompanysetup1{height:1630px;}
+.newcompanylogo{color: #333333;font-size: 18px;font-weight: bold;padding-top:3px;}
+.imagelogo {border: 1px solid #333333;float: left;}
+.companylogoupload{padding:4px 0px 16px 0px;height:110px;}
+.companygalery .companygalery1{float:left;width:538px;}
+.companygalery .companygalery1 .photocol1{float:left;width: 128px; padding-left: 25px;padding-right: 10px;color: #333333;font-size: 18px;font-weight: bold;}
+.companygalery .companygalery1 .photocol2{float:left;width:363px;}
+.companygalery .companygalery1 .photocol2 .photonote{font-size:14px;font-style:italic;color:#333333;padding:4px 0px 17px 0px}
+.photodefaulttext{font-size:14px;font-style:italic;font-weight:bold;}
+.companygalery .companygalery2{float:left;width:120px;}
+.companygalery .companygalery2 .imgavailabletext{font-size:14px;font-style:italic;color:#333333;padding:4px 0px 17px 0px;}
+.companygalery .companygalery2 .imgavailable{width:120px;height:75px;background-color:black;}
+.companygalery .companygalery2 .imgavailable img{width:120px;height:75px;}
+.companygalery .companygalery2 .availableviewmore{text-align:right;}
+.companygalery .companygalery2 .availableviewmore a{color:#0071bc;font-size:14px;font-family:Arial, Helvetica, sans-serif;}
+.removephoto{padding:4px 0px 0px 4px;}
+.removephoto a{text-decoration:none;color:#0071bc;font-size:14px;font-weight:normal;}
+.removephoto a:hover{text-decoration:none;}
+.photoimg{position:relative;}
+.photoimg .photo{border:1px solid #333333;}
+.newcompanysetup .companysetupform .newcompanylogo1{padding-left: 25px;padding-right: 10px;float:left;width: 128px;}
+#photocontentfile .preview,
+#photocontentfile2 .preview,
+#photocontentfile3 .preview{height: 216px !important;display:none;}
+
+/******************************* COMPANY SETUP **************************************/
+.companysetupimagebox{
+	border: 1px solid #999999;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 2px 2px 2px;
+    font-size: 14px;
+    margin: 0 auto;
+    padding: 15px;
+    width: 590px;
+	background:#FFF;
+	position:relative;
+}
+.companysetupimagebox .pika-stage img{height: 315px;width:435px;}
+.companysetupimagebox .pika-thumbs li{
+	background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #E5E5E5;
+    cursor: pointer;
+    float: left;
+    height: 63px;
+    list-style-type: none;
+    margin: 0 0 0 4px;
+    overflow: hidden;
+    padding: 0;
+    width: 102px;
+}
+.companysetupimagebox .pika-imgnav a.previous {
+    background: url("../images/prev.png") no-repeat scroll left 45% transparent;
+    border-right: 1px solid #999999;
+    cursor: pointer;
+    height: 83px;
+    left: 5px;
+    top: 346px;
+    width: 16px;
+}
+.companysetupimagebox .pika-imgnav a.next {
+    background: url("../images/next.png") no-repeat scroll right 45% transparent;
+    border-left: 1px solid #999999;
+    cursor: pointer;
+    height: 83px;
+    right: 5px;
+    top: 346px;
+    width: 16px;
+}
+.companysetupimagebox .pika-stage, .pika-textnav {
+    width: 590px;
+}
+.companysetupimagebox .pika-stage {
+    background: none;
+    padding: 0;
+    position: relative;
+    text-align: left;
+}
+.companysetupimagebox .searchbar{margin-bottom:10px;}
+.companysetupimagebox .searchbar #search{width:340px;float:left;height:48px;line-height:48px;border:1px solid #b3b3b3; padding:0 5px;font-size:21px;color:#B3B3B3;}
+/*.companysetupimagebox .pika-stage .caption{display:block !important;}*/
+.companygalery{padding-bottom:10px;}
+.btnarea .btnusersetting .btnuploadimage {
+    width: 340px;
+}
+.btnarea .btnback {
+    margin-right: 182px;
+}
+.companysetupimagebox .pika-textnav{display:none;}
+.companysetupimagebox .pika-stage .caption {
+    background: none;
+    border: none;
+    bottom: 170px;
+    color: #000;
+    font-size: 11px;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    text-align: left;
+	width:115px;
+	font-size:12px;
+}
+.companysetupimagebox .pika-stage .btnaddcart{width:129px;height:41px;margin-bottom:5px;}
+.bluecolor{color:#29ABE2;}
+
+.companysetupimagebox .pika-stage label.ui-checkbox {
+    background: url("../images/homepage_icon.png") no-repeat scroll -288px -977px transparent;
+    cursor: pointer;
+    padding: 2px 0 8px 30px;
+}
+
+.companysetupimagebox .pika-stage label.ui-checkbox-state-checked {
+    background-position: -288px -952px;
+}
+
+.companysetupimagebox .pika-stage .chktext{height:23px;margin-top:5px;}
+.companysetupimagebox .pika-stage .btnremove{display: block;text-align: right;color:#0071BC;margin-top:7px;}
+.companysetupimagebox .pika-thumbs{margin-top:30px;}
+.gallerynumber{margin-top: 325px;position: absolute;z-index: 99;color:#000;font-weight:bold;}
+.totaldue{float:right;color:#000;}
+.btnarea .btnusersetting .btnnext {
+    width: 140px;
+}
+.btnarea .btnback2 {
+    margin-right: 383px;
+}
+.btnarea .btnusersetting .btncheckoutleft {
+    background: url("../images/btncheckout_bg.png") no-repeat scroll left top transparent;
+    display: block;
+    float: left;
+    height: 51px;
+    width: 6px;
+}
+
+.btnarea .btnusersetting .btncheckoutright {
+    background: url("../images/btncheckout_bg.png") no-repeat scroll right top transparent;
+    display: block;
+    float: left;
+    height: 51px;
+    width: 6px;
+}
+.btnarea .btnusersetting .btncheckout {
+    width: 320px !important;
+}
+.btnarea .btnusersetting .btncheckoutcenter {
+    background: url("../images/btncheckout_bg.png") repeat-x scroll right bottom transparent;
+    color: #4D4D4D;
+    display: block;
+    float: left;
+    font-size: 24px;
+    font-weight: 600;
+    height: 41px;
+    padding-top: 10px;
+    text-align: center;
+    width: 100px;
+}
+
+.btnarea .btnback3 {
+    margin-right: 198px;
+}
+
+.wrapperimageupload{position:absolute;z-index:1;right:32px;width:130px;}
+.removelink{display:block;float:right;font-size:12px;margin-top:10px;color:#0071BC;}
+.wrapperimageupload input[type=file]{position:relative;top:-42px;height:42px;letter-spacing:8px;left:-310px;opacity:0;cursor:pointer;}
+.ie .wrapperimageupload input[type=file]{letter-spacing:7px;left:-162px;}
+.ad-controls-invisible{display:none;}
+.colorblack{color:#000;}
+
+.companygalery .companygalery5 {
+    float: left;
+    width: 670px;
+}
+.companygalery .companygalery5 .photocol1 {
+    color: #333333;
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 25px;
+    padding-right: 10px;
+    width: 128px;
+}
+.companygalery .companygalery5 .photocol2 .photonote {
+    color: #333333;
+    font-size: 14px;
+    font-style: italic;
+    padding: 4px 0 17px;
+	width:648px;
+}
+
+.btnarea .btnback5 {
+    margin-right: 10px;
+}
+label#lblhide{display:block;width:140px;color:#000;}
+label#lbldefault{color:#000;}
+.removelink span{color:#000;}
+
+.btnarea .btnusersetting .btnsavechange {
+    width: 190px;
+}
+/******************************* END COMPANY SETUP **************************************/
+
+/******************************* CAROUSEL **************************************/
+
+div.carousel-section 		{ margin-bottom: 20px; margin-top: 15px; }
+ul.carousel-apps li a		{ color: #fff; font: bold 12px verdana,sans-serif; }
+ul.carousel-apps li p 		{ color: #fff; margin-bottom: 5px; font: 11px/16px verdana,sans-serif; text-align: left; line-height: 14px; }
+ul.carousel-apps li div		{ text-align: left; margin-bottom: 5px; }
+ul.carousel-apps li div.app-item-wrapper
+							{ padding: 10px; }
+/*ul.carousel-apps li img 	{ float: left; display: inline; margin-right: 12px; width:90px; height:60px;border: 3px solid #CCCCCC;}
+*/div.carousel-actions 		{ margin: 10px 6px 0 0; color: #666; font-weight: bold; }
+
+
+div.carousel 						{ clear: both; position: relative; background: none repeat scroll 0 0 #E6E6E6;    border: 1px solid #999999; width: 590px !important;	height:80px;}
+ul.carousel-apps					{ padding-top: 2px; padding-left:0px;margin:0px; }
+ul.carousel-apps li 				{ color:#DDDDDD; display:inline; float:left;}
+div.carousel ul li div.image		{ float: left; text-align: center; }
+div.carousel ul li div.info			{ float: left; width: 180px; }
+
+div.data							{ margin-top: 30px; }
+div.data p a						{ padding-top: 10px; }
+div.data fieldset					{ margin: 5px 0; padding: 5px 0; }		
+div.data fieldset legend			{ margin-left: 0px; font-weight: bold; }							
+div.data p label					{ width: 100px; text-align: left; display: inline; color: #ddd; }
+div.data p span						{  }
+
+div.carousel div.arrow				{ background: url(carousel_arrows.png) no-repeat 50% 0;
+	 position: absolute; top: 65px; width: 20px; height: 28px; cursor: pointer; }
+div.carousel div.arrow.left			{ left: 10px; background-position: 0 0; }
+div.carousel div.arrow.right		{ right: 10px; background-position: -20px 0; }
+
+.carousel-gallery .carousel-nav{
+	
+    padding: 5px 0;
+    position: relative;
+    width: 590px;
+	height:80px;
+}
+.carousel-gallery .carousel-nav .carousel-thumbs{
+	height: 80px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: 530px;
+}
+.carousel_btnprev{
+	background: url("../images/prev.png") no-repeat scroll 0 27px transparent;
+    border-right: 1px solid #999999;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    left: 4px;
+    width: 13px;
+	position:absolute;
+	z-index:1;	
+}
+.carousel_btnnext{
+	background: url("../images/next.png") no-repeat scroll 0 27px transparent;
+    border-left: 1px solid #999999;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    position: absolute;
+    right: 0;
+    width: 13px;
+    z-index: 1;
+}
+
+.carousel_btnprev1{
+	background: url("../images/prev.png") no-repeat scroll 0 27px transparent;
+    border-right: 1px solid #999999;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    left: 4px;
+    width: 13px;
+	position:absolute;
+	z-index:1;	
+}
+.carousel_btnnext1{
+	background: url("../images/next.png") no-repeat scroll 0 27px transparent;
+    border-left: 1px solid #999999;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    position: absolute;
+    right: 0;
+    width: 13px;
+    z-index: 1;
+}
+
+.carousel_btnprev2{
+	background: url("../images/prev.png") no-repeat scroll 0 27px transparent;
+    border-right: 1px solid #999999;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    left: 4px;
+    width: 13px;
+	position:absolute;
+	z-index:1;	
+}
+.carousel_btnnext2{
+	background: url("../images/next.png") no-repeat scroll 0 27px transparent;
+    border-left: 1px solid #999999;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    position: absolute;
+    right: 0;
+    width: 13px;
+    z-index: 1;
+}
+
+#carousel_viewimage{margin-bottom:10px;}
+#carousel_viewimage img{max-width:420px; max-height:300px;}
+#carousel_viewimage1{margin-bottom:10px;}
+#carousel_viewimage1 img{max-width:420px; max-height:300px;}
+#carousel_viewimage1 .caption{
+	position: absolute;
+    right: 15px;
+    top: 100px;
+    width: 140px;
+	color:#000;
+	text-align:left;
+}
+.imgtitle{display:block;font-weight:bold;}
+.carousel-nav .carousel-thumbs li a.ad-active img {
+    border: 3px solid #C1D82F;
+}
+.btnpurchasemore{position: absolute;top: 567px;width:165px;height:260px;background-image:url(../images/img_purchase_more.png); margin-left:-7px;}
+.btnpurchasemore a{display:block;height: 99px;margin-top: 160px;width: 165px;}
+/******************************* END CAROUSEL **************************************/
+.deletephotopopup {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 3px solid #C1D82F;
+    display: none;
+    min-height: 190px;
+    position: fixed;
+    width: 430px;
+    z-index: 9999;
+	top:165px !important;
+}
+.deletephotopopup .contentPopup .btnClose {
+    background: url("../images/appointment.png") no-repeat scroll -438px -27px transparent;
+    display: block;
+    height: 16px;
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    width: 15px;
+}
+.deletephotopopup .contentPopup h3 {
+    font: 18px/25px Arial,Helvetica,sans-serif;
+    margin: 0;
+    padding: 0;
+	width:350px;
+}
+
+.deletephotopopup .contentPopup {
+    color: #666666;
+    font: 15px/18px Arial,Helvetica,sans-serif;
+    padding: 12px 19px 15px;
+    position: relative;
+}
+
+.deletephotopopup .ydescript {
+    color: #333333;
+    font-size: 14px;
+    font-style: normal;
+    height: 62px;
+    line-height: 18px;
+    padding: 7px 0 0;
+}
+.deletephotopopup .contentPopup .btndelete {
+    background-image:url(../images/btn_delete.png);
+    border: 0 none;
+    color: #000;
+    display: block;
+    font-size: 18px;
+    height: 44px;
+    text-align: center;
+    width: 136px;
+	line-height:44px;
+	float:left;
+}
+
+.deletephotopopup .contentPopup .btnnevermind {
+    background-image:url(../images/btn_nevermind.png);
+    border: 0 none;
+    color: #000;
+    display: block;
+    font-size: 18px;
+    height: 45px;
+    text-align: center;
+    width: 228px;
+	line-height:45px;
+	float:right;
+}
+.btnuploadimagenocheck{
+	display: block;
+	width: 129px;
+	height: 41px;
+	background: url(../images/btn_addcart_nocheck.png) no-repeat;
+	margin-bottom:10px;
+}
+.btnuploadimage{
+	display: block;
+	width: 129px;
+	height: 41px;
+	background: url(../images/btn_addcart.png) no-repeat;
+	margin-bottom:10px;
+}
+.displaynone{
+	display: none;
+}
+
+.center-thumb {
+    display: table-cell !important;
+    text-align: center !important;
+    vertical-align: middle;
+    width: 90px;
+    height: 60px;
+
+}
+.center-thumb *{
+    vertical-align: middle;
+}
+.center-thumb{
+   display:block;
+}
+.center-thumb span{
+	display: inline-block;
+    height: 100%;
+    width: 1px;
+	height:auto;
+}
+
+ul.carousel-apps li {
+    background: none repeat scroll 0 0 #FFFFFF;
+	border: 3px solid #CCCCCC;
+    color: #DDDDDD;
+    display: inline;
+    float: left;
+    margin-right: 12px;
+    width: 90px;
+	height:60px;
+}
+
+ul.carousel-apps li img {
+    /*border: 3px solid #CCCCCC;*/
+    display: inline;
+    margin-right: 5px;
+    max-height: 60px !important;
+    max-width: 90px !important;
+}
+
+.carousel-nav .carousel-thumbs li.ad-active {
+    border: 3px solid #C1D82F;
+}
+#carousel_viewimage {
+    display: table-cell !important;
+    text-align: center !important;
+    vertical-align: middle;
+    width: 420px;
+    height: 300px;
+
+}
+#carousel_viewimage *{
+    vertical-align: middle;
+}
+#carousel_viewimage{
+   display:block;
+}
+#carousel_viewimage span{
+	display: inline-block;
+    height: 100%;
+    width: 1px;
+	height:auto;
+}
+
+#carousel_viewimage1 {
+    display: table-cell !important;
+    text-align: center !important;
+    vertical-align: middle;
+    width: 420px;
+    height: 300px;
+
+}
+#carousel_viewimage1 *{
+    vertical-align: middle;
+}
+#carousel_viewimage1{
+   display:block;
+}
+#carousel_viewimage1 < span{
+	display: inline-block;
+    height: 100%;
+    width: 1px;
+	height:auto;
+}
+.safari .btnpurchasemore,.chrome .btnpurchasemore {
+   top: 564px
+}
+
+
+/*For check box*/
+
+.checkboxFive {
+	width: 25px;
+	height:25px;
+	position: relative;
+}
+.checkboxFive span {
+	display: block;
+    padding-left: 30px;
+    padding-top: 2px;
+    width: 125px;
+	color:#000;
+}
+.checkboxFive label {
+	cursor: pointer;
+	position: absolute;
+	width: 21px;
+	height: 21px;
+	top: 0;
+  	left: 0;
+	background: #fff;
+	border:1px solid #b7b7b7;
+}
+.checkboxFive label:after {
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 17px;
+	height: 6px;
+	background: transparent;
+	top: 4px;
+	left: 1px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+/**
+ * Create the hover event of the tick
+ */
+.checkboxFive label:hover::after {
+	opacity: 0.5;
+}
+/**
+ * Create the checkbox state for the tick
+ */
+.checkboxFive input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
+
+/*=========================================================*/
+
+.hideProfile {
+	width: 25px;
+	height:25px;
+	position: relative;
+}
+.hideProfile span {
+	display: block;
+    padding-left: 30px;
+    padding-top: 2px;
+    width: 125px;
+	color:#000;
+}
+.hideProfile label {
+	cursor: pointer;
+	position: absolute;
+	width: 21px;
+	height: 21px;
+	top: 0;
+  	left: 0;
+	background: #fff;
+	border:1px solid #b7b7b7;
+}
+.hideProfile label:after {
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 17px;
+	height: 6px;
+	background: transparent;
+	top: 4px;
+	left: 1px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+/**
+ * Create the hover event of the tick
+ */
+.hideProfile label:hover::after {
+	opacity: 0.5;
+}
+/**
+ * Create the checkbox state for the tick
+ */
+.hideProfile input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}

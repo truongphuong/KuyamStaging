@@ -1,0 +1,96 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:addthis="https://www.facebook.com/2008/fbml"
+xmlns:g="https://www.facebook.com/2008/fbml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="Kuyam" name="description" />
+    <meta content="Kuyam" name="keywords" />
+    <title>Kuyam - Master Admin</title>
+    <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" />
+    <link href="@Url.Content("~/Content/masteradmin/css/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/kuyam.css?v=16")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/css/themes/base/jquery.ui.all.css")" />
+    <link type="text/css" href="@Url.Content("~/css/themes/base/jquery.ui.selectmenu.css")" rel="stylesheet" />
+    <link rel="stylesheet" media="all" type="text/css" href="/css/themes/base/jquery-ui-timepicker-addon.css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-1.10.2.custom.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.ui.datepicker.js")"></script>    
+    <script type="text/javascript" src="/Scripts/js/jquery-ui-timepicker-addon.js"></script> 
+    <script language='javascript' src="@Url.Content("~/Scripts/js/detect_timezone.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/masteradmin/js/admin_js.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.nicescroll.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/css_browser_selector.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/purl.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/common.js?v=20")"></script>
+        
+</head>
+<body>
+    <div class="wrap">
+        <div>
+            <div class="fixheaderposition">
+                <div class="header">
+                    <div class="hcontent h73">
+                        <a href="/" class="logo" title="kuyam">
+                            <img alt="Kuyam" src="/images/logo_kuyam.png" /></a>
+                        @if (HttpContext.Current.User.Identity.IsAuthenticated && User.IsInRole("Concierge"))
+                        {
+                            Cust user = MySession.Cust; 
+                            @*<span style="margin-left: 8px; line-height: 16px;" class="nameUser" title="admin">@(User.IsInRole("Admin") ? "admin" : "agent")</span>*@
+                            <ul class="menuHeader">
+                                <li><span style="font: 16px/28px Arial,Helvetica,sans-serif;color: #CCCCCC;margin-left: 12px;text-decoration: none;" title="@Kuyam.Domain.UtilityHelper.TruncateText(user.FirstName, 15)">
+                                        hi, @Kuyam.Domain.UtilityHelper.TruncateText(user.FirstName, 15)</span></li>
+                                <li class="lastchild"><a href="javascript:void(0);" title="logout" id="logout" onclick="logout();">
+                                                          log out</a></li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="content">
+            <div class="whitebackground">
+                <div class="leftadmin">
+                    <h2 class="adminleftmn">
+                        &nbsp;
+                    </h2>
+                    <style type="text/css">
+                        .rightadmin {
+                            border-left: 0px dashed #BDDCF8;
+                            width: auto!important;
+                        }
+                    </style>
+
+                </div>
+                <div class="rightadmin">
+                    @RenderBody()
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="footer" style="text-decoration: none !important;">
+            @Html.Partial("_FooterNew")
+        </div>
+    </div>
+    <div id="popupAlert" class="savechangepopup">
+        <div class="contentpopup">
+            <p class="error" id="alertMessage">
+            </p>
+            <div class="buttons">
+                <button type="button" value="Ok" onclick="closeAlertMessage()" class="btnok">
+                    ok
+                </button>
+            </div>
+        </div>
+    </div>
+    @RenderSection("Scripts", false)
+</body>
+</html>

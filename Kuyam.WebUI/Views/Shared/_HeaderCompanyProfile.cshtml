@@ -1,0 +1,516 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Repository.Infrastructure;
+@using Kuyam.Utility;
+@using Kuyam.WebUI.Extension;
+@using Kuyam.WebUI.Models;
+@using Kuyam.Domain.Seo;
+@using Kuyam.Domain;
+@model ProfileCompaniesModels
+@{
+    ProfileCompany profile = Model.ProfileCompany;
+    List<ServiceCompany> listServiceCompany = Model.ListServiceCompany;
+    List<CompanyMedia> companyMedia = new List<CompanyMedia>();
+    if (profile != null)
+    {
+        companyMedia = profile.CompanyMedias.ToList();
+    }
+    string logoId = string.Empty;
+    string photoId = string.Empty;
+    int videoId = 0;
+    string logopath = string.Empty;
+    string photopath = string.Empty;
+    string videopath = string.Empty;
+    string partnerId = ConfigManager.KULTURA_PARTNER_ID.ToString();
+    string kattalraentryId = string.Empty;
+
+    List<CompanyMedia> lstPhoto = companyMedia.Where(m => m.IsBanner && (m.IsHidden == false || !m.IsHidden.HasValue)).ToList();
+    CompanyMedia video = companyMedia.Where(m => m.IsVideo).FirstOrDefault();
+    if (lstPhoto != null && lstPhoto.Count > 0)
+    {
+        CompanyMedia defaultMedia = lstPhoto.Where(m => m.IsDefault).FirstOrDefault();
+
+        if (defaultMedia == null)
+        {
+            defaultMedia = lstPhoto.FirstOrDefault();
+        }
+        if (defaultMedia.Medium != null)
+        {
+            photoId = defaultMedia.Medium.LocationData;
+            photopath = string.Format("{1}/p/811441/thumbnail/entry_id/{0}/quality/0/type/1/width/330/height/200", defaultMedia.Medium.LocationData, Types.KaturaDoman);
+        }
+    }
+    if (video != null && video.Medium != null)
+    {
+        kattalraentryId = video.Medium.LocationData;
+        videoId = video.Medium.MediaID;
+        videopath = video.Medium.LocationPath;
+    }
+    var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
+}
+
+<script src="@Url.Content("~/Scripts/js/kWidget.getSources.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var companyType = @profile.CompanyTypeID;
+
+    $(document).ready(function () {
+        var kalturaPartnerId = '@partnerId'
+        var kattalraentryId = '@kattalraentryId'
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        var hasVideo = "@videoId";
+
+
+        if (hasVideo == 0) {
+            $(".divphoto").show();
+            $(".divvideo").hide();
+        }
+        if (agentID) {
+            loadSources(kalturaPartnerId, kattalraentryId);
+            $("#formobile").show();
+            $("#forweb").hide();
+        }
+
+        if ($('#checkFavorite').val() == "True") {
+            $('#favarited').show();
+            $('#addfavarites').hide();
+        } else {
+            $('#favarited').hide();
+            $('#addfavarites').show();
+        }
+        /* new height for class .newbusinesshours*/
+        var newbusinesshours = $('.newcompanyschedule .newbusinesshours'),
+            heightNewbusinesshours = newbusinesshours.height(),
+            heightImg = $('.logo-thumbnail img:visible').height();
+        if (heightImg == null) {
+            heightImg = 0;
+        }
+        var newHeight = heightNewbusinesshours + heightImg;
+        newbusinesshours.height(newHeight);
+
+        $('.btnGetTheOffer1').click(function (e) {
+            var pTop=($(window).height() - $('#gettheoffer').height())/2;
+            var pLeft=($(window).width() - $('#gettheoffer').width())/2;
+            $('#gettheoffer').css({top: pTop, left: pLeft});
+            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            var className = $(e.target).attr('class');
+            var target = e.target;
+
+            var returnUrl = $(e.target).attr("href");
+
+            if (typeof returnUrl != 'undefined' && returnUrl != '') {
+                redirectUrl = returnUrl;
+            } else {
+                redirectUrl = "";
+            }
+
+            if (!isLogin) {
+                $('.loginError').hide();
+                $('#loginpopup').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            $("#gettheoffer").html("");
+            $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+this.id + "&nocache=" + getunixtime());
+            var id = "#" + $(this).attr("for");
+            $('#gettheoffer').appendTo(id);
+            $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
+            $('#gettheoffer').css('z-index', '1000');
+            $('#gettheoffer').fadeIn(200);
+            return false;
+        });
+    });
+
+    function addfavarites() {
+        if ('@(Request.IsAuthenticated?"1":"0")' == '0') {
+            showDialog('signuppopup', 'btnCloseloginPopup');
+            return;
+        }
+        var valu2 = $('#profileid').val();
+        var searchParameters = { profileid: valu2 };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/CompanyProfile/AddToFavorite/'
+            })
+            .success(function (result) {
+                $('#favarited').show();
+                $('#addfavarites').hide();
+                reloadFavorites();
+            })
+
+            .error(function (error) {
+
+                alert('error');
+            });
+    }
+
+    function favarited() {
+        if ('@(Request.IsAuthenticated?"1":"0")' == '0') {
+            showDialog('signuppopup', 'btnCloseloginPopup');
+            return;
+        }
+        var valu2 = $('#profileid').val();
+        var searchParameters = { profileid: valu2 };
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/CompanyProfile/RemoveFromFavorite/'
+                })
+                .success(function (result) {
+                    $('#favarited').hide();
+                    $('#addfavarites').show();
+                    var href = $('#favorite a[href="/CompanyProfile/index/' + valu2 + '"]');
+                    if (href && href.parent()) {
+                        $(href.parent()).hide();
+                    }
+                })
+                .error(function (error) {
+                    $('#favarited').hide();
+                    $('#addfavarites').show();
+                    reloadFavorites();
+                });
+    }
+
+
+    function loadSources(partnerId, entryId) {
+
+        kWidget.getSources({
+            'partnerId': partnerId, 'entryId': entryId,
+            'callback': function (data) {
+                for (var i in data['sources']) {
+                    var source = data['sources'][i];
+                    //alert(source['src']);
+                    //alert(source['data-flavorid']);
+                    if (source['data-flavorid'] == 'iPad') {
+                        $("#formobile").append("<video height=\"188\" width=\"280\" controls=\"controls\"><source src=\"" + source['src'] + "\" type=\"video/mp4\" /></video>");
+                        return;
+                    }
+                }
+
+            }
+        })
+    }
+
+    function reloadFavorites() {
+        commonGetAjax("CompanyProfile", "GetFavorite", "", setFavoritesSuccess, setError);
+    }
+
+    function setFavoritesSuccess(result) {
+        var sthtml = "";
+        for (var i = 0; i < result.length; i++) {
+            sthtml += '<li><a href="' + result[i].Slug + '" title="' + result[i].Name + '">' + truncateText(result[i].Name, 14) + '</a></li>';
+        }
+        $("#reloaddivfavorite #favorite").html(sthtml);
+    }
+
+    function truncateText(input, length) {
+        if (input.length <= length)
+            return input.toLowerCase();
+        return input.substring(0, length).toLowerCase() + "...";
+    }
+</script>
+<input type="hidden" id="profileid" value='@Model.ProfileId' />
+<input type="hidden" id="checkFavorite" value='@Model.Favorite' />
+<input type="hidden" id="hdfcompanyname" value='@profile.Name' />
+<input type="hidden" id="hdfCurrentDate" value='' />
+<input type="hidden" id="hdfEmployeeName" value='' />
+<input type="hidden" id="hdfCompanytype" value='@profile.CompanyTypeID' />
+<input type="hidden" id="hdfPolicy" value='@profile.CancelPolicy' />
+<input type="hidden" id="hdfCancelHour" value='@profile.CancelHour' />
+<input type="hidden" id="hdfCancelPercent" value='@profile.CancelRefundPercent' />
+@*<input type="hidden" id="isschedule" value="@(!DAL.isViewAvailability(profile.ProfileID))" />*@
+<div class="profileschedule">
+    <div class="profile">
+        <div class="profileschedulerow">
+            <div class="divbacktosearch">
+                <h2 class="texttitle">
+                    @profile.Name
+                </h2>
+
+            </div>
+        </div>
+        <div class="clear6">
+        </div>
+        <div class="profileschedulerow">
+            <div class="profileschedulecol1">
+                @{
+                    int totalReview = 0;
+                    double valueRanting = 0;
+                    double agvValue = 0;
+                    if (profile.ServiceCompanies != null && profile.ServiceCompanies.Count > 0)
+                    {
+                        foreach (ServiceCompany item in profile.ServiceCompanies)
+                        {
+                            totalReview += item.Ratings.Count;
+                            valueRanting += item.Ratings.Sum(m => m.RatingValue).Value;
+                        }
+                    }
+                    if (totalReview > 0)
+                    {
+                        agvValue = Math.Round(valueRanting / totalReview);
+                    }
+
+                    Html.RenderPartial("_ProfileCompanyRating", new ProfileCompanyRating(profile, agvValue, totalReview, Model.IsBookDirect));
+                }
+
+                <div class="clear6">
+                </div>
+                @Html.Raw(string.Format("{0}. <br/> {1}, {2} {3}", profile.Street1, profile.City, profile.State, profile.Zip))
+                (<a href="@(Model.IsBookDirect ? "description" : Url.RouteUrl("Availability", new { seName = profile.GetSeName(Model.ProfileId) }) + "/description")" class="weburl" title="map">map</a>)
+            </div>
+
+            <div class="profileschedulecol2">
+                <div>
+                    <a href="javascript:favarited();" class="favorites" id="favarited" title="favorite">favorite</a>
+                    <a href="javascript:addfavarites();" class="addfavarites" id="addfavarites" title="add to favorites">add to favorites</a>
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="companycontactdetail">
+                    @UtilityHelper.FormatPhone(@profile.Phone)
+                    <br />
+                    <a href="@Kuyam.Domain.UtilityHelper.UrlFormat(@profile.Url)" target="_blank" class="weburl" title="@profile.Url">website</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="clear12">
+        </div>
+        <div class="profileschedulerow">
+            <div class="profileschedulecol1">
+                <div class="businesshours newbusinesshours">
+                    <div class="bstitle">
+                        business hours
+                    </div>
+                    <div class="clear5">
+                    </div>
+
+                    @{string dayOfWeek = string.Empty; string fromDate = string.Empty;}
+                    @foreach (var item in profile.CompanyHours)
+                    {
+                        {
+                            dayOfWeek = @item.DayOfWeek.ToString();
+                        }
+
+                        if (dayOfWeek.Length > 1)
+                        {
+                            string start = ((DayOfWeek)Int32.Parse(dayOfWeek.Substring(0, 1))).ToString().ToLower().Substring(0, 3);
+                            string end = ((DayOfWeek)Int32.Parse(dayOfWeek.Substring(dayOfWeek.Length - 1, 1))).ToString().ToLower().Substring(0, 3);
+                            fromDate = string.Format("{0}-{1}", start, end);
+                        }
+                        else
+                        {
+                            fromDate = ((DayOfWeek)item.DayOfWeek).ToString().ToLower().Substring(0, 3);
+                        }
+
+                        <div class="bsdate">@fromDate</div>
+                        <div class="bshour">
+                            <div class="bshourdetail1">@string.Format("{0:t}", new DateTime().Add(item.FromHour)).Replace(" ", string.Empty).ToLower() - </div>
+                            <div class="bshourdetail2">@string.Format("{0:t}", new DateTime().Add(item.ToHour)).Replace(" ", string.Empty).ToLower()</div>
+                        </div>
+                    }
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="profileschedulecol2">
+                <div class="businesshours">
+                    <div class="listcategories">
+                        <div>
+                            <div class="clear3"></div>
+                            <div>
+                                <a title="PayPal, pay in person" class="iconPaypal" href="#">
+                                    @if (profile.PaymentMethod.HasValue && profile.PaymentMethod.Value == 1)
+                                    {
+                                        <span>PayPal, pay in person</span>
+                                    }
+                                    else
+                                    {
+                                        <text>PayPal</text>
+                                    }
+                                </a>
+                            </div>
+                            <div class="clear"></div>
+                            <div>
+                                @if (profile.CancelHour > 0)
+                                {
+                                    string notice = profile.CancelHour + "hr notice";
+                                    <a title="@(profile.CancelHour)hr notice" class="noticehr" href="#">@notice</a>
+                                }
+                                else
+                                {
+                                    <a title="anytime" class="noticehr" href="#">anytime</a>
+                                }
+                            </div>
+
+                            @if (profile.CompanyEvents.Any(x => x.Event.StartDate.Value.AddDays(-3) <= pstNowTime && x.Event.EndDate >= pstNowTime.AddDays(-1)))
+                            {
+                                var companyEvent = profile.CompanyEvents.Where(x => x.Event.StartDate.Value.AddDays(-3) <= pstNowTime && x.Event.EndDate >= pstNowTime.AddDays(-1)).First();
+                                if (companyEvent.CompanyServiceEvents.Any())
+                                {
+                                    <div class="btnGetTheOffer1" id="@companyEvent.CompanyEventID">
+                                        <img style="cursor:pointer" src="../images/GetTheOffer.png?v=1" />
+                                    </div>
+                                }
+
+                            }
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear10">
+        </div>
+        <div class="profileschedulerowbottom">
+            <div class="profileschedulecol1">
+                <div class="businesshours">
+                    @{
+                        string directUrl = "https://maps.google.com/maps?daddr=" + string.Format("{0} {1}, {2} {3}", profile.Street1, profile.City, profile.State, profile.Zip);
+                        directUrl = directUrl + "&hl=en";
+                        directUrl = directUrl + "&sll=" + profile.Latitude + "," + profile.Longitude;
+                        directUrl = directUrl + "&sspn=0.000000,0.000000&mra=ls&t=m&z=16&iwloc=ddw1";
+
+                        <a class="directions" target="_blank" title="directions" href="@directUrl">directions</a>
+                    }
+                </div>
+            </div>
+            <div class="profileschedulecol2">
+                <a href="Package" title="package offers" class="packageoffer">package offers</a>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+
+    <div class="profilemap">
+        <a href="@(Url.RouteUrl("SearchPage", new { seName = profile.GetSeName(Model.CategoryId,"category")}))" class="backtosearchavailability" title="back to search results" style="@(Model.IsBookDirect?"display:none":"")">
+            back to search results
+        </a>
+        @if (profile.IsEvent.HasValue && profile.IsEvent.Value)
+        {
+            <div class="logo-thumbnail" style="display:block">
+                <a href="http://beautify-la.com/" target="_blank"><img alt="thumbnail logo" src="../images/thumbnail-logo.jpg" /></a>
+            </div>
+        }
+        <div class="clear4">
+        </div>
+
+
+        <div class="gmap">
+            <div class="profileimage">
+                @*style="width:280px;"*@
+
+                @*style="width:280px;height:188px;"*@
+                @if (!string.IsNullOrEmpty(photopath))
+                {
+                    <div class="divphoto" style="background-image:url(@photopath);"></div>
+                    @*<img alt="@Kuyam.Domain.UtilityHelper.TruncateText(@profile.Name, 45)" src="@photopath" />*@
+                }
+                else
+                {
+                    <div class="divphoto" style="background-image:url(/images/photo_company_image.png);"></div>
+                    @*<img src="/images/photo_company_image.png" title="no photo" alt="no photo" />*@
+                }
+
+                <div class="divvideo">
+                    <div id="formobile" class="displaynone">
+                    </div>
+                    <div id="forweb">
+                        @Html.Raw(KalturaHelper.GetEmbedVideothumbnail(kattalraentryId, videoId, 200, 330, UtiHelper.UseSsl))
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="profilemntab">
+    <div class="avaitab">
+        <a href="@(Model.IsBookDirect ? "availability" : Url.RouteUrl("Availability", new { seName = profile.GetSeName(Model.ProfileId) }) )" title="availability" @((!Request.RawUrl.TrimStart('/').ToLower().Contains("/") || Request.RawUrl.ToLower().Contains("availability")) ? "class=tabactive" : "")>
+            <span class="profileltab">
+            </span><span class="profilectab">appointment </span><span class="profilertab"></span>
+        </a>
+    </div>
+    @if (profile.IsClass.HasValue && profile.IsClass.Value)
+    {
+        <div class="avaitab" style="display:none">
+            <a href="@Url.RouteUrl("Class", new { seName = profile.GetSeName(Model.ProfileId) })" title="class" @((!Request.RawUrl.TrimStart('/').ToLower().Contains("/") || Request.RawUrl.ToLower().Contains("class")) ? "class=tabactive" : "")>
+                <span class="profileltab">
+                </span><span class="profilectab">class</span><span class="profilertab"></span>
+            </a>
+        </div>
+    }
+    <div class="desctab">
+        <a href="@(Model.IsBookDirect ? "description" : Url.RouteUrl("description", new { seName = profile.GetSeName(Model.ProfileId) }))" title="info + map" @(Request.RawUrl.ToLower().Contains("description") ? "class=tabactive" : "")>
+            <span class="profileltab"></span><span class="profilectab">info + map</span><span class="profilertab"></span>
+        </a>
+    </div>
+    <div class="phototab">
+        <a href="@(Model.IsBookDirect ? "photo" : Url.RouteUrl("photo", new { seName = profile.GetSeName(Model.ProfileId) }))" title="photos" @(Request.RawUrl.ToLower().Contains("photo") ? "class=tabactive" : "")>
+            <span class="profileltab"></span><span class="profilectab">photos</span><span class="profilertab"></span>
+        </a>
+    </div>
+    <div class="userreviewtab">
+        <a href="@(Model.IsBookDirect ? "review" : Url.RouteUrl("review", new { seName = profile.GetSeName(Model.ProfileId) }))" title="reviews" @(Request.RawUrl.ToLower().Contains("review") ? "class=tabactive" : "")>
+            <span class="profileltab">
+            </span><span class="profilectab">reviews</span><span class="profilertab"></span>
+        </a>
+    </div>
+    <div class="pkgtab">
+        <a href="@(Model.IsBookDirect ? "package" : Url.RouteUrl("package", new { seName = profile.GetSeName(Model.ProfileId) }))" title="packages" @(Request.RawUrl.ToLower().Contains("package") ? "class=tabactive" : "")>
+            <span class="profileltab">
+            </span><span class="profilectab">packages</span><span class="profilertab"></span>
+        </a>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="gettheoffer" class="gettheofferpopup">
+</div>
+
+<div id="gettheofferterms" class="gettheoffertermspopup">
+    <div class="contentPopup">
+        <h3>terms of use</h3>
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="gettheoffertermscontent">
+            <p>Last update: September 9, 2012</p>
+            <h4>User Agreement:</h4>
+            <p>
+                This User Agreement (the “Agreement”) and the policies referred to herein contain the
+                complete terms and conditions that apply to your use of the appointment services (the
+                “Services”) being offered at the URL: <a href="http://www.kuyam.com" title="">http://www.kuyam.com</a> and all affiliated web sites
+                owned and operated solely by Kuyam (collectively, the “Website”). As used in this
+                Agreement, “Kuyam” refers to Kuyam Companies, Inc. and any of its subsidiaries, and
+                “User” or “you” refers to you. USE OF THE SERVICES AND THE WEBSITE
+                CONSTITUTES KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS
+                USER AGREEMENT, KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS,
+                AND KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS, AND KUYAM’S
+                TERMS AND CONDITIONS.
+            </p>
+            <p>
+                Kuyam may modify this Agreement’s terms and conditions at any time without notice.
+                Continued use of the Services and the Kuyam Website after a change in this
+                Agreement, a change in the Privacy policy, a change in the Services Listings, or after
+                implementation of any other new policy constitutes acceptance of such change or
+                policy.
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

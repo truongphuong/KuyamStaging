@@ -1,0 +1,872 @@
+﻿@model CompanySetupModel
+@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@{
+    ViewBag.Title = "Company Setup";
+    Layout = "~/Views/Shared/_KuyamLayoutCompanySetup.cshtml";
+}
+<script type="text/javascript">
+
+    $(function () {
+
+
+        //Add categories
+        $('#addcategories').click(function () {
+            var textVal = $("span.ui-selectmenu-status").text(); //.split(' ').join('');
+
+            // user apply new tag
+            var isExist = jQuery.inArray(textVal.split(' ').join(''), arrayTags);
+
+            if (isExist == -1) {
+                // insert new tag (visible to user)
+                $(insertTag(textVal)).insertBefore("#newTagInput");
+
+                // insert new tag to js array
+                arrayTags[index] = textVal.split(' ').join('');
+                index++;
+            }
+        });
+        //End categories
+
+        $('.catresult span').click(function () {
+            if ($(this).hasClass("choose")) {
+                $(this).removeClass("choose");
+            }
+            else {
+                $(this).addClass('choose');
+            }
+        });
+
+        $('select#categorycompanysetup').selectmenu();
+        $('#call').checkBox({ addVisualElement: false });
+        $('#mail').checkBox({ addVisualElement: false });
+        $("#companyphone").mask("(999) 999-9999");
+        $('.photoimg a').lightBox({
+            fixedNavigation: true,
+            captionText: false
+        });       
+
+        var streestcompanyname = $('#streestcompanyname').val();
+        if (streestcompanyname == "") {
+            $('#streestcompanyname').hide();
+            $('#deffirstline').show();
+        } else {
+            $('#streestcompanyname').show();
+            $('#deffirstline').hide();
+        }
+
+        $('#deffirstline').focus(function () {
+            $('#deffirstline').hide();
+            $('#streestcompanyname').show();
+            $('#streestcompanyname').css('color', '#333333');
+            $('#streestcompanyname').focus();
+        });
+        $('#streestcompanyname').blur(function () {
+            if ($('#streestcompanyname').val() == '') {
+                $('#deffirstline').show();
+                $('#deffirstline').css('color', '#cccccc');
+                $('#streestcompanyname').hide();
+            }
+        });
+
+        var secondline = $('#secondline').val();
+        if (secondline == "") {
+            $('#secondline').hide();
+            $('#defsecondline').show();
+        } else {
+            $('#secondline').show();
+            $('#defsecondline').hide();
+        }
+        $('#defsecondline').focus(function () {
+            $('#defsecondline').hide();
+            $('#secondline').show();
+            $('#secondline').css('color', '#333333');
+            $('#secondline').focus();
+        });
+        $('#secondline').blur(function () {
+            if ($('#secondline').val() == '') {
+                $('#defsecondline').show();
+                $('#defsecondline').css('color', '#cccccc');
+                $('#secondline').hide();
+            }
+        });
+
+        var city = $('#city').val();
+        if (city == "") {
+            $('#city').hide();
+            $('#defcity').show();
+        } else {
+            $('#city').show();
+            $('#defcity').hide();
+        }
+
+        $('#defcity').focus(function () {
+            $('#defcity').hide();
+            $('#city').show();
+            $('#city').css('color', '#333333');
+            $('#city').focus();
+        });
+        $('#city').blur(function () {
+            if ($('#city').val() == '') {
+                $('#defcity').show();
+                $('#defcity').css('color', '#cccccc');
+                $('#city').hide();
+            }
+        });
+
+        var zipcode = $('#zipcode').val();
+        if (zipcode == "") {
+            $('#zipcode').hide();
+            $('#defzipcode').show();
+        } else {
+            $('#zipcode').show();
+            $('#defzipcode').hide();
+        }
+
+        $('#defzipcode').focus(function () {
+            $('#defzipcode').hide();
+            $('#zipcode').show();
+            $('#zipcode').css('color', '#333333');
+            $('#zipcode').focus();
+        });
+
+        $('#zipcode').blur(function () {
+            if ($('#zipcode').val() == '') {
+                $('#defzipcode').show();
+                $('#defzipcode').css('color', '#cccccc');
+                $('#zipcode').hide();
+            }
+        });
+
+        //createtopscroll(0, $('.footer').position().top - $('.header').height());
+
+        $('#btnsubmit').click(function () {            
+            if (validationdata()) {
+                getCategory();
+                if (twicePush == 0) {
+                    $('#companysetup').submit();
+                    twicePush = 1;
+                }
+            } else {
+                window.scrollTo(0, 0);
+                return false;
+            }
+        });
+    });
+   
+    function fadehours() {
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        if (agentID) {
+            $('#hourfrom, #hourto').scroller({
+                preset: 'time',
+                theme: 'jqm',
+                display: 'modal',
+                mode: 'scroller',
+                onClose: function () {
+                    if (checkhoursvalid(day)) {
+                        $('#btndailyadd').css("color", "#333333");
+                    }
+                    else {
+                        $('#btndailyadd').css("color", "#a6a6a6");
+                    }
+                }
+            });
+
+        } else {
+
+            $('#hourfrom').timepicker({
+                onClose: function (dateText, inst) {
+                    if (checkhoursvalid(day)) {
+                        $('#btndailyadd').css("color", "#333333");
+                    }
+                    else {
+                        $('#btndailyadd').css("color", "#a6a6a6");
+                    }
+                }
+            });
+
+            $('#hourto').timepicker({
+                onClose: function (dateText, inst) {
+                    if (checkhoursvalid(day)) {
+                        $('#btndailyadd').css("color", "#333333");
+                    }
+                    else {
+                        $('#btndailyadd').css("color", "#a6a6a6");
+                    }
+                }
+            });
+        }
+
+        $('#addhourspopup').fadeToggle(400);
+    };
+
+    function getCategory() {
+        var totalchoose = $(".catresult span").length;
+        var value = '';
+        var name = '';
+        for (i = 0; i < totalchoose; i++) {
+            if (value != '' && i != totalchoose) { value += ','; name += ','; }
+            value += $(".catresult span").eq(i).attr("id");
+            name += $(".catresult span").eq(i).html();
+        }
+        $("#hdcategoryname").val(name);
+        $("#hdcategory").val(value);
+        getMedia();
+        getHours();
+    }
+
+    function getMedia() {
+        var logoid = $("#logocontentfile #hdmediaid").val();
+        var photoid = $("#photocontentfile #hdmediaid").val();
+        var videoid = $("#videocontentfile #hdmediaid").val();
+        var logdata = $("#logocontentfile #hdmediadata").val();
+        var photodata = $("#photocontentfile #hdmediadata").val();
+        var videodata = $("#videocontentfile #hdmediadata").val();
+
+        if (typeof logoid != "undefined")
+            $("#logoid").val(logoid);
+        if (typeof photoid != "undefined")
+            $("#photoid").val(photoid);
+        if (typeof videoid != "undefined")
+            $("#videoid").val(videoid);
+        $("#logodata").val(logdata);
+        $("#photodata").val(photodata);
+        $("#videodata").val(videodata);
+    }
+
+    function getHours() {
+        var totalchoose = $("#editaddhours span").length;
+        var value = '';
+        for (i = 0; i < totalchoose; i++) {
+            if (value != '' && i != totalchoose) { value += '|'; }
+            var tmp = $.trim($("#editaddhours span").eq(i).attr("id"));
+            value += tmp;
+        }
+        $("#hdhour").val(value);
+    }
+
+    function validationdata() {
+
+        var isValid = true;
+        isValid = $('#companysetup').validate().element($('#companyname'))
+        isValid = $('#companysetup').validate().element($('#streestcompanyname')) ? isValid : false;
+        isValid = $('#companysetup').validate().element($('#city')) ? isValid : false;
+        isValid = $('#companysetup').validate().element($('#zipcode')) ? isValid : false;
+        isValid = ($('#companysetup').validate().element($('#companyemail'))) ? isValid : false;
+        isValid = ($('#companysetup').validate().element($('#companyphone'))) ? isValid : false;
+        return isValid;
+    }
+
+    function createAccount() {
+        var line1 = $('#streestcompanyname').val();
+        var city = $('#cityid').val().split(',')[0];
+        var state = $('#cityid').val().split(',')[1];
+        var postalCode = $('#zipcode').val();
+        var emailAddress = $('#companyemail').val();
+        var homePhoneNumber = $('#companyphone').val();
+        var param = "line1=" + line1 + "&city=" + city + "&state=" + state + "&postalCode=" + postalCode + "&emailAddress=" + emailAddress + "&homePhoneNumber=" + homePhoneNumber;
+        $('#imgLoaderListDetail').show();
+        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+        commonPostAjax("Company", "CreateAccountPaypal", param, sendcallbacksucess, setError);
+    }
+
+    function sendcallbacksucess(result) {
+        window.open(result);
+        //window.location = result;
+        $('#imgLoaderListDetail').hide();
+        $('#lightBox').css('opacity', '0.6').fadeOut(200);
+        return false;
+    }  
+        
+</script>
+<div class="companysetup">
+    <h1>
+        to get started, fill out your company's basic information</h1>
+    <div class="companysetupform">
+        <div class="formcol1">
+            <div class="rcompanytitle rcom">
+                company name</div>
+            <div class="clear6">
+            </div>
+            <div class="rcompanytitle radd">
+                address</div>
+            <div class="clear50">
+            </div>
+            <div class="rcompanytitle rcomemail">
+                company e-mail</div>
+            <div class="clear">
+            </div>
+            <div class="rcompanytitle rcomemail">paypal email</div>
+            <div class="rcompanytitle rwebcompanysetup">
+                website</div>
+            <div class="clear8">
+            </div>
+            <div class="rcompanytitle rphone">
+                phone #</div>
+            <div class="clear6">
+            </div>
+            <div class="rcompanytitle rperson">
+                contact person</div>
+            <div class="clear16">
+            </div>
+            <div class="rcompanytitle businesshours">
+                business<br />
+                hours
+                <div class="clear3">
+                </div>
+                <div>
+                    <a title="reset" class="reset" id="btnreset">reset</a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="rcompanylogo createcompanysetup">
+                company<br />
+                logo</div>
+            <div class="clear">
+            </div>
+            <div class="rcompanytitle relative">
+                <form id="fileuploadlogo" action="/Upload/LogoUploadHandler.ashx" method="POST" enctype="multipart/form-data">
+                <div class="row fileupload-buttonbar">
+                    <div class="span7">
+                        <span class="btnupload fileinput-button">
+                            <input type="file" name="files[]" onchange="$('#logocontentfile').html('')" />
+                        </span>
+                        <div class="clear">
+                        </div>
+                        <span class="maxsize">max size 1mb</span>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="rcompanyphoto">
+                company<br />
+                photo</div>
+            <div class="clear">
+            </div>
+            <div class="rcompanytitle relative">
+                <form id="fileuploadphoto" action="/Upload/PhotoUploadHandler.ashx" method="POST"
+                enctype="multipart/form-data">
+                <div class="row fileupload-buttonbar">
+                    <div class="span7">
+                        <span class="btnupload fileinput-button">
+                            <input type="file" name="files[]" onchange="$('#photocontentfile').html('')" />
+                        </span>
+                        <div class="clear">
+                        </div>
+                        <span class="maxsize">max size 1mb</span>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="rcompanyvideo">
+                company<br />
+                video</div>
+            <div class="clear">
+            </div>
+            <div class="rcompanytitle relative">
+                <form id="fileuploadvideo" action="/Upload/VideoUploadHandler.ashx" method="POST"
+                enctype="multipart/form-data">
+                <div class="row fileupload-buttonbar">
+                    <div class="span7">
+                        <span class="btnuploadvideo fileinput-button">
+                            <input type="file" name="files[]" onchange="$('#photovideocontentfile').html('')" />
+                        </span>
+                        <div class="clear">
+                        </div>
+                        <span class="maxsize">max size 100mb</span>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="rcompanyoutube">
+                or youtube link:</div>
+            <div class="clear">
+            </div>
+        </div>
+        @using (Html.BeginForm("CompanySetup", "company", FormMethod.Post, new { id = "companysetup" }))
+        {
+            <div class="formcol2">
+                <div class="formcol2name">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtcompanyname">
+                        @Html.TextBoxFor(m => m.Name, new { @id = "companyname" })
+                    </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="error">
+                        @Html.ValidationMessageFor(m => m.Name)&nbsp;
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="formcol2address">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtcompanyname">
+                        <input type="text" value="first line for address" id="deffirstline" class="txtcompanyname default" />
+                        @Html.TextBoxFor(m => m.Street1, new { @class = "txtcompanyname", @id = "streestcompanyname" })
+                    </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="error">
+                        @Html.ValidationMessageFor(m => m.Street1)&nbsp;
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="formcol2saddress">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtsaddress">
+                        <input type="text" value="second line" id="defsecondline" class="txtcompanyname default" />
+                        @Html.TextBoxFor(m => m.Street2, new { @class = "txtcompanyname", @id = "secondline" })
+                    </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                </div>
+                <div class="formcol2city">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtcity">
+                        <input type="text" value="city, state" id="defcity" class="txtcompanyname default" />
+                        @Html.TextBoxFor(m => m.City, new { @class = "txtcompanyname", @id = "city" })
+                    </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="error">
+                        @Html.ValidationMessageFor(m => m.City)&nbsp;
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="formcol2zip">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtzip">
+                        <input type="text" value="zip code" id="defzipcode" class="txtcompanyname default" />
+                        @Html.TextBoxFor(m => m.Zip, new { @class = "txtcompanyname", @id = "zipcode" })
+                    </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="error">
+                        @Html.ValidationMessageFor(m => m.Zip)&nbsp;
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="formcol2address">
+                    <div class="divtxtemail">
+                        <div class="ltxtcompanysetup">
+                        </div>
+                        <div class="txtcompanysetup txtcompanyemail">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "txtcompanyemail", @id = "companyemail" })
+                        </div>
+                        <div class="rtxtcompanysetup">
+                        </div>
+                    </div>
+                    <div class="divcompanyemail">
+                        (for appointment updates)</div>
+                    <div class="clear">
+                    </div>
+                    <div class="error">
+                        @Html.ValidationMessageFor(m => m.Email)&nbsp;
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="formcol2name">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtcompanyname">                        
+                        @Html.TextBoxFor(m => m.PaymentOptions, new {@id = "PaymentOptions" })
+                     </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="createpaypal">
+                        <a href="@ViewBag.PaypalAccountlink" target="_blank" title="create account paypal" >If you do not have one, click on this link to create new paypal account</a>
+                    </div>
+                    <div class="error">
+                        @Html.ValidationMessageFor(m => m.PaymentOptions)&nbsp;
+                    </div>
+                </div>
+                <div class="clear2">
+                </div>
+                <div class="formcol2web">
+                    <div class="formcol2webtxt">
+                        <div class="ltxtcompanysetup">
+                        </div>
+                        <div class="txtcompanysetup txtweb">
+                            @Html.TextBoxFor(m => m.Url)
+                        </div>
+                        <div class="rtxtcompanysetup">
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="error">
+                            &nbsp;
+                        </div>
+                        <div class="clear2">
+                        </div>
+                        <div class="ltxtcompanysetup">
+                        </div>
+                        <div class="txtcompanysetup txtweb">
+                            @Html.TextBoxFor(m => m.Phone, new { @id = "companyphone" })
+                        </div>
+                        <div class="rtxtcompanysetup">
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="error">
+                            @Html.ValidationMessageFor(m => m.Phone)&nbsp;
+                        </div>
+                        <div class="clear2">
+                        </div>
+                        <div class="ltxtcompanysetup">
+                        </div>
+                        <div class="txtcompanysetup txtweb">
+                            @Html.TextBoxFor(m => m.ContactName)
+                        </div>
+                        <div class="rtxtcompanysetup">
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="error">
+                            &nbsp;
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="formcol2webverification">
+                        <div class="verificatiotext">
+                            <strong>for verification:</strong><div class="clear2">
+                            </div>
+                            choose one<br />
+                            (how we should check
+                            <br />
+                            if your company exists)<br />
+                        </div>
+                        <div class="verificatiocheck">
+                            <input type="checkbox" name="TextType" id="call" @(Model.TextType ? "checked=checked" : "") value="true" />
+                            <label for="call">
+                                call</label>
+                            <div class="clear14">
+                            </div>
+                            <input type="checkbox" name="EmailType" id="mail" @(Model.EmailType ? "checked=checked" : "") value="true" />
+                            <label for="mail">
+                                mail</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="editbtnaddhours">
+                    <div id="addhourspopup" class="addhourspopup">
+                        <div class="hourspopup">
+                            <div id="dayofweek" class="dayofweek">
+                                <a href="javascript:void(0);" id="monday" class="btnday" title="monday">mon</a>
+                                <a href="javascript:void(0);" id="tuesday" class="btnday" title="tuesday">tue</a>
+                                <a href="javascript:void(0);" id="wednesday" class="btnday" title="wednesday">wed</a>
+                                <a href="javascript:void(0);" id="thursday" class="btnday" title="thursday">thu</a>
+                                <a href="javascript:void(0);" id="friday" class="btnday" title="friday">fri</a>
+                                <a href="javascript:void(0);" id="satday" class="btnday" title="satday">sat</a>
+                                <a href="javascript:void(0);" id="sunday" class="btnday" title="sunday">sun</a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="fromto">
+                                <div class="fromtitle">
+                                    from</div>
+                                <div class="fromtoinput">
+                                    <div class="ltxtcompanysetup">
+                                    </div>
+                                    <div class="txtcompanysetup txtfrom">
+                                        <input type="text" value="" readonly="readonly" id="hourfrom" class="txtcompanyname" />
+                                    </div>
+                                    <div class="rtxtcompanysetup">
+                                    </div>
+                                </div>
+                                <div class="totitle">
+                                    to</div>
+                                <div class="fromtoinput">
+                                    <div class="ltxtcompanysetup">
+                                    </div>
+                                    <div class="txtcompanysetup txtfrom">
+                                        <input type="text" value="" readonly="readonly" id="hourto" class="txtcompanyname" />
+                                    </div>
+                                    <div class="rtxtcompanysetup">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="daily">
+                                <div class="dailytitle">
+                                    <input id="cbAvailable" onfocus="this.blur();" type="checkbox" /><label for="cbAvailable"
+                                        class="ctext">daily?</label>
+                                </div>
+                                <div class="btndaily">
+                                    <a href="javascript:void(0);" id="btndailyadd" class="btndailyadd" title="add">+add</a>
+                                    <a href="javascript:void(0);" id="btndailycancel" class="btndailycancel" title="cancel">
+                                        cancel</a>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <a href="javascript: fadehours();" id="addhours" class="addhours" title="add hours">
+                    </a>
+                    <div class="editaddhours" id="editaddhours">
+                        @if (Model.Companylist != null)
+                        {
+                            foreach (Companylist item in Model.Companylist)
+                            { 
+                            <span id="@item.CompanyID" style="float:right;" >@item.CompanyNam</span>  
+                            <br />                                                      
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="categories editcategories">
+                    <div class="titlecategories">
+                        <strong>categories</strong>&nbsp;&nbsp;<i>(your search tags)</i>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="addcategories">
+                        <ul>
+                            <li>
+                                @Html.DropDownListFor(m => m.ServiceID, Model.CategoryCompany, new { @id = "categorycompanysetup", @class = "selectcategories" })
+                            </li>
+                        </ul>
+                    </div>
+                    <input type="hidden" id="hdcategory" name="hdcategory" value="" />
+                    <input type="hidden" id="hdhour" name="hdhour" value="" />
+                    <input type="hidden" id="logoid" name="LogoID" value="0" />
+                    <input type="hidden" id="photoid" name="PhotoID" value="0" />
+                    <input type="hidden" id="videoid" name="VideoID" value="0" />
+                    <input type="hidden" id="logodata" name="LogoData" value="" />
+                    <input type="hidden" id="photodata" name="PhotoData" value="" />
+                    <input type="hidden" id="videodata" name="VideoData" value="" />
+                    <div class="divaddselect">
+                        <a href="javascript:void(0);" class="addselect" title="add" id="addcategories">+add</a>
+                        <div class="clear4">
+                        </div>
+                        &nbsp;<a href="javascript:void(0);" class="addselect" title="delete" id="deletecategories">delete</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="catresult">
+                        @if (Model.Categories != null)
+                        {
+                            int i = 0;
+                            foreach (Category item in Model.Categories)
+                            {
+                                i++;
+                            <span id="@item.CategoryID">@item.NamCategory</span>
+                                if (Model.Categories.Count() != i)
+                                {
+                            <label id="@item.CategoryID.ToString()1">
+                                ,</label>   
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="rcompanytitle logoimage">
+                    <div class="companylogo">
+                        <div id="logocontentfile">
+                            @if (!string.IsNullOrEmpty(Model.LogoData))
+                            {                              
+                                <img alt="logo" src="@Types.KaturaDoman/p/811441/thumbnail/entry_id/@Model.LogoData"/>
+                                <input id="hdmediaid" class="in" type="hidden" value="@Model.LogoID" name="hdmediaid" />
+                                <input id="hdmediadata" class="in" type="hidden" value="@Model.LogoData" name="hdmediadata" />
+                                
+                                <script type="text/javascript">
+                                    $('.companylogo').css('background-image', 'none');
+                                </script>
+                            }
+                        </div>
+                        <div class="waiting">
+                            <img id="imgLoaderlogo" src="../../Images/progress.gif" alt="progress..." />
+                        </div>
+                    </div>
+                    <div class="logonote">
+                        please only use your company logo.</div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="companyphoto">
+                    <div class="photoimg">
+                        <div class="photo" id="photocontentfile">
+                            @if (!string.IsNullOrEmpty(Model.PhotoData))
+                            {                              
+                                <img alt="photo"  src="@Types.KaturaDoman/p/811441/thumbnail/entry_id/@Model.PhotoData"/>
+                                <input id="hdmediaid" class="in" type="hidden" value="@Model.PhotoID" name="hdmediaid" />
+                                <input id="hdmediadata" class="in" type="hidden" value="@Model.PhotoData" name="hdmediadata" />
+                                <script type="text/javascript">
+                                    $('.photo').css('background-image', 'none');
+                                </script>
+                            }
+                        </div>
+                        <div class="waitingphoto">
+                            <img id="imgLoaderphoto" src="../../Images/progress.gif" alt="progress..." />
+                        </div>
+                    </div>
+                    <div class="photonote">
+                        original content only.<br />
+                        only upload a photo
+                        <br />
+                        you’ve purchased or
+                        <br />
+                        taken for your company.</div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="companyphoto">
+                    <div class="photoimg photovideo">
+                        <div class="video" id="videocontentfile">
+                            @if (!string.IsNullOrEmpty(Model.VideoData))
+                            {
+                                @Model.FlashData
+                                <input id="hdmediaid" class="in" type="hidden" value="@Model.VideoID" name="hdmediaid" />
+                                <input id="hdmediadata" class="in" type="hidden" value="@Model.VideoData" name="hdmediadata" />
+                            }
+                        </div>
+                        <div class="waitingvideo">
+                            <img id="imgLoadervideo" src="../../Images/progress.gif" alt="progress..." />
+                        </div>
+                    </div>
+                    <div class="photonote videonote">
+                        original content only.<br />
+                        we want to know your story.
+                        <br />
+                        how did you get into this
+                        <br />
+                        business? what are you
+                        <br />
+                        passionate about?</div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="youtubelink">
+                    <div class="ltxtcompanysetup">
+                    </div>
+                    <div class="txtcompanysetup txtyoutubelink">
+                        @Html.TextBoxFor(m => m.Youtubelink)
+                    </div>
+                    <div class="rtxtcompanysetup">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        }
+    </div>
+    <div class="companysetupbutton">
+        <a class="btnsubmit" title="submit" id="btnsubmit">submit</a>
+        <div class="clear7">
+        </div>
+        <a href="/" class="btnsubmit" title="cancel">cancel</a>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="lightBox" class="lightBox">
+    </div>
+    <div id="deletecompanypopup" class="comfirmationpopup" style="display: block;">
+        <div class="contentPopup">
+            <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+            <div class="deletecompanypopup">
+                <div class="deltitle">
+                    are you sure you want to delete this company?</div>
+                <div class="delcancel">
+                    if no, <a href="JavaScript:void(0);" class="canceldeletecompany" title="cancel">cancel</a></div>
+                <div class="delyes">
+                    if yes, please enter your password:</div>
+                <div class="deltxt">
+                    <input type="password" id="txtpassword" /></div>
+                <div class="delreason">
+                    reason for deletion:</div>
+                <div class="delreasontext">
+                    <textarea id="txtreason" class="textarea" rows="3" cols="5"></textarea></div>
+                <div class="clear">
+                </div>
+                <a href="#" class="btncancel" title="delete this company"></a>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}   
+        <div class="preview"><span class="fade"></span></div>       
+        {% if (file.error) { %}
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } %}      
+
+{% } %}
+
+</script>
+
+<script id="company-photo-template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %} <span class="boxcontentimg" style="height: 215px; width: 302px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/302/height/216"/></span></span> {% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.thumbnail_url%}" />
+        {% } %}
+{% } %}
+$('.photo').css('background-image', 'none');
+</script>
+
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}    
+        {% if (file.error) { %}           
+            <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
+        {% } else { %}
+            <div class="preview">{% if (file.thumbnail_url) { %}<span class="boxcontentimg" style="height: 99px; width: 99px;"><span class="boximage"><img src="@Kuyam.Database.Types.KaturaDoman/p/811441/thumbnail/entry_id/{%=file.kalturaid%}/width/99/height/100"/></span></span>{% } %}</div>
+            <input type="hidden" id="hdmediaid" name="hdmediaid" value="{%=file.mediaid%}" />
+            <input type="hidden" id="hdmediadata" name="hdmediadata" value="{%=file.kalturaid%}" />        
+        {% } %}
+{% } %}
+</script>

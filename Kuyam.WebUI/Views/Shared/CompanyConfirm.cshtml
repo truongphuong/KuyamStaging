@@ -1,0 +1,231 @@
+﻿<style>
+    .kuyam * {
+        line-height: 0;
+    }
+</style>
+<center>
+    <table class="kuyam" cellpadding="0" cellspacing="0" border="0" width="550px" style="font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr style="background-color: black;">
+                        <td style="text-align: left;" height="61">
+                            <img alt="" src="@Model.Host/images/header_logo.png" usemap="#logo" style="border: solid 0px white;" />
+                            <map name="logo" id="logo">
+                                <area shape="rect" coords="20,5,148,50" href="@Model.Host" alt="Kuyam" title="Kuyam" />
+                            </map>
+                        </td>
+                        <td style="color: #c1d82f; text-align: right; font-size: 12px;padding-right: 17px;">
+                            <div style="font-family: Arial, Helvetica, sans-serif;padding-top: 25px;">
+                                @Model.Date
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="line-height: 0px;">
+                            <img alt="" src="@Model.Host/images/header_footer.png" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;">
+                <img alt="" src="@Model.Host/images/tbox.png" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td valign="top" style="background-color: #b5d5eb;" width="25">
+                            <img alt="" src="@Model.Host/images/lbox.png" />
+                        </td>
+                        <td valign="top" style="border-left: solid 1px #c1d82f;padding-left:21px; border-right: solid 1px #c1d82f;
+                            width: 506px;" width="506" align="left">
+                            <div style="border-left: solid 8px #c1d82f;">
+                                <table cellpadding="0" cellspacing="0" border="0" width="475">
+                                    <tr>
+                                        <td style="padding-left: 31px; height: 381px;" height="381" valign="top">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="432" style="padding-left: 5px;">
+                                                <tr>
+                                                    <td style="text-align: right;">
+                                                        <a href="@Model.Host" title="login" style="color: #29abe2; text-decoration: none; font-size: 12px;
+                                                            line-height: 10px; font-family: Arial, Helvetica, sans-serif;">login</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 12px; color: #808080; font-family: Arial, Helvetica, sans-serif;">
+                                                        hi <b>@Model.UserName !</b>
+                                                    </td>
+                                                </tr>                                                
+                                                <tr>
+                                                    <td style="padding-top: 10px;line-height:142%">
+                                                        <table cellpadding="0" cellspacing="0" border="0" width="410">
+                                                            <tr>
+                                                                <td style="width: 292px; font-size: 12px; color: #666666; padding: 0px 0px 0px 2px;
+                                                                    font-family: Arial, Helvetica, sans-serif;">
+                                                                    here’s your confirm appointment summary:
+                                                                </td>
+                                                                <td style="width: 116px; height: 27px; background-color: #c1d82f; text-align: center; color: black; font-size: 14px; font-weight: bold; font-family: Arial, Helvetica, sans-serif;"
+                                                                    height="27">
+                                                                    confirm
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table cellpadding="0" cellspacing="0" border="0" style="border: solid 1px #b2b2b2;
+                                                            width: 411px;">
+                                                            <tr>
+                                                                <td valign="top" style="width: 153px;line-height:142%; text-align: right; font-size: 16px; padding-top: 13px;
+                                                                    color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                                                    <span style="font-weight: bold;">@Model.AppointmentDate</span><br />
+                                                                    <span>@Model.AppointmentTime</span><br />
+                                                                    <span style="color: #666666; font-size: 14px; font-weight: bold;">for @Model.UserName</span><br />
+                                                                </td>
+                                                                <td valign="top" style="width: 183px;line-height:142%; text-align: left; font-size: 14px; padding-left: 22px;
+                                                                    padding-top: 13px; color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                                                    <span style="font-weight: bold; font-size: 16px;">
+                                                                        <span title="@Model.CompanyName">@Kuyam.Domain.UtilityHelper.TruncateText(Model.CompanyName, 15)</span><br />
+                                                                        with <span title="@Model.EmployeeName">@Kuyam.Domain.UtilityHelper.TruncateText(Model.EmployeeName, 15)</span>
+                                                                    </span><br />
+                                                                    <span>@Model.ServiceName </span>
+                                                                    <br />
+                                                                    <span>@Model.ServiceDetail</span><br />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td height="22" style="text-align: left; font-size: 12px; padding-left: 10px; color: #808080;
+                                                                    padding-top: 9px; font-family: Arial, Helvetica, sans-serif;" valign="top" colspan="2">
+                                                                    to <strong style="color: #000000;">view notes</strong> or check current appointments,
+                                                                    <a href="@Model.Host/appointment" title="click here " style="text-decoration: none; color: #0071bc;">
+                                                                        click
+                                                                        here
+                                                                    </a>.
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                    <td style="padding-top: 22px; padding-bottom: 13px; padding-left: 2px;line-height:142%;">
+                                                        <table cellpadding="0" cellspacing="0" border="0" width="410">
+                                                            <tr>
+                                                                <td valign="top" height="7" style="line-height: 0px; height: 7px;">
+                                                                    <img alt="" src="@Model.Host/images/pinkbdtop.jpg" style="padding: 0px; margin: 0px;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="margin: 0px; padding: 0px; background-color: #efc9ca;">
+                                                                <td style="color: #333333;line-height:142%; font-size: 12px; background-color: #efc9ca; padding: 0px 5px 0px 5px;
+                                                                    letter-spacing: -0.2px; margin: 0px; height: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                                    @Html.Raw(Model.PayAfterText)<br />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" height="7" style="line-height: 0px;">
+                                                                    <img alt="" src="@Model.Host/images/pinkbdbot.jpg" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table cellpadding="0" cellspacing="0" border="0" style="width: 422px; padding: 6px 0px 10px 2px;
+                                                color: #808080;">
+                                                <tr>
+                                                    <td style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;line-height:142%;">
+                                                        @*we’re sorry this appointment did not work out! <a href="@Model.Host/companyprofile/index/@Model.CompanyID" title="" style="color: #29abe2;
+                                                            text-decoration: none; font-size: 12px; line-height: 10px;">try booking a new appointment</a>
+                                                        with this company or <a href="@Model.Host/company/companysearch/?id=0" title="" style="color: #29abe2; text-decoration: none;
+                                                            font-size: 12px; line-height: 10px;">search for a new one</a>.
+                                                        <br />
+                                                        <br />*@
+                                                        comments, questions or concerns? email <a href="mailto:support@kuyam.com" title="support@kuyam.com" style="color: #29abe2; text-decoration: none; font-size: 12px; line-height: 10px;">support@kuyam.com</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td valign="top" style="background-color: #b5d5eb;">
+                            <img alt="" src="@Model.Host/images/rbox.png" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="line-height: 0px;">
+                <img alt="" src="@Model.Host/images/fbox1.png" usemap="#social" style="border: solid 0px white;" />
+                <map name="social" id="social">
+                    <area shape="rect" coords="220,18,272,30" href="http://www.kuyam.org" alt="Kuyam" title="Kuyam" />
+                    <area shape="rect" coords="279,4,313,34" href="http://www.facebook.com/mykuyam" alt="Facebook" title="Facebook" />
+                    <area shape="rect" coords="316,4,344,34" href="https://twitter.com/mykuyam" alt="Twitter" title="Twitter" />
+                    <area shape="rect" coords="349,4,379,34" href="http://www.youtube.com/channel/UCei6RmG4G9jLgEHchRzR5jA" alt="Youtube" title="Youtube" />
+                    <area shape="rect" coords="382,4,412,34" href="http://kuyam.tumblr.com/" alt="Tumblr" title="Tumblr" />
+                    <area shape="rect" coords="415,4,445,34" href="http://pinterest.com/kuyam/" alt="Pinterest" title="Pinterest" />
+                    <area shape="rect" coords="448,4,482,35" href="https://plus.google.com/u/0/b/103779915573360185741/103779915573360185741" alt="Google+" title="Google+" />
+                    <area shape="rect" coords="483,4,515,35" href="http://instagram.com/kuyamsocial" alt="Instagram" title="Instagram" />
+                </map>
+                @*<map name="social" id="social"><area shape="rect" coords="482,5,515,36" href="http://instagram.com/kuyamsocial" alt="Instagram" title="Instagram" />
+                        <area shape="rect" coords="383,3,412,33" href="http://www.youtube.com/user/mykuyam" alt="Youtube" title="Youtube" />
+                        <area shape="rect" coords="350,3,379,33" href="https://twitter.com/mykuyam" alt="Twitter" title="Twitter" />
+                        <area shape="rect" coords="314,3,343,33" href="http://www.facebook.com/mykuyam" alt="Facebook" title="Facebook" />
+                        <area shape="rect" coords="252,17,305,29" href="http://www.kuyam.org" alt="Kuyam" title="Kuyam" />
+                        <area shape="rect" coords="416,4,446,34" href="http://kuyam.tumblr.com/" alt="Tumblr" title="Tumblr" />
+                        <area shape="rect" coords="450,4,479,34" href="http://pinterest.com/kuyam/" alt="Pinterest" title="Pinterest" />
+                    </map>*@
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;" valign="top">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="line-height: 0px;">
+                            <img alt="" src="@Model.Host/images/footer2.png" style="border: solid 0px white;" />
+                        </td>
+                        <td style="line-height: 0px;">
+                            <a href="mailto:@Model.Email" title="@Model.Email">
+                                <img alt="" src="@Model.Host/images/footer2a.png" style="border: solid 0px white;" />
+                            </a>
+                        </td>
+                        <td style="line-height: 0px;">
+                            <img alt="" src="@Model.Host/images/footer2b.png" style="border: solid 0px white;" usemap="#kuyam" />
+                            <map name="kuyam" id="kuyam">
+                                <area shape="rect" coords="79,10,135,22" href="@Model.Host" alt="kuyam.com"
+                                      title="kuyam.com" />
+                            </map>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 0px;">
+                <img alt="" src="@Model.Host/images/footer1.png" usemap="#footer" style="border: solid 0px white;" />
+                <map name="footer" id="footer">
+                    <area shape="rect" coords="470,3,525,10" href="%unsubscribe_url%"
+                          alt="unsubscribe" title="unsubscribe" />
+                    <area shape="rect" coords="183,17,242,26" href="@Model.Host/home/howitworks_user"
+                          alt="how it works " title="how it works " />
+                    <area shape="rect" coords="266,17,307,26" href="@Model.Host/home/OurStory" alt="our story"
+                          title="our story" />
+                    <area shape="rect" coords="338,17,354,26" href="@Model.Host/home/faq" alt="faq"
+                          title="faq" />
+                    <area shape="rect" coords="378,17,424,26" href="@Model.Host/home/contactnew" alt="contact us"
+                          title="contact us" />
+                    <area shape="rect" coords="454,17,525,26" href="@Model.Host/" alt="terms &amp; privacy"
+                          title="terms &amp; privacy" />
+                </map>
+            </td>
+        </tr>
+    </table>
+</center>

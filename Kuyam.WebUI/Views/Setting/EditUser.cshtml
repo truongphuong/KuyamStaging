@@ -1,0 +1,592 @@
+﻿@model Kuyam.WebUI.Models.UserEditModel
+@using Kuyam.Database;
+@using Kuyam.WebUI.Models
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    var facebookClass = string.IsNullOrEmpty(MySession.Cust.FacebookUserID) ? string.Empty : "facebook";
+}
+<style>
+    .file
+    {
+        display: inline-block;
+        width: 137px;
+        position: relative; /*background: #61c6f5;
+        border-bottom: solid 1px #59b8e4;*/
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin-bottom: 10px;
+    }
+    .file .button
+    {
+        background: url("../images/appointment.png") no-repeat scroll left -400px;
+        text-indent: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #555;
+        height: 40px;
+        line-height: 40px;
+        display: block;
+    }
+    .file input
+    {
+        cursor: pointer;
+        height: 41px;
+        position: absolute;
+        right: -4px;
+        top: 0;
+        filter: alpha(opacity=0);
+        -moz-opacity: 0;
+        opacity: 0;
+        font-size: 23px;
+        line-height: 35px;
+    }
+    
+    .savechangepopup .contentpopup
+    {
+        behavior: url(PIE.htc);
+    }
+    
+    .usersettingsboxmid.facebook
+    {
+        min-height: 320px !important;
+    }
+</style>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.maskedinput-1.3.min.js")"></script>
+<script type="text/javascript">
+    
+    var phoneNumber ="";
+    $.fn.fileName = function () {
+        var $this = $(this),
+        $val = $this.val(),
+        valArray = $val.split('\\'),
+        newVal = valArray[valArray.length - 1];
+        if (newVal !== '') {
+            $("#txt").val(newVal);
+        }
+    };
+
+    $(function () {
+        $('#category, #selectmobile, #FirstAlert, #SecondAlert').selectmenu();
+        @ViewBag.Defaultfuntion
+        $('#text').checkBox({ addVisualElement: false });
+        $('#mail').checkBox({ addVisualElement: false });
+         $('#call').checkBox({ addVisualElement: false });
+        $("#HomePhone").mask("(999) 999-9999");
+        //JS for password
+        $('#inputnewpwd').hide();
+        $('#textnewpwd').focus(function () {
+            $('#textnewpwd').hide();
+            $('#inputnewpwd').show();
+            $('#inputnewpwd').css('color', '#333333');
+            $('#inputnewpwd').focus();
+        });
+        $('#inputnewpwd').blur(function () {
+            if ($('#inputnewpwd').val() == '') {
+                $('#textnewpwd').show();
+                $('#inputnewpwd').hide();
+            }
+        });
+
+        $('#btsave').click(function () {
+            $('#editusersetting').submit();
+        });
+
+         $('#btnSucees').click(function () {
+            self.location.href="/";
+        });
+
+        $('#inputrenewpwd').hide();
+        $('#textrenewpwd').focus(function () {
+            $('#textrenewpwd').hide();
+            $('#inputrenewpwd').show();
+            $('#inputrenewpwd').css('color', '#333333');
+            $('#inputrenewpwd').focus();
+        });
+        $('#inputrenewpwd').blur(function () {
+            if ($('#inputrenewpwd').val() == '') {
+                $('#textrenewpwd').show();
+                $('#inputrenewpwd').hide();
+            }
+        });
+        createtopscroll(0, $('.footer').position().top - $('.header').height());
+    });
+
+    $().ready(function () {
+        $('input[type=file]').bind('change focus click', function () { $(this).fileName() });        
+        @ViewBag.PopupString
+    });
+
+    function saveChange(){
+         showDialog('savechangepopup');
+         setTimeout("redirectTo()",1000);
+    }
+
+    function redirectTo(){
+      self.location.href="/";
+    }
+
+    function SendInviteCode() {
+    
+        var email=$("#Email").val();
+        var phoneNumber = $("#HomePhone").val();  
+
+        var firstName= "@(Model.FirstName)";
+        var lastName= "@(Model.LastName)";
+              
+        var param = "phoneNumber=" + phoneNumber+"&email="+email+"&firstName="+firstName+"&lastName="+lastName;
+        if (phoneNumber == "")
+            return
+        commonPostAjax("Account", "SendInviteCode", param, sendcallbacksucess, setError, "html");
+        $('#btnsendsms').hide();
+        $('.busyIndicator').show();
+    }
+
+    function sendcallbacksucess(result) {
+    
+        if (result == "true") {
+            $("#verifiycode").show();
+            $('#btnsendsms').removeClass('btnsend')
+            $("#btnsendsms").prop('disabled', true);
+            $("#btnsendsms").prop('title',"sent! check your messages");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#forget').show();
+            $('.busyIndicator').hide();
+        }
+        if (result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)') {
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+        }
+    }
+
+    function VerifyInviteCode() {
+        var inviteCode = $("#smsinviteCode").val();
+        if (inviteCode == "" || inviteCode == "enter code") {            
+            $('#smserrormessage').show();
+            return;
+        }
+        var param = "inviteCode=" + inviteCode;
+        commonPostAjax("Account", "SMSVerifyInviteCode", param, verifycallbacksucess, setError, "html");
+    }
+
+    function verifycallbacksucess(result) {
+        if (result == "true") {
+            $('#smserrormessage').hide();
+            $("#verifiycode").hide();
+            $('#btnsendsms').addClass('btnverified');
+            $("#btnsendsms").prop('disabled', true);
+             $("#btnsendsms").prop('title',"verification phone number");
+            //$("#txtPhoneBlur").prop('disabled', true);
+            $('#smsinviteCode').val("enter code");
+            $('#forget').hide();
+            $('.field-validation-error').hide();
+            $('#btnsendsms').show();
+        } else {            
+            $('#smserrormessage').show();
+        }
+    }
+
+    function resendCode() {
+        /*var phoneNumber = $("#HomePhone").val();
+        var param = "phoneNumber=" + phoneNumber;
+        if (phoneNumber == "")
+            return
+        showDialog('resended');
+        commonPostAjax("Account", "SendInviteCode", param, resendCodecallbacksucess, setError, "html");*/
+
+        $("#verifiycode").hide();
+        $('#btnsendsms').addClass('btnsend');
+        $("#btnsendsms").prop('disabled', false);
+        $("#btnsendsms").prop('title',"send SMS verification code");
+        //$("#txtPhoneBlur").prop('disabled', true);
+        $('#forget').hide();
+        $('#btnsendsms').show();
+        $('.busyIndicator').hide();
+        $('#smserrormessage').hide();
+        $('.msmerror').hide();
+    }
+
+    function resendCodecallbacksucess(result) {
+        if (result == "true") {
+            $('#btnsendsms').removeClass('btnverified');
+            $("#verifiycode").show();
+            $("#btnsendsms").prop('title',"sent! check your messages");
+            //$('#resended').show();            
+            setTimeout("hideDialog('resended')",1000);
+            $('.busyIndicator').hide();
+        }
+    }
+
+    function setDefaultvalue() {
+        $("#verifiycode").show();
+        $('#btnsendsms').removeClass('btnsend');
+        $("#btnsendsms").prop('disabled', true);
+        $("#btnsendsms").hide();
+        $('#forget').show();
+    }
+
+    function checkPhoneNumber(phoneNumber)
+    { 
+        if(phoneNumber!=''){
+            var email =  $("#Email").val();
+            var param = "phoneNumber=" + phoneNumber+ "&email="+ email+"&nocache=" + getunixtime();
+            commonGetAjax("Setting", "CheckPhoneNumber", param, checkPhoneNumbercallbacksucess, setError, "html"); 
+        }
+    }
+
+    function checkPhoneNumbercallbacksucess(result)
+    {       
+       if(result=="true"){
+          isverification();
+          $("#verifiycode").hide();
+          $('#forget').hide();
+          $('.field-validation-error').hide();         
+       }
+       else if(result == '@((int)Kuyam.Database.Types.FlagInvite.Verified)'){
+            $('#btnsendsms').show();
+            $('.busyIndicator').hide();
+            alert("this phone is verified !");
+       }
+       else{
+            $("#btnsendsms").prop('disabled', false); 
+            $('#btnsendsms').removeClass('btnverified').addClass('btnsend');
+            $("#verifiycode").hide();
+            $('#forget').hide();
+       }
+    }
+
+    function isverification() {
+        $('#btnsendsms').removeClass('btnsend').addClass('btnverified');
+        $("#btnsendsms").prop('disabled', true);     
+        
+    }
+
+</script>
+<!-- InstanceBeginEditable name="content" -->
+<div class="usersettings">
+    <div class="clear">
+    </div>
+    <div class="usersettingstab">
+        <div class="textusersettings tabactive">
+            <a href="/Setting/UserSetting" title="user settings">user settings</a></div>
+        <div class="textcalendarsettings">
+            <a href="/calendarsetting" title="calendar settings">calendar settings</a></div>
+        <div class="textcompanysettings">
+            <a href="/Company/CompanySetting" title="company settings">company settings</a></div>
+    </div>
+    <div class="clear">
+    </div>
+    @using (Html.BeginForm("Edituser", "Setting", FormMethod.Post, new { id = "editusersetting", enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)            
+        <div class="usersettingsbox">
+            <div class="usersettingsboxtop">
+            </div>
+            <div class="usersettingsboxmid @facebookClass">
+                <div class="usersettingcol1">
+                    <div class="useraccount">
+                        <h2>
+                            user account</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="editaccount">
+                        @Kuyam.Domain.UtilityHelper.TruncateText(@Model.FirstName, 15)<br />
+                        <a href="javascript:void(0);" class="edituserinfogray">edit information</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="userpersonal @facebookClass">
+                        <h2 class="edith2" style="padding-top:@(string.IsNullOrEmpty(facebookClass) ? "259px" : "153px") !important;">
+                            personal
+                        </h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="userreminders">
+                        <h2 class="edith2" style="padding-bottom: 69px !important;">
+                            reminders</h2>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @*<div class="usercalendar">
+                        <h2>
+                            calendar sync</h2>
+                    </div>
+                    <div class="clear">
+                    </div>*@
+                </div>
+                <div class="usersettingcol2">
+                    <div class="useremail edit">
+                        e-mail:</div>
+                    <div class="clear">
+                    </div>
+                    @if (string.IsNullOrEmpty(facebookClass))
+                    {
+                        <div class="usercurrentpass editusercurrentpass editusercurrentpass1">
+                            current password:</div>
+                        <div class="clear">
+                        </div>
+                        <div class="usercurrentpass editusercurrentpass">
+                            new password:</div>
+                        <div class="clear">
+                        </div>
+                    }
+                    <div class="edituserphone">
+                        phone #</div>
+                    <div class="clear">
+                    </div>
+                    <div class="postphoneverify postusersetting">
+                        <div id="forget">
+                            didn’t get it?<br />
+                            <a href="javascript:void(0);" onclick="resendCode();" title="resend code">resend code</a>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="userzipcode edituserzipcode edituserzipcode1">
+                        zip code:</div>
+                    <div class="clear">
+                    </div>
+                    @* <div class="usercontact editusercontact">
+                        &nbsp; contact preferences:</div>
+                    <div class="clear">
+                    </div>*@ @*<div class="userappointmentupdate">
+                        &nbsp; (for appointment updates)</div>
+                    <div class="clear">
+                    </div>*@
+                    <div class="userremindme edituserremindme">
+                        remind me:</div>
+                    <div class="clear">
+                    </div>
+                    @*<div class="userggcal userggcal1">
+                        ical:</div>
+                    <div class="clear">
+                    </div>*@ @*<div class="userical">ical:</div>*@
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="usersettingcol3">
+                    <div class="edituseremailvalue">
+                        <input disabled=true  class="inputemail" id="Email" name="Email" type="text" value="@Model.Email" />
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="error">
+                        &nbsp;</div>
+                    <div class="clear">
+                    </div>
+                    @if (string.IsNullOrEmpty(facebookClass))
+                    {
+                        <div class="edituserpass">
+                            @Html.PasswordFor(m => m.OldPassword, new { @class = "inputpwd" })
+                            <div class="clear">
+                            </div>
+                            <div class="error">
+                                @Html.ValidationMessageFor(m => m.OldPassword)
+                                @Html.ValidationMessage("UserEditModel")
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="usernewpass editusernewpass">
+                            <div>
+                                <input type="text" id="textnewpwd" class="textpwd" title="enter password" value="enter password" />
+                                @Html.PasswordFor(m => m.NewPassword, new { @class = "inputpwd", @id = "inputnewpwd" })
+                                <input type="text" id="textrenewpwd" class="textpwd" title="enter password" value="re-enter password" />
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "inputpwd", @id = "inputrenewpwd" })
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="useerror1">
+                                <div class="error">@Html.ValidationMessageFor(m => m.NewPassword)&nbsp;</div>
+                            </div>
+                            <div class="useerror2">
+                                <div class="error">@Html.ValidationMessageFor(m => m.ConfirmPassword)&nbsp;</div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    }
+                    <div class="edituserphonevalue">
+                        <div class="puserphone">
+                            @Html.TextBoxFor(m => m.MobilePhone, new { @class = "inputuserphonevalue", @id = "HomePhone", @onchange = "checkPhoneNumber(this.value);" })
+                        </div>
+                        <div class="ddlmobile ddluserphone">
+                            <select name="SelectCarrier" id="selectmobile">
+                                <option value="none">none</option>
+                                @foreach (var item in @Model.CarrierList)
+                                {
+                                    <option value="@item.Data" @(item.Data == Model.SelectCarrier ? "selected=selected" : "")>@item.Name.ToLower()</option>                               
+                                }
+                            </select>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="error">
+                           @* @Html.ValidationMessageFor(m => m.MobilePhone)*@
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="smsarea smsusersetting">
+                            <div class="smstitle">
+                                for SMS appointment updates and reminders:
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="smscontent">
+                                <div class="divbtnsend">
+                                    <input type="button" id="btnsendsms" class="btnsend" onclick="SendInviteCode();"
+                                        title="send SMS verification code" />
+                                    <div class="busyIndicator" style="display: none; height: 28px; width: 184px; background-color: orange;
+                                        border: green; background-image: url('/Images/sendcode.png')">
+                                        <img src="/Images/BusyIndicator.gif" alt="" style="margin: 4px 5px 0 14px;" />
+                                    </div>
+                                </div>
+                                <div id="verifiycode" style="display: none;">
+                                    <div class="divtxtsend">
+                                        <div class="rpostformtext">
+                                            <div class="ltxtcompanysetup">
+                                            </div>
+                                            <div class="txtcompanysetup txtbday">
+                                                <input type="text" id="smsinviteCode" value="enter code" onfocus="if (this.value=='enter code') {this.value = '';}this.className = 'inputactive';"
+                                                    onblur="if (this.value==''){this.value='enter code';this.className = '';}" />
+                                            </div>
+                                            <div class="rtxtcompanysetup">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="divbtnverify">
+                                        <input type="button" class="verifysms" onclick="VerifyInviteCode();" title="verify" />
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="msmerror">
+                                     @Html.ValidationMessage("VerifiPhoneNumber")
+                                     <span id="smserrormessage" style="display: none;">
+                                        wrong code</span>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="edituserzipcodevalue">
+                        @Html.TextBoxFor(m => m.Zip, new { @class = "inputuserzipcodevalue" })
+                        <div class="clear">
+                        </div>
+                        <div class="error">
+                            @Html.ValidationMessageFor(m => m.Zip)
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @* <div class="usercontactvalue editusercontactvalue" style="height: 20px;">
+                         <div class="chkcall">
+                            <input type="checkbox" name="EmailType" id="mail" @(Model.EmailType? "checked=checked" : "") value="true" />
+                            <label for="mail">
+                                e-mail</label>
+                        </div>
+                        <div class="chktext" style="padding-right: 77px;">
+                            <input type="checkbox" name="TextType" id="text" @(Model.TextType? "checked=checked" : "") value="true" />
+                            <label for="text">
+                                text</label>
+                        </div>
+                        <div class="chktext">
+                            <input type="checkbox" name="CallType" id="call" @(Model.CallType? "checked=checked" : "") value="true" />
+                            <label for="call">
+                                call</label>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>*@
+                    <div class="clear">
+                    </div>
+                    <div class="userfirstalert">
+                        <div class="firstalerttitle">
+                            first alert:
+                        </div>
+                        <div class="firstalertselect">
+                            @Html.DropDownListFor(m => m.FirstAlert, Model.FirstListItem)
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="usersecondalert">
+                        <div class="secondalerttitle">
+                            second alert:
+                        </div>
+                        <div class="secondalertselect">
+                            @Html.DropDownListFor(m => m.SecondAlert, Model.SecondListItem)
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="userggcaltext userggcaltext1">
+                        @*<input type="text" id="txt" />*@
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @*<div class="usericaltext">
+                        <input type="text" id="txt" />
+                        <div class="file">
+                            <input type="file" id="fileUpload" name="file" />
+                            <span class="button"></span>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>*@
+                </div>
+            </div>
+            <div class="usersettingsboxbot">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="btnarea">
+                <a href="/" id="btcancel" class="btnusersetting btncanceluser"><span class="btnusersettingleft">
+                </span><span class="btnusersettingcenter btncancelusersetting">cancel </span><span
+                    class="btnusersettingright"></span></a><a href="javascript:" id="btsave" class="btnusersetting">
+                        <span class="btnusersettingleft"></span><span class="btnusersettingcenter btnsaveusersetting">
+                            save changes </span><span class="btnusersettingright"></span></a>
+            </div>
+        </div>
+           
+    }
+    <div class="clear">
+    </div>
+</div>
+<div class="clear">
+</div>
+<!-- InstanceEndEditable -->
+<div id="savechangepopup" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            settings saved.
+        </p>
+    </div>
+</div>
+<div id="resended" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            Your code was resent.
+        </p>
+    </div>
+</div>

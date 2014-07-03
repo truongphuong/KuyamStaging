@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        users list</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <label>
+                            search&nbsp;&nbsp;
+                            <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                        </label>
+                        @Html.Partial("_SearchBox")
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                        <input type="button" id="btnexportUser" value="export user" />
+                        <input type="button" id="btaddnewuser" onclick="addNewUser();" value="add new user" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="listUsers">
+        @Html.Partial("_UserListResults")
+    </div>
+</div>
+<script type="text/javascript"> 
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var searchParameters = { page: pageIndex, key: key, searchType: searchType };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/userlist/'
+            })
+            .success(function (result) {
+                $('#listUsers').html(result);
+            })
+            .error(function (error) {
+
+            });
+
+        $("#btnexportUser").click(function() {
+
+        });
+    };
+    function FilterSearchResult() {
+
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var searchParameters = { key: key, searchType: searchType };
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/AdminSearchUsers/'
+                })
+                .success(function (result) {
+                    if (result == "false") {
+                        window.location.href = "/Admin/Login";
+                    } else {
+                        $('#listUsers').html(result);
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+    }
+
+    function addNewUser() {
+        window.location.href = "/Admin/adduser";
+    }
+</script>

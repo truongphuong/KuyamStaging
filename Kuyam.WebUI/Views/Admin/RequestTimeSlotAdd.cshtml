@@ -1,0 +1,84 @@
+﻿@model Kuyam.WebUI.Models.RequestTimeSlot
+@{
+    ViewBag.Title = "request timeslot add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var comparyId = Model.ProfileId;
+    var page = ViewBag.Page;
+    var key = ViewBag.Key;
+    var searchType = ViewBag.SearchType;
+    var isDetail = (bool)ViewBag.isDetail;
+}
+@using (Html.BeginForm("RequestTimeSlotAdd", "Admin", FormMethod.Post, new { id = "add", enctype = "multipart/form-data" }))
+{
+    <div id="contentmainpage">
+        <h2>add time slot</h2>
+        @Html.Partial("_RequestTimeSlotEdit", Model)
+        <input id="btnbook" type="submit" value="Save" />
+        @if (isDetail)
+        {
+            <p>
+                <a href="/Admin/AdminCompanyDetail?companyID=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)">back to detail</a>
+            </p>
+        }
+        else
+        {
+            <a href="/Admin/RequestTimeSlotList?companyID=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)">back to timeslot</a>
+        }
+        
+    </div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnbook").click(function () {
+            var dateOfWeek = $("#dateOfWeeks").val();
+            var fromHour = $('#fromhours').val();
+            var toHour = $('#tohours').val();
+            var companyId = $('#companyId').val();
+            if (dateOfWeek == null || dateOfWeek == "" || dateOfWeek.length == 0) {
+                showAlertMessage("Please select date of week");
+                return false;
+            }
+            if (fromHour == "" || toHour == "") {
+                showAlertMessage("Please select time");
+                return false;
+            }
+            SaveTimeSlot(companyId, dateOfWeek, fromHour, toHour);
+            return false;
+        });
+    });
+    function SaveTimeSlot(companyId, stringListDays, fromHour, toHour) {
+        var parameters = {
+            fromHour: fromHour,
+            toHour: toHour,
+            stringListDays: stringListDays,
+            companyId: companyId
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/Admin/RequestTimeSlotAdd/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    if (result.isExisted) {
+                        showAlertMessage("Company existed time slot. Please select an other company");
+                    } else {
+                        window.location.href = "/Admin/RequestTimeSlotList?companyID=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)";
+                    }
+                   
+                }
+
+            })
+            .error(function (error) {
+                alert('you selected wrong time');
+            });
+
+    }
+
+</script>

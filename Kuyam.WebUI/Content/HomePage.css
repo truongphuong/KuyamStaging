@@ -1,0 +1,1258 @@
+﻿
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-family: inherit;
+    font-size: inherit;
+    vertical-align: baseline;
+    line-height: inherit;
+    font-weight: normal;
+    font-style: normal;
+    outline: 0;
+}
+
+
+p
+{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+hr
+{
+    clear:both;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    width:75%;
+    margin-top:20px;
+    margin-bottom:20px;
+    height:2px;
+    background-color:black;
+}
+
+body.Basic
+{
+    background-color:#e6e6e6;
+    position:relative;
+    min-width:900px;
+}
+
+
+a { color:#0071bc; text-decoration: none; }
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:active { text-decoration: underline; }
+
+#password-clear { display: none; }
+
+td.none
+{
+    vertical-align:top;
+}
+
+.KuyamGreen { color:#c1d72e; }
+
+
+/*************************************************/
+/* Inputs                                        */
+/*************************************************/
+
+input.BlackBackground
+{
+    background: transparent url("../images/Background/InputBlackBackground.gif") no-repeat left bottom;
+    border: none; 
+    width:162px;
+    height:29px;
+    font-family: Arial;
+    font-style: Italic;
+    font-size: 12;
+    color:#b3b3b3;
+    line-height:2;
+    padding-left:10px;
+}
+
+input.WhiteBackground
+{
+    background: transparent url("../images/Background/InputWhiteBackground.png") no-repeat left bottom;
+    border: none; 
+    width:236px;
+    height:40px;
+    font-family: Arial;
+    font-style: Italic;
+    font-size: 12pt !important;
+    color:#808080;
+    line-height:2.5;
+    padding-left:10px;
+    margin-bottom:10px;
+}
+
+/************** HeaderBasic ***************/
+div.HeaderBasic
+{
+    background-color:Black;
+    position:relative;
+    height:87px;
+    font-family:Arial;
+    font-size: 8pt;
+    color:#cccccc;
+    text-transform:lowercase;
+    padding-left:30px;
+    padding-right:30px;    
+    min-width:900px;
+}
+
+div.HeaderBasic a:link 
+{ 
+    color:#b3b3b3; 
+    text-decoration: none;
+}
+
+div.HeaderBasic a:visited
+{ 
+    color:#b3b3b3; 
+    text-decoration: none;
+}
+
+div.HeaderBasic a:hover
+{ 
+    color:#c1d72e; 
+    text-decoration: none;
+}
+
+div.HeaderBasicContent
+{
+    background-repeat: no-repeat;
+    background-position: left;
+    width:960px;
+    height:87px;
+    margin-left:auto; 
+    margin-right:auto;
+    position: relative;     
+}
+
+/************** HeaderHomepage ***************/
+div.HeaderHomepage
+{
+    background-color:Black;
+    position:relative;
+    height:153px;
+    font-family:Arial;
+    font-size: 8pt;
+    color:#cccccc;
+    text-transform:lowercase;
+    padding-left:30px;
+    padding-right:30px;    
+}
+
+div.HeaderHomepage a:link 
+{ 
+    color:#b3b3b3; 
+    text-decoration: none;
+}
+
+div.HeaderHomepage a:visited
+{ 
+    color:#b3b3b3; 
+    text-decoration: none;
+}
+
+div.HeaderHomepage a:hover
+{ 
+    color:#c1d72e; 
+    text-decoration: none;
+}
+
+div.HeaderHomepageContent
+{
+    width:960px;
+    height:153px;
+    margin-left:auto; 
+    margin-right:auto;
+    position: relative;     
+    display:block;
+}
+
+div.HeaderLargeLogo
+{
+    left:338px;
+    top:36px;
+    position: absolute;
+}
+
+div.HeaderLogin
+{
+    right: 50px;
+    bottom: 12px;
+    position: absolute;
+}
+
+Div.PageLinkLine
+{
+    position:absolute;
+    bottom: 15px;
+    right:0px;
+    font-size:12pt;
+    color:#808080;
+}
+
+.LoginButton
+{
+    right: 0px;
+    bottom:31px;
+    position:absolute;
+}
+
+.HeaderInviteCode
+{
+    left:200px;
+    bottom:-50px;
+    position:absolute;
+    z-index:10;
+}
+
+/*************************************************/
+/* Body Blank                                    */
+/*************************************************/
+div.BodyBlank
+{
+    background: url("../images/Background/BodyBackgroundTop.gif") top left repeat-x,
+                url("../images/background/BodyBackgroundFooter.gif") bottom left repeat-x;
+    background-color:#c1d72e;
+    overflow:auto;
+    min-width:900px;
+}
+
+div.BodyBlankContent
+{
+    background-image: url("../images/BackGround/BodyBasicBackground.png");
+    background-position: top left;
+    background-repeat: repeat-x;
+    background-color: White;
+
+    width:960px;
+    min-width:900px;
+	overflow: auto;
+
+    color:#666666;
+    font-family:Century Gothic;
+    font-size:12pt;
+    text-transform:lowercase;
+
+    line-height:150%;
+    text-align:left;
+}
+
+/*************************************************/
+/* Body                                          */
+/*************************************************/
+div.BodyBasic
+{
+    background-image: url("../images/Background/BodyBackgroundTop.gif");
+    background-color:#c1d72e;
+    background-repeat: repeat-x;
+    position:relative;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+div.BodyBasicContent
+{
+    background-image: url("../images/BackGround/BodyBasicBackground.png");
+    background-position: top left;
+    background-repeat: repeat-x;
+    background-color: White;
+
+    width:900px;
+    position: relative; 
+	overflow: auto;
+	margin-left:auto; 
+    margin-right:auto;
+
+    color:#666666;
+    font-family:Century Gothic;
+    font-size:12pt;
+    text-transform:lowercase;
+
+    line-height:150%;
+    padding: 30px;
+    text-align:left;
+}
+
+div.BodyBasicContentYellow
+{
+    background-image: url("../images/BackGround/BodyBasicBackgroundYellow.gif");
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-color: White;
+
+    width:900px;
+    position: relative; 
+	overflow: auto;
+	margin-left:auto; 
+    margin-right:auto;
+    min-height: 600px;
+
+    color:#666666;
+    font-family:Century Gothic;
+    font-size:12pt;
+    text-transform:lowercase;
+
+    line-height:150%;
+    padding: 30px;
+    text-align:left;
+}
+
+div.BodyBasicContentBlack
+{
+    background-image: url("../images/BackGround/BodyBasicBackgroundBlack.gif");
+    background-repeat: repeat;
+    background-color: black;
+
+    width:900px;
+    position: relative; 
+	overflow: auto;
+	margin-left:auto; 
+    margin-right:auto;
+    min-height: 600px;
+
+    color:#d6d6d6;
+    font-family:Century Gothic;
+    font-size:18pt;
+    font-weight:bold;
+    text-transform:lowercase;
+
+    line-height:150%;
+    padding: 30px;
+    text-align:left;
+}
+
+img.BodyTop
+{
+    margin-top:-30px; 
+    margin-left:-30px;
+    padding-bottom:20px;
+}
+
+div.BodyHomepageContent
+{
+    background-image: url("../images/BackGround/BodyHomepageBackground.png");
+    height: 790px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+    position: relative; 
+    font-family:Century Gothic;
+    font-size:14pt;
+    color:#666666;
+    line-height:150%;
+}
+
+div.BodyBasic H1
+{
+    font-family: Century Gothic;
+    font-weight:bold;
+    color:#c1d72e;
+    font-size: 18pt;
+    padding-top:20px;
+}
+
+div.BodyBasic H2
+{
+    font-family: Century Gothic;
+    font-weight:bold;
+    color:#c1d72e;
+    font-size: 16pt;
+}
+
+div.BodyBasic H3
+{
+    font-family: Century Gothic;
+    font-weight:bold;
+    color:#666666;
+    font-size: 16pt;
+}
+
+/************** BodyFooter ***************/
+div.BodyFooterBasic
+{
+    background-image: url("../images/background/BodyBackgroundFooter.gif");
+    background-color:#c1d72e;
+    background-position: bottom;
+    background-repeat: repeat-x;
+    position:relative;
+    height:10px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+div.BodyFooterBasicContent
+{
+    background-image: url("../images/BackGround/BodyFooterBasicBackground.png");
+    background-repeat:repeat-x;
+    height:10px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+div.BodyFooterBasicContentGrey
+{
+    background-image: url("../images/BackGround/BodyFooterBasicBackgroundGrey.gif");
+    background-repeat:repeat-x;
+    height:10px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+div.BodyFooterBasicContentYellow
+{
+    background-image: url("../images/BackGround/BodyFooterBasicBackgroundYellow.gif");
+    background-repeat:repeat;
+    height:10px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+div.BodyFooterBasicContentBlack
+{
+    background-image: url("../images/BackGround/BodyFooterBasicBackgroundBlack.gif");
+    background-repeat:repeat-x;
+    height:10px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+div.BodyBasicBlackTop
+{
+    background-image: url("../images/BackGround/BodyBasicBackgroundBlackTop.gif");
+    background-repeat:repeat-x;
+    height:8px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+div.BodyFooterHomepage
+{
+    background-image: url("../images/BackGround/BodyFooterHomepageBackground.png");
+    background-repeat:no-repeat;
+    height:10px;
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+/*************************************************/
+/* Footer                                        */
+/*************************************************/
+div.FooterBasic
+{
+    background-image: url("../images/Footer/FooterBackground.gif");
+    background-repeat:repeat-x;
+    background-color:#e6e6e6;
+    color:#666666;
+    padding-top:3px;
+    position:relative;
+    padding-left:30px;
+    padding-right:30px;
+    min-width:900px;
+}
+
+div.FooterBasicContent
+{
+    width: 960px;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+}
+
+div.FooterBasic a:link 
+{ 
+    color:#333333; 
+    text-decoration: none;
+}
+
+div.FooterBasic a:visited
+{ 
+    color:#333333; 
+    text-decoration: none;
+}
+
+div.FooterBasic a:hover
+{ 
+    color:#c1d72e; 
+    text-decoration: none;
+}
+
+div.FooterColumn
+{
+    padding:10px 15px;
+    font-family:Arial;
+    font-size:8pt;
+    float:left;
+}
+
+div.GreyBodyFooter
+{
+    Padding:20px;
+    margin-left:-30px;
+    margin-bottom:-30px;
+    background-color:#CCCCCC;
+    clear:both;
+    width:920px;
+}
+
+/*************************************************/
+/* General styles                                */
+/*************************************************/
+.clear 
+{
+    width: 100%;
+    height:1px;
+    margin: 0 0 -1px;
+    clear: both;
+}
+
+.Center
+{
+    margin-left:auto; 
+    margin-right:auto;  
+    text-align:center;
+    position:relative;  
+}
+
+.Right
+{
+    right: 0px;
+    text-align:right;
+    position: absolute;
+}
+
+.clearfix:after 
+{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.Border1 { border: 0x solid #000000; }
+
+.FloatLeft
+{
+    float:left;
+    border: 0x solid #000000;
+}
+
+.FloatRight
+{
+    float:right;
+    border: 0px solid #000000;
+}
+
+.Width75 { width:75%; }
+
+.TeamName
+{
+    font-size:18pt;
+}
+
+.TeamTitle
+{
+    font-size:12pt;
+    font-style:italic;
+}
+
+/*************************************************/
+/* SignUpDialog                                  */
+/*************************************************/
+
+.SignUpDialog
+{
+    width:250px;
+    height:350px;
+    padding:10px;
+    position:relative;
+}
+
+.SignUpDialog H1
+{
+    color:#3a5070;
+    font-family:Century Gothic;
+    font-size:12pt;
+    font-weight:bold;
+    padding-bottom:10px;
+}
+
+.SignUpDialogBottomLinks
+{
+    position: absolute;
+    bottom:25px;
+    right:30px;
+    text-align:right;
+}
+
+.SignUpDialog a:link 
+{ 
+    color:#3a5070; 
+    font-size:8pt;
+    text-decoration:underline;
+}
+
+.SignUpDialog a:visited
+{ 
+    color:#3a5070; 
+    font-size:8pt;
+    text-decoration:underline;
+}
+
+.SignUpDialog a:hover
+{ 
+    color:#3a5070; 
+    font-size:8pt;
+    text-decoration:underline;
+}
+
+.SignUpDialog .ui-dialog,
+.SignUpDialog.ui-dialog 
+{
+	background: url('../images/Homepage/SignUpDialogBackground.png') no-repeat;
+    width:313px;
+    height:485px;
+    border:0px;
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-titlebar, 
+.SignUpDialog.ui-dialog .ui-dialog-titlebar 
+{  
+    padding: .5em 1em .3em; 
+    position: relative;  
+    background-image:none;
+    background-color:transparent;
+    border:0px;
+    height:50px;
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-title,
+.SignUpDialog.ui-dialog .ui-dialog-title 
+{
+    color: Navy;
+    float: left; 
+    margin: .1em 16px .2em 0; 
+} 
+
+.SignUpDialog .ui-dialog .ui-dialog-titlebar-close,
+.SignUpDialog.ui-dialog .ui-dialog-titlebar-close 
+{  
+    background-image: url("../images/homepage/xbutton.png");
+    position: absolute; 
+    right: 16px; 
+    top: 17px; 
+    width: 19px; 
+    margin: -10px 0 0 0; 
+    padding: 1px; 
+    height: 18px; 
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-titlebar-close span,
+.SignUpDialog.ui-dialog .ui-dialog-titlebar-close span 
+{  
+    display: none; 
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-titlebar-close:hover, 
+.SignUpDialog.ui-dialog .ui-dialog-titlebar-close:hover, 
+.SignUpDialog .ui-dialog .ui-dialog-titlebar-close:focus,
+.SignUpDialog.ui-dialog .ui-dialog-titlebar-close:focus 
+{ 
+    background-image: url("../images/homepage/xbutton.png");
+    background-color:transparent;
+    position: absolute; 
+    right: 14px; 
+    top: 19px; 
+    width: 19px; 
+    margin: -10px 0 0 0; 
+    padding: 1px; 
+    height: 18px; 
+    border:0px;
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-content,
+.SignUpDialog.ui-dialog .ui-dialog-content 
+{  
+    position: relative; 
+    border: 0; 
+    padding: .5em 1em; 
+    background: none; 
+    overflow: auto; 
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-buttonpane,
+.SignUpDialog.ui-dialog .ui-dialog-buttonpane 
+{  
+    text-align: left; 
+    border-width: 1px 0 0 0; 
+    background-image: none; 
+    margin: .5em 0 0 0; 
+    padding: .3em 1em .5em .4em; 
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset,
+.SignUpDialog.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset 
+{  
+    float: right; 
+}
+
+.SignUpDialog .ui-dialog .ui-dialog-buttonpane button,
+.SignUpDialog.ui-dialog .ui-dialog-buttonpane button 
+{  
+    margin: .5em .4em .5em 0; 
+    cursor: pointer; 
+}
+
+.SignUpDialog .ui-dialog .ui-resizable-se,
+.SignUpDialog.ui-dialog .ui-resizable-se 
+{  
+    width: 14px; 
+    height: 14px; 
+    right: 3px; 
+    bottom: 3px; 
+}
+
+.SignUpDialog .ui-draggable .ui-dialog-titlebar,
+.SignUpDialog.ui-draggable .ui-dialog-titlebar 
+{  
+    cursor: move; 
+}
+
+/*************************************************/
+/* PopUpDialog                                  */
+/*************************************************/
+
+.PopUpDialog
+{
+    width:500px;
+    height:540px;
+    padding:30px;
+    margin:30px;
+    position:relative;
+}
+
+.PopUpDialogContent
+{
+    height:470px;
+    width:600px;
+    overflow:scroll;
+    margin-left:15px;
+    margin-top:10px;
+}
+
+.PopUpDialog H1
+{
+    color:#3a5070;
+    font-family:Century Gothic;
+    font-size:12pt;
+    font-weight:bold;
+    padding-bottom:10px;
+}
+
+.PopUpDialog a:link 
+{ 
+    color:#3a5070; 
+    font-size:8pt;
+    text-decoration:underline;
+}
+
+.PopUpDialog a:visited
+{ 
+    color:#3a5070; 
+    font-size:8pt;
+    text-decoration:underline;
+}
+
+.PopUpDialog a:hover
+{ 
+    color:#3a5070; 
+    font-size:8pt;
+    text-decoration:underline;
+}
+
+.PopUpDialog .ui-dialog,
+.PopUpDialog.ui-dialog 
+{
+	background: url('../images/Homepage/PopUpDialogBackground.png') no-repeat;
+    width:313px;
+    height:485px;
+    border:0px;
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-titlebar, 
+.PopUpDialog.ui-dialog .ui-dialog-titlebar 
+{  
+    padding: .5em 1em .3em; 
+    position: relative;  
+    background-image:none;
+    background-color:transparent;
+    border:0px;
+    height:50px;
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-title,
+.PopUpDialog.ui-dialog .ui-dialog-title 
+{
+    color: Navy;
+    float: left; 
+    margin: .1em 30px .2em 0;
+    padding-top:23px;
+    padding-left:10px;
+} 
+
+.PopUpDialog .ui-dialog .ui-dialog-titlebar-close,
+.PopUpDialog.ui-dialog .ui-dialog-titlebar-close 
+{  
+    background-image: url("../images/homepage/xbutton.png");
+    position: absolute; 
+    right: 18px; 
+    top: 21px; 
+    width: 19px; 
+    margin: -10px 0 0 0; 
+    padding: 1px; 
+    height: 18px; 
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-titlebar-close span,
+.PopUpDialog.ui-dialog .ui-dialog-titlebar-close span 
+{  
+    display: none; 
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-titlebar-close:hover, 
+.PopUpDialog.ui-dialog .ui-dialog-titlebar-close:hover, 
+.PopUpDialog .ui-dialog .ui-dialog-titlebar-close:focus,
+.PopUpDialog.ui-dialog .ui-dialog-titlebar-close:focus 
+{ 
+    background-image: url("../images/homepage/xbutton.png");
+    background-color:transparent;
+    position: absolute; 
+    right: 15px; 
+    top: 24px; 
+    width: 19px; 
+    margin: -10px 0 0 0; 
+    padding: 1px; 
+    height: 18px; 
+    border:0px;
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-content,
+.PopUpDialog.ui-dialog .ui-dialog-content 
+{  
+    position: relative; 
+    border: 0; 
+    padding: .5em 1em; 
+    background: none; 
+    overflow: auto; 
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-buttonpane,
+.PopUpDialog.ui-dialog .ui-dialog-buttonpane 
+{  
+    text-align: left; 
+    border-width: 1px 0 0 0; 
+    background-image: none; 
+    margin: .5em 0 0 0; 
+    padding: .3em 1em .5em .4em; 
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset,
+.PopUpDialog.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset 
+{  
+    float: right; 
+}
+
+.PopUpDialog .ui-dialog .ui-dialog-buttonpane button,
+.PopUpDialog.ui-dialog .ui-dialog-buttonpane button 
+{  
+    margin: .5em .4em .5em 0; 
+    cursor: pointer; 
+}
+
+.PopUpDialog .ui-dialog .ui-resizable-se,
+.PopUpDialog.ui-dialog .ui-resizable-se 
+{  
+    width: 14px; 
+    height: 14px; 
+    right: 3px; 
+    bottom: 3px; 
+}
+
+.PopUpDialog .ui-draggable .ui-dialog-titlebar,
+.PopUpDialog.ui-draggable .ui-dialog-titlebar 
+{  
+    cursor: move; 
+}
+
+
+/*************************************************/
+/* Green Tabs                                    */
+/*************************************************/
+ul.GreenTabs
+{
+    background-image:url("../images/about/TabLine.gif");
+    background-repeat:repeat-x;
+    background-position:bottom;
+    height:45px;
+    width:882px;
+    color:#4d4d4d;
+    font-family: Arial;
+    font-size: 18pt;
+    font-weight:900;
+    text-transform:lowercase;
+    list-style:none;
+    margin-bottom:20px;
+}
+
+ul.GreenTabs li 
+{
+    float:left;
+}
+
+ul.GreenTabs li.TabLeft.Here
+{
+    background-image:url("../images/about/TabLeft.png");
+    background-position:0 0;
+    background-repeat:no-repeat;
+    border: 0px solid #000000;
+    width:289px;
+    height:45px;
+}
+
+ul.GreenTabs li.TabCenter.Here
+{
+    background-image:url("../images/about/TabCenter.png");
+    background-position:0 0;
+    background-repeat:no-repeat;    
+    width:304px;
+    height:45px;
+}
+
+ul.GreenTabs li.TabRight.Here
+{
+    background-image:url("../images/about/TabRight.png");
+    background-position:top right;
+    background-repeat:no-repeat;    
+    width:289px;
+    height:45px;
+}
+
+ul.GreenTabs li.TabRight a 
+{
+	display: block;
+    width:289px;
+    height:45px;
+	background: url('../images/about/TabRight.png') bottom;
+	text-indent: -99999px;
+}
+
+ul.GreenTabs li.TabCenter a 
+{
+	display: block;
+    width:304px;
+    height:45px;
+	background: url('../images/about/TabCenter.png') bottom;
+	text-indent: -99999px;
+}
+
+ul.GreenTabs li.TabLeft a 
+{
+	display: block;
+    width:289px;
+    height:45px;
+	background: url('../images/about/TabLeft.png') bottom;
+	text-indent: -99999px;
+}
+
+ul.GreenTabs li.TabLeft a:hover,
+ul.GreenTabs li.TabRight a:hover,
+ul.GreenTabs li.TabCenter a:hover
+{ 
+    background-position: top;
+}
+
+.BusinessTitle
+{
+    font-size:20pt;
+    font-weight:bold;
+    color:#333333;
+}
+
+.BusinessDesc
+{
+    font-size:14pt;
+    color:#333333;
+}    
+
+.GreyBox
+{
+    border-style:solid;
+    border-width:4px;
+    border-radius:16px;
+    border-color:#c1d72e;
+    background-color:#aaabab;
+    background-image:url("../images/Background/GreyBoxBackground.gif");
+    background-repeat:repeat-x;
+    width:545px;
+    height:450px;
+}
+
+
+/*************************************************/
+/* Container stuff (FAQ)                         */
+/*************************************************/
+.ContainerPanel
+{
+       width:800px;
+       margin-left:40px;
+       background-color:#c1d72e;
+}
+.collapsePanelHeader
+{
+       width:800px;
+       height:44px;
+       background-color:#c1d72e;
+}
+.HeaderContent
+{
+       float:left;
+       padding-left:45px;
+       padding-top:10px;
+       font-weight:bold;
+       font-style:italic;
+       font-size:16pt;
+       color:#333333;
+       background-color:#c1d72e;
+       width:700px;
+}
+.Content
+{
+      background-color:#e6e6e6;
+      padding-left:85px;
+      padding-top:5px;
+      font-size:12pt;
+      font-family:Arial;
+}
+.ArrowExpand
+{
+       background-image: url(../images/faq/expand.gif);
+       width:25px;
+       height:25px;
+       float:left;
+       margin-top:10px;
+       margin-left:15px;
+}
+.ArrowExpand:hover
+{
+       cursor:hand;
+}
+.ArrowClose
+{
+       background-image: url(../images/faq/collapse.gif);
+       width:25px;
+       height:25px;
+       float:left;
+       margin-top:10px;
+       margin-left:15px;
+}
+.ArrowClose:hover
+{
+       cursor:hand;
+}
+.BottomLine
+{
+    clear:both; 
+    width:800px; 
+    height:5px; 
+    margin-left:40px; 
+    background-color:#e6e6e6;
+}
+
+.VideoBorder
+{
+    background-image:url(../images/homepage/videoborder.png);
+    background-repeat:no-repeat;
+    width:579px;
+    height:394px;
+    margin-top:5px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:8px;
+    padding-left:-6px;
+}
+
+/*************************************************/
+/* Register pages                                */
+/*************************************************/
+.RegisterSwim
+{
+    background-image:url(../images/homepage/SignUpBack1.png);
+    width: 960px;
+    height:519px;
+}
+
+.RegisterFloat
+{
+    background-image:url(../images/homepage/SignUpBack2.png);
+    width: 960px;
+    height:662px;
+}
+
+.RegisterDive
+{
+    background-image:url(../images/homepage/SignUpBack3.png);
+    width: 960px;
+    height:662px;
+}
+
+.TransparentWhite
+{
+    border-radius: 10px;
+    background-color:White;
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+    padding:10px;
+    margin:auto;
+    width:660px;
+    overflow:auto;
+    font-family:arial;
+    color:Black;
+    text-align:left;
+    font-weight:bold;
+    padding:20px;
+    position:relative;
+}
+
+.TransparentWhite td
+{
+    font-family:arial;
+    color:Black;
+    font-weight:bold;
+}
+
+.TransparentWhite input
+{
+    opacity:1;
+    filter:alpha(opacity=100);
+    background-color:White;
+}
+
+.TransparentWhite a
+{
+    font-style:italic;
+}
+
+.contentMarketPlace{background:#9f9f9f;background:url(../images/bgcontentMarketPlace.jpg) repeat-x;}
+.bgMainContent{min-height:500px;background:url(../images/bgMainContent.png) repeat-y;}
+*{outline:0 none;}
+.clear{display:block;clear:both;height:0;font-size:0;}
+.w104{width:104px !important;}
+.w138{width:138px !important;}
+.w145{width:145px !important;}
+.w158{width:158px !important;}
+.w259{width:259px !important;}
+.w271{width:271px !important;}
+.w289{width:289px !important;}
+.w760{width:760px !important;}
+.h1{height:1px;}
+.h2{height:2px;}
+.h3{height:3px;}
+.h5{height:5px;}
+.h6{height:6px;}
+.h7{height:7px;}
+.h10{height:10px;}
+.h11{height:11px;}
+.h12{height:12px;}
+.h30{height:30px;}
+.h73{height:73px;}
+.aligncenter{text-align:center;}
+.opacity4{opacity:0.4;filter:alpha(opacity=40);}
+.opacity6{opacity:0.6;filter:alpha(opacity=60);}
+fieldset{display:block;margin:0;padding:0;border:0 none;}
+.relative{position:relative;}
+.left-2{left:-2px;}
+a, button, input[type="submit"], input[type="button"], input[type="checkbox"], input[type="radio"]{cursor:pointer;}
+a{text-decoration:none;}
+button{padding:0;margin:0;}
+.p0_11{padding:0 11px;}
+.p10_8{padding:10px 8px;}
+.p0{padding:0 !important;}
+.p10{padding:10px !important;}
+.pr27{padding-right:27px !important;}
+.mt4{margin-top:4px !important;}
+.ml2{margin-left:2px !important;}
+.ml4{margin-left:4px !important;}
+.ml11{margin-left:11px !important;}
+.ml12{margin-left:12px !important;}
+.ml13{margin-left:13px !important;}
+.mr13{margin-right:13px !important;}
+.w741{width:741px;}
+.fLeft{float:left;}
+.fRight{float:right;}
+.borderNone{border:1px solid transparent !important;}
+.transparentbordertop{border-top:1px solid transparent !important;}
+/******nameUser******/
+.nameUser{display:block;width:112px;position:absolute;top:46px;left:202px;overflow:hidden;font:14px/14px Arial, Helvetica, sans-serif;color:#c1d72e;}
+.admincompany{display:block;position:absolute;top:44px;left:202px;overflow:hidden;font:16px/16px Arial, Helvetica, sans-serif;color:#29ABE2;}
+
+/******boxSearch******/
+.boxSearch{position:absolute;top:26px;left:319px;}
+.boxSearch fieldset{}
+
+/******date******/
+.date{width:200px;position:absolute;top:20px;right:5px;font:14px/14px Arial, Helvetica, sans-serif;color:#c1d72e;text-align:right;}
+
+/******menuHeader******/
+.fixheaderposition{ width: 100%; background-color: black; z-index:9900;}
+.stopscrollheader{position:relative;}
+
+ul.menuHeader{padding:0;margin:0;list-style:none;position:absolute;right:24px;top:38px;}
+ul.menuHeader li{float:left;height:26px;font:16px/28px Arial, Helvetica, sans-serif;color:#ccc;border-right:1px solid #666;padding: 2px 12px 0 0;}
+ul.menuHeader li.accountname{padding-right:0px;}
+ul.menuHeader li.accountname .divaccount{padding-right:12px;}
+ul.menuHeader li.lastchild{border:0 !important;padding-right:0;}
+ul.menuHeader li a{color:#ccc;margin-left:24px;}
+ul.menuHeader li .linksignout{margin-left:14px !important;}
+ul.menuHeader li .state{display:block;background:url(../images/sprite.png) no-repeat right -86px;position:relative;text-align:right;}
+ul.menuHeader li .state span{width:160px;height:28px;text-align:right;padding-right:16px;cursor:pointer;}
+ul.menuHeader li .statecalendar{display:block;background-image:none;position:relative;text-align:right;}
+
+ul.signout{right:7px;}
+
+
+.header{height:84px;background: url(../images/head_bg.png) repeat-x left bottom;position:relative;top:11px;min-width:961px;z-index:9900;}
+.header .logo{text-decoration:none;border:solid 0px white;width:157px; height:55px;position:absolute;top:8px;left:22px;}
+.footer{height:140px;background: url(../images/footer_bg.png) repeat-x top left;position:relative;bottom:17px;min-width:961px;font-size:12px;font-family: Arial,Helvetica,sans-serif;}
+.footer .logo{text-decoration:none;border:solid 0px white;width:66px; height:67px;position:absolute;top:25px;left:9px;}
+.footer .menu{position:absolute;top:24px;left:89px;list-style-type:none;margin:0px;padding:0px;}
+.footer .menu li{width:83px;background: url(../images/footer_line.png) no-repeat bottom left;height:21px;}
+.footer .menu li a{text-decoration:none;color:#333333;}
+.footer .menu li a:hover{color:#C1D72E;}
+.footer .col2{top:24px;left:201px;}
+.hcontent, .fcontent{margin:0px auto;width:961px;z-index:1;background-color:transparent;position:relative;}
+.footer span{position:absolute;top:22px;right:3px;color:#666666;}
+.footer .medialogo{position:absolute;top:44px;right:4px;margin:0px;padding:0px;list-style-type:none;}
+.footer .medialogo li{float:left;margin:0px 2px;}
+.footer .medialogo li a{background: url(../images/kuyam_footer_logo1.png) no-repeat top left;height:32px;width:32px;display:block;text-decoration:none;}
+.footer .medialogo li .fb{background-position:top left;}
+.footer .medialogo li .tw{background-position:-35px 0px;}
+.footer .medialogo li .yt{background-position:-70px 0px;}
+.footer .medialogo li .tt{background-position:-105px 0px;}
+.footer .medialogo li .na{background-position:-140px 0px;}
+.footer .medialogo li .ig{background-position:top right;}

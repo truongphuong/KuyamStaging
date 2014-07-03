@@ -1,0 +1,113 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "request appoinment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>appointment requests</h2>
+    <div class="boxsearch">
+        <center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <select id="companyId" name="companyName" style="width:260px;">
+                            @{       
+                                <option value="0">all</option>                           
+                                if (ViewBag.Companys != null)
+                                {
+                                    foreach (ProfileCompany item in ViewBag.Companys)
+                                    {                                  
+                                        <option value="@item.ProfileID" @(ViewBag.profileID == item.ProfileID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }
+                        </select>
+                        <input type="text" value="start date"
+                               onfocus="if (this.value=='start date') {this.value = '';}"
+                               onblur="if (this.value==''){this.value='start date';}" id="ainpStartDateSearchAdmin" />
+                        <input type="text" value="end date"
+                               onfocus="if (this.value == 'end date') { this.value = ''; }"
+                               onblur="if (this.value == '') { this.value = 'end date'; }" id="ainpEndDateSearchAdmin" />
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                        @*<button class="button" id="btnAddApt" type="button" onclick="bookit();">
+                            add</button>*@
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div id="apptlist" style="overflow-x: scroll">
+        @Html.Partial("_RequestAppoinmentList")
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-ui-timepicker-addon.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#ainpStartDateSearchAdmin,#ainpEndDateSearchAdmin").keypress(function (e) {
+            if (e.keyCode != 8) {
+                return false;
+            }
+        });
+        $('#ainpStartDateSearchAdmin,  #ainpEndDateSearchAdmin').datepicker({
+        });
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+    });
+
+    //function bookit() {
+    //    window.location.href = "/Admin/RequestTimeSlotAdd";
+    //}
+
+    function pagingEvent(pageIndex) {
+        var companyId = $('#companyId option:selected').val();
+        var startDate = $("#ainpStartDateSearchAdmin").val();
+        if (startDate != 'start date') {
+            if (Date.parse(startDate)) {
+               
+            } else {
+                showAlertMessage("start date invalid");
+                return false;
+            }
+        }
+        var endDate = $("#ainpEndDateSearchAdmin").val();
+        if (endDate != 'end date') {
+            if (Date.parse(endDate)) {
+
+            } else {
+                showAlertMessage("end date invalid");
+                return false;
+            }
+        }
+        var searchParameters = {
+            companyId: companyId,
+            pageIndex: pageIndex,
+            startDate: startDate,
+            endDate: endDate
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/RequestAppoinmentList/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    $('#apptlist').html(result);
+                }
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>

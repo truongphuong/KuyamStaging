@@ -1,0 +1,159 @@
+﻿@model Kuyam.Database.ZipCode
+@using Kuyam.Database
+@{
+    int totalRecord = 0;
+    bool isOdd = false;
+    if (ViewBag.ZipCodesList != null)
+    {
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+    int userListPageIndex = ViewBag.Page ?? 1;
+    string key = ViewBag.Key == "-1" ? "" : ViewBag.Key;
+    int searchType = ViewBag.SearchType ?? -1;
+    bool isAddMode = ViewBag.IsAddMode;
+    int oldZipCode = Model.ZipCodeId;
+    
+    if (Model.State == null){
+        Model.State = "CA";
+    }
+}
+
+<style type="text/css">
+    body 
+    {
+        color:red;
+    }
+    
+    .tbldata td span{
+    color: red;
+    text-align: left;
+}
+</style>
+@using (@Html.BeginForm("SaveZipCode", "Admin", FormMethod.Post, new { isAddMode = isAddMode }))
+{
+    if (isAddMode)
+    {
+     <h2>add zipcode</h2>
+    }
+    else
+    {
+        <h2>edit zipcode</h2>
+    }
+       
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div style="width:100%">
+            <table cellpadding="1" cellspacing="1" border="0" class="tbldata" width="100%">
+                <tr class="odd">
+                    <td style="width:25px;">
+                        zipcode
+                    </td>
+                    <td>
+                       @Html.TextBoxFor(model => model.Code, new { maxlength = 5,@style="width:300px;" })
+                       &nbsp; @Html.ValidationMessageFor(m => m.Code)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:25px;">
+                        city
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.City, new {maxlength=200, @style = "width:300px;" })&nbsp;
+                        @Html.ValidationMessageFor(m => m.City)
+                    </td>
+                </tr>
+                 <tr class="odd">
+                    <td style="width:25px;">
+                        state
+                    </td>
+                    <td>
+                     <select id="State" name="State">
+                     @foreach (State state in ViewBag.States)
+                     {
+                        <option value="@state.Abbreviation.Trim()" @(Model.State.Trim().ToUpper()==state.Abbreviation.Trim().ToUpper() ? "selected=selected" : "")>@state.Abbreviation.Trim() - @state.Name.Trim()</option>   
+                     }
+                     </select>
+                     @* @Html.DropDownListFor(m => m.SecondAlert, Model.SecondListItem)*@
+                        @*@Html.TextBoxFor(model => model.State, new { @style = "width:300px;" })&nbsp;
+                        @Html.ValidationMessageFor(m => m.State)*@
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:25px;">
+                        county
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.County, new {maxlength=200, @style = "width:300px;" })&nbsp;
+                         @Html.ValidationMessageFor(m => m.County)
+                    </td>
+                </tr>
+            
+            </table>           
+            <br/>
+            @Html.HiddenFor(model => model.Active)
+             @Html.HiddenFor(model => model.ZipCodeId)
+            <input type="hidden" id="page" name="page" value="@userListPageIndex" />
+            <input type="hidden" id="key" name="key" value="@key" />
+            <input type="hidden" id="hdfSearchType" value="@searchType" />
+            <input type="hidden" id="isAddMode" name="isAddMode" value="@isAddMode" />   
+            <input type="hidden" id="oldZipCodeId" name="oldZipCodeId" value="@oldZipCode" />
+            @if (isAddMode)
+            {         
+                   <input id="btnAdd" type="submit" value="add"/>   
+            }
+            else
+            {
+                <input id="btnAdd" type="submit" value="save"/>
+            }         
+             @{
+            if (Model.Active)
+            {
+                if (key == "\'\'") { key = ""; }
+                                <input id="btnDeactive" type="button" value="deactivate" onclick="changeZipCodeStatus('false',@userListPageIndex,'@key',@searchType);"/>                   
+            }
+            else if (Model.Code != "" && Model.Code != string.Empty && Model.Code != null)
+            {
+                if (key == "\'\'") { key = ""; }
+                                <input class="btnActivate" type="button" value="activate" onclick="changeZipCodeStatus('true',@userListPageIndex,'@key',@searchType);" />                  
+            }               
+            }                           
+        </div>
+    </fieldset>
+    <p>
+    <input type="hidden" id="hdfZipCodeId" value="@Model.ZipCodeId" />
+        <a href="/Admin/ZipCodes?page=@(userListPageIndex)&key=@(key)&searchType=@(searchType)">back to list</a>   
+    </p>    
+
+}
+
+<script type="text/javascript">
+
+    function changeZipCodeStatus(status,page,key,searchType) {
+        var id = $("#hdfZipCodeId").val();
+        var searchParameters = { id: id, status: status, page:page, key: key, searchType: searchType };
+
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/ChangeZipcodeStatus/'
+                })
+                .success(function (result) {
+                    if (result == "true") {
+                        //window.location.href = "/Admin/ZipCodeDetail/" + id + "/" + $("#page").val() + "/" + $("#key").val() + "/" + $("#hdfSearchType").val();
+                        window.location.href = "/Admin/ZipCodeDetail/" + id + "/" + $("#page").val() + "/" + $("#key").val() + "/" + $("#hdfSearchType").val();
+                    }
+                })
+                .error(function (error) {
+
+                });
+
+    };
+
+    function GotoZipcodeList() {
+        window.location.href = "/Admin/ZipCodes";
+    }
+</script>

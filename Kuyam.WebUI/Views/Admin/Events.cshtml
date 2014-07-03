@@ -1,0 +1,655 @@
+﻿@using Kuyam.Database
+
+@{
+    ViewBag.Title = "Events";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    int totalRecord = 0;   
+    if (ViewBag.Data != null)
+    {
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtKey").focus();
+        $("#txtKey").val("@ViewBag.Key");
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                FilterSearchResult();
+
+                return false;
+            }
+        });
+    });
+
+</script>
+
+<style type="text/css">
+    .error {
+        color: red;
+        text-align: left;
+    }
+</style>
+<div id="contentmainpage">
+    <div id="divList">
+        <h2>
+            Events list
+        </h2>
+        <div class="boxsearch">
+            <center>
+                <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                    <tr class="odd">
+                        <td>
+                            @*<label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>                           
+                            &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />*@
+                            <input class="button" id="btnNewEvent" type="button" value="add event">                                
+                            </input>                            
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+        <div id="listServices" style="overflow-x: scroll; display: block">
+            
+            <table border='0' cellpadding="0" cellspacing="0" class="tbldata" id="tblServices">
+                <tr>                    
+                    <th> name
+                    </th>
+                    <th style="display:none">
+                        decription
+                    </th>
+                    <th style="width: 70px;">
+                        start
+                    </th>
+                    <th style="width: 70px;">
+                        end
+                    </th>    
+                    <th style="width: 120px;">
+                        action
+                    </th>              
+                </tr>
+                @foreach (Kuyam.Database.Event  eventItem in ViewBag.Data)
+                {                    
+                    <tr id="@eventItem.EventID">                        
+                        <td>
+                            @eventItem.Name 
+                        </td>
+
+                        <td style="display:none">
+                            @eventItem.Description
+                        </td>                                          
+                                             
+                        <td>
+                            @if(eventItem.StartDate.HasValue)
+                            {
+                             <span> @eventItem.StartDate.Value.ToString("M/d/yyyy")</span>                           
+                            }
+                            
+                        </td>
+                        <td>
+                            @if (eventItem.EndDate.HasValue)
+                            {
+                               <span> @eventItem.EndDate.Value.ToString("M/d/yyyy")</span> 
+                            }
+                            
+                        </td>
+                        <td style="width: 100px;">
+                            <a class="modify" href="javascript:void(0)">Edit</a>&nbsp; <span>| </span>
+                            <a  href="@Url.Action("CompaniesForEachEvent", "Admin", new { id = eventItem.EventID })">CompanyList</a>                           
+                        </td>
+                    </tr>
+                }
+            </table>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd" style="width: 50%;">
+                    <td>
+                        <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+                        @{
+                            int from = (ViewBag.Page - 1) * 10 + 1;
+                            int to = ViewBag.Page * 10;
+                            if (to > totalRecord)
+                            {
+                                to = totalRecord;
+                            }
+                            int lastPage = 0;
+                            if (totalRecord % 10 == 0)
+                            {
+                                lastPage = totalRecord / 10;
+                            }
+                            else
+                            {
+                                lastPage = totalRecord / 10 + 1;
+                            }
+
+
+                            <div class="fLeft mt4" style="float: left; padding-left: 0px;">
+                                @if (totalRecord > 0)
+                                {
+                                    <span>@from - @to of </span>
+                                    <span><strong>@totalRecord results</strong></span>
+                                }
+                            </div>
+                        }
+                    </td>
+                    <td class="paging" style="text-align: right; width: 50%;">
+                        @{
+                            if (totalRecord > 0)
+                            {
+                                <div class="paging">
+                                    @if (ViewBag.Page > 1)
+                                    {
+
+                                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+                                    }
+                                    @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+                                    {
+                                        if (ViewBag.Page == 4)
+                                        {
+                                            <a onclick="pagingEvent(@(ViewBag.Page - 3))" pageindex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                                        }
+                                        if (ViewBag.Page > 4)
+                                        {
+                                            <a onclick="pagingEvent(1)" title="previous">1</a>
+                                            <span class="borderNone p0 ml4 dotmore">...</span>
+
+                                        }
+
+                                        <a onclick="pagingEvent(@(ViewBag.Page - 2))" pageindex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                                    }
+                                    @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+                                    {
+
+                                        if (ViewBag.Page == 3)
+                                        {
+                                            <a onclick="pagingEvent(1)" title="previous">1</a>
+                                        }
+                                        if (ViewBag.Page > 3)
+                                        {
+                                            <a onclick="pagingEvent(1)" title="previous">1</a>
+                                            <span class="borderNone p0 ml4 dotmore">...</span>
+
+                                        }
+                                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                                    }
+                                    <span class="active" title="@ViewBag.Page">@ViewBag.Page</span>
+                                    @if (ViewBag.Page + 1 < lastPage)
+                                    {
+                                        <a onclick="pagingEvent(@(ViewBag.Page + 1))" pageindex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+                                    }
+                                    @if (ViewBag.Page + 2 < lastPage)
+                                    {
+                                        <a onclick="pagingEvent(@(ViewBag.Page + 2))" pageindex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+                                    }
+                                    @if (ViewBag.Page + 3 < lastPage)
+                                    {
+                                        <span class="borderNone p0 ml4 dotmore">...</span>
+                                    }
+                                    @if (ViewBag.Page < lastPage)
+                                    {
+                                        <a onclick="pagingEvent(@lastPage)" pageindex="@lastPage" title="@lastPage">@lastPage</a>
+                                        <a onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+                                    }
+                                </div>
+                                <div class="clear">
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+            <div style="width: 100%">
+            </div>
+
+
+        </div>
+    </div>
+    <div id="dialog-form" style="display: none;">
+        <h2 id="formTitle"></h2>
+        <p class="validateTips">
+        </p>
+        <form id="form-data" enctype="multipart/form-data">
+            <input type="hidden" id="hdfEventId" />
+            <table border='0' cellpadding="0" cellspacing="0" class="tbldata">                
+                <tr>
+                    <td style="width: 90px;">
+                        <label for="txtServiceName">
+                            Name
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" name="txtEventName" id="txtEventName" class="text" maxlength="80" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="txtServiceDescription">
+                            description
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" name="txtEventDescription" id="txtEventDescription" value=""
+                               class="text" maxlength="150" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="txtServiceDescription">
+                            Start Date
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" value="start date"
+                               onfocus="if (this.value=='start date') {this.value = '';}"
+                               onblur="if (this.value==''){this.value='start date';}" id="eventStartDate" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="txtServiceDescription">
+                            End Date
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" value="end date"
+                               onfocus="if (this.value=='end date') {this.value = '';}"
+                               onblur="if (this.value==''){this.value='end date';}" id="eventEndDate" />
+                    </td>
+                </tr>
+                
+            
+                <tr>
+                    <td colspan="2" align="center">
+                        <center>
+                            <button id="btnSave">
+                                create
+                            </button>
+                            <button id="btnCancel">
+                                cancel
+                            </button>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <a id="lnkBack" href="javascript:void(0)">back to list</a>
+    </div>
+</div>
+<style>
+    /*#dialog-form label,*/ #dialog-form input:text {
+        display: block;
+    }
+
+    #dialog-form input.text {
+        width: 99%; /*margin-bottom:12px; width:95%; padding: .4em;*/
+    }
+
+    #dialog-form fieldset {
+        padding: 0;
+        border: 0;
+        margin-top: 25px;
+    }
+
+    #dialog-form .ui-state-error {
+        border-color: red;
+    }
+
+    #dialog-form .validateTips {
+        border: 1px solid transparent;
+        padding: 0.3em;
+        color: red;
+    }
+</style>
+
+@*<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js" type="text/javascript"></script>*@
+<script src="/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+@*<script src="/Scripts/validation/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>*@
+<script type="text/javascript">
+
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+      
+        var searchParameters = { page: pageIndex, key: key};
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/Category/'
+            })
+            .success(function (result) {
+                $('#listServices').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function FilterSearchResult() {
+
+        var key = $('#txtKey').val();
+        var type = $('#searchType').val();
+        var searchParameters = { key: key, type: type };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/Category/'
+            })
+            .success(function (result) {
+                if (result == "false") {
+                    window.location.href = "/Admin/Login";
+                } else {
+                    $('#listServices').html(result);
+                }
+
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    $(document).ready(function () {
+
+        $('#eventStartDate, #eventEndDate').datepicker({
+
+        });
+
+
+        $('#txtKey').keypress(function (e) {
+            if (e.which == 13) {
+                e.stopPropagation();
+                e.preventDefault();
+                $('#btnSearch').click();
+            }
+        });
+
+        $('#btnNewEvent').click(function (e) {           
+            resetFormFields();          
+          
+            $('#txtServiceSequence').val('');
+            $("#divsequence").show();
+           
+            $('#divList').hide();
+            $('#dialog-form').show();
+            $('#formTitle').text('add Event');
+        });
+
+       
+
+        $('#btnSave').live('click', function (e) {
+            e.preventDefault();
+            window.isUseDefaultAjaxHandle = true;            
+                if ($.trim($('#hdfEventId').val()) == "") {
+                    createEvent();
+                } else {
+                    modifyEvent($.trim($('#hdfEventId').val()));
+                }
+            
+
+
+
+        });
+
+        $('#btnCancel, #lnkBack').click(function (e) {
+            e.preventDefault();
+            $('#divList').show();
+            $('#dialog-form').hide();
+        });
+
+
+        $('.modify').live('click', function (e) {
+            var tr = $(this).closest('tr');
+            currentRow = tr;
+            $('#hdfEventId').val($.trim(tr.prop('id')));
+            $('#txtEventName').val($.trim(tr.find('td:nth-child(1)').text()));
+            $('#txtEventDescription').val($.trim(tr.find('td:nth-child(2)').text()));
+            $('#eventStartDate').val($.trim(tr.find('td:nth-child(3)').text()));
+            $('#eventEndDate').val($.trim(tr.find('td:nth-child(4)').text()));
+                   
+            
+            $('#divList').hide();
+            $('#dialog-form').show();
+            $('#btnSave').text('save');
+            $('#formTitle').text('edit Event');
+        });
+
+        $('.deleteService').live('click', function (e) {
+            currentRow = $(this).closest('tr');
+            deleteService(currentRow.prop('id'));
+        });
+
+
+        $('.detailCategory').live('click', function () {
+            var self = this;
+            var tr = $(this).closest('tr');
+            if (tr.attr('isExpanded') != "1") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({ categoryId: tr.prop('id') }),
+                        dataType: 'json',
+                        url: '/Admin/ListServicesByCategory/'
+                    })
+                    .success(function (result) {
+                        if (result.status) {
+                            if (result.data.length > 0) {
+                                collapseAll();
+                                tr.attr('isExpanded', 1);
+                                var target = $('<tr></tr>').insertAfter(tr);
+                                target.html('<td colspan="5"><table class="tbldata"></table><td>');
+                                //target.html('<td colspan="5">123555555</table><td>');
+                                $("#serviceTemplate").tmpl(result.data).appendTo(target.find('table.tbldata'));
+                                $(self).text('hide');
+                            } else {
+                                alert('there is no service belong to this category');
+                            }
+                        }
+                    })
+                    .error(function (error) {
+
+                    });
+            }
+            else {
+                tr.next().remove();
+                tr.removeAttr('isExpanded');
+                $(self).text('detail');
+            }
+        });
+    });
+
+    function collapseAll() {
+        $('tr[isExpanded] + tr').remove();
+        $('tr[isExpanded]').removeAttr('isExpanded').find('.detailCategory').text('detail');
+    }
+
+    function resetFormFields() {
+        $('#txtEventName').val('').removeClass("ui-state-error");
+        $('#txtEventDescription').val('').removeClass("ui-state-error");
+        $('#eventStartDate').val('start date').removeClass("ui-state-error");
+        $('#eventEndDate').val('end date').removeClass("ui-state-error");
+        //$('label[for="serviceParent"]');
+        $('#hdfEventId').val('');
+        $('.validateTips').empty(); 
+        $('#btnSave').text('create');
+    }
+
+    function updateTips(t) {
+        $('.validateTips')
+            .text(t)
+            .addClass("ui-state-highlight");
+        setTimeout(function () {
+            $('.validateTips').removeClass("ui-state-highlight", 1500);
+        }, 500);
+    }
+
+    function validateData() {
+        if ($.trim($('#txtEventName').val()) == "") {
+            $('#txtEventName').addClass('ui-state-error');
+            updateTips("name could not be blank.");
+            return false;
+        }      
+        
+
+        return true;
+    }
+
+    function createEvent() {
+        if (!validateData()) {
+            return;
+        }
+        if (!$("#form-data").validate().form())
+            return;
+        var type = 1;
+        var serviceName = $('#txtEventName').val();
+        var description = $('#txtEventDescription').val();
+        var startDate = $('#eventStartDate').val();
+        var endDate = $('#eventEndDate').val();
+       
+        if (startDate == null || startDate == '' || startDate == 'start date' || endDate == 'end date' || endDate == null || endDate == '')
+        {
+            alert('please input correct event date');
+            return;
+        }
+        else if( endDate < startDate)
+        {
+            alert('please input correct event date');
+            return;
+        }
+
+        var postData = {
+            Name: serviceName,
+            Description: description,
+            StartDate: startDate,
+            EndDate: endDate      
+        };
+        
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/EventCreate/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    $('#divList').show();
+                    $('#dialog-form').hide();
+                    alert("added event successfully.");
+                    window.location = "/Admin/Events"; //+ $.param({ key: $.trim($('#txtKey').val()), type: $('#searchType').val(), page: parseInt($('.paging .active').text()) });
+                }
+                else {
+                    alert(result.message);
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function modifyEvent(id) {
+        if (!validateData()) {
+            return;
+        }
+               
+
+        var serviceName = $('#txtEventName').val();
+        var description = $('#txtEventDescription').val();
+        var startDate = $('#eventStartDate').val();
+        var endDate = $('#eventEndDate').val();
+
+        if (startDate == null || startDate == '' || startDate == 'start date' || endDate == 'end date' || endDate == null || endDate == '') {
+            alert('please input correct event date');
+            return;
+        }
+        else if (new Date(endDate) < new Date(startDate)) {
+            alert('please input correct event date');
+            return;
+        }
+
+        var postData = {
+            EventID : id,
+            Name: serviceName,
+            Description: description,
+            StartDate: startDate,
+            EndDate: endDate
+        };      
+
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/EventModify/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    $('#divList').show();
+                    $('#dialog-form').hide();
+                    alert("modified event successfully.");
+                    window.location = "/Admin/Events";
+                }
+                else {
+                    alert(result.message);
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    function deleteService(serviceId) {
+        var type = 1;
+        if ($.trim(currentRow.find('td:nth-child(4)').text()) != "")
+            type = 2;
+        var postData = { serviceId: serviceId };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(postData),
+                dataType: 'json',
+                url: '/Admin/CategoryDelete/'
+            })
+            .success(function (result) {
+                if (result.status) {
+                    alert("deleted " + (type == 1 ? "category" : "service") + " successfully.");
+                    if ($('#tblServices tbody tr:gt(0)').length == 1 && parseInt($('.paging .active').text()) > 1) {
+                        pagingEvent(parseInt($('.paging .active').text()) - 1);
+                    }
+                    else {
+                        pagingEvent(parseInt($('.paging .active').text()));
+                    }
+                }
+                else {
+                    alert(result.message);
+                }
+            })
+            .error(function (error) {
+
+            });
+    }
+</script>
+
+

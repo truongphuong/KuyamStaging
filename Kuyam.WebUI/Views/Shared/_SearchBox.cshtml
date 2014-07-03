@@ -1,0 +1,6 @@
+﻿<select id="searchType">
+    <option value="-1" @(ViewBag.SearchType==-1? "selected":"")>select status</option>
+    <option value="1" @(ViewBag.SearchType==1? "selected":"")>active</option>
+    <option value="2" @(ViewBag.SearchType==2? "selected":"")>frozen</option>
+    <option value="0" @(ViewBag.SearchType==0? "selected":"")>cancelled</option>
+</select>

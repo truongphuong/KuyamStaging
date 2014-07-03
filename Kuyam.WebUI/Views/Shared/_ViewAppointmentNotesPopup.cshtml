@@ -1,0 +1,119 @@
+﻿@using Kuyam.Database;
+@using Kuyam.WebUI.Models;
+@{
+    List<AppointmentLog> appoiontmentNotes = ViewBag.AppointmentNotes;
+    Appointment appointment = ViewBag.Appointment;
+}
+<div class="contentPopup">
+    <a class="btnClose" onclick="closePopup();" href="JavaScript:void(0);" title="Close">
+    </a>
+    <h3>
+        appointment notes</h3>
+    <div class="clear">
+    </div>
+    <input type="hidden" id="appointmentid" value ="@ViewBag.AppointmentID"/>
+    <div class="boxappointmentnotes1">
+    </div>
+    <div class="boxappointmentnotes">
+      
+        @if (appoiontmentNotes != null && appoiontmentNotes.Count > 0)
+        {
+            foreach (AppointmentLog item in appoiontmentNotes)
+            {
+                if (item.CustID == MySession.CustID)
+                {
+            <div class="noteitem">
+                <div class="noteturn">
+                </div>
+                <div class="notecontent">
+                    <div class="notedate">
+                        <div class="txtnotedate">@DateTimeUltility.ConvertToUserTime(@item.LogDT, DateTimeKind.Utc).ToString("M/d/yyyy h:mm:ss tt").ToLower()</div>
+                        @*@if (!item.Viewed)
+                        {<div class="new"></div>}*@
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="notedescription last">
+                        @Html.Raw(item.Message)
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>       
+                }
+                else
+                {   <div class="noteitem">
+                    <div class="theirturn">
+                    </div>
+                    <div class="notecontent">
+                        <div class="notedate">
+                            <div class="txtnotedate">@DateTimeUltility.ConvertToUserTime(@item.LogDT, DateTimeKind.Utc).ToString("M/d/yyyy h:mm:ss tt").ToLower()</div>
+                            @if (!item.Viewed)
+                            {<div class="new">
+                            </div>}
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="notedescription theysay">@Html.Raw(item.Message)
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                }
+            }
+        }
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="divreason">
+        <div class="boxreason">
+            <textarea id="message" cols="3" rows="4" onfocus="if (this.value=='type your message here...') {this.value = '';}"
+                onblur="if (this.value==''){this.value='type your message here...';}">type your message here...</textarea>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <a href="javascript:void(0);" class="addnote" id="addnote" title="add note">add note</a>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#addnote').click(function () {
+            addnote();
+        });
+    });
+    function addnote() {
+        var appointmetnId = $("#appointmentid").val();
+        var message = $("#message").val();
+
+        if (message == 'type your message here...' || message == '') {
+            return;
+        }
+        var param = "appointmetnId=" + appointmetnId + "&message=" + message;
+        commonPostAjax("Appointment", "AddNote", param, callbacksucess, setError, "html");
+    }
+    function callbacksucess(result) {
+        $("#message").val("");
+        $(".boxappointmentnotes").html(result);
+        var a = $('#viewnotespopup .boxappointmentnotes');
+        var hight = a[0].scrollHeight;
+        a.scrollTop(hight);
+        lengthofviewnote();
+    }
+
+    function closePopup() {
+        hideDialog('viewnotespopup');
+        var param = "appointmentId=" + document.getElementById("appointmentid").value;
+        commonPostAjax("Appointment", "ViewedNote", param, function () { }, setError);
+    }
+    
+
+</script>

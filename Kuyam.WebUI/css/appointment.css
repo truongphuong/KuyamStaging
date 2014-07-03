@@ -1,0 +1,136 @@
+﻿/* jQuery.Rating Plugin CSS - http://www.fyneworks.com/jquery/star-rating/ */
+div.rating-cancel,div.star-rating{float:left;width:25px;height:22px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden;margin-right:5px;}
+div.star-rating,div.star-rating a{background:url(../images/stargroup.png) no-repeat 0 0px}
+div.rating-cancel a,div.star-rating a{display:block;width:25px;height:100%;background-position:0 0px;border:0;}
+/*div.rating-cancel a,div.star-rating a{display:block;width:16px;height:100%;background-position:0 0px;border:0}*/
+div.star-rating-on a{background-position:0 -22px!important}
+div.star-rating-hover a{background-position:0 -22px}
+/* Read Only CSS */
+div.star-rating-readonly a{cursor:default !important}
+/* Partial Star CSS */
+div.star-rating{background:transparent!important;overflow:hidden!important}
+/* END jQuery.Rating Plugin CSS */
+
+
+/*** user appointments list page ***/
+.lualist{margin-top:2px;}
+.lualist ul{list-style-type:none;padding:0px;margin:0px 1px;font-size:18px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;}
+.lualist ul li{padding:0px 5px 0px 11px;margin-bottom:2px;text-align:right;}
+.lualist ul .leftitem{text-align:left;}
+.lualist ul li a{color:#0071BC;}
+.ie7 .lualist ul li a{float:left;}
+.lualist ul .active{background-color:#ffff00;height:25px;}
+.lualist ul li .yellow{float:right;display:block;background-color:#ffff00;width:23px;height:19px;text-align:center;font-size:14px;font-weight:bold;color:#000000;padding-top:2px;margin-left:9px;}
+.lualist ul li .orange{float:right;display:block;background-color:#f7931e;width:23px;height:19px;text-align:center;font-size:14px;font-weight:bold;color:#000000;padding-top:2px;margin-left:9px;}
+.lualist ul li .green{float:right;display:block;background-color:#c1d82f;width:23px;height:19px;text-align:center;font-size:14px;font-weight:bold;color:#000000;padding-top:2px;margin-left:9px;}
+.lualist ul li .red{float:right;display:block;background-color:#c1272d;width:23px;height:19px;text-align:center;font-size:14px;font-weight:bold;color:#000000;padding-top:2px;margin-left:9px;}
+.ie7 .lualist ul li .yellow,
+.ie7 .lualist ul li .orange,
+.ie7 .lualist ul li .green,
+.ie7 .lualist ul li .red{float:right;}
+/*background:url(../images/appts_bg.png) repeat-x;*/
+.ualist{min-height:500px;padding-bottom:25px;}
+.ualist .leftcol{float:left;width:170px;}
+.ualist .leftcol .title{font-size:14px;font-weight:bold;color:black;text-align:center;width:144px;height:22px;background-color:#e0eb97;margin:13px 0px 5px 15px;padding-top:3px;}
+.ualist .leftcol .favorite{list-style-type:none;padding:0px;margin:0px;width:142px;background:#c8c8c8 url(../images/appts_sprite.png) no-repeat 0px -427px;height:71px;overflow:hidden;display:none;}
+.ualist .leftcol .favorite li{min-height:24px;}
+.ualist .leftcol .favorite li a{display:block;min-height:22px;width:131px;padding:0px 0px 0px 10px;border-top:0px solid transparent;border-bottom:1px solid transparent;color:#131230;font-size:16px;color:#131230l}
+.ualist .leftcol .favorite li a:hover{background-color:#FFFF00;background-image:none;border-top:0px solid #FFFF00;border-bottom:0px solid #FFFF00;width:131px;margin-left:1px;min-height:22px;padding-left:9px;}
+.ualist .leftcol .favorite li a.active{background-color:#FFFF00;background-image:none;border-top:0px solid #c7c7c7;border-bottom:0px solid #c7c7c7;width:131px;margin-left:1px;min-height:22px;padding-left:9px;}
+.ie .ualist .leftcol .favorite li a{line-height:21px;}
+.ualist .leftcol .schedulefavoritearrowdown{background:url(../images/appts_sprite.png) no-repeat 0px -590px;height: 21px;width: 142px;border-top:1px solid #999999;display: none;}
+.ualist .leftcol .schedulefavoritearrowup{background:url(../images/appts_sprite.png) no-repeat 0px -614px;height: 20px;width: 142px;display:none;}
+.ualist .leftcol .schedulefavoritearrowup1{background:url(../images/appts_sprite.png) no-repeat 0px -639px;height: 21px;width: 142px;display:block;}
+.ualist .leftcol .divfavorite{padding-left:15px;}
+.ualist .leftcol .schedulefavorite{background: url(../images/appts_sprite.png) no-repeat 0px -335px;width:142px;height:27px;text-align:center;font-size:16px;color:#4D4D4D;font-style:italic;font-family:Arial, Helvetica, sans-serif;padding-top:4px;display: block;}
+.ualist .leftcol .schedulefavorite:hover{width:142px;height:27px;background-position:0px -366px;padding-top:4px;color:#FFFFFF;}
+.ualist .leftcol .schedulefavoriteactive{background: url(../images/appts_sprite.png) no-repeat 0 -396px;width:142px;height:27px;text-align:center;font-size:16px;font-style:italic;font-family:Arial, Helvetica, sans-serif;padding-top:4px;display: block;color:#FFFFFF;}
+.ie .ualist .leftcol .schedulefavorite,
+.ualist .leftcol .schedulefavorite:hover,
+.ualist .leftcol .schedulefavoriteactive{line-height:21px;}
+.ualist .rightcol{float:left;width:577px;margin:13px 13px 0px 0px;}
+.ualist .rightcol .boxlist{border:solid 1px #a6a8aa;}
+.ualist .rightcol .boxlist .title{font-size:14px;font-weight:bold;color:black;height:22px;background-color:#e0eb97;padding:3px 0px 0px 10px;}
+.ualist .rightcol .boxlist .title .txttitle{float:left;}
+.ualist .rightcol .boxlist .item{min-height:115px;border-bottom:solid 1px #a4a7aa;margin:0px 2px;}
+.ualist .rightcol .boxlist .item .colinfo{float:left;width:273px;}
+.ualist .rightcol .boxlist .item .colinfo .colinfotitle{font-size:16px;font-weight:normal;font-family:Arial, Helvetica, sans-serif;color:#000000;padding-top:8px;}
+.ualist .rightcol .boxlist .item .colinfo .colinfotitle .hours{padding:4px 0px 0px 40px;float:left;}
+.ualist .rightcol .boxlist .item .colinfo .colinfotitle .divname{float:right;font-weight:bold;color:#666666;font-size:14px;margin-right:11px;}
+.ualist .rightcol .boxlist .item .colinfo .colinfotitle .divname .name{width:110px;float:left;padding-top:3px;}
+.ualist .rightcol .boxlist .item .colinfo .colinfotitle .divname .imgtime{width:21px;height:20px;background: url(../images/appts_sprite.png) no-repeat -168px -104px;float:left;margin-right:4px;}
+.ualist .rightcol .boxlist .item .colinfo .turn{padding-top:6px;}
+.ualist .rightcol .boxlist .item .colinfo .yourturn{display:block;background: url(../images/appts_sprite.png) no-repeat -464px 0px;width:38px;height:32px;margin:1px 8px 0px -7px;float:left;}
+.ualist .rightcol .boxlist .item .colinfo .theirturn{display:block;background: url(../images/appts_sprite.png) no-repeat -464px -35px;width:38px;height:32px;margin:1px 8px 0px -7px;float:left;}
+.ualist .rightcol .boxlist .item .colinfo .nonturn{display:block;width:38px;height:32px;margin:1px 8px 0px -7px;float:left;}
+.ualist .rightcol .boxlist .item .colinfo .newrequest{font-size:14px;color:#000000;font-weight:bold;height:22px;background-color:#ffff00;padding:5px 0px 0px 9px;width:104px;float:left;margin-top:4px;}
+.ualist .rightcol .boxlist .item .colinfo .confirmed{font-size:14px;color:#000000;font-weight:bold;height:22px;background-color:#C1D82F;padding:5px 0px 0px 9px;width:104px;float:left;margin-top:4px;}
+.ualist .rightcol .boxlist .item .colinfo .modified{font-size:14px;color:#000000;font-weight:bold;height:22px;background-color:#F7931E;padding:5px 0px 0px 9px;width:104px;float:left;margin-top:4px;}
+.ualist .rightcol .boxlist .item .colinfo .cancelled{font-size:14px;color:#000000;font-weight:bold;height:22px;background-color:#ED1C24;padding:5px 0px 0px 9px;width:104px;float:left;margin-top:4px;}
+.ualist .rightcol .boxlist .item .colinfo .button .confirm{border:solid 0px transparent;background: url(../images/appts_sprite.png) no-repeat -200px 0px;width:110px;height:34px;font-size:14px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;float:left;padding:0px;margin:0px;}
+.ualist .rightcol .boxlist .item .colinfo .button .pending{border:solid 0px transparent;background: url(../images/appts_sprite.png) no-repeat -200px -83px;width:110px;height:34px;font-size:14px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;float:left;padding:0px;margin:0px;}
+.ualist .rightcol .boxlist .item .colinfo .button .remove{border:solid 0px transparent;background: url(../images/appts_sprite.png) no-repeat -200px -123px ;width:110px;height:34px;font-size:14px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;float:left;padding:0px;margin:0px;}
+.ualist .rightcol .boxlist .item .colinfo .button .btnconfirmed{border:solid 0px transparent;background: url(../images/appts_sprite.png) no-repeat -200px -41px;width:110px;height:34px;font-size:14px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;float:left;padding:0px;margin:0px;}
+.ualist .rightcol .boxlist .item .colinfo .coltime{float:left;width:300px;}
+.ualist .rightcol .boxlist .item .colinfo .coltime .ago{font-size:12px;color:#999999;padding:0px 0px 0px 42px;float:left;width:110px;}
+.ualist .rightcol .boxlist .item .colinfo .coltime .redhours{color:#C1272D;}
+.ualist .rightcol .boxlist .item .colinfo .coltime .modify{margin-top:7px;float:left;width:130px;}
+
+.ualist .rightcol .boxlist .item .colinfo .coltime .modify .hidea {color: #AAD1EB;cursor: default;}
+.ualist .rightcol .boxlist .item .colinfo .coltime .modify .hidea:hover {color: #AAD1EB;cursor: default;}
+
+.ualist .rightcol .boxlist .item .colinfo .button .hidea {cursor: default;}
+.ualist .rightcol .boxlist .item .colinfo .button .hidea:hover {cursor: default;}
+
+.ualist .rightcol .boxlist .item .colinfo .button .hidea {cursor: default;}
+.ualist .rightcol .boxlist .item .colinfo .button .hidea {cursor: default;}
+
+.ualist .rightcol .boxlist .item .colinfo .coltime .modify a{font-size:14px;font-weight:bold;color:#0071BC;margin-right:16px;}
+.ualist .rightcol .boxlist .item .colinfo .coltime .modify a:hover{font-size:14px;font-weight:bold;color:#0071BC;margin-right:16px;}
+.ualist .rightcol .boxlist .last{border-bottom:solid 1px transparent;}
+.ualist .rightcol .boxlist .item .coltime{float:left;width:113px;}
+.ualist .rightcol .boxlist .item .coltime .hours{font-size:16px;color:#4D4D4D;padding:13px 0px 9px 1px;}
+.ualist .rightcol .boxlist .item .coldescription{float:left;width:295px;padding:5px 0px 0px 0px;}
+.ualist .rightcol .boxlist .item .coldescription .divimg{float:left;width:87px;height:84px;margin:3px 9px 0px 0px;}
+.ualist .rightcol .boxlist .item .coldescription .divimg img{border:1px solid #000000;width:85px;height:82px;}
+.ualist .rightcol .boxlist .item .coldescription .colcontent{float:left;width:195px;}
+.ualist .rightcol .boxlist .item .coldescription h2{margin:0px;padding:0px;float:left;font-size:16px;font-weight:bold;color:#000000;margin-right:12px;}
+.ualist .rightcol .boxlist .item .coldescription a{color:#0071BC;font-size:12px;text-decoration:none;display:block;margin-top:2px;font-weight:bold;}
+.ualist .rightcol .boxlist .item .coldescription a:hover{color:#0071BC;font-size:12px;text-decoration:none;display:block;margin-top:2px;font-weight:bold;}
+.ualist .rightcol .boxlist .item .coldescription .description{color:#4D4D4D;font-size:14px;}
+.ualist .rightcol .boxlist .item .coldescription .viewnote{padding-left:62px;}
+.ualist .rightcol .boxlist .item .coldescription .viewnote .lnkviewnote{float:left;}
+.ualist .rightcol .boxlist .item .coldescription .viewnote .newviewnote{float:left;width:25px;height:15px;background: url(../images/appts_sprite.png) no-repeat -169px -57px;margin:2px 0px 0px 6px;}
+.ualist .rightcol .boxlist .item .coldescription .viewnote .nonviewnote{float:left;width:25px;height:15px;margin:2px 0px 0px 6px;}
+.ualist .rightcol .boxlist .item .coldescription .description .yhighlight{background-color:#ffff00;}
+.ualist .apptscalendar{margin:0px 17px 0px 15px;background-color:#e6e6e6;position:relative;}
+.ualist .apptscalendar #calendar{width:728px;}
+.ualist .apptscalendar .divavailability{position:absolute;top:4px;left:2px;}
+.ualist .apptscalendar .divavailability .availability{background-color:#FCEE21;font-size:16px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;color:#000000;padding:2px 3px;letter-spacing:0.3px;}
+.ualist .apptscalendar .divappointmentpreview{position:absolute;top:3px;right:10px;}
+.ualist .apptscalendar .divappointmentpreview .appointmentpreview{font-size:14px;font-weight:normal;font-family:Arial, Helvetica, sans-serif;color:#4D4D4D;padding:2px 10px;border:solid 2px #29ABE2;}
+.ualist .leftcol .viewoption{padding:15px 0px 0px 21px;}
+.ualist .leftcol .viewoption .chooseoption{padding-top:2px;}
+.ualist .leftcol .viewoption .chooseoption .lineoption{float:left;width:2px;height:27px;background-color:#999999;}
+.ualist .leftcol .viewoption .divviewoption{font-size:14px;color:#333333;}
+.ualist .leftcol .optionlist{font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#4D4D4D;width:30px;height:22px;display:block;background: url(../images/appts_sprite.png) no-repeat -319px -112px;padding:5px 0px 0px 15px;float:left;}
+.ualist .leftcol .optionlist:hover{font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#ffffff;width:30px;height:22px;display:block;background: url(../images/appts_sprite.png) no-repeat -319px -78px;padding:5px 0px 0px 15px;}
+.ualist .leftcol .activeoptionlist{font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#ffffff;width:30px;height:22px;display:block;background: url(../images/appts_sprite.png) no-repeat -319px -78px;padding:5px 0px 0px 15px;float:left;}
+.ualist .leftcol .optioncalendar{font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#4D4D4D;width:65px;height:22px;display:block;background: url(../images/appts_sprite.png) no-repeat -366px -78px;float:left;padding:5px 0px 0px 8px;}
+.ualist .leftcol .optioncalendar:hover{font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#ffffff;width:65px;height:22px;display:block;background: url(../images/appts_sprite.png) no-repeat -366px -112px;float:left;padding:5px 0px 0px 8px;}
+.ualist .leftcol .activeoptioncalendar{font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#ffffff;width:65px;height:22px;display:block;background: url(../images/appts_sprite.png) no-repeat -366px -112px;float:left;padding:5px 0px 0px 8px;float:left;}
+.ualist .rightcol .tophead{height:31px;}
+.ualist .rightcol .tophead .toptitle{float:left;font-size:12px;color:#808080;padding:3px 0px 0px 6px;margin-right:2px;}
+.ualist .rightcol .tophead .topday{float:left;margin-right:31px;}
+.ualist .rightcol .tophead .topday .textday{float:left;background:url(../images/appointment.png) no-repeat 0px -869px;width:76px;height:19px;margin:0px 8px;text-align:center;padding-top:4px;}
+.ualist .rightcol .tophead .topday .arrowleft{float:left;width:12px;padding-top:3px;}
+.ualist .rightcol .tophead .topday .arrowleft a{display:block;width:12px;height:14px;background:url(../images/appointment.png) no-repeat -443px 0px;}
+.ualist .rightcol .tophead .topday .arrowright{float:left;width:12px;padding-top:3px;}
+.ualist .rightcol .tophead .topday .arrowright a{display:block;width:12px;height:14px;background:url(../images/appointment.png) no-repeat -461px 0px;}
+.ualist .rightcol .tophead .topselect{float:left;}
+.ualist .rightcol .tophead .topviewhistory{float:right;padding:3px 2px 0px 0px;}
+.ualist .rightcol .tophead .topviewhistory a{color:#0071BC;font-size:12px;font-family:Arial, Helvetica, sans-serif;text-decoration:none;}
+.ualist .rightcol .tophead .topviewhistory a:hover{text-decoration:none;}
+.ualist .rightcol .loadmore{text-align:center;padding:16px 0px 13px 0px;}
+.ualist .rightcol .loadmore a{background:url(../images/blue_arrow.png) no-repeat 0px 0px;color:#0071BC;font-size:14px;font-family:Arial, Helvetica, sans-serif;text-decoration:none;padding-left:14px;}
+

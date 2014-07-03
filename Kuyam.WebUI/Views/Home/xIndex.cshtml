@@ -1,0 +1,56 @@
+﻿@using M2.Util.MVC
+@{
+    ViewBag.Title = "";
+}
+<div style="float: left; width: 400px">
+    <br />
+    <p>
+        make appointments with your favorite local businesses with the click of a mouse.
+        no assembly required.</p>
+    @Html.Partial("_KalturaVideoPlayer", new Kuyam.WebUI.Models.MediaDisplayModel(1, 255, 400))
+    <br />
+    <br />
+    <div class="regSteps">
+        Three simple steps to better organization:</div>
+    <br />
+    <table width="400">
+        <tr>
+            <td>
+                <img src="@Url.Content("~/images/circle-1.png")" />
+            </td>
+            <td width="400">
+                find a company
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content("~/images/circle-2.png")" />
+            </td>
+            <td>
+                schedule your appointment
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content("~/images/circle-3.png")" />
+            </td>
+            <td>
+                get confirmed
+            </td>
+        </tr>
+    </table>
+    @*<img src="@Url.Content("~/images/calfake.jpg")" width=400 alt=""/>*@
+    <br />
+</div>
+<div style="float: right; width: 450px">
+    <br />
+    <p style="width:80%;padding-left:10%">
+        if you have one of our exclusive invite codes, @Html.ActionLink("click here to register", "register", "account")
+        otherwise enter your name and email below to join our mailing list!
+    </p>
+    <div>
+        <p>
+            <script type="text/javascript" src="http://forms.aweber.com/form/54/1251584254.js"></script>
+        </p>
+    </div>
+</div>

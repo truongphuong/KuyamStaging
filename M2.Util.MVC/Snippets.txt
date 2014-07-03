@@ -1,0 +1,169 @@
+﻿// _db is an EF4.1 data entity context
+// Based on http://msdn.microsoft.com/en-us/library/bb896248.aspx
+public static void UpdateRec<ENTITY_TYPE, ENTITY_ID_TYPE>(ENTITY_TYPE obj, ENTITY_ID_TYPE keyValue) where ENTITY_TYPE : class
+{
+    var org = _db.Set<ENTITY_TYPE>().Find(keyValue);
+    _db.Entry(org).CurrentValues.SetValues(obj);
+    _db.SaveChanges();
+}
+
+
+// _db is an EF4.1 data entity context
+// From: http://stackoverflow.com/questions/5400530/validation-failed-for-one-or-more-entities-while-saving-changes-to-sql-server-dat
+public static void SaveChanges(dbEntities db=null)
+{
+    if (db == null)
+        db = _db;
+
+    try
+    {
+        db.SaveChanges();
+    }
+    catch (DbEntityValidationException dbEx)
+    {
+		TraceEntityValidationException(dbEx);
+    }
+}
+
+public static void TraceEntityValidationException(DbEntityValidationException ex)
+{
+	Trace.TraceInformation(GetEntityValidations(ex));
+}
+
+public static string GetEntityValidations(DbEntityValidationException ex)
+{
+	StringBuilder sb = new StringBuilder();
+	foreach (var validationErrors in ex.EntityValidationErrors)
+	{
+		foreach (var validationError in validationErrors.ValidationErrors)
+		{
+			sb.AppendFormat("Property \"{0}\": {1}\r\n", validationError.PropertyName, validationError.ErrorMessage);
+		}
+	}
+
+	return sb.ToString();
+}
+
+
+// Explore this
+// http://weblogs.asp.net/hajan/archive/2010/12/11/viewbag-dynamic-in-asp-net-mvc-3-rc-2.aspx
+I much prefer to write expansion methods to ViewDataDictionary to manage my necessities, for example:
+
+<Extension>
+
+Function ListColors(vdd As ViewDataDictionary(Of T)) As List(Of String)
+
+ Return DirectCast(ViewData("listColors"), List(Of String))
+
+End Function
+
+With this little effort you can use ViewData.ListColors, just the same as ViewBag.ListColors but with Intellisense and strong types!
+
+// implement bilookup
+http://stackoverflow.com/questions/255341/getting-key-of-value-of-a-generic-dictionary
+
+
+// Read xml for a faq
+// http://think2loud.com/224-reading-xml-with-jquery/
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Content("~/content/faq.xml")',
+            dataType: "xml",
+            success: function (xml) {
+                var id = 0;
+                $(xml).find('cat').each(function () {
+
+                    var title = $(this).attr('title');
+                    $('<div class="faq-cat"></div>)').html(title).appendTo('#faq-anchor');
+
+                    $(this).find('faq').each(function () {
+                        var q = $(this).find('question').text();
+                        var a = $(this).find('answer').text();
+                        $('<div class="faq-question"></div>').html(q).appendTo('#faq-anchor');
+                        $('<div class="faq-answer"></div>').html(a).appendTo('#faq-anchor');
+                    });
+                });
+            }
+        });
+    });
+</script>
+
+// Get querystring in javascript, on the client!
+// http://forums.macrumors.com/showthread.php?t=605953
+
+function qs(search_for) {
+		var query = window.location.search.substring(1);
+		var parms = query.split('&');
+		for (var i=0; i<parms.length; i++) {
+			var pos = parms[i].indexOf('=');
+			if (pos > 0  && search_for == parms[i].substring(0,pos)) {
+				return parms[i].substring(pos+1);;
+			}
+		}
+		return "";
+	}
+
+<script type="text/javascript">
+  document.write(qs("name"));
+</script>
+
+
+Generic database update
+// _db is an EF4.1 data entity context
+public static void UpdateRec<ENTITY_TYPE, ENTITY_ID_TYPE>(ENTITY_TYPE obj, ENTITY_ID_TYPE keyValue) where ENTITY_TYPE : class
+{
+	RefreshContext();
+	var org = DBContext.Set<ENTITY_TYPE>().Find(keyValue);
+	if (org != null)
+	{
+		DBContext.Entry(org).CurrentValues.SetValues(obj);
+	}
+	else
+	{
+		DBContext.Set<ENTITY_TYPE>().Add(obj);
+	}
+	DBContext.SaveChanges();
+}
+
+// _db is an EF4.1 data entity context
+public static void DeleteRec<ENTITY_TYPE, ENTITY_ID_TYPE>(ENTITY_TYPE obj, ENTITY_ID_TYPE keyValue) where ENTITY_TYPE : class
+{
+	RefreshContext();
+	var org = DBContext.Set<ENTITY_TYPE>().Find(keyValue);
+	DBContext.Entry(org).State = System.Data.EntityState.Deleted;
+	DBContext.SaveChanges();
+}
+
+
+
+// Ghost text
+// Reference our element
+var txtContent  = document.getElementById("content");
+// Set our default text
+var defaultText = "Please enter a value.";
+
+// Set default state of input
+txtContent.value = defaultText;
+txtContent.style.color = "#CCC";
+
+// Apply onfocus logic
+txtContent.onfocus = function() {
+  // If the current value is our default value
+  if (this.value == defaultText) {
+    // clear it and set the text color to black
+    this.value = "";
+    this.style.color = "#000";
+  }
+}
+
+// Apply onblur logic
+txtContent.onblur = function() {
+  // If the current value is empty
+  if (this.value == "") {
+    // set it to our default value and lighten the color
+    this.value = defaultText;
+    this.style.color = "#CCC";
+  }
+}

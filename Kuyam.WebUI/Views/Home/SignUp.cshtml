@@ -1,0 +1,77 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "get invited to the public beta:";
+}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#SignUpForm').submit(function (e) {
+                submitKuyamSignup(); //should check if call fails...
+                return true;
+            });
+        });
+
+        function submitLogin(myfield, e) {
+            var keycode;
+            if (window.event) keycode = window.event.keyCode;
+            else if (e) keycode = e.which;
+            else return true;
+
+            if (keycode == 13) {
+                $('#SignUpForm').submit();
+                return false;
+            }
+            else
+                return true;
+        }
+
+        function submitKuyamSignup() {
+            var nameValue = $('#name').val();
+            var emailValue = $('#email').val();
+
+            $.post(
+                '@Url.Action("SignUp", "Account")',
+                { email: emailValue, name: nameValue }
+            );
+        }
+    </script>
+
+    <div class="SignUpDialog">
+        <h1>get invited to the public beta:</h1>
+        <div class="Center">
+            <form id="SignUpForm" name="SignUpForm" action="http://www.aweber.com/scripts/addlead.pl" method="post">
+              
+                <!--
+                <input type="hidden" name="meta_web_form_id" value="1142476004" />
+                <input type="hidden" name="meta_split_id" value="" />
+                <input type="hidden" name="meta_tooltip" value="" />
+                <input type="hidden" name="redirect" value="http://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_557464367e077344cf14e091627b058b" />
+                -->
+
+                <input type="hidden" name="listname" value="kuyam-home" />
+                <input type="hidden" name="redirect" value="http://kuyam.com/home/SignUpConfirm" id="redirect_557464367e077344cf14e091627b058b" />
+                <input type="hidden" name="meta_adtracking" value="home_page_form" />
+                <input type="hidden" name="meta_message" value="1" />
+                <input type="hidden" name="meta_required" value="name,email" />
+                <input type="hidden" name="meta_forward_vars" value="1" />
+
+                <input id="name" name="name" class="WhiteBackground" placeholder="name" />
+                <br />
+                <input id="email" name="email" class="WhiteBackground" placeholder="email" onkeypress="return submitLogin(this,event)" />
+                <br />
+        
+                <a href="javascript:$('#SignUpForm').submit()">
+                    <img src="@Url.Content("~/Images/Homepage/popupsignupbutton.png")" alt="Sign Up" style="margin-top:10px;" />
+                </a>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="SignUpDialogBottomLinks">
+        @Html.ActionLink("already a member?", "login", "account")
+        <br />
+    </div>
+
+

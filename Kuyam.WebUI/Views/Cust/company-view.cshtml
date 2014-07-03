@@ -1,0 +1,153 @@
+﻿@model Kuyam.WebUI.Models.CompanyViewModel
+@using M2.Util
+@using M2.Util.MVC
+@{
+    ViewBag.CustPage = "sched";
+    ViewBag.Subtitle = "company details";
+    Layout = null;  // partial view
+    String fullAddress = "";
+}
+<div class="clear">
+</div>
+@if (true)
+{ 
+    <div style="float: left;">
+        @*<img src="../images/business_logo_ph.jpg" height="75" /><br />*@
+        @if (!Model.Company.Street1.IsNullOrEmpty())
+        {
+            @Html.DisplayFor(model => model.Company.Street1)<br />
+            fullAddress += Model.Company.Street1;
+        }
+        @if (!Model.Company.Street2.IsNullOrEmpty())
+        {
+            @Html.DisplayFor(model => model.Company.Street2)<br />
+            fullAddress += ", " + Model.Company.Street2;
+        }
+        @Html.DisplayFor(model => model.Company.City),
+        @Html.DisplayFor(model => model.Company.State)
+        @Html.DisplayFor(model => model.Company.Zip)<br />
+        @{fullAddress += String.Format(", {0}, {1} {2}", Model.Company.City, Model.Company.State, Model.Company.Zip);}
+        <a href="http://maps.google.com?q=@(Html.Encode(fullAddress))" target="_blank">Map</a>
+    </div>
+}
+@*
+<div style="float: left">
+    [video]
+</div>*@
+<div class="clear">
+</div>
+<br />
+@if (!Model.Company.Desc.IsNullOrEmpty())
+{
+    @MvcHtmlString.Create(Model.Company.Desc)
+}
+<div class="clear">
+</div>
+@if (!Model.Company.Phone.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Phone:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Phone)
+    </div>
+}
+@if (!Model.Company.Fax.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Fax:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Fax)
+    </div>
+}
+@if (!Model.Company.Email.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Email:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Email)
+    </div>
+}
+@if (!Model.Company.Url.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Web Page:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Url)
+    </div>
+}
+@if (!Model.Company.PaymentOptions.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Payment Options:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.PaymentOptions)
+    </div>
+}
+@if (!Model.Company.MapUrl.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Map Url:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.MapUrl)
+    </div>
+}
+@if (!Model.Company.Neighborhood.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Neighborhood:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Neighborhood)
+    </div>
+}
+@if (!Model.Company.CrossStreet.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Cross Street:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.CrossStreet)
+    </div>
+}
+@if (Model.Hours.ToString() != "")
+{ 
+    <div class="display-label-companyview">
+        Regular Hours:
+    </div>
+    <div class="display-field-companyview">
+        @Model.Hours
+    </div>
+}
+@if (!Model.Company.PublicTransportation.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Public Transportation:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.PublicTransportation)
+    </div>
+}
+@if (!Model.Company.Parking.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Parking:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Parking)
+    </div>
+}
+@if (!Model.Company.Notes.IsNullOrEmpty())
+{ 
+    <div class="display-label-companyview">
+        Notes:
+    </div>
+    <div class="display-field-companyview">
+        @Html.DisplayFor(model => model.Company.Notes)
+    </div>
+}

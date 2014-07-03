@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "our story";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+        $('select#category').selectmenu();
+    });
+</script>
+<!-- InstanceBeginEditable name="content" -->
+<div class="contentMarketPlace">
+    <div class="howitworks">
+        <div class="ourstory">
+            <div class="ourstoryleft">
+                <ul>
+                    <li><span class="active">our story</span> <span class="greenarrow"></span>
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <li class="meetingteam"><span class="nonarrow"></span><a href="/home/teamkourosh"
+                        title="meet the team">meet the team</a>
+                        <div class="clear">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ourstoryright">
+                <div class="ourstorycontent">
+                    <h1>
+                        our story</h1>
+                    <p>
+                        founded in 2011 by <a href="/home/teamkourosh"><span>kourosh gohar</span></a>, <a
+                            href="/home/teamtony"><span>tony rhoton</span></a>, and <a href="/home/teamtodd"><span>
+                                todd zebert</span></a>, what started as <a href="/home/HairCut"><span>a man who simply
+                                    wanted to get his hair cut</span></a> has evolved into a fresh online
+                        scheduling platform: kuyam.<br />
+                        <br />
+                        with kuyam, you can easily schedule appointments with your favorite lifestyle (cosmetic,
+                        fitness, and family-related) businesses in your neighborhood. you can create, share
+                        and connect calendars with your friends or even manage your family schedule. kuyam
+                        is also a hub to <a href="http://kuyam.org" target="_blank"><span>discover local non-profit</span></a>
+                        and for-profit companies.<br />
+                        <br />
+                        <a href="/home/contactnew"><span>our office</span></a> is in los angeles where we're
+                        building the first kuyam community. <a href="/home/teamkourosh"><span>the team</span></a>
+                        believes in an organic, friendly and collaberative company environment which celebrates
+                        the core idea of kuyam, which in chumash means, "a meeting place where we can come
+                        together."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

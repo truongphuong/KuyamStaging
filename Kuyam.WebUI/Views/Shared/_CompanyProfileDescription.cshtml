@@ -1,0 +1,120 @@
+﻿@using Kuyam.Database
+@model Kuyam.WebUI.Models.ProfileCompaniesModels
+@{
+    ProfileCompany company = Model.ProfileCompany;
+    string descLeft = company.Desc;
+    string descRight = string.Empty;
+    if (!string.IsNullOrEmpty(company.Desc))
+    {
+        int index = company.Desc.Trim().Length / 2;
+        while (index < company.Desc.Length && company.Desc[index] != ' ')
+        {
+            index++;
+        }
+
+        if (index < company.Desc.Length)
+        {
+            descLeft = company.Desc.Substring(0, index);
+            descRight = company.Desc.Substring(index + 1);
+        }
+    }
+    else
+    {
+        descLeft = string.Empty;
+    }
+    descLeft = descLeft.Replace("\n", "<br/>");
+    descRight = descRight.Replace("\n", "<br/>");
+
+    string info = string.Format("{0} {1}", string.IsNullOrEmpty(company.State) ? string.Empty : company.State.ToUpper(), company.Zip);
+
+    string googlemapUrl = "https://maps-api-ssl.google.com";
+}
+
+<div class="companymap">
+    <div id="ggmap" class="ggmap">
+    </div>
+</div>
+<div class="clear15">
+</div>
+@if (company.Desc != null && company.Desc.Length > 80)
+{
+    <div class="descLeft">@Html.Raw(descLeft)</div>
+    <div class="descRight">@Html.Raw(descRight)</div>
+}
+else
+{
+    <div class="descLeft" style="width: 90%;">@Html.Raw(company.Desc)</div>
+}
+<div class="clear">
+</div>
+
+<script type="text/javascript" src="@googlemapUrl/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.pikachoose.full.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });
+
+        $("#pikame").PikaChoose({
+            showTooltips: false,
+            showCaption: false,
+            text: { previous: "", next: "" },
+            thumbOpacity: 1
+        });
+    });
+
+    var map;
+    function initialize() {
+        var myLatlng = new google.maps.LatLng('@company.Latitude', '@company.Longitude');
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("ggmap"), myOptions);
+
+        var myLatLng = new google.maps.LatLng('@company.Latitude', '@company.Longitude');
+        var beachMarker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+        });
+
+        var address = '<div style="color:#666666;">' +
+            '<font size="2" face="Arial">' +
+                '<b>@company.Street1</b>' +
+                    '<br/>@company.City, @info<br/>' +
+                        '</font>' +
+                            '</div>';
+
+        google.maps.event.addListener(beachMarker, "click", function () {
+            //beachMarker.openInfoWindowHtml(address);
+            var infoWindow = new google.maps.InfoWindow();
+            infoWindow.setContent(address);
+            infoWindow.open(map, beachMarker);
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function loadmap(lat, lon, googleIcon) {
+        var myLatlng = new google.maps.LatLng(lat, lon);
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("ggmap"), myOptions);
+        var myLatLng = new google.maps.LatLng(lat, lon);
+        var beachMarker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            icon: googleIcon
+
+
+        });
+    }
+</script>

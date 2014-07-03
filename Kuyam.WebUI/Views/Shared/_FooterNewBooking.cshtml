@@ -1,0 +1,105 @@
+﻿<script type="text/javascript" src="@Url.Content("~/Scripts/js/popup.js")"></script>
+<div class="fcontent">
+    <a href="javascript:void(0);" class="logobooking" title="kuyam">
+        <img src="/Images/powerByKuyam.png" alt="Kuyam" />
+    </a>
+   
+    <ul class="menu">
+        <li><a href="/home/howitworks_user" title="how it works" target="_blank">how it works</a></li>
+        <li><a href="/home/OurStory" title="our story" target="_blank">team</a></li>
+        <li style="display: none;"><a href="#" title="faq" target="_blank">faq</a></li>
+    </ul>
+    <ul class="menu col2">
+        <li><a href="/home/contactnew" title="contact us" target="_blank">contact</a></li>
+        <li><a id="terms" title="terms & privacy" href="#" onclick='return false;'>terms & privacy</a></li>
+        <li><a href="http://kuyam.org" title="kuyam.org" target="_blank">kuyam.org</a></li>
+    </ul>
+    <span>copyright © 2013 kuyam companies, inc. all rights reserved.</span>
+    <span style="top: 40px;">patent pending.</span>
+    <ul class="medialogo">
+        <li style="margin-right: 36px;"><a target="_blank" href="https://www.mcafeesecure.com/RatingVerify?ref=kuyam.com">
+            <img width="65" height="37" border="0" src="//images.mcafeesecure.com/meter/kuyam.com/55.gif"
+                alt="McAfee SECURE sites help keep you safe from identity theft, credit card fraud, spyware, spam, viruses and online scams"
+                oncontextmenu="alert('Copying Prohibited by Law - McAfee SECURE is a Trademark of McAfee, Inc.'); return false;">
+        </a></li>
+        <li><a href="https://www.facebook.com/mykuyam" class="fb" target="_blank" title="Facebook">
+            </a></li>
+        <li><a href="https://twitter.com/mykuyam" class="tw" target="_blank" title="twitter">
+        </a></li>
+        <li><a href="http://www.youtube.com/channel/UCei6RmG4G9jLgEHchRzR5jA" target="_blank" class="yt" title="youtube">
+</a></li>
+        <li><a href="http://kuyam.tumblr.com/" target="_blank" class="tt" title="tumblr"></a>
+        </li>
+        <li><a href="http://pinterest.com/kuyam/" target="_blank" class="na" title="pinterest">
+            </a></li>
+        <li><a href="https://plus.google.com/u/0/b/103779915573360185741/103779915573360185741" class="gg" target="_blank" title="google+"></a></li>
+        <li><a href="http://instagram.com/kuyamsocial/" target="_blank" class="ig" title="instagram">
+        </a></li>
+    </ul>
+</div>
+<div id="termspopup" class="popupterms">
+    <div class="contenttermpopup">
+        <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+        <div class="termspopupheader">
+            <a id="termsofuse" class="headerterms headeractive" title="terms of use">terms of use</a>
+            <a id="privacy" class="headerprivacy" title="privacy policy">privacy policy</a>
+            <a id="services" class="headerservices" title="services listings">services listings</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="termspopupbody">
+            @Html.Partial("_Privacy-Security")
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="termspopupDisclosure" class="popupterms">
+    <div class="contenttermpopup">
+        <a class="btnCloseloginPopup" href="JavaScript:void(0);" title="Close"></a>
+        <div class="termspopupheader">
+            Disclosure
+        </div>
+        <div class="clear">
+        </div>
+        <div class="termspopupbody" style="margin-top: 18px;">
+            @Html.Partial("_Disclosure")
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="lightBox" class="lightBox">
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        $(".termspopupheader a").click(function () {
+            $(".termspopupheader a").removeClass("headeractive");
+            $(this).addClass("headeractive");
+            $("#divtermsofuse, #divprivacy, #divservices").hide();
+            $("#div" + $(this).attr("id")).show();
+        });
+    });
+
+    function hideandshowprivacy(showid) {
+        $(".termspopupheader a").removeClass("headeractive");
+        $(".termspopupheader #" + showid).addClass("headeractive");
+        $("#divtermsofuse, #divprivacy, #divservices").hide();
+        $("#div" + showid).show();
+    }
+</script>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35978406-1']);
+    _gaq.push(['_setDomainName', 'kuyam.com']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>

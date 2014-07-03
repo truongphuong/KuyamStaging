@@ -1,0 +1,149 @@
+﻿@model Kuyam.WebUI.Models.RequestTimeSlot
+@{
+    ViewBag.Title = "request timeslot add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "request timeslot edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var comparyId = Model.ProfileId;
+    var page = ViewBag.Page;
+    var key = ViewBag.Key;
+    var searchType = ViewBag.SearchType;
+    var itemId = Model.Id;
+
+}
+<div id="contentmainpage">
+    <h2>edit time slot</h2>
+    <fieldset>
+        <div style="width: 100%">
+            <table cellpadding="1" cellspacing="1" border="0" class="tbldata" width="100%">
+                <tr>
+                    <td style="width: 100px;">
+                        company
+                    </td>
+                    <td>
+                        @if (Model.ProfileCompany != null)
+                        {
+                            <span>@Model.ProfileCompany.Name</span>
+                            <input id="companyId" type="hidden" value="@Model.ProfileId" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100px;">
+                        start time
+                    </td>
+                    <td>
+                        <input id="StartTime" width="100" value="@ViewBag.FromHour" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100px;">
+                        end time
+                    </td>
+                    <td>
+                        <input id="EndTime" width="100" value="@ViewBag.ToHour" />
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <input id="btnSaveTimeSlot" type="submit" value="Save" />
+    </fieldset>
+    <p>
+        <a href="/Admin/RequestTimeSlotList?companyID=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)">back to list time slot</a>
+    </p>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#StartTime, #EndTime').timepicker({
+            ampm: true,
+            stepMinute: 15,
+            amNames: ['am', 'a'],
+            pmNames: ['pm', 'p']
+        });
+        $("#btnSaveTimeSlot").click(function() {
+            var fromHour = $("#StartTime").val();
+            var toHour = $("#EndTime").val();
+            var flag1 = CheckReangeTime1(fromHour, toHour);
+            if (flag1 == -1)
+            {
+                showAlertMessage("End time must be grater than start time one hour");
+                return false;
+            }
+            var flag = ComapreTime(fromHour, toHour);
+            if (flag != -1) {
+                EditTimeSlot('@comparyId', '@itemId', fromHour, toHour);
+            } else {
+                showAlertMessage("End time must be grater than start time");
+                return false;
+            }
+        });
+    });
+    function CheckReangeTime1(fromHour, toHour) {
+        var myDate = "Oct 13, 2010";
+        var timeStart = fromHour;
+        var timeEnd = toHour;
+
+        var startDate = new Date(myDate + " " + timeStart);
+        var endDate = new Date(myDate + " " + timeEnd);
+
+        var sdd = new Date(startDate.getTime() + 60 * 60000);
+        var aa = new Date(sdd);
+        if (sdd > endDate) {
+            return -1;
+        }
+        return 1;
+    }
+    function ComapreTime(fromHour, toHour) {
+        var myDate = "Oct 13, 2010";
+        var timeStart = fromHour;
+        var timeEnd = toHour;
+
+        var startDate = new Date(myDate + " " + timeStart);
+        var endDate = new Date(myDate + " " + timeEnd);
+        if (startDate > endDate) {
+            return -1;
+        }
+        if (startDate < endDate) {
+            return 1;
+        }
+        return 0; //startDate < endDate
+    }
+    function EditTimeSlot(companyId, itemId, fromHour, toHour) {
+        var parameters = {
+            companyId: companyId,
+            Id: itemId,
+            fromHour: fromHour,
+            toHour: toHour,
+            page: '@page',
+            key: '@key',
+            searchType: '@searchType'
+        };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                url: '/Admin/RequestTimeSlotItemEdit/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    if (result.isOverlap == true) {
+                        showAlertMessage("time slots must not overlap");
+                    } else {
+                        window.location.href = "/Admin/RequestTimeSlotList?companyID=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)";
+                    }
+                }
+
+            })
+            .error(function (error) {
+                alert('you selected wrong time');
+            });
+
+    }
+
+</script>

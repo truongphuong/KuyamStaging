@@ -1,0 +1,53 @@
+﻿@using Kaltura;
+@using M2.Util;
+@using M2.Util.MVC;
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+@{
+    const int PARTNER_ID = 771272; //(STEVE)enter your partner id
+    const string USER_SECRET = "b4edf0a76e3e5391d489214f1741f4dd"; // (STEVE) enter your user secret
+    const string ADMIN_SECRET = "8a9e90ad9dae0f007a6e4312b26c1394"; //(STEVE) enter your admin secret
+    const string SERVICE_URL = "http://www.kaltura.com";
+    string USER_ID = "steve@socalsteve.com"; // "ANONYMOUS"; //steve.mark@markiisoftware.com"; // "ANONYMOUS";
+
+    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+    
+    //construct Kaltura objects for session initiation
+    var config = new KalturaConfiguration(PARTNER_ID);
+    var client = new KalturaClient(config);
+    var ks = client.SessionService.Start(USER_SECRET, USER_ID, KalturaSessionType.USER);
+
+//    string flashVars = "\"uid\":\"" + USER_ID + "\", \"partnerId\":" + PARTNER_ID + ", \"ks\":\"" + ks + 
+//        "\", \"afterAddEntry\":\"onContributionWizardAfterAddEntry\",\"close\":\"onContributionWizardClose\", \"showCloseButton\":false, \"Permissions\":1";
+}
+<div id="kcw">
+</div>
+<script type="text/javascript">
+    function onContributionWizardClose() {
+        //alert("Thank you for using Kaltura ontribution Wizard");
+    }
+
+    function onContributionWizardAfterAddEntry(entries) {
+        alert(entries.length + " media file/s was/were succsesfully uploaded");
+        for (var i = 0; i < entries.length; i++) {
+            alert("entries[" + i + "]:EntryID = " + entries[i].entryId);
+        }
+    }
+
+    var flashVars = {
+        uid: "@USER_ID",
+        partnerID: @PARTNER_ID,
+        ks: "@ks",
+        afterAddEntry: "onContributionWizardAfterAddEntry",
+        close: "onContributionWizardClose",
+        showCloseButton: false,
+        Permissions: 1
+    }
+
+    var params = {
+            allowScriptAccess: "always",
+            allowNetworking: "all",
+            wmode: "opaque"
+    };
+    
+    swfobject.embedSWF("http://www.kaltura.com/kcw/ui_conf_id/1000741", "kcw", "680", "360", "9.0.0", "expressInstall.swf", flashVars, params);
+</script>

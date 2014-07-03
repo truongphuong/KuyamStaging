@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "DashboardViewMyAppts";
+    Layout = null;
+}
+
+@*<img src="@Url.Content("~/images/Dashboard/MyAppts.png")" alt="temp" />*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        fetchAndShowMyAppointments();
+    });
+
+    function fetchAndShowMyAppointments() {
+        $.getJSON(
+            '@Url.Action("AllAppointments")',
+            function (data) { showMyAppointments(data); }
+        );
+    }
+
+    function setMyApptBox(e,AppointmentID) {
+        e.preventDefault();
+        var searchTerms = $('#myAppt').val();
+        showmyApptDialog('@Url.Content("~/cust/dashboardviewMyAppointment/")' + AppointmentID, '', fetchAndShowMyAppointments);
+    }
+
+    function showMyAppointments(appts){
+        //        clearMyAppointments();
+        $('#ScheduleContainer').empty();
+        $.each(appts, function (index) { addMyAppointmentToList(appts[index]); });
+    }
+
+    function addMyAppointmentToList(appt) {
+        var scheduleDiv = $('<div />', {
+            class: "SilverBackground"
+//            style: "background-color:Grey; padding: 5px 10px; width:100%; height:140px;"
+//            onclick: "javascript:CompanySelectClick(this);"
+
+        });
+
+        scheduleDiv.append($('<div />', {
+            class: "titleBar",
+            text: appt.ContactPerson + " - " + appt.CompanyName,
+            onclick: "javascript:setMyApptBox(this, "+appt.AppointmentID+");"
+        }));
+
+        scheduleDiv.append($('<div />', {
+            class: "colorBox"
+        }).append($('<div />',{
+            class: "CalendarSquare",
+            style: "left:7px; top: 6px; position:absolute;"
+        }).html("<H1>" + appt.StartDateDisplay + "</H1><H2>" + appt.StartDateDay + "</h2><H3>" + appt.StartTimeDisplay + "</H3><H4>" + appt.DurationDisplay + "</H4>")));
+
+        scheduleDiv.append($('<div />', {
+            class: "colorBar",
+            style: "font-size:14pt;",
+            text: appt.Status
+        }));
+
+        scheduleDiv.append($('<div />', {
+            class: "BtnDashboard",
+            style: "position:absolute; left:125px; top:65px; float:right;",
+            text: "confirm"
+        }));
+
+        scheduleDiv.append($('<div />', {
+            class: "BtnDashboard",
+            style: "position:absolute; left:125px; top:95px; float:right;",
+            text: "Modify"
+        }));
+
+        $('#ScheduleContainer').append(scheduleDiv);
+    }
+</script>
+
+    <div id="ScheduleContainer" class="DashboardScheduleAppt" style="height:auto;">
+@*        <div class="SilverBackground">
+            <div class="titleBar">
+            Sallies Nail Salon
+            </div>
+            <div class="colorBox">
+              <div id="CurrentApptsDateBox" class="CalendarSquare" style="left:7px; top: 6px; position:absolute;">
+                <h1>feb 10</h1>
+                <h2>fri</h2>
+                <h3>12pm</h3>
+                <h4>1hr</h4>
+              </div>
+            </div>
+            <div class="colorBar">
+            Accepted
+            </div>
+            <div class="BtnDashboard" style="position:absolute; left:125px; top:65px; float:right;">
+                Confirm
+            </div>
+            <div class="BtnDashboard"  style="position:absolute; left:125px; top:95px; float:right;">
+                Modify
+            </div>
+        </div>*@
+    </div>
+
+
+@******************************************************@
+@* Dialg div section                                  *@
+@******************************************************@
+
+<div id="MyApptDialog"></div>

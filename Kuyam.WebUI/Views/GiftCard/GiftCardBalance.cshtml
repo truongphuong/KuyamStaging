@@ -1,0 +1,99 @@
+﻿@using Kuyam.Database
+@model string
+@{
+    ViewBag.Title = "gift card balance";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div id="divLoadForm" class="accountbalance">
+                <div class="boxsuccess">
+                    @* success! you have redeemed $20.00 and it’s been added to your account balance.*@
+                   @* we can't find that gift card number. please check the number and try again.*@
+                    <span class="errorCheckBalane">please enter your gift card number.</span> 
+                </div>
+                <div>
+                    <div class="accountbalanceleft">
+                        <span id="amountValue">$0.00</span>
+                          
+                    </div>
+                    <div class="accountbalanceright">
+                        <div class="boxtop">
+                        </div>
+                        <div class="boxcenter">
+                            <fieldset>
+                                received a gift card?
+                                <br />
+                                enter the gift card number below:
+                                <br />
+                                <input id="giftCode" class="txtnumgif" type="text" />
+                                <input id="checkBalance" type="submit" value="" class="btnredeem" />
+                                <div class="clear">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="boxbottom">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<input id="ipPostCheckBalanceURl" type="hidden" value="@Url.Action("GiftCardBalance", "GiftCard")"/>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#accordion").accordion("option", "active", 1);
+
+        $(".boxsuccess").hide();
+        $(".errorCheckBalane").text("please enter your gift card number.");
+        $("#checkBalance").click(function () {
+            $(".boxsuccess").hide();
+            var giftCode = $("#giftCode").val();
+            if (giftCode == '') {
+                $(".boxsuccess").show();
+                return false;
+            }
+            var option = {
+                giftCode: giftCode
+            };
+            var postUrl = $("#ipPostCheckBalanceURl").val();
+            $.ajax({
+            type: "POST",
+            url: postUrl,
+            data: JSON.stringify(option),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.IsFailed == true && data.isLock==false) {
+                    $(".boxsuccess").show();
+                    $(".errorCheckBalane").text("we can't find that gift card number. please check the number and try again.");
+                    $("#amountValue").text("$0.00");
+                }
+                else{
+                    if (data.isLock == true) {
+                        $(".boxsuccess").show();
+                        $(".errorCheckBalane").text("your account has been locked");
+                        $("#amountValue").text("$0.00");
+                    } else {
+                        if (data.used != '') {
+                            $("#amountValue").text(data.used);
+                        } else {
+                            $("#amountValue").text("$0.00");
+                        }
+                    }
+               }
+            }
+           
+         });
+        });
+    });
+</script>

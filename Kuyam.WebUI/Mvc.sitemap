@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home"  route="home" controller="Home" action="Index">
+    <mvcSiteMapNode title="How it work" controller="Home" action="howitworks_user"/>
+    <mvcSiteMapNode title="Our-story" route="our-story" controller="Home" action="About"/>
+    <mvcSiteMapNode title="Contact" controller="Home" action="ContactNew"/>
+    <mvcSiteMapNode title="FAQ" controller="Home" action="FAQ"/>
+    
+    <mvcSiteMapNode title="Blog post" route="blogPost" controller="Blog" action="Post" dynamicNodeProvider="Kuyam.WebUI.Sitemap.BlogNodes, Kuyam.WebUI"/>
+    <mvcSiteMapNode title="Landing page" controller="landing" action="Index" dynamicNodeProvider="Kuyam.WebUI.Sitemap.LandingPageNodes, Kuyam.WebUI"/>
+    <mvcSiteMapNode title="Company" route="availability" controller="CompanyProfile" action="Availability" dynamicNodeProvider="Kuyam.WebUI.Sitemap.CompanyNodes, Kuyam.WebUI" >
+      <!--<mvcSiteMapNode title="Company Description" route="availability" controller="CompanyProfile" action="Description" />-->
+      <!--<mvcSiteMapNode title="Company Photo" controller="CompanyProfile" action="Photo" inheritedRouteParameters="id" />
+      <mvcSiteMapNode title="Company Review" controller="CompanyProfile" action="Review" inheritedRouteParameters="id" />
+      <mvcSiteMapNode title="Company Package" controller="CompanyProfile" action="Package" inheritedRouteParameters="id" />-->
+    </mvcSiteMapNode>
+    
+  </mvcSiteMapNode>
+  
+</mvcSiteMap>

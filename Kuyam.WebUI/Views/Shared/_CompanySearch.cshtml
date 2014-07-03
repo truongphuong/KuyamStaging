@@ -1,0 +1,16 @@
+﻿@using M2.Util.MVC
+<div class="sched-appt-box">
+    @using (Html.BeginForm("company-search", "cust"))
+    {
+        <div class="sched-appt-company">
+            Lookup or Add a Company</div>
+        <br />
+        <div class="center">@Html.TextBox("searchTerms", "", new { placeholder = "enter all or part of a company name", style = "width:250px", autocomplete = "off" })<br />
+            <br />
+            @Html.SaveCancelLC("search", "searching", "cancel", false)</div>
+        <br />
+    }
+</div>
+<div class="clear">
+</div>
+<br />

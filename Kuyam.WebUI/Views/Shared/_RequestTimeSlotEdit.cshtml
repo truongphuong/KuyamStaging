@@ -1,0 +1,449 @@
+﻿<script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/validation/jquery.validate.unobtrusive.min.js")"></script>
+
+@model Kuyam.WebUI.Models.RequestTimeSlot
+@using Kuyam.Database
+@Html.ValidationSummary(true)
+@{
+    List<EmployeeHour> previewHour = null;
+    if (ViewBag.previewHour != null)
+    {
+        previewHour = ViewBag.previewHour;
+    }
+    string stringFromHour = Model.FromHour;
+    string stringToHour = Model.ToHour;
+
+
+}
+<style type="text/css">
+    body {
+        color: red;
+    }
+
+    .tbldata td span {
+        color: red;
+        text-align: left;
+    }
+
+    #editaddhours ul {
+        list-style: none;
+    }
+
+        #editaddhours ul li.first {
+            margin-left: 0px;
+        }
+
+        #editaddhours ul li {
+            margin-left: 25px;
+        }
+</style>
+<fieldset>
+    <div style="width: 100%">
+        <table cellpadding="1" cellspacing="1" border="0" class="tbldata" width="100%">
+            <tr>
+                <td style="width: 100px;">
+                    company
+                </td>
+                <td>
+                    @if (Model.ProfileCompany != null)
+                    {
+                        <span style="color: #000000!important">@Model.ProfileCompany.Name</span>
+                        <input id="companyId" type="hidden" value="@Model.ProfileId" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    time slot
+                </td>
+                <td>
+                    <div class="listhours">
+                        <div class="boxselect1">
+                        </div>
+                        <div class="boxselect">
+                            <div class="selectday">
+                                <div class="title">
+                                    select days:
+                                </div>
+                                <div class="clear">
+                                </div>
+                                @if (previewHour != null)
+                                {
+                                    DateTime now = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
+                                    int dayOfWeek = (int)now.DayOfWeek;
+                                    int detDay = 7 - dayOfWeek;
+                                    int day = 0;
+
+                                    <div class="dayofweek">
+                                        @for (int i = 0; i < 7; i++)
+                                        {
+                                            bool flag = false;
+                                            foreach (EmployeeHour item in previewHour)
+                                            {
+                                                //if (item.DayOfWeek >= dayOfWeek)
+                                                //{
+                                                //    day = item.DayOfWeek - dayOfWeek;
+                                                //}
+                                                //else
+                                                //{
+                                                //    day = item.DayOfWeek + detDay;
+                                                //}
+                                                day = item.DayOfWeek;
+                                                if (day.ToString().Contains(i.ToString()))
+                                                {
+                                                    flag = true;
+                                                    break;
+                                                }
+
+                                            }
+                                            var dateName = System.Globalization.DateTimeFormatInfo.CurrentInfo.GetDayName((DayOfWeek)i);
+                                            @*if (flag)
+                                            {
+                                                <a href="javascript:void(0);" id="@now.AddDays(i).Day" class="active" addday="@dateName" title="@now.AddDays(i).Day">@dateName.Substring(0, 3).ToLower()</a>
+
+                                            }
+                                            else*@
+                                            //{
+                                                <a href="javascript:void(0);" id="@now.AddDays(i).Day" addday="@dateName" title="@now.AddDays(i).Day">@dateName.Substring(0, 3).ToLower()</a>
+                                            //}
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    DateTime now = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
+
+                                    <div class="dayofweek">
+                                        @for (var i = 0; i < 7; i++)
+                                        {
+                                            var dateName = System.Globalization.DateTimeFormatInfo.CurrentInfo.GetDayName((DayOfWeek)i);
+                                            <a href="javascript:void(0);" id="@now.AddDays(i).Day" addday="@dateName" title="@now.AddDays(i).Day">@dateName.Substring(0, 3).ToLower()</a>
+                                        }
+                                        @*<a href="javascript:void(0);" id="@now.Day" addday="@now.DayOfWeek.ToString()" title="@now.Day">@now.ToString("ddd").ToLower()</a>
+                                            <a href="javascript:void(0);" id="@now.AddDays(1).Day" addday="@now.AddDays(1).DayOfWeek.ToString()" title="@now.AddDays(1).Day">@now.AddDays(1).ToString("ddd").ToLower()</a>
+                                            <a href="javascript:void(0);" id="@now.AddDays(2).Day" addday="@now.AddDays(2).DayOfWeek.ToString()" title="@now.AddDays(2).Day">@now.AddDays(2).ToString("ddd").ToLower()</a>
+                                            <a href="javascript:void(0);" id="@now.AddDays(3).Day" addday="@now.AddDays(3).DayOfWeek.ToString()" title="@now.AddDays(3).Day">@now.AddDays(3).ToString("ddd").ToLower()</a>
+                                            <a href="javascript:void(0);" id="@now.AddDays(4).Day" addday="@now.AddDays(4).DayOfWeek.ToString()" title="@now.AddDays(4).Day">@now.AddDays(4).ToString("ddd").ToLower()</a>
+                                            <a href="javascript:void(0);" id="@now.AddDays(5).Day" addday="@now.AddDays(5).DayOfWeek.ToString()" title="@now.AddDays(5).Day">@now.AddDays(5).ToString("ddd").ToLower()</a>
+                                            <a href="javascript:void(0);" id="@now.AddDays(6).Day" addday="@now.AddDays(6).DayOfWeek.ToString()" title="@now.AddDays(6).Day">@now.AddDays(6).ToString("ddd").ToLower()</a>*@
+                                    </div>
+                                }
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="available">
+                                <div class="title">
+                                    available hours:
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="divaddhours">
+                                    <div class="textbox">
+                                        <div class="ltxtaddhours">
+                                        </div>
+                                        <div class="ctxtaddhours" style="width: 57px !important;">
+                                            <input id="fromhours" type="text" readonly="readonly" value="" />
+                                        </div>
+                                        <div class="rtxtaddhours">
+                                        </div>
+                                    </div>
+                                    <div class="divto">
+                                        to
+                                    </div>
+                                    <div class="textbox">
+                                        <div class="ltxtaddhours">
+                                        </div>
+                                        <div class="ctxtaddhours" style="width: 57px !important;">
+                                            <input id="tohours" type="text" value="" readonly="readonly" />
+                                        </div>
+                                        <div class="rtxtaddhours">
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $('#fromhours').val('@stringFromHour');
+                                        $('#tohours').val('@stringToHour');
+                                    </script>
+                                    <div class="divbtnaddhours">
+                                        <input id="btnaddhours" class="addhours" style="width: 146px;" type="button" value="+add timeslot" title="Add timeslot" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="editaddhours" class="editaddhours">
+                        @if (!string.IsNullOrEmpty(Model.htmlTimeSlots))
+                        {
+                            @Html.Raw(Model.htmlTimeSlots)
+                        }
+                        else
+                        {
+                            <ul id="0">
+                                <li id="Sun" class="first">Sun:</li>
+                                <li id="Suncontent">
+                                </li>
+                            </ul>
+                            <ul id="1">
+                                <li id="Mon" class="first">Mon:</li>
+                                <li id="Moncontent">
+                                </li>
+                            </ul>
+                            <ul id="2">
+                                <li id="Tue" class="first">Tue:</li>
+                                <li id="Tuecontent">
+                                </li>
+                            </ul>
+                            <ul id="3">
+                                <li id="Wed" class="first">Wed:</li>
+                                <li id="Wedcontent">
+                                </li>
+                            </ul>
+                            <ul id="4">
+                                <li id="Thu" class="first">Thu:</li>
+                                <li id="Thucontent">
+                                </li>
+                            </ul>
+                            <ul id="5">
+                                <li id="Fri" class="first">Fri:</li>
+                                <li id="Fricontent">
+                                </li>
+                            </ul>
+                            <ul id="6">
+                                <li id="Sat" class="first">Sat:</li>
+                                <li id="Satcontent">
+                                </li>
+                            </ul>
+
+                        }
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</fieldset>
+<input type="hidden" id="dateOfWeeks" />
+<script type="text/javascript">
+    var dayReview;
+    $(document).ready(function () {
+        $("#btnbook").hide();
+        $(".dayofweek a").click(function () {
+            if ($(this).attr("class") == "active") {
+                dayReview = document.querySelectorAll('.dayofweek .active');
+                $(this).removeClass("active");
+            }
+            else {
+                $(this).addClass("active");
+            }
+            //LoadReview();
+        });
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        if (agentID) {
+
+            $('#fromEditHours, #toEditHours, #fromhours').scroller({
+                preset: 'time',
+                theme: 'jqm',
+                display: 'modal',
+                mode: 'scroller'
+            });
+
+            $('#tohours').scroller({
+                preset: 'time',
+                theme: 'jqm',
+                display: 'modal',
+                mode: 'scroller',
+                //onClose: function () { //LoadReview(); }}
+            });
+        }
+        else {
+            $('#fromhours').timepicker({
+                ampm: true,
+                stepMinute: 15,
+                amNames: ['am', 'a'],
+                pmNames: ['pm', 'p']
+            });
+
+            $('#tohours').timepicker({
+                ampm: true,
+                stepMinute: 15,
+                amNames: ['am', 'a'],
+                pmNames: ['pm', 'p'],
+                //onClose: function () { LoadReview(); }
+            });
+        }
+        $("#btnaddhours").click(function () {
+            var listDays = document.querySelectorAll('.dayofweek .active');
+            if (listDays && listDays.length > 0) {
+                //for (var i = 0; i < listDays.length; i++) {
+                //    if (stringListDays != "" && listDays[i].attributes["AddDay"].value != "")
+                //        stringListDays += ",";
+                //    stringListDays += listDays[i].attributes["AddDay"].value;
+                //}
+            } else {
+                showAlertMessage("Please select date of week");
+                return false;
+            }
+            var fromHour = $('#fromhours').val();
+            var toHour = $('#tohours').val();
+            if (fromHour != '' && toHour != '') {
+                var cOne = CheckReangeTime(fromHour, toHour);
+                if (cOne == -1) {
+                    showAlertMessage("End time must be greater than start time one hour");
+                    return false;
+                }
+                var com = ComapreTime(fromHour, toHour);
+                if (com == -1 || com == 0) {
+                    showAlertMessage("End time must be greater than start time");
+                    return false;
+                }
+                $("#btnbook").show();
+                //$("#editaddhours").empty();
+                var stringListDays = $("#dateOfWeeks").val();
+                //if (listDays.length == 7) {
+                //    var id = "isdaily," + fromHour.replace(/\s/g, "") + "," + toHour.replace(/\s/g, "");
+                //    var span = "<span id='" + id + "'>mon - sun " + fromHour + "-" + toHour + "</span><br>";
+                //    $("#isdailycontent").empty();
+                //    $("#isdailycontent").append(span);
+                //    stringListDays = stringListDays + id + "*";
+                //    $("#dateOfWeeks").val(stringListDays);
+                //} else {
+                for (var i = 0; i < listDays.length; i++) {
+                    //if (stringListDays != "" && listDays[i].attributes["AddDay"].value != "")
+                    //    stringListDays += ",";
+                    var dateOfWeek = listDays[i].attributes["AddDay"].value;
+                    var subDateOfWeek = dateOfWeek.substring(0, 3);
+                    var id = subDateOfWeek + "," + fromHour.replace(/\s/g, "") + "," + toHour.replace(/\s/g, "");
+                    var flag = CheckTimeExisted(subDateOfWeek, fromHour, toHour);
+                    if (!flag) {
+                        //showAlertMessage(dateOfWeek + " time is be overlap");
+                        showAlertMessage(dateOfWeek + ": time slots must not overlap");
+                        return false;
+                    }
+                    else {
+                        //stringListDays += dateOfWeek;
+                        //var subDateOfWeek = dateOfWeek.substring(0,3);
+                        //var id = subDateOfWeek + "," + fromHour.replace(/\s/g, "") + "," + toHour.replace(/\s/g, "");
+                        //var text = subDateOfWeek + " " + fromHour + "-" + toHour;
+                        //var span = "<span id='" + id + "'>" + text + "</span><br>";
+                        //$("#editaddhours").append(span);
+                        //$("#dateOfWeeks").val(stringListDays);
+                        AddToSessionTimeSlot(subDateOfWeek, id, fromHour.replace(/\s/g, ""), toHour.replace(/\s/g, ""));
+                        stringListDays = stringListDays + id + "*";
+                        $("#dateOfWeeks").val(stringListDays);
+                    }
+                }
+
+                //}
+
+            } else {
+                showAlertMessage('please select both a start and end time for this time slot');
+            }
+
+        });
+    });
+    function AddToSessionTimeSlot(dateOfWeek, id, fromTime, toTime) {
+        var span = GetHTMLSpan(id, fromTime, toTime);
+        $("#" + dateOfWeek + "content").append(span);
+    }
+    function GetHTMLSpan(id, fromHour, toHour) {
+        var text = fromHour.replace("am", " am").replace("pm", " pm") + "-" + toHour.replace("am", " am").replace("pm", " pm");
+        var span = "<span id='" + id + "'>" + text + "</span><br/>";
+        return span;
+    }
+    function CheckTimeExisted(id, fromHour, toHour) {
+        var exit = true;
+        $("#" + id + "content span").each(function (index, element) {
+            var spanId = element.id;
+            var arrSpan = spanId.split(",");
+            //Get current time is added
+            var currentFromTime = arrSpan[1].replace("am", " AM").replace("pm", " PM");
+            var currentToTime = arrSpan[2].replace("am", " AM").replace("pm", " PM");
+            //case same from/to
+            var ff = ComapreTime(fromHour.replace("am", " AM").replace("pm", " PM"), currentFromTime);
+            var tt = ComapreTime(toHour.replace("am", " AM").replace("pm", " PM"), currentToTime);
+            if (ff == 0 && tt == 0) {
+                exit = false;
+                return false;
+            }
+            // case end time <= from time add
+            var fwt = ComapreTime(currentToTime, fromHour.replace("am", " AM").replace("pm", " PM"));
+            if (fwt == 0 || fwt == 1) {
+                return true;
+            }
+            // case end time <= from time add
+            var twf = ComapreTime(toHour.replace("am", " AM").replace("pm", " PM"), currentFromTime);
+            if (twf == 0 || twf == 1) {
+                return true;
+            }
+            exit = false;
+            return false;
+        });
+        return exit;
+    }
+    function CheckReangeTime(fromHour, toHour) {
+        var myDate = "Oct 13, 2010";
+        var timeStart = fromHour;
+        var timeEnd = toHour;
+
+        var startDate = new Date(myDate + " " + timeStart);
+        var endDate = new Date(myDate + " " + timeEnd);
+
+        var sdd = new Date(startDate.getTime() + 60 * 60000);
+        var aa = new Date(sdd);
+        if (sdd > endDate) {
+            return -1;
+        }
+        return 1;
+    }
+    function ComapreTime(fromHour, toHour) {
+        var myDate = "Oct 13, 2010";
+        var timeStart = fromHour;
+        var timeEnd = toHour;
+
+        var startDate = new Date(myDate + " " + timeStart);
+        var endDate = new Date(myDate + " " + timeEnd);
+        if (startDate > endDate) {
+            return -1;
+        }
+        if (startDate < endDate) {
+            return 1;
+        }
+        return 0; //startDate < endDate
+    }
+    //function SaveTimeLoad(companyId,stringListDays,fromHour,toHour) {
+    //    var parameters = {
+    //        fromHour: fromHour,
+    //        toHour: toHour,
+    //        stringListDays: stringListDays,
+    //        profileId:companyId
+    //    };
+    //    $.ajax(
+    //        {
+    //            type: 'POST',s
+    //            contentType: 'application/json; charset=utf-8',
+    //            data: JSON.stringify(parameters),
+    //            dataType: 'json',
+    //            url: '/company/RequestTimeSlotAdd/'
+    //        })
+    //        .success(function(result) {
+    //            if (result == 'true') {
+
+    //            } else {
+    //                alert('you selected wrong time');
+    //            }
+
+    //        })
+    //        .error(function(error) {
+    //        });
+
+    //}
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        var hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
+</script>

@@ -1,0 +1,590 @@
+﻿@{
+    ViewBag.Title = "Apppoitments";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+    
+}
+<link rel='stylesheet' type='text/css' href='../../css/themes/base/fullcalendar_appts_calendar.css' />
+<link rel='stylesheet' type='text/css' href='../../css/themes/base/fullcalendar.print_appts_calendar.css'
+    media='print' />
+<script type='text/javascript' src='../../Scripts/js/fullcalendar_appts_calendar.js'></script>
+<link rel="stylesheet" media="all" type="text/css" href="../../css/themes/base/jquery-ui-timepicker-addon.css" />
+<script type="text/javascript" src="@Url.Content("~/scripts/js/jquery-ui-timepicker-addon.js")"></script>
+<script src="../../Scripts/js/jquery-ui-sliderAccess.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/js/appointment.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/css/appointment.css")" />
+<div class="content2">
+    <!-- InstanceBeginEditable name="content" -->
+    <div class="contentMarketPlace ml2">
+    <input type="hidden" id="hdfKey" value="0" />
+        <div class="bgMainContent">
+            <div id="leftTabAppointment">
+                @Html.Partial("_CompanySearchLeftTab")
+            </div>
+            <div class="colRight w760">
+                <div class="ualist">
+                    <div class="leftcol">
+                        <div class="title">
+                            select a calendar</div>
+                        <div class="clear">
+                        </div>
+                        <div class="divfavorite">
+                            <a href="javascript:void(0);" id="employees" class="schedulefavorite" title="all calendar">
+                                all calendar </a>
+                            <ul class="favorite" id="employeeslist">
+                                @if (ViewBag.CalendarList != null)
+                                {
+                                    foreach (Kuyam.Database.Calendar item in ViewBag.CalendarList)
+                                    {
+                                    <li><a href="javascript:void(0);" onclick="fillterByCalendar('@item.CalendarID');" title="@item.Name" value="@item.CalendarID" title="@item.Name">@Kuyam.Domain.UtilityHelper.TruncateText(item.Name,10)</a></li>                            
+                                    }
+                                }
+                            </ul>
+                            <a href="#" id="employeeslistarrowup" class="schedulefavoritearrowup" title="up">
+                            </a><a href="#" id="employeeslistarrowdown" class="schedulefavoritearrowdown" title="down">
+                            </a>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="viewoption">
+                            <div class="divviewoption">
+                                view options:</div>
+                            <div class="clear">
+                            </div>
+                            <div class="chooseoption">
+                                <a href="/appointment" id="idlist" class="optionlist">list</a>
+                                <div class="lineoption">
+                                </div>
+                                <a href="/appointment/IndexCalendar" id="idcalendar" class="activeoptioncalendar">calendar</a>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="rightcol">
+                        <div id="appointmentdetail">
+                            @Html.Raw(ViewBag.HtmlData)
+                        </div>
+                       @* <div id="divAppointment">
+                            @Html.Raw(@ViewBag.DataCalendar)
+                        </div>*@
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="rappts">
+                        <div class="clear10">
+                        </div>
+                        <div class="apptscalendar">
+                            <div class="divavailability">
+                                <span class="availability">@*<label id="lblempname">@ViewBag.EmpName’s availability this week</label>*@
+                                    <label id="lblempname">
+                                        all</label>
+                                </span>
+                            </div>
+                            <div class="divappointmentpreview">
+                                <div class="appointmentpreview">
+                                    appointment preview</div>
+                            </div>
+                            <div id="calendar" style="background-color: White!important;">
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="lightBox" class="lightBox z499">
+</div>
+<div id="cancelpopup" class="cancelpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <h3>
+            are you sure you want to cancel?</h3>
+        <div class="clear">
+        </div>
+        <div class="contentcancel">
+            <div class="contentcancelcol1">
+                <label id="lbldatetime">
+                </label>
+                <br />
+                <label id="lblcustname">
+                </label>
+                <br />
+            </div>
+            <div class="contentcancelcol2">
+                <label id="lblcompname">
+                </label>
+                <br />
+                <label id="lblempname">
+                </label>
+                <br />
+                <label id="lblsername">
+                </label>
+                <br />
+                <label id="lblnote">
+                </label>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="divreason">
+            <h3>
+                reason for cancellation:</h3>
+            <div class="clear h1">
+            </div>
+            <div class="boxreason">
+                <textarea id="txtCancelReason" cols="3" rows="4"></textarea>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="divpass">
+            <h3>
+                enter password:</h3>
+            <div class="clear h3">
+            </div>
+            <div class="boxpass">
+                <input type="password" id="txtpwd" />
+            </div>
+            <div id="divErrorPass" class="errorpass">
+                wrong password. please try again.
+            </div>
+            <div id="divErrorReason" style="color: #FF0000; font-size: 12px; padding-left: 2px;">
+                wrong password. please try again.
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <a href="#" class="btnbook" id="btnCancelApp" title="cancel appointment">cancel appointment</a>
+        <input id="hdfAppointmentCode" type="hidden" value="0" />
+    </div>
+</div>
+<div id="modifypopup" class="modifypopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
+        <div class="apheader">
+            <div class="colWishSalon fleft">
+                <a href="#" id="closemodify" class="back backtosearch" title="back to appointments">
+                    back to appointments</a>
+                <div class="contentWish">
+                    <h5>
+                        <label id="lblcurcompname">
+                        </label>
+                    </h5>
+                    <img alt="@ViewBag.CompanyName" width="88px" height="84px" src="@ViewBag.BannerURL" />
+                </div>
+            </div>
+            <div class="colCurrentAppointment fleft">
+                <div class="contentCurrent">
+                    <h6>
+                        current appointment</h6>
+                    <p class="pt3">
+                        <label id="lblcurdatetime">
+                        </label>
+                    </p>
+                    <p class="fontWeight">
+                        <label id="lblcurcustname">
+                        </label>
+                    </p>
+                    <p class="fontWeight">
+                        <label id="lblcurempname">
+                        </label>
+                    </p>
+                    <p>
+                        <label id="lblcursername">
+                        </label>
+                    </p>
+                    <p class="mb9">
+                        <label id="lblcurnote">
+                        </label>
+                    </p>
+                </div>
+                <div>
+                    <a href="#" class="btnCurrent" title="keep current appointment">keep current appointment</a>
+                </div>
+            </div>
+            <div class="colModifyAppointment fleft">
+                <div class="bgModify">
+                    <h6>
+                        modify appointment here:</h6>
+                    <div class="grounpInput">
+                        <p>
+                            <input type="text" class="inputMonth" id="inputMonth" readonly="readonly" value="june 3" />
+                            <span class="classAt">at</span>
+                            <input type="text" class="inputTime" id="inputTime" readonly="readonly" value="12:00 pm" />
+                        </p>
+                    </div>
+                    <div class="groupSelectName">
+                        <p>
+                            <label id="lblnewusername">
+                            </label>
+                        </p>
+                    </div>
+                    <div class="groupSelectName">
+                        <p>
+                            <span class="pr20">with</span>
+                            <select name="category" class="nameOption" id="selectEmp">
+                                @{
+                                    if (ViewBag.ListEmployee != null)
+                                    {
+                                        foreach (Kuyam.Database.CompanyEmployee emp in ViewBag.ListEmployee)
+                                        {
+                                    <option value="@emp.EmployeeID">@emp.EmployeeName</option>                                                            
+                                        }
+                                    }   
+                                }
+                            </select>
+                        </p>
+                    </div>
+                    <div class="selectMinute">
+                        <p>
+                            <select name="category" class="nameOption" id="selService">
+                            </select>
+                        </p>
+                    </div>
+                </div>
+                <div class="pl2">
+                    <a href="#" class="btnRequest" title="request modification">request modification</a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var appId = $('#hdfAppId').val();
+    $(function () {
+        $("#accordion").accordion({
+            collapsible: false,
+            autoHeight: false,
+            active: 1,
+            changestart: function (event, ui) {
+                if (event.currentTarget != undefined) {
+                    if (event.currentTarget.id == "ui-accordion-accordion-header-2") {
+                        if (window.location.href.toLowerCase().indexOf("calendarview") == -1) {
+                            window.location = "/calendarview/";
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
+
+        $(".pannelappointments").click(function () {
+            $(".pannelappointments").removeClass("bgactive");
+            $(this).addClass("bgactive");
+        });
+
+        $('#lnkcancel').click(function () {
+            $('#lightBox').css('opacity', '0.3').fadeIn(400);
+            $('#cancelpopup').fadeIn(400);
+            $('#cancelpopup').css('top', ($('#lightBox').height() - $('#cancelpopup').height()) / 2);
+            $('#cancelpopup').css('left', ($('#lightBox').width() - $('#cancelpopup').width()) / 2);
+            $('#cancelpopup .btnClose').click(function () {
+                $('#cancelpopup').fadeOut(400);
+                $('#lightBox').fadeOut(400);
+            });
+        });
+
+        $('#lnkmodify').click(function () {
+            $('#lightBox').css('opacity', '0.3').fadeIn(400);
+            $('#modifypopup').fadeIn(400);
+            $('#modifypopup').css('top', ($('#lightBox').height() - $('#modifypopup').height()) / 2);
+            $('#modifypopup').css('left', ($('#lightBox').width() - $('#modifypopup').width()) / 2);
+            $('#modifypopup .btnClose, #closemodify').click(function () {
+                $('#modifypopup').fadeOut(400);
+                $('#lightBox').fadeOut(400);
+            });
+        });
+        $('.groupSelectName select,.selectMinute select,#category').selectmenu();
+
+        //        createtopleftscroll();
+
+    });
+    function fillterByUserCalendar(calendarId) {
+        if (calendarId != 0) {
+            $.get("/appointment/fillterByUserCalendar?calendarId=" + calendarId + "&nocache=" + getunixtime(), function (result) {
+                $(".apptscalendar").html(result);
+            });
+        }
+    }
+    $(document).ready(function () {
+        var calendar = $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
+            header: {
+                left: '',
+                center: 'title',
+                right: ''
+            },
+            selectable: false,
+            selectHelper: true,
+            allDaySlot: false,
+            height: 1000,
+            firstDay: (new Date()).getDay(),
+            minTime: 0,
+            maxTime: 24,
+            slotMinutes: 60,
+            disableDragging: true,
+            disableResizing: true,
+            columnFormat: {
+                week: 'ddd d'
+            },
+            select: function (start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+                        {
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay
+                        },
+                        true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+            editable: true,
+            events: {
+                url: '/Appointment/GetCalendar/',
+                cache: true,
+                data: {
+                    empId: $('#hdfEmployeeId').attr('value'),
+                    appointmentId: $('#hdfAppId').attr('value')
+                }
+            },
+            dayNamesShort: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            monthNamesShort: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
+            eventClick: function (calEvent, jsEvent, view) {
+                $(".fc-event-skin").removeClass("fc-event-skin-active");
+                $(this).addClass("fc-event-skin-active");
+                $.get('@Url.Action("LoadCurrentAppointment")', { id: calEvent.id }, function (response) {
+                    $('#appointmentdetail').html(response);
+                });
+            }
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ui-accordion-accordion-panel-1").css("display", "none");
+        $("#accordion").accordion("option", "active", 2);
+    });
+    //script select employee
+    var employeelistcount = $('#employeeslist li').length;
+    var employeelistli = 1;
+
+    function btnemployeesdownreset() {
+        $('#employeeslistarrowdown').css('border-top-width', '1px');
+        $('#employeeslistarrowdown').css('border-top-color', '#999999');
+    }
+
+    $('.calendarClass').click(function () {
+        window.location = "/CompanyAppointmentCalendar/index/" + $(this).attr('val');
+    });
+
+    $("#employeeslist li").click(function () {
+        var index = $("#employeeslist li a").index($('a[class="active"]'));
+        if (index != -1) {
+            $("#employeeslist li a").eq(index).removeClass("active");
+        }
+        var objA = $("#employeeslist li a").eq($("#employeeslist li").index(this));
+        objA.addClass("active");
+        $("#employees").attr("title", objA.text()).text(objA.text());
+        //server code
+        var calendarId = objA.attr("value");
+        if (typeof calendarId == 'undefined') {
+            calendarId = 0;
+        }
+        $('#hdfEmployeeId').attr("value", calendarId);
+        $.get('@Url.Action("GetAppointmentByCalendar")', { calendarId: calendarId }, function (response) {
+            $('#divAppointment').html(response);
+            var source = '/Appointment/GetCalendar/?calendarId=' + calendarId;
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', source);
+            $('#calendar').fullCalendar('rerenderEvents');
+            var name = objA.attr('title').toLowerCase();
+            if (name.length > 10)
+                name = name.substring(0, 10) + '...';
+            $("#lblempname").text(name);
+        });
+    });
+
+    function goNext(appId) {
+        var appointmentId;
+        $.get('@Url.Action("LoadNextAppointment")', { id: appId }, function (response) {
+            $('#appointmentdetail').html(response);
+        });
+    }
+
+
+    function cancelApp(value, empId) {
+        if (value == '') return false;
+        $('#txtCancelReason').attr("value", '');
+        $('#txtpwd').attr("value", '');
+        //server code
+        var employeeId = $('#hdfEmployeeId').attr("value");
+        if (typeof employeeId == 'undefined') {
+            employeeId = 0;
+        }
+        var id = '#' + empId;
+
+        var obj = $(id);
+        $('#lbldatetime').text(obj.attr('datetime'));
+        $('#lblcustname').text(obj.attr('custname'));
+        $('#lblcompname').text(obj.attr('compname'));
+        $('#lblempname').text(obj.attr('empname'));
+        $('#lblsername').text(obj.attr('sername'));
+        $('#lblnote').text(obj.attr('note'));
+        $('#hdfAppointmentCode').attr('value', value);
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#cancelpopup').fadeIn(400);
+        $('#cancelpopup').css('top', ($('#lightBox').height() - $('#cancelpopup').height()) / 2);
+        $('#cancelpopup').css('left', ($('#lightBox').width() - $('#cancelpopup').width()) / 2);
+        $('#cancelpopup .btnClose').click(function () {
+            $('#cancelpopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+    }
+    $('.groupSelectName select,.selectMinute select,#category').selectmenu();
+
+    $(document).ready(function () {
+        $('#divErrorReason').hide();
+        $('#divErrorPass').hide();
+    });
+
+    function getServicebyEmployeeId(id) {
+        var param = "companyEmployeeID=" + id;
+        commonGetAjax("../CompanyAppointment/Appointment", "LoadServiceEmployee", param, sethtmloption, setError);
+    }
+
+    function sethtmloption(result) {
+        var html = '';
+        for (var i = 0; i < result.length; i++) {
+            html += "<option value=\"" + result[i].serviceid + "\" selected=\"selected\">" + result[i].servicename + "</option>";
+        }
+        $("#servicetype").html(html);
+        $('select#servicetype').selectmenu();
+    }
+
+    function actionApp(value, empId, appId) {
+        if (empId == 'Remove') {
+            $.get('@Url.Action("ActionAppointment")', { appId: appId, appCode: "Remove" }, function (response) {
+                $('#divAppointment').html(response);
+                $.get('@Url.Action("LoadMasterAgenda")', {}, function (response) {
+                    var arr = response.split('#');
+                    $('#li3 a').text(arr[0]);
+                    $('#li4 a').text(arr[1]);
+                    $('#li5 a').text(arr[2]);
+                    $('#li6 a').text(arr[3]);
+                });
+            });
+        }
+        else if (empId == 'confirm' && value != '') {
+            $.get('@Url.Action("ActionAppointment")', { appId: appId, appCode: 'Confirm' }, function (response) {
+                $('#divAppointment').html(response);
+                $.get('@Url.Action("LoadMasterAgenda")', {}, function (response) {
+                    var arr = response.split('#');
+                    $('#divNewApp').text(arr[0]);
+                    $('#divModApp').text(arr[1]);
+                    $('#divConApp').text(arr[2]);
+                    $('#divCanApp').text(arr[3]);
+                });
+            });
+        }
+        return false;
+    }
+
+    function gotoStatus(status) {
+        
+        $.get('@Url.Action("ActionStatus")', { status: status }, function (response) {
+            $('#divAppointment').html(response);
+            $.get('@Url.Action("LoadCurrentAppointmentId")', {}, function (response) {
+                appointmentId = response;
+                $.get('@Url.Action("LoadNextEmployee")', { id: appId }, function (response) {
+                    var arr = response.split('#_#');
+                    $('#hdfEmployeeId').attr('value', arr[0]);
+                    $('#hdfAppId').attr('value', appointmentId);
+                    $("#lblempname").text(arr[1] + "’s availability this week");
+                    var source = '/CompanyAppointmentCalendar/GetCalendar/?empId=' + arr[0] + "&appointmentId=" + appointmentId;
+                    $('#calendar').fullCalendar('removeEvents');
+                    $('#calendar').fullCalendar('addEventSource', source);
+                    $('#calendar').fullCalendar('rerenderEvents');
+
+                    function actionApp(value, empId, appId) {
+                        if (empId == 'Remove') {
+                            $.get('@Url.Action("ActionAppointment")', { appId: appId, appCode: 'Remove' }, function (response) {
+                                $('#divAppointment').html(response);
+                                $.get('@Url.Action("../CompanyAppointment/LoadMasterAgenda")', {}, function (response) {
+                                    var arr = response.split('#');
+                                    $('#divNewApp').text(arr[0]);
+                                    $('#divModApp').text(arr[1]);
+                                    $('#divConApp').text(arr[2]);
+                                    $('#divCanApp').text(arr[3]);
+                                });
+                            });
+                        }
+                        else if (empId == 'confirm' && value != '') {
+                            $.get('@Url.Action("ActionAppointment")', { appId: appId, appCode: 'Confirm' }, function (response) {
+                                $('#divAppointment').html(response);
+                                $.get('@Url.Action("../CompanyAppointment/LoadMasterAgenda")', {}, function (response) {
+                                    var arr = response.split('#');
+                                    $('#divNewApp').text(arr[0]);
+                                    $('#divModApp').text(arr[1]);
+                                    $('#divConApp').text(arr[2]);
+                                    $('#divCanApp').text(arr[3]);
+                                });
+                            });
+                        }
+                        return false;
+                    }
+                });
+            });
+        });
+        switch (status) {
+            case "app":
+                $(".appts li.active").removeClass("active");
+                $("#liApp").addClass("active");
+                break;
+            case "new":
+                $(".appts li.active").removeClass("active");
+                $("#liNew").addClass("active");
+                break;
+            case "mod":
+                $(".appts li.active").removeClass("active");
+                $("#liMod").addClass("active");
+
+                break;
+            case "con":
+                $(".appts li.active").removeClass("active");
+                $("#liCon").addClass("active");
+
+                break;
+            case "can":
+                $(".appts li.active").removeClass("active");
+                $("#liCan").addClass("active");
+                break;
+        }
+    }
+</script>

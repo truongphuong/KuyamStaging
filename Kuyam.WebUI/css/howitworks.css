@@ -1,0 +1,100 @@
+﻿/* How it works page */
+.howitworks{min-height:722px;background:url(../images/howitworks-bg.jpg) repeat-x 0px 0px;}
+.howitworks .howbanner img{border:0px;}
+.howitworks .howcontentleft{float:left;width:200px;margin-top:6px;}
+.ie9 .howitworks .howcontentleft{margin-top:12px;}
+.chrome .howitworks .howcontentleft{margin-top:12px;}
+.howitworks .howcontentleft ul{list-style-type:none;margin:0px;padding:0px;}
+.howitworks .howcontentleft ul li{margin:19px 62px 19px 0px;text-align:right;}
+.howitworks .howcontentleft ul .pricing{margin-top:24px;}
+.ie .howitworks .howcontentleft ul .businesses{margin-top:21px;}
+.howitworks .howcontentleft ul li a{color:#29ABE2;font-size:18px;float:right;}
+.howitworks .howcontentleft ul li .active{color:#333333;font-size:18px;float:right;}
+.howitworks .howcontentleft ul li .greenarrow{display:block;background:url(../images/appointment.png) no-repeat -438px -47px;width:15px;height:17px;float:right;margin:3px 0px 0px 8px;}
+.howitworks .howcontentleft ul li .nonarrow{display:block;width:15px;height:17px;float:right;margin:3px 0px 0px 8px;}
+.howitworks .howcontentright{float:left;width:760px;}
+.howitworks .howcontentright h2{font-family:"baskerville_italic", Arial, Helvetica, sans-serif;font-weight:normal;color:#333333;font-size:28px;margin:19px 0px 9px 0px;padding:0px;}
+.ie7 .howitworks .howcontentright h2{;margin:15px 0px 9px 0px;}
+.howitworks .howcontentright .howboxcontent{z-index:1;position:relative;}
+.howitworks .howcontentright .howboxcontent ul{list-style-type:none;margin:0px;padding:0px;}
+.howitworks .howcontentright .howboxcontent ul li{border-radius:20px;height:261px;}
+.howitworks .howcontentright .howboxcontent ul li.tab1{width:71px;float:left;margin-right:11px;overflow:hidden;background-color:#97c4ff;}
+.howitworks .howcontentright .howboxcontent ul li.tab1 .headtab1{background:transparent url(../images/sprite_howitworks.png) 0 0 no-repeat;width:71px;display:block;height:261px;float:left;}
+.howitworks .howcontentright .howboxcontent ul li.tab2{width:71px;float:left;margin-right:11px;overflow:hidden;background-color:#97c4ff;}
+.howitworks .howcontentright .howboxcontent ul li.tab2 .headtab2{background:transparent url(../images/sprite_howitworks.png) -82px 0 no-repeat;width:71px;display:block;height:261px;float:left;}
+.howitworks .howcontentright .howboxcontent ul li.tab3{width:71px;float:left;overflow:hidden;background-color:#97c4ff;}
+.howitworks .howcontentright .howboxcontent ul li.tab3 .headtab3{background:transparent url(../images/sprite_howitworks.png) -163px 0 no-repeat;width:71px;display:block;height:261px;float:left;}
+.howitworks .howcontentright .howboxcontent ul li .contenttab{float:left;width:465px;display:block;height:261px;}
+.howitworks .howcontentright .howboxcontent ul li .slidenumber{width:65px;float:left;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:60px;color:#425fb1;padding:14px 18px 0px 0px;text-align:center;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent{width:365px;float:left;font-family:Arial, Helvetica, sans-serif;font-size:21px;color:#333333;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontentthrive{width:374px;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent .slidearrow{float:right;margin-right:7px;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent .slidetext{width:345px;padding-top:24px;height:175px;letter-spacing:1px;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent .slidetextthrive{height:144px;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent .slidearrow a{width:49px;height:42px;background:transparent url(../images/sprite_howitworks.png) 0px -538px no-repeat;text-decoration:none;display:block;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent .slidearrow a:hover{text-decoration:none;}
+.howitworks .howcontentright .howboxcontent ul li .slidecontent .slidearrow .arrow2{width:269px;height:72px;background-position:-56px -538px}
+.howitworks .howcontentright .howboxcontent ul li.active{margin-right:16px;background-color:#6aaaff;width:540px;}
+.howitworks .howcontentright .howboxcontent ul li.active .headtab1{background-position:0 -267px;}
+.howitworks .howcontentright .howboxcontent ul li.active .headtab2{background-position:-81px -267px;}
+.howitworks .howcontentright .howboxcontent ul li.active .headtab3{background-position:-163px -266px;}
+
+/* How it works user page */
+.howitworks .howcontentright .howboxcontentuser{z-index:1;position:relative;}
+.howitworks .howcontentright .howboxcontentuser ul{list-style-type:none;margin:0px;padding:0px;}
+.howitworks .howcontentright .howboxcontentuser ul li{border-radius:20px;height:261px;}
+.howitworks .howcontentright .howboxcontentuser ul li.tab1{width:71px;float:left;margin-right:11px;overflow:hidden;background-color:#fdf364;}
+.howitworks .howcontentright .howboxcontentuser ul li.tab1 .headtab1{background:transparent url(../images/sprite_howitworks.png) -248px 0px no-repeat;width:71px;display:block;height:261px;float:left;}
+.howitworks .howcontentright .howboxcontentuser ul li.tab2{width:71px;float:left;margin-right:11px;overflow:hidden;background-color:#fdf364;}
+.howitworks .howcontentright .howboxcontentuser ul li.tab2 .headtab2{background:transparent url(../images/sprite_howitworks.png) -331px 0 no-repeat;width:71px;display:block;height:261px;float:left;}
+.howitworks .howcontentright .howboxcontentuser ul li.tab3{width:71px;float:left;overflow:hidden;background-color:#fdf364;}
+.howitworks .howcontentright .howboxcontentuser ul li.tab3 .headtab3{background:transparent url(../images/sprite_howitworks.png) -416px 0 no-repeat;width:71px;display:block;height:261px;float:left;}
+.howitworks .howcontentright .howboxcontentuser ul li .contenttab{float:left;width:465px;display:block;height:261px;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidenumber{width:65px;float:left;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:60px;color:#8b8143;padding:14px 18px 0px 0px;text-align:center;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent{width:365px;float:left;font-family:Arial, Helvetica, sans-serif;font-size:21px;color:#333333;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontentthrive{width:374px;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent .slidearrow{float:right;margin-right:7px;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent .slidetext{width:345px;padding-top:24px;height:175px;letter-spacing:1px;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent .slidetextthrive{height:144px;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent .slidearrow a{width:49px;height:42px;background:transparent url(../images/sprite_howitworks.png) 0px -584px no-repeat;text-decoration:none;display:block;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent .slidearrow a:hover{text-decoration:none;}
+.howitworks .howcontentright .howboxcontentuser ul li .slidecontent .slidearrow .arrow2{width:269px;height:72px;background-position:-331px -538px}
+.howitworks .howcontentright .howboxcontentuser ul li.active{margin-right:16px;background-color:#FCEE21;width:540px;}
+.howitworks .howcontentright .howboxcontentuser ul li.active .headtab1{background-position:-248px -267px;}
+.howitworks .howcontentright .howboxcontentuser ul li.active .headtab2{background-position:-331px -267px;}
+.howitworks .howcontentright .howboxcontentuser ul li.active .headtab3{background-position:-416px -266px;}
+
+/*How it work - pricing page*/
+.howitworks .howcontentright .forbusinessbox{height:477px;position:relative;}
+.ie7 .howitworks .howcontentright .forbusinessbox{margin-top:12px;}
+.ie7 .howitworks .howcontentright .foruserbox{margin-top:11px;}
+.howitworks .howcontentright .forbusinessbox .trial{position:absolute;bottom:19px;right:372px;width:194px;height:194px;background:transparent url(../images/sprite_howitworks.png) -4px -687px no-repeat;}
+.howitworks .howcontentright .forbusinessbox .sumicon{position:absolute;bottom:255px;left:335px;width:56px;height:56px;background:transparent url(../images/sprite_howitworks.png) -168px -611px no-repeat;}
+.howitworks .howcontentright .foruserbox .foruserboxtitle{background-color:#c1d72e; width:151px;height:48px;text-align:center;margin-bottom:-14px;}
+.howitworks .howcontentright .foruserbox .foruserboxtitle h2{font-size:36px;font-family:"baskerville_italic", Arial, Helvetica, sans-serif;font-weight:normal;color:#333333;margin:11px 0px 9px 0px;padding:0px;}
+.ie7 .howitworks .howcontentright .foruserbox .foruserboxtitle h2{margin-top:-6px;}
+.howitworks .howcontentright .foruserbox .foruserboxcontent{border:solid 14px #c1d72e;width:723px;height:65px;background-color:white;}
+.howitworks .howcontentright .foruserbox .foruserboxcontent .foruserboxcontentcol1{float:left;border:solid 1px #cccccc;height:46px;font-size:24px;color:#0071BC;font-weight:bold;padding:17px 0px 0px 21px;font-family:"century_gothic", Arial, Helvetica, sans-serif;line-height:28px;width:700px;}
+.howitworks .howcontentright .foruserbox .foruserboxcontent .foruserboxcontentcol1 span{font-size:18px;color:#4D4D4D;font-weight:normal;font-family:Arial, Helvetica, sans-serif;padding-left:15px;}
+.howitworks .howcontentright .foruserbox .foruserboxcontent .foruserboxcontentcol2{float:left;width:325px;border-top:solid 1px #cccccc;border-bottom:solid 1px #cccccc;border-right:solid 1px #cccccc;height:53px;padding:10px 0px 0px 48px;}
+.howitworks .howcontentleftprice{float:left;width:189px;margin-top:6px;}
+.ie9 .howitworks .howcontentleftprice{margin-top:12px;}
+.howitworks .howcontentleftprice ul li{margin:19px 51px 19px 0px;text-align:right;}
+
+.howitworks .howcontentright .forbusinessbox .forbusinessboxtitle{background-color:#69c4eb; width:219px;height:48px;text-align:center;margin-bottom:-14px;z-index:1;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxtitle h2{font-size:36px;font-family:"baskerville_italic", Arial, Helvetica, sans-serif;font-weight:normal;color:#333333;margin:12px 0px 9px 0px;padding:0px;}
+.ie7 .howitworks .howcontentright .forbusinessbox .forbusinessboxtitle h2{margin-top:-6px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent{border:solid 14px #69c4eb;width:723px;background-color:white;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1{float:left;width:326px;border:solid 1px #cccccc;font-size:24px;color:#0071BC;font-weight:bold;padding:17px 0px 0px 21px; height:263px;}
+.ie9 .howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1{padding:21px 0px 0px 21px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1 .fbbrow1{height:110px;font-family:"century_gothic", Arial, Helvetica, sans-serif;line-height:28px;}
+.ie9 .howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1 .fbbrow1{height:113px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1 .fbbrow2{font-size:18px;color:#4D4D4D;font-family:Arial, Helvetica, sans-serif;font-weight:normal;padding-bottom:8px;}
+.ie9 .howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1 .fbbrow2{padding-bottom:49px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1 .fbbrow2 span{font-size:24px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol1 .fbbrow3{font-size:14px;font-family:Arial, Helvetica, sans-serif;color:#4D4D4D;font-weight:normal;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol2{float:left;width:323px;border-top:solid 1px #cccccc;border-bottom:solid 1px #cccccc;border-right:solid 1px #cccccc;height:53px;font-size:18px;color:#4D4D4D;font-weight:normal;padding:19px 0px 0px 50px;height:261px;font-size:24px;color:#0071BC;font-weight:bold;}
+.ie9 .howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol2{padding:23px 0px 0px 50px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol2 .fbbrow1{height:108px;font-family:"century_gothic", Arial, Helvetica, sans-serif;line-height:28px;}
+.ie9 .howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol2 .fbbrow1{height:104px;}
+.howitworks .howcontentright .forbusinessbox .forbusinessboxcontent .forbusinessboxcontentcol2 .fbbrow2{font-size:24px;color:#4D4D4D;font-family:Arial, Helvetica, sans-serif;font-weight:normal;}

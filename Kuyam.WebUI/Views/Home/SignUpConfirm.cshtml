@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+    ViewBag.Title = "SignUpConfirm";
+}
+<center>
+    <div style="background-color: black; background-image: url('/images/BackGround/BodyBasicBackgroundBlack.gif');
+        background-repeat: repeat; color: #D6D6D6; font-family: Century Gothic; font-size: 18pt;
+        font-weight: bold; line-height: 150%; margin-left: auto; margin-right: auto;
+        min-height: 600px; overflow: auto; padding: 30px; position: relative; text-align: left;
+        text-transform: lowercase; width: 900px;">
+        <center style="margin-top: 44px;">
+            <img src="@Url.Content("~/images/Contact/MeerkatIdea.png")" alt="Meerkat Ideas" />
+        </center>
+        <input type="hidden" id="linkUrl" value="" />
+        <br />
+        <b>
+            <p id="message" style="border: 0 none; font-family: inherit; font-size: inherit;
+                font-style: normal; font-weight: normal; line-height: inherit; margin: 0; outline: 0 none;
+                padding: 0; vertical-align: baseline;">
+                thanks for signing up! we'll be in touch with your invite code as soon as we're
+                ready.
+            </p>
+        </b>
+    </div>
+</center>
+<script type="text/javascript">
+//        $(document).ready(function () {
+//            var myParam = getQueryString()["email"];
+//            if (myParam != '' && typeof myParam != "undefined") {
+//                $("#message").text("thanks for signing up! we'll be in touch with your invite code as soon as we're ready.");
+//            } else {
+//                $("#message").text("thank you for your interest. please check your e-mail to confirm.");
+//            }
+//        });
+    $('#password').hide();
+    $('#passwordtext').focus(function () {
+        $('#passwordtext').hide();
+        $('#password').show();
+        $('#password').css('color', '#333333');
+        $('#password').focus();
+    });
+    $('#password').blur(function () {
+        if ($('#password').val() == '') {
+            $('#passwordtext').show();
+            $('#password').hide();
+        }
+    });
+
+</script>

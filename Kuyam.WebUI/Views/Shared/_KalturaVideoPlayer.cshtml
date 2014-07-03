@@ -1,0 +1,47 @@
+﻿@model Kuyam.WebUI.Models.MediaDisplayModel
+<script type="text/javascript" src="http://html5.kaltura.org/js"></script>
+<object 
+    style="border: 1px solid black; padding: 0px; padding-left: 0px" 
+    id="kaltura_player_1330930000" 
+    name="@(Model.Data["player"])"
+    type="application/x-shockwave-flash" 
+    allowfullscreen="true" 
+    allownetworking="all"
+    allowscriptaccess="always" 
+    height="@Model.Height" 
+    width="@Model.Width" 
+    bgcolor="#000000" 
+    xmlns:dc="https://purl.org/dc/terms/"
+    xmlns:media="https://search.yahoo.com/searchmonkey/media/" 
+    rel="media:video" 
+    resource="https://www.kaltura.com/index.php/kwidget/cache_st/1320175403/wid/_@(Model.Data["wid"])/uiconf_id/@(Model.Data["uiconf_id"])/entry_id/@(Model.Data["entry_id"])"
+    data="http://www.kaltura.com/index.php/kwidget/cache_st/@(Model.Data["player"])/wid/_@(Model.Data["wid"])/uiconf_id/@(Model.Data["uiconf_id"])/entry_id/@(Model.Data["entry_id"])">
+
+    <param name="allowFullScreen" value="true" />
+    <param name="allowNetworking" value="all" />
+    <param name="allowScriptAccess" value="always" />
+    <param name="bgcolor" value="#000000" />
+    <param name="wmode" value="opaque" />
+    <param name="flashVars" value='autoPlay="0"&#038;' />
+    <param name="movie" value="https://www.kaltura.com/index.php/kwidget/cache_st/@(Model.Data["player"])/wid/_@(Model.Data["wid"])/uiconf_id/@(Model.Data["uiconf_id"])/entry_id/@(Model.Data["entry_id"])" />
+    <a href="https://corp.kaltura.com">video platform</a> 
+    <a href="https://corp.kaltura.com/video_platform/video_management">video management</a> 
+    <a href="https://corp.kaltura.com/solutions/video_solution">video solutions</a> 
+    <a href="https://corp.kaltura.com/video_platform/video_publishing">video player</a> 
+    <a rel="media:thumbnail" href="https://cdnbakmi.kaltura.com/p/682432/sp/@(Model.Data["wid"])00/thumbnail/entry_id/@(Model.Data["entry_id"])/width/120/height/90/bgcolor/000000/type/2"></a>
+    <span property="dc:description" content=""></span>
+    <span property="media:title" content="KuyamADA2"></span>
+    <span property="media:width" content="@Model.Width"></span>
+    <span property="media:height" content="@Model.Height"></span>
+    <span property="media:type"content="application/x-shockwave-flash"></span>
+</object>
+
+<!--
+<object 
+    name="kaltura_player_1330930000" 
+    
+    <param name="flashVars" value="&{FLAVOR}" />
+
+    <span property="media:title" content="KUYAM PARADE POST MASTER HD720imovies"></span> 
+</object>
+-->

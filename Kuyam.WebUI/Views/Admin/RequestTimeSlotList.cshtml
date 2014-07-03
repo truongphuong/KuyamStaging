@@ -1,0 +1,109 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "requested timeslot";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    ViewBag.Title = "request timeslot add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var comparyId = ViewBag.profileID;
+    var page = ViewBag.Page;
+    var key = ViewBag.Key;
+    var searchType = ViewBag.SearchType;
+    var companyName = ViewBag.Company!=null? ViewBag.Company.Name:string.Empty;
+}
+<div id="contentmainpage">
+    @if (!string.IsNullOrEmpty(companyName))
+    {
+        <h2>@companyName-requested time slot</h2>
+    }
+    else
+    {
+        <h2>requested time slot</h2>
+    }
+   
+    <div class="boxsearch">
+        <center><a id="addTimeSlot" style=" float: right; font-size: 20px; margin-top: -14px;">add time slot</a></center>
+        @*<center>
+            <table cellpadding="0" cellspacing="0" border="0" class="tbldata">
+                <tr class="odd">
+                    <td>
+                        <select id="companyId" name="companyName" style="width:500px;">
+                            @{       
+                                <option value="0">all</option>                           
+                                if (ViewBag.Companys != null)
+                                {
+                                    foreach (ProfileCompany item in ViewBag.Companys)
+                                    {                                  
+                                        <option value="@item.ProfileID" @(ViewBag.profileID == item.ProfileID ? "selected" : "")>@item.Name</option>
+                                    }
+                                }                            
+                               
+                            }
+                        </select>
+                        &nbsp;&nbsp;<input class="button" id="btnSearch" value="search" type="button" onclick="pagingEvent(1);" />
+                        <button class="button" id="btnAddApt" type="button" onclick="bookit();">
+                            add</button>
+                    </td>
+                </tr>
+            </table>
+        </center>*@
+        
+    </div>
+    <div id="apptlist">
+        @Html.Partial("_RequestTimeSlotList")
+    </div>
+    <p>
+        <a href="/Admin/AdminCompanyDetail?companyID=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)">back to detail</a>
+    </p>
+</div>
+<input id="comId" type="hidden" value="@comparyId"/>
+<input id="keySearch" type="hidden" value="@key" />
+<input id="searchTypeSearch" type="hidden" value="@searchType" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#contentmainpage").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                pagingEvent(1);
+                return false;
+            }
+        });
+        $("#addTimeSlot").click(function () {
+            window.location.href = "/Admin/RequestTimeSlotAdd?Id=@(comparyId)&page=@(page)&key=@(key)&searchType=@(searchType)&isDetail=false";
+        });
+    });
+
+    function bookit() {
+        window.location.href = "/Admin/RequestTimeSlotAdd";
+    }
+
+    function pagingEvent(pageIndex) {
+        var companyId = $("#comId").val();
+        var keySearch = $("#keySearch").val();
+        var searchTypeSearch = $("#searchTypeSearch").val();
+        var searchParameters = {
+            companyId: companyId,
+            page: pageIndex,
+            key:keySearch,
+            searchType: searchTypeSearch
+            };
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/RequestTimeSlotList/'
+            })
+            .success(function (result) {
+                if (result.result == false && result.iAuthen == false) {
+                    window.location.href = result.returnUrl;
+                } else {
+                    $('#apptlist').html(result);
+                }
+            })
+            .error(function (error) {
+
+            });
+    };
+</script>

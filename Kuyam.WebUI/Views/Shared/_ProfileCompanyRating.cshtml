@@ -1,0 +1,67 @@
+﻿@using Kuyam.Domain.Seo;
+@model Kuyam.WebUI.Models.ProfileCompanyRating
+@{
+    <a href="review" style="margin-left: 5px;">
+        @switch (Model.Rate.ToString())
+        {
+            case "0":
+                {
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    break;
+                }
+            case "1":
+                {
+                    <span class="greenstar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    break;
+                }
+            case "2":
+                {
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    break;
+                }
+            case "3":
+                {
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="graystar"></span>
+                    <span class="graystar"></span>
+                    break;
+                }
+            case "4":
+                {
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="graystar"></span>
+                    break;
+                }
+            case "5":
+                {
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    <span class="greenstar"></span>
+                    break;
+                }
+        }
+    </a><a href="@(Model.IsBookDirect ? "review" : Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.ProfileId) }) + "/review")" class="weburl" id="review">
+    (@Model.TotalReview
+    @(Model.TotalReview > 1 ? "reviews" : "review"))
+</a>
+}
+</>

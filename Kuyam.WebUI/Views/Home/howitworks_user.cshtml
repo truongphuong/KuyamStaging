@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "how it works?";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<style type="text/css">
+    .howitworks .howcontentright .howboxcontent ul li
+    {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<link href="../../css/howitworks.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#thrivenextarrow').click(function () {
+         var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if (!isLogin) {
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            window.location = "/Company/SetupBasic";
+    });
+     $('#signuptop').click(function () {
+         var isLogin = @Request.IsAuthenticated.ToString().ToLower();
+            if (!isLogin) {
+                $('#loginError').hide();
+                showDialog('signuppopup', 'btnCloseloginPopup');
+                return false;
+            }
+            window.location = "/Company/SetupBasic";
+    });
+    
+    });
+    $(function () {
+        $('select#category').selectmenu();
+        $('#password').hide();
+        $('#passwordtext').focus(function () {
+            $('#passwordtext').hide();
+            $('#password').show();
+            $('#password').css('color', '#333333');
+            $('#password').focus();
+        });
+        $('#password').blur(function () {
+            if ($('#password').val() == '') {
+                $('#passwordtext').show();
+                $('#password').hide();
+            }
+        });
+        //$('#accordion-3').easyAccordion({ 
+        //	autoStart: false,
+        //	slideInterval: 5000,
+        //	slideNum:false	
+        //});
+
+        $(".howboxcontent li").click(function (e) {
+
+            var className = $(e.target).attr('class');
+            if (className == "arrow1") {
+                $(".tab1").animate({ width: "74px" }, 500).removeClass("active");
+                $(".tab2").animate({ width: "540px" }, 500).addClass("active");
+                return false;
+            }
+            else if (className == "arrow3") {
+                $(".tab2").animate({ width: "74px" }, 500).removeClass("active");
+                $(".tab3").animate({ width: "540px" }, 500).addClass("active");
+                return false;
+            }
+
+            if (!$(this).hasClass("active")) {
+                $(this).animate({ width: "540px" }, 500);
+                for (i = 0; i < 3; i++) {
+                    if ($(".howboxcontent li").eq(i).hasClass("active")) {
+                        $(".howboxcontent li").eq(i).animate({ width: "74px" }, 500).removeClass("active");
+                    }
+                }
+                $(this).addClass("active");
+            }
+        });
+
+        createtopscroll();
+    });
+
+    function signuppopup() {
+        $('#lightBox').css('opacity', '0.3').fadeIn(400);
+        $('#signuppopup').fadeIn(400);
+        $('#signuppopup').css('top', ($('#lightBox').height() - $('#signuppopup').height()) / 2);
+        $('#signuppopup').css('left', ($('#lightBox').width() - $('#signuppopup').width()) / 2);
+        $('#signuppopup .btnCloseloginPopup').click(function () {
+            $('#signuppopup').fadeOut(400);
+            $('#lightBox').fadeOut(400);
+        });
+    };
+	
+</script>
+<div class="wrap">
+    <div class="clear">
+    </div>
+    <div class="content" style="padding: 0px;">
+        <!-- InstanceBeginEditable name="content" -->
+        <div class="contentMarketPlace">
+            <div class="howitworks">
+                <div class="howbanner">
+                    <img alt="" src="../../Images/howitworks-banner.png" usemap="#Map" />
+                    <map name="Map">
+                        <area shape="rect" coords="355,290,640, 220" href="/home/lifestyle" title="what is a lifestyle bussiness?">
+                        <area shape="rect" coords="670,290,940, 220" id="signuptop" href="#" title="sign me up">
+                    </map>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="howcontent">
+                    <div class="howcontentleft">
+                        <ul>
+                            <li><span class="greenarrow"></span><span class="active">users</span>
+                                <div class="clear">
+                                </div>
+                            </li>
+                            <li class="businesses"><span class="nonarrow"></span><a href="/home/howitworks" title="businesses">
+                                businesses</a>
+                                <div class="clear">
+                                </div>
+                            </li>
+                            <li class="pricing"><span class="nonarrow"></span><a href="/home/howitworks_pricing"
+                                title="pricing">pricing</a>
+                                <div class="clear">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="howcontentright">
+                        <h2>
+                            i want to relax - how do i start?</h2>
+                        <div class="howboxcontent howboxcontentuser">
+                            <ul>
+                                <li class="tab1 active">
+                                    <div class="headtab headtab1">
+                                    </div>
+                                    <div class="contenttab">
+                                        <div class="slidenumber">
+                                            1</div>
+                                        <div class="slidecontent">
+                                            <div class="slidetext">
+                                                sign up for your free account and start browsing your community. select a category
+                                                or search by company name to find the perfect pamper for you!
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                            <div class="slidearrow">
+                                                <a href="javascript: void(0);" class="arrow1" title="Manage" id="listnextarrow">
+                                                </a>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="tab2">
+                                    <div class="headtab headtab2">
+                                    </div>
+                                    <div class="contenttab">
+                                        <div class="slidenumber">
+                                            2</div>
+                                        <div class="slidecontent">
+                                            <div class="slidetext">
+                                                pick the day and time that works for you -- we'll take care of the rest. no phone
+                                                calls necessary. if the company is using kuyam autoscheduling - you can view their availabilities
+                                                and book immediately.
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                            <div class="slidearrow">
+                                                <a href="javascript: void(0);" class="arrow3" title="Thrive" id="managenextarrow">
+                                                </a>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="tab3">
+                                    <div class="headtab headtab3">
+                                    </div>
+                                    <div class="contenttab">
+                                        <div class="slidenumber">
+                                            3</div>
+                                        <div class="slidecontent slidecontentthrive">
+                                            <div class="slidetext slidetextthrive">
+                                                exploring and connecting with local businesses is easier than ever before! so get
+                                                out there and discover what your community has to offer.
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                            <div class="slidearrow">
+                                                <a href="#" class="arrow2" title="sign me up" id="thrivenextarrow"></a>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="lightBox" class="lightBox">
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</div>

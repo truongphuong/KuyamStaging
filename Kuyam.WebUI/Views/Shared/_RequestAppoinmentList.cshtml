@@ -1,0 +1,202 @@
+﻿@using Kuyam.Database
+@{
+    bool isOdd = false;
+    int totalRecord = 0;
+    totalRecord = ViewBag.TotalRecords;
+    var apts = @ViewBag.RequestAppointments;
+}
+<style type="text/css">
+    .w200 {
+        width: 200px;
+    }
+</style>
+@if (apts != null)
+{
+    <table border='0' cellpadding="0" cellspacing="0" class="tbldata" style="width: 1430px" id="ddlUsers">
+        <tr>
+            <th class="w200">
+                company
+            </th>
+            <th class="w200">
+                start
+            </th>
+            <th class="w200">
+                end
+            </th>
+            <th style="width: 30px;">
+                duration
+            </th>
+            <th class="w200">
+                services name
+            </th>
+            <th class="w200">
+                customer name
+            </th>
+            <th class="w200">
+                calendar name
+            </th>
+            <th class="w200">
+                action
+            </th>
+        </tr>
+        @foreach (var item in @apts)
+        {
+            string addClass = "";
+            if (isOdd)
+            {
+                addClass = "class=odd";
+                isOdd = false;
+
+            }
+            else
+            {
+                isOdd = true;
+            }
+            <tr @addClass>
+
+                <td class="w200">
+                    <span>@item.ProfileCompany.Name</span>
+                </td>
+                <td class="w200">
+                    @{
+            var startdate = (DateTime)item.Start;
+                    }
+                    <span>@startdate.ToString("MM/dd/yyyy hh:mm tt")</span>
+                </td>
+
+                <td class="w200">
+                    @{
+            var enddate = (DateTime)item.End;
+                    }
+                    <span>@enddate.ToString("MM/dd/yyyy hh:mm tt")</span>
+                </td>
+
+               
+                <td style="width: 30px;">
+                    @if (item.ServiceCompany != null)
+                    {
+                        <span>@item.ServiceCompany.Duration</span>
+                    }
+                </td>
+                <td class="w200">
+                    @if (item.ServiceCompany != null && item.ServiceCompany.Service != null && !string.IsNullOrEmpty(item.ServiceCompany.Service.ServiceName))
+                    {
+                        <span> @item.ServiceCompany.Service.ServiceName </span>;
+                    }
+                </td>
+                <td class="w200">
+                    <span>@item.Cust.FullName</span>
+                </td>
+                <td style="width: 200px;">
+                    @if (@item.Calendar != null)
+                    {
+                        <span>@item.Calendar.Name</span>
+                    }
+
+                </td>
+                <td style="text-align: left; width: 200px;">
+                    <a href="/Admin/RequestAppointmentDetails?Id=@item.Id&page=@ViewBag.Page">view detail</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="tbldata" style="width: 1430px">
+        <tr class="odd">
+            <td>
+                <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+                @{
+        int from = (ViewBag.Page - 1) * 10 + 1;
+        int to = ViewBag.Page * 10;
+        if (to > totalRecord)
+        {
+            to = totalRecord;
+        }
+        int lastPage = 0;
+        if (totalRecord % 10 == 0)
+        {
+            lastPage = totalRecord / 10;
+        }
+        else
+        {
+            lastPage = totalRecord / 10 + 1;
+        }
+
+
+        <div class="fLeft mt4" style="float: left;">
+            @if (totalRecord > 0)
+            {
+                <span>@from - @to of </span>
+                <span><strong>@totalRecord results</strong></span>
+            }
+        </div>
+                }
+            </td>
+            <td class="paging" style="text-align: right;">
+                @{
+    if (totalRecord > 0)
+    {
+        <div class="paging">
+            @if (ViewBag.Page > 1)
+            {
+
+                <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+            }
+            @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+            {
+                if (ViewBag.Page == 4)
+                {
+                    <a onclick="pagingEvent(@(ViewBag.Page - 3))" pageindex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                }
+                if (ViewBag.Page > 4)
+                {
+                    <a onclick="pagingEvent(1)" title="previous">1</a>
+                    <span class="borderNone p0 ml4 dotmore">...</span>
+
+                }
+
+                <a onclick="pagingEvent(@(ViewBag.Page - 2))" pageindex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+            }
+            @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+            {
+
+                if (ViewBag.Page == 3)
+                {
+                    <a onclick="pagingEvent(1)" title="previous">1</a>
+                }
+                if (ViewBag.Page > 3)
+                {
+                    <a onclick="pagingEvent(1)" title="previous">1</a>
+                    <span class="borderNone p0 ml4 dotmore">...</span>
+
+                }
+                <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+            }
+            <span class="active" title="@ViewBag.Page">@ViewBag.Page</span>
+            @if (ViewBag.Page + 1 < lastPage)
+            {
+                <a onclick="pagingEvent(@(ViewBag.Page + 1))" pageindex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+            }
+            @if (ViewBag.Page + 2 < lastPage)
+            {
+                <a onclick="pagingEvent(@(ViewBag.Page + 2))" pageindex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+            }
+            @if (ViewBag.Page + 3 < lastPage)
+            {
+                <span class="borderNone p0 ml4 dotmore">...</span>
+            }
+            @if (ViewBag.Page < lastPage)
+            {
+                <a onclick="pagingEvent(@lastPage)" pageindex="@lastPage" title="@lastPage">@lastPage</a>
+                <a onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+            }
+        </div>
+                    <div class="clear">
+                    </div>
+    }
+                }
+            </td>
+        </tr>
+    </table>
+}

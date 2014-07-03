@@ -1,0 +1,252 @@
+﻿@using Kuyam.Database
+@using Kuyam.Database.Extensions
+
+@{
+    ViewBag.Title = "CompanyServicesToEvent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isOdd = false;
+    List<CompanyService> companyServices = ViewBag.CompanyServices;
+    List<CompanyServiceEvent>  cseList = new List<CompanyServiceEvent>();
+    
+    if (ViewBag.CompanyServiecsToEvent!= null)
+    {
+        cseList = ViewBag.CompanyServiecsToEvent;
+    }
+    int sCount = cseList.Count;  
+
+    
+}
+
+<div id="contentmainpage">
+    <h2>
+        services of the company: @ViewBag.CompanyName for event: @ViewBag.EventName
+    </h2>
+    <input type="hidden" id="hdfNumber" value="@sCount" />
+    <input type="hidden" id="hdfCompanyEventId" value="@ViewBag.companyeventid"/>
+    <a href="@Url.Action("CompaniesForEachEvent","Admin", new {id= ViewBag.EventId })"> back to list</a>
+    <div id="listCompany">
+        <table id="tblcompanies" border='0' cellpadding="0" cellspacing="0" class="tbldata"
+               width="500">
+            <tr>
+                <th>
+                </th>
+                <th>
+                    name
+                </th>
+                <th>
+                    duration
+                </th>
+                <th>
+                    current price
+                </th>
+                <th>
+                    new price
+                </th>
+                <th>
+                    percent
+                </th>
+            </tr>
+            @foreach (CompanyService cs in companyServices)
+    {
+        string addClass = "";
+        if (isOdd)
+        {
+            addClass = "class=odd";
+            isOdd = false;
+
+        }
+        else
+        {
+            isOdd = true;
+        }
+        if (cseList.Any(x => x.CompanyEventID == @ViewBag.companyeventid && x.ServiceCompanyID == cs.ID))
+        {
+            var cse = cseList.Where(x => x.CompanyEventID == @ViewBag.companyeventid && x.ServiceCompanyID == cs.ID).First();
+            double percent = (double)(((cse.ServiceCompany.Price.Value - cse.NewPrice.Value) * 100) / cse.ServiceCompany.Price.Value);
+            string percentDisplay = Math.Round(percent, 0).ToString() + '%';
+            
+            <tr @addClass>
+            <td>
+               
+                <input type="checkbox" onclick='handleClick(this);' cseId="@cse.ID" checked id="chk_@cs.ID" class="companyserviceSelect" value="@cs.ID" />
+            </td>
+            <td>
+                <label>@cs.ServiceName</label>
+            </td>
+            <td>
+                <label>@cs.Duration</label>
+            </td>
+            <td>
+                <label>@cs.Price</label>
+            </td>
+            <td style="width: 100px;">
+                <input type="text" id="newprice_@cs.ID" class="newPrice" ckid="chk_@cs.ID" csid="@cs.ID" value="@cse.NewPrice" />
+            </td>  
+            <td>
+                @percentDisplay
+            </td>      
+           
+        </tr>
+        }
+        else
+        {
+            <tr @addClass>
+            <td>
+               
+                <input type="checkbox"  id="chk_@cs.ID" class="companyserviceSelect" value="@cs.ID" />
+            </td>
+            <td>
+                <label>@cs.ServiceName</label>
+            </td>
+            <td>
+                <label>@cs.Duration</label>
+            </td>
+            <td>
+                <label>@cs.Price</label>
+            </td>
+            <td style="width: 100px;">
+                <input type="text" class="newPrice" id="newprice_@cs.ID" ckid="chk_@cs.ID" percentid="percent_@cs.ID" csid="@cs.ID " />
+            </td>      
+            <td >
+                <label id="percent_@cs.ID"></label>
+            </td>  
+           
+        </tr>
+        }
+        
+    }
+        </table>
+        <a href="@Url.Action("CompaniesForEachEvent","Admin", new {id= ViewBag.EventId })"> back to list</a>
+     </div>
+</div>
+
+<script type="text/javascript">
+    var count = parseInt( $('#hdfNumber').val());
+
+    
+    
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+    
+    
+    $(document).ready(function () {      
+              
+        $('.companyserviceSelect').live('click', function (e) {
+            
+            if (!this.checked) {
+                var companyServiceEventId = $(this).attr('cseId');
+                var newPriceID = 'newprice_' + $(this).attr('value');
+                if (companyServiceEventId == null || companyServiceEventId == '')
+                    return;
+
+                var Parameters = { id: companyServiceEventId};
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(Parameters),
+                        dataType: 'html',
+                        url: '/Admin/RemoveCompanyServiceToEvent/'
+                    })
+                    .success(function (result) {
+                        alert("remove success");
+
+                        
+                        $('#' +newPriceID).val('');
+                        location.reload();
+                    })
+                    .error(function (error) {
+
+                    });
+            }
+        });
+
+        $('.newPrice').live('change', function (e) {
+
+            if (!isNumber($(this).val()))
+            {
+                alert("please input correct price ");
+                return false;
+            }
+            var chkId = $(this).attr("ckid");
+            var isChecked = document.getElementById(chkId).checked;
+
+            
+                document.getElementById(chkId).checked = true;
+
+                var serviceCompanyId = $(this).attr('csID');
+                var price = $(this).val();
+                var companyEventId = $('#hdfCompanyEventId').val();
+
+
+                var Parameters = { CompanyEventID: companyEventId, ServiceCompanyID: serviceCompanyId, NewPrice: price };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(Parameters),
+                        dataType: 'html',
+                        url: '/Admin/AddCompanyServiceToEvent/'
+                    })
+                    .success(function (result) {
+                        location.reload();
+                        
+                    })
+                    .error(function (error) {
+
+                    });
+                    
+                
+
+            
+        });
+       
+    });
+    function pagingEvent(pageIndex) {
+        var key = $('#txtKey').val();
+        var id = $('#hdfEventId').val();
+        var searchParameters = { id:id, page: pageIndex, key: key};
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/CompaniesForEachEvent/'
+            })
+            .success(function (result) {
+                $('#listCompany').html(result);
+            })
+            .error(function (error) {
+
+            });
+    };
+    function FilterSearchResult() {
+
+        var key = $('#txtKey').val();
+        var id = $('#hdfEventId').val();
+        var searchParameters = {id:id, key: key};
+        $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(searchParameters),
+                    dataType: 'html',
+                    url: '/Admin/CompaniesForEachEvent/'
+                })
+                .success(function (result) {
+                    if (result == "false") {
+                        window.location.href = "/Admin/Login";
+                    }else{
+                    $('#listCompany').html(result);
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+    }
+
+
+</script>

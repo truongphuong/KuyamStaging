@@ -1,0 +1,447 @@
+﻿@using Kuyam.Utility;
+@using Kuyam.Database;
+@using RestSharp.Extensions
+@{
+
+    int totalRecord = 0;
+    List<Kuyam.Database.Extensions.CompanyInvoices> companyInvoiceList = null;
+    if (ViewBag.InvoicesList != null)
+    {
+        companyInvoiceList = ViewBag.InvoicesList;
+        totalRecord = ViewBag.TotalRecords;
+
+    }
+    bool flag = false;
+}
+<div class="invoceheader">
+    <div class="invdate">
+        date
+    </div>
+    <div class="invservice">
+        service description
+    </div>
+    <div class="invemployee">
+        employee
+    </div>
+    <div class="invclient">
+        client
+    </div>
+    <div class="invregular">
+        regular?
+    </div>
+    <div class="invamount">
+        amount ($)
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div class="clear">
+</div>
+@for (int i = 0; i < companyInvoiceList.Count; i++)
+{
+
+    string cssClass = string.Empty;
+    string cssId = string.Empty;
+    if (!flag)
+    {
+        cssClass = "invoceitem";
+
+    }
+    else
+    {
+        cssClass = "invoceitem invoceitemf2f2f2";
+
+    }
+    flag = !flag;
+    cssId = "invoceitem" + i + 1;
+    string invoiceDetail = "class=invitemcontent hidden" + " id = invoiceDetail" + i + 1;
+    string invoiceDetailId = "invoceitem" + i + 1;
+    <div class="@cssClass" id="@cssId">
+        <div class="activeitem">
+            <div class="invitemheader">
+                <div class="invicon">
+                    <a href="#" class="plus"></a>
+                </div>
+
+                <div class="invdate">@DateTimeUltility.ConvertToUserTime(companyInvoiceList[i].ServiceStartDate, DateTimeKind.Utc).ToString("MM/dd/yy")</div>
+                <div class="invtime">@DateTimeUltility.ConvertToUserTime(companyInvoiceList[i].ServiceStartDate, DateTimeKind.Utc).ToString("h tt")</div>
+                <div class="invservice">
+                    @if (companyInvoiceList[i].ServiceDescription == null || string.IsNullOrEmpty(companyInvoiceList[i].ServiceDescription))
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    else
+                    {
+                        <span>@companyInvoiceList[i].ServiceDescription</span>
+                    }
+                </div>
+                <div class="invemployee">
+                    @if (companyInvoiceList[i].EmployeeName == null || string.IsNullOrEmpty(companyInvoiceList[i].EmployeeName))
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    else
+                    {
+                        <span>@Kuyam.Domain.UtilityHelper.TruncateText(companyInvoiceList[i].EmployeeName, 15)</span>
+                    }
+                </div>
+                <div class="invcalendar">
+                    @if (companyInvoiceList[i].ClientName == null || string.IsNullOrEmpty(companyInvoiceList[i].ClientName))
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    else
+                    {
+                        <span>@Kuyam.Domain.UtilityHelper.TruncateText(companyInvoiceList[i].ClientName, 15)</span>
+                    }
+                </div>
+                <div class="invcheck">
+                    @{
+    if (@companyInvoiceList[i].IsRegular)
+    {
+        <a href="#">
+            <img alt="" src="../../images/check_icon.png" />
+        </a><span>&nbsp;</span>
+    }
+    else
+    {
+        <span></span>
+                        @*<span>Not regular </span>*@
+    }
+                    }
+                </div>
+                <div class="invamount" id="invamount">@companyInvoiceList[i].ServiceAmmount</div>
+                <div class="invamount" id="ordertotal" style="display: none;">@string.Format("{0:0.00}", companyInvoiceList[i].OrderTotal - (companyInvoiceList[i].PaymentFeeTotal + companyInvoiceList[i].KuyamFeeTotal))</div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="invitemcontent hidden">
+                <div class="itemcontentwidth">
+                    <div class="inv1">
+                        <div>
+                            <div class="invdate">
+                                <strong>receipt #:</strong>
+                            </div>
+                            <div class="invservice">
+                                <span>@companyInvoiceList[i].ReceiptNumber</span>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        @if (companyInvoiceList[i].PurchasedOn.HasValue)
+                        {
+                            <div>
+                                <div class="invdate">
+                                    <strong>purchased on:</strong>
+                                </div>
+                                <div class="invservice">
+                                    <span>@DateTimeUltility.ConvertToUserTime(companyInvoiceList[i].PurchasedOn.Value, DateTimeKind.Utc).ToString("M/dd/yyyy h:mm tt")</span>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        }
+                        <div>
+                            <div class="invdate">
+                                <strong>status:</strong>
+                            </div>
+                            <div class="invservice">
+                                @( ((Kuyam.Database.Types.AppointmentStatus)companyInvoiceList[i].AppointmentStatus).ToString().ToLower())
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div>
+                            <div class="invdate">
+                                <strong>payment:</strong>
+                            </div>
+                            <div class="invservice">
+                                @{
+    if (companyInvoiceList[i].PaymentMethod == (int)Kuyam.Database.Types.PaymentMethod.Paypal)
+    {
+        <span>Paypal</span>
+    }
+    else
+    {
+        <span>pay in person</span>
+    }
+                                }
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div>
+                            <div class="invdate">
+                                <strong>company:</strong>
+                            </div>
+                            <div class="invservice">
+                                @companyInvoiceList[i].CompanyName
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="inv2">
+                        <div class="billbox">
+                            <div class="billinfo">
+                                @*<div class="cardinfo">
+                                        MASTERCARD ending in 3209
+                                    </div>*@
+                                <div class="clear">
+                                </div>
+                                <div>
+                                    <div class="fLeft">
+                                        company services
+                                    </div>
+                                    <div class="fRight">
+                                        @{
+                                            if (companyInvoiceList[i].OrderSubtotal < 0 || @companyInvoiceList[i].OrderSubtotal == null)
+                                            {
+                                                <span>0.0</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@string.Format("{0:0.00}", companyInvoiceList[i].OrderSubtotal)</span>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div>
+                                    @if (companyInvoiceList[i].DiscountType != (int)Types.DiscountType.Admin && companyInvoiceList[i].OrderDiscount.HasValue && companyInvoiceList[i].OrderDiscount.Value > 0)
+                                    {
+                                        <div class="fLeft">
+                                            promo code:@companyInvoiceList[i].DiscountCodeNumber
+                                        </div>
+                                        <div class="fRight">-@string.Format("{0:0.00}", companyInvoiceList[i].OrderDiscount)</div>
+                                    }
+                                </div>
+
+                                <div class="clear">
+                                </div>
+                                <div>
+                                    <div class="fLeft">@string.Format("kuyam Appointment Fee ({0:0.00}% + ${1:0.00})", companyInvoiceList[i].PercentKuyamFee, companyInvoiceList[i].AppointmentAdditionalFee)</div>
+                                    <div class="fRight">@string.Format("-{0:0.00}", companyInvoiceList[i].KuyamFeeTotal)</div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            @if (companyInvoiceList[i].PaymentMethod == (int)Kuyam.Database.Types.PaymentMethod.Paypal)
+                            {
+                                <div class="billtotal1">
+                                    <div>
+                                        <div class="fLeft">
+                                            subtotal
+                                        </div>
+                                        <div class="fRight">@string.Format("{0:0.00}", companyInvoiceList[i].OrderSubtotal)</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div>
+                                        <div class="fLeft">@string.Format("PayPal processing fee ({0:0.00}% +  ${1:0.00})", companyInvoiceList[i].PercentPaymentFee, companyInvoiceList[i].TransactionAdditionalFee)</div>
+                                        <div class="fRight">@string.Format("-{0:0.00}", companyInvoiceList[i].PaymentFeeTotal)</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            }
+                            @if (companyInvoiceList[i].GiftCardCodeNumber.HasValue())
+                            {
+                                <div class="billtotal1">
+                                    <div>
+                                        <div class="fLeft">
+                                            giftcard: @companyInvoiceList[i].GiftCardCodeNumber
+                                        </div>
+                                        <div class="fRight">@string.Format("{0:0.00}", companyInvoiceList[i].GiftCardAmount)</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div>
+                                        <div class="fLeft">@string.Format("giftcard amount")</div>
+                                        <div class="fRight">@string.Format("-{0:0.00}", companyInvoiceList[i].GiftCardAmount)</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            }
+                            @if (companyInvoiceList[i].DiscountCodeNumber.HasValue() && !string.IsNullOrEmpty(companyInvoiceList[i].DiscountCodeNumber))
+                            {
+                                <div class="billtotal1">
+                                    <div>
+                                        <div class="fLeft">
+                                            promocode: @companyInvoiceList[i].DiscountCodeNumber
+                                        </div>
+                                        <div class="fRight">@string.Format("{0:0.00}", companyInvoiceList[i].OrderDiscount)</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                    <div>
+                                        <div class="fLeft">@string.Format("promocode amount")</div>
+                                        <div class="fRight">@string.Format("-{0:0.00}", companyInvoiceList[i].OrderDiscount)</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            }
+                            <div class="billtotal">
+                                <div class="fLeft">
+                                    Total amount received
+                                </div>
+                                @{
+                            decimal? total = 0;
+                            if (companyInvoiceList[i].PaymentMethod == (int)Kuyam.Database.Types.PaymentMethod.Paypal)
+                            {
+                                if (companyInvoiceList[i].DiscountType != (int)Types.DiscountType.Admin)
+                                {
+                                    total = companyInvoiceList[i].OrderTotal - (companyInvoiceList[i].PaymentFeeTotal + companyInvoiceList[i].KuyamFeeTotal);
+                                }
+                                else
+                                {
+                                    total = companyInvoiceList[i].OrderTotal - (companyInvoiceList[i].PaymentFeeTotal + companyInvoiceList[i].KuyamFeeTotal) + companyInvoiceList[i].OrderDiscount;
+                                }
+                            }
+                            else
+                            {
+                                if (companyInvoiceList[i].DiscountType != (int)Types.DiscountType.Admin)
+                                {
+                                    total = companyInvoiceList[i].OrderTotal - companyInvoiceList[i].KuyamFeeTotal;
+                                }
+                                else
+                                {
+                                    total = companyInvoiceList[i].OrderTotal - companyInvoiceList[i].KuyamFeeTotal + companyInvoiceList[i].OrderDiscount;
+                                }
+                            }
+
+                            <div class="fRight">@string.Format("{0:0.00}", total)</div>
+                                }
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="printinvoce">
+                        <a href="#" title="print this invoice" id="printInvoice" onclick="printInvoiceById('@invoiceDetailId');">
+                            print this invoice
+                        </a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+
+}
+<div class="reviewpaging">
+    <div class="contentPaging">
+        <div class="fLeft totalreviews">
+            &nbsp;
+        </div>
+        <input type="hidden" id="currentPage" value="@ViewBag.Page" />
+        @{
+            int from = (ViewBag.Page - 1) * 10 + 1;
+            int to = ViewBag.Page * 10;
+            if (to > totalRecord)
+            {
+                to = totalRecord;
+            }
+            int lastPage = 0;
+            if (totalRecord % 10 == 0)
+            {
+                lastPage = totalRecord / 10;
+            }
+            else
+            {
+                lastPage = totalRecord / 10 + 1;
+            }
+        }
+        @{
+            if (totalRecord > 0)
+            {
+                <div class="paging">
+                    @if (ViewBag.Page > 1)
+                    {
+                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" title="previous">&lt;</a>
+
+                    }
+                    @if (lastPage >= 5 && ((ViewBag.Page == lastPage - 1) || ViewBag.Page == lastPage))
+                    {
+                        if (ViewBag.Page == 4)
+                        {
+                            <a onclick="pagingEvent(@(ViewBag.Page - 3))" pageindex="@(ViewBag.Page - 3)" title="@(ViewBag.Page - 3)">@(ViewBag.Page - 3)</a>
+                        }
+                        if (ViewBag.Page > 4)
+                        {
+                            <a onclick="pagingEvent(1)" title="previous">1</a>
+                            <span class="borderNone p0 ml4 dotmore">...</span>
+
+                        }
+
+                        <a onclick="pagingEvent(@(ViewBag.Page - 2))" pageindex="@(ViewBag.Page - 2)" title="@(ViewBag.Page - 2)">@(ViewBag.Page - 2)</a>
+                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                    }
+                    @if (ViewBag.Page > 1 && ViewBag.Page < lastPage - 1)
+                    {
+
+                        if (ViewBag.Page == 3)
+                        {
+                            <a onclick="pagingEvent(1)" title="previous">1</a>
+                        }
+                        if (ViewBag.Page > 3)
+                        {
+                            <a onclick="pagingEvent(1)" title="previous">1</a>
+                            <span class="borderNone p0 ml4 dotmore">...</span>
+
+                        }
+                        <a onclick="pagingEvent(@(ViewBag.Page - 1))" pageindex="@(ViewBag.Page - 1)" title="@(ViewBag.Page - 1)">@(ViewBag.Page - 1)</a>
+                    }
+                    <span class="active" title="@ViewBag.Page">@ViewBag.Page</span>
+                    @if (ViewBag.Page + 1 < lastPage)
+                    {
+                        <a onclick="pagingEvent(@(ViewBag.Page + 1))" pageindex="@(ViewBag.Page + 1)" title="@(ViewBag.Page + 1)">@(ViewBag.Page + 1)</a>
+                    }
+                    @if (ViewBag.Page + 2 < lastPage)
+                    {
+                        <a onclick="pagingEvent(@(ViewBag.Page + 2))" pageindex="@(ViewBag.Page + 2)" title="@(ViewBag.Page + 2)">@(ViewBag.Page + 2)</a>
+                    }
+                    @if (ViewBag.Page + 3 < lastPage)
+                    {
+                        <span class="borderNone p0 ml4 dotmore">...</span>
+                    }
+                    @if (ViewBag.Page < lastPage)
+                    {
+                        <a onclick="pagingEvent(@lastPage)" pageindex="@lastPage" title="@lastPage">@lastPage</a>
+                        <a onclick="pagingEvent(@(ViewBag.Page + 1))" title="next">&gt;</a>
+                    }
+                </div>
+                <div class="clear">
+                </div>
+            }
+            else
+            {
+                <div>
+                    No data found!!!
+                </div>
+            }
+        }
+    </div>
+</div>

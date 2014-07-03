@@ -1,0 +1,24 @@
+﻿@model Kuyam.WebUI.Models.CompanyAdminModel
+@using M2.Util.MVC
+@{
+    ViewBag.Title = "Impersonate Company";
+}
+<h2>@ViewBag.Title</h2>
+@if (User.IsInRole("support"))
+{
+    using (Html.BeginForm())
+    {
+    @Html.ValidationSummary(true)
+        @:select company:
+        @Html.DropDownListFor(x => x.SelectedProfileID, Model.Companies.OrderBy(x => x.Text))
+    <select name="CompanyAction" id="CompanyAction">
+        <option value="Edit Profile" selected="selected">Edit Profile</option>
+    </select>
+    <br />
+    @Html.SaveCancelLC("submit", "submitting")
+    }
+}
+else
+{
+    @:You are not authorized for this page.
+}

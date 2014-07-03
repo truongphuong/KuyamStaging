@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Steve Test Page";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#yourDropDown").hide();
+        $("#yourButtonsID").click(function () {
+            $("#yourDropDown").toggle();
+        });
+    });  
+</script>  
+</head>  
+
+<button id="leftButtonSection">Do Something</button>  
+<button id="yourButtonsID">Open Menu</button>  
+<div id="yourDropDown">  
+    <ul>  
+      <li>Option One</li>  
+      <li>Option Two</li>    
+    </ul>
+</div>
+<hr />
+<div class="demo">
+
+    <div>
+        <button id="rerun">Run last action</button>
+        <button id="select">Select an action</button>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#rerun").button().click(function () {
+            alert("Running the last action");
+        })
+    .next()
+    .button({
+        text: false,
+        icons: {
+            primary: "ui-icon-triangle-1-s"
+        }
+    })
+    .click(function () {
+        // Code to display menu goes here. <<<<<<<<<<<<
+    })
+    .parent()
+    .buttonset();
+});
+</script>

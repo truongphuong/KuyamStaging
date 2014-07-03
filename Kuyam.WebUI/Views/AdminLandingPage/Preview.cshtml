@@ -1,0 +1,26 @@
+﻿@using Kuyam.Utility
+@model Kuyam.WebUI.Models.LandingPage.LandingPageModel
+
+@{
+    ViewBag.Title = "Preview";
+    Layout = "~/Views/Shared/_LandingPageLayout.cshtml";
+    ViewBag.ShowSignUp = true;
+}
+
+<div class="landing">
+    <div class="landingbanner">
+        <img src="@Model.BannerDisplayImage" alt="" />
+        <div class="bgcaption">
+            <h1 class="textCaption">@Model.Name </h1>
+        </div>
+    </div>
+    <div class="landingcolumns">
+        @Html.Raw(Model.MainContent)
+
+        <div>
+            @Html.Raw(Model.Scripts)
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

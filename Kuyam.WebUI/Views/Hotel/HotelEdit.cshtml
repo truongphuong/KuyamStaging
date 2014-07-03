@@ -1,0 +1,23 @@
+﻿@model Kuyam.WebUI.Models.HotelModel
+@using Kuyam.Database
+
+@{
+    Layout = "~/Views/Shared/_HotelLayout.cshtml";
+    ViewBag.Title = "HotelEdit";
+    string url = "/Hotel/HotelList?page=" + ViewBag.Page;
+    if (!string.IsNullOrEmpty(ViewBag.KeyName)){
+        url += "&keyname=!" + ViewBag.KeyName;
+    }
+}
+@using (Html.BeginForm("HotelEdit", "Hotel", FormMethod.Post, new { id = "edit", enctype = "multipart/form-data" }))
+{
+    <div id="contentmainpage">
+        <h2>
+            edit hotel</h2>
+        @Html.Partial("_HotelAddEdit", Model)
+        <input id="btnEdit" type="submit" value="save" />
+        <p>
+            <a href="@url">back to list</a>
+        </p>
+    </div>
+}

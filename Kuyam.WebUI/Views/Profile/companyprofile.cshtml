@@ -1,0 +1,296 @@
+﻿@model Kuyam.WebUI.Models.CompanyProfileModel
+@section Head
+{
+    <link href="@Url.Content("~/Content/company.css")" rel="stylesheet" type="text/css" />
+}
+@using M2.Util.MVC
+@{
+    ViewBag.Title = Model.Title + " my company";
+}
+@Html.Partial("_TextareaEditorSetup")
+<div style="float: left">
+    <h2>
+        @ViewBag.Title</h2>
+</div>
+<div style="float: right">
+    @Html.ActionLink("Personal Profile", "index", "profile") | 
+    @Html.ActionLink("home", "index", "cust")
+</div>
+<div class="clear"></div>
+<h3>
+    Company information</h3>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.ProfileCompany.ProfileID)
+    @Html.HiddenFor(model => model.ProfileCompany.ProfileID)
+    @Html.HiddenFor(model => model.ProfileCompany.Created)
+
+    if (User.IsInRole("support"))
+    { 
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.CompanyStatusID, "company status")
+        </div>
+        <div class="editor-field-profile">
+            @Html.DropDownListFor(x => x.ProfileCompany.CompanyStatusID, Model.CompanyStatusTypes)
+        </div>
+    </div>
+    }
+    else
+    { 
+    @Html.HiddenFor(model => model.ProfileCompany.CompanyStatusID)
+    }
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.CompanyTypeID, "business category")
+        </div>
+        <div class="editor-field-profile">
+            @Html.DropDownListFor(x => x.ProfileCompany.CompanyTypeID, Model.BusinessTypes)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Name, "company name")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Name)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Name)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            logo/photo
+        </div>
+        <div class="editor-field-profile">
+            <input type="file" name="logoCompany" id="logoCompany" />                
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            video
+        </div>
+        <div class="editor-field-profile">
+            [TODO]
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Desc, "description")
+        </div>
+        <div class="editor-field-profile">
+            <textarea cols="50" id="Company_Desc" name="Company.Desc" rows="2">@Model.ProfileCompany.Desc</textarea><br />
+            @Html.ValidationMessageFor(model => model.ProfileCompany.Desc)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Street1, "street 1")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Street1)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Street1)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Street2, "street 2")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Street2)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Street2)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.City, "city")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.City)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.City)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.State, "state")
+        </div>
+        <div class="editor-field-profile">
+            @Html.DropDownListFor(model => model.ProfileCompany.State, Model.StateList)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Zip, "zip")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Zip)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Zip)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Phone, "phone")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Phone)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Phone)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Fax, "fax")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Fax)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Fax)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Email, "email")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Email)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Email)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Url, "website")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Url)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Url)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.PaymentOptions, "payment options")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.PaymentOptions)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.PaymentOptions)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.MapUrl, "map link")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.MapUrl)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.MapUrl)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Neighborhood)
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Neighborhood, "neighborhood")
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Neighborhood)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.CrossStreet, "cross street")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.CrossStreet)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.CrossStreet)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.PublicTransportation, "public transportation")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.PublicTransportation)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.PublicTransportation)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Parking, "parking")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Parking)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Parking)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.Notes, "notes")
+        </div>
+        <div class="editor-field-profile">
+            @Html.EditorFor(model => model.ProfileCompany.Notes)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.Notes)
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <h3>
+        appointment settings</h3>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.ApptAutoConfirm, "Auto confirm")
+        </div>
+        <div class="editor-field-profile-autowidth">
+            @Html.CheckBoxFor(model => model.ProfileCompany.ApptAutoConfirm)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.ApptAutoConfirm)
+        </div>
+    </div>    
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.ApptDefaultSlotDuration, "default duration")
+        </div>
+        <div class="editor-field-narrow" style="width: 300px">
+            @Html.EditorFor(model => model.ProfileCompany.ApptDefaultSlotDuration) minutes
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.ApptDefaultSlotDuration)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProfileCompany.ApptDefaultPeoplePerSlot, "people per slot")
+        </div>
+        <div class="editor-field-narrow">
+            @Html.EditorFor(model => model.ProfileCompany.ApptDefaultPeoplePerSlot)
+            <br />@Html.ValidationMessageFor(model => model.ProfileCompany.ApptDefaultPeoplePerSlot)
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            Open Hours
+        </div>
+        <div class="editor-field">
+            @if (Model.Hours != null && Model.Hours.ToString().Length > 0)
+            {
+                <div style="float: left; padding-right: 20px;">
+                    @Model.Hours
+                </div>
+            }
+            <div style="float: left">
+                @Html.ActionLink("modify hours", "open-hours", new { id = Model.ProfileCompany.ProfileID })
+            </div>
+        </div>
+    </div>
+    <div class="editor-row">
+        <div class="editor-label">
+            Exception Hours
+        </div>
+        <div class="editor-field">
+            @if (Model.ExceptionHours != null && Model.ExceptionHours.ToString().Length > 0)
+            {
+                <div style="float: left; padding-right: 20px;">
+                    @Model.ExceptionHours
+                </div>
+            }
+            <div style="float: left; ">
+                @Html.ActionLink("Modify exception hours", "exception-hours", new { id = Model.ProfileCompany.ProfileID })
+            </div>
+        </div>
+    </div>
+    @Html.Div("clear")
+    <p>
+        @Html.SaveCancelLC()
+    </p>
+}

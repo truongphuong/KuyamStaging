@@ -1,0 +1,217 @@
+﻿@{
+    ViewBag.Title = "Newsletter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div id="contentmainpage">
+    <h2>
+        newsletter for users</h2>
+    <div class="boxsearch">
+        <center>
+            <table class="tbldata" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr class="odd">
+                        <td>
+                            <label>
+                                search&nbsp;&nbsp;
+                                <input type="text" id="txtKey" name="Key" value="@ViewBag.Key" />
+                            </label>
+                             @Html.Partial("_SearchBox")
+                            <input class="button" id="btnSearch" value="search" type="button" onclick="FilterSearchResult();" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </div>
+    <div id="listCustomers">
+        @Html.Partial("_CustomerListResultWithCheckbox")
+    </div>
+    
+    <div>
+        <table class="tbldata" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr class="odd">
+                    <td>
+                        <div class="fleft">
+                            <label class="countSelected">0 user is selected</label> &nbsp;
+                            <input class="button" id="btnClear" value="clear selected" type="button" onclick="clearSelected()" />
+                        </div>
+                    </td>
+                            
+                    <td>
+                        <div class="adminbuttons">
+                            <input type="text" id="newsletterSubject" class="subject" onfocus="if (this.value=='email subject') {this.value = '';}" onblur="if ($.trim(this.value)=='' || $.trim(this.value).toLowerCase()=='email subject'){this.value='email subject';}" value="email subject"/>
+                            <div class="clear-10"></div>
+                            <select id="emailTemplate">
+                                @foreach (SelectListItem item in ViewBag.EmailTemplates)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                            &nbsp;&nbsp;
+                            <input class="button" id="btnSend" value="send newsletter" type="button" onclick="sendNewsletter()" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    
+    // new search
+    function pagingEvent(pageIndex) {
+        UpdateData(pageIndex);
+    };
+
+    // change page
+    function FilterSearchResult() {
+        UpdateData(1);
+    }
+
+    // ajax load data
+
+    function UpdateData(page) {
+        var key = $('#txtKey').val();
+        var searchType = $("#searchType option:selected").val();
+        var searchParameters = { page: page, key: key, searchType: searchType };
+
+        window.isUseDefaultAjaxHandle = true;
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(searchParameters),
+                dataType: 'html',
+                url: '/Admin/NewsLetterCust/'
+            })
+            .success(function (result) {
+                $('#listCustomers').html(result);
+
+                // update checkbox status
+                var numChecked = 0;
+                $.each($(".customerProfileSelect"), function (index, item) {
+                    if ($.inArray($(item).val(), listProfilesSelected) >= 0) {
+                        $(item).prop('checked', true);
+                        numChecked+=1;
+                    }
+                });
+                
+                if (numChecked == 10) {
+                    $("#selectAll").prop('checked', true);
+                }
+
+            })
+            .error(function (error) {
+
+            });
+    }
+
+    // document ready
+    $(function () {
+        // handle click on select all
+        $('#selectAll').live('change', function () {
+            if ($('#selectAll').prop('checked')) {
+                $.each($(".customerProfileSelect"), function (index, item) {
+                    $(item).prop('checked', true);
+                    addProfile(item.value);
+                });
+            } else {
+                $.each($(".customerProfileSelect"), function (index, item) {
+                    $(item).prop('checked', false);
+                    removeProfile(item.value);
+                });
+            }
+
+        });
+
+        // handle click on select user profile
+        $('.customerProfileSelect').live('change', function () {
+            if ($(this).prop('checked'))
+                addProfile($(this).val());
+            else
+                removeProfile($(this).val());
+        });
+
+        updateAnnounce();
+    });
+    
+
+    var listProfilesSelected = new Array();
+
+
+    function addProfile(profileId) {
+        var position = $.inArray(profileId, listProfilesSelected);
+        if (position < 0)
+            listProfilesSelected[listProfilesSelected.length] = profileId;
+        
+        updateAnnounce();
+    }
+
+    function removeProfile(profileId) {
+        var position = $.inArray(profileId, listProfilesSelected);
+        if (position>=0)
+            listProfilesSelected.splice(position, 1);
+        updateAnnounce();
+    }
+
+    function updateAnnounce() {
+        
+        if (listProfilesSelected.length <= 1) {
+            $(".countSelected").html(listProfilesSelected.length + " user is selected");
+        } else {
+            $(".countSelected").html(listProfilesSelected.length + " users are selected");
+        }
+
+        if (listProfilesSelected.length > 0) {
+            $("#btnSend").removeAttr("disabled"); ;
+            $("#btnClear").removeAttr("disabled"); ;
+        } else {
+            $("#btnSend").attr("disabled", "disabled");
+            $("#btnClear").attr("disabled", "disabled");
+        }
+    }
+
+    function clearSelected() {
+        $("#selectAll").prop('checked', false);
+        
+        $.each($(".customerProfileSelect"), function (index, item) {
+            $(item).prop('checked', false);
+        });
+        listProfilesSelected = new Array();
+        updateAnnounce();
+    }
+
+    function sendNewsletter() {
+        if ($("#emailTemplate").val() == '0') {
+            alert("please select a template to send.");
+            return false;
+        }
+
+        if ($("#newsletterSubject").val() == 'email subject') {
+            alert("please enter subject of newsletter email.");
+            return false;
+        }
+        
+        window.isUseDefaultAjaxHandle = true;
+        $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                traditional: true,
+                data: { 'listCustIds': listProfilesSelected, 'emailTemplate': $("#emailTemplate").val(), 'emailSubject': $("#newsletterSubject").val() },
+                url: '/Admin/SendNewsLetterCust/'
+            })
+            .success(function(result) {
+                if (result == true) {
+                    clearSelected();
+                    alert("newsletter has been sent.");
+                } else {
+                    alert("sorry, newsletter can't be sent.");
+                }
+            })
+            .error(function(error) {
+
+            });
+    }
+</script>

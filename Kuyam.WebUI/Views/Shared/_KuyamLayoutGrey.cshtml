@@ -1,0 +1,68 @@
+﻿@using M2.Util
+@using M2.Util.MVC
+@using Kuyam.WebUI.Models
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:addthis="https://www.facebook.com/2008/fbml" xmlns:g="https://www.facebook.com/2008/fbml">
+  <head>
+    <link rel="stylesheet" type="text/css" href=@Url.Content("~/content/Homepage.css") />
+    <title>kuyam @(ViewBag.Title != "" ? "- " + ViewBag.Title.ToLower() : "")</title>
+    <link href="@Url.Content("~/Content/themes/custom-theme/jquery-ui-1.8.16.custom.css")" rel="Stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/scripts/jquery.alerts/jquery.alerts.js")"></script> 
+    <link href="@Url.Content("~/scripts/jquery.alerts/jquery.alerts.css")" rel="stylesheet" type="text/css" />
+
+    <link href="@Url.Content("~/scripts/jqueryTimepickerAddon/jqueryTimepickerAddon.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/scripts/jqueryTimepickerAddon/jqueryTimepickerAddon.js")"></script>
+
+    @if (!Request.IsAuthenticated && !MySession.DebugMode)
+    { 
+        <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e7601423db4b833"></script>
+    }
+
+    <script type="text/javascript" src="@Url.Content("~/scripts/modernizr.custom.js")"></script>
+    <script src="@Url.Content("~/scripts/M2.Modernizr.js")" type="text/javascript"></script>
+
+    <link href="@Url.Content("~/scripts/fbdropdown/fbdropdown.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/scripts/fbdropdown/fbdropdown.js")"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/scripts/main.js")"></script>
+
+    <!--<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />-->
+
+    @RenderSection("Head", required: false)
+    <script type="text/javascript">
+        var $j = jQuery;
+    </script>
+  </head>
+
+
+  <body class="Basic">
+
+    @Html.Partial("_Header")
+
+    <div class="BodyBasic">
+    <center>
+      <div class="BodyBasicContent">
+
+         @RenderBody()
+
+      </div>
+    </center>
+    </div>
+
+    <div class="BodyFooterBasic">
+      <div class="BodyFooterBasicContentGrey">
+      </div>
+    </div>
+
+    @Html.Partial("_Footer")
+
+    <div id="dialog"></div>
+    <div id="PopUpDialog"></div>
+    @Html.Partial("_LiveChat")
+  </body>
+</html>

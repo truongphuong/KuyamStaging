@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Help ";
+}
+<h2>@ViewBag.Title</h2>
+<div class="text centered">
+<p>
+    need help?<br />
+</p>
+<p>
+    check out our @Html.ActionLink("faq", "faq", "home") section.</p>
+<p>
+    if that doesn’t answer your question, <a target="_blank" href="mailto:feedback@kuyam.com?subject=kuyam help request from @(Kuyam.WebUI.Models.MySession.Username)">click here</a> for help or call us at 310-461-1515.</p>
+</div>

@@ -1,0 +1,172 @@
+﻿@using Kuyam.Database
+@using Kuyam.WebUI.Controllers
+@{
+    ViewBag.Title = "BuyGiftCardStyle";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('select#amount').selectmenu();
+    });
+</script>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div id="divLoadForm" class="dashboardmail">
+                <h1>
+                    buy a gift card</h1>
+                <div class="dashboardmailleft">
+                    kuyam's gift cards can be used to book an appointment with ANY service provider
+                    within the beauty, health & fitness and kids activities based in Los Angeles that
+                    is booked through kuyam. this gift card does not expire.
+                </div>
+                <div class="dashboardmailright">
+                    <fieldset>
+                        <div class="fleft boxamount">
+                            <select name="amount" id="amount" class="selectamount">
+                                <option value="0" style="font-weight: bold"><span>select a amount</span></option>
+                                <option value="1" style="font-weight: bold"><span>select a amount</span></option>
+                                <option value="2" style="font-weight: bold"><span>select a amount</span></option>
+                                <option value="3" style="font-weight: bold"><span>select a amount</span></option>
+                            </select>
+                        </div>
+                        <div class="fleft radioemail">
+                            <input type="radio" name="radiomailtype" id="radioemail" /><label for="radioemail">e-mail</label>
+                        </div>
+                        <div class="fleft radiomail">
+                            <input type="radio" name="radiomailtype" id="radiomail" /><label for="radiomail">mail</label>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="controlmail" style="display: none;">
+                            <div class="boxdashboardmailright">
+                                <div class="boxtop">
+                                </div>
+                                <div class="boxcenter">
+                                    <label for="txtname" class="labelblock">
+                                        recipient’s name:</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <input type="text" class="txtxlarge" id="txtname" />
+                                    <div class="boxaddress">
+                                        <label for="txtaddress" class="labelblock">
+                                            recipient address:</label>
+                                        <div class="clear1">
+                                        </div>
+                                        <input type="text" class="txtxlarge" name="txtaddress" id="txtaddress" value="address line 1" />
+                                        <div class="clear3">
+                                        </div>
+                                        <input type="text" class="txtxlarge" name="txtaddress" value="address line 2" />
+                                        <div class="clear2">
+                                        </div>
+                                        <input type="text" class="fleft txtlarge" name="txtaddress" value="city" />
+                                        <input type="text" class="fleft txtsmall" name="txtaddress" value="state" />
+                                        <input type="text" class="fleft txtmedium" name="txtaddress" value="zip code" />
+                                        <div class="clear13">
+                                        </div>
+                                        <div class="fleft">
+                                            <input type="radio" name="radioshipping" id="radiostandard" /><label for="radiostandard">FREE
+                                                standard shipping</label>
+                                        </div>
+                                        <div class="fright cbpremium">
+                                            <input type="radio" name="radioshipping" id="radiopremium" /><label for="radiopremium">premium
+                                                shipping</label>
+                                        </div>
+                                        <div class="clear20">
+                                        </div>
+                                        <div class="fleft">
+                                            estimated delivery date:
+                                        </div>
+                                        <div class="fright arangedate">
+                                            Oct 31 - Nov 1 2013
+                                        </div>
+                                        <div class="clear11">
+                                        </div>
+                                        <div class="fright shippcost">
+                                            shipping cost: $0.00
+                                        </div>
+                                        <div class="clear19">
+                                        </div>
+                                    </div>
+                                    <label for="txtyourname" class="labelblock">
+                                        your name:</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <input type="text" class="txtxlarge" id="txtyourname" />
+                                    <div class="clear7">
+                                    </div>
+                                    <label for="txtmessage" class="labelblock">
+                                        your message (300 characters max):</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <textarea cols="" rows="" id="txtmessage">hi friend!
+
+here’s a gift for you. thought you could use somerelaxation :)</textarea>
+                                </div>
+                                <div class="boxbottom">
+                                </div>
+                            </div>
+                            <input type="submit" value="" class="btnpurchase" />
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="controlemail">
+                            <div class="boxdashboardmailright">
+                                <div class="boxtop">
+                                </div>
+                                <div class="boxcenter">
+                                    <label for="txtname" class="labelblock" style="margin-top:-2px;">
+                                        recipient’s name:</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <input type="text" class="txtxlarge" id="txtname" />
+                                    <div class="clear5">
+                                    </div>
+                                    <label for="txtemail" class="labelblock">
+                                        recipient’s e-mail:</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <input type="text" class="txtxlarge" id="txtemail" />
+                                    <div class="clear3">
+                                    </div>
+                                    <label for="txtyourname" class="labelblock">
+                                        your name:</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <input type="text" class="txtxlarge" id="txtyourname" />
+                                    <div class="clear13">
+                                    </div>
+                                    <label for="txtmessage" class="labelblock">
+                                        your message (300 characters max):</label>
+                                    <div class="clear2">
+                                    </div>
+                                    <textarea cols="" rows="" id="txtmessage">hi friend!
+
+here’s a gift for you. thought you could use somerelaxation :)</textarea>
+                                    <div class="clear2">
+                                    </div>
+                                    <div class="textassurance">
+                                        upon purchase, the gift card will be delivered immediately.</div>
+                                </div>
+                                <div class="boxbottom">
+                                </div>
+                            </div>
+                            <div class="clear2">
+                            </div>
+                            <input type="submit" value="" class="btnpurchase" />
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

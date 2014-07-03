@@ -1,0 +1,336 @@
+﻿@using Kuyam.Database;
+@{
+    ViewBag.Title = "Company Services";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
+    List<Service> categories = DAL.GetParentService();
+    string id = string.Empty;
+    if (Url.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = Url.RequestContext.RouteData.Values["id"].ToString();
+    }
+    List<ServiceCompany> scList = new List<ServiceCompany>();
+    if (ViewBag.CompanyServices != null)
+    {
+        scList = ViewBag.CompanyServices;
+    }
+       
+    
+}
+<style>
+    .listservices .listservicescol1 .formaddlistservices1
+    {
+        behavior: url(../../PIE.htc);
+    }
+</style>
+<script type="text/javascript">
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    $(document).ready(function () {
+        $('select#category1').selectmenu();
+    })
+    
+    
+</script>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+        <div class="colRight">
+            <div class="editserviceform">
+                <h1>
+                    list/edit all your services</h1>
+                <p class="padd">
+                    please add or edit what services your company provides.</p>
+                <div class="line">
+                </div>
+                <h2>
+                    company’s list of services</h2>
+                <div class="listservices">
+                    <div class="listservicescol1">
+                        <div class="formaddlistservices1">
+                        </div>
+                        <div class="formaddlistservices">
+                            <div class="selectcat">
+                                <select name="category1" id="category1" class="selectcatagory">
+                                   @{
+                                
+                                        <option value="-1">select from categories</option>
+                                        foreach (Service category in categories)
+                                        {                                            
+                                        <option value="@category.ServiceID" serviceID="@category.ServiceID" @(ViewBag.CategoriID!=null && ViewBag.CategoriID ==category.ServiceID?"selected=selected":"") >@Kuyam.Domain.UtilityHelper.TruncateText(category.ServiceName, 25)</option>
+                                           
+                                        }
+
+                                   
+                                    }
+                                </select>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="selectservice" id="serviceSelect">
+                                <select name="category" id="service" class="selectservice" disabled="disabled">
+                                    <option value="select from service" selected="selected">select from service</option>
+                                </select>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="timeduration">
+                                <div class="timedurationcol1">
+                                    time duration
+                                </div>
+                                <div class="timedurationcol2">
+                                    <div class="formtext">
+                                        <div class="ltxt">
+                                        </div>
+                                        <div class="ctxt">
+                                            <input id="txtTimeDuration" onkeypress="return isNumberKey(event)" type="text" />
+                                        </div>
+                                        <div class="rtxt">
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        minutes:
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="price">
+                                <div class="timedurationcol1">
+                                    price
+                                </div>
+                                <div class="timedurationcol2">
+                                    <div class="formtext">
+                                        <div class="ltxt">
+                                        </div>
+                                        <div class="ctxt">
+                                            <input id="txtPrice" type="text" onkeypress="return isNumberKey(event)" />
+                                        </div>
+                                        <div class="rtxt">
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        $
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="maxpeople">
+                                <div class="timedurationcol1">
+                                    max people per slot
+                                </div>
+                                <div class="timedurationcol2">
+                                    <div class="formtext">
+                                        <div class="ltxt">
+                                        </div>
+                                        <div class="ctxt">
+                                            <input id="txtMaxPeople" type="text" value="1" onkeypress="return isNumberKey(event)" />
+                                        </div>
+                                        <div class="rtxt">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                            <div class="bried">
+                                <div class="title">
+                                    brief description
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="formtextare">
+                                    <textarea id="txtDescription" class="textareainactive" type="text" col="5" row="2"
+                                        onfocus="if (this.value=='150 max characters') {this.value = '';}this.className = '';"
+                                        onblur="if (this.value==''){this.value='150 max characters';this.className = 'textareainactive';}">150 max characters</textarea>
+                                    @*<textarea id="txtDescription" type="text" col="5" row="2" ></textarea>*@
+                                </div>
+                                <div class="clear">
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div id="divErrorBox" style="width: 292px; margin-top: 20px; color: Red;">
+                                <div class="ui-state-error ui-corner-all">
+                                    <div style="position: relative;">
+                                        <div id='errorlist' style="padding: 4px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listservicescol2">
+                        <input type="button" value="" class="btnadd" title="Add" />
+                        <input type="button" value="save edits" class="btnsave" title="save edits" style="display: none" />
+                        <div class="clear7">
+                        </div>
+                        <input type="button" value="delete" class="btncancel" title="Delete" />
+                    </div>
+                    <div class="listservicescol3">
+                        <div class="boxadd1">
+                        </div>
+                        <div class="boxadd">
+                            <ul>
+                                @if (scList.Count > 0)
+                                {
+                                    foreach (ServiceCompany sc in scList)
+                                    {
+                                    <li class="serviceCompany"  serviceCompanyID="@sc.ServiceCompanyID">@Kuyam.Domain.UtilityHelper.TruncateText(sc.Service.ServiceName, 10),
+                                        @sc.Duration min, $@sc.Price, @sc.AttendeesNumber person</li>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="noservicesadded">
+                                        (no services added yet)</div>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var companyId = '@ViewBag.companyId';
+
+    $(document).ready(function () {
+        $('#divErrorBox').hide();
+        $('#CompanyServicesMenu').attr("class", "leftitem choose");
+
+        $('#category1').change(function () {
+            var categoryID = $('#category1').val();
+            var parameters = { categoryID: categoryID };
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/GetServices/'
+                })
+                .success(function (result) {
+                    var result = JSON.parse(result);
+                    if (result != "") {
+                        $('#serviceSelect').html('');
+                        $('#serviceSelect').html(result);
+                        $('select#service').selectmenu();
+                        $('#serviceSelect').attr("class", "selectservice selectserviceactive");
+                    } else {
+                        $('#serviceSelect').html("<select name=\"category\" id=\"service\" class=\"selectservice selectserviceactive\"><option value=\"select from service\" selected=\"selected\">select from service</option>");
+                        $('select#service').selectmenu();
+                        $('#service-button').attr("aria-disabled", "true");
+                        $('#serviceSelect').attr("class", "selectservice");
+                    }
+
+                })
+                .error(function (error) {
+
+                });
+        });
+
+        $('.btnadd').click(function () {
+
+            var serviceID = $('#service').val();
+            var timeDuration = $('#txtTimeDuration').val();
+            var price = $('#txtPrice').val();
+            var maxPeople = $('#txtMaxPeople').val();
+            var description = $('#txtDescription').val();
+            var category = $('#category1').val();
+            var err = "";
+            if (category == '' || category == '-1') {
+                err = err + 'select category first.<br/>';
+            } else {
+
+                if (serviceID == '' || serviceID == 'select from service') {
+                    err = err + 'please select service.<br/>';
+                } else {
+                    if (timeDuration == '' || timeDuration <= 0) {
+                        err = err + 'time duration is required.<br/>';
+                    }
+                    if (timeDuration >= 2147483647) {
+                        err = err + 'invalid time duration value.<br/>';
+                    }
+                    if (maxPeople >= 2147483647) {
+                        err = err + 'invalid max people value.<br/>';
+                    }
+                    if (price == '' || price <= 0) {
+                        err = err + 'price is required.<br/>';
+                    }
+                    if (price >= 2147483647) {
+                        err = err + 'invalid price value.<br/>';
+                    }
+                    if (maxPeople == '' || maxPeople <= 0) {
+                        err = err + 'max people per slot are required.<br/>';
+                    }
+                    if (description == "150 max characters") {
+                        description = '';
+                    }
+
+                }
+            }
+            if (err == '') {
+                $('#divErrorBox').hide();
+                var parameters = { serviceID: serviceID, time: timeDuration, price: price, maxPeople: maxPeople, description: description, profileid: companyId };
+                $.ajax(
+                {
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(parameters),
+                    dataType: 'html',
+                    url: '/company/AddService/'
+                })
+                .success(function (result) {
+                    window.location.href = '/company/companyservices/?companyId=' + companyId;
+                })
+
+                .error(function (error) {
+
+                });
+            } else {
+                $('#divErrorBox').show();
+                $('#errorlist').html(err);
+            }
+
+        });
+
+        $('.serviceCompany').click(function () {
+            var id = $(this).attr('serviceCompanyID');
+            window.location.href = "/Company/CompanyServiceEdit/" + id + "?companyId=" + companyId;
+            return false;
+        });
+
+        function gotoStatus(status) {
+            window.location.href = "/CompanyAppointment/";
+        }
+
+        $(document).ready(function () {
+            $("#ui-accordion-accordion-header-2").click(function () {
+                if (window.location.href.indexOf("calendarview") == -1) {
+                    window.location = "/calendarview/";
+                }
+            });
+        });
+
+
+    });
+
+    function gotoStatus(status) {
+        window.location.href = "/CompanyAppointment/";
+    }       
+
+</script>

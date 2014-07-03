@@ -1,0 +1,46 @@
+﻿@using Kuyam.Database
+@{
+    ViewBag.Title = "BuyGiftCard";
+    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
+}
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        <div id="leftTabAppointment">
+            @Html.Partial("_CompanySearchLeftTab")
+        </div>
+        <div class="colRight">
+            <div id="divLoadForm" class="accountbalance">
+                <div class="boxsuccess">
+                    success! you have redeemed $20.00 and it’s been added to your account balance.
+                </div>
+                <div>
+                    <div class="accountbalanceleft">
+                        $20.00
+                    </div>
+                    <div class="accountbalanceright">
+                        <div class="boxtop">
+                        </div>
+                        <div class="boxcenter">
+                            <fieldset>
+                                received a gift card?
+                                <br />
+                                enter the gift card number below:
+                                <br />
+                                <input class="txtnumgif" type="text" />
+                                <input type="submit" value="" class="btnredeem" />
+                                <div class="clear">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="boxbottom">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

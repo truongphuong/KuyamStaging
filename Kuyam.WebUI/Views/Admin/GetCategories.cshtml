@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "GetCategories";
+}
+@using Kuyam.Database
+@model List<be_Categories>
+<div id="contentmainpage">
+    <h2>blog categories</h2>
+    <div class="loginform">
+        <table cellpadding="2" cellspacing="2" border="0" class="tbldata">
+            @{ 
+                foreach (be_Categories category in Model)
+                {                    
+                    <tr> 
+                        <td>@category.CategoryName</td>
+                        <td>
+                            <a href="AddFeaturedCompaniesToCategory/@category.CategoryRowID">edit featured companies</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>       
+    </div>
+</div>

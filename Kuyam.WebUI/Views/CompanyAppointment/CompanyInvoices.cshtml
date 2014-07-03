@@ -1,0 +1,106 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain;
+@using Kuyam.Utility;
+@using Kuyam.WebUI.Models;
+@{
+    ViewBag.Title = "Company Invoice";
+    Layout = "~/Views/Shared/_CompanyAdmin.cshtml";                                       
+}
+@{
+    List<Service> svCompanies = ViewBag.Categories;
+    List<PaymentMethod> payMethods = ViewBag.PaymentMethods;     
+ }
+
+
+<script src="../../Scripts/js/companyinvoices.js" type="text/javascript"></script>
+<script src="../../Scripts/js/jquery.printElement.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var companyId = '@ViewBag.companyId';   
+         $(function () {
+             accordionforadmin(0);
+             $('.groupSelectName select,.selectMinute select, #allcategories, #paymentMethod').selectmenu();
+             clapinvoices("invoceitem", "companyinvoiceactive");             
+
+         });
+</script>
+
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanyAdminLeftTab")
+         <div class="colRight">    
+            <div class="companyinvoices">
+                <div class="tophead">
+                <div class="toptitle">scroll to date:</div>
+                <div class="topday">
+                <div class="arrowleft">
+                    <a class="btnpreview" title="Previous" href="javascript:void(0);"></a>
+                </div>                 
+                     <input type="text" id="searchDate" class="textday" style="border:none; text-align:center; color: #808080; font-size: 12px;font-family: Arial,Helvetica,sans-serif;"/>                 
+              
+                <div class="arrowright">
+                    <a class="btnnext" title="Next" href="javascript:void(0);"></a>
+                </div>
+                </div>
+                <div class="topselect">
+                <select name="message" id="allcategories" class="selectcategories">
+                            <option value="-1">all categories</option>
+                        @{
+                            foreach (var cat in svCompanies)
+                            {
+                                <option title="@cat.ServiceName" value="@cat.ServiceID">@Kuyam.Domain.UtilityHelper.TruncateText(cat.ServiceName,10)</option>
+                            }
+                        }
+                </select>
+                    @*@Html.DropDownList("allcategories",new SelectList(svCompanies,"ServiceID","ServiceName"),"all categories", new {id="allcategories",@class="selectcategories"})              *@
+                </div>
+                <div class="invoices">
+                <input type="text" id="txtseachname" value="search by name" onblur="if (this.value==''){this.value='search by name';}" onfocus="if (this.value=='search by name') {this.value = '';}"/>
+                <div class="clear"></div>
+                </div>
+                <div class="topselect">    
+                    <select name="message" id="paymentMethod" class="selectcategories">
+                        <option value="-1">any payment</option>
+                        @{
+                            foreach(var payment in Enum.GetNames(typeof(Types.PaymentMethod))){
+                                string paymentMethod = payment;
+                                var value = (int)Enum.Parse(typeof(Types.PaymentMethod), payment);
+                                if (paymentMethod == "PayInPerson")
+                                {
+                                    paymentMethod = "pay in person";
+                                }
+                                              
+                                <option value="@value">@paymentMethod</option>
+                                }
+                            }
+                    </select>          
+                               
+                </div>
+                <div class="topdownload">
+                 <a id="lnkInvoicesDownload" onclick="downloadCompanyInvoicesList()"; title="download">download</a>
+                </div>
+                <div class="topprint">
+                <a href="javascript:void(0);" title="print all"  onclick="printInvoicesList();">print all</a>
+                </div>
+                <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+
+        <!-- Main contents go here -->
+        <div class="invocelist">  
+             @Html.Partial("CompanyInvoicesList")               
+        </div>          
+                   
+        <div class="clear"></div>	
+        </div> 
+        <div class="clear">
+        </div>
+    </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script type="text/javascript">
+   function gotoStatus(status) {
+       window.location = "/CompanyAppointment/index/" ;           
+        }
+</script>
+     

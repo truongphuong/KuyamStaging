@@ -1,0 +1,86 @@
+﻿@model Kuyam.WebUI.Models.CustHomeModel
+@using M2.Util
+@{
+    Layout = "~/Views/Cust/custmaster.cshtml";
+    ViewBag.CustPage = "home";
+}
+@Html.Partial("company-view-setup-partial")
+
+@section subhead
+{
+    <script type="text/javascript">
+    $(function () {
+//        if (@@(Model.FeaturedCompanyModel.Company.Desc != null && Model.FeaturedCompanyModel.Company.Desc.Length <= 400)
+//        {
+//            $('#fcodfullcontent').css('display', 'block');
+//            $('#fcodfullcontent').css('visibility', 'visible');
+//        }
+
+//        $('#fcodmore').click(function() {
+//            $('#fcodpartialcontent').hide();
+//            //$('#fcodfullcontent').show();
+//            $('#fcodfullcontent').css('display', 'block');
+//            $('#fcodfullcontent').css('visibility', 'visible');
+//        });
+
+        if (@(Model.CustAge) <= 0)
+        {
+            jAlert("We need to know how old you are as minors are not allowed to use the site.  Please enter your birthday on the next screen.  Thanks!", "alert", function() {
+                location.href = '@Url.Content("~/profile")';
+            });
+        }
+        else if (@(Model.CustAge) < 18)
+        {
+            jAlert("This site is intended for adults only.  Use of it by minors is prohibited.", "alert", function() {
+                location.href = '@Url.Content("~/account/logout")';
+            });
+        }
+    });
+    </script>
+}
+@using M2.Util.MVC
+<div class="updates-frame">
+    <h3 class="box-title">
+        Updates</h3>
+    @Html.Partial("appt-notifications-partial")
+</div>
+@if (Model.FeaturedCompanyModel.Company != null)
+{ 
+    <div id="fcod-frame" class="fcod-frame" style="margin-top:10px">
+        <h3 class="box-title">
+            Featured company</h3>
+        <br />
+        <div class="fcod-inner">
+            <div class="fcod-title">
+                <a href="javascript:showCompanyViewDialog(@(Model.FeaturedCompanyModel.Company.ProfileID), '@Model.FeaturedCompanyModel.Company.Name.EscapeJS()')" class="dialoglink">@Model.FeaturedCompanyModel.Company.Name</a></div>
+        </div>
+        <div class="fcod-video" style="text-align: center; margin: auto;">
+            @*<iframe width="220" height="123" src="http://www.youtube.com/embed/Gj632vH5gFM?controls=0&modestbranding=1&showinfo=0"
+            frameborder="1"></iframe>*@
+            @Html.Partial("_KalturaVideoPlayer", Model.FeaturedCompanyModel.MediaDisplayModel)
+        </div>
+        <div class="fcod-blurb">
+            <div>
+                @if (Model.FeaturedCompanyModel.Company.Desc != null && Model.FeaturedCompanyModel.Company.Desc.Length > 400)
+                {
+                    @(Html.RawBreaks(Model.FeaturedCompanyModel.Company.Desc.Substring(0, 400)))@:...
+            }
+                else
+                {
+                    @(Html.RawBreaks(Model.FeaturedCompanyModel.Company.Desc + ""))
+                }
+                <br />
+            </div>
+        </div>
+        <div>
+            &nbsp;
+            <div style="float: left">
+                <a href="javascript:showCompanyViewDialog(@(Model.FeaturedCompanyModel.Company.ProfileID), '@Model.FeaturedCompanyModel.Company.Name.EscapeJS()')" class="dialoglink">
+                    more</a>
+            </div>
+            <div style="float: right">
+                @Html.ActionLink("schedule appointment", "schedule_appointment", "cust", new { id = @Model.FeaturedCompanyModel.Company.ProfileID }, null)
+            </div>
+        </div>
+    </div>
+}

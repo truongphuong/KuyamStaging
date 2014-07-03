@@ -1,0 +1,128 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain
+@using M2.Util
+@using Kuyam.Domain.Seo;
+@model Kuyam.WebUI.Models.CompanyAppointment.CompanyAvailableTimeSlots
+
+@if (Model.ProfileCompany.CompanyTypeID == (int)Types.CompanyType.NonKuyamBookIt)
+{
+    if (Model.CompanyHours != null && Model.CompanyHours.Any())
+    {
+        <span class="availableDate @(Model.IsAvailableToday ? "" : "grey")">@Model.DayAvaiable:</span>
+        <div class="hours">
+            @foreach (CompanyHour companyHour in Model.CompanyHours)
+            {
+                <span>
+                    @(new DateTime().Date.Add(companyHour.FromHour).ToString("h:mmtt").ToLower()) - @(new DateTime().Date.Add(companyHour.ToHour).ToString("h:mmtt").ToLower())
+                </span>
+                <br />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="hours">
+            &nbsp;
+        </div>
+    }
+
+    <input type="button" class="btnSchedule btnAvailability nonKuyam" title="check for availability"
+           profileid="@Model.ProfileCompany.ProfileID"
+           companyname="@Model.ProfileCompany.Name"
+           phonenumber="@UtilityHelper.FormatPhone(Model.ProfileCompany.Phone)"
+           companysite="@Model.ProfileCompany.Url"
+           address="@string.Format("{0}. {1}, {2} {3}. </br>{4}", Model.ProfileCompany.Street1, Model.ProfileCompany.City, Model.ProfileCompany.State, Model.ProfileCompany.Zip, UtilityHelper.FormatPhone(Model.ProfileCompany.Phone))"
+           value="check for availabitily" />
+}
+else if (Model.ProfileCompany.CompanyTypeID == (int)Types.CompanyType.GeneralAvailability)
+{
+    if (Model.CompanyHours != null && Model.CompanyHours.Any())
+    {
+        <span class="availableDate @(Model.IsAvailableToday ? "" : "grey")">@Model.DayAvaiable:</span>
+        <div class="hours">
+            @foreach (CompanyHour companyHour in Model.CompanyHours)
+            {
+                <span>
+                    @(new DateTime().Date.Add(companyHour.FromHour).ToString("h:mmtt").ToLower()) - @(new DateTime().Date.Add(companyHour.ToHour).ToString("h:mmtt").ToLower())
+                </span>
+                <br />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="hours">
+            &nbsp;
+        </div>
+    }
+    var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId) });
+    if (Model.IsRederect)
+    {
+        url = "/book" + url;
+    }
+    <a href="@url" class="checkAvailabitity companyLink" title="check for availabitily">
+        check for availabitily
+    </a>
+}
+else
+{
+    if (Model.TimeSlots.Any())
+    {
+        <span class="availableDate @(Model.IsAvailableToday ? "" : "grey")">@Model.DayAvaiable:</span>
+        <div class="listTimeSlots">
+            @foreach (var timeSlot in Model.TimeSlots)
+            {
+                var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categotyId = ViewBag.CategoryId, book = true });
+                if (Model.IsRederect)
+                {
+                    url = "/book" + url;
+                }
+                <a href="@url" class="companyTimeSlot" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+            }
+
+            @if (Model.IsShowMore)
+            {
+                var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId), categotyId = ViewBag.CategoryId });
+                if (Model.IsRederect)
+                {
+                    url = "/book" + url;
+                }
+                <a href="@url" class="companyTimeSlotMore companyTimeSlot" title="more...">more...</a>
+
+            }
+        </div>
+
+    }
+    else
+    {
+        if (Model.CompanyHours != null && Model.CompanyHours.Any())
+        {
+            <span class="availableDate @(Model.IsAvailableToday ? "" : "grey")">@Model.DayAvaiable:</span>
+            <div class="hours">
+                @foreach (CompanyHour companyHour in Model.CompanyHours)
+                {
+                    <span>
+                        @(new DateTime().Date.Add(companyHour.FromHour).ToString("h:mmtt").ToLower()) - @(new DateTime().Date.Add(companyHour.ToHour).ToString("h:mmtt").ToLower())
+                    </span>
+                    <br />
+                }
+            </div>
+        }
+        else
+        {
+            <div class="hours">
+                &nbsp;
+            </div>
+        }
+
+        var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId) });
+        if (Model.IsRederect)
+        {
+            url = "/book" + url;
+        }
+        <a href="@url" class="checkAvailabitity companyLink" title="check for availabitily">
+            check for availabitily
+        </a>
+
+    }
+}
