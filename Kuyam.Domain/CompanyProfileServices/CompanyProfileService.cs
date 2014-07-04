@@ -1491,7 +1491,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                          join emp in _companyEmployeeRepository.Table on emh.CompanyEmployeeID equals emp.EmployeeID
                          join ems in _employeeServiceRepository.Table on emp.EmployeeID equals ems.CompanyEmployeeID
                          where emp.ProfileCompanyID == profileId
-                         && (serviceId == 0 || ems.ServiceCompanyID == serviceId)
+                         && ((serviceId == 0 || ems.ServiceCompanyID == serviceId)&& ems.ServiceCompany.ServiceTypeId==(int)Types.ServiceType.ServiceType)
                          && (employeeId == 0 || emp.EmployeeID == employeeId)
                          && !emh.IsPreview // this field use for review or not
                          select emh).Distinct();
