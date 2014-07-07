@@ -3233,7 +3233,7 @@ namespace Kuyam.WebUI.Controllers
                 employee.PaymentAccount = paypal;
                 employee.IsDefault = isDefault;
                 DAL.UpdateCompanyEmployeeInfo(employee);
-                DAL.DeleteEmployeeServicesByEmployeeID(employee.EmployeeID);
+                _classService.DeleteEmployeeServicesNonClassByEmployeeID(employee.EmployeeID);                
             }
 
             bool result = false;
@@ -3248,7 +3248,7 @@ namespace Kuyam.WebUI.Controllers
                         Kuyam.Database.EmployeeService service = new Kuyam.Database.EmployeeService();
                         service.CompanyEmployeeID = empID;
                         service.ServiceCompanyID = int.Parse(serviceCompanyIds[i]);
-                        result = DAL.AddEmployeeService(service);
+                        result = _classService.AddEmployeeServicesNonClass(service);
                     }
                 }
             }
@@ -4276,7 +4276,7 @@ namespace Kuyam.WebUI.Controllers
         public ActionResult Class(int? id)
         {
             int profileId = this.ProfileId;
-            ViewBag.Categories = _classService.GetParentService(profileId);
+            ViewBag.Categories = DAL.GetParentService();
             if (profileId != 0)
             {
                 ViewBag.CompanyServices = _classService.GetListClassByProfileId(profileId);
@@ -4333,14 +4333,12 @@ namespace Kuyam.WebUI.Controllers
 
                 if (sc.Appointments.Count > 0)
                 {
-                    ServiceCompany scItem = DAL.GetServiceCompany(serviceCompanyID);
-                    scItem.Description = description;
-                    result = DAL.UpdateServiceCompany(scItem);
+                    result = false;
                 }
                 else
                 {
                     result = DAL.UpdateServiceCompany(sc);
-                }
+                }               
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

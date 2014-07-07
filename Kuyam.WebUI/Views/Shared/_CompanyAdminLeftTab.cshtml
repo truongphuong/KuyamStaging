@@ -128,7 +128,7 @@
                     }
                     else
                     {
-                        <div class="leftitem" id="EmployeeMenu">
+                        <div class="leftitem choose" id="EmployeeMenu">
                             <a href="/company/employee/?companyId=@profileID" title="edit employees">edit employees</a>
                         </div>
                     }
@@ -192,7 +192,7 @@
                         @if (rawURL.Contains("/company/class"))
                         {
                             <div class="leftitem choose" id="CompanyServicesMenu">
-                                <a class="class" href="/company/class?profileID=@profileID" title="edit class">
+                                <a class="class" href="/company/class?companyId=@profileID" title="edit class">
                                     edit class
                                 </a>
                             </div>
@@ -200,7 +200,7 @@
                         else
                         {
                             <div class="leftitem" id="CompanyServicesMenu">
-                                <a class="class" href="/company/class?profileID=@profileID" title="edit class">
+                                <a class="class" href="/company/class?companyId=@profileID" title="edit class">
                                     edit class
                                 </a>
                             </div>

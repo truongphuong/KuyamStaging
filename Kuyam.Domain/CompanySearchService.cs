@@ -15,8 +15,9 @@ namespace Kuyam.Domain
     {
         public static List<CompanyProfileSearch> GetCompaniesFromTypeIDWithDistance(int custID, int serviceId, double distance, decimal priceFrom, decimal priceTo, DateTime hourFrom, DateTime hourTo, bool isToday, int page, int sortBy, out int totalRecord, string key)
         {
-            var skip = page - 1;
             var take = 10;
+            var skip = (page - 1)*take;
+            
             var totalItems = 0;
             var curLat = ConfigManager.DefaultLatitude;
             var curLong = ConfigManager.Defaultlongitude;

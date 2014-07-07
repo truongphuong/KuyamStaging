@@ -3237,7 +3237,7 @@ namespace Kuyam.Database
                 if (_context.EmployeeServices.Any(x => x.CompanyEmployeeID == employeeID))
                 {
                     List<EmployeeService> esList =
-                        _context.EmployeeServices.Where(x => x.CompanyEmployeeID == employeeID).ToList();
+                        _context.EmployeeServices.Where(x => x.CompanyEmployeeID == employeeID && !x.InstructorClassSchedulers.Any()).ToList();
                     foreach (EmployeeService es in esList)
                     {
                         _context.EmployeeServices.Remove(es);
@@ -3299,7 +3299,7 @@ namespace Kuyam.Database
             kuyamEntities _context = DBContext;
             try
             {
-                if (_context.ServiceCompanies.Any(x => x.ServiceCompanyID == serviceCompanyID))
+                if (_context.ServiceCompanies.Any(x => x.ServiceCompanyID == serviceCompanyID ))
                 {
                     ServiceCompany sc =
                         _context.ServiceCompanies.Where(x => x.ServiceCompanyID == serviceCompanyID).FirstOrDefault();
@@ -3382,7 +3382,7 @@ namespace Kuyam.Database
             try
             {
                 _context.EmployeeServices.Add(employeeService);
-                _context.Save();
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception ex)

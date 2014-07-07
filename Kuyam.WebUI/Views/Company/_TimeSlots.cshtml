@@ -68,7 +68,8 @@ else
 {
     if (Model.CompanyTimeSlots.Any())
     {
-        if (Model.ProfileCompany.IsClass.HasValue && Model.ProfileCompany.IsClass.Value)
+        var disableClass = false; // not show class for profile company search
+        if (Model.ProfileCompany.IsClass.HasValue && Model.ProfileCompany.IsClass.Value && disableClass)
         {
             <span class="boxPrice">
                 <span class="spanAvailable">@Model.DayAvaiable:</span>
@@ -90,7 +91,7 @@ else
                     {
                         url = "/book" + url;
                     }
-                    <a href="@url" class="btnAvailable" title="more...">more...</a>
+                    <a href="@url" class="btnAvailable" title="more...">more</a>
 
                 }               
             </span>

@@ -102,6 +102,8 @@
         $('.btnaddemployee').hide();
         $('#imgLoaderListDetail').show();
 
+        $('#divErrorBox').hide();
+
         var employeeName = $('#rpostename').val();
         var email = $('#rpostemail').val();
         var phone = $('#rpostphone').val();
@@ -451,6 +453,8 @@
         });
 		
         $('#btnaddclasses').click(function () {
+            $('#categoryClasses').selectmenu("enable");
+            $('#service').selectmenu("enable");
             //$('#comfirmationpopup').fadeOut(400);
             showpopup("popupClasses");
             $('#service').val(-1);
@@ -461,6 +465,8 @@
             $('#categoryClasses').val(-1);
             $('#eventStartDate').val('start date');
             $('#eventEndDate').val('end date');
+            $('#hdnServiceCompanyId').val('');
+            $('#divErrorBox').hide();
         });
 		
     });
@@ -513,7 +519,7 @@
                             <td>@scList[i].AttendeesNumber.Value</td>
                             <td>@scList[i].FromDateTime.Value.ToString("M/d/yyyy")</td>
                             <td>@scList[i].ToDateTime.Value.ToString("M/d/yyyy")</td>
-                            <td> <a class="lnkDelete" classname="@scList[i].ServiceName" classid="@scList[i].ServiceCompanyID" title="">Delete</a></td>
+                            <td> <a class="lnkEdit" id="@scList[i].ServiceCompanyID" title="">edit</a> | <a class="lnkDelete" classname="@scList[i].ServiceName" classid="@scList[i].ServiceCompanyID" title="">Delete</a></td>
                         </tr>
     }
 }
@@ -746,6 +752,10 @@
 
         
         $('.lnkEdit').click(function () {
+            $('#categoryClasses').selectmenu('disable'); 
+            $('#service').selectmenu('disable');
+           
+            $('#divErrorBox').hide();
             var serviceCompanyID = $(this).attr('id');      
             showpopup("popupClasses");
 
@@ -757,7 +767,7 @@
             $('#txtMaxPeople').val($.trim(tr.find('td:nth-child(4)').text()));
             $('#eventStartDate').val($.trim(tr.find('td:nth-child(5)').text()));
             $('#eventEndDate').val($.trim(tr.find('td:nth-child(6)').text()));
-            $('#txtDescription').val($.trim(tr.find('td:nth-child(7)').text()));         
+            $('#txtDescription').val('');         
 
         });
 
@@ -893,8 +903,8 @@
 
     });
 
-    function updateService(id) {
-       
+    function updateService(id) {            
+
         var timeDuration = $('#txtTimeDuration').val();
         var price = $('#txtPrice').val();
         var maxPeople = $('#txtMaxPeople').val();
@@ -943,19 +953,27 @@
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(parameters),
-                dataType: 'html',
+                dataType: 'json',
                 url: '/company/UpdateClass/'
             })
             .success(function (result) {
-                window.location.href = '/company/class/?companyId=' + companyId;
+                if(result)
+                {
+                    window.location.href = '/company/class/?companyId=' + companyId;
+                }
+                else
+                {
+                    $('#divErrorBox').show();
+                    $('#errorlist').html('had appointments. can not edit class!');
+                }
+                
             })
-
-            .error(function (error) {
+            .error(function (error) { 
 
             });
         } else {
             $('#divErrorBox').show();
-            $('#errorlist').html(err);
+            $('#errorlist').html('had appointments. can not edit class!');
         }
 
     }

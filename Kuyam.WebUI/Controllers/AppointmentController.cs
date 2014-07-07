@@ -476,6 +476,12 @@ namespace Kuyam.WebUI.Controllers
 
                         html.Append("<div class=\"clear\"></div>");
                     }
+                    else
+                    {
+                        html.AppendFormat("<div class=\"coltime\"><div class=\"ago\">{0}</div><div class=\"modify\"><a href=\"{1}\" title=\"modify\" class=\"{2}\" style=\"display:none;\" id=\"btnmodify\">modify</a> <a href=\"javascript:void(0);\" {3} title=\"cancel\" id=\"btncancel\" class=\"{4}\">cancel</a></div></div>", DateTimeUltility.RelativeDatetime(newList[j].Appointment.Modified ?? DateTime.UtcNow), hrfModify, modifyClass, eventCancel, cancelBtnClass);
+
+                        html.Append("<div class=\"clear\"></div>");
+                    }
                     
                     html.Append("</div>");
 

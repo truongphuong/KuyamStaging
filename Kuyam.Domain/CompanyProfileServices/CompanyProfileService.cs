@@ -1491,7 +1491,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                          join emp in _companyEmployeeRepository.Table on emh.CompanyEmployeeID equals emp.EmployeeID
                          join ems in _employeeServiceRepository.Table on emp.EmployeeID equals ems.CompanyEmployeeID
                          where emp.ProfileCompanyID == profileId
-                         && ((serviceId == 0 || ems.ServiceCompanyID == serviceId)&& ems.ServiceCompany.ServiceTypeId==(int)Types.ServiceType.ServiceType)
+                         && ((serviceId == 0 || ems.ServiceCompanyID == serviceId) && ems.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ServiceType)
                          && (employeeId == 0 || emp.EmployeeID == employeeId)
                          && !emh.IsPreview // this field use for review or not
                          select emh).Distinct();
@@ -1531,7 +1531,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                                Duration = sc.Duration ?? 0,
                                EmployeeID = e.CompanyEmployeeID,
                                EmployeeName = string.Empty,
-                               ServiceTypeId =sc.ServiceTypeId
+                               ServiceTypeId = sc.ServiceTypeId
                            });
             return service.ToList();
         }
@@ -1742,7 +1742,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                          join sv in _serviceRepository.Table
                          on svc.ServiceID equals sv.ServiceID
                          where svc.ProfileID == profileId
-                         && (!lstServiceId.Any() || lstServiceId.Contains(sv.ServiceID) 
+                         && (!lstServiceId.Any() || lstServiceId.Contains(sv.ServiceID)
                          && svc.Status == (int)Types.ServiceCompanyStatus.Active)
                          select sv.ParentServiceID).ToList();
 

@@ -322,7 +322,7 @@ else
            
             if(classId != null &&  classId !='0')
             {
-                url= "/company/schedulerforclasses?classId=" + classId;
+                url= "/company/schedulerforclasses?classId=" + classId + "&companyid="+companyId;
                 window.location.href = url;
             }
         });
@@ -332,7 +332,7 @@ else
             var instructorId =  $('#instructor').val();
             if(classId != null &&  classId !='0' && instructorId != null && instructorId !='0')
             {
-                url= "/company/schedulerforclasses?instructorId=" + instructorId + "&classId=" + classId;
+                url= "/company/schedulerforclasses?instructorId=" + instructorId + "&classId=" + classId + "&companyid="+companyId;
                 window.location.href = url;
             }
 
@@ -372,7 +372,7 @@ else
                 url: '/company/DeleteClassScheduler/'
             })
         .success(function (result) {
-            window.location.href ="/company/schedulerforclasses?instructorId=" + instructorId + "&classId=" + classId;
+            window.location.href ="/company/schedulerforclasses?instructorId=" + instructorId + "&classId=" + classId + "&companyid="+companyId;
 
         })
         .error(function (error) {

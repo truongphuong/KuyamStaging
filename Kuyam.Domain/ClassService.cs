@@ -577,6 +577,44 @@ namespace Kuyam.Domain
 
             return result;
         }
+
+        public  bool DeleteEmployeeServicesNonClassByEmployeeID(int employeeID)
+        {          
+            try
+            {
+                if (_employeeServiceRepository.Table.Any(x => x.CompanyEmployeeID == employeeID && !x.InstructorClassSchedulers.Any()))
+                {
+                    List<EmployeeService> esList =
+                        _employeeServiceRepository.Table.Where(x => x.CompanyEmployeeID == employeeID && !x.InstructorClassSchedulers.Any()).ToList();
+                    foreach (EmployeeService es in esList)
+                    {
+                        _employeeServiceRepository.Delete(es);
+                    }
+                    return true;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool AddEmployeeServicesNonClass(EmployeeService employeeService)
+        {
+            try
+            {
+                if (!_employeeServiceRepository.Table.Any(x => x.ServiceCompanyID == employeeService.ServiceCompanyID && x.CompanyEmployeeID == employeeService.CompanyEmployeeID))
+                {
+                    _employeeServiceRepository.Insert(employeeService);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 
 }
