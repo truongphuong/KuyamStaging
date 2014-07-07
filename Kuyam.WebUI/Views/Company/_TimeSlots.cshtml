@@ -68,7 +68,7 @@ else
 {
     if (Model.CompanyTimeSlots.Any())
     {
-        var disableClass = false; // not show class for profile company search
+        var disableClass = true; // not show class for profile company search
         if (Model.ProfileCompany.IsClass.HasValue && Model.ProfileCompany.IsClass.Value && disableClass)
         {
             <span class="boxPrice">
