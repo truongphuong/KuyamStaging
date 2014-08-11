@@ -52,6 +52,7 @@ namespace Kuyam.Domain
         AppointmentParticipant GetAppointmentParticipantByAppointmentId(int appointmentId);
         List<EmployeeHour> GetListEmployeeHour(int employeeId);
         List<Service> GetServicesByCustomerId(int custId);
+        List<Appointment> GetAppoinmentsByProfileId(int profileId, DateTime startTime, DateTime endTime);
         List<Appointment> GetAppointmentHistoryNotReview(int custID, DateTime? day, int calendarId = 0, DateTime currentDate = default(DateTime));
         List<Appointment> GetAppointmentHistoryReview(int custID, DateTime day, int calendarId = 0, DateTime currentDate = default(DateTime));
         List<Rating> GetRatingByServiceCompanyId(int id);

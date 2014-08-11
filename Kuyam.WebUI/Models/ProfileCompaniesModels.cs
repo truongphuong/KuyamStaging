@@ -61,6 +61,15 @@ namespace Kuyam.WebUI.Models
             }
         }
 
+        public bool AllowScroll
+        {
+            get
+            {
+                return (HttpContext.Current.Request.QueryString["categoryId"] != null || HttpContext.Current.Request.QueryString["serviceId"] != null
+                      || (HttpContext.Current.Request.RawUrl.Contains("/review") && HttpContext.Current.Request.RawUrl.Contains("/book")));
+            }
+        }
+
         public string ServiceString { get; set; }
 
         public string CalendarString { get; set; }

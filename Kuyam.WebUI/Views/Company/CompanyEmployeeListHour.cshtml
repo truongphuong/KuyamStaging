@@ -210,6 +210,7 @@
                                             {
                                                 day = item.DayOfWeek + detDay;
                                             }
+                                            
                                             if (day.ToString().Contains(i.ToString()))
                                             {
                                                 flag = true;
@@ -354,7 +355,7 @@
      var currentDate ='@ViewBag.CurrentDate';       
      $(document).ready(function () {
         
-                $('#employeeListHourMenu').attr("class", "leftItem choose");
+                $('#employeeListHourMenu').attr("class", "leftitem choose");
                 $('#btnaddhours').click(function () {
                 var employeeID = @id;
                 if(employeeID =='0')

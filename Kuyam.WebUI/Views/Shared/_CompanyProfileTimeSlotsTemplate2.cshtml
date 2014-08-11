@@ -7,7 +7,7 @@
     var urlImage = host + "/images/homepage_icon.png";
     var isRenderScript1 = ViewBag.IsScript1 != null;
     var script = host + "Script/jquery-1.8.2.min.js";
-    var avaiUrl = "/book" + Url.RouteUrl("availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID) });
+    var avaiUrl = "/book/" + Model.Company.GetSeName(Model.Company.ProfileID) + "/availability";
     var linkType = (int)Types.LinkType.Searchbox;
     string state = string.Empty;
     if (!string.IsNullOrEmpty(@Model.Company.City) && !string.IsNullOrEmpty(@Model.Company.State))

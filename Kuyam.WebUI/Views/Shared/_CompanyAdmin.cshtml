@@ -9,7 +9,7 @@
 @{
     int profileID = ViewBag.companyId;
     List<Kuyam.Database.Service> parentCategories = DAL.GetParentService();
-    Profile profile = ViewBag.CompanyProfile;//EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(profileID == 0 ? MySession.ProfileID : profileID);
+    ProfileCompany profile = ViewBag.CompanyProfile;//EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(profileID == 0 ? MySession.ProfileID : profileID);
     
 }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,8 +17,8 @@
 xmlns:g="https://www.facebook.com/2008/fbml">
 <head>
     <title>kuyam @(ViewBag.Title != "" ? "- " + ViewBag.Title.ToLower() : "")</title>
-    <link href="@Url.Content("~/css/style.css?v=21")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/css/kuyam.css?v=20")" rel="stylesheet" type="text/css" />    
+    <link href="@Url.Content("~/css/style.css?v=60")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/kuyam.css?v=60")" rel="stylesheet" type="text/css" />    
     <link rel="stylesheet" href="@Url.Content("~/css/themes/base/jquery.ui.all.css")" />
     <link type="text/css" href="@Url.Content("~/css/themes/base/jquery.ui.selectmenu.css")" rel="stylesheet" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>    
@@ -38,7 +38,7 @@ xmlns:g="https://www.facebook.com/2008/fbml">
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/css_browser_selector.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/purl.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/common.js?v=21")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/js/general.js?v=20")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js/general.js?v=21")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/json2.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery.nicescroll.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/mobiscroll.core-2.0.3.js")"></script>

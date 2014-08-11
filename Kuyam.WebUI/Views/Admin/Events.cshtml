@@ -317,23 +317,11 @@
 
     function pagingEvent(pageIndex) {
         var key = $('#txtKey').val();
-      
-        var searchParameters = { page: pageIndex, key: key};
-        $.ajax(
-            {
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(searchParameters),
-                dataType: 'html',
-                url: '/Admin/Category/'
-            })
-            .success(function (result) {
-                $('#listServices').html(result);
-            })
-            .error(function (error) {
 
-            });
+        var url = '/Admin/Events?page=' + pageIndex;
+        window.location.href = url;
     };
+
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode
         if (charCode > 31 && (charCode < 48 || charCode > 57))

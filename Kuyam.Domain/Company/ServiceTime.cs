@@ -9,7 +9,9 @@ namespace Kuyam.Domain.Company
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public int ServiceCompanyId { get; set; }
+        public int ServiceCompanyId { get; set; }        
+        public string ServiceName { get; set; }
+        public int AttendeesNumber { get; set; }
         public TimeSpan FromHour { get; set; }
         public TimeSpan ToHour { get; set; }
         public DateTime FromDateTime { get; set; }

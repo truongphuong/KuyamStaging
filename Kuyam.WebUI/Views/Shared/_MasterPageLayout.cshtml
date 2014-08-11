@@ -9,7 +9,7 @@
 @using Kuyam.Domain.CompanyProfileServices;
 @{    
     List<Service> parentCategories =EngineContext.Current.Resolve<CompanyProfileService>().GetCategories();
-    Profile profile = ViewBag.CompanyProfile;
+    ProfileCompany profile = ViewBag.CompanyProfile;
     int categoryId = 0;
     if (ViewBag.CategoryId != null)
     {
@@ -24,8 +24,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     @RenderSection("MetaSeoSection", required: false)
     @RenderSection("SharingSection", required: false)
-    <link href="@Url.Content("~/css/style.css?v=27")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/css/kuyam.css?v=20")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/style.css?v=60")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/kuyam.css?v=60")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="@Url.Content("~/css/themes/base/jquery.ui.all.css")" />
     <link type="text/css" href="@Url.Content("~/css/themes/base/jquery.ui.selectmenu.css")" rel="stylesheet" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>

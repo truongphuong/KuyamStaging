@@ -18,5 +18,8 @@ namespace Kuyam.Database
         public System.DateTime EndDate { get; set; }
 
         public int CompanyEventID { get; set; }
+        public int CompanyServiceEventsNumber { get; set; }
+
+        public int ClassEventsNumber { get; set; }
     }
 }

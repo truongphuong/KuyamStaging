@@ -8,7 +8,7 @@
     var isRenderScript = ViewBag.IsScript != null;
     var script = host + "Script/jquery-1.8.2.min.js";
     var host1 = host.Replace("https", "http");
-    var avaiUrl = "/book" + Url.RouteUrl("availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID) });
+    var avaiUrl = "/book/" + Model.Company.GetSeName(Model.Company.ProfileID) + "/availability";
     //bool isNonKuyam = Model.Company != null && Model.Company.Profile != null && Model.Company.Profile.ProfileCompany != null
     //                  && Model.Company.Profile.ProfileCompany.CompanyTypeID == (int) Types.CompanyType.NonKuyamBookIt;
     var linkType = (int)Types.LinkType.Searchbox;

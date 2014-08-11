@@ -1237,9 +1237,9 @@ padding-top:4px;width:188px;margin-left:12px !important;margin-bottom:3px !impor
 .editserviceform .line{	height:3px;background-color:#1b1464;margin-top:10px;}
 .editserviceform .padd{margin:0px;padding:0px;color:#1B1464;font-size:16px;}
 .activeblue .ui-accordion .ui-state-active{background:url(../images/appointment.png) repeat-x -155px -401px;border:1px solid #29abe2;}
-.editservices a{color:#0071BC !important;font-size:18px;font-weight:bold;text-decoration:none;margin-left:13px;}
-.editservices a:hover{color:#0071BC;font-size:18px;font-weight:bold;text-decoration:none;}
-.editservices .choose{background-color:#ffff00;height:24px;color:#000000;font-size:18px;font-weight:bold;}
+.editservices a{color:#0071BC !important;font-size:17px;font-weight:bold;text-decoration:none;margin-left:13px;}
+.editservices a:hover{color:#0071BC;font-size:17px;font-weight:bold;text-decoration:none;}
+.editservices .choose{background-color:#ffff00;color:#000000;font-size:17px;font-weight:bold;padding:10px 0  !important;}
 .listservices .listservicescol1{width:295px;height:327px;float:left;position:relative;padding-left:4px;}
 .listservices .listservicescol1 .formaddlistservices1{width:293px;height:326px;border-radius:10px;background-color:white;opacity:0.8;filter:alpha(opacity=80);position:absolute;z-index:1;}
 .listservices .listservicescol1 .formaddlistservices{width:293px;height:326px;z-index:2;position:absolute;}
@@ -1279,7 +1279,7 @@ padding-top:4px;width:188px;margin-left:12px !important;margin-bottom:3px !impor
 .listservices .listservicescol3 .boxadd ul li{font-size:16px;padding:6px 13px;color:#000000;line-height:15px;}
 .listservices .listservicescol3 .boxadd ul li.active{background-color:#f4ee89;}
 .editservices{font-family:Arial, Helvetica, sans-serif;}
-.editservices .leftitem{height:24px;margin-top:2px;}
+.editservices .leftitem{padding:2px 0 0;}
 .listservices .formtext{float:right;}
 .listservices .ltxt{float:left;width:6px;display:block;height:29px;background:url(../images/txtbg_company_setup.png) no-repeat left top;}
 .listservices .rtxt{float:left;width:6px;display:block;height:29px;background:url(../images/txtbg_company_setup.png) no-repeat left bottom;}
@@ -3697,7 +3697,7 @@ hr{margin-bottom:17px;color:#FFFFFF;}
 .gettheofferpopup .gettheofferheader{position:relative;height:120px;background:#000000;}
 .gettheofferpopup .gettheofferheader .logo{float:left;}
 .gettheofferpopup .gettheofferheader .btnClose{display:block;width:15px;height:16px;background:url(../images/appointment.png) no-repeat -438px -27px;position:absolute;right:15px;top:15px;z-index:99}
-.gettheofferpopup .gettheofferheader .event{width:230px;position:absolute;right:15px;bottom:15px;color:#fd620e;font-size:26px;line-height:30px;font-family:Didot,"Didot LT STD","Hoefler Text",Garamond,"Times New Roman",serif;}
+.gettheofferpopup .gettheofferheader .event{width:230px;position:absolute;right:15px;bottom:15px;color:#F7941E;font-size:26px;line-height:30px;font-family:Didot,"Didot LT STD","Hoefler Text",Garamond,"Times New Roman",serif;}
 
 .gettheofferpopup #tabsgettheoffer{border:0 none;padding:0;}
 .gettheofferpopup #tabsgettheoffer .gettheoffertab{height:55px;background:#f2f2f0;margin:0;padding:0;list-style:none;border:0 none;}
@@ -3705,7 +3705,7 @@ hr{margin-bottom:17px;color:#FFFFFF;}
 .gettheofferpopup #tabsgettheoffer .gettheoffertab li a{display:block;margin:0;padding:0;width:100%;color:#000000;}
 .gettheofferpopup #tabsgettheoffer .gettheoffertab li i{float:right;font-size:22px;margin:2 0px;}
 .gettheofferpopup #tabsgettheoffer .gettheoffertab li:hover,
-.gettheofferpopup #tabsgettheoffer .gettheoffertab li.ui-state-active{background:url(../images/gettheoffer_tab1.png) no-repeat;}
+.gettheofferpopup #tabsgettheoffer .gettheoffertab li.ui-state-active{background:url(../images/gettheoffer_tab2.png) no-repeat;}
 .gettheofferpopup #tabsgettheoffer .gettheoffertab li:hover a,
 .gettheofferpopup #tabsgettheoffer .gettheoffertab li.ui-state-active a{color:#ffffff;}
 .gettheofferpopup #tabsgettheoffer .gettheoffertab li:first-child{margin:0;}
@@ -3717,13 +3717,13 @@ hr{margin-bottom:17px;color:#FFFFFF;}
 .gettheofferpopup #tabsgettheoffer .gettheofferleft .setScroll{width:346px;height:180px;overflow-y:auto;overflow-x:hidden;}
 .gettheofferpopup #tabsgettheoffer .gettheofferleft .gettheofferdescription{margin:10px auto;display:block;}
 .gettheofferpopup #tabsgettheoffer .gettheofferleft .gettheoffer_boxSearch{float:left;}
-.gettheofferpopup #tabsgettheoffer .gettheofferright{width:248px;border-left:4px solid #f2f2f0;text-align:center;font:14px/18px Arial, Helvetica, sans-serif;}
-.gettheofferpopup #tabsgettheoffer .gettheofferright h3{font-size:30px;color:#fd620e;font-family:Didot,"Didot LT STD","Hoefler Text",Garamond,"Times New Roman",serif;margin:10px 0;}
+.gettheofferpopup #tabsgettheoffer .gettheofferright{width:248px;border-right:4px solid #f2f2f0;text-align:center;font:14px/18px Arial, Helvetica, sans-serif;}
+.gettheofferpopup #tabsgettheoffer .gettheofferright h3{font-size:30px;color:#F7941E;font-family:Didot,"Didot LT STD","Hoefler Text",Garamond,"Times New Roman",serif;margin:10px 0;}
 .gettheofferpopup #tabsgettheoffer .gettheofferright h4{font-size:24px;font-style:italic;margin:5px 0;font-weight:lighter;}
 .gettheofferpopup #tabsgettheoffer .gettheofferright h4 .oldprice{color:#aaaaaa;display:inline;}
 .gettheofferpopup #tabsgettheoffer .gettheofferright h4 .newprice{display:inline-block;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;background:#F7941E;color:#ffffff;line-height:150%;padding:5px;}
 .gettheofferpopup #tabsgettheoffer .gettheofferright h4 .saleoff{display:inline;}
-.gettheofferpopup #tabsgettheoffer .gettheofferright .btnpurchasenow{width:225px;height:45px;border:0;background:url(../images/gettheoffer_btn_purchase.png) no-repeat;color:#000000;font-size:18px;line-height:45px;font-weight:bold;}
+.gettheofferpopup #tabsgettheoffer .gettheofferright .btnpurchasenow{padding:0;width:225px;height:45px;border:0;background:url(../images/gettheoffer_btn_purchase.png) no-repeat;color:#000000;font-size:18px;line-height:45px;font-weight:bold;}
 .gettheofferpopup #tabsgettheoffer .gettheofferright .linkterms,
 .gettheofferpopup #tabsgettheoffer .gettheofferright .linkterms:hover,
 .gettheofferpopup #tabsgettheoffer .gettheofferright .linkterms:focus,
@@ -3734,11 +3734,11 @@ hr{margin-bottom:17px;color:#FFFFFF;}
 .tabelrow{display:table-row;}
 .tabelcell{display:table-cell;}
 
-.gettheoffertermspopup{width:688px;height:598px;background:url(../images/gettheofferterms_bg.png) no-repeat;display:none;position:fixed;z-index:9999;}
+.gettheoffertermspopup{width:688px;height:338px;background:#000000;border:3px solid #c1d82f;display:none;position:fixed;z-index:9999;}
 .gettheoffertermspopup .contentPopup h3{font-size:30px;color:#fd620e;font-family:Didot,"Didot LT STD","Hoefler Text",Garamond,"Times New Roman",serif;text-decoration:underline;margin:0 0 20px;}
 .gettheoffertermspopup .contentPopup .btnClose{display:block;width:15px;height:16px;background:url(../images/appointment.png) no-repeat -438px -27px;position:absolute;right:30px;top:30px;}
 .gettheoffertermspopup .contentPopup{position:relative;padding:35px;}
-.gettheoffertermspopup .contentPopup .gettheoffertermscontent{background:#ffffff;padding:20px;height:427px;overflow-y:auto;}
+.gettheoffertermspopup .contentPopup .gettheoffertermscontent{background:#ffffff;padding:20px;height:156px;overflow-y:auto;}
 .gettheoffertermspopup .contentPopup .gettheoffertermscontent h4{font-size:24px;margin:20px 0;}
 .gettheoffertermspopup .contentPopup .gettheoffertermscontent p{margin-top:0;}
 .gettheoffertermspopup .contentPopup .gettheoffertermscontent a,
@@ -3754,15 +3754,15 @@ hr{margin-bottom:17px;color:#FFFFFF;}
 .clearfix:before, .clearfix:after{content:"";display:table;}
 .clearfix:after{clear:both;}
 .clearfix{zoom:1;}
-.classes-week-cols{display:block;margin:10px 0 30px;overflow:hidden; width:100%;}
+.classes-week-cols{display:block;margin:10px 0 30px;overflow:hidden; width:100%; min-height:400px;}
 .classes-week-cols .column-day{float:left;margin-left:12px;transition:width 0.4s ease 0s;width:95px;}
 .classes-week-cols .today .column-header{color:#434243;}
-.classes-week-cols .column-header{color:#8E8E91;font-family:Arial,sans-serif;padding-left:8px;white-space:nowrap;}
+.classes-week-cols .column-header{color:#8E8E91;font-family:Arial,sans-serif;padding-left:8px;white-space:nowrap;border-bottom: 1px solid #cdcdcd;}
 .classes-week-cols .day{font-size:1.5em;}
 .classes-week-cols .datetime{display:block;font-size:1em;}
-.classes-week-cols .column-sessions{font-size:14px;margin-top:10px;}
-.classes-week-cols .column-sessions .session{border-top:1px solid #CDCDCD;color:#404041;min-height:122px;overflow:hidden;padding-left:8px;padding-top:10px;position:relative;}
-.classes-week-cols .column-sessions .session:first-child{margin-top:0;}
+.classes-week-cols .column-sessions{font-size:14px;margin-top:0px;}
+.classes-week-cols .column-sessions .session{border-top:1px solid #CDCDCD;color:#404041;min-height:122px;overflow:hidden;padding-left:8px;padding-top:11px;position:relative;}
+.classes-week-cols .column-sessions .session:first-child{margin-top:-1px;}
 .classes-week-cols .column-sessions .session.full{background:#EDEDED;color:#737373;}
 .classes-week-cols .column-sessions .session .bookmark{background:url(../images/find-a-class-bookmark.png) no-repeat 0 -28px;cursor:pointer;height:28px;opacity:0;position:absolute;right:-14px;top:-15px;visibility:hidden;width:27px;}
 .classes-week-cols .column-sessions .session:hover .bookmark{opacity:1;visibility:visible;right:0;top:0;}
@@ -3856,5 +3856,33 @@ hr{margin-bottom:17px;color:#FFFFFF;}
   /* Opera 15+, Chrome 25+, IE 10+, Firefox 16+, Safari 6.1+, iOS 7+, Android 4.4+ */
   background-image:linear-gradient(to right, #252122, #262324);
 }
-.leftitem .class, .leftitem .intructor, .leftitem .scheduler{margin-left:30px;}
+.leftitem .class, .leftitem .intructor, .leftitem .scheduler{margin-left:25px;}
 
+.lightbox1{opacity: 0.8 !important; filter: alpha(opacity=80) !important;}
+.companypackageform #btnaddclasses{width:232px;height:42px;line-height:42px;display:block;background:url(../images/class_bg.jpg) repeat-x;border:1px solid #E5BC10;font-size:18px;font-weight:bold;font-family:Arial, Helvetica, sans-serif;color:#1b1464;text-align:center;border:0 none;}
+
+.classSummary{height:80px;-moz-border-radius:10px;-webkit-border-radius:10px;-khtml-border-radius:10px;border-radius:10px;background:#ffffff;margin:10px 15px;padding:10px 15px;}
+.classSummaryTitle{text-align:center;}
+.classSummary hr{border:1px solid #A2DBF2;margin-bottom:10px;}
+.classSummary p{margin-left:5px;margin-right:5px;}
+
+.listTimeSlots .btnMore{margin:5px auto  0;text-align:center;}
+.btnMore{display:block;border:1px solid #636061;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;color:#000000;font-weight:bold;margin:5px auto 0;text-decoration:none;height:25px;line-height:25px; width:70px;
+/* Fallback (could use .jpg/.png alternatively) */
+  background-color:#afb1b5;
+
+  /* Safari 4, Chrome 1-9, iOS 3.2-4.3, Android 2.1-3.0 */
+  background-image:-webkit-gradient(linear, top, bottom, from(#feffff), to(#afb1b5));
+  
+  /* Safari 5.1, iOS 5.0-6.1, Chrome 10-25, Android 4.0-4.3 */
+  background-image:-webkit-linear-gradient(top, #feffff, #afb1b5);
+
+  /* Firefox 3.6 - 15 */
+  background-image:-moz-linear-gradient(top, #feffff, #afb1b5);
+
+  /* Opera 11.1 - 12 */
+  background-image:-o-linear-gradient(top, #feffff, #afb1b5);
+
+  /* Opera 15+, Chrome 25+, IE 10+, Firefox 16+, Safari 6.1+, iOS 7+, Android 4.4+ */
+  background-image:linear-gradient(to bottom, #feffff, #afb1b5);
+}

@@ -23,6 +23,9 @@ namespace Kuyam.Database
         public System.DateTime LastedUpdate { get; set; }
     
         public virtual CompanyEmployee CompanyEmployee { get; set; }
+
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
     
 }

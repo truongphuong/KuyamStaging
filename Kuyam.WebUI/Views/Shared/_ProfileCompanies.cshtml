@@ -44,10 +44,10 @@
             i++;
             var divID = "item" + i.ToString();
 
-            string url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID), categotyId = ViewBag.CategoryId }); ;
+            string url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID), categoryId = ViewBag.CategoryId }); ;
             //if (DAL.isViewAvailability(company.ProfileID))
             //{
-            //    url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID), categotyId = ViewBag.CategoryId });
+            //    url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID), categoryId = ViewBag.CategoryId });
             //}
             //else
             //{

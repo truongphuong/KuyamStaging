@@ -39,8 +39,9 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Kuyam.D
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\DataAnnotationsExtensions.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\M2.Util.dll
-D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.xml
-D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\NLog.xml
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.csprojResolveAssemblyReference.cache

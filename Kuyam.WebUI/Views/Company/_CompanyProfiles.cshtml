@@ -4,8 +4,8 @@
 @using Kuyam.Domain;
 @using Kuyam.Repository.Infrastructure;
 @using Kuyam.Domain.Seo;
-@using Kuyam.WebUI.Models;
-@model ProfileCompaniesModels
+@*@using Kuyam.WebUI.Models;
+    @model ProfileCompaniesModels*@
 @{
     List<CompanyProfileSearch> companies = null;
     int totalRecord = 0;
@@ -16,12 +16,6 @@
 
     }
     var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
-    //string id = string.Empty;
-    //if (Url.RequestContext.RouteData.Values["id"] != null)
-    //{
-    //    id = Url.RequestContext.RouteData.Values["id"].ToString();
-    //}
-    //CompanyProfileService companyProfileService = EngineContext.Current.Resolve<CompanyProfileService>();
 }
 
 <div class="listSearch relative left-2">
@@ -47,7 +41,7 @@
             i++;
             var divID = "item" + i.ToString();
 
-            string url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID), categotyId = ViewBag.CategoryId }); ;
+            string url = Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID)}); ;
             string googleCursorName;
             if (company.IsFeature)
             {
@@ -81,68 +75,67 @@
                     state = string.Format("{0}{1}", company.City, company.State);
                 }
             }
-            
+
             <input type="hidden" id="linkUrl" value="" />
             <div id="@divID" class="item">
-               
-                    @if (company.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
-{
-    <div class="LA">
-        @{var companyEvent = company.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
 
-        <img class="btnGetTheOffer" id="@companyEvent.CompanyEventID" src="../images/GetTheOffer.png?v=1" />}
-        
-    </div>
-}
-else if (company.IsEvent.HasValue && company.IsEvent.Value)
-{
-                        <div class="LA1">
-                            <img alt="LA" src="../images/LA.png" />
-                        </div>
-                    }
-                 
-               
+                @if (company.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+                {
+                    <div class="LA">
+                        @{var companyEvent = company.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
+                        if ((company.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
+                        {
+                            <img class="btnGetTheOffer" id="@companyEvent.CompanyEventID" src="../images/GetTheOffer.png?v=1" />}
+                        }
+                    </div>
+                }
+
+                @if (company.IsEvent.HasValue && company.IsEvent.Value)
+                {
+                    <div class="LA1">
+                        <img alt="LA" src="../images/LA.png" />
+                    </div>
+                }
+
+
                 <span class="number" lat="@company.Latitude" lon="@company.Longitude" googlecursoricon="@googleCursorName">@i</span>
                 <label class="border" for="@divID" id="@company.ProfileID">
                     @{
-                        Medium logo = DAL.GetCompanyLogoFromProfileCompanyID(company.ProfileID);
-            //Medium image = DAL.GetCompanyImageFromProfileCompanyID(company.ProfileID);
-            bool isViewAvailability = company.CompanyTypeID != (int)Types.CompanyType.NonKuyamBookIt;   
-                
-            bool isSchedule = !isViewAvailability;
-            bool isNonkuyam=(company.CompanyTypeID==(int)Types.CompanyType.NonKuyamBookIt);
 
+                bool isViewAvailability = company.CompanyTypeID != (int)Types.CompanyType.NonKuyamBookIt;
+                bool isSchedule = !isViewAvailability;
+                bool isNonkuyam = (company.CompanyTypeID == (int)Types.CompanyType.NonKuyamBookIt);
 
-            if (logo != null && logo.LocationPath != null && logo.LocationPath != string.Empty)
-            {
-                string urlLogo = @Types.KaturaDoman + "/p/811441/thumbnail/entry_id/" + logo.LocationData + "/width/85/height/82";
-                <span class="boxImg">
-                    <span class="boxcontentimg">
-                        <span class="boximage">
-                            <a href="@url"  profileid="@company.ProfileID" title="@company.Name">
-                                <img src="@urlLogo" title="@company.Name" alt="@company.Name" />
-                            </a>
+                if (!string.IsNullOrEmpty(company.LogoMediaId))
+                {
+                    string urlLogo = Types.KaturaDoman + "/p/811441/thumbnail/entry_id/" + company.LogoMediaId + "/width/85/height/82";
+                    <span class="boxImg">
+                        <span class="boxcontentimg">
+                            <span class="boximage">
+                                <a href="@url" profileid="@company.ProfileID" title="@company.Name">
+                                    <img src="@urlLogo" title="@company.Name" alt="@company.Name" />
+                                </a>
+                            </span>
                         </span>
                     </span>
-                </span>
-            }
-            else
-            {
-                <span class="boxImg">
-                    <span class="boxcontentimg">
-                        <span class="boximage">
-                            <a href="@url" isnonkuyam="@isNonkuyam" profileid="@company.ProfileID" title="@company.Name">
-                                <img src="/Images/placeholder.png" title="@company.Name" alt="@company.Name" width="86px;" height="83px;" />
-                            </a>
+                }
+                else
+                {
+                    <span class="boxImg">
+                        <span class="boxcontentimg">
+                            <span class="boximage">
+                                <a href="@url" isnonkuyam="@isNonkuyam" profileid="@company.ProfileID" title="@company.Name">
+                                    <img src="/Images/placeholder.png" title="@company.Name" alt="@company.Name" width="86px;" height="83px;" />
+                                </a>
+                            </span>
                         </span>
                     </span>
-                </span>
-            }
+                }
                     }
                     <span class="boxInfo">
                         <div class="title">
                             <a href="@url" isfeature="@isSchedule" isnonkuyam="@isNonkuyam" profileid="@company.ProfileID" class="companyname" title="@company.Name">
-                                @UtilityHelper.TruncateAtWord(company.Name,17)
+                                @UtilityHelper.TruncateAtWord(company.Name, 17)
 
                             </a>
                             @if (company.IsVideo)
@@ -175,80 +168,80 @@ else if (company.IsEvent.HasValue && company.IsEvent.Value)
                         </span>
                         <span class="clear h2"></span><span class="iconStar">
                             @{
-                            switch (company.Rate.ToString())
-                            {
-                                case "0":
-                                    {
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        break;
-                                    }
-                                case "1":
-                                    {
-                                        <span class="greenstar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        break;
-                                    }
-                                case "2":
-                                    {
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        break;
-                                    }
-                                case "3":
-                                    {
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="graystar"></span>
-                                        <span class="graystar"></span>
-                                        break;
-                                    }
-                                case "4":
-                                    {
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="graystar"></span>
-                                        break;
-                                    }
-                                case "5":
-                                    {
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        <span class="greenstar"></span>
-                                        break;
-                                    }
-                            }
+            switch (company.Rate.ToString())
+            {
+                case "0":
+                    {
+                        <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                        break;
+                    }
+                case "1":
+                    {
+                        <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                        break;
+                    }
+                case "2":
+                    {
+                        <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                        break;
+                    }
+                case "3":
+                    {
+                        <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                                <span class="graystar"></span>
+                        break;
+                    }
+                case "4":
+                    {
+                        <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="graystar"></span>
+                        break;
+                    }
+                case "5":
+                    {
+                        <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                                <span class="greenstar"></span>
+                        break;
+                    }
+            }
 
 
-                            <a href="@Url.RouteUrl("availability", new { seName = company.GetSeName(company.ProfileID) })/review" class="review" id="@company.ProfileID">
-                                (@company.TotalReviews
-                                reviews)
-                            </a>
+            <a href="@Url.RouteUrl("Review", new { seName = company.GetSeName(company.ProfileID) })/review" class="review" id="@company.ProfileID">
+                (@company.TotalReviews
+                reviews)
+            </a>
                             }
                         </span><span class="price" style="display: none;">price: $</span>
                         <div class="clear h5">
                         </div>
                         @{
-                            string stringCategories = company.ListServices;                            
-                            <span class="description">categories: @UtilityHelper.TruncateText(stringCategories,25) </span>
+            string stringCategories = company.ListServices;
+            <span class="description">categories: @UtilityHelper.TruncateText(stringCategories, 25) </span>
                         }
                     </span>
                     <span class="boxPrice">
-                        @Html.Partial("_TimeSlots", company.CompanyAvailableTimeSlots)
+                        @Html.Partial("_TimeSlots", company)
                     </span>
                 </label>
             </div>
@@ -339,26 +332,13 @@ else if (company.IsEvent.HasValue && company.IsEvent.Value)
         <h3>terms of use</h3>
         <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
         <div class="gettheoffertermscontent">
-            <p>Last update: September 9, 2012</p>
+            <p>Last update: May 3, 2014</p>
             <h4>User Agreement:</h4>
             <p>
-                This User Agreement (the “Agreement”) and the policies referred to herein contain the
-                complete terms and conditions that apply to your use of the appointment services (the
-                “Services”) being offered at the URL: <a href="http://www.kuyam.com" title="">http://www.kuyam.com</a> and all affiliated web sites
-                owned and operated solely by Kuyam (collectively, the “Website”). As used in this
-                Agreement, “Kuyam” refers to Kuyam Companies, Inc. and any of its subsidiaries, and
-                “User” or “you” refers to you. USE OF THE SERVICES AND THE WEBSITE
-                CONSTITUTES KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS
-                USER AGREEMENT, KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS,
-                AND KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS, AND KUYAM’S
-                TERMS AND CONDITIONS.
-            </p>
-            <p>
-                Kuyam may modify this Agreement’s terms and conditions at any time without notice.
-                Continued use of the Services and the Kuyam Website after a change in this
-                Agreement, a change in the Privacy policy, a change in the Services Listings, or after
-                implementation of any other new policy constitutes acceptance of such change or
-                policy.
+                In view of the special pricing for the Beautify LA event,
+                all payments are nonrefundable unless written notice of cancellation is received
+                by Kuyam within 24 hours after Kuyam confirms the appointment; provided that no
+                refund will be given if the appointment is cancelled within 24 hours of the appointment time.
             </p>
         </div>
         <div class="clear"></div>
@@ -469,14 +449,14 @@ else if (company.IsEvent.HasValue && company.IsEvent.Value)
 
 
             if(className=="companyname" && !isnonkuyam)
-                return true;           
+                return true;
 
             if(className!="review")
             {
                 if (className == "btnView" || className == "btnSchedule" || className == "brownHeart" || className == "company" || className == "pinkHeart") {
                     return false;
                 }
-                else if ($(target).hasClass("companyTimeSlot") || $(target).hasClass("companyTimeSlotMore")  || $(target).hasClass("checkAvailabitity") || $(target).hasClass("btnAvailable")  ) {
+                else if ($(target).hasClass("companyTimeSlot") || $(target).hasClass("companyTimeSlotMore")  || $(target).hasClass("checkAvailabitity") || $(target).hasClass("btnMore") || $(target).hasClass("btnAvailable")  ) {
                     return true;
                 }
                 else {
@@ -516,13 +496,27 @@ else if (company.IsEvent.HasValue && company.IsEvent.Value)
                 showDialog('signuppopup', 'btnCloseloginPopup');
                 return false;
             }
+
+            showIconLoading();
             $("#gettheoffer").html("");
-            $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+this.id + "&nocache=" + getunixtime());
-            var id = "#" + $(this).attr("for");
-            $('#gettheoffer').appendTo(id);
-            $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
-            $('#gettheoffer').css('z-index', '1000');
-            $('#gettheoffer').fadeIn(200);
+            $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+ this.id + "&nocache=" + getunixtime(),
+            function (e) {
+                $("#tabsgettheoffer").tabs();
+                var id = "#" + $(this).attr("for");
+                $('#gettheoffer').appendTo(id);
+                $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
+                $('#gettheoffer').css('z-index', '1000');
+                $('#gettheoffer').fadeIn(200);
+                hideIconLoading();
+            });
+
+            //$("#gettheoffer").html("");
+            //$("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+this.id + "&nocache=" + getunixtime());
+            //var id = "#" + $(this).attr("for");
+            //$('#gettheoffer').appendTo(id);
+            //$('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
+            //$('#gettheoffer').css('z-index', '1000');
+            //$('#gettheoffer').fadeIn(200);
             return false;
         });
 
@@ -846,19 +840,19 @@ else if (company.IsEvent.HasValue && company.IsEvent.Value)
         });
     }
 
-  
-    $(document).ready(function () {       
+
+    $(document).ready(function () {
         $(".companyname").dotdotdot({
             height: 25,
             width:306
         });
-        
+
         $(".description").dotdotdot({
             height: 13,
             width:350
-        });       
-       
+        });
+
     });
-   
-   
+
+
 </script>

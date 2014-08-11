@@ -50,122 +50,7 @@ namespace Kuyam.Domain.MessageServcies
         public MessageHeaderList messageHeaderList;
 
         public string getMessageListErrorResponse = string.Empty;
-
-        public SendSMSResult SendSms(string message, string[] PhoneNumber, bool notifyDeliveryStatus = false)
-        {
-            try
-            {
-                var authentication = new AuthenticationAT(new SettingService());
-                string sendSMSErrorMessage = string.Empty;
-                if (authentication.ReadAndGetAccessToken(AccessTokenType.ClientCredential, ref sendSMSErrorMessage) == true)
-                {
-                    string outBoundSmsJson = string.Empty;
-                    List<string> destinationNumbers = new List<string>();
-                    if (PhoneNumber != null)
-                    {
-                        foreach (string addr in PhoneNumber)
-                        {
-                            if (addr.StartsWith("tel:"))
-                            {
-                                destinationNumbers.Add(addr);
-                            }
-                            else
-                            {
-                                string phoneNumberWithTel = "tel:" + addr;
-                                destinationNumbers.Add(phoneNumberWithTel);
-                            }
-                        }
-                        if (PhoneNumber.Length == 1)
-                        {
-                            SendSMSDataForSingle outBoundSms = new SendSMSDataForSingle();
-                            outBoundSms.outboundSMSRequest = new OutboundSMSRequestForSingle();
-                            outBoundSms.outboundSMSRequest.notifyDeliveryStatus = notifyDeliveryStatus;
-                            outBoundSms.outboundSMSRequest.address = destinationNumbers[0];
-                            outBoundSms.outboundSMSRequest.message = message;
-                            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-                            outBoundSmsJson = javaScriptSerializer.Serialize(outBoundSms);
-                        }
-                        else
-                        {
-                            SendSMSDataForMultiple outBoundSms = new SendSMSDataForMultiple();
-                            outBoundSms.outboundSMSRequest = new OutboundSMSRequestForMultiple();
-                            outBoundSms.outboundSMSRequest.notifyDeliveryStatus = notifyDeliveryStatus;
-                            outBoundSms.outboundSMSRequest.address = destinationNumbers;
-                            outBoundSms.outboundSMSRequest.message = message;
-                            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-                            outBoundSmsJson = javaScriptSerializer.Serialize(outBoundSms);
-                        }
-                    }
-                    else
-                    {
-                        return new SendSMSResult(EResultStatus.Fail, "No input provided for Address");
-
-                    }
-
-
-
-                    string sendSmsResponseData;
-                    HttpWebRequest sendSmsRequestObject = (HttpWebRequest)System.Net.WebRequest.Create(authentication.EndPoint + authentication.SendSMSURL);
-                    sendSmsRequestObject.Method = "POST";
-                    sendSmsRequestObject.Headers.Add("Authorization", "Bearer " + authentication.AccessToken);
-                    sendSmsRequestObject.ContentType = "application/json";
-                    sendSmsRequestObject.Accept = "application/json";
-
-                    UTF8Encoding encoding = new UTF8Encoding();
-                    byte[] postBytes = encoding.GetBytes(outBoundSmsJson);
-                    sendSmsRequestObject.ContentLength = postBytes.Length;
-
-                    Stream postStream = sendSmsRequestObject.GetRequestStream();
-                    postStream.Write(postBytes, 0, postBytes.Length);
-                    postStream.Close();
-
-                    HttpWebResponse sendSmsResponseObject = (HttpWebResponse)sendSmsRequestObject.GetResponse();
-                    using (StreamReader sendSmsResponseStream = new StreamReader(sendSmsResponseObject.GetResponseStream()))
-                    {
-                        sendSmsResponseData = sendSmsResponseStream.ReadToEnd();
-                        JavaScriptSerializer deserializeJsonObject = new JavaScriptSerializer();
-                        var sendSMSResponseData = new SendSMSResponse();
-                        sendSMSResponseData.outBoundSMSResponse = new OutBoundSMSResponse();
-                        sendSMSResponseData = (SendSMSResponse)deserializeJsonObject.Deserialize(sendSmsResponseData, typeof(SendSMSResponse));
-                        //if (!chkGetOnlineStatus.Checked)
-                        //{
-                        //    Session["lastSentSMSID"] = sendSMSResponseData.outBoundSMSResponse.messageId;
-                        //    messageId.Value = Session["lastSentSMSID"].ToString();
-                        //}
-                        //sendSMSSuccessMessage = "Success";
-                        return new SendSMSResult(EResultStatus.Success, "Success", sendSMSResponseData);
-                    }
-                }
-
-                return new SendSMSResult(EResultStatus.Fail, sendSMSErrorMessage);
-
-            }
-            catch (WebException we)
-            {
-                string errorResponse = string.Empty;
-
-                try
-                {
-                    using (StreamReader sr2 = new StreamReader(we.Response.GetResponseStream()))
-                    {
-                        errorResponse = sr2.ReadToEnd();
-                        sr2.Close();
-                    }
-                }
-                catch
-                {
-                    errorResponse = "Unable to get response";
-
-                }
-
-                return new SendSMSResult(EResultStatus.Fail, errorResponse);
-            }
-            catch (Exception ex)
-            {
-                return new SendSMSResult(EResultStatus.Fail, ex.ToString());
-            }
-        }
-
+             
         public MessageList GetMessageList(string limit, string offset)
         {
             try
@@ -342,7 +227,7 @@ namespace Kuyam.Domain.MessageServcies
         {
             if (!this.IsValidAddress(address, groupflag))
             {
-                NotificationErrorZendeskTicket("send error", sendMessageErrorResponse, string.Join("", address));
+                //NotificationErrorZendeskTicket("send error", sendMessageErrorResponse, string.Join("", address));
                 return new SendSMSResult(EResultStatus.Fail, sendMessageErrorResponse);
             }
 
@@ -357,7 +242,7 @@ namespace Kuyam.Domain.MessageServcies
 
             if (!string.IsNullOrEmpty(sendMessageErrorResponse))
             {
-                NotificationErrorZendeskTicket("send error", sendMessageErrorResponse, string.Join("", address));
+                //NotificationErrorZendeskTicket("send error", sendMessageErrorResponse, string.Join("", address));
                 return new SendSMSResult(EResultStatus.Fail, sendMessageErrorResponse);
             }
             return new SendSMSResult(EResultStatus.Success, "Success", sendMessageSuccessResponse);

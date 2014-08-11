@@ -1026,18 +1026,15 @@
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        @if (Model.IsBookDirect)
+    $(document).ready(function () {  
+        
+        $('#message, #service').selectmenu();
+
+        @if (Model.AllowScroll)
         {
             @:$("#ui-accordion-accordion-header-0").css({ "cursor": "default" });
-                   @:$("html, body").animate({ scrollTop: $(".profileschedule").height() + 15 }, "slow");
-                }
-
-        $('#message, #service').selectmenu();
-        //$('#service-button').addClass("ui-state-active ui-corner-top");
-        //var html ='<span class="ui-selectmenu-status">'+"a"+'</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span>';
-        //$('#service-button').html(html);
-
+            @:$("html, body").animate({ scrollTop: $(".profileschedule").height() + 15 }, "slow");
+        }
     });
 
     $(document).ready(function () {

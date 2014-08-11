@@ -12,7 +12,7 @@
                     <span class="boxcontentimg">
                         <span class="boximage">
                             <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})" profileid="@Model.Company.ProfileID" class="companyLink" title="@Model.Company.Name">
-                                <img src="@Model.UrlLogo" title="@Model.Company.Name" alt="@Model.Company.Name" />
+                             <img src="@Model.UrlLogo" title="@Model.Company.Name" alt="@Model.Company.Name" />
                             </a>
                         </span>
                     </span>
@@ -24,7 +24,7 @@
                     <span class="boxcontentimg">
                         <span class="boximage">
                             <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})" profileid="@Model.Company.ProfileID" class="companyLink" title="@Model.Company.Name">
-                                <img src="/Images/placeholder.png" title="@Model.Company.Name" alt="@Model.Company.Name" width="86px;" height="83px;" />
+                              <img src="/Images/placeholder.png" title="@Model.Company.Name" alt="@Model.Company.Name" width="86px;" height="83px;" />
                             </a>
                         </span>
                     </span>
@@ -119,7 +119,7 @@
                             }
                     }
                     <div class="totalReview">
-                        <a href="@Url.RouteUrl("Availability", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})/review" class="review companyLink" id="@Model.Company.ProfileID">
+                        <a href="@Url.RouteUrl("Review", new { seName = Model.Company.GetSeName(Model.Company.ProfileID)})/review" class="review companyLink" id="@Model.Company.ProfileID">
                             (@Model.TotalReviews reviews)
                         </a>
                     </div>

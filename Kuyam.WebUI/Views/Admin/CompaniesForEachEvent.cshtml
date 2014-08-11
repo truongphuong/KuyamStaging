@@ -184,7 +184,8 @@
     function pagingEvent(pageIndex) {
         var key = $('#txtKey').val();
         var id = $('#hdfEventId').val();
-        var searchParameters = { id:id, page: pageIndex, key: key};
+        var type = $("#stateType option:selected").val();
+        var searchParameters = { id:id, page: pageIndex, key: key , type:type};
         $.ajax(
             {
                 type: 'POST',
@@ -204,7 +205,8 @@
         $("#stateType").val("0");
         var key = $('#txtKey').val();
         var id = $('#hdfEventId').val();
-        var searchParameters = {id:id, key: key};
+        var type = $("#stateType option:selected").val();
+        var searchParameters = {id:id, page: 1, key: key, type: type};
         $.ajax(
                 {
                     type: 'POST',

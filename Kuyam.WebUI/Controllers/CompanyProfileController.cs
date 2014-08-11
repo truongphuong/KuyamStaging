@@ -358,7 +358,7 @@ namespace Kuyam.WebUI.Controllers
                                         className = "fc-black"
                                     };
 
-                                    if (profileCompany.IsClass.HasValue && profileCompany.IsClass.Value)
+                                    if (profileCompany.HasClassBooking)
                                     {
                                         if (instructorHours.Any(y => eventCustom.EmployeeID == y.EmployeeID && y.DayOfWeek == (int)beginDate.DayOfWeek
                                             && ((beginDate < beginDate.Date.Add(y.Start) && beginDate.Date.Add(y.End) < enddt)
@@ -668,7 +668,7 @@ namespace Kuyam.WebUI.Controllers
 
             var aptNext = empAppointments.Where(m => m.Start == startTime.AddMinutes(30)).OrderBy(m => m.Start).FirstOrDefault();
 
-            var listServiceAvailability = lstService.Where(s => (!profileCompany.IsClass.HasValue || profileCompany.IsClass.Value || s.ServiceTypeId == (int)Types.ServiceType.ServiceType)
+            var listServiceAvailability = lstService.Where(s => (!profileCompany.HasClassBooking || s.ServiceTypeId == (int)Types.ServiceType.ServiceType)
                 && (employeeId == 0 || s.EmployeeID == employeeId)
                 && serviceHour.Any(m => (m.Start <= startTime && m.End >= startTime.AddMinutes(s.Duration)) && (aptNext == null || startTime.AddMinutes(s.Duration) <= aptNext.Start) && m.EmployeeID == s.EmployeeID)).ToList();
 
@@ -699,9 +699,12 @@ namespace Kuyam.WebUI.Controllers
                         if (cseItem != null)
                         {
                             double percent = (double)(((cseItem.ServiceCompany.Price.Value - cseItem.NewPrice.Value) * 100) / cseItem.ServiceCompany.Price.Value);
-                            percentstring = Math.Round(percent, 0).ToString();
-                        }
+                            if (percent > 0)
+                            {
+                                percentstring = Math.Round(percent, 0).ToString();
+                            }
 
+                        }
 
                         htmlSevice.AppendFormat("<option txt=\"{5}\" duration=\"{6}\" desc=\"{7}\" employeeid =\"{8}\"  employeename=\"{9}\" offerPercent=\"{10}\" value=\"{0}\">{1}, {2} min, ${3}, {4} person</option>", companyService.ID, UtilityHelper.TruncateText(companyService.ServiceName, 36), companyService.Duration,
                             cseItem != null ? cseItem.NewPrice.Value : companyService.Price, companyService.AttendeesNumber, companyService.ServiceName, companyService.Duration, companyService.Description, companyService.EmployeeID, companyService.EmployeeName, percentstring);
@@ -968,7 +971,7 @@ namespace Kuyam.WebUI.Controllers
         }
 
         [Authorize]
-        public ActionResult Availability(int? id, int? proposedId, int? categotyId, int? serviceId)
+        public ActionResult Availability(int? id, int? proposedId, int? categoryId, int? serviceId)
         {
             MySession.IsBookDirect = false;
 
@@ -991,8 +994,8 @@ namespace Kuyam.WebUI.Controllers
             var categorys = _companyProfileService.GetCategoryByProfileID(id.Value);
             model.ListServiceCompany = categorys;
             var category = categorys.FirstOrDefault();
-            model.CategoryId = categotyId ?? 0;
-            ViewBag.CategoryId = categotyId;
+            model.CategoryId = categoryId ?? 0;
+            ViewBag.CategoryId = categoryId;
             model.Favorite = _companyProfileService.CheckFavoriteByProfileID(id.Value, MySession.CustID);
             model.CompanyName = profileCompany.Name;
             var Keywords = MyApp.Settings.TagSetting.Keywords;
@@ -1016,7 +1019,7 @@ namespace Kuyam.WebUI.Controllers
             return View(model);
         }
 
-        public ActionResult Class(int? id, int? categotyId, int? serviceId)
+        public ActionResult Class(int? id, int? categoryId, int? serviceId)
         {
             var model = new ProfileCompaniesModels();
             model.ProfileId = id.Value;
@@ -1029,66 +1032,67 @@ namespace Kuyam.WebUI.Controllers
             model.CompanyName = profileCompany.Name;
             DateTime dtnow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
             int dayOfWeek = (int)dtnow.DayOfWeek;
-            DateTime startTime = DateTime.Now;
-            if (dayOfWeek == (int)System.DayOfWeek.Sunday)
-            {
-                startTime = dtnow.AddDays(-6);
-            }
-            else
-            {
-                startTime = dtnow.AddDays(-(dayOfWeek - 1));
-            }
 
-            DateTime endTime = startTime.AddDays(7);
+            //DateTime startTime = dtnow;
+            //if (dayOfWeek == (int)System.DayOfWeek.Sunday)
+            //{
+            //    startTime = dtnow.AddDays(-6);
+            //}
+            //else
+            //{
+            //    startTime = dtnow.AddDays(-(dayOfWeek - 1));
+            //}
 
-            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id.Value, startTime.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
-            model.CalendarString = BuildCalendar(calendars, dtnow, startTime, endTime);
+            DateTime endTime = dtnow.AddDays(7);
+
+            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id.Value, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
+            model.CalendarString = BuildCalendar(calendars, dtnow);
 
             return View(model);
         }
 
 
-        private string BuildCalendar(List<SchedulerAvailability> schedulerAvailability, DateTime dtnow, DateTime startTime, DateTime endTime)
+        private string BuildCalendar(List<SchedulerAvailability> schedulerAvailability, DateTime dtNow)
         {
             StringBuilder strBuilder = new StringBuilder();
-            for (int i = 6; i >= 0; i--)
+
+            for (int i = 0; i < 7; i++)
             {
-                int dayOfWeek = 6 - i;
-                string dayInWeek = startTime.AddDays(dayOfWeek).ToString("dddd").ToLower();
-                string classToday = string.Empty;
-                if (dtnow.DayOfWeek == startTime.AddDays(dayOfWeek).DayOfWeek)
+                string dayInWeek = dtNow.AddDays(i).ToString("ddd").ToLower();
+                string classToday = string.Empty;                
+                if (i == 0)
                 {
                     classToday = "today";
                     dayInWeek = "today";
                 }
+
                 strBuilder.AppendFormat("<div class=\"column-day {0}\">", classToday);
-                strBuilder.AppendFormat("<div class=\"column-header\"><span class=\"day\">{0}</span><span class=\"datetime\">{1}</span></div>", dayInWeek, startTime.AddDays(dayOfWeek).ToString("MMM d, yyyy"));
-                int tempDay = dayOfWeek + 1;
-                if (i == 0)
-                    tempDay = 0;
-                var classIndays = schedulerAvailability.Where(q => q.DayOfWeek == tempDay).OrderBy(o => o.FromHour).ToList();
+                strBuilder.AppendFormat("<div class=\"column-header\"><span class=\"day\">{0}</span><span class=\"datetime\">{1}</span></div>", dayInWeek, dtNow.AddDays(i).ToString("MMM d, yyyy"));
+
+
+                var classIndays = schedulerAvailability.Where(q => q.DayOfWeek == (int)dtNow.AddDays(i).DayOfWeek).OrderBy(o => o.FromHour).ToList();
+
                 foreach (var item in classIndays)
                 {
-                    DateTime start = startTime.AddDays(dayOfWeek).Date.AddTicks(item.FromHour.Ticks);
+                    DateTime start = dtNow.AddDays(i).Date.AddTicks(item.FromHour.Ticks);
                     string isFull = "full";
 
-                    if (item.IsAvailability && start < dtnow)
+                    if (item.IsAvailability && start < dtNow)
                     {
                         isFull = "expired";
                     }
 
                     string btnReserve = string.Empty;
-                    if (start >= dtnow.AddMinutes(10) && item.IsAvailability)
+                    if (start >= dtNow.AddMinutes(10) && item.IsAvailability)
                     {
                         isFull = string.Empty;
                         btnReserve = string.Format("<a id=\"reserve\" classSchedulerId =\"{0}\" startTime=\"{1}\" emdTime=\"{2}\" className= \"{3}\" instructorName=\"{4}\" class=\"reserve\"  href=\"javascript:void(0);\">reserve</a>",
                             item.ClassSchedulerID, start.ToString("MM/dd/yyyy hh:mm tt"), start.AddMinutes(item.Duration).ToString("MM/dd/yyyy hh:mm tt"), item.ServiceName, item.EmployeeName);
                     }
 
-
                     strBuilder.Append("<div class=\"column-sessions\">");
                     strBuilder.AppendFormat(" <div class=\"session {0}\">", isFull);
-                    strBuilder.AppendFormat("<span class=\"time\">{0} – {1}</span>", new DateTime(item.FromHour.Ticks).ToString("h:mm tt").ToLower(), new DateTime(item.ToHour.Ticks).ToString("h:mm tt").ToLower());
+                    strBuilder.AppendFormat("<span class=\"time\">{0} – {1}</span>", new DateTime(item.FromHour.Ticks).ToString("h:mm tt").ToLower(), new DateTime(item.FromHour.Ticks).AddMinutes(item.Duration).ToString("h:mm tt").ToLower());
                     strBuilder.AppendFormat("<span class=\"instructor\">{0}</span>", item.EmployeeName);
                     strBuilder.AppendFormat("<span class=\"type\">{0}</span>", item.ServiceName);
                     strBuilder.Append(btnReserve);
@@ -1106,9 +1110,14 @@ namespace Kuyam.WebUI.Controllers
 
         public ActionResult GetCalendarAvailability(int classSchedulerId, string startDate)
         {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            var classInfor = _appointmentService.GetDataCheckOutOfClass(classSchedulerId);
+            dict.Add("classInfor", classInfor);
             //Parse start time
             DateTime startTime = DateTime.ParseExact(startDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
-            Dictionary<string, object> dict = new Dictionary<string, object>();
+            DateTime endTime = startTime.AddMinutes(classInfor.Duration);
+            dict.Add("startTime", startTime.ToString("MM/dd/yyyy hh:mm tt"));
+            dict.Add("endTime", endTime.ToString("MM/dd/yyyy hh:mm tt"));
             StringBuilder htmlCalendar = new StringBuilder();
             List<Kuyam.Database.Calendar> listCal = _companyProfileService.GetCalendarByCustId(MySession.CustID);
             var calAppointment = _appointmentService.GetAppointmentByCalendarId(0, startTime);
@@ -1169,7 +1178,7 @@ namespace Kuyam.WebUI.Controllers
                 int totalRecord = 0;
                 ViewBag.RatingList = _appointmentService.GetRatingListByProfileID(id ?? 0, 1, 10, out totalRecord);
                 ViewBag.TotalRecords = totalRecord;
-                ViewBag.Page = 1;
+                ViewBag.Page = 1;               
             }
             return View(model);
         }
@@ -1182,9 +1191,9 @@ namespace Kuyam.WebUI.Controllers
             int totalRecord = 0;
             ViewBag.RatingList = _appointmentService.GetRatingListByProfileID(profileID, pageIndex, 10, out totalRecord);
             ViewBag.Page = pageIndex;
-            ViewBag.TotalRecords = totalRecord;
-
-            return PartialView("_RatingList");
+            ViewBag.TotalRecords = totalRecord;          
+            var model = new ProfileCompaniesModels();
+            return PartialView("_RatingList", model);
 
         }
 

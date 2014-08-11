@@ -1,4 +1,4 @@
-﻿
+﻿@using Kuyam.Database;
 @{
     List<int> companyEventIds = ViewBag.CompanyEventIds;
     string key = ViewBag.Key ?? "";    
@@ -24,7 +24,7 @@
         <th>
             city
         </th>
-        <th style="width:200px">
+        <th style="width:220px">
             action
         </th>
     </tr>
@@ -65,6 +65,14 @@
     <a href="@Url.Action("CompanyServicesToEvent", "Admin", new { profileId = company.ProfileID, eventId = eventItem.EventID })" >
         edit Services
     </a>
+                    if (company.IsClass.HasValue && company.IsClass.Value)
+                    {
+                        <span> | </span>
+                    <a href="@Url.Action("CompanyServicesToEvent", "Admin", new { profileId = company.ProfileID, eventId = eventItem.EventID, typeId= (int)Types.ServiceType.ClassType})" >
+        edit classes
+    </a>
+                    }
+                    
                 }
                 else
                 {

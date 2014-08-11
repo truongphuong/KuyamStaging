@@ -1825,8 +1825,14 @@ namespace Kuyam.Domain
 
         public List<CompanyServiceEvent> GetListCompanyServicesToEventByCompanyEventId(int Id)
         {
-            return _companyServiceEventRepository.Table.Any(x => x.CompanyEventID == Id) ?
-                _companyServiceEventRepository.Table.Where(x => x.CompanyEventID == Id).ToList() : null;
+            return _companyServiceEventRepository.Table.Any(x => x.CompanyEventID == Id && x.ServiceCompany.ServiceTypeId ==(int)Types.ServiceType.ServiceType) ?
+                _companyServiceEventRepository.Table.Where(x => x.CompanyEventID == Id && x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ServiceType).ToList() : null;
+        }
+
+        public List<CompanyServiceEvent> GetListClassesToEventByCompanyEventId(int Id)
+        {
+            return _companyServiceEventRepository.Table.Any(x => x.CompanyEventID == Id && x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ClassType) ?
+                _companyServiceEventRepository.Table.Where(x => x.CompanyEventID == Id && x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ClassType).ToList() : null;
         }
 
         public int CreateCompanyEvent(CompanyEvent companyEvent)

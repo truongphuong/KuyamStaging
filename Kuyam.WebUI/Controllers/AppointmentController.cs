@@ -470,18 +470,16 @@ namespace Kuyam.WebUI.Controllers
                     html.AppendFormat("<div class=\"turn\"><div class=\"{0}\">&nbsp;</div><div class=\"{1}\">{4}</div> <div class=\"button\"> <input type=\"button\" onclick=\"{5};\" title=\"\" value=\"{3}\" class=\"{2}\" /> </div></div>", turnClass, lblClass, btnClass, btnValue, lblValue, eventstring);
 
                     html.Append("<div class=\"clear\"></div>");
-                    if(!isClass)
+                    
+                    if (isClass)
                     {
-                        html.AppendFormat("<div class=\"coltime\"><div class=\"ago\">{0}</div><div class=\"modify\"><a href=\"{1}\" title=\"modify\" class=\"{2}\" id=\"btnmodify\">modify</a> <a href=\"javascript:void(0);\" {3} title=\"cancel\" id=\"btncancel\" class=\"{4}\">cancel</a></div></div>", DateTimeUltility.RelativeDatetime(newList[j].Appointment.Modified ?? DateTime.UtcNow), hrfModify, modifyClass, eventCancel, cancelBtnClass);
-
-                        html.Append("<div class=\"clear\"></div>");
+                        hrfModify = "javascript:void(0)";
+                        modifyClass = "hidea";                       
                     }
-                    else
-                    {
-                        html.AppendFormat("<div class=\"coltime\"><div class=\"ago\">{0}</div><div class=\"modify\"><a href=\"{1}\" title=\"modify\" class=\"{2}\" style=\"display:none;\" id=\"btnmodify\">modify</a> <a href=\"javascript:void(0);\" {3} title=\"cancel\" id=\"btncancel\" class=\"{4}\">cancel</a></div></div>", DateTimeUltility.RelativeDatetime(newList[j].Appointment.Modified ?? DateTime.UtcNow), hrfModify, modifyClass, eventCancel, cancelBtnClass);
 
-                        html.Append("<div class=\"clear\"></div>");
-                    }
+                    html.AppendFormat("<div class=\"coltime\"><div class=\"ago\">{0}</div><div class=\"modify\"><a href=\"{1}\" title=\"modify\" class=\"{2}\" id=\"btnmodify\">modify</a> <a href=\"javascript:void(0);\" {3} title=\"cancel\" id=\"btncancel\" class=\"{4}\">cancel</a></div></div>", DateTimeUltility.RelativeDatetime(newList[j].Appointment.Modified ?? DateTime.UtcNow), hrfModify, modifyClass, eventCancel, cancelBtnClass);
+
+                    html.Append("<div class=\"clear\"></div>");
                     
                     html.Append("</div>");
 

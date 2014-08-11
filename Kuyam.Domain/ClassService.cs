@@ -615,6 +615,118 @@ namespace Kuyam.Domain
                 return false;
             }
         }
+
+        public  bool DeleteClass(int serviceCompanyID)
+        {            
+            try
+            {
+                if(_serviceCompanyRepository.Table.Any(x=> x.ServiceCompanyID == serviceCompanyID))
+                {
+                    ServiceCompany sc =
+                       _serviceCompanyRepository.Table.Where(x => x.ServiceCompanyID == serviceCompanyID).FirstOrDefault();
+
+                    //remove all instructorclassscheduler
+                    var icsQuery = (from ics in _instructorClassSchedulerRepository.Table
+                                    join es in _employeeServiceRepository.Table on ics.InstructorClassID equals es.ID
+                                    where es.ServiceCompanyID == serviceCompanyID
+                                    select ics).ToList();
+                    if(icsQuery != null && icsQuery.Count >0)
+                    {
+                        foreach(var icsItem in icsQuery)
+                        {
+                            _instructorClassSchedulerRepository.Delete(icsItem);
+                        }
+                    }
+
+                    // remove all employeeService 
+                    var esQuery = _employeeServiceRepository.Table.Where(x => x.ServiceCompanyID == serviceCompanyID).ToList();
+                    if(esQuery != null && esQuery.Count > 0)
+                    {
+                        foreach( var esItem in esQuery)
+                        {
+                            _employeeServiceRepository.Delete(esItem);
+                        }
+                    }
+
+                    sc.Status = (int)Types.ServiceCompanyStatus.Delete;
+                    sc.Modified = DateTime.Now;
+                    _serviceCompanyRepository.Update(sc);                   
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        
+        public bool UpdateTimeForInstructorClassScheduler(int servicecompanyId, int duration)
+        {
+            try
+            {
+                var icsQuery = (from ics in _instructorClassSchedulerRepository.Table
+                                join es in _employeeServiceRepository.Table on ics.InstructorClassID equals es.ID
+                                where es.ServiceCompanyID == servicecompanyId
+                                select ics).ToList();
+                if(icsQuery != null && icsQuery.Count >0)
+                {
+                    foreach(var icsItem in icsQuery)
+                    {
+                        icsItem.ToHour = new DateTime(icsItem.FromHour.Ticks).AddMinutes(duration).TimeOfDay;
+                        _instructorClassSchedulerRepository.Update(icsItem);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<CompanyService> GetServiceCompanybyProfileId(int profileId)
+        {          
+
+            var service = (from s in _serviceRepository.Table
+                           join sc in _serviceCompanyRepository.Table on s.ServiceID equals sc.ServiceID
+                           join e in _employeeServiceRepository.Table on sc.ServiceCompanyID equals e.ServiceCompanyID
+                           where sc.ProfileID == profileId
+                                 && sc.Status == (int)Types.ServiceCompanyStatus.Active && (sc.ServiceTypeId == (int)Types.ServiceType.ServiceType)
+                                 && s.ParentServiceID.HasValue
+                           select new CompanyService()
+                           {
+                               ID = sc.ServiceCompanyID,
+                               Price = sc.Price.HasValue ? sc.Price.Value : 0,
+                               ServiceName = s.ServiceName,
+                               AttendeesNumber = sc.AttendeesNumber.HasValue ? sc.AttendeesNumber.Value : 0,
+                               Description = s.Desc,
+                               Duration = sc.Duration.HasValue ? sc.Duration.Value : 0
+                           }).OrderBy(x => x.ServiceName).Distinct();
+            return service.ToList();
+        }
+
+        public List<CompanyService> GetClassesbyProfileId(int profileId)
+        {
+
+            var service = (from s in _serviceRepository.Table
+                           join sc in _serviceCompanyRepository.Table on s.ServiceID equals sc.ServiceID
+                           join e in _employeeServiceRepository.Table on sc.ServiceCompanyID equals e.ServiceCompanyID
+                           where sc.ProfileID == profileId
+                                 && sc.Status == (int)Types.ServiceCompanyStatus.Active && (sc.ServiceTypeId == (int)Types.ServiceType.ClassType)
+                                 && s.ParentServiceID.HasValue
+                           select new CompanyService()
+                           {
+                               ID = sc.ServiceCompanyID,
+                               Price = sc.Price.HasValue ? sc.Price.Value : 0,
+                               ServiceName = s.ServiceName,
+                               AttendeesNumber = sc.AttendeesNumber.HasValue ? sc.AttendeesNumber.Value : 0,
+                               Description = s.Desc,
+                               Duration = sc.Duration.HasValue ? sc.Duration.Value : 0
+                           }).OrderBy(x => x.ServiceName).Distinct();
+            return service.ToList();
+        }
     }
 
 }

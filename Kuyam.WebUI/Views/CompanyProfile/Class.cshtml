@@ -132,6 +132,9 @@
 
     $(document).ready(function () {
 
+        $("#ui-accordion-accordion-header-0").css({ "cursor": "default" });
+        $("html, body").animate({ scrollTop: $(".profileschedule").height() + 15 }, "slow");
+
         $('.classes-week-cols #reserve').click(function (e) {
             var classSchedulerId = $(e.target).attr("classSchedulerId");
             var starDate = $(e.target).attr("startTime");
@@ -140,7 +143,7 @@
             var instructorName = $(e.target).attr("instructorName");
             $("#hdfCurrentDate").val(starDate);
             $("#hdfclassSchedulerId").val(classSchedulerId);
-            reserveClass(classSchedulerId, starDate, endDate, className, instructorName);
+            reserveClass(classSchedulerId, starDate);
         });
 
         $('#bookcheckout').click(function () {
@@ -167,7 +170,7 @@
     });
 
 
-    function reserveClass(classSchedulerId, starDate, endDate, className, instructorName) {
+    function reserveClass(classSchedulerId, starDate) {
         if ('@(MySession.CustID>0?1:0)' == 0) {
             showDialog('signuppopup', 'btnCloseloginPopup');
             redirectUrl = '@(!string.IsNullOrEmpty(Request.RawUrl) ? (Request.RawUrl.IndexOf("?") != -1 ? Request.RawUrl.Substring(0, Request.RawUrl.IndexOf("?")) : Request.RawUrl) : "")';
@@ -175,17 +178,21 @@
             redirectUrl += "?classSchedulerId=" + classSchedulerId + "&start=" + startTime
             return;
         }
+
+        $("#hdfCurrentDate").val(starDate);
+        $("#hdfclassSchedulerId").val(classSchedulerId);
+
         $.get("/CompanyProfile/GetCalendarAvailability?nocache=" + getunixtime(), { classSchedulerId: classSchedulerId, startDate: starDate },
            function (data) {
                if (data.calendar == '') {
                    showAlertMessage("this class had been booked in all current calendars");
                    return;
                }
-               $("#instructorName").text(instructorName);
-               $("#className").text(className);
+               $("#instructorName").text(data.classInfor.EmployeeName);
+               $("#className").text(data.classInfor.ServiceName);
                $('#divystart').text(new Date(starDate).format("ddd, mmm d").toLowerCase());
-               $('#divystarttime').text("starts: " + new Date(starDate).format("h:MM tt"));
-               $('#yendtime').text("ends: " + new Date(endDate).format("h:MM tt"));
+               $('#divystarttime').text("starts: " + new Date(data.startTime).format("h:MM tt"));
+               $('#yendtime').text("ends: " + new Date(data.endTime).format("h:MM tt"));
                $("#username").html(data.calendar);
                $('select#servicetype').selectmenu();
                $('select#username').selectmenu();

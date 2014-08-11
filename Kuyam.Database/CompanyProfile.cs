@@ -5,6 +5,8 @@ namespace Kuyam.Database
 {
     public class CompanyProfileSearch
     {
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
         public int ProfileID { get; set; }
         public int CompanyTypeID { get; set; }
         public int CompanyStatusID { get; set; }
@@ -30,9 +32,6 @@ namespace Kuyam.Database
         public Nullable<int> PayAfter { get; set; }
         public string MapUrl { get; set; }
         public string Neighborhood { get; set; }
-        public string CrossStreet { get; set; }
-        public string PublicTransportation { get; set; }
-        public string Parking { get; set; }
         public string Notes { get; set; }
         public bool ApptAutoConfirm { get; set; }
         public int ApptDefaultSlotDuration { get; set; }
@@ -59,6 +58,10 @@ namespace Kuyam.Database
         public int Rate { get; set; }
         public int TotalReviews { get; set; }
 
+        public string LogoMediaId { get; set; }
+
+        public List<CompanyMedia> CompanyMedias { get; set; }
+        /*
         public List<CompanyMedia> _companyMedias { get; set; }
 
         public List<CompanyMedia> CompanyMedias
@@ -73,6 +76,16 @@ namespace Kuyam.Database
                 _companyMedias = value;
             }
         }
+        */
+
+        public bool HasClassBooking
+        {
+            get
+            {
+                return (this.IsClass.HasValue && this.IsClass.Value
+                    && this.CompanyTypeID == (int)Types.CompanyType.HybridKuyamBookIt);
+            }
+        }
 
         public List<ServiceCompany> _serviceCompanies;
 
@@ -80,7 +93,7 @@ namespace Kuyam.Database
         {
             get
             {
-                if(_serviceCompanies == null) _serviceCompanies = new List<ServiceCompany>();
+                if (_serviceCompanies == null) _serviceCompanies = new List<ServiceCompany>();
                 return _serviceCompanies;
             }
             set
@@ -89,14 +102,17 @@ namespace Kuyam.Database
             }
         }
 
+        public List<Appointment> Appointments { get; set; }
+
+        public TimeSlots CompanyAvailableTimeSlots { get; set; }
+
         public string EmployeeHoursStr { get; set; }
+
         public List<EmployeeHour> EmployeeHours { get; set; }
 
         public string CompanyHoursStr { get; set; }
 
         public List<CompanyHour> CompanyHours { get; set; }
-
-        public TimeSlots CompanyAvailableTimeSlots { get; set; }
 
         public string CompanyEventsStr { get; set; }
 

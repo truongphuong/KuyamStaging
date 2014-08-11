@@ -25,8 +25,11 @@ using RazorEngine;
 using System.Dynamic;
 using Kuyam.Domain.KuyamServices;
 using Kuyam.WebUI.Extension;
-using Kuyam.Domain.CompanyProfileServices;
 using Kuyam.Domain.Seo;
+using Kuyam.Domain.CompanyProfileServices;
+using Kuyam.Domain.OfferServices;
+using Kuyam.WebUI.Models.Offers;
+
 
 namespace Kuyam.WebUI.Controllers
 {
@@ -41,18 +44,20 @@ namespace Kuyam.WebUI.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IProfileCompanyService _profileCompanyService;
         private readonly ISeoFriendlyUrlService _seoFriendlyUrlService;
-        private readonly AdminService _adminService;
         private readonly ClassService _classService;
+        private readonly CompanySearchService _companySearchService;
+        private readonly IOfferService _offerService;
         public CompanyController(IFormsAuthenticationService formsService,
             IMembershipService membershipService,
             CompanyProfileService companyProfileService,
             EmailSender emailSender,
             CustService custService,
             IAppointmentService appointmentService,
-            AdminService adminService,
             IProfileCompanyService profileCompanyService,
             ISeoFriendlyUrlService seoFriendlyUrlService,
-            ClassService classService)
+            ClassService classService,
+            CompanySearchService companySearchService,
+            IOfferService offerService)
         {
             this._formsService = formsService;
             this._membershipService = membershipService;
@@ -62,8 +67,9 @@ namespace Kuyam.WebUI.Controllers
             this._appointmentService = appointmentService;
             this._profileCompanyService = profileCompanyService;
             this._seoFriendlyUrlService = seoFriendlyUrlService;
-            this._adminService = adminService;
             this._classService = classService;
+            this._companySearchService = companySearchService;
+            this._offerService = offerService;
         }
 
         public ActionResult Index()
@@ -150,7 +156,8 @@ namespace Kuyam.WebUI.Controllers
             }
 
             var custID = Kuyam.WebUI.Models.MySession.CustID;
-            List<CompanyProfileSearch> resultList = CompanySearchService.GetCompaniesFromTypeIDWithDistance(custID, typeID, distance,
+            var cust = _custService.GetCustomerCustID(custID);
+            List<CompanyProfileSearch> resultList = _companySearchService.GetCompaniesFromTypeIDWithDistance(cust, typeID, distance,
                 priceFrom, priceTo, hourFrom, hourTo, Boolean.Parse(isAvailable), pageIndex, int.Parse(sortBy),
                 out totalRecord, key);
 
@@ -164,17 +171,8 @@ namespace Kuyam.WebUI.Controllers
             ViewBag.Category = service != null ? service.ServiceName : "all";
             ViewBag.CategoryId = categoryId;
 
-            //List<ProfileCompany> pList = BusinessService.GetCompaniesFromTypeIDWithDistance(serviceId, defaultDistance, 0, 0, DateTime.Today, DateTime.Today, false, 1, 0, out total, string.Empty);
-            //ViewBag.TypeName = DAL.GetServiceNameFromServiceID(serviceId);
-
-            //ViewBag.ProfileCompanies = pList;
-            //ViewBag.Page = 1;
-            //ViewBag.TypeID = serviceId;
-            //ViewBag.TotalRecords = total;
-
-            if (User.Identity.IsAuthenticated)
+            if (cust != null)
             {
-                Cust cust = MySession.Cust;
                 ViewBag.UserLat = cust.Latitude;
                 ViewBag.UserLon = cust.Longitude;
                 ViewBag.SearchArea = string.Empty;
@@ -256,8 +254,9 @@ namespace Kuyam.WebUI.Controllers
             }
 
             var custID = Kuyam.WebUI.Models.MySession.CustID;
+            var cust = _custService.GetCustomerCustID(custID);
             int totalRecord = 0;
-            List<CompanyProfileSearch> resultList = CompanySearchService.GetCompaniesFromTypeIDWithDistance(custID, serviceId,
+            List<CompanyProfileSearch> resultList = _companySearchService.GetCompaniesFromTypeIDWithDistance(cust, serviceId,
                 distance, priceFrom, priceTo, hourFrom, hourTo, isAvailableToday, 1, int.Parse(sortBy), out totalRecord,
                 key);
             ViewBag.ProfileCompanies = resultList;
@@ -327,9 +326,9 @@ namespace Kuyam.WebUI.Controllers
             }
 
             var custID = Kuyam.WebUI.Models.MySession.CustID;
-            List<CompanyProfileSearch> resultList = CompanySearchService.GetCompaniesFromTypeIDWithDistance(custID, typeID, distance,
-                priceFrom, priceTo, hourFrom, hourTo, isAvailableToday, pageIndex, int.Parse(sortBy), out totalRecord,
-                key);
+            var cust = _custService.GetCustomerCustID(custID);
+            List<CompanyProfileSearch> resultList = _companySearchService.GetCompaniesFromTypeIDWithDistance(cust, typeID, distance,
+                priceFrom, priceTo, hourFrom, hourTo, isAvailableToday, pageIndex, int.Parse(sortBy), out totalRecord, key);
             ViewBag.ProfileCompanies = resultList;
             ViewBag.TotalRecords = totalRecord;
             ViewBag.Page = pageIndex;
@@ -346,20 +345,62 @@ namespace Kuyam.WebUI.Controllers
             ViewBag.company = company;
             return PartialView("_SearchPopup");
         }
+             
 
-        [HttpGet]
         public ActionResult LoadOfferPopup(int? companyEventId)
         {
-            CompanyEvent ce = _adminService.GetCompanyEventByCompanyEventId(companyEventId ?? 0);
-            if (ce != null && ce.Event != null)
+
+            var companyEvent = _offerService.GetCompanyEventByCompanyEventId(companyEventId ?? 0);
+            var listOffers = _offerService.GetListServicesEventByCompanyEventId(companyEventId ?? 0, 0);
+            var ListClasses = listOffers.Where(m => m.ServiceTypeId == (int)Types.ServiceType.ClassType).OrderBy(o => o.NewPrice).Take(3).ToList();
+            var ListServices = listOffers.Where(m => m.ServiceTypeId == (int)Types.ServiceType.ServiceType).OrderBy(o => o.NewPrice).Take(3).ToList();
+            bool hasClass = (ListClasses != null && ListClasses.Count() > 0);
+
+            List<CompanyServiceEventDTO> offers = new List<CompanyServiceEventDTO>();
+
+            if (ListClasses != null && ListClasses.Count() > 0 && companyEvent.ProfileCompany.HasClassBooking)
             {
-                ViewBag.Event = ce.Event;
-                List<CompanyServiceEvent> cseList = _adminService.GetListCompanyServicesToEventByCompanyEventId(ce.CompanyEventID);
-                ViewBag.CompanyServices = cseList.OrderBy(x => x.NewPrice).Take(3).ToList();
+                offers = ListClasses.Select(item => new CompanyServiceEventDTO
+                 {
+                     ID = item.ID,
+                     ServiceTypeId = item.ServiceTypeId,
+                     Description = item.Description,
+                     CompanyEventID = item.CompanyEventID,
+                     ServiceCompanyID = item.ServiceCompanyID,
+                     OldPrice = item.OldPrice,
+                     NewPrice = item.NewPrice,
+                     ServiceName = item.ServiceName,
+                     CategoryName = item.CategoryName,
+                     IsClass =true
+
+                 }).ToList();
             }
-            var company = ce.ProfileCompany;
-            ViewBag.Url = Url.RouteUrl("availability", new { sename = company.GetSeName(company.ProfileID) });
-            return PartialView("_OfferPopup");
+            int numberOfferClass = offers != null ? offers.Count() : 0;
+            var serviceOffers = ListServices.Select(item => new CompanyServiceEventDTO
+                 {
+                     ID = item.ID,
+                     ServiceTypeId = item.ServiceTypeId,
+                     Description = item.Description,
+                     CompanyEventID = item.CompanyEventID,
+                     ServiceCompanyID = item.ServiceCompanyID,
+                     OldPrice = item.OldPrice,
+                     NewPrice = item.NewPrice,
+                     ServiceName = item.ServiceName,
+                     CategoryName = item.CategoryName,
+                     IsClass =false
+
+                 }).Take(3 - numberOfferClass).ToList();
+
+            offers.AddRange(serviceOffers);
+
+            var model = new OfferModel
+            {
+                SlugName = Url.RouteUrl("Slug", new { sename = companyEvent.GetSeName(companyEvent.ProfileCompany.ProfileID) }),
+                Event = companyEvent.Event,
+                Offers = offers
+
+            };
+            return PartialView("_OfferPopup", model);
         }
 
 
@@ -379,76 +420,6 @@ namespace Kuyam.WebUI.Controllers
 
             return PartialView("_CompanySearchLeftTab");
         }
-
-        //[HttpPost]
-        //public ActionResult AddCustomerSchedules(string id, string dateTime1, string dateTime2, string dateTime3, string messageLog)
-        //{
-        //    int companyID = int.Parse(id);
-        //    int custID = DAL.xGetCust(User.Identity.Name).CustID;
-        //    Guid session = Guid.NewGuid();
-        //    CustomerScheduleLog csl = new CustomerScheduleLog();
-        //    csl.SessionID = session;
-        //    csl.Message = messageLog;
-        //    csl.CreatedDate = DateTime.Now;
-        //    DAL.AddCustomerScheduleLog(csl);
-
-        //    if (dateTime1 != null && dateTime1.Trim() != string.Empty)
-        //    {
-        //        DateTime date;
-        //        DateTime.TryParseExact(dateTime1, "MM/dd h:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
-        //        CustomerSchedule cs1 = new CustomerSchedule();
-        //        cs1.ProfileCompanyID = companyID;
-        //        cs1.ScheduleTime = date;
-        //        cs1.SessionID = session;
-        //        cs1.CreatedDate = DateTime.Now;
-        //        cs1.CustID = custID;
-        //        cs1.IsConfirm = false;
-        //        DAL.AddCustomerSchedule(cs1);
-        //    }
-
-        //    if (dateTime2 != null && dateTime2.Trim() != string.Empty)
-        //    {
-        //        DateTime date;
-        //        DateTime.TryParseExact(dateTime1, "mm/dd h:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
-        //        CustomerSchedule cs2 = new CustomerSchedule();
-        //        cs2.ProfileCompanyID = companyID;
-        //        cs2.ScheduleTime = date;
-        //        cs2.SessionID = session;
-        //        cs2.CreatedDate = DateTime.Now;
-        //        cs2.CustID = custID;
-        //        cs2.IsConfirm = false;
-        //        DAL.AddCustomerSchedule(cs2);
-        //    }
-
-        //    if (dateTime3 != null && dateTime3.Trim() != string.Empty)
-        //    {
-        //        DateTime date;
-        //        DateTime.TryParseExact(dateTime1, "mm/dd h:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
-        //        CustomerSchedule cs3 = new CustomerSchedule();
-        //        cs3.ProfileCompanyID = companyID;
-        //        cs3.ScheduleTime = date;
-        //        cs3.SessionID = session;
-        //        cs3.CreatedDate = DateTime.Now;
-        //        cs3.CustID = custID;
-        //        cs3.IsConfirm = false;
-        //        DAL.AddCustomerSchedule(cs3);
-        //    }
-
-        //    // send email
-
-        //    string to = User.Identity.Name;
-        //    string abc = "http://" + HttpContext.Request.Url.Authority;
-        //    string url = "<a href=\"" + abc + "/Company/Confirmation/" + session + "\">Confirm</a>";
-
-        //    Thread oThread = new Thread(() => EmailHelper.SendSheduleEmail(url, "huyphan@vinasource.com"));
-        //    oThread.Start();
-        //    string mess = "Thanks!, We will contact you soon";
-        //    return Json(mess, JsonRequestBehavior.AllowGet);
-
-        //}
 
         [HttpPost]
         public ActionResult RequireSendEmailListCompanyHours(string companyName)
@@ -1644,7 +1615,7 @@ namespace Kuyam.WebUI.Controllers
             if (services != null && services.Count > 0)
             {
                 serviceHTML = "<select name=\"category\" id=\"service\" class=\"selectservice selectserviceactive\">";
-                serviceHTML = serviceHTML + "<option value=\"select from service\" selected=\"selected\">select from service</option>";
+                serviceHTML = serviceHTML + "<option value=\"select a service\" selected=\"selected\">select a service</option>";
                 foreach (Service service in services)
                 {
                     serviceHTML = serviceHTML + "<option value=\"" + service.ServiceID + "\" serviceID=\"" + service.ServiceID + "\">" + Kuyam.Domain.UtilityHelper.TruncateText(service.ServiceName, 27) + "</option>";
@@ -2015,13 +1986,13 @@ namespace Kuyam.WebUI.Controllers
                 ViewBag.CompanyHours = companyHours;
 
                 List<EmployeeHour> ehList = DAL.GetEmployeeHoursFromEmployeeID(id.Value);
-                List<EmployeeHour> ihList =  _classService.GetInstructorHoursFromInstructorId(id.Value);
+                List<EmployeeHour> ihList = _classService.GetInstructorHoursFromInstructorId(id.Value);
                 if (ehList != null)
                 {
                     ViewBag.StringEvent = BusinessService.GetEventCalendar(ehList);
                 }
 
-                if(ihList !=  null)
+                if (ihList != null)
                 {
                     ViewBag.StringClassHour = BusinessService.GetListClassHourCalendar(ihList);
                 }
@@ -3233,7 +3204,7 @@ namespace Kuyam.WebUI.Controllers
                 employee.PaymentAccount = paypal;
                 employee.IsDefault = isDefault;
                 DAL.UpdateCompanyEmployeeInfo(employee);
-                _classService.DeleteEmployeeServicesNonClassByEmployeeID(employee.EmployeeID);                
+                _classService.DeleteEmployeeServicesNonClassByEmployeeID(employee.EmployeeID);
             }
 
             bool result = false;
@@ -4152,7 +4123,7 @@ namespace Kuyam.WebUI.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult EditInstructorInfo(string employeeID, string employeeName, string email, string phone, string stringServiceCompanyIDs,string unselectedService, string employeeDefault, string paypal, int profileId = 0)
+        public ActionResult EditInstructorInfo(string employeeID, string employeeName, string email, string phone, string stringServiceCompanyIDs, string unselectedService, string employeeDefault, string paypal, int profileId = 0)
         {
             Profile profile = _companyProfileService.GetProfileByID(profileId != 0 ? profileId : MySession.ProfileID);
             if (profile == null)
@@ -4177,7 +4148,7 @@ namespace Kuyam.WebUI.Controllers
                 employee.PaymentAccount = paypal;
                 employee.IsDefault = isDefault;
                 DAL.UpdateCompanyEmployeeInfo(employee);
-               // _classService.DeleteInstructorClassByInstructorID(employee.EmployeeID);
+                // _classService.DeleteInstructorClassByInstructorID(employee.EmployeeID);
 
             }
 
@@ -4195,7 +4166,7 @@ namespace Kuyam.WebUI.Controllers
                         es.CompanyEmployeeID = int.Parse(employeeID);
                         es.ServiceCompanyID = int.Parse(serviceCompanyIds[i]);
                         result = _classService.AddInstructorClass(es);
-                        if(!result)
+                        if (!result)
                         {
                             error = "add class is not success";
                             return Json(new { Success = result, Message = error }, JsonRequestBehavior.AllowGet);
@@ -4211,7 +4182,7 @@ namespace Kuyam.WebUI.Controllers
                 {
                     if (unselectServiceIds[i] != string.Empty)
                     {
-                        result = _classService.DeleteInstructorClass(int.Parse(unselectServiceIds[i]), int.Parse(employeeID));                       
+                        result = _classService.DeleteInstructorClass(int.Parse(unselectServiceIds[i]), int.Parse(employeeID));
                     }
                     if (!result)
                     {
@@ -4321,6 +4292,7 @@ namespace Kuyam.WebUI.Controllers
         {
             bool result = false;
             ServiceCompany sc = DAL.GetServiceCompany(serviceCompanyID);
+            var isUpdateDuration = sc.Duration != time;
             if (sc != null)
             {
                 sc.Duration = time;
@@ -4338,7 +4310,12 @@ namespace Kuyam.WebUI.Controllers
                 else
                 {
                     result = DAL.UpdateServiceCompany(sc);
-                }               
+                    if (isUpdateDuration)
+                    {
+                        result = _classService.UpdateTimeForInstructorClassScheduler(sc.ServiceCompanyID, sc.Duration.Value);
+                    }
+
+                }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -4505,7 +4482,7 @@ namespace Kuyam.WebUI.Controllers
             var result = false;
             var error = string.Empty;
             if (cs.FromHour < cs.ToHour)
-            {               
+            {
                 if (stringListDays != string.Empty)
                 {
                     string[] listDay = stringListDays.Split(',');
@@ -4562,5 +4539,16 @@ namespace Kuyam.WebUI.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult DeleteClass(int serviceCompanyID)
+        {
+
+            bool result = _classService.DeleteClass(serviceCompanyID);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -1,0 +1,353 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain;
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    ViewBag.Title = "class of " + Model.CompanyName; 
+    Layout = "~/Views/Shared/_MasterPageLayoutBooking.cshtml";
+    ViewBag.IsAllowOtherCompnies = false;
+}
+
+}
+@section MetaSeoSection{
+    @Model.MetaTagExtension.MetaTag()
+}
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar_appts_calendar.css?v=17")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar.print_appts_calendar.css?v=17")" media="print" />
+<style type="text/css">
+    .ybox, .newcompanyschedule .allviewing .personcalendar .activeperson {
+        behavior: url(PIE.htc);
+    }
+</style>
+<div class="contentMarketPlace">
+    <div class="bgMainContent">
+        @Html.Partial("_CompanySearchLeftTab")
+        <div class="colRight newcompanyschedule">
+            @Html.Partial("_HeaderCompanyProfile")
+            <div class="clear7">
+            </div>
+            <!--begin classes-week-cols-->
+            <div class="classes-week-cols">
+                <div class="clearfix">
+                    @Html.Raw(Model.CalendarString)
+                </div>
+            </div>
+            <!--end classes-week-cols-->
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="newpayment" class="giftcardpopup"></div>
+<div id="delayclock" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            do you need more time?
+        </p>
+        <div>
+            <center>
+                <input type="button" class="btnok" id="btnok" value="yes" onclick="changeTime();" />
+                <input type="button" class="btncancel" id="btnno" value="no" onclick="cancelbooking();" />
+            </center>
+        </div>
+    </div>
+</div>
+<div id="selectservice" class="selectservicepopup packagecheckout" style="min-height: 320px;">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('selectservice');"
+           title="Close"></a>
+        <h3>
+            you’ve selected:
+        </h3>
+
+        <div class="clear">
+        </div>
+        <div class="ybox newybox">
+            <div class="ycomname" id="className" title="">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="ycomname" id="instructorName" title="">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="ystart" id="divystart">
+            </div>
+            <div class="ystarttime" id="divystarttime">
+            </div>
+            <div class="clear">
+            </div>
+            <div class="yend">
+                &nbsp;
+            </div>
+            <div class="yendtime" id="yendtime">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="selectacalendar">
+            <div class="selecttext">
+                select a calendar:
+            </div>
+            <div class="selectcontent">
+                <select name="username" id="username" class="endtime"></select>
+            </div>
+        </div>
+        <div class="clear25">
+        </div>
+        <a href="javascript:void(0);" class="btnbook" id="bookcheckout" title="proceed to checkout">
+            proceed to checkout
+        </a>
+        <div class="clear">
+        </div>
+        <div class="diverr">
+            <span style="color: red" id='spanError'></span>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="cancellationpopup" class="selectservicepopup cancellationpopup">
+    <div class="contentPopup">
+        <a class="btnClose" href="JavaScript:void(0);" onclick="hideDialog('cancellationpopup')"
+           title="Close"></a>
+        <div class="cancellationbox">
+            this appointment has a <span id='policyType' style="font-weight: bold;"></span>-hour
+            cancellation policy.
+            <br />
+            <br />
+            if you modify or cancel <span id="cancelhour" style="font-weight: bold;"></span>
+            hours before this appointment or later, you will be charged <span id='returnpercent' style="font-weight: bold;">50%</span> of the total amount.
+        </div>
+        <div class="clear15">
+        </div>
+        <a href="javascript:void(0);" class="btnbook btncancelcontinue" id="bookme" onclick="checkout();"
+           title="continue">continue</a>
+    </div>
+</div>
+<input type="hidden" id="hdfclassSchedulerId" value="0">
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#ui-accordion-accordion-header-0").css({ "cursor": "default" });
+        $("html, body").animate({ scrollTop: $(".profileschedule").height() + 15 }, "slow");
+
+        $('.classes-week-cols #reserve').click(function (e) {
+            var classSchedulerId = $(e.target).attr("classSchedulerId");
+            var starDate = $(e.target).attr("startTime");
+            var endDate = $(e.target).attr("emdTime");
+            var className = $(e.target).attr("className");
+            var instructorName = $(e.target).attr("instructorName");
+            $("#hdfCurrentDate").val(starDate);
+            $("#hdfclassSchedulerId").val(classSchedulerId);
+            reserveClass(classSchedulerId, starDate);
+        });
+
+        $('#bookcheckout').click(function () {
+            var serviceId = $("#servicetype option:selected").val()
+            var calendarId = $("#username option:selected").val();
+            if (typeof calendarId == 'undefined') {
+                showAlertMessage("not available user calendar");
+                $("#selectservice").hide();
+                return false;
+            }
+            if (serviceId == '0' || serviceId == '') {
+                $('#spanError').text('please select a service');
+                return;
+            }
+
+            var companyType = $("#hdfCompanytype").val();
+
+            if (companyType == '@((int)Types.CompanyType.KuyamBookIt)' || companyType == '@((int)Types.CompanyType.KuyamInstantBook)' || companyType == '@((int)Types.CompanyType.HybridKuyamBookIt)') {
+
+                continueCheckout();
+            }
+        });
+
+    });
+
+
+    function reserveClass(classSchedulerId, starDate) {
+        if ('@(MySession.CustID>0?1:0)' == 0) {
+            showDialog('signuppopup', 'btnCloseloginPopup');
+            redirectUrl = '@(!string.IsNullOrEmpty(Request.RawUrl) ? (Request.RawUrl.IndexOf("?") != -1 ? Request.RawUrl.Substring(0, Request.RawUrl.IndexOf("?")) : Request.RawUrl) : "")';
+            var startTime = new Date(starDate).format("mm/dd/yyyy hh:MM tt");
+            redirectUrl += "?classSchedulerId=" + classSchedulerId + "&start=" + startTime
+            return;
+        }
+
+        $("#hdfCurrentDate").val(starDate);
+        $("#hdfclassSchedulerId").val(classSchedulerId);
+
+        $.get("/CompanyProfile/GetCalendarAvailability?nocache=" + getunixtime(), { classSchedulerId: classSchedulerId, startDate: starDate },
+           function (data) {
+               if (data.calendar == '') {
+                   showAlertMessage("this class had been booked in all current calendars");
+                   return;
+               }
+               $("#instructorName").text(data.classInfor.EmployeeName);
+               $("#className").text(data.classInfor.ServiceName);
+               $('#divystart').text(new Date(starDate).format("ddd, mmm d").toLowerCase());
+               $('#divystarttime').text("starts: " + new Date(data.startTime).format("h:MM tt"));
+               $('#yendtime').text("ends: " + new Date(data.endTime).format("h:MM tt"));
+               $("#username").html(data.calendar);
+               $('select#servicetype').selectmenu();
+               $('select#username').selectmenu();
+               showDialog("selectservice");
+           });
+    }
+
+    var inervalId;
+    var countsecond = 30; // 30 second
+    var extend5MinuteMore = 300; // 5 minute
+    var countDownFrom = 600; // 10 minute
+    var isTimeExtendMode = false;
+    var lastCheckTimeSlot = new Date().getTime();
+
+    function startCountDown(selector) {
+        inervalId = window.setInterval('updateClock("' + selector + '");', 1000);
+    }
+
+    function formatNumber(number) {
+        if (number < 10) {
+            return "0" + number;
+        }
+        return "" + number;
+    }
+
+    function updateClock(selector) {
+        if (countDownFrom <= 0 && isTimeExtendMode === false) {
+            showDelayPopup();
+            return;
+        } else if (countDownFrom <= 0) {
+            hideDialog('newpayment');
+            hideDialog('delayclock');
+            window.clearInterval(inervalId);
+            cancelbooking();
+            return;
+        }
+        var minute = parseInt(countDownFrom / 60);
+        var second = countDownFrom % 60;
+        $(selector).html(formatNumber(minute) + ":" + formatNumber(second));
+
+        if (countDownFrom <= 0) {
+            window.clearInterval(inervalId);
+        }
+        countDownFrom -= 1;
+    }
+
+    function showDelayPopup() {
+        showDialog('delayclock');
+        countDownFrom = countsecond;
+        isTimeExtendMode = true;
+    }
+
+    function dateDiff(start, end) {
+        var days = (end.getTime() - start.getTime()) / 1000 / 60;
+        return days;
+    }
+
+    function continueCheckout() {
+        var policy = $("#hdfPolicy").val();
+        var cncelHour = $("#hdfCancelHour").val();
+        var percent = $("#hdfCancelPercent").val();
+        hideDialog('selectservice');
+        if (policy > 0) {
+            var dateNow = new Date();
+            var endDate = new Date($("#hdfCurrentDate").val());
+            var total = dateDiff(dateNow, endDate);
+            var canceltime = cncelHour * 60;
+            if (total <= canceltime) {
+                $(".cancellationbox").css({ 'background-color': '#FF7F7F' })
+            } else {
+                $(".cancellationbox").css({ 'background-color': '#FEFBC7' })
+            }
+
+            $("#cancelhour").html(cncelHour);
+            if (policy == 1) {
+                $('#policyType').html(cncelHour);
+            } else if (policy == 2) {
+                $('#policyType').html(cncelHour);
+            } else if (policy == 3) {
+                $('#policyType').html(cncelHour);
+                $("#returnpercent").html(percent);
+                if (cncelHour == '0') {
+                    $('#policyType').html("anytime");
+                    $("#cancelhour").html("anytime");
+                }
+                if (percent == '0') {
+                    percent = "100";
+                } else if (percent == "25") {
+                    percent = "75";
+                } else if (percent == "50") {
+                    percent = "50";
+                } else if (percent == "75") {
+                    percent = "25";
+                }
+                $("#returnpercent").html(percent + "%");
+            }
+            setTimeout("showDialog('cancellationpopup')", 700);
+
+        } else { checkout(); }
+    }
+
+    function checkout() {
+        checkTimeSlot(checkoutHandle);
+    }
+
+    function checkTimeSlot(callbackSuccess) {
+        //lastCheckTimeSlot = new Date().getTime();
+        //var selected = document.getElementById('servicetype');
+        //var seviceId = selected.options[selected.selectedIndex].value;
+        //var employeeId = $("#servicetype option:selected").attr('employeeid');
+        //var calendar = document.getElementById('username');
+        //var calendarId = calendar.options[calendar.selectedIndex].value;
+        //var startDate = new Date($("#hdfCurrentDate").val());
+        //var expectedDate = $.fullCalendar.formatDate(startDate, "yy/MM/dd hh:mm tt");
+        //var packageId = $("#activepackageId").val();
+        //var param = "serviceId=" + seviceId + "&employeeId=" + employeeId + "&calendarId=" + calendarId + "&startDate=" + expectedDate + "&packageId=" + packageId;
+        //commonGetAjax("CompanyProfile", "CheckTimeSlot", param,
+        //    function (result) {
+        //        if (result == false) {
+        //            showAlertMessage("it looks like this time has already been booked. please refresh the page and select a different employee or time.", reloadPage);
+
+        //        } else {
+        //            callbackSuccess();
+        //        }
+
+        //    },
+        //    setError);
+
+        callbackSuccess();
+    }
+
+    function checkoutHandle() {
+        loaddataCheckout();
+        isTimeExtendMode = false;
+        countDownFrom = 600; //10 minute
+        window.clearInterval(inervalId);
+        startCountDown('.countdownclock');
+    }
+
+    function loaddataCheckout() {
+        var classSchedulerID = $("#hdfclassSchedulerId").val();
+        var calendarId = $("#username option:selected").val();
+        var starDate = $("#hdfCurrentDate").val();
+        $.get("/Paypal/GetDataCheckoutForClass?nocache=" + getunixtime(), { classSchedulerId: classSchedulerID, calendarId: calendarId, startDate: starDate },
+           function (data) {
+               if (data.content != '') {
+                   hideDialog('cancellationpopup');
+                   $('#newpayment').html(data.content);
+                   $('#cbemail').checkBox({ addVisualElement: false });
+                   $('#cbsms').checkBox({ addVisualElement: false });
+                   setTimeout("showDialog('newpayment')", 500);
+               }
+           });
+    }
+
+</script>

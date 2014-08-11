@@ -72,7 +72,7 @@ else
         <div class="listTimeSlots">
             @foreach (var timeSlot in Model.TimeSlots)
             {
-                var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categotyId = ViewBag.CategoryId, book = true });
+                var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
                 if (Model.IsRederect)
                 {
                     url = "/book" + url;
@@ -82,7 +82,7 @@ else
 
             @if (Model.IsShowMore)
             {
-                var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId), categotyId = ViewBag.CategoryId });
+                var url = Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.CompanyProfileId), categoryId = ViewBag.CategoryId });
                 if (Model.IsRederect)
                 {
                     url = "/book" + url;

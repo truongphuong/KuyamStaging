@@ -137,7 +137,7 @@ function showDialog(dialogid, btnCloseid) {
     $('#lightBox').css('opacity', '0.6').fadeIn(400);
     $('#' + dialogid).fadeIn(400);
     if (typeof btnCloseid != 'undefined') {
-        $('#' + dialogid + ' .' + btnCloseid).click(function () {
+        $('#' + dialogid + ' .' + btnCloseid).click(function () {           
             hideDialog(dialogid);
         });
     }

@@ -110,16 +110,50 @@
                 showDialog('signuppopup', 'btnCloseloginPopup');
                 return false;
             }
+
+            showIconLoading();
             $("#gettheoffer").html("");
-            $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+this.id + "&nocache=" + getunixtime());
+            $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+ this.id + "&nocache=" + getunixtime(),
+            function (e) {
+                $("#tabsgettheoffer").tabs();
+                var id = "#" + $(this).attr("for");
+                $('#gettheoffer').appendTo(id);
+                $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
+                $('#gettheoffer').css('z-index', '1000');
+                $('#gettheoffer').fadeIn(200);
+                hideIconLoading();
+            });        
+            return false;
+        });
+    });
+
+    function showGetOfferPopup(id)
+    {
+        var pTop=($(window).height() - $('#gettheoffer').height())/2;
+        var pLeft=($(window).width() - $('#gettheoffer').width())/2;
+        $('#gettheoffer').css({top: pTop, left: pLeft});
+
+        @*var isLogin = @Request.IsAuthenticated.ToString().ToLower();*@
+        //if (!isLogin) {
+        //    $('.loginError').hide();
+        //    $('#loginpopup').hide();
+        //    showDialog('signuppopup', 'btnCloseloginPopup');
+        //    return false;
+        //}
+        showIconLoading();
+        $("#gettheoffer").html("");
+        $("#gettheoffer").load("/company/LoadOfferPopup/?companyEventId="+ id + "&nocache=" + getunixtime(),
+        function (e) {
+            $("#tabsgettheoffer").tabs();
             var id = "#" + $(this).attr("for");
             $('#gettheoffer').appendTo(id);
             $('#lightBox').css({'opacity': '0.3','z-index':'999'}).fadeIn(200);
             $('#gettheoffer').css('z-index', '1000');
             $('#gettheoffer').fadeIn(200);
-            return false;
-        });
-    });
+            hideIconLoading();
+        });        
+        return false;
+    }
 
     function addfavarites() {
         if ('@(Request.IsAuthenticated?"1":"0")' == '0') {
@@ -353,10 +387,11 @@
                             @if (profile.CompanyEvents.Any(x => x.Event.StartDate.Value.AddDays(-3) <= pstNowTime && x.Event.EndDate >= pstNowTime.AddDays(-1)))
                             {
                                 var companyEvent = profile.CompanyEvents.Where(x => x.Event.StartDate.Value.AddDays(-3) <= pstNowTime && x.Event.EndDate >= pstNowTime.AddDays(-1)).First();
-                                if (companyEvent.CompanyServiceEvents.Any())
+                                if ((profile.HasClassBooking && companyEvent.CompanyServiceEvents.Any(x => x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ClassType))
+                                    || (companyEvent.CompanyServiceEvents.Any(x => x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ServiceType)))
                                 {
                                     <div class="btnGetTheOffer1" id="@companyEvent.CompanyEventID">
-                                        <img style="cursor:pointer" src="../images/GetTheOffer.png?v=1" />
+                                        <img style="cursor:pointer" src="~/images/GetTheOffer.png?v=1" />
                                     </div>
                                 }
 
@@ -386,7 +421,7 @@
                 </div>
             </div>
             <div class="profileschedulecol2">
-                <a href="Package" title="package offers" class="packageoffer">package offers</a>
+                <a href="@(Model.IsBookDirect ? "package" : Url.RouteUrl("package", new { seName = profile.GetSeName(Model.ProfileId) }))" title="package offers" class="packageoffer">package offers</a>
             </div>
         </div>
         <div class="clear">
@@ -400,7 +435,7 @@
         @if (profile.IsEvent.HasValue && profile.IsEvent.Value)
         {
             <div class="logo-thumbnail" style="display:block">
-                <a href="http://beautify-la.com/" target="_blank"><img alt="thumbnail logo" src="../images/thumbnail-logo.jpg" /></a>
+                <a href="http://beautify-la.com/" target="_blank"><img alt="thumbnail logo" src="~/images/thumbnail-logo.jpg" /></a>
             </div>
         }
         <div class="clear4">
@@ -442,38 +477,41 @@
 </div>
 <div class="profilemntab">
     <div class="avaitab">
-        <a href="@(Model.IsBookDirect ? "availability" : Url.RouteUrl("Availability", new { seName = profile.GetSeName(Model.ProfileId) }) )" title="availability" @((!Request.RawUrl.TrimStart('/').ToLower().Contains("/") || Request.RawUrl.ToLower().Contains("availability")) ? "class=tabactive" : "")>
+        <a href="@(Model.IsBookDirect ? "availability" : Url.RouteUrl("Availability", new { seName = profile.GetSeName(Model.ProfileId) }) )" title="availability" @((!Request.RawUrl.TrimStart('/').ToLower().Contains("/") || Request.RawUrl.ToLower().Contains("/availability")) ? "class=tabactive" : "")>
             <span class="profileltab">
             </span><span class="profilectab">appointment </span><span class="profilertab"></span>
         </a>
     </div>
-    @if (profile.IsClass.HasValue && profile.IsClass.Value)
+    @if (profile.HasClassBooking)
     {
-        <div class="avaitab" style="display:none">
-            <a href="@Url.RouteUrl("Class", new { seName = profile.GetSeName(Model.ProfileId) })" title="class" @((!Request.RawUrl.TrimStart('/').ToLower().Contains("/") || Request.RawUrl.ToLower().Contains("class")) ? "class=tabactive" : "")>
+        var urlTest = Model.IsBookDirect ? "class" : Url.RouteUrl("Class", new { seName = profile.GetSeName(Model.ProfileId) });
+        <div class="avaitab">
+
+            <a href="@urlTest" title="class" @( Request.RawUrl.ToLower().Contains("/class") ? "class=tabactive" : "")>
+
                 <span class="profileltab">
                 </span><span class="profilectab">class</span><span class="profilertab"></span>
             </a>
         </div>
     }
     <div class="desctab">
-        <a href="@(Model.IsBookDirect ? "description" : Url.RouteUrl("description", new { seName = profile.GetSeName(Model.ProfileId) }))" title="info + map" @(Request.RawUrl.ToLower().Contains("description") ? "class=tabactive" : "")>
+        <a href="@(Model.IsBookDirect ? "description" : Url.RouteUrl("description", new { seName = profile.GetSeName(Model.ProfileId) }))" title="info + map" @(Request.RawUrl.ToLower().Contains("/description") ? "class=tabactive" : "")>
             <span class="profileltab"></span><span class="profilectab">info + map</span><span class="profilertab"></span>
         </a>
     </div>
     <div class="phototab">
-        <a href="@(Model.IsBookDirect ? "photo" : Url.RouteUrl("photo", new { seName = profile.GetSeName(Model.ProfileId) }))" title="photos" @(Request.RawUrl.ToLower().Contains("photo") ? "class=tabactive" : "")>
+        <a href="@(Model.IsBookDirect ? "photo" : Url.RouteUrl("photo", new { seName = profile.GetSeName(Model.ProfileId) }))" title="photos" @(Request.RawUrl.ToLower().Contains("/photo") ? "class=tabactive" : "")>
             <span class="profileltab"></span><span class="profilectab">photos</span><span class="profilertab"></span>
         </a>
     </div>
     <div class="userreviewtab">
-        <a href="@(Model.IsBookDirect ? "review" : Url.RouteUrl("review", new { seName = profile.GetSeName(Model.ProfileId) }))" title="reviews" @(Request.RawUrl.ToLower().Contains("review") ? "class=tabactive" : "")>
+        <a href="@(Model.IsBookDirect ? "review" : Url.RouteUrl("review", new { seName = profile.GetSeName(Model.ProfileId) }))" title="reviews" @(Request.RawUrl.ToLower().Contains("/review") ? "class=tabactive" : "")>
             <span class="profileltab">
             </span><span class="profilectab">reviews</span><span class="profilertab"></span>
         </a>
     </div>
     <div class="pkgtab">
-        <a href="@(Model.IsBookDirect ? "package" : Url.RouteUrl("package", new { seName = profile.GetSeName(Model.ProfileId) }))" title="packages" @(Request.RawUrl.ToLower().Contains("package") ? "class=tabactive" : "")>
+        <a href="@(Model.IsBookDirect ? "package" : Url.RouteUrl("package", new { seName = profile.GetSeName(Model.ProfileId) }))" title="packages" @(Request.RawUrl.ToLower().Contains("/package") ? "class=tabactive" : "")>
             <span class="profileltab">
             </span><span class="profilectab">packages</span><span class="profilertab"></span>
         </a>
@@ -489,26 +527,13 @@
         <h3>terms of use</h3>
         <a class="btnClose" href="JavaScript:void(0);" title="Close"></a>
         <div class="gettheoffertermscontent">
-            <p>Last update: September 9, 2012</p>
+            <p>Last update: May 3, 2014</p>
             <h4>User Agreement:</h4>
             <p>
-                This User Agreement (the “Agreement”) and the policies referred to herein contain the
-                complete terms and conditions that apply to your use of the appointment services (the
-                “Services”) being offered at the URL: <a href="http://www.kuyam.com" title="">http://www.kuyam.com</a> and all affiliated web sites
-                owned and operated solely by Kuyam (collectively, the “Website”). As used in this
-                Agreement, “Kuyam” refers to Kuyam Companies, Inc. and any of its subsidiaries, and
-                “User” or “you” refers to you. USE OF THE SERVICES AND THE WEBSITE
-                CONSTITUTES KNOWING ACCEPTANCE AND ACKNOWLEDGEMENT OF THIS
-                USER AGREEMENT, KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS,
-                AND KUYAM’S PRIVACY POLICY, KUYAM’S SERVICES LISTINGS, AND KUYAM’S
-                TERMS AND CONDITIONS.
-            </p>
-            <p>
-                Kuyam may modify this Agreement’s terms and conditions at any time without notice.
-                Continued use of the Services and the Kuyam Website after a change in this
-                Agreement, a change in the Privacy policy, a change in the Services Listings, or after
-                implementation of any other new policy constitutes acceptance of such change or
-                policy.
+                In view of the special pricing for the Beautify LA event,
+                all payments are nonrefundable unless written notice of cancellation is received
+                by Kuyam within 24 hours after Kuyam confirms the appointment; provided that no
+                refund will be given if the appointment is cancelled within 24 hours of the appointment time.
             </p>
         </div>
         <div class="clear"></div>

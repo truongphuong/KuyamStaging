@@ -31,7 +31,7 @@ namespace Kuyam.WebUI.Controllers
             ViewBag.IsAdminOrAgent = false;
             ViewBag.companyId = 0;
             ViewBag.CompanyName = string.Empty;
-            ViewBag.CompanyProfile = new Profile();
+            ViewBag.CompanyProfile = new ProfileCompany();
             int profileId = 0;
             try
             {
@@ -42,22 +42,30 @@ namespace Kuyam.WebUI.Controllers
             {
                 return 0;
             }
-            Profile profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(profileId != 0 ? profileId : MySession.ProfileID);
+            var profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileCompanyByID(profileId != 0 ? profileId : MySession.ProfileID);
             ViewBag.CompanyName = (profile != null ? profile.Name : string.Empty);
             ViewBag.CompanyProfile = profile;
-            profileId = profile != null ? profile.ProfileID : 0;
+
+            //profileId = profile != null ? profile.ProfileID : 0;
+
             if (profileId == 0)
                 return 0;
+
             bool isAdmin = this.AuthorizationAdmin(profileId);
             bool isAgent = this.AuthorizationAgent(profileId);
             ViewBag.IsAdmin = isAdmin;
             ViewBag.IsAgent = isAgent;
             ViewBag.IsAdminOrAgent = isAdmin || isAgent;
-            ViewBag.companyId = profileId;
-            if (MySession.CustID == profile.CustID)
-                return profileId;
-            else if (!isAdmin && !isAgent)
+
+            if (!isAdmin && !isAgent)
                 return 0;
+
+            ViewBag.companyId = profileId;
+
+            //if (MySession.CustID == profile.CustID)
+            //    return profileId;
+            //else 
+           
             return profileId;
         }
 
@@ -65,16 +73,20 @@ namespace Kuyam.WebUI.Controllers
         {
             bool isLogin = Request.IsAuthenticated;
             bool isAdmin = User.IsInRole("Admin");
-            ProfileCompany profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileCompanyByID(companyId, MySession.CustID);
-            return (isLogin && isAdmin && (profile == null) && (companyId > 0));
+            //if (isAdmin)
+            //    return isAdmin;
+            //var profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileCompanyByID(companyId, MySession.CustID);
+            return (isLogin && isAdmin && companyId > 0);
         }
 
         private bool AuthorizationAgent(int companyId)
         {
             bool isLogin = Request.IsAuthenticated;
             bool isAgent = User.IsInRole("Agent");
-            ProfileCompany profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileCompanyByID(companyId, MySession.CustID);
-            return (isLogin && isAgent && (profile == null) && (companyId > 0));
+            //if (isAgent)
+            //    return isAgent;
+            //var profile = EngineContext.Current.Resolve<CompanyProfileService>().GetProfileCompanyByID(companyId, MySession.CustID);
+            return (isLogin && isAgent && companyId > 0);
         }
 
         protected virtual ActionResult InvokeHttp404()

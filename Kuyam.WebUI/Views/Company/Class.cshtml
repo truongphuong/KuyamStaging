@@ -434,25 +434,26 @@
 
 
     $(function() {
-    
-		
+
+
         $('.groupSelectName select,.selectMinute select,#category, #service, #allcategories, #anypayment').selectmenu();
-		
+
         createtopleftscroll();
-		
-		
-		
+
+
+
         $("#pkghistorypurchase").click(function(e){
             showpopup("pkgpurchasehistorypopup");
-            $("#deletescroll").niceScroll("#pkgpcontent",{cursorborder:"",cursoropacitymin:1,cursorcolor:"#000000",boxzoom:false, cursorwidth: 14, cursorborderradius: 0}).resize();			
+            $("#deletescroll").niceScroll("#pkgpcontent",{cursorborder:"",cursoropacitymin:1,cursorcolor:"#000000",boxzoom:false, cursorwidth: 14, cursorborderradius: 0}).resize();
         });
-		
+
         $("#pkgdetail").click(function(e){
             showpopup("pkgdetailpopup");
-            $("#pkgdetailscroll").niceScroll("#pkgdetailcontent",{cursorborder:"",cursoropacitymin:1,cursorcolor:"#000000",boxzoom:false, cursorwidth: 14, cursorborderradius: 0}).resize();	
+            $("#pkgdetailscroll").niceScroll("#pkgdetailcontent",{cursorborder:"",cursoropacitymin:1,cursorcolor:"#000000",boxzoom:false, cursorwidth: 14, cursorborderradius: 0}).resize();
         });
-		
+
         $('#btnaddclasses').click(function () {
+            $('body').css("overflow", "hidden");
             $('#categoryClasses').selectmenu("enable");
             $('#service').selectmenu("enable");
             //$('#comfirmationpopup').fadeOut(400);
@@ -468,7 +469,7 @@
             $('#hdnServiceCompanyId').val('');
             $('#divErrorBox').hide();
         });
-		
+
     });
 </script>
 <style type="text/css">
@@ -485,10 +486,10 @@
                     <div class="companypackageboxtext">
                         <h1>classes</h1>
                         <div class="clear3"></div>
-                      
+
                     </div>
-                    <div class="companypackageboxbutton">
-                        <a href="#" title="add classes" id="btnaddclasses" class="btncreatepackage">add classes</a>
+                    <div class="companypackageboxbutton" style="float:none;padding-top:36px;">
+                        <a href="#" title="add classes" id="btnaddclasses">add classes</a>
                     </div>
                     <div class="clear3"></div>
                     <div class="line"></div>
@@ -508,27 +509,28 @@
                             <th width="10%"></th>
                         </tr>
                         @if (scList != null && scList.Count > 0)
-{
-    for (int i = 0; i < scList.Count; i++)
-    {
-        var classTr = i%2 == 0 ?"event":"odd";
-                        <tr class="@classTr">
-                            <td>@scList[i].ServiceName</td>
-                            <td>@scList[i].Duration</td>
-                            <td>@scList[i].Price.Value</td>
-                            <td>@scList[i].AttendeesNumber.Value</td>
-                            <td>@scList[i].FromDateTime.Value.ToString("M/d/yyyy")</td>
-                            <td>@scList[i].ToDateTime.Value.ToString("M/d/yyyy")</td>
-                            <td> <a class="lnkEdit" id="@scList[i].ServiceCompanyID" title="">edit</a> | <a class="lnkDelete" classname="@scList[i].ServiceName" classid="@scList[i].ServiceCompanyID" title="">Delete</a></td>
-                        </tr>
-    }
-}
-                       
+                        {
+                            for (int i = 0; i < scList.Count; i++)
+                            {
+                                var classTr = i % 2 == 0 ? "event" : "odd";
+                                <tr class="@classTr">
+                                    <td>@scList[i].ServiceName</td>
+                                    <td>@scList[i].Duration</td>
+                                    <td>@scList[i].Price.Value</td>
+                                    <td>@scList[i].AttendeesNumber.Value</td>
+                                    <td>@scList[i].FromDateTime.Value.ToString("M/d/yyyy")</td>
+                                    <td>@scList[i].ToDateTime.Value.ToString("M/d/yyyy")</td>
+                                    <td> <a class="lnkEdit" id="@scList[i].ServiceCompanyID" description="@scList[i].Description" title="">edit</a> | <a class="lnkDelete" classname="@scList[i].ServiceName" classid="@scList[i].ServiceCompanyID" title="">Delete</a>
+
+                                </tr>
+                            }
+                        }
+
                     </table>
                 </div>
                 <div class="clear"></div>
             </div>
-        </div>    
+        </div>
         <div class="clear">
         </div>
     </div>
@@ -544,7 +546,7 @@
 
                         @{
 
-                            <option value="-1" selected>select from categories</option>
+                            <option value="-1" selected>select a category</option>
                             foreach (Service category in categories)
                             {
                                 <option value="@category.ServiceID" serviceid="@category.ServiceID" @(ViewBag.CategoriID != null && ViewBag.CategoriID == category.ServiceID ? "selected=selected" : "")>@Kuyam.Domain.UtilityHelper.TruncateText(category.ServiceName, 25)</option>
@@ -559,13 +561,13 @@
                 <div class="clear"></div>
                 <div class="selectservice" id="serviceSelect">
                     <select name="category" id="service" class="selectservice">
-                        <option value="select from service" selected="selected">select from service</option>
+                        <option value="select a service" selected="selected">select a service</option>
                     </select>
                 </div>
                 <div class="clear"></div>
                 <div class="timeduration">
                     <div class="timedurationcol1">
-                        time duration
+                        class duration
                     </div>
                     <div class="timedurationcol2">
                         <div class="formtext">
@@ -583,7 +585,7 @@
                 <div class="clear"></div>
                 <div class="price">
                     <div class="timedurationcol1">
-                        price
+                        price per class
                     </div>
                     <div class="timedurationcol2">
 
@@ -603,7 +605,7 @@
                 <div class="clear"></div>
                 <div class="maxpeople">
                     <div class="timedurationcol1">
-                        max people per slot
+                        max people per class
                     </div>
                     <div class="timedurationcol2">
                         <div class="formtext">
@@ -667,7 +669,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="clear6"></div>
-                
+
                 <input class="btnsave" type="button" title="save" value="save">
                 <div id="divErrorBox" style="width: 292px; margin-top: 5px; color: Red;">
                     <div class="ui-state-error ui-corner-all">
@@ -680,8 +682,8 @@
                 <div class="clear6"></div>
                 <div class="clear"></div>
             </div>
-                        </div>
-                    </div>
+        </div>
+    </div>
 
     <div id="addemployeepopup" class="savechangepopup">
         <div class="contentpopup">
@@ -705,7 +707,7 @@
         </div>
     </div>
 </div>
-<div id="lightBox" class="lightBox">
+<div id="lightBox" class="lightBox lightbox1">
 </div>
 
 <script type="text/javascript">
@@ -717,7 +719,7 @@
         $('#eventStartDate, #eventEndDate').datepicker({});
 
         $('#divErrorBox').hide();
-        
+
 
         $('#categoryClasses').change(function () {
             var categoryID = $('#categoryClasses').val();
@@ -738,7 +740,7 @@
                         $('select#service').selectmenu();
                         $('#serviceSelect').attr("class", "selectservice selectserviceactive");
                     } else {
-                        $('#serviceSelect').html("<select name=\"category\" id=\"service\" class=\"selectservice selectserviceactive\"><option value=\"select from service\" selected=\"selected\">select from service</option>");
+                        $('#serviceSelect').html("<select name=\"category\" id=\"service\" class=\"selectservice selectserviceactive\"><option value=\"select a service\" selected=\"selected\">select a service</option>");
                         $('select#service').selectmenu();
                         $('#service-button').attr("aria-disabled", "true");
                         $('#serviceSelect').attr("class", "selectservice");
@@ -750,33 +752,33 @@
                 });
         });
 
-        
+
         $('.lnkEdit').click(function () {
-            $('#categoryClasses').selectmenu('disable'); 
+            $('#categoryClasses').selectmenu('disable');
             $('#service').selectmenu('disable');
-           
+
             $('#divErrorBox').hide();
-            var serviceCompanyID = $(this).attr('id');      
+            var serviceCompanyID = $(this).attr('id');
             showpopup("popupClasses");
 
             var tr = $(this).closest('tr');
             currentRow = tr;
-            $('#hdnServiceCompanyId').val($(this).attr('id'));            
-            $('#txtTimeDuration').val($.trim(tr.find('td:nth-child(2)').text()));   
+            $('#hdnServiceCompanyId').val($(this).attr('id'));
+            $('#txtTimeDuration').val($.trim(tr.find('td:nth-child(2)').text()));
             $('#txtPrice').val($.trim(tr.find('td:nth-child(3)').text()));
             $('#txtMaxPeople').val($.trim(tr.find('td:nth-child(4)').text()));
             $('#eventStartDate').val($.trim(tr.find('td:nth-child(5)').text()));
             $('#eventEndDate').val($.trim(tr.find('td:nth-child(6)').text()));
-            $('#txtDescription').val('');         
+            $('#txtDescription').val($(this).attr('description'));
 
         });
 
         $('.lnkDelete').click(function () {
-            var serviceCompanyID = $(this).attr('classid');      
+            var serviceCompanyID = $(this).attr('classid');
             var className = $(this).attr('classname');
             var parameters = { serviceCompanyID: serviceCompanyID, profileId:companyId};
 
-            var result = confirm("Want to delete " + className + "?");
+            var result = confirm("All schedules related to this class will be deleted. Are you sure you want to delete " + className + " class?");
             if (result==false) {
                 return ;
             }
@@ -787,11 +789,11 @@
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(parameters),
                     dataType: 'html',
-                    url: '/company/DeleteServiceCompany/'
+                    url: '/company/DeleteClass/'
                 })
                 .success(function (result) {
                     if (result=='false') {
-                        alert("can not delete this service");
+                        alert("can not delete this class");
                         return false;
                     }else{
                         window.location.href = '/company/class/?companyId='+companyId;
@@ -803,8 +805,12 @@
                 });
         });
 
+        var clicked =false;
+
+        var clicked =false;
 
         $('.btnsave').click(function () {
+            if(clicked)return;
             var id= $('#hdnServiceCompanyId').val();
             if(id != null && id!= 0)
             {
@@ -821,29 +827,29 @@
             var end = $('#eventEndDate').val();
             var err = "";
             if (category == '' || category == '-1') {
-                err = err + 'select category first.<br/>';
+                err = err + 'Please select category.<br/>';
             } else {
 
-                if (serviceID == '' || serviceID == 'select from service') {
+                if (serviceID == '' || serviceID == 'select a service') {
                     err = err + 'please select service.<br/>';
                 } else {
                     if (timeDuration == '' || timeDuration <= 0) {
-                        err = err + 'time duration is required.<br/>';
+                        err = err + 'class duration is required.<br/>';
                     }
                     if (timeDuration >= 2147483647) {
-                        err = err + 'invalid time duration value.<br/>';
+                        err = err + 'invalid class duration value.<br/>';
                     }
                     if (maxPeople >= 2147483647) {
                         err = err + 'invalid max people value.<br/>';
                     }
                     if (price == '' || price <= 0) {
-                        err = err + 'price is required.<br/>';
+                        err = err + 'price per class is required.<br/>';
                     }
                     if (price >= 2147483647) {
-                        err = err + 'invalid price value.<br/>';
+                        err = err + 'invalid price per class value.<br/>';
                     }
                     if (maxPeople == '' || maxPeople <= 0) {
-                        err = err + 'max people per slot is required.<br/>';
+                        err = err + 'max people per class is required.<br/>';
                     }
                     if (description == "150 max characters") {
                         description = '';
@@ -859,6 +865,8 @@
             if (err == '') {
                 $('#divErrorBox').hide();
                 var parameters = { serviceID: serviceID, time: timeDuration, price: price, maxPeople: maxPeople, description: description, start: start, end: end , profileid: companyId  };
+                window.isUseDefaultAjaxHandle=true;
+                clicked =true;
                 $.ajax(
                 {
                     type: 'POST',
@@ -868,11 +876,12 @@
                     url: '/company/AddClass/'
                 })
                 .success(function (result) {
+                    $("#popupClasses").hide();
                     window.location.href = '/company/class/?companyId=' + companyId;
                 })
 
                 .error(function (error) {
-
+                    clicked =false;
                 });
             } else {
                 $('#divErrorBox').show();
@@ -891,7 +900,7 @@
             window.location.href = "/CompanyAppointment/";
         }
 
-        
+
         $(document).ready(function () {
             $("#ui-accordion-accordion-header-2").click(function () {
                 if (window.location.href.indexOf("calendarview") == -1) {
@@ -903,7 +912,7 @@
 
     });
 
-    function updateService(id) {            
+    function updateService(id) {
 
         var timeDuration = $('#txtTimeDuration').val();
         var price = $('#txtPrice').val();
@@ -913,38 +922,38 @@
         var start = $('#eventStartDate').val();
         var end = $('#eventEndDate').val();
         var err = "";
-        
 
-            
-                if (timeDuration == '' || timeDuration <= 0) {
-                    err = err + 'time duration is required.<br/>';
-                }
-                if (timeDuration >= 2147483647) {
-                    err = err + 'invalid time duration value.<br/>';
-                }
-                if (maxPeople >= 2147483647) {
-                    err = err + 'invalid max people value.<br/>';
-                }
-                if (price == '' || price <= 0) {
-                    err = err + 'price is required.<br/>';
-                }
-                if (price >= 2147483647) {
-                    err = err + 'invalid price value.<br/>';
-                }
-                if (maxPeople == '' || maxPeople <= 0) {
-                    err = err + 'max people per slot are required.<br/>';
-                }
-                if (description == "150 max characters") {
-                    description = '';
-                }
 
-                if (start =='start date' || end == 'end date' ||new Date(end) < new Date(start)) {
-                    alert('please input correct event date');
-                    return;
-                }
 
-            
-        
+        if (timeDuration == '' || timeDuration <= 0) {
+            err = err + 'class duration is required.<br/>';
+        }
+        if (timeDuration >= 2147483647) {
+            err = err + 'invalid class duration value.<br/>';
+        }
+        if (maxPeople >= 2147483647) {
+            err = err + 'invalid max people value.<br/>';
+        }
+        if (price == '' || price <= 0) {
+            err = err + 'price per class is required.<br/>';
+        }
+        if (price >= 2147483647) {
+            err = err + 'invalid price per class value.<br/>';
+        }
+        if (maxPeople == '' || maxPeople <= 0) {
+            err = err + 'max people per class are required.<br/>';
+        }
+        if (description == "150 max characters") {
+            description = '';
+        }
+
+        if (start =='start date' || end == 'end date' ||new Date(end) < new Date(start)) {
+            alert('please input correct event date');
+            return;
+        }
+
+
+
         if (err == '') {
             $('#divErrorBox').hide();
             var parameters = { serviceCompanyID: id, time: timeDuration, price: price, maxPeople: maxPeople, description: description, start: start, end: end };
@@ -966,9 +975,9 @@
                     $('#divErrorBox').show();
                     $('#errorlist').html('had appointments. can not edit class!');
                 }
-                
+
             })
-            .error(function (error) { 
+            .error(function (error) {
 
             });
         } else {

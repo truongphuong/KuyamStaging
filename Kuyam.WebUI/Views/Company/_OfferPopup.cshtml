@@ -1,99 +1,91 @@
 ﻿@using Kuyam.Database;
 @using Kuyam.Domain;
-
+@model Kuyam.WebUI.Models.Offers.OfferModel
 @{
-    Event eventItem = ViewBag.Event;
-    List<CompanyServiceEvent> cseList = ViewBag.CompanyServices;
-    var company = ViewBag.Company;
-    string url = ViewBag.Url;    
-}    
-
+    //Event eventItem = ViewBag.Event;
+    //List<CompanyServiceEvent> cseList = ViewBag.CompanyServices;
+    //var company = ViewBag.Company;
+    //string url = ViewBag.Url;
+}
 <script src="/Scripts/jquery.ui.tabs.js"></script>
-<script>
-    $(function () {
-        $("#tabsgettheoffer").tabs();
-    });
-</script>
-
-
 <div class="contentPopup">
-        <div class="gettheofferheader">
-            <a class="logo" href="" title=""><img alt="" src="~/Images/gettheoffer_logo.png" /></a>
-           
-            <a class="btnClose" id="btnCloseOfferPopup" title="Close"></a>
-            @if (eventItem != null)
-{
-    <div class="event" title="@eventItem.Name">
-        @UtilityHelper.TruncateAtWord(eventItem.Name, 18)
-        <br />
-        @if (eventItem.StartDate.Value.Month == eventItem.EndDate.Value.Month)
-{
-    <span>@eventItem.StartDate.Value.ToString("MMM dd")  - @eventItem.EndDate.Value.ToString("dd, yyyy") </span>
-}
-else
-{
- <span>@eventItem.StartDate.Value.ToString("MMM dd")  - @eventItem.EndDate.Value.ToString("MMM dd, yyyy") </span>
-}
-        
+    <div class="gettheofferheader">
+        <a class="logo" href="" title=""><img alt="" src="~/Images/gettheoffer_logo.png" /></a>
+
+        <a class="btnClose" id="btnCloseOfferPopup" title="Close"></a>
+        @if (Model.Event != null)
+        {
+            <div class="event" title="@Model.Event.Name">
+                @UtilityHelper.TruncateAtWord(Model.Event.Name, 18)
+                <br />
+                @if (Model.Event.StartDate.Value.Month == Model.Event.EndDate.Value.Month)
+                {
+                    <span>@Model.Event.StartDate.Value.ToString("MMM dd")  - @Model.Event.EndDate.Value.ToString("dd") </span>
+                }
+                else
+                {
+                    <span>@Model.Event.StartDate.Value.ToString("MMM dd")  - @Model.Event.EndDate.Value.ToString("MMM dd") </span>
+                }
+
+            </div>
+        }
+
+        <div class="clear"></div>
     </div>
-}
-           
-            <div class="clear"></div>
-        </div>
-    @if( cseList != null && cseList.Count > 0 )
-    {        
+    @if (Model.Offers != null && Model.Offers.Count > 0)
+    {
         <div id="tabsgettheoffer">
             <ul class="gettheoffertab">
-                @for (int i = 0; i < cseList.Count; i++)
+                @for (int i = 0; i < Model.Offers.Count; i++)
                 {
-                    var className = i == 0 ? "active" : ""; 
+                    var className = i == 0 ? "active" : "";
                     <li class="@className">
                         <a href="#tabs-@i">
-                            <i>@cseList[i].NewPrice.Value.ToString("c")</i>
-                            <span title="@cseList[i].ServiceCompany.Service.ServiceName"> @UtilityHelper.TruncateAtWord(cseList[i].ServiceCompany.Service.ServiceName,10) </span>
-                                <br />
-                            <span title="@cseList[i].ServiceCompany.Service.ParentName">
-                                @UtilityHelper.TruncateAtWord(cseList[i].ServiceCompany.Service.ParentName, 10)
-                               </span>
-</a>
+                            <i>@Model.Offers[i].NewPrice.ToString("c")</i>
+                            <span title="@Model.Offers[i].ServiceName"> @UtilityHelper.TruncateAtWord(Model.Offers[i].ServiceName, 10) </span>
+                            <br />
+                            <span title="@Model.Offers[i].CategoryName">
+                                @UtilityHelper.TruncateAtWord(Model.Offers[i].CategoryName, 10)
+                            </span>
+                        </a>
                     </li>
-                    
-                }                
+
+                }
             </ul>
 
-            @for (int i = 0; i < cseList.Count; i++)
+            @for (int i = 0; i < Model.Offers.Count; i++)
             {
-                double percent = (double)(((cseList[i].ServiceCompany.Price.Value - cseList[i].NewPrice.Value) * 100) / cseList[i].ServiceCompany.Price.Value);
+                double percent = (double)(((Model.Offers[i].OldPrice - Model.Offers[i].NewPrice) * 100) / Model.Offers[i].OldPrice);
                 string percentDisplay = Math.Round(percent, 0).ToString() + '%';
-               <div id="tabs-@i" class="scrollcontent">
-                <div class="tabelstyle">
-                    <div class="tabelrow">
-                        <div class="tablecell gettheofferleft">
-                            <div class="setScroll">
-                                <img class="gettheofferdescription" alt="" src="~/Images/gettheoffer_description.png" />
-                                <p>@cseList[i].ServiceCompany.Description</p>
-                            </div>                        
-                        </div>
-                        <div class="tablecell gettheofferright">
-                            <h3>the offer</h3>
-                            <h4><del class="oldprice">$@cseList[i].ServiceCompany.Price</del> <span class="newprice">$@cseList[i].NewPrice.Value</span> <span class="saleoff">@percentDisplay off</span></h4>
-                            <input type="button" class="btnpurchasenow" servicecompanyid="@cseList[i].ServiceCompany.ServiceCompanyID" value="check for availability" />
-                            <p>promotional offers subject to <a class="linkterms" href="#" title="">terms</a></p>
+                <div id="tabs-@i" class="scrollcontent">
+                    <div class="tabelstyle">
+                        <div class="tabelrow">
+                            <div class="tablecell gettheofferright">
+                                <h3>the offer</h3>
+                                <h4><del class="oldprice">$@Model.Offers[i].OldPrice</del> <span class="newprice">@Model.Offers[i].NewPrice.ToString("c")</span> <span class="saleoff">@percentDisplay off</span></h4>
+                                <input type="button" class="btnpurchasenow" iclass="@Model.Offers[i].IsClass" servicecompanyid="@Model.Offers[i].ServiceCompanyID" value="check for availability" />
+                                <p>promotional offers subject to <a class="linkterms" href="#" title="">terms</a></p>
+                            </div>
+                            <div class="tablecell gettheofferleft">
+                                <div class="setScroll">
+                                    <img class="gettheofferdescription" alt="" src="~/Images/gettheoffer_description.png" />
+                                    <p>@Model.Offers[i].Description</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            
-            
-            }           
+
+
+            }
 
         </div>
-      
+
     }
-    
-      <div class="clear"></div>
-    </div>
+
+    <div class="clear"></div>
+</div>
 
 
 <script>
@@ -110,10 +102,16 @@ else
 
         $('.btnpurchasenow').click(function (e) {
             //$('#comfirmationpopup').fadeOut(400);
-            var serviceCompanyId = $(this).attr('servicecompanyid');          
-            window.location.href = '@url' + "?serviceId=" + serviceCompanyId;
+            var serviceCompanyId = $(this).attr('servicecompanyid');
+            var iclass = $(this).attr("iclass");
+            var url = "/availability" + '@Model.SlugName' + "?serviceId=" + serviceCompanyId;
+            if (iclass) {
+                url = "/class" + '@Model.SlugName' + "?serviceId=" + serviceCompanyId;
+            }
+
+            window.location.href = url;
         });
     });
-    
-   
+
+
 </script>

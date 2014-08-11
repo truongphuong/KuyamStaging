@@ -58,3 +58,5 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Debug\Entit
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\obj\Debug\Kuyam.Repository.csprojResolveAssemblyReference.cache
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\obj\Debug\Kuyam.Repository.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\obj\Debug\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Debug\EntityFramework.SqlServer.xml

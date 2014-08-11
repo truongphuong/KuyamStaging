@@ -6,7 +6,21 @@ namespace Kuyam.Database
 {
     public class TimeSlots
     {
-        public static int NumberTimeSlots = 3;
+        public int NumberTimeSlots
+        {
+            get
+            {
+                if (IsClass)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 3;
+                }
+            }
+
+        }
 
         public TimeSlots()
         {
@@ -14,17 +28,18 @@ namespace Kuyam.Database
             DayAvaiable = "today";
         }
 
-        public List<TimeSlot> CompanyTimeSlots { get; set; } 
+        public List<TimeSlot> CompanyTimeSlots { get; set; }
         public bool IsShowMore { get; set; }
         public int CompanyProfileId { get; set; }
+        public int CompanyTypeID { get; set; }
         public bool IsAvailableToday { get; private set; }
         public string DayAvaiable { get; set; }
         public List<CompanyHour> CompanyHours { get; set; }
-        public CompanyProfileSearch ProfileCompany { get; set; }
         public List<ServiceTimeDTO> CompanyGenreralTimes { get; set; }
         public bool IsRederect { get; set; }
-        
+
         public bool IsClass { get; set; }
+
         public void SetTimeSlots(List<TimeSlot> timeSlots, DateTime currentTime)
         {
             if (timeSlots != null && timeSlots.Any())
@@ -39,15 +54,11 @@ namespace Kuyam.Database
                     }
                     else if (groupByDate.Key == currentTime.Date.AddDays(1))
                     {
-                        DayAvaiable = "available tomorrow";
+                        DayAvaiable = "available " + groupByDate.Key.ToString("ddd, MMM dd");// "available tomorrow";
                     }
                     else
                     {
                         DayAvaiable = "available " + groupByDate.Key.ToString("ddd, MMM dd");
-                    }
-                    if(IsClass)
-                    {
-                        NumberTimeSlots = 1;
                     }
 
                     if (groupByDate.Count() > NumberTimeSlots)

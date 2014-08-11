@@ -6,6 +6,7 @@
     ViewBag.Title = "SchedulerForClasses";
     Layout = "~/Views/Shared/_CompanyAdmin.cshtml";
     var instructorId = 0;
+    var classSummary = string.Empty;
     if (ViewBag.InstructorId != null)
     {
         instructorId = (int)ViewBag.InstructorId;
@@ -167,9 +168,9 @@
                 </div>
                 <div class="listservices">
                     <div class="listservicescol1">
-                        <div class="formaddlistservices1">
+                        <div class="formaddlistservices1" style="height:385px;">
                         </div>
-                        <div class="formaddlistservices">
+                        <div class="formaddlistservices" style="height:385px;">
                             <div class="clear10"> </div>
                             <div class="selectcat">
                                 <select name="class" id="classList" class="selectcatagory">
@@ -179,7 +180,13 @@
                                         {
                                             foreach (ServiceCompany item in ViewBag.ServiceCompanys)
                                             {
+                                                if(item.ServiceCompanyID == classId)
+                                                {
+                                                    classSummary = string.Format("{0}, {1} min, ${2}, {3} person", UtilityHelper.TruncateAtWord(item.Service.ServiceName, 25), item.Duration, item.Price, item.AttendeesNumber);
+                                                }
+                                                
                                                 <option @(item.ServiceCompanyID == classId ? "selected=selected" : "") class="employeeName" value="@item.ServiceCompanyID" title="@item.Service.ServiceName">@string.Format("{0}, {1} min, ${2}, {3} person", UtilityHelper.TruncateAtWord(item.Service.ServiceName, 25), item.Duration, item.Price, item.AttendeesNumber)</option>
+                                        
                                             }
                                         }
                                     }
@@ -199,11 +206,11 @@
                                                 CompanyEmployee obj = ViewBag.EmployeeList[i];
                                                 if (instructorId > 0 && obj.EmployeeID == instructorId)
                                                 {
-                                                    <option class="employeeName" value="@obj.EmployeeID" selected="selected" title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
+                                    <option class="employeeName" value="@obj.EmployeeID" selected="selected" title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
                                                 }
                                                 else
                                                 {
-                                                    <option class="employeeName" value="@obj.EmployeeID" title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
+                                    <option class="employeeName" value="@obj.EmployeeID" title="@obj.EmployeeName">@UtilityHelper.TruncateAtWord(obj.EmployeeName, 30)</option>
                                                 }
 
 
@@ -222,20 +229,20 @@
                                     </div>
                                     <div class="clear">
                                     </div>
-                                    
-                                   
+
+
                                     @{
                                         DateTime now = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
 
-                                        <div class="dayofweek">
-                                            <a href="javascript:void(0);" id="@now.Day" addday="@now.DayOfWeek.ToString()" title="@now.Day">@now.ToString("ddd").ToLower()</a>
-                                            <a href="javascript:void(0);" id="@now.AddDays(1).Day" addday="@now.AddDays(1).DayOfWeek.ToString()" title="@now.AddDays(1).Day">@now.AddDays(1).ToString("ddd").ToLower()</a>
-                                            <a href="javascript:void(0);" id="@now.AddDays(2).Day" addday="@now.AddDays(2).DayOfWeek.ToString()" title="@now.AddDays(2).Day">@now.AddDays(2).ToString("ddd").ToLower()</a>
-                                            <a href="javascript:void(0);" id="@now.AddDays(3).Day" addday="@now.AddDays(3).DayOfWeek.ToString()" title="@now.AddDays(3).Day">@now.AddDays(3).ToString("ddd").ToLower()</a>
-                                            <a href="javascript:void(0);" id="@now.AddDays(4).Day" addday="@now.AddDays(4).DayOfWeek.ToString()" title="@now.AddDays(4).Day">@now.AddDays(4).ToString("ddd").ToLower()</a>
-                                            <a href="javascript:void(0);" id="@now.AddDays(5).Day" addday="@now.AddDays(5).DayOfWeek.ToString()" title="@now.AddDays(5).Day">@now.AddDays(5).ToString("ddd").ToLower()</a>
-                                            <a href="javascript:void(0);" id="@now.AddDays(6).Day" addday="@now.AddDays(6).DayOfWeek.ToString()" title="@now.AddDays(6).Day">@now.AddDays(6).ToString("ddd").ToLower()</a>
-                                        </div>
+                                    <div class="dayofweek">
+                                        <a href="javascript:void(0);" id="@now.Day" addday="@now.DayOfWeek.ToString()" title="@now.Day">@now.ToString("ddd").ToLower()</a>
+                                        <a href="javascript:void(0);" id="@now.AddDays(1).Day" addday="@now.AddDays(1).DayOfWeek.ToString()" title="@now.AddDays(1).Day">@now.AddDays(1).ToString("ddd").ToLower()</a>
+                                        <a href="javascript:void(0);" id="@now.AddDays(2).Day" addday="@now.AddDays(2).DayOfWeek.ToString()" title="@now.AddDays(2).Day">@now.AddDays(2).ToString("ddd").ToLower()</a>
+                                        <a href="javascript:void(0);" id="@now.AddDays(3).Day" addday="@now.AddDays(3).DayOfWeek.ToString()" title="@now.AddDays(3).Day">@now.AddDays(3).ToString("ddd").ToLower()</a>
+                                        <a href="javascript:void(0);" id="@now.AddDays(4).Day" addday="@now.AddDays(4).DayOfWeek.ToString()" title="@now.AddDays(4).Day">@now.AddDays(4).ToString("ddd").ToLower()</a>
+                                        <a href="javascript:void(0);" id="@now.AddDays(5).Day" addday="@now.AddDays(5).DayOfWeek.ToString()" title="@now.AddDays(5).Day">@now.AddDays(5).ToString("ddd").ToLower()</a>
+                                        <a href="javascript:void(0);" id="@now.AddDays(6).Day" addday="@now.AddDays(6).DayOfWeek.ToString()" title="@now.AddDays(6).Day">@now.AddDays(6).ToString("ddd").ToLower()</a>
+                                    </div>
                                     }
                                 </div>
                                 <div class="clear">
@@ -251,12 +258,17 @@
                                             </div>
                                             <div class="rtxtaddhours">
                                             </div>
-                                        </div>                                    
+                                        </div>
 
                                     </div>
                                 </div>
                             </div>
                             <div class="clear">
+                            </div>
+                            <div class="classSummary">
+                                <div class="classSummaryTitle">class summary</div>
+                                <hr />
+                                <p>@classSummary</p>
                             </div>
                             <div id="divErrorBox" style="width: 292px; margin-top: 20px; color: Red;">
                                 <div class="ui-state-error ui-corner-all">
@@ -276,21 +288,21 @@
                         <input type="button" value="delete" class="btncancel" title="Delete" />
                     </div>
                     <div class="listservicescol3">
-                        <div class="boxadd1">
+                        <div class="boxadd1" style="height:385px;">
                         </div>
-                        <div class="boxadd">
+                        <div class="boxadd" style="height:385px;">
                             <ul>
                                 @if (scList.Count > 0)
-{
-    foreach (var sc in scList)
-    {
-        <li class="serviceCompany" classSchedulerId="@sc.ID">
-            @sc.FromHour - @sc.ToHour  @Enum.GetName(typeof(Types.Day), sc.DayOfWeek)
-        </li>
-    }
-}
-else
-{
+                                {
+                                    foreach (var sc in scList)
+                                    {
+                                        <li class="serviceCompany" classschedulerid="@sc.ID">
+                                            @DateTime.Today.Add(sc.FromHour).ToString("hh:mm tt")  - @DateTime.Today.Add(sc.ToHour).ToString("hh:mm tt")  @Enum.GetName(typeof(Types.Day), sc.DayOfWeek)
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
                                     <div class="noservicesadded">
                                         (no class scheduler added yet)
                                     </div>

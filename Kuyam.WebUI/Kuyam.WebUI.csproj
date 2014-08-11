@@ -45,9 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,10 +65,11 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=3.1.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -148,9 +149,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PushSharp.2.0.4.0\lib\net40\PushSharp.WindowsPhone.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.0.8.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+    <Reference Include="RazorEngine, Version=2.1.4039.23635, Culture=neutral, PublicKeyToken=1f722ed313f51831, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Kuyam.Bin\RazorEngine.dll</HintPath>
+      <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -168,9 +169,9 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -239,6 +240,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SitemapLoader .cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\API\APIAreaRegistration.cs" />
+    <Compile Include="Areas\API\Controllers\BeautifyController.cs" />
+    <Compile Include="Areas\API\Models\BeatifyInputParamModel.cs" />
+    <Compile Include="Areas\API\Models\CategoryModel.cs" />
+    <Compile Include="Areas\API\Models\CompanyHourDTO.cs" />
+    <Compile Include="Areas\API\Models\CompanyMediaDTO.cs" />
+    <Compile Include="Areas\API\Models\CompanyProfilesModel.cs" />
+    <Compile Include="Areas\API\Models\EmployeeHourDTO.cs" />
+    <Compile Include="Areas\API\Models\Offers\CompanyServiceEventDTO.cs" />
+    <Compile Include="Areas\API\Models\Offers\EventDTO.cs" />
+    <Compile Include="Areas\API\Models\Offers\OfferModel.cs" />
+    <Compile Include="Areas\API\Models\TimeSlotsDTO.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminLandingPageController.cs" />
@@ -289,6 +302,7 @@
     <Compile Include="Helpers\GoogleHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\iCalHelper.cs" />
+    <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Mapper\Mapper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AdminModels.cs" />
@@ -317,6 +331,9 @@
     <Compile Include="Models\MiscModels.cs" />
     <Compile Include="Models\MyApp.cs" />
     <Compile Include="Models\MySession.cs" />
+    <Compile Include="Models\Offers\CompanyServiceEventDTO.cs" />
+    <Compile Include="Models\Offers\EventDTO.cs" />
+    <Compile Include="Models\Offers\OfferModel.cs" />
     <Compile Include="Models\ProfileCompaniesModels.cs" />
     <Compile Include="Models\ProfileCompanyRating.cs" />
     <Compile Include="Models\ProfileModels.cs" />
@@ -364,8 +381,7 @@
     <Compile Include="validation\CustomValidation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Dashboard.css" />
-    <Content Include="Content\faq.xml" />
+    <Content Include="Content\base.css" />
     <Content Include="Content\files\ExportImport\error.txt" />
     <Content Include="Content\gallery\classic-loader.gif" />
     <Content Include="Content\gallery\classic-map.png" />
@@ -373,7 +389,61 @@
     <Content Include="Content\gallery\galleria.classic.css" />
     <Content Include="Content\gallery\galleria.classic.js" />
     <Content Include="Content\gallery\galleria.classic.min.js" />
-    <Content Include="Content\HomePage.css" />
+    <Content Include="Content\general.css" />
+    <Content Include="Content\images\1.jpg" />
+    <Content Include="Content\images\2.jpg" />
+    <Content Include="Content\images\3.jpeg" />
+    <Content Include="Content\images\3.jpg" />
+    <Content Include="Content\images\4.jpg" />
+    <Content Include="Content\images\4stars.png" />
+    <Content Include="Content\images\5.jpg" />
+    <Content Include="Content\images\6.jpg" />
+    <Content Include="Content\images\7.jpg" />
+    <Content Include="Content\images\8.jpg" />
+    <Content Include="Content\images\apple-touch-icon-114x114.png" />
+    <Content Include="Content\images\apple-touch-icon-72x72.png" />
+    <Content Include="Content\images\apple-touch-icon.png" />
+    <Content Include="Content\images\btn_blog.png" />
+    <Content Include="Content\images\btn_discover.png" />
+    <Content Include="Content\images\btn_events.png" />
+    <Content Include="Content\images\business_image.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\google_badge.png" />
+    <Content Include="Content\images\google_badge1.png" />
+    <Content Include="Content\images\icons\arrow.jpg" />
+    <Content Include="Content\images\icons\gray_star.png" />
+    <Content Include="Content\images\icons\icon-list.jpg" />
+    <Content Include="Content\images\icons\icon_ business.png" />
+    <Content Include="Content\images\icons\icon_arrow.png" />
+    <Content Include="Content\images\icons\icon_blog.png" />
+    <Content Include="Content\images\icons\icon_email.png" />
+    <Content Include="Content\images\icons\icon_events.png" />
+    <Content Include="Content\images\icons\icon_facebook.png" />
+    <Content Include="Content\images\icons\icon_google.png" />
+    <Content Include="Content\images\icons\icon_instagram.png" />
+    <Content Include="Content\images\icons\icon_location.png" />
+    <Content Include="Content\images\icons\icon_phone.png" />
+    <Content Include="Content\images\icons\icon_pinterest.png" />
+    <Content Include="Content\images\icons\icon_tumblr.png" />
+    <Content Include="Content\images\icons\icon_twitter.png" />
+    <Content Include="Content\images\icons\icon_youtube.png" />
+    <Content Include="Content\images\icons\live chat.png" />
+    <Content Include="Content\images\icons\yellow_star.png" />
+    <Content Include="Content\images\itunes_badge.png" />
+    <Content Include="Content\images\itunes_badge1.png" />
+    <Content Include="Content\images\kuyam_banner_1.jpg" />
+    <Content Include="Content\images\kuyam_banner_2.jpg" />
+    <Content Include="Content\images\kuyam_banner_3.jpg" />
+    <Content Include="Content\images\laptop.png" />
+    <Content Include="Content\images\logo_kuyam.png" />
+    <Content Include="Content\images\mobile.png" />
+    <Content Include="Content\images\reuters.png" />
+    <Content Include="Content\images\sale_ribbon.png" />
+    <Content Include="Content\images\startup.png" />
+    <Content Include="Content\images\tablet.png" />
+    <Content Include="Content\images\tech.png" />
+    <Content Include="Content\images\techcrunch.png" />
+    <Content Include="Content\images\thewallstreet.png" />
     <Content Include="Content\jcarousel\jquery.jcarousel.js" />
     <Content Include="Content\jcarousel\jquery.jcarousel.min.js" />
     <Content Include="Content\jcarousel\skins\ie7\loading-small.gif" />
@@ -389,16 +459,14 @@
     <Content Include="Content\jcarousel\skins\tango\prev-horizontal.png" />
     <Content Include="Content\jcarousel\skins\tango\prev-vertical.png" />
     <Content Include="Content\jcarousel\skins\tango\skin.css" />
-    <Content Include="Content\Licenses.txt" />
+    <Content Include="Content\layout.css" />
     <Content Include="Content\masteradmin\css\style.css" />
     <Content Include="Content\masteradmin\homepage.html" />
     <Content Include="Content\masteradmin\js\admin_js.js" />
     <Content Include="Content\masteradmin\js\general.js" />
-    <Content Include="Content\PagedList.css" />
-    <Content Include="Content\personal.css" />
-    <Content Include="Content\popupgreen.css" />
     <Content Include="Content\scripts\encoder.js" />
     <Content Include="Content\scripts\login.js" />
+    <Content Include="Content\skdslider.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -422,12 +490,16 @@
     <Content Include="Content\themes\base\jquery.ui.core.css" />
     <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
     <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.menu.css" />
     <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
     <Content Include="Content\themes\base\jquery.ui.resizable.css" />
     <Content Include="Content\themes\base\jquery.ui.selectable.css" />
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -448,12 +520,15 @@
     <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Content\themes\custom-theme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\custom-theme\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Content\themes\custom-theme\images\ui-bg_glass_65_ffffff_1x400.png" />
@@ -468,8 +543,6 @@
     <Content Include="Content\themes\custom-theme\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\custom-theme\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\custom-theme\jquery-ui-1.8.16.custom.css" />
-    <Content Include="Content\vendor.css" />
-    <Content Include="Content\xSite.css" />
     <Content Include="css\appointment.css" />
     <Content Include="css\companysetting.css" />
     <Content Include="css\companysetup.css" />
@@ -549,103 +622,12 @@
     <Content Include="fullCalendar\gcal.js" />
     <Content Include="Geolocation.html" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="App_Data\Pdf\FreeSerif.ttf" />
     <Content Include="fonts\Baskerville-Italic.eot" />
     <Content Include="fonts\Baskerville-Italic.ttf" />
     <Content Include="fonts\Baskerville-Italic.woff" />
     <Content Include="googlea073ac1af76989dd.html" />
     <Content Include="HomeMedia\final\final - Shortcut.lnk" />
-    <Content Include="html\images\1.jpg" />
-    <Content Include="html\images\2.jpg" />
-    <Content Include="html\images\3.jpeg" />
-    <Content Include="html\images\3.jpg" />
-    <Content Include="html\images\4.jpg" />
-    <Content Include="html\images\4stars.png" />
-    <Content Include="html\images\5.jpg" />
-    <Content Include="html\images\6.jpg" />
-    <Content Include="html\images\7.jpg" />
-    <Content Include="html\images\8.jpg" />
-    <Content Include="html\images\apple-touch-icon-114x114.png" />
-    <Content Include="html\images\apple-touch-icon-72x72.png" />
-    <Content Include="html\images\apple-touch-icon.png" />
-    <Content Include="html\images\btn_blog.png" />
-    <Content Include="html\images\btn_discover.png" />
-    <Content Include="html\images\btn_events.png" />
-    <Content Include="html\images\business_image.png" />
-    <Content Include="html\images\favicon.ico" />
-    <Content Include="html\images\google_badge.png" />
-    <Content Include="html\images\google_badge1.png" />
-    <Content Include="html\images\icons\arrow.jpg" />
-    <Content Include="html\images\icons\gray_star.png" />
-    <Content Include="html\images\icons\icon-list.jpg" />
-    <Content Include="html\images\icons\icon_ business.png" />
-    <Content Include="html\images\icons\icon_arrow.png" />
-    <Content Include="html\images\icons\icon_blog.png" />
-    <Content Include="html\images\icons\icon_email.png" />
-    <Content Include="html\images\icons\icon_events.png" />
-    <Content Include="html\images\icons\icon_facebook.png" />
-    <Content Include="html\images\icons\icon_google.png" />
-    <Content Include="html\images\icons\icon_instagram.png" />
-    <Content Include="html\images\icons\icon_location.png" />
-    <Content Include="html\images\icons\icon_phone.png" />
-    <Content Include="html\images\icons\icon_pinterest.png" />
-    <Content Include="html\images\icons\icon_tumblr.png" />
-    <Content Include="html\images\icons\icon_twitter.png" />
-    <Content Include="html\images\icons\icon_youtube.png" />
-    <Content Include="html\images\icons\live chat.png" />
-    <Content Include="html\images\icons\yellow_star.png" />
-    <Content Include="html\images\itunes_badge.png" />
-    <Content Include="html\images\itunes_badge1.png" />
-    <Content Include="html\images\kuyam_banner_1.jpg" />
-    <Content Include="html\images\kuyam_banner_2.jpg" />
-    <Content Include="html\images\kuyam_banner_3.jpg" />
-    <Content Include="html\images\laptop.png" />
-    <Content Include="html\images\logo_kuyam.png" />
-    <Content Include="html\images\mobile.png" />
-    <Content Include="html\images\reuters.png" />
-    <Content Include="html\images\sale_ribbon.png" />
-    <Content Include="html\images\startup.png" />
-    <Content Include="html\images\tablet.png" />
-    <Content Include="html\images\tech.png" />
-    <Content Include="html\images\techcrunch.png" />
-    <Content Include="html\images\thewallstreet.png" />
-    <Content Include="html\index.html" />
-    <Content Include="html\scripts\general.js" />
-    <Content Include="html\scripts\lib\css_browser_selector.js" />
-    <Content Include="html\scripts\lib\jquery-ui.js" />
-    <Content Include="html\scripts\lib\jquery.cycle.all.js" />
-    <Content Include="html\scripts\lib\jquery.js" />
-    <Content Include="html\scripts\lib\skdslider.js" />
-    <Content Include="html\stylesheets\base.css" />
-    <Content Include="html\stylesheets\general.css" />
-    <Content Include="html\stylesheets\images\animated-overlay.gif" />
-    <Content Include="html\stylesheets\images\left.png" />
-    <Content Include="html\stylesheets\images\loader.gif" />
-    <Content Include="html\stylesheets\images\next.png" />
-    <Content Include="html\stylesheets\images\pause.png" />
-    <Content Include="html\stylesheets\images\play.png" />
-    <Content Include="html\stylesheets\images\right.png" />
-    <Content Include="html\stylesheets\images\slide-bg-active.png" />
-    <Content Include="html\stylesheets\images\slide-bg.png" />
-    <Content Include="html\stylesheets\images\slide_desc.png" />
-    <Content Include="html\stylesheets\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
-    <Content Include="html\stylesheets\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
-    <Content Include="html\stylesheets\images\ui-bg_flat_10_000000_40x100.png" />
-    <Content Include="html\stylesheets\images\ui-bg_glass_100_f6f6f6_1x400.png" />
-    <Content Include="html\stylesheets\images\ui-bg_glass_100_fdf5ce_1x400.png" />
-    <Content Include="html\stylesheets\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="html\stylesheets\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
-    <Content Include="html\stylesheets\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
-    <Content Include="html\stylesheets\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
-    <Content Include="html\stylesheets\images\ui-icons_222222_256x240.png" />
-    <Content Include="html\stylesheets\images\ui-icons_228ef1_256x240.png" />
-    <Content Include="html\stylesheets\images\ui-icons_ef8c08_256x240.png" />
-    <Content Include="html\stylesheets\images\ui-icons_ffd27a_256x240.png" />
-    <Content Include="html\stylesheets\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="html\stylesheets\jquery-ui.css" />
-    <Content Include="html\stylesheets\layout.css" />
-    <Content Include="html\stylesheets\skdslider.css" />
     <Content Include="Images\bgPopup1.png" />
     <Content Include="Images\bg_paging.png" />
     <Content Include="Images\btn_more.png" />
@@ -654,6 +636,7 @@
     <Content Include="Images\btn_time_slot.png" />
     <Content Include="Images\button-long.pdn" />
     <Content Include="Images\button.pdn" />
+    <Content Include="Images\class_bg.jpg" />
     <Content Include="Images\DowloadMobileApp\downloadmobile_100_app_store.png" />
     <Content Include="Images\DowloadMobileApp\downloadmobile_100_bg_1.png" />
     <Content Include="Images\DowloadMobileApp\downloadmobile_100_bg_2.png" />
@@ -680,13 +663,16 @@
     <Content Include="Images\DowloadMobileApp\downloadmobile_80_logo.png" />
     <Content Include="Images\GetTheOffer.png" />
     <Content Include="Images\gettheofferterms_bg.png" />
+    <Content Include="Images\gettheofferterms_bg1.png" />
     <Content Include="Images\gettheoffer_btn_purchase.png" />
     <Content Include="Images\gettheoffer_description.png" />
     <Content Include="Images\gettheoffer_logo.png" />
     <Content Include="Images\gettheoffer_tab.png" />
     <Content Include="Images\gettheoffer_tab1.png" />
+    <Content Include="Images\gettheoffer_tab2.png" />
     <Content Include="Images\gettheoffer_tab_hover.png" />
     <Content Include="Images\LA.png" />
+    <Content Include="Images\offer_description.png" />
     <Content Include="Images\powerByKuyam.png" />
     <Content Include="Images\pricegiftcard100.png" />
     <Content Include="Images\pricegiftcard150.png" />
@@ -699,6 +685,8 @@
     <Content Include="mu-c7fc16fe-93173c2e-0da5177b-649783c3.txt" />
     <Content Include="mu-e56b5528-0b6fd0ff-5ba0cf77-9763c1dd.txt" />
     <Content Include="Mvc.sitemap" />
+    <Content Include="Areas\API\Views\Web.config" />
+    <Content Include="Areas\API\Views\Beautify\Index.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -739,7 +727,6 @@
     <Content Include="Resources\kuyam_aps_dev_staging.p12">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="HomeMedia\BackUp\banner1.jpg" />
     <Content Include="HomeMedia\BackUp\banner2.jpg" />
     <Content Include="HomeMedia\BackUp\banner3.png" />
@@ -1546,6 +1533,16 @@
     <Content Include="Scripts\datepicker\prototype-1.js" />
     <Content Include="Scripts\datepicker\prototype-base-extensions.js" />
     <Content Include="Scripts\datepicker\prototype-date-extensions.js" />
+    <Content Include="Scripts\css_browser_selector.js" />
+    <Content Include="Scripts\general.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\skdslider.js" />
     <Content Include="Scripts\dialogs.js" />
     <Content Include="Scripts\fbdropdown\fbdropdown.css" />
     <Content Include="Scripts\fbdropdown\fbdropdown.js" />
@@ -1684,13 +1681,12 @@
     <Content Include="Scripts\jqtransformplugin\jqtransform.css" />
     <Content Include="Scripts\jqtransformplugin\jquery.jqtransform.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-jtemplates.js" />
     <Content Include="Scripts\jquery-jtemplates.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
-    <Content Include="Scripts\jquery-ui-timepicker-addon.css" />
     <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\jquery.alerts\images\help.gif" />
     <Content Include="Scripts\jquery.alerts\images\important.gif" />
@@ -1776,11 +1772,6 @@
     <Content Include="Scripts\js\userinvoices.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
-    <Content Include="Scripts\LocMetrics.css" />
-    <Content Include="Scripts\LocMetrics.html" />
-    <Content Include="Scripts\LocMetricsFunctions.html" />
-    <Content Include="Scripts\LocMetricsPie.jpg" />
-    <Content Include="Scripts\LocMetricsPie.png" />
     <Content Include="Scripts\M2.Modernizr.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -2461,7 +2452,7 @@
     <Content Include="Views\Home\howitworks.cshtml" />
     <Content Include="Views\Home\howitworks_pricing.cshtml" />
     <Content Include="Views\Home\howitworks_user.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index_old.cshtml" />
     <Content Include="Views\Home\IndexLogin.cshtml" />
     <Content Include="Views\Home\learn-more.cshtml" />
     <Content Include="Views\Home\lifestyle.cshtml" />
@@ -2619,9 +2610,6 @@
     <Content Include="Views\Shared\_ZipCodeAddEdit.cshtml" />
     <Content Include="Views\Shared\_ZipCodesResult.cshtml" />
     <Content Include="Views\VersionHistory\Index.cshtml" />
-    <Content Include="Scripts\LocMetricsFiles.csv" />
-    <Content Include="Scripts\LocMetricsFolders.csv" />
-    <Content Include="Scripts\LocMetricsFunctions.csv" />
     <Content Include="Scripts\simplecolor\LICENSE" />
     <Content Include="Scripts\simplecolor\README.markdown" />
     <Content Include="Scripts\simplecolor\VERSION" />
@@ -2743,12 +2731,8 @@
     <Content Include="Views\Home\DownloadMobileApp.cshtml" />
     <Content Include="Views\Home\TopLaSpots.cshtml" />
     <Content Include="Views\Shared\_CompanyInfor.cshtml" />
-    <Content Include="Views\Company\_CompanyProfiles.cshtml" />
     <Content Include="Views\Company\CompanyProfileSearch.cshtml" />
-    <Content Include="Views\Company\_TimeSlots.cshtml" />
-    <Content Include="Views\Company\_CompanyProfiles.cshtml" />
     <Content Include="Views\Company\CompanyProfileSearch.cshtml" />
-    <Content Include="Views\Company\_TimeSlots.cshtml" />
     <Content Include="Views\Admin\Events.cshtml" />
     <Content Include="Views\Admin\CompaniesForEachEvent.cshtml" />
     <Content Include="Views\Shared\_AdminCompaniesEvent.cshtml" />
@@ -2760,6 +2744,10 @@
     <Content Include="Views\Company\Instructor.cshtml" />
     <Content Include="Views\Company\SchedulerForClasses.cshtml" />
     <Content Include="Views\Shared\CompanyConfirm.cshtml" />
+    <Content Include="Views\Company\_CompanyProfiles.cshtml" />
+    <Content Include="Views\Company\_TimeSlots.cshtml" />
+    <Content Include="Views\Book\Class.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2791,7 +2779,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="html\stylesheets\fonts\" />
+    <Folder Include="Areas\API\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

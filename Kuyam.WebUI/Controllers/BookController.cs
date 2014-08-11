@@ -11,6 +11,9 @@ using Kuyam.WebUI.Extension;
 using Kuyam.WebUI.Models;
 using MvcSiteMapProvider.Reflection;
 using System.Text;
+using Kuyam.Domain.Seo;
+using Kuyam.Domain.CompanyProfileServices;
+using Kuyam.Domain.ClassModel;
 
 namespace Kuyam.WebUI.Controllers
 {
@@ -37,7 +40,7 @@ namespace Kuyam.WebUI.Controllers
             return RedirectToAction("Availability", new { companyUrlName });
         }
 
-        public ActionResult Availability(string companyUrlName, int? proposedId, int? categotyId, int? serviceId)
+        public ActionResult Availability(string companyUrlName, int? proposedId, int? categoryId, int? serviceId)
         {
             MySession.IsBookDirect = true;
             var id = GetCompanyIdViaUrl(companyUrlName);
@@ -70,8 +73,8 @@ namespace Kuyam.WebUI.Controllers
             var categorys = _companyProfileService.GetCategoryByProfileID(id);
             model.ListServiceCompany = categorys;
             var category = categorys.FirstOrDefault();
-            model.CategoryId = categotyId ?? 0;
-            ViewBag.CategoryId = categotyId;
+            model.CategoryId = categoryId ?? 0;
+            ViewBag.CategoryId = categoryId;
             model.Favorite = _companyProfileService.CheckFavoriteByProfileID(id, MySession.CustID);
             model.CompanyName = profileCompany.Name;
             var Keywords = MyApp.Settings.TagSetting.Keywords;
@@ -92,6 +95,100 @@ namespace Kuyam.WebUI.Controllers
             model.ServiceString = htmlSevice.ToString();
             return View(model);
         }
+
+        public ActionResult Class(string companyUrlName)
+        {
+            MySession.IsBookDirect = true;
+
+            var id = GetCompanyIdViaUrl(companyUrlName);
+            if (id == 0)
+                return InvokeHttp404();
+            var model = new ProfileCompaniesModels();
+            model.ProfileId = id;
+            var profileCompany = _companyProfileService.GetProfileCompanyByID(id);
+            model.MetaTagExtension = new MetaTagExtension(profileCompany.Desc);
+            model.ProfileCompany = profileCompany;
+            var categorys = _companyProfileService.GetCategoryByProfileID(id);
+            model.ListServiceCompany = categorys;
+            var category = categorys.FirstOrDefault();
+            model.CompanyName = profileCompany.Name;
+            DateTime dtnow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
+            int dayOfWeek = (int)dtnow.DayOfWeek;
+
+            //DateTime startTime = dtnow;
+            //if (dayOfWeek == (int)System.DayOfWeek.Sunday)
+            //{
+            //    startTime = dtnow.AddDays(-6);
+            //}
+            //else
+            //{
+            //    startTime = dtnow.AddDays(-(dayOfWeek - 1));
+            //}
+
+            DateTime endTime = dtnow.AddDays(7);
+
+            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
+            model.CalendarString = BuildCalendar(calendars, dtnow);
+
+            return View(model);
+        }
+
+        private string BuildCalendar(List<SchedulerAvailability> schedulerAvailability, DateTime dtNow)
+        {
+            StringBuilder strBuilder = new StringBuilder();
+
+            for (int i = 0; i < 7; i++)
+            {
+                string dayInWeek = dtNow.AddDays(i).ToString("ddd").ToLower();
+                string classToday = string.Empty;
+                if (i == 0)
+                {
+                    classToday = "today";
+                    dayInWeek = "today";
+                }
+
+                strBuilder.AppendFormat("<div class=\"column-day {0}\">", classToday);
+                strBuilder.AppendFormat("<div class=\"column-header\"><span class=\"day\">{0}</span><span class=\"datetime\">{1}</span></div>", dayInWeek, dtNow.AddDays(i).ToString("MMM d, yyyy"));
+
+
+                var classIndays = schedulerAvailability.Where(q => q.DayOfWeek == (int)dtNow.AddDays(i).DayOfWeek).OrderBy(o => o.FromHour).ToList();
+
+                foreach (var item in classIndays)
+                {
+                    DateTime start = dtNow.AddDays(i).Date.AddTicks(item.FromHour.Ticks);
+                    string isFull = "full";
+
+                    if (item.IsAvailability && start < dtNow)
+                    {
+                        isFull = "expired";
+                    }
+
+                    string btnReserve = string.Empty;
+                    if (start >= dtNow.AddMinutes(10) && item.IsAvailability)
+                    {
+                        isFull = string.Empty;
+                        btnReserve = string.Format("<a id=\"reserve\" classSchedulerId =\"{0}\" startTime=\"{1}\" emdTime=\"{2}\" className= \"{3}\" instructorName=\"{4}\" class=\"reserve\"  href=\"javascript:void(0);\">reserve</a>",
+                            item.ClassSchedulerID, start.ToString("MM/dd/yyyy hh:mm tt"), start.AddMinutes(item.Duration).ToString("MM/dd/yyyy hh:mm tt"), item.ServiceName, item.EmployeeName);
+                    }
+
+                    strBuilder.Append("<div class=\"column-sessions\">");
+                    strBuilder.AppendFormat(" <div class=\"session {0}\">", isFull);
+                    strBuilder.AppendFormat("<span class=\"time\">{0} – {1}</span>", new DateTime(item.FromHour.Ticks).ToString("h:mm tt").ToLower(), new DateTime(item.FromHour.Ticks).AddMinutes(item.Duration).ToString("h:mm tt").ToLower());
+                    strBuilder.AppendFormat("<span class=\"instructor\">{0}</span>", item.EmployeeName);
+                    strBuilder.AppendFormat("<span class=\"type\">{0}</span>", item.ServiceName);
+                    strBuilder.Append(btnReserve);
+                    //strBuilder.AppendFormat("<a id=\"reserve\" classSchedulerId =\"{0}\" startTime=\"{1}\" emdTime=\"{2}\" className= \"{3}\" instructorName=\"{4}\" class=\"reserve\"  href=\"javascript:void(0);\">reserve</a>",
+                    //item.ClassSchedulerID, start.ToString("MM/dd/yyyy hh:mm tt"), start.AddMinutes(item.Duration).ToString("MM/dd/yyyy hh:mm tt"), item.ServiceName, item.EmployeeName);
+
+                    strBuilder.Append("</div></div>");
+
+                }
+                strBuilder.Append("</div>");
+            }
+
+            return strBuilder.ToString();
+        }
+
 
         public ActionResult Description(string companyUrlName)
         {

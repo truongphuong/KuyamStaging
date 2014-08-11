@@ -1,18 +1,3 @@
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll.config
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.pdb
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\M2.Util.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.pdb
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.xml
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.xml
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.xml
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.csprojResolveAssemblyReference.cache
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.dll
-D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.pdb
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll.config
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.pdb
@@ -28,33 +13,73 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Ent
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.csprojResolveAssemblyReference.cache
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll.config
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\M2.Util.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.pdb
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll.config
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.pdb
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.dll
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\M2.Util.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.pdb
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.xml
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.xml
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.xml
+E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.xml
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.csprojResolveAssemblyReference.cache
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll.config
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Repository.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\M2.Util.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Repository\obj\Release\Kuyam.Repository.pdb
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Kuyam.Repository.dll.config
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Kuyam.Repository.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Kuyam.Repository.pdb
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Autofac.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\EntityFramework.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Kuyam.Database.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\M2.Util.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Kuyam.Database.pdb
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Autofac.xml
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\Autofac.Integration.Mvc.xml
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\EntityFramework.xml
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\bin\Release\EntityFramework.SqlServer.xml
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\obj\Release\Kuyam.Repository.csprojResolveAssemblyReference.cache
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\obj\Release\Kuyam.Repository.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Repository\obj\Release\Kuyam.Repository.pdb

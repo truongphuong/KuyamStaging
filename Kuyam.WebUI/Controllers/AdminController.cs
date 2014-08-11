@@ -59,6 +59,7 @@ namespace Kuyam.WebUI.Controllers
         private readonly IHipmobService _hipmobService;
         private readonly ImportService _importService;
         private readonly ISeoFriendlyUrlService _seoFriendlyUrlService;
+        private readonly ClassService _classService;
         public AdminController(AdminService adminService,
             IFormsAuthenticationService formsService, IMembershipService membershipService,
             CompanyProfileService companyProfileService, IBlogCategoryService categoryService,
@@ -74,7 +75,8 @@ namespace Kuyam.WebUI.Controllers
             IHipmobService hipmobService,
             CompanyProfileService companyProfile,
             ImportService importService,
-            ISeoFriendlyUrlService seoFriendlyUrlService)
+            ISeoFriendlyUrlService seoFriendlyUrlService,
+            ClassService classService)
         {
             this._adminService = adminService;
             this._formsService = formsService;
@@ -93,6 +95,7 @@ namespace Kuyam.WebUI.Controllers
             this._hipmobService = hipmobService;
             this._importService = importService;
             this._seoFriendlyUrlService = seoFriendlyUrlService;
+            this._classService = classService;
         }
 
         public bool AuthorizationAdmin()
@@ -4625,7 +4628,7 @@ namespace Kuyam.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult CompaniesForEachEvent(int id, string page, string key)
+        public ActionResult CompaniesForEachEvent(int id, string page, string key, int type)
         {
             //Check Authorization
             if (!AuthorizationAdminOrAgent())
@@ -4639,8 +4642,21 @@ namespace Kuyam.WebUI.Controllers
             int totalRecord = 0;
             List<ProfileCompany> lstCompany = new List<ProfileCompany>();
 
-            lstCompany = _adminService.AdminGetListCompanyByKeyName(key, (int)Types.CompanyStatus.Active, pageIndex, 10, out totalRecord);
 
+            if (type == 0)
+            {
+                lstCompany = _adminService.AdminGetListCompanyByKeyName(key, (int)Types.CompanyStatus.Active, pageIndex, 10, out totalRecord);
+            }
+            else if (type == 1)
+            {
+                lstCompany = _adminService.AdminGetListCompanyJoinEvent(id, out totalRecord, pageIndex, 10);
+            }
+            else
+            {
+                lstCompany = _adminService.AdminGetListCompanyNotJoinEvent(id, out totalRecord, pageIndex, 10);
+            }
+
+            
             ViewBag.TotalRecords = totalRecord;
             ViewBag.CompanyList = lstCompany;
             ViewBag.CompanyEventIds = _adminService.GetListCompanyIdsByEventId(id);
@@ -4690,7 +4706,7 @@ namespace Kuyam.WebUI.Controllers
         }
 
 
-        public ActionResult CompanyServicesToEvent(int? profileId, int? eventId)
+        public ActionResult CompanyServicesToEvent(int? profileId, int? eventId, int? typeId)
         {
 
             if (!AuthorizationAdmin())
@@ -4703,26 +4719,56 @@ namespace Kuyam.WebUI.Controllers
                 return RedirectToAction("Events");
             }
 
-            List<CompanyService> scList = DAL.GetServiceCompanybyProfileId(profileId.Value);
-            ViewBag.CompanyServices = scList;
-            var company = DAL.GetProfileCompany(profileId.Value);
-            ViewBag.CompanyName = company != null ? company.Name : string.Empty;
-            ViewBag.EventName = _adminService.GetEventNameById(eventId.Value);
-            ViewBag.EventId = eventId;
-            var companyEventId = _adminService.GetCompanyEventIdByProfileIdEventId(profileId.Value, eventId.Value);
-
-            if (companyEventId > 0)
+            if(typeId.HasValue && typeId.Value == (int)Types.ServiceType.ClassType)
             {
-                ViewBag.CompanyServiecsToEvent = _adminService.GetListCompanyServicesToEventByCompanyEventId(companyEventId);
-                ViewBag.CompanyEventID = companyEventId;
+
+                List<CompanyService> scList = _classService.GetClassesbyProfileId(profileId.Value);
+                ViewBag.CompanyServices = scList;
+                var company = DAL.GetProfileCompany(profileId.Value);
+                ViewBag.CompanyName = company != null ? company.Name : string.Empty;
+                ViewBag.EventName = _adminService.GetEventNameById(eventId.Value);
+                ViewBag.EventId = eventId;
+                var companyEventId = _adminService.GetCompanyEventIdByProfileIdEventId(profileId.Value, eventId.Value);
+
+                if (companyEventId > 0)
+                {
+                    ViewBag.CompanyServiecsToEvent = _adminService.GetListClassesToEventByCompanyEventId(companyEventId);
+                    ViewBag.CompanyEventID = companyEventId;
+                }
+                else
+                {
+                    CompanyEvent ce = new CompanyEvent();
+                    ce.ProfileCompanyID = profileId.Value;
+                    ce.EventID = eventId.Value;
+                    ViewBag.CompanyEventID = _adminService.CreateCompanyEvent(ce);
+                }
+
             }
             else
             {
-                CompanyEvent ce = new CompanyEvent();
-                ce.ProfileCompanyID = profileId.Value;
-                ce.EventID = eventId.Value;
-                ViewBag.CompanyEventID = _adminService.CreateCompanyEvent(ce);
+                List<CompanyService> scList = _classService.GetServiceCompanybyProfileId(profileId.Value);
+                ViewBag.CompanyServices = scList;
+                var company = DAL.GetProfileCompany(profileId.Value);
+                ViewBag.CompanyName = company != null ? company.Name : string.Empty;
+                ViewBag.EventName = _adminService.GetEventNameById(eventId.Value);
+                ViewBag.EventId = eventId;
+                var companyEventId = _adminService.GetCompanyEventIdByProfileIdEventId(profileId.Value, eventId.Value);
+
+                if (companyEventId > 0)
+                {
+                    ViewBag.CompanyServiecsToEvent = _adminService.GetListCompanyServicesToEventByCompanyEventId(companyEventId);
+                    ViewBag.CompanyEventID = companyEventId;
+                }
+                else
+                {
+                    CompanyEvent ce = new CompanyEvent();
+                    ce.ProfileCompanyID = profileId.Value;
+                    ce.EventID = eventId.Value;
+                    ViewBag.CompanyEventID = _adminService.CreateCompanyEvent(ce);
+                }
+
             }
+            
             return View();
         }
 

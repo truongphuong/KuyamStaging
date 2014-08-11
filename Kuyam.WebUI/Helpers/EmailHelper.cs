@@ -182,6 +182,10 @@ namespace Kuyam.WebUI.Helpers
 
         public static void SendContactEmail(string name, string email, string subject, string message)
         {
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                message += "<br/><br/>" + string.Format("Send by {0}: {1}", name, email);
+            }
             SendMail(email, EmailAdmin, subject, message);
         }
         public static IRestResponse SendMail(string from, string to, string subject, string content)

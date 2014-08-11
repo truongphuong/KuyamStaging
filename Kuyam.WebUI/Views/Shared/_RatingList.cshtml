@@ -1,6 +1,7 @@
 ﻿@using Kuyam.Database;
 @using Kuyam.Utility
 @using Kuyam.WebUI
+@model Kuyam.WebUI.Models.ProfileCompaniesModels
 @{
     List<Rating> ratings = ViewBag.RatingList;
 
@@ -199,3 +200,14 @@
 </div>
 <div class="clear">
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {     
+
+        @if (Model.AllowScroll)
+        {
+            @:$("#ui-accordion-accordion-header-0").css({ "cursor": "default" });
+            @:$("html, body").animate({ scrollTop: $(".profileschedule").height() + 15 }, "slow");
+        }
+    });
+    </script>

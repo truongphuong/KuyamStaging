@@ -54,7 +54,7 @@ namespace Kuyam.WebUI
             HandleNonHttpsRequest(filterContext);
         }
     }
-       
+
     public class KuyamAuthorizeAttribute : AuthorizeAttribute
     {
 
@@ -115,7 +115,7 @@ namespace Kuyam.WebUI
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                new[] { "Kuyam.WebUI.Controllers" }
+                namespaces: new[] { "Kuyam.WebUI.Controllers" }
             );
 
         }
@@ -210,11 +210,28 @@ namespace Kuyam.WebUI
                     context.Response.Write(javascript);
                     CompleteRequest();
                 }
+                else if (rawUrl.ToLower().Contains("showgetofferpopup"))
+                {
+                    var companyeventid = context.Request.QueryString["companyeventid"];
+                    var javascript = "<script type=\"text/javascript\">$(document).ready(function(){showGetOfferPopup(" + companyeventid + ")}); </script>";
+                    context.Response.Write(javascript);
+                    CompleteRequest();
+                }
                 else if (!string.IsNullOrEmpty(start) && rawUrl.ToLower().Contains("book"))
                 {
                     if (context.Request.IsAuthenticated)
                     {
-                        var javascript = "<script type=\"text/javascript\">$(document).ready(function(){getServicebyStartTime('" + start + "')}); </script>";
+                        var javascript = string.Empty;
+                        if (rawUrl.ToLower().Contains("/class"))
+                        {
+                            var instructorClassSchedulerId = context.Request.QueryString["instructorClassSchedulerId"];
+                            javascript = "<script type=\"text/javascript\">$(document).ready(function(){reserveClass('" + instructorClassSchedulerId + "','" + start + "')}); </script>";
+                        }
+                        else
+                        {
+                            javascript = "<script type=\"text/javascript\">$(document).ready(function(){getServicebyStartTime('" + start + "')}); </script>";
+                        }
+
                         context.Response.Write(javascript);
                         CompleteRequest();
                     }
@@ -224,7 +241,7 @@ namespace Kuyam.WebUI
                         context.Response.Write(javascript);
                         CompleteRequest();
                     }
-                }
+                }                
             }
         }
 

@@ -14,6 +14,14 @@ namespace Kuyam.Database
 
         public double? Distance { get; set; }
 
+        public bool HasClassBooking
+        {
+            get
+            {
+                return (this.IsClass.HasValue && this.IsClass.Value
+                    && this.CompanyTypeID == (int)Types.CompanyType.HybridKuyamBookIt);
+            }
+        }
         public double Rate
         {
             get

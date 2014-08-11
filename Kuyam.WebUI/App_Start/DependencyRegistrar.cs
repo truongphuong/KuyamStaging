@@ -34,6 +34,7 @@ using Kuyam.WebUI.Sitemap.Autofac.Modules;
 using Kuyam.Domain.HomeServices;
 using Kuyam.Domain.CompanyProfileServices;
 using Kuyam.Domain.SearchServices;
+using Kuyam.Domain.OfferServices;
 
 namespace Kuyam.WebUI.App_Start
 {
@@ -66,6 +67,7 @@ namespace Kuyam.WebUI.App_Start
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().InstancePerHttpRequest();
             builder.RegisterType<AccountMembershipService>().As<IMembershipService>().InstancePerHttpRequest();
             builder.RegisterType<AdminService>().InstancePerHttpRequest();
+            builder.RegisterType<CompanySearchService>().InstancePerHttpRequest();
             builder.RegisterType<ClassService>().InstancePerHttpRequest();
             builder.RegisterType<OrderService>().InstancePerHttpRequest();
             builder.RegisterType<PdfService>().InstancePerHttpRequest();
@@ -113,6 +115,10 @@ namespace Kuyam.WebUI.App_Start
             builder.RegisterType<SeoFriendlyUrlService>().As<ISeoFriendlyUrlService>().InstancePerHttpRequest();
             builder.RegisterType<HotelVisitService>().As<IHotelVisitService>().InstancePerHttpRequest();
             builder.RegisterType<SearchService>().As<ISearchService>().InstancePerHttpRequest();
+
+            builder.RegisterType<OfferService>().As<IOfferService>().InstancePerHttpRequest();
+
+            
             
             #region Sitemap
             // Register modules

@@ -8,7 +8,7 @@
 @using Kuyam.Repository.Infrastructure;
 @{
     List<Kuyam.Database.Service> parentCategories = DAL.GetParentService();
-    Profile profile = ViewBag.CompanyProfile;//EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(profileID != 0 ? profileID : MySession.ProfileID);
+    ProfileCompany profile = ViewBag.CompanyProfile;//EngineContext.Current.Resolve<CompanyProfileService>().GetProfileByID(profileID != 0 ? profileID : MySession.ProfileID);
     int categoryId = 0;
     if (ViewBag.CategoryId != null)
     {
@@ -23,8 +23,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     @RenderSection("MetaSeoSection", required: false)
     @RenderSection("SharingSection", required: false)
-    <link href="@Url.Content("~/css/style.css?v=21")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/css/kuyam.css?v=20")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/style.css?v=60")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/kuyam.css?v=60")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="@Url.Content("~/css/themes/base/jquery.ui.all.css")" />
     <link type="text/css" href="@Url.Content("~/css/themes/base/jquery.ui.selectmenu.css")" rel="stylesheet" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/js/jquery-1.7.2.js")"></script>

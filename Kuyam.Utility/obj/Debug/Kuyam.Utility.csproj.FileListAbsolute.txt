@@ -33,12 +33,11 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\Kuyam.Ut
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\Kuyam.Utility.pdb
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\GeoFramework.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\log4net.dll
-D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\NLog.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\RestSharp.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\GeoFramework.pdb
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\GeoFramework.xml
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\log4net.xml
-D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\NLog.xml
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\bin\Debug\RestSharp.xml
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\obj\Debug\Kuyam.Utility.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\obj\Debug\Kuyam.Utility.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Utility\obj\Debug\Kuyam.Utility.csprojResolveAssemblyReference.cache

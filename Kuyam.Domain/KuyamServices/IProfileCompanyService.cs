@@ -8,6 +8,7 @@ namespace Kuyam.Domain.KuyamServices
 {
     public interface IProfileCompanyService
     {
+        List<Service> GetParentService();
         ProfileCompany GetByProfileId(int profileId);
         IQueryable<ProfileCompany> GetAll();
     }

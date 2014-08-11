@@ -542,11 +542,11 @@ namespace Kuyam.WebUI.Controllers
             }
             else if (appointment.ContactType == (int)Types.ContactType.SMS)
             {
-                _smsProvider.SendSms("your appointment has been confirmed.", new string[] { phoneNumber });
+                _smsProvider.SendSms(new string[] { phoneNumber }, "confirm appointment", "your appointment has been confirmed.", false);
             }
             else if (appointment.ContactType == (int)Types.ContactType.EmailSMS)
             {
-                _smsProvider.SendSms("your appointment has been confirmed.", new string[] { phoneNumber });
+                _smsProvider.SendSms(new string[] { phoneNumber }, "confirm appointment", "your appointment has been confirmed.", false);
                 EmailHelper.SendEmailConfirmAppointment(string.Empty, emailTo, emailstring);
             }
         }
@@ -578,7 +578,7 @@ namespace Kuyam.WebUI.Controllers
                 ServiceCompanyID = infoCheckout.ServiceCompanyID,
                 ServiceName = infoCheckout.ServiceName,
                 EmployeeName = infoCheckout.EmployeeName,
-                Price = infoCheckout.Price,
+                Price = cseItem != null ? cseItem.NewPrice.Value : infoCheckout.Price,
                 Duration = infoCheckout.Duration,
                 AttendeesNumber = infoCheckout.AttendeesNumber,
                 Start = dt,
@@ -642,7 +642,7 @@ namespace Kuyam.WebUI.Controllers
                 return Json(new { content = string.Empty }, JsonRequestBehavior.AllowGet);
 
             DateTime dt = DateTime.ParseExact(startDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
-
+            var cseItem = _adminService.GetAvalableCompanyServiceEventFromCompanyServiceId(classInfor.ServiceCompanyID, dt);
             var calendar = _companyProfileService.GetCalendarByCalendarId(calendarId);
             string encryptPackageId = string.Empty;
             bool isPackage = false;
@@ -671,7 +671,7 @@ namespace Kuyam.WebUI.Controllers
                 EmployeeID = classInfor.EmployeeID,
                 ServiceName = classInfor.ServiceName,
                 EmployeeName = classInfor.EmployeeName,
-                Price = classInfor.Price,
+                Price = cseItem != null ? cseItem.NewPrice.Value : classInfor.Price,                
                 Duration = classInfor.Duration,
                 AttendeesNumber = classInfor.AttendeesNumber,
                 Created = DateTime.UtcNow,
@@ -706,8 +706,8 @@ namespace Kuyam.WebUI.Controllers
                 EmployeeName = UtilityHelper.TruncateText(classInfor.EmployeeName, 12),
                 CalendarName = UtilityHelper.TruncateText(calendar.Name, 12),
                 ServiceName = UtilityHelper.TruncateText(classInfor.ServiceName, 12),
-                Price = classInfor.Price,
-                Totaldue = classInfor.Price,
+                Price = cseItem != null ? cseItem.NewPrice.Value : classInfor.Price,
+                Totaldue = cseItem != null ? cseItem.NewPrice.Value : classInfor.Price,
                 Duration = classInfor.Duration,
                 Datetime = String.Format("{0:ddd, MMM d}", dt),
                 Time = String.Format("{0:t}", dt).Replace(" ", string.Empty).ToLower() + " - " + String.Format("{0:t}", dtend).Replace(" ", string.Empty).ToLower()

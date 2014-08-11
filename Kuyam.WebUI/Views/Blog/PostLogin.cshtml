@@ -14,6 +14,7 @@
     var url = Request.Url;
     sharingUrl = url.Scheme + "://" + url.Host + Url.Content(sharingUrl);
     var description = UtilityHelper.StripTagsRegexCompiled(HttpUtility.HtmlDecode(Model.PostContent)).Trim();
+    var postContent = Model.PostContent;
     if (description.Length > 100)
     {
         description = description.Substring(0, 100) + "...";
@@ -118,8 +119,7 @@
                                 @user.FirstName @user.LastName</a></span> @Model.DateCreated.ToString("MM/dd/yy")</h4>
                     </div>*@
                     <div class="contentBlog">
-
-                        <div id="content" class="listSearch">@Html.Raw(Model.PostContent)</div>
+                        <div id="content" class="listSearch">@Html.Raw(postContent)</div>                       
                         <div class="clear">
                         </div>
                         <div id="chattobook">

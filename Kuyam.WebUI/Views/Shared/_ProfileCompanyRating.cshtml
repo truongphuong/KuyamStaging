@@ -59,7 +59,7 @@
                     break;
                 }
         }
-    </a><a href="@(Model.IsBookDirect ? "review" : Url.RouteUrl("Availability", new { seName = Model.ProfileCompany.GetSeName(Model.ProfileId) }) + "/review")" class="weburl" id="review">
+    </a><a href="@(Model.IsBookDirect ? "review" : Url.RouteUrl("Review", new { seName = Model.ProfileCompany.GetSeName(Model.ProfileId) }) + "/review")" class="weburl" id="review">
     (@Model.TotalReview
     @(Model.TotalReview > 1 ? "reviews" : "review"))
 </a>

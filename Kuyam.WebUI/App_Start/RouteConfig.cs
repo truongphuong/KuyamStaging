@@ -45,7 +45,7 @@ namespace Kuyam.WebUI
 
             routes.MapRoute("conciergeAppointment", "Concierge/Appointment", new { controller = "Concierge", action = "Appointment" });
 
-            routes.MapRoute("conciergeProposals", "Concierge/Proposals", new { controller = "Concierge", action = "Proposals" });
+            routes.MapRoute("conciergeProposals", "Concierge/Proposals", new { controller = "Concierge", action = "Proposals" });            
 
             routes.MapRoute("ViewDetails", "Admin/AdminUserDetail/{id}/{userListPageIndex}/{key}/{searchType}",
                   new
@@ -93,31 +93,36 @@ namespace Kuyam.WebUI
                 );
 
            routes.MapRoute(
-                "Booking - Company Description",
+                "BookingDescription",
                 "book/{companyUrlName}/Description",
                 new { controller = "Book", action = "Description" }
                 );
             routes.MapRoute(
-                "Booking - Company Photo",
+                "BookingPhoto",
                 "book/{companyUrlName}/Photo",
                 new { controller = "Book", action = "Photo" }
                 );
             routes.MapRoute(
-                "Booking - Company Review",
+                "BookingReview",
                 "book/{companyUrlName}/Review",
                 new { controller = "Book", action = "Review" }
                 );
 
             routes.MapRoute(
-                "Booking - Company Package",
+                "BookingPackage",
                 "book/{companyUrlName}/Package",
                 new { controller = "Book", action = "Package" }
                 );
 
             routes.MapRoute(
-                "Booking - Company Availability",
+                "BookingAvailability",
                 "book/{companyUrlName}/Availability",
                 new { controller = "Book", action = "Availability" }
+                );
+            routes.MapRoute(
+                "BookingClass",
+                "book/{companyUrlName}/class",
+                new { controller = "Book", action = "Class" }
                 );
 
             routes.MapRoute(
@@ -130,6 +135,8 @@ namespace Kuyam.WebUI
             // custom routes for seo
             routes.MapGenericPathRoute("GenericUrl", "{generic_se_name}", new { controller = "Error", action = "GenericUrl" });
 
+            routes.MapGenericPathRoute("Slug", "{SeName}", new { controller = "CompanyProfile", action = "Availability" });
+
             routes.MapGenericPathRoute("Availability", "availability/{SeName}", new { controller = "CompanyProfile", action = "Availability" });
             routes.MapGenericPathRoute("Class", "class/{SeName}", new { controller = "CompanyProfile", action = "Class" });
             routes.MapGenericPathRoute("Description", "description/{SeName}", new { controller = "CompanyProfile", action = "Description" });
@@ -141,8 +148,7 @@ namespace Kuyam.WebUI
 
             routes.MapGenericPathRoute("HomePage", "{SeName}", new { controller = "Home", action = "Index" });
 
-            routes.MapGenericPathRoute("blogPost", "{SeName}", new { controller = "Blog", action = "Post" });
-
+            routes.MapGenericPathRoute("blogPost", "{SeName}", new { controller = "Blog", action = "Post" });            
           
         }
 

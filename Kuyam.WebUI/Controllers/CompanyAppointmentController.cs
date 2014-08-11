@@ -196,7 +196,7 @@ namespace Kuyam.WebUI.Controllers
             List<Appointment> lstToday = new List<Appointment>();
             foreach (var dt in listDays)
             {
-                lstToday = lstApp.Where(a => a.Start.Date == dt.Date).ToList();
+                lstToday = lstApp.Where(a => a.Start.Date == dt.Date).ToList();               
                 if (lstToday.Count > 0)
                 {
                     string today = "today";
@@ -211,36 +211,53 @@ namespace Kuyam.WebUI.Controllers
                         string confirmButtonStatus = "confirm";
                         string modifiedButton = "";
                         string cancelButton = "";
+                        var isClass = currentApp.ClassSchedulerID.HasValue && currentApp.ClassSchedulerID.Value > 0;
                         switch (currentApp.AppointmentStatusID)
                         {
                             case (int)Types.AppointmentStatus.Pending:
-                                cName = "newrequest";
-                                dName = "new request";
-                                break;
+                                {
+                                    cName = "newrequest";
+                                    dName = "new request";
+                                    break;
+                                }
                             case (int)Types.AppointmentStatus.Modified:
-                                cName = "modified";
-                                dName = "modified";
-                                break;
+                                {
+                                    cName = "modified";
+                                    dName = "modified";
+                                    break;
+                                }
                             case (int)Types.AppointmentStatus.CompanyModified:
-                                cName = "modified";
-                                dName = "modified";
-                                confirmButtonStatus = "confirmed";
-                                modifiedButton = "hidea";
-                                break;
+                                {
+                                    cName = "modified";
+                                    dName = "modified";
+                                    confirmButtonStatus = "confirmed";
+                                    modifiedButton = "hidea";
+                                    break;
+                                }
                             case (int)Types.AppointmentStatus.Confirmed:
-                                cName = "confirmed";
-                                dName = "confirmed";
-                                confirmButtonStatus = "confirmed";
-                                modifiedButton = "hidea";
-                                break;
+                                {
+                                    cName = "confirmed";
+                                    dName = "confirmed";
+                                    confirmButtonStatus = "confirmed";
+                                    modifiedButton = "hidea";
+                                    break;
+                                }
                             case (int)Types.AppointmentStatus.Cancelled:
-                                cName = "cancelled";
-                                dName = "cancelled";
-                                confirmButtonStatus = "remove";
-                                cancelButton = "hidea";
-                                modifiedButton = "hidea";
-                                break;
+                                {
+                                    cName = "cancelled";
+                                    dName = "cancelled";
+                                    confirmButtonStatus = "remove";
+                                    cancelButton = "hidea";
+                                    modifiedButton = "hidea";
+                                    break;
+                                }
                         }
+
+                        if (isClass)
+                        {
+                            modifiedButton = "hidea";
+                        }
+
                         string minuteAgo = DateTimeUltility.RelativeDatetime(currentApp.Modified.Value);// (int)DateTimeUltility.ConvertToUtcMinus7(DateTime.Now).Subtract(currentApp.Modified.Value).TotalMinutes;
                         string username = currentApp.Cust.FullName;
                         username = username.Length > 14 ? username.Substring(0, 14) : username;
@@ -252,6 +269,8 @@ namespace Kuyam.WebUI.Controllers
                         string appNote = currentApp.Notes ?? string.Empty;
                         appNote = appNote.Length > 25 ? appNote.Substring(0, 25) : appNote;
                         string modifyApp =
+                            SecurityHelper.EncryptStringToBytesAes(string.Format("{0}@{1}", "modify", currentApp.AppointmentID));
+                        string confirmApp =
                             SecurityHelper.EncryptStringToBytesAes(string.Format("{0}@{1}", "modify", currentApp.AppointmentID));
                         string cancelApp = SecurityHelper.EncryptStringToBytesAes(string.Format("{0}@{1}", "cancel", currentApp.AppointmentID));
                         string reason = "reason: " + currentApp.Desc ?? "";
@@ -303,7 +322,7 @@ namespace Kuyam.WebUI.Controllers
                                              "<div class=\"clear\">" +
                                              "</div>" +
                                              "<div class=\"button\">" +
-                                             "<input type=\"button\" title=\"\" value=\"{15}\" class=\"{8}\" onclick=\"javascript:actionApp('{11}','{15}','{14}')\"/>" +
+                                             "<input type=\"button\" title=\"\" value=\"{15}\" class=\"{8}\" onclick=\"javascript:actionApp('{17}','{15}','{14}')\"/>" +
                                              "</div>" +
                                              "<div class=\"clear\">" +
                                              "</div>" +
@@ -331,7 +350,7 @@ namespace Kuyam.WebUI.Controllers
                                              "", time, cName, dName, minuteAgo, username,
                                              employeeName, appDesc, appNote, confirmButtonStatus, modifiedButton,
                                              cancelButton, modifyApp, cancelApp, "hdfEmp" + currentApp.AppointmentID,
-                                             currentApp.AppointmentID, confirmText, reason);
+                                             currentApp.AppointmentID, confirmText, reason, confirmApp);
 
                         if (cancelApp != string.Empty)
                         {
@@ -373,35 +392,50 @@ namespace Kuyam.WebUI.Controllers
                             string confirmButtonStatus = "confirm";
                             string modifiedButton = "";
                             string cancelButton = "";
+                            var isClass = currentApp.ClassSchedulerID.HasValue && currentApp.ClassSchedulerID.Value > 0;
                             switch (currentApp.AppointmentStatusID)
                             {
                                 case (int)Types.AppointmentStatus.Pending:
-                                    cName = "newrequest";
-                                    dName = "new request";
-                                    break;
+                                    {
+                                        cName = "newrequest";
+                                        dName = "new request";
+                                        break;
+                                    }
                                 case (int)Types.AppointmentStatus.Modified:
-                                    cName = "modified";
-                                    dName = "modified";
-                                    break;
+                                    {
+                                        cName = "modified";
+                                        dName = "modified";
+                                        break;
+                                    }
                                 case (int)Types.AppointmentStatus.CompanyModified:
-                                    cName = "modified";
-                                    dName = "modified";
-                                    confirmButtonStatus = "confirmed";
-                                    modifiedButton = "hidea";
-                                    break;
+                                    {
+                                        cName = "modified";
+                                        dName = "modified";
+                                        confirmButtonStatus = "confirmed";
+                                        modifiedButton = "hidea";
+                                        break;
+                                    }
                                 case (int)Types.AppointmentStatus.Confirmed:
-                                    cName = "confirmed";
-                                    dName = "confirmed";
-                                    confirmButtonStatus = "confirmed";
-                                    modifiedButton = "hidea";
-                                    break;
+                                    {
+                                        cName = "confirmed";
+                                        dName = "confirmed";
+                                        confirmButtonStatus = "confirmed";
+                                        modifiedButton = "hidea";
+                                        break;
+                                    }
                                 case (int)Types.AppointmentStatus.Cancelled:
-                                    cName = "cancelled";
-                                    dName = "cancelled";
-                                    confirmButtonStatus = "remove";
-                                    cancelButton = "hidea";
-                                    modifiedButton = "hidea";
-                                    break;
+                                    {
+                                        cName = "cancelled";
+                                        dName = "cancelled";
+                                        confirmButtonStatus = "remove";
+                                        cancelButton = "hidea";
+                                        modifiedButton = "hidea";
+                                        break;
+                                    }
+                            }
+                            if (isClass)
+                            {
+                                modifiedButton = "hidea";
                             }
                             string minuteAgo = DateTimeUltility.RelativeDatetime(currentApp.Modified.Value);// (int)DateTimeUltility.ConvertToUtcMinus7(DateTime.Now).Subtract(currentApp.Modified.Value).TotalMinutes;
                             string username = currentApp.Cust.FullName;
@@ -423,6 +457,8 @@ namespace Kuyam.WebUI.Controllers
                             string appNote = currentApp.Notes ?? string.Empty;
                             appNote = (appNote.Length > 25) ? appNote.Substring(0, 25) : appNote;
                             string modifyApp = SecurityHelper.EncryptStringToBytesAes(string.Format("{0}@{1}", "modify", currentApp.AppointmentID));
+                            string confirmApp =
+                           SecurityHelper.EncryptStringToBytesAes(string.Format("{0}@{1}", "modify", currentApp.AppointmentID));
                             string cancelApp = SecurityHelper.EncryptStringToBytesAes(string.Format("{0}@{1}", "cancel", currentApp.AppointmentID));
                             string reason = "reason: " + currentApp.Desc ?? "";
                             reason = reason.Length > 25 ? reason.Substring(0, 25) : reason;
@@ -468,7 +504,7 @@ namespace Kuyam.WebUI.Controllers
                                                  "<div class=\"clear\">" +
                                                  "</div>" +
                                                  "<div class=\"button\">" +
-                                                 "<input type=\"button\" title=\"\" value=\"{16}\" class=\"{9}\" onclick=\"javascript:actionApp('{12}','{16}','{15}')\"/>" +
+                                                 "<input type=\"button\" title=\"\" value=\"{16}\" class=\"{9}\" onclick=\"javascript:actionApp('{18}','{16}','{15}')\"/>" +
                                                  "</div>" +
                                                  "<div class=\"clear\">" +
                                                  "</div>" +
@@ -497,7 +533,7 @@ namespace Kuyam.WebUI.Controllers
                                                  employeeName, appDesc, appNote, titleclass, confirmButtonStatus,
                                                  modifiedButton, cancelButton, modifyApp, cancelApp,
                                                  "hdfEmp" + currentApp.AppointmentID, currentApp.AppointmentID, confirmText,
-                                                 reason);
+                                                 reason, confirmApp);
                             //clear
                             builder.Append("<div class=\"clear\"></div>");
                             if (cancelApp != string.Empty)
@@ -672,11 +708,11 @@ namespace Kuyam.WebUI.Controllers
             }
             else if (appointment.ContactType == (int)Types.ContactType.SMS)
             {
-                _smsProvider.SendSms("your appointment has been confirmed.", new string[] { phoneNumber });
+                _smsProvider.SendSms(new string[] { phoneNumber },"confirm appointment","your appointment has been confirmed.", false );
             }
             else if (appointment.ContactType == (int)Types.ContactType.EmailSMS)
             {
-                _smsProvider.SendSms("your appointment has been confirmed.", new string[] { phoneNumber });
+                _smsProvider.SendSms(new string[] { phoneNumber }, "confirm appointment", "your appointment has been confirmed.", false);
                 EmailHelper.SendEmailConfirmAppointment(string.Empty, emailTo, emailstring);
             }
         }

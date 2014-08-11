@@ -24,9 +24,7 @@ using Kuyam.Database.Extensions;
 namespace Kuyam.WebUI.Controllers
 {
     public class HomeController : KuyamBaseController
-    {
-        //AuthenticationFacebook oAuthFacbook = new AuthenticationFacebook(new SettingService());
-        //AuthenticationGoogle oAuthGoogle = new AuthenticationGoogle(new SettingService());
+    {      
         private readonly IBlogPostService _postService;
         private readonly IFeaturedCompanyService _featuredCompanyService;
         private readonly IProfileCompanyService _profileCompanyService;
@@ -44,6 +42,12 @@ namespace Kuyam.WebUI.Controllers
         }
 
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        /*
         public ActionResult Index(int? id)
         {
             var description = MyApp.Settings.TagSetting.HomeDescription;
@@ -51,7 +55,7 @@ namespace Kuyam.WebUI.Controllers
 
             if (!Request.IsAuthenticated)
             {
-                ViewBag.ParentCategories = DAL.GetParentService();
+                ViewBag.ParentCategories = _profileCompanyService.GetParentService();
                 var featuredPost = _postService.GetFeaturedPost();
 
                 var featuredCompany = _featuredCompanyService.Get().OrderBy(f => f.priority).FirstOrDefault();
@@ -202,6 +206,7 @@ namespace Kuyam.WebUI.Controllers
 
             return View();
         }
+         */
 
         public ActionResult CropImage()
         {
@@ -804,11 +809,7 @@ namespace Kuyam.WebUI.Controllers
         [HttpPost]
         public ActionResult contactnew(string name, string email, string subject, string message)
         {
-            System.Threading.Thread oThread = new System.Threading.Thread(() => EmailHelper.SendContactEmail(name, email, subject, message));
-
-            // Start the thread
-            oThread.Start();
-
+            EmailHelper.SendContactEmail(name, email, subject, message);
             return View();
         }
 

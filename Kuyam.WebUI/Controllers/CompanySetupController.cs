@@ -58,16 +58,17 @@ namespace Kuyam.WebUI.Controllers
             if (profile == null)
                 return RedirectToAction("SetupBasic", "Company", new { companyId = profileId });
 
-            var serviceCompany = _companyProfileService.GetCategoryByProfileID(profileId).FirstOrDefault();
-            if (string.IsNullOrEmpty(key) && serviceCompany != null && serviceCompany.Service != null)
-            {
-                key = serviceCompany.Service.ServiceName;
-            }
-            else
-            {
-                key = profile.Name;
-            }
-            IList<Image> imgList = GetGettyImages(string.Empty, 1);
+            //var serviceCompany = _companyProfileService.GetCategoryByProfileID(profileId).FirstOrDefault();
+            //if (string.IsNullOrEmpty(key) && serviceCompany != null && serviceCompany.Service != null)
+            //{
+            //    key = serviceCompany.Service.ServiceName;
+            //}
+            //else
+            //{
+            //    key = profile.Name;
+            //}
+
+            IList<Image> imgList = GetGettyImages(key, 1);
             //if (MySession.GettyImages == null){
             //    imgList = GetGettyImages(key);
             //}
@@ -80,7 +81,7 @@ namespace Kuyam.WebUI.Controllers
             ViewBag.ItemStartNumber = 1;
             //
             List<CompanyMedia> companyMedia = _companyProfileService.GetCompanyMediaByProfileID(profileId);
-            ViewBag.ImagesDownloaded = _companyProfileService.GetCompanyMediaByProfileID(profileId).Where(x => x.IsBanner).OrderByDescending(x=>x.MediaID).ToList();
+            ViewBag.ImagesDownloaded = _companyProfileService.GetCompanyMediaByProfileID(profileId).Where(x => x.IsBanner).OrderByDescending(x => x.MediaID).ToList();
             ViewBag.ImagesPending = _gettyImageService.GetGettyImages(profileId, (int)Types.GettyImageStatus.Pending);
             ViewBag.Logo = _companyProfileService.GetCompanyMediaByProfileID(profileId).Where(x => x.IsVideo != true && x.IsLogo).FirstOrDefault();
             ViewBag.IsActiveCompany = profile.ProfileCompany.CompanyStatusID == (int)Types.CompanyStatus.Active;
@@ -310,7 +311,7 @@ namespace Kuyam.WebUI.Controllers
         {
             KalturaMediaEntry kalturaMediaEntry = KalturaService.StartSessionAndUploadMedia(new Uri(url), Kaltura.KalturaMediaType.IMAGE, "Crop logo");
 
-            
+
             Medium media = new Medium
             {
                 CustID = MySession.CustID,
@@ -349,7 +350,7 @@ namespace Kuyam.WebUI.Controllers
                 _companyProfileService.DeleteMediaById(logo.MediaID);
             }
             _companyProfileService.InsertCompanyMedia(lstcompanyMedia);
-            return Json(new {location = kalturaMediaEntry.Id}, JsonRequestBehavior.AllowGet);
+            return Json(new { location = kalturaMediaEntry.Id }, JsonRequestBehavior.AllowGet);
         }
 
         #region Getty Imges API
@@ -413,7 +414,7 @@ namespace Kuyam.WebUI.Controllers
                 string token = createSessionResult.Token;
                 //string accountId = createSessionResult.AccountId;
                 SearchForImagesResult searchForImagesResult = searchForCreativeImage.Search(token, key, itemStartNumber).SearchForImagesResult; ;
-               
+
                 if (searchForImagesResult != null)
                 {
                     //imageIds = searchForImagesResult.Images.Select(m => m.ImageId).ToList();
@@ -585,7 +586,7 @@ namespace Kuyam.WebUI.Controllers
                         var priceExclTax = item.Price;
                         //round
                         var unitPriceExclTaxRounded = Math.Round(unitPriceExclTax.Value, 2);
-                        
+
                         builder.AppendFormat("&item_name_" + x + "={0}", HttpUtility.UrlEncode(item.Title));
                         builder.AppendFormat("&amount_" + x + "={0}", unitPriceExclTaxRounded.ToString("0.00", CultureInfo.InvariantCulture));
                         builder.AppendFormat("&quantity_" + x + "={0}", item.Quantity);
@@ -593,10 +594,10 @@ namespace Kuyam.WebUI.Controllers
                         cartTotal += priceExclTax.Value;
                     }
                 }
-                               
+
             }
             else
-            {               
+            {
                 builder.AppendFormat("&item_name=Order Number {0}", postProcessPaymentRequest.Order.OrderID);
                 var orderTotal = Math.Round(postProcessPaymentRequest.Order.OrderTotal.Value, 2);
                 builder.AppendFormat("&amount={0}", orderTotal.ToString("0.00", CultureInfo.InvariantCulture));
@@ -607,11 +608,11 @@ namespace Kuyam.WebUI.Controllers
             builder.Append(string.Format("&no_note=1&currency_code={0}", HttpUtility.UrlEncode(ConfigManager.currencyCode)));
             builder.AppendFormat("&invoice={0}", postProcessPaymentRequest.Order.OrderID);
             builder.AppendFormat("&rm=2", new object[0]);
-           
+
             string returnUrl = EmailHelper.GetStoreHost() + "companysetup/Success?companyId=" + postProcessPaymentRequest.Order.ProfileID;
             string cancelReturnUrl = EmailHelper.GetStoreHost() + "companysetup/image";
             builder.AppendFormat("&return={0}&cancel_return={1}", HttpUtility.UrlEncode(returnUrl), HttpUtility.UrlEncode(cancelReturnUrl));
-                       
+
             return builder.ToString();
         }
 

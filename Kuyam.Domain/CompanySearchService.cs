@@ -8,29 +8,127 @@ using Kuyam.Database;
 using Kuyam.Domain.AppointmentModel;
 using Kuyam.Domain.Company;
 using Kuyam.Utility;
+using Kuyam.Repository.Interface;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Kuyam.Domain
 {
-    public static class CompanySearchService
+    public class CompanySearchService
     {
-        public static List<CompanyProfileSearch> GetCompaniesFromTypeIDWithDistance(int custID, int serviceId, double distance, decimal priceFrom, decimal priceTo, DateTime hourFrom, DateTime hourTo, bool isToday, int page, int sortBy, out int totalRecord, string key)
+        #region Fields
+
+        private readonly DbContext _dbContext;
+        private readonly IRepository<ServiceCompany> _serviceCompanyRepository;
+        private readonly IRepository<Appointment> _appointmentRepository;
+        private readonly IRepository<EmployeeService> _employeeServiceRepository;
+        private readonly IRepository<InstructorClassScheduler> _instructorClassSchedulerRepository;
+
+        #endregion
+
+        #region Ctor
+
+        public CompanySearchService(DbContext dbContext,
+            IRepository<ServiceCompany> serviceCompanyRepository,
+            IRepository<Appointment> appointmentRepository,
+            IRepository<InstructorClassScheduler> instructorClassSchedulerRepository,
+            IRepository<EmployeeService> employeeServiceRepository
+            )
+        {
+            this._dbContext = dbContext;
+            this._serviceCompanyRepository = serviceCompanyRepository;
+            this._appointmentRepository = appointmentRepository;
+            this._instructorClassSchedulerRepository = instructorClassSchedulerRepository;
+            this._employeeServiceRepository = employeeServiceRepository;
+
+
+        }
+        #endregion
+
+
+        public List<CompanyProfileSearch> GetProfileCompaniesByEventId(int eventId, int categoryId, string cityName = "")
+        {
+            var data = _dbContext.SqlQuery<CompanyProfileSearch>("GetProfileCompaniesByEventID @EventID, @CategoryID, @CityName",
+                new SqlParameter("EventID", eventId), new SqlParameter("CategoryID", categoryId), new SqlParameter("CityName", cityName));
+            var result = data.ToList();
+
+            var appointments = this.GetAppoinmentsByProfileIds(result.Select(a => a.ProfileID).ToList());
+
+            foreach (var companyProfileSearch in result)
+            {
+                TransformEmployeeHours(companyProfileSearch);
+                TransformInstructorClassSchedulerHours(companyProfileSearch);
+                TransformCompanyHours(companyProfileSearch);
+                TransformEvents(companyProfileSearch);
+                companyProfileSearch.Appointments = appointments.Where(m => m.ProfileId == companyProfileSearch.ProfileID).ToList();
+                companyProfileSearch.CompanyAvailableTimeSlots = GetCompanyAvailableTimeSlots(companyProfileSearch);
+            }
+            return result;
+        }
+
+        public List<CompanyProfileSearch> GetProfileCompaniesWebSite(int serviceID, decimal? fromPrice, decimal? toPrice
+            , DateTime? fromDate, DateTime? toDate, bool isToday, string keySearch, double currentLat, double currentLong
+            , double distance, int custID, int skip, int take, out int totalItems)
+        {
+            totalItems = 0;
+            try
+            {
+                if (keySearch == null) keySearch = string.Empty;
+
+                var totalItemParam = new SqlParameter("TotalItems", 0);
+                totalItemParam.Direction = ParameterDirection.Output;
+                var data = _dbContext.SqlQuery<CompanyProfileSearch>(
+                    "GetProfileCompaniesWebSite @ServiceID, @FromPrice, @ToPrice, @FromDate, @ToDate, @IsToDay, @KeySearch, @CurrentLat, @CurrentLong, @Distance, @CustID, @Skip, @Take, @TotalItems out",
+                    new SqlParameter("ServiceID", serviceID),
+                    new SqlParameter("FromPrice", fromPrice),
+                    new SqlParameter("ToPrice", fromPrice),
+                    new SqlParameter("FromDate", fromDate),
+                    new SqlParameter("ToDate", toDate),
+                    new SqlParameter("IsToday", isToday),
+                    new SqlParameter("KeySearch", keySearch),
+                    new SqlParameter("CurrentLat", Convert.ToSingle(currentLat)),
+                    new SqlParameter("CurrentLong", Convert.ToSingle(currentLong)),
+                    new SqlParameter("Distance", Convert.ToSingle(distance)),
+                    new SqlParameter("CustID", custID),
+                    new SqlParameter("Skip", skip),
+                    new SqlParameter("Take", take),
+                    totalItemParam
+                    );
+
+                var result = data.ToList();
+                totalItems = Convert.ToInt32(totalItemParam.Value);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new List<CompanyProfileSearch>();
+            }
+        }
+
+        public List<CompanyProfileSearch> GetCompaniesFromTypeIDWithDistance(Cust cust, int serviceId, double distance, decimal priceFrom, decimal priceTo, DateTime hourFrom, DateTime hourTo, bool isToday, int page, int sortBy, out int totalRecord, string key)
         {
             var take = 10;
-            var skip = (page - 1)*take;
-            
+            var skip = (page - 1) * take;
+
             var totalItems = 0;
             var curLat = ConfigManager.DefaultLatitude;
             var curLong = ConfigManager.Defaultlongitude;
-            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            int custID = 0;
+            if (cust != null)
             {
-                Cust cust = DAL.xGetCust(HttpContext.Current.User.Identity.Name);
+                custID = cust.CustID;
                 curLat = cust.Latitude;
                 curLong = cust.Longitude;
             }
 
-            var pcList = CompanySearchDAL.GetProfileCompaniesWebSite(serviceId, priceFrom, priceTo, hourFrom, hourTo,
+            var pcList = this.GetProfileCompaniesWebSite(serviceId, priceFrom, priceTo, hourFrom, hourTo,
                     isToday, key, curLat, curLong, distance, custID, skip, take, out totalItems);
+
             totalRecord = totalItems;
+
+            var appointments = this.GetAppoinmentsByProfileIds(pcList.Select(a => a.ProfileID).ToList());
 
             foreach (var companyProfileSearch in pcList)
             {
@@ -38,18 +136,21 @@ namespace Kuyam.Domain
                 TransformInstructorClassSchedulerHours(companyProfileSearch);
                 TransformCompanyHours(companyProfileSearch);
                 TransformEvents(companyProfileSearch);
+                companyProfileSearch.Appointments = appointments.Where(m => m.ProfileId == companyProfileSearch.ProfileID).ToList();
                 companyProfileSearch.CompanyAvailableTimeSlots = GetCompanyAvailableTimeSlots(companyProfileSearch);
             }
 
             return pcList;
         }
 
-        private static void TransformEmployeeHours(CompanyProfileSearch companyProfile)
+        private void TransformEmployeeHours(CompanyProfileSearch companyProfile)
         {
             var employeeHoursXml = UtiHelper.Deserialize<EmployeeHoursXml>("<EmployeeHoursXml>" + companyProfile.EmployeeHoursStr + "</EmployeeHoursXml>");
             companyProfile.EmployeeHours = employeeHoursXml != null
                 ? employeeHoursXml.EmployeeHours.Select(o => new EmployeeHour
                 {
+                    ID = o.ID,
+                    ServiceCompanyID = o.ServiceCompanyID,
                     DayOfWeek = o.DayOfWeek,
                     FromHour = o.FromHour,
                     IsPreview = o.IsPreview,
@@ -59,23 +160,28 @@ namespace Kuyam.Domain
                 : new List<EmployeeHour>();
         }
 
-        private static void TransformInstructorClassSchedulerHours(CompanyProfileSearch companyProfile)
+        private void TransformInstructorClassSchedulerHours(CompanyProfileSearch companyProfile)
         {
             var employeeHoursXml = UtiHelper.Deserialize<EmployeeHoursXml>("<EmployeeHoursXml>" + companyProfile.InstructorClassSchedulerStr + "</EmployeeHoursXml>");
             companyProfile.InstructorClassSchedulerHours = employeeHoursXml != null
                 ? employeeHoursXml.EmployeeHours.Select(o => new EmployeeHour
                 {
                     ID = o.ID,
+                    ServiceCompanyID = o.ServiceCompanyID,
+                    ServiceName = o.ServiceName,
+                    AttendeesNumber = o.AttendeesNumber,
                     DayOfWeek = o.DayOfWeek,
                     FromHour = o.FromHour,
                     IsPreview = o.IsPreview,
                     ToHour = o.ToHour,
-                    CompanyEmployee = new CompanyEmployee { EmployeeID = o.EmployeeID, EmployeeName = o.EmployeeName }
+                    CompanyEmployee = new CompanyEmployee { EmployeeID = o.EmployeeID, EmployeeName = o.EmployeeName },
+                    StartDate = o.StartDate,
+                    EndDate = o.EndDate
                 }).ToList()
                 : new List<EmployeeHour>();
         }
 
-        private static void TransformCompanyHours(CompanyProfileSearch companyProfile)
+        private void TransformCompanyHours(CompanyProfileSearch companyProfile)
         {
             var companyHoursXml = UtiHelper.Deserialize<CompanyHoursXml>("<CompanyHoursXml>" + companyProfile.CompanyHoursStr + "</CompanyHoursXml>");
             companyProfile.CompanyHours = companyHoursXml != null
@@ -89,7 +195,7 @@ namespace Kuyam.Domain
                     : new List<CompanyHour>();
         }
 
-        private static void TransformEvents(CompanyProfileSearch companyProfile)
+        private void TransformEvents(CompanyProfileSearch companyProfile)
         {
             var eventsXML = UtiHelper.Deserialize<EventsXml>("<EventsXml>" + companyProfile.CompanyEventsStr + "</EventsXml>");
             companyProfile.CompanyEvents = eventsXML != null
@@ -99,21 +205,22 @@ namespace Kuyam.Domain
                     Name = o.Name,
                     StartDate = o.StartDate,
                     EndDate = o.EndDate,
-                    CompanyEventID = o.CompanyEventID
+                    CompanyEventID = o.CompanyEventID,
+                    CompanyServiceEventsNumber = o.CompanyServiceEventsNumber,
+                    ClassEventsNumber = o.ClassEventsNumber
                 }).ToList()
                 : new List<EventDTO>();
         }
 
-        private static TimeSlots GetCompanyAvailableTimeSlots(CompanyProfileSearch profileCompany)
+        private TimeSlots GetCompanyAvailableTimeSlots(CompanyProfileSearch profileCompany)
         {
             if (profileCompany == null)
                 return null;
 
             var startTime = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow, DateTimeKind.Utc);
             var result = new TimeSlots() { CompanyProfileId = profileCompany.ProfileID };
-            result.ProfileCompany = profileCompany;
 
-            result.IsClass = profileCompany.IsClass.HasValue ? profileCompany.IsClass.Value : false;
+            result.IsClass = profileCompany.HasClassBooking;
 
             var companyhours = profileCompany.CompanyHours;
             if (companyhours.Any())
@@ -123,7 +230,7 @@ namespace Kuyam.Domain
                     var date = startTime.Date.AddDays(i);
                     var hoursOfDate = companyhours.Where(c =>
                         (c.IsDaily != null && c.IsDaily.Value) ||
-                        c.DayOfWeek.ToString().Contains(((int)date.DayOfWeek).ToString())).Take(2)
+                        c.DayOfWeek == (int)date.DayOfWeek).Take(1)
                         .ToList();
 
                     if (hoursOfDate.Any())
@@ -144,8 +251,10 @@ namespace Kuyam.Domain
                 startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour,
                     startTime.Minute, 0);
                 var endTime = startTime.AddDays(8).Date;
-                var companyTimeslots = GetTimeSlots(profileCompany, startTime, endTime,
-                    TimeSlots.NumberTimeSlots + 1);
+                var numberofTimeSlot = 3;
+                if (result.IsClass)
+                    numberofTimeSlot = 1;
+                var companyTimeslots = GetTimeSlots(profileCompany, startTime, endTime, numberofTimeSlot);
 
                 result.SetTimeSlots(companyTimeslots, startTime);
             }
@@ -153,57 +262,85 @@ namespace Kuyam.Domain
             return result;
         }
 
-        private static List<TimeSlot> GetTimeSlots(CompanyProfileSearch profileCompany, DateTime startTime, DateTime endTime, int take = 0, int timeSlot = 30)
+        private List<Appointment> GetAppoinmentsByProfileIds(List<int> profileIds)
+        {
+            DateTime temp = DateTime.UtcNow.AddMinutes(-10);
+            DateTime dtNow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow, DateTimeKind.Utc);
+            return _appointmentRepository.Table.Where(a => profileIds.Contains(a.ProfileId ?? 0)
+                && a.Start >= dtNow
+                && a.AppointmentStatusID != (int)Types.AppointmentStatus.Unknown
+                && a.AppointmentStatusID != (int)Types.AppointmentStatus.Cancelled
+                && a.AppointmentStatusID != (int)Types.AppointmentStatus.Delete
+                && (a.AppointmentStatusID != (int)Types.AppointmentStatus.TemporaryPending || temp <= a.Created)
+                ).ToList();
+        }
+
+        private List<TimeSlot> GetTimeSlots(CompanyProfileSearch profileCompany, DateTime startTime, DateTime endTime, int take = 0, int timeSlot = 30)
         {
             List<TimeSlot> results = new List<TimeSlot>();
 
             var profileId = profileCompany.ProfileID;
-            var isClass = profileCompany.IsClass.HasValue ? profileCompany.IsClass.Value : false;
-            var companyAppointments = CompanySearchDAL.GetAppoinmentsByProfileId(profileId, startTime, endTime);
+
+            var isClass = profileCompany.HasClassBooking;
+
+            var companyAppointments = profileCompany.Appointments.Where(a => ((a.Start >= startTime && a.Start < endTime) || (a.End > startTime && a.End <= endTime))).ToList();
 
             var serviceHours = GetCompanyServiceTimes(profileCompany, startTime).ToList();
+
             for (DateTime time = startTime; time < endTime; time = time.AddMinutes(timeSlot))
             {
                 var end = time.AddMinutes(timeSlot);
-                var employeeAvaiable = 0;
+                var employeeAvaiableId = 0;
                 var serviceName = string.Empty;
-                int status =
-                    (int)GetCompanyTimeslotStatus(time, end, companyAppointments, serviceHours, out employeeAvaiable, out serviceName);
-               
+                int status = 0;
+                int InstructorClassSchedulerId = 0;
+                if (!isClass)
+                {
+                    status = (int)GetCompanyTimeslotStatus(time, end, companyAppointments, serviceHours, out employeeAvaiableId, out serviceName);
+                }
+                else
+                {
+                    status = (int)GetClassSchedulerslotStatus(time, end, companyAppointments, serviceHours, out employeeAvaiableId, out InstructorClassSchedulerId, out serviceName);
+                }
+
+
                 if (status == (int)CompanyTimeSlotStatus.Available)
                     results.Add(new TimeSlot()
                     {
-                        Title = time.ToString("hh:mmtt") + (isClass ? " " + UtilityHelper.TruncateAtWord(serviceName, 12) : string.Empty),
+                        Title = time.ToString("h:mmtt") + (isClass ? " " + UtilityHelper.TruncateAtWord(serviceName, 12) : string.Empty),
                         Time = time.ToString("yyyy-MM-dd HH:mm:ss"),
                         Status = status,
                         StartTime = time,
                         EndTime = end,
-                        EmployeeAvailableId = employeeAvaiable
+                        EmployeeAvailableId = employeeAvaiableId,
+                        InstructorClassSchedulerId = InstructorClassSchedulerId
                     });
-                if (take > 0 && results.Count == take)
+
+                if (results.Count > take)
                     break;
             }
             return results;
         }
 
-        private static CompanyTimeSlotStatus GetCompanyTimeslotStatus(DateTime start, DateTime end, List<Appointment> companyAppointments, List<ServiceTime> companyServiceHours, out int employeeAvaiable, out string serviceName)
+        private CompanyTimeSlotStatus GetCompanyTimeslotStatus(DateTime start, DateTime end, List<Appointment> companyAppointments, List<ServiceTime> companyServiceHours, out int employeeAvaiable, out string serviceName)
         {
             employeeAvaiable = 0;
             serviceName = string.Empty;
-            if (companyAppointments.Any(
-                    x =>
-                    ((x.Start < start && x.End > end) || (start <= x.Start && x.Start < end) ||
-                     (start < x.End && x.End <= end)) &&
-                    x.AppointmentStatusID == (int)Types.AppointmentStatus.Confirmed))
+            if (companyAppointments.Any(x =>
+                    ((x.Start < start && x.End > end)
+                    || (start <= x.Start && x.Start < end)
+                    || (start < x.End && x.End <= end)
+                    ) && x.AppointmentStatusID == (int)Types.AppointmentStatus.Confirmed))
             {
+
                 return CompanyTimeSlotStatus.Busy;
             }
 
-            if (companyAppointments.Any(
-                    x =>
-                    ((x.Start < start && x.End > end) || (start <= x.Start && x.Start < end) ||
-                     (start < x.End && x.End <= end)) &&
-                    (x.AppointmentStatusID == (int)Types.AppointmentStatus.Pending ||
+            if (companyAppointments.Any(x =>
+                    ((x.Start < start && x.End > end)
+                    || (start <= x.Start && x.Start < end)
+                    || (start < x.End && x.End <= end)
+                    ) && (x.AppointmentStatusID == (int)Types.AppointmentStatus.Pending ||
                      x.AppointmentStatusID == (int)Types.AppointmentStatus.TemporaryPending ||
                      x.AppointmentStatusID == (int)Types.AppointmentStatus.CompanyModified ||
                      x.AppointmentStatusID == (int)Types.AppointmentStatus.Modified)))
@@ -232,8 +369,10 @@ namespace Kuyam.Domain
                         x.AppointmentStatusID != (int)Types.AppointmentStatus.Delete &&
                         x.AppointmentStatusID != (int)Types.AppointmentStatus.Unknown))
                 {
-                    employeeAvaiable = companyServiceHoursAvailable.First().EmployeeId;
-                    serviceName = DAL.GetServiceNameFromServiceCompanyId(companyServiceHoursAvailable.First().ServiceCompanyId);
+                    var employeeHour = companyServiceHoursAvailable.First();
+
+                    employeeAvaiable = employeeHour.Id;
+                    serviceName = employeeHour.ServiceName; //DAL.GetServiceNameFromServiceCompanyId(companyServiceHoursAvailable.First().ServiceCompanyId);
                     return CompanyTimeSlotStatus.Available;
                 }
 
@@ -252,35 +391,96 @@ namespace Kuyam.Domain
             return CompanyTimeSlotStatus.UnAvailable;
         }
 
-        private static List<ServiceTime> GetCompanyServiceTimes(CompanyProfileSearch profileCompany, DateTime dtnow)
+        private CompanyTimeSlotStatus GetClassSchedulerslotStatus(DateTime start, DateTime end, List<Appointment> companyAppointments, List<ServiceTime> companyServiceHours, out int instructorId, out int InstructorClassSchedulerId, out string serviceName)
+        {
+            instructorId = 0;
+            InstructorClassSchedulerId = 0;
+            serviceName = string.Empty;
+
+            var endTime = end.TimeOfDay;
+            if (endTime.Hours == 0 && endTime.Minutes == 0 && endTime.Seconds == 0)
+                endTime = end.AddTicks(-1).TimeOfDay;
+
+            var companyServiceHoursAvailable = companyServiceHours.Where(
+                x => (x.DateOfWeek == (int)start.DayOfWeek) &&
+                    ((x.FromHour < start.TimeOfDay && x.ToHour > endTime) ||
+                     (start.TimeOfDay <= x.FromHour && x.FromHour < endTime) ||
+                     (start.TimeOfDay < x.ToHour && x.ToHour <= endTime))).ToList();
+
+            if (!companyServiceHoursAvailable.Any())
+            {
+                return CompanyTimeSlotStatus.UnAvailable;
+            }
+
+            foreach (var companyServiceHour in companyServiceHoursAvailable)
+            {
+                var numberAppoitment = companyAppointments.Where(x =>
+                     ((x.Start < start && x.End > end) || (start <= x.Start && x.Start < end) ||
+                      (start < x.End && x.End <= end)) &&
+                      (x.ClassSchedulerID.HasValue && x.ClassSchedulerID.Value == companyServiceHour.Id) &&
+                     (x.AppointmentStatusID == (int)Types.AppointmentStatus.Pending ||
+                      x.AppointmentStatusID == (int)Types.AppointmentStatus.TemporaryPending ||
+                      x.AppointmentStatusID == (int)Types.AppointmentStatus.CompanyModified ||
+                      x.AppointmentStatusID == (int)Types.AppointmentStatus.Modified ||
+                       x.AppointmentStatusID == (int)Types.AppointmentStatus.Confirmed
+                      )).ToList().Count();
+
+                var maxSlot = companyServiceHour.AttendeesNumber;
+
+
+                //var sc = _serviceCompanyRepository.Table.Where(x => x.ServiceCompanyID == companyServiceHour.ServiceCompanyId).FirstOrDefault();
+
+                //if (sc != null)
+                //{
+                //    maxSlot = sc.AttendeesNumber.HasValue ? sc.AttendeesNumber.Value : 0;
+                //}
+
+                if (numberAppoitment < maxSlot)
+                {
+                    instructorId = companyServiceHour.EmployeeId;
+                    InstructorClassSchedulerId = companyServiceHour.Id;
+                    serviceName = companyServiceHour.ServiceName;//DAL.GetServiceNameFromServiceCompanyId(companyServiceHour.ServiceCompanyId);
+                    return CompanyTimeSlotStatus.Available;
+                }
+            }
+            return CompanyTimeSlotStatus.UnAvailable;
+        }
+
+        private List<ServiceTime> GetCompanyServiceTimes(CompanyProfileSearch profileCompany, DateTime dtnow)
         {
             var results = new List<ServiceTime>();
             var lstEmployeeHour = new List<ServiceTime>();
-            if (profileCompany.IsClass.HasValue && profileCompany.IsClass.Value)
+            if (profileCompany.HasClassBooking)
             {
-                lstEmployeeHour = profileCompany.InstructorClassSchedulerHours
-               .Select(d => new ServiceTime()
-               {
-                   EmployeeId = d.CompanyEmployeeID,
-                   DateOfWeek = d.DayOfWeek,
-                   FromHour = d.FromHour,
-                   ToHour = d.ToHour,
-                   ServiceCompanyId = d.ID //  get serviceCompanyID in store procedure
-               }).ToList();
+                lstEmployeeHour = profileCompany.InstructorClassSchedulerHours.Select(d => new ServiceTime()
+                             {
+                                 Id = d.ID,
+                                 EmployeeId = d.CompanyEmployeeID,
+                                 DateOfWeek = d.DayOfWeek,
+                                 FromHour = d.FromHour,
+                                 ToHour = d.ToHour,
+                                 ServiceCompanyId = d.ServiceCompanyID,//  get serviceCompanyID in store procedure
+                                 ServiceName = d.ServiceName,
+                                 AttendeesNumber = d.AttendeesNumber,
+                                 FromDateTime = d.StartDate.HasValue ? d.StartDate.Value : DateTime.MinValue,
+                                 ToDateTime = d.EndDate.HasValue ? d.EndDate.Value : DateTime.MinValue
+                             }).ToList();
             }
             else
             {
                 lstEmployeeHour = profileCompany.EmployeeHours
                .Select(d => new ServiceTime()
                {
+                   Id = d.ID,
                    EmployeeId = d.CompanyEmployeeID,
                    DateOfWeek = d.DayOfWeek,
                    FromHour = d.FromHour,
                    ToHour = d.ToHour,
-                   ServiceCompanyId = d.ID //  get serviceCompanyID in store procedure
+                   FromDateTime = d.StartDate.HasValue ? d.StartDate.Value : DateTime.MinValue,
+                   ToDateTime = d.EndDate.HasValue ? d.EndDate.Value : DateTime.MinValue
                }).ToList();
             }
-           
+
 
 
             int dayOfWeek = (int)dtnow.DayOfWeek;
@@ -305,20 +505,38 @@ namespace Kuyam.Domain
                 dt = dt.AddDays(day);
                 dt = dt.Date;
 
+                if (item.FromDateTime > DateTime.MinValue && item.ToDateTime > DateTime.MinValue &&
+                    (item.FromDateTime > dt || item.ToDateTime < dt))
+                {
+                    continue;
+                }
+
                 var eventCustoms = GetIntersectWithCompanyHours(companyHours, dt, item.FromHour, item.ToHour);
                 foreach (ServiceTime ec in eventCustoms)
                 {
                     ec.EmployeeId = item.EmployeeId;
                     ec.ServiceCompanyId = item.ServiceCompanyId;
+                    ec.ServiceName = item.ServiceName;
+                    ec.AttendeesNumber = item.AttendeesNumber;
+                    ec.Id = item.Id;
                     results.Add(ec);
                 }
+
 
             }
 
             return results;
         }
 
-        private static List<ServiceTime> GetIntersectWithCompanyHours(List<CompanyHour> companyHours, DateTime date, TimeSpan startTime, TimeSpan endTime)
+        private bool IsClassExpire(int serviceCompanyId, DateTime date)
+        {
+            var isExpire = false;
+            isExpire = _serviceCompanyRepository.Table.Any(x => x.ServiceCompanyID == serviceCompanyId
+                && x.ServiceTypeId == (int)Types.ServiceType.ClassType && (x.FromDateTime.Value > date || x.ToDateTime.Value < date));
+            return isExpire;
+        }
+
+        private List<ServiceTime> GetIntersectWithCompanyHours(List<CompanyHour> companyHours, DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             List<ServiceTime> results = new List<ServiceTime>();
             int dateOfWeek = (int)date.DayOfWeek;
@@ -378,6 +596,6 @@ namespace Kuyam.Domain
         }
 
 
-    
+
     }
 }

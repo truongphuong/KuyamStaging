@@ -333,3 +333,5 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\GeoFramew
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\RestSharp.xml
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\obj\Debug\Kuyam.Domain.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Domain\bin\Debug\EntityFramework.SqlServer.xml

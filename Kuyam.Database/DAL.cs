@@ -3124,18 +3124,12 @@ namespace Kuyam.Database
             }
         }
 
-        public static List<Service> GetServicesByCategoryID(int categoryID, bool getActiveOnly = true)
+        public static List<Service> GetServicesByCategoryID(int? categoryID, bool getActiveOnly = true)
         {
-            kuyamEntities _context = DBContext;
-            List<Service> services = new List<Service>();
-            var query = (from sc in _context.ServiceCompanies
-                             join s in _context.Services on sc.ServiceID equals s.ServiceID
-                             where s.ParentServiceID == categoryID &&( sc.ServiceTypeId != (int)Types.ServiceType.ClassType)
-                             select s).Distinct().ToList();
-            if (query != null && query.Count > 0)
-                return query;
-            return null;
-           
+            kuyamEntities _context = DBContext;         
+            var query = _context.Services.Where(m => m.ParentServiceID == categoryID && (m.Status.HasValue && m.Status.Value)).ToList();
+            return query;
+
         }
 
         public static Service GetService(int serviceID)
@@ -3299,7 +3293,7 @@ namespace Kuyam.Database
             kuyamEntities _context = DBContext;
             try
             {
-                if (_context.ServiceCompanies.Any(x => x.ServiceCompanyID == serviceCompanyID ))
+                if (_context.ServiceCompanies.Any(x => x.ServiceCompanyID == serviceCompanyID))
                 {
                     ServiceCompany sc =
                         _context.ServiceCompanies.Where(x => x.ServiceCompanyID == serviceCompanyID).FirstOrDefault();
@@ -3325,7 +3319,7 @@ namespace Kuyam.Database
                 scList =
                     _context.ServiceCompanies.Where(
                         x =>
-                        x.ProfileID == profileID && x.Service.ParentServiceID != null &&  x.ServiceTypeId != (int)Types.ServiceType.ClassType && 
+                        x.ProfileID == profileID && x.Service.ParentServiceID != null && x.ServiceTypeId != (int)Types.ServiceType.ClassType &&
                         x.Status != (int)Types.ServiceCompanyStatus.Delete).
                         ToList();
                 return scList;
@@ -5842,11 +5836,11 @@ namespace Kuyam.Database
 
         }
 
-        public static string GetEmployeeNameFromEmployeeID( int employeeID)
+        public static string GetEmployeeNameFromEmployeeID(int employeeID)
         {
             var name = string.Empty;
             kuyamEntities _context = DBContext;
-            if(_context.CompanyEmployees.Any(x => x.EmployeeID == employeeID))
+            if (_context.CompanyEmployees.Any(x => x.EmployeeID == employeeID))
             {
                 name = _context.CompanyEmployees.Where(x => x.EmployeeID == employeeID).First().EmployeeName;
             }

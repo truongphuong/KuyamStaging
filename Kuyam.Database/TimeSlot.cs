@@ -21,7 +21,7 @@ namespace Kuyam.Database
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int Status { get; set; }
-
         public int EmployeeAvailableId { get; set; }
+        public int InstructorClassSchedulerId { get; set; }
     }
 }

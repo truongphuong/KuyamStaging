@@ -1,466 +1,816 @@
-﻿@using Kuyam.Database;
-@using Kuyam.Domain
-@using Kuyam.WebUI.Models;
-@using Kuyam.Utility;
-@using Kuyam.Domain.Seo;
-@using Kuyam.Database.Extensions;
-@{
-    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "lets you book all your appointments in one place";
-    FeaturedCompany featuredCompany = ViewBag.FeaturedCompany;
-    ProfileCompany profileCompany = ViewBag.ProfileCompany;
-    List<Service> parentCategories = ViewBag.ParentCategories;
-    List<PostExt> recentPosts = ViewBag.Posts;
-    PostExt featuredPost = ViewBag.FeaturedPost;
-    var totalPosts = recentPosts.Count();
 }
-@section MetaSeoSection{
-    @ViewBag.MetaTagExtension.MetaTag()
-}
-<link href="@Url.Content("~/Content/jcarousel/skins/tango/skin.css")" rel="stylesheet" type="text/css" />
-<!-- InstanceBeginEditable name="content" -->
-<div class="whitebackground">
-    <div class="banner">
-        <div style="position: absolute; z-index: 1;">
-            <div class="bheader">
-                <div class="col1 marketplacecol1">
-                    <img style="margin-top: 14px; margin-left: 157px;" src="/Images/text.png" />
-                    <div class="r3">
-                        <div class="homeselect">
-                            <select name="speedC" id="speedC" class="selectmenu" onchange="redrectToResult();">
-                                <option value="0" style="font-weight: bold" selected="selected"><span>select a category</span></option>
-                                @foreach (Service parent in parentCategories)
-                                {
-                                    <option style="font-weight:bold" value="@parent.ServiceID" name="@parent.ServiceName">@UtilityHelper.TruncateText(parent.ServiceName, 30)</option>
-                                }
-                            </select>
-                        </div>
-                        <a href="#" title="discover" id="btnDiscover" class="discover" style="display: none;">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="slides" class="marketplaceblog">
-            <ul class="bjqs">
-                <li>
-                    @if (featuredPost == null)
-                    {
-                        <img alt="" src="/images/photo_company_image.png" style="width: 961px; height: 511px;" />
-                        <div class="bgcaption">
-                        </div>
 
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl("blogPost", new { seName = featuredPost.GetSeName(featuredPost.PostRowID, "post") })" title="@featuredPost.Title">
-                            @if (string.IsNullOrEmpty(featuredPost.CoverPhoto))
-                            {
 
-                                <img alt="@featuredPost.Title" src="/images/photo_company_image.png" style="width: 961px; height: 511px;" />
-                            }
-                            else
-                            {
-                                <img alt="" src="@KalturaHelper.GetKalturaUrl(featuredPost.PostRowID, featuredPost.CoverPhoto, (int)Types.MediaCropType.HomeBeforeLogin, 961, 511)" style="width: 961px; height: 511px;" />
-                            }
-                            <div class="bgcaption">
-                                <h1 class="textCaption">@featuredPost.Title</h1>
-                            </div>
-                        </a>
-                    }
-                </li>
+    <!-- Delete everything in this .container and get started on your own site! -->
+    <div class="bannerSlideShow">
+        <div class="skdslider">
+            <ul id="demo1" class="slides">
+                <li><img src="content/images/7.jpg" /></li>
+                <li><img src="content/images/8.jpg" /></li>
+                <!-- <li><img src="content/images/1.jpg" /></li>
+                <li><img src="content/images/2.jpg" /></li>
+                <li><img src="content/images/3.jpeg" /></li>
+                <li><img src="content/images/4.jpg" /></li>
+                <li><img src="content/images/5.jpg" /></li>
+                <li><img src="content/images/6.jpg" /></li> -->
             </ul>
         </div>
-    </div>
-    <div class="clear">
-    </div>
-    <div class="homecontent marketplaceblog">
-        <div class="itembox">
-            @if (profileCompany != null)
-            {
-                var addrees1 = UtilityHelper.TruncateText(profileCompany.City, 15) + ", " + profileCompany.State;
-                if (addrees1.Length > 45)
-                {
-                    addrees1 = addrees1.Substring(0, 40) + "...";
-                }
-                var imgsrc = DAL.GetCompanyPhotoByCompanyID(featuredCompany.ProfileID);
-                var urlPhoto = "/images/photo_company_image.png";
-                if (imgsrc != null)
-                {
-                    urlPhoto = KalturaHelper.GetKalturaUrl(imgsrc.LocationData, 961, 511);
-                }
-                string pUrl = Url.RouteUrl("availability", new { seName = featuredCompany.GetSeName(featuredCompany.ProfileID) }); ;
 
-                //if (DAL.isViewAvailability(featuredCompany.ProfileID))
-                //{
-                //    pUrl = Url.RouteUrl("availability",new { seName = featuredCompany.GetSeName(featuredCompany.ProfileID) });
-                //}
-                //else
-                //{
-                //    pUrl = "/company/companysearch/0?profileId=" + featuredCompany.ProfileID;
-                //}
-
-                <div class="activitivedouble">
-                    <div class="featured">
-                    </div>
-                    <a href="@pUrl" title="@featuredCompany.Profile.ProfileCompany.Name" class="testing">
-                        <img src="@urlPhoto" alt="" style="width: 472px; height: 230px;" />
-                        <div class="bgcaptionactive">
-                            <div class="contentcaption captionactivitive" style="color: #FFFFFF;font-size: 35px;bottom: 45px !important" title="@featuredCompany.Profile.ProfileCompany.Name">
-                                @featuredCompany.Profile.ProfileCompany.Name
-                            </div>
-                            <div class="rankingstar">
-                                <div class="clear5">
-                                </div>
-                                @for (var i = 0; i < profileCompany.Rate; i++)
-                                {
-                                    <span class="greenstar"></span>
-                                }
-                                @for (var i = 5 - profileCompany.Rate; i > 0; i--)
-                                {
-                                    <span class="graystar"></span>
-                                }
-                                <a href="#" title="reviews" class="weburl" style="font-size: 18px;">
-                                    (@profileCompany.TotalReview
-                                    @(profileCompany.TotalReview > 1 ? "reviews" : "review"))
-                                </a> <span class="addr"
-                                           style="font-size: 18px;">@addrees1</span>
-                                        <div class="clear">
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btnarrow">
-                                        <img src="@Url.Content("~/Images/Blog/arrow-right.png")" alt="arrow-right" />
-                                    </a>
-                                </div>
-                            </a>
-                        </div>
-            }
-            @foreach (var post in recentPosts)
-            {
-                <div class="activebox1">
-                    <a href="@Url.RouteUrl("blogPost", new { seName = post.GetSeName(post.PostRowID, "post") })" title="@post.Title">
-                        @if (string.IsNullOrEmpty(post.CoverPhoto))
-                        {
-                            <img src="@Url.Content("~/Images/noimg.jpg")" alt="No Image" style="width: 233px; height: 230px;" />
-                        }
-                        else
-                        {
-                            <img src="@KalturaHelper.GetKalturaUrl(post.PostRowID, post.CoverPhoto, (int)Types.MediaCropType.DetailBeforeLogin, 233, 230)" alt="@post.Title" style="width: 233px; height: 230px;" />
-                        }
-                        <div class="bgcaptionactive">
-                            <div class="contentcaption">@post.Title</div>
-                        </div>
-                    </a>
+        <div class="lineBottom">
+            <div class="container">
+                <div class="sixteen columns descriptionTitle">
+                    <h2><span>booking</span> appointments has never been easier!</h2>
+                    <h4>you pick the time, we'll book the appointment</h4>
+                    <p>
+                        <a href="#" title="sign up">sign up</a>
+                        <a href="#" title="how it works" class="itWork">how it works</a>
+                    </p>
                 </div>
-            }
-
-            <div class="clear">
             </div>
-            <h2 class="aligncenter">
-                as featured on <span>
-                    <img src="@Url.Content("~/Images/Blog/arrow-down.png")" alt='Arrow Down' />
-                </span>
-            </h2>
-            <div class="clear">
-            </div>
-            <div class="marketplaceCarousel">
-                <ul id="as-featured-on" class="carousel-apps group jcarousel-skin-tango">
-                    <li>
-                        <a href="http://online.wsj.com/article/PR-CO-20130429-911201.html?mod=googlenews_wsj"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Wall-Street-Journal.png" title="Busy Moms Rejoice: Make All Appointments from your Mobile in a Matter of Seconds with kuyam "
-                                     alt="The Wall Street Journal" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://techcrunch.com/2012/09/10/kuyam-is-a-one-stop-shop-to-find-schedule-appointments-with-lifestyle-businesses/"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/techcrunch.png" title="Tech Crunch" alt="Tech Crunch"
-                                     class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.buzzfeed.com/josieroman/busy-women-rejoice-make-all-appointments-online-i-7nyd"
-                           target="_blank">
-                            @*class="ad-active"*@
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/BuzzFeed_Logo.jpg" title="Busy Women Rejoice: Make All Appointments Online In A Matter Of Seconds With Kuyam"
-                                     alt="Buzzfeed" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.reuters.com/article/2013/02/28/ca-kuyamcom-schedule-idUSnPnLA69035+160+PRN20130228"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Reuters.jpg" title="Meet Kuyam.com, A New Online Scheduling Platform Designed to Organize Your Life in Just Three Clicks"
-                                     alt="Reuters" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.kost1035.com/pages/mommyblog.html?article=11511668" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/KOST_FM_2013.jpg" title="One Crazy Summer: Mom's How-to Manual"
-                                     alt="KOST FM 2013" class="image2">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.layoga-digital.com/layoga/october_2013#pg20" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/LaYoga.jpg" title="La Yoga - October 2013" alt="LA Yoga"
-                                     class="image2">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://finance.yahoo.com/news/meet-kuyam-com-online-scheduling-230600436.html"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/yahoo finance.jpg" title="Meet Kuyam.com, A New Online Scheduling Platform Designed to Organize Your Life in Just Three Clicks"
-                                     alt="Yahoo Finance" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://tech.co/kuyam-take-me-away-online-scheduler-for-lifestyle-services-2013-05?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+TechCocktail+%28Tech+Cocktail%29"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/TechCocktail.jpg" title="Kuyam, Take Me Away! – Online Scheduler for Lifestyle Services"
-                                     alt="Tech Cocktail" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.bizjournals.com/newyork/prnewswire/press_releases/Georgia/2013/02/28/LA69035?ana=prnews"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/New-York-Business-Journal.jpg" title="Meet Kuyam.com, A New Online Scheduling Platform Designed to Organize Your Life in Just Three Clicks"
-                                     alt="New York Business Journal" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://smdp.com/website-makes-booking-appointments-a-cinch/124951" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/santa_monica_daily_press-logo.jpg" title="Website makes booking appointments a cinch - Santa Monica Daily PressSanta Monica Daily Press"
-                                     alt="Website makes booking appointments a cinch - Santa Monica Daily PressSanta Monica Daily Press"
-                                     class="image3">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.savvysassymoms.com/blog/making-it-happen-with-kuyam/" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/SavvySassyMomsLogo.jpg" title="Making It Happen with Kuyam"
-                                     alt="Savvy Sassy Moms" class="image0">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://la-story.com/2013/09/whether-a-parent-or-not-get-your-schedule-managed-with-kuyam-app/"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/LaStorycom.jpg" title="Whether a Parent or Not, Get Your Schedule Managed with Kuyam App"
-                                     alt="La Story" class="image1">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://brentwood.patch.com/groups/business-news/p/kuyam" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Brentwood-Patch.jpg" title="Brentwood Resident Helps Launch Easy Online Scheduling Website"
-                                     alt="Brentwood Patch" class="image0">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.bizjournals.com/sacramento/prnewswire/press_releases/Georgia/2013/02/28/LA69035?ana=prnews"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/SacBizJournal.png" title="Meet Kuyam.com, A New Online Scheduling Platform Designed to Organize Your Life in Just Three Clicks"
-                                     alt="Sacramento Business Journal" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://brentwoodfocus.com/wp-content/uploads/2013/06/Focus-JuneJuly2013.pdf"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/focus_Logo.png" title="Tech and Startup - Best New Startup"
-                                     alt="Brentwood Focus" class="image4">
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.besttechie.com/2013/05/27/kuyam-and-handybook-make-scheduling-appointments-easy/"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Best-Techie.png" title="Two Apps That Make Scheduling Appointments Easy"
-                                     alt="Best Techie" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.westsidetoday.com/n9503/#.UZ063v9fHqY.email/" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/westside-today-logo.png" title="Hi-Diddle-Dee-Dee an appointment Free Life for Me - Maybe"
-                                     alt="Westside Today" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.socaltech.com/kuyam_debuts_mobile_apps/s-0049043.html" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Social-Tech.jpg" title="Kuyam Debuts Mobile Apps"
-                                     alt="Socaltech.com" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://startupgrind.com/2012/03/kuyams-bold-vision-is-to-organize-your-life/"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Start-Up-Grind.jpg" title="Kuyam’s Bold Vision is to Organize Your Life"
-                                     alt="Startup Grind" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://latenightparents.com/2013/03/21/kuyam-com-online-scheduling-platform-for-parents/"
-                           target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/Late-Night-Parents-Logo.jpg" title="Kuyam.com – online scheduling platform for Parents"
-                                     alt="Late Night Parents" class="image0 featured-img" />
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://mommyduckling.com/Article/Comments?ID=178" target="_blank">
-                            <div class="center-thumb">
-                                <span></span>
-                                <img src="/images/photos/thumbs/MommyDuckling.jpg" title="Make, juggle appointment quickly, easily, free"
-                                     alt="Mommy Duckling" class="image5">
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="clear">
         </div>
     </div>
-</div>
-<!-- InstanceEndEditable -->
-<div class="clear">
-</div>
-<script src="@Url.Content("~/Content/jcarousel/jquery.jcarousel.min.js")" type="text/javascript"></script>
-<script type="text/javascript">
-    //carousels
-    $(document).ready(function(){
-        $('#as-featured-on').jcarousel({
-            wrap: 'circular',
-            scroll: 4,
-        });
-    });
-    $(document).ready(function () {
+    <div class="clear"></div>
+    <div class="container">
+        <div class="sixteen columns topContent">
+            <h2>welcome to kuyam.</h2>
+            <p>book appointments at home or on the go!</p>
+        </div>
+        <div class="two-thirds column omega group_image">
+            <img alt="Laptop" src="content/images/laptop.png" class="laptop">
+            <img alt="Tablet" src="content/images/tablet.png" class="tablet">
+            <img alt="Mobile" src="content/images/mobile.png" class="mobile">
+        </div>
+        <div class="six six-fix columns alpha omega offset-by-one-fix">
+            <div class="iphone-android">
+                <div class="book-phone">
+                    <p class="book">BOOK IN SECONDS WITH KUYAM app. download for</p>
+                    <p class="phone">Iphone and android!</p>
+                </div>
+                <p class="linkStore">
+                    <a href="#" title="App Store"><img alt="App Store" src="content/images/itunes_badge1.png"></a>
+                    <a href="#" title="Google Play"><img alt="Google Play" src="content/images/google_badge1.png"></a>
+                </p>
+            </div>
+        </div>
+        <div class="sixteen columns tabContent">
+            <h2>book me a session for...</h2>
+            <p>select a time and let us book it.</p>
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1">blowout</a></li>
+                    <li><a href="#tabs-2">facial</a></li>
+                    <li><a href="#tabs-3">massage</a></li>
+                    <li><a href="#tabs-4">nails</a></li>
+                    <li><a href="#tabs-5">personal trainer</a></li>
+                    <li><a href="#tabs-6">Pilates</a></li>
+                    <li><a href="#tabs-7">tanning</a></li>
+                    <li><a href="#tabs-8">wax</a></li>
+                    <li><a href="#tabs-9">yoga</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-2">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-3">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-4">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-5">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-6">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-7">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-8">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+                <div id="tabs-9">
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                            <div class="sale"></div>
+                        </div>
+                    </div>
+                    <div class="eight eight_fix columns alpha omega">
+                        <div class="avatar">
+                            <a href="#" title=""><img alt="Avatar" src="content/images/business_image.png"></a>
+                        </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="#" title="Rockstar Nails">Rockstar Nails</a></h3>
+                                <h4 class="iAddress">North Hollywood, CA</h4>
+                            </div>
+                            <div class="votes">
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="yellow"><img alt="Avatar" src="content/images/icons/yellow_star.png"></span>
+                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                            </div>
+                            <p class="shortDes">Gentle hands is the premier hand message place. Come in today and get 10% off.</p>
+                            <div class="group_link">
+                                <a href="#" title="10:00 AM">10:00 AM</a>
+                                <a href="#" title="10:30 AM">10:30 AM</a>
+                                <a href="#" title="11:00 AM">11:00 AM</a>
+                                <a href="#" title="More">More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rgba-background" style='background: #FFFFFF url("content/images/kuyam_banner_1.jpg") no-repeat center top;background-attachment: fixed;'>
+        <div class="opacity"></div>
+        <div class="container items_container">
+            <div class="item_container">
+                <div class="eleven columns">
+                    <div class="blockLeft">
+                        <span class="boxBlue"></span>
+                        <span class="boxlightBlue"></span>
+                    </div>
+                    <div class="blockRight">
+                        <h3>everyone's here!</h3>
+                        <p>discover and schedule appointments with lifestyle businesses around LA in seconds!</p>
+                    </div>
+                </div>
+                <div class="one-third column alpha omega">
+                    <a href="#" title="discover"><img alt="Reuters" src="content/images/btn_discover.png"></a>
+                </div>
+            </div>
+            <div class="item_container">
+                <div class="eleven columns">
+                    <div class="blockLeft">
+                        <span class="boxBlue"></span>
+                        <span class="boxlightBlue"></span>
+                    </div>
+                    <div class="blockRight">
+                        <h3>events for you!</h3>
+                        <p>book your favorite beauty or fitness appointments with discounts of up to 40% off.</p>
+                    </div>
+                </div>
+                <div class="one-third column alpha omega">
+                    <a href="#" title="discover"><img alt="Reuters" src="content/images/btn_events.png"></a>
+                </div>
+            </div>
+            <div class="item_container">
+                <div class="eleven columns">
+                    <div class="blockLeft">
+                        <span class="boxBlue"></span>
+                        <span class="boxlightBlue"></span>
+                    </div>
+                    <div class="blockRight">
+                        <h3>you'll love our blog!</h3>
+                        <p>it covers the latest tips and trends on topics ranging from beauty, fitness, lifestyle and more.</p>
+                    </div>
+                </div>
+                <div class="one-third column alpha omega">
+                    <a href="#" title="discover"><img alt="Reuters" src="content/images/btn_blog.png"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="midContent">
+        <ul class="ad_logo">
+            <li><a href="#" title="Reuters"><img alt="Reuters" src="content/images/reuters.png"></a></li>
+            <li><a href="#" title="The Wall Street"><img alt="The Wall Street" src="content/images/thewallstreet.png"></a></li>
+            <li><a href="#" title="Start Up"><img alt="Start Up" src="content/images/startup.png"></a></li>
+            <li><a href="#" title="Tech"><img alt="Tech" src="content/images/tech.png"></a></li>
+            <li><a href="#" title="Tech Crunch"><img alt="Tech Crunch" src="content/images/techcrunch.png"></a></li>
+            <li><a href="#" title="Reuters"><img alt="Reuters" src="content/images/reuters.png"></a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="bottomContent">
+        <div class="container">
+            <div class="one-third column">
+                <h3><a href="#" title="Kuyam"><img alt="Logo Kuyam" src="content/images/logo_kuyam.png" width="159" height="42"></a></h3>
+                <p class="feedback">we love hearing your questions and feedback. send us an email or give us a call!</p>
+                <p><span class="address">1901 Avenue of the Stars, Suite 1900 Los Angeles, CA 90067</span></p>
+                <p><span class="phone">(310) 461-15151</span></p>
+                <p><a href="mailto:info@kuyam.com" title="info@kuyam.com" class="mailto">info@kuyam.com</a></p>
+            </div>
+            <div class="one-third column">
+                <h3>Kuyam app</h3>
+                <p>download kuyam's FREE app for your devices. with our app book your appointments on the go! available for iPhone & Android phones.</p>
+                <p>
+                    <a href="#" title="App Store"><img alt="App Store" src="content/images/itunes_badge.png" width="109" height="34"></a>
+                    <a href="#" title="Google Play"><img alt="Google Play" src="content/images/google_badge.png" width="109" height="33"></a>
+                </p>
+                <p class="liveChat"><a href="#" title="live chat"><img alt="Live Chat" src="content/images/icons/live chat.png" width="92" height="38"></a></p>
+            </div>
+            <div class="one-third column">
+                <h3>sign up</h3>
+                <div class="form">
+                    <form action="#" method="get">
+                        <label>name:</label>
+                        <input type="text" name="name" placeholder="Enter Name">
+                        <label>email:</label>
+                        <input type="text" name="email" placeholder="Enter Email">
+                        <input type="submit" value="Sign up">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- bottomContent -->
 
-        $('select#speedC').selectmenu();
-        $(".termspopupheader a").click(function () {
-            $(".termspopupheader a").removeClass("headeractive");
-            $(this).addClass("headeractive");
-            $("#divtermsofuse, #divprivacy, #divservices").hide();
-            $("#div" + $(this).attr("id")).show();
-            var deviceAgent = navigator.userAgent.toLowerCase();
-            var agentId = deviceAgent.match(/(iphone|ipod|android|ipad)/);
-            if (agentId) {
-                $("#termspopupbody").niceScroll({ cursorborder: "", cursoropacitymin: 1, cursorcolor: "#89c1f5", boxzoom: false }).resize();
-            }
-        });
-
-        loadhomepageitems();
-        createtopscroll(0, $('.footer').position().top - $('.header').height());
-
-       
-
-        function forgotPasswordpopup()
-        {
-            var myParam = getQueryString()["key"];
-            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
-
-            if(!isLogin && myParam=='true'){
-                $('#forgotPass').hide();
-                $('#loginError').hide();
-                $('#signuppopup').hide();
-                $('#loginpopup').hide();
-                showDialog('forgotpassword', 'btnCloseloginPopup');
-            }
-        }
-
-        $('.activitivedouble').click(function (e) {
-            var isLogin = @Request.IsAuthenticated.ToString().ToLower();
-            redirectUrl= $(this).children(".testing").attr("href");           
-            if(!isLogin){
-                $('#loginError').hide();
-                showDialog('signuppopup', 'btnCloseloginPopup');
-                return false;
-            }
-        });
-    });
-
-    function redrectToResult()
-    {  
-        //var index = $("#speedC-menu li").index($('li[class*="ui-selectmenu-item-selected"]'));
-        //var id = $("#speedC option").eq(index).val();
-        //var url = "/company/companysearch/?id=" + id;    
-        
-        var categoryName = $("#speedC option:selected").attr("name");
-        var slug = generateSlug(categoryName);
-        var url = "/" + slug;          
-        window.location = url;
-        
-    }
-
-    $(document).ready(function() {
-        $(".contentcaption .captionactivitive").dotdotdot(
-            {
-                height:50,
-                width:462
-            });
-       
-        $(".textCaption").dotdotdot(
-            {      
-                height:120,
-                width:789
-            });
-        $(".contentcaption").dotdotdot({
-            height:52
-            });
-        });
-
-</script>

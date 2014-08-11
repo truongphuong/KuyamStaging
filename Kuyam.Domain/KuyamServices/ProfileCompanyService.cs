@@ -9,32 +9,33 @@ namespace Kuyam.Domain.KuyamServices
 {
     public class ProfileCompanyService : IProfileCompanyService
     {
-        private readonly IRepository<ProfileCompany> _profileCompany;
 
-        public ProfileCompanyService(IRepository<ProfileCompany> profileCompany)
+        public ProfileCompanyService(IRepository<ProfileCompany> profileCompanyRepository,
+            IRepository<Service> serviceRepository)
         {
-            _profileCompany = profileCompany;
+            this._profileCompanyRepository = profileCompanyRepository;
+            this._serviceRepository = serviceRepository;
+        }
+
+        private readonly IRepository<ProfileCompany> _profileCompanyRepository;
+
+        private readonly IRepository<Service> _serviceRepository;
+
+        public List<Service> GetParentService()
+        {
+            return _serviceRepository.Table.Where(x => (x.ParentServiceID == null) && (x.Status == null || x.Status == true)).OrderBy(o => o.ServiceName).ToList();
         }
 
         public ProfileCompany GetByProfileId(int profileId)
         {
-            var profileCompany = _profileCompany.Table.FirstOrDefault(t => t.ProfileID == profileId);
+            var profileCompany = _profileCompanyRepository.Table.FirstOrDefault(t => t.ProfileID == profileId);
             int totalReviews = 0;
             double rating = 0;
             if (profileCompany != null)
             {
                 var serviceCompany = profileCompany.ServiceCompanies;
                 totalReviews = serviceCompany.Select(m => m.Ratings.Count).Sum();
-                rating = serviceCompany.Select(m => m.Ratings.Sum(r => r.RatingValue)).Sum().Value;
-
-                //if (serviceCompany != null && serviceCompany.Count() > 0)
-                //{
-                //    foreach (ServiceCompany item in serviceCompany)
-                //    {
-                //        totalReviews += item.Ratings.Count;
-                //        rating += item.Ratings.Sum(m => m.RatingValue).Value;
-                //    }
-                //}
+                rating = serviceCompany.Select(m => m.Ratings.Sum(r => r.RatingValue)).Sum().Value;             
             }
 
             if (totalReviews > 0)
@@ -47,7 +48,7 @@ namespace Kuyam.Domain.KuyamServices
 
         public IQueryable<ProfileCompany> GetAll()
         {
-            return _profileCompany.Table.Where(p => p.CompanyStatusID == (int)Types.CompanyStatus.Active).OrderBy(c => c.Name);
+            return _profileCompanyRepository.Table.Where(p => p.CompanyStatusID == (int)Types.CompanyStatus.Active).OrderBy(c => c.Name);
         }
 
     }

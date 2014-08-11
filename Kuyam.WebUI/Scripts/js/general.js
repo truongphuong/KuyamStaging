@@ -177,7 +177,7 @@ function showPopup(idForm, idItem) {
     $(id).appendTo(rowItem).show();
     $(id).fadeIn(200);
 
-    $('#btnClose').click(function () {
+    $('#btnClose').click(function () {        
         $(id).fadeOut(200);
     });
 }
@@ -195,7 +195,8 @@ function showpopup(popupid) {
     }
 
 
-    $('#' + popupid + ' .btnClose').click(function () {
+    $('#' + popupid + ' .btnClose').click(function () {       
+        $('body').css("overflow", "");
         $('#' + popupid).fadeOut(400);
         $('#lightBox').fadeOut(400);
         //document.documentElement.style.overflow = 'auto';  // firefox, chrome

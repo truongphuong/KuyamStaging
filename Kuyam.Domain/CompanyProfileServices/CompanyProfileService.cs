@@ -442,7 +442,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                         where svcpn.ProfileID == profileId
                         && svcpn.ServiceTypeId == (int)Types.ServiceType.ServiceType
                         && sv.ParentServiceID.HasValue
-                        && (sv.Status.HasValue && sv.Status.Value)
+                        && (svcpn.Status == 0)
                         select svcpn;
             return query.ToList();
 
@@ -1519,6 +1519,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                                  && (employeeId == 0 || e.CompanyEmployeeID == employeeId)
                                  && (serviceId == 0 || sc.ServiceCompanyID == serviceId)
                                  && sc.Status == (int)Types.ServiceCompanyStatus.Active
+                                 && sc.ServiceTypeId == (int)Types.ServiceType.ServiceType
                                  && s.ParentServiceID.HasValue
                            select new CompanyService()
                            {
