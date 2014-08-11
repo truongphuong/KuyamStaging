@@ -585,7 +585,7 @@
     <Content Include="html\images\icons\icon_email.png" />
     <Content Include="html\images\icons\icon_events.png" />
     <Content Include="html\images\icons\icon_facebook.png" />
-    <Content Include="html\images\icons\icon_google+.png" />
+    <Content Include="html\images\icons\icon_google.png" />
     <Content Include="html\images\icons\icon_instagram.png" />
     <Content Include="html\images\icons\icon_location.png" />
     <Content Include="html\images\icons\icon_phone.png" />
