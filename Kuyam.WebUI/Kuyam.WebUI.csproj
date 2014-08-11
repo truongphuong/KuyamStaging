@@ -547,6 +547,7 @@
     <Content Include="fullCalendar\fullcalendar.min.js" />
     <Content Include="fullCalendar\fullcalendar.print.css" />
     <Content Include="fullCalendar\gcal.js" />
+    <Content Include="Geolocation.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="App_Data\Pdf\FreeSerif.ttf" />
@@ -555,6 +556,96 @@
     <Content Include="fonts\Baskerville-Italic.woff" />
     <Content Include="googlea073ac1af76989dd.html" />
     <Content Include="HomeMedia\final\final - Shortcut.lnk" />
+    <Content Include="html\images\1.jpg" />
+    <Content Include="html\images\2.jpg" />
+    <Content Include="html\images\3.jpeg" />
+    <Content Include="html\images\3.jpg" />
+    <Content Include="html\images\4.jpg" />
+    <Content Include="html\images\4stars.png" />
+    <Content Include="html\images\5.jpg" />
+    <Content Include="html\images\6.jpg" />
+    <Content Include="html\images\7.jpg" />
+    <Content Include="html\images\8.jpg" />
+    <Content Include="html\images\apple-touch-icon-114x114.png" />
+    <Content Include="html\images\apple-touch-icon-72x72.png" />
+    <Content Include="html\images\apple-touch-icon.png" />
+    <Content Include="html\images\btn_blog.png" />
+    <Content Include="html\images\btn_discover.png" />
+    <Content Include="html\images\btn_events.png" />
+    <Content Include="html\images\business_image.png" />
+    <Content Include="html\images\favicon.ico" />
+    <Content Include="html\images\google_badge.png" />
+    <Content Include="html\images\google_badge1.png" />
+    <Content Include="html\images\icons\arrow.jpg" />
+    <Content Include="html\images\icons\gray_star.png" />
+    <Content Include="html\images\icons\icon-list.jpg" />
+    <Content Include="html\images\icons\icon_ business.png" />
+    <Content Include="html\images\icons\icon_arrow.png" />
+    <Content Include="html\images\icons\icon_blog.png" />
+    <Content Include="html\images\icons\icon_email.png" />
+    <Content Include="html\images\icons\icon_events.png" />
+    <Content Include="html\images\icons\icon_facebook.png" />
+    <Content Include="html\images\icons\icon_google+.png" />
+    <Content Include="html\images\icons\icon_instagram.png" />
+    <Content Include="html\images\icons\icon_location.png" />
+    <Content Include="html\images\icons\icon_phone.png" />
+    <Content Include="html\images\icons\icon_pinterest.png" />
+    <Content Include="html\images\icons\icon_tumblr.png" />
+    <Content Include="html\images\icons\icon_twitter.png" />
+    <Content Include="html\images\icons\icon_youtube.png" />
+    <Content Include="html\images\icons\live chat.png" />
+    <Content Include="html\images\icons\yellow_star.png" />
+    <Content Include="html\images\itunes_badge.png" />
+    <Content Include="html\images\itunes_badge1.png" />
+    <Content Include="html\images\kuyam_banner_1.jpg" />
+    <Content Include="html\images\kuyam_banner_2.jpg" />
+    <Content Include="html\images\kuyam_banner_3.jpg" />
+    <Content Include="html\images\laptop.png" />
+    <Content Include="html\images\logo_kuyam.png" />
+    <Content Include="html\images\mobile.png" />
+    <Content Include="html\images\reuters.png" />
+    <Content Include="html\images\sale_ribbon.png" />
+    <Content Include="html\images\startup.png" />
+    <Content Include="html\images\tablet.png" />
+    <Content Include="html\images\tech.png" />
+    <Content Include="html\images\techcrunch.png" />
+    <Content Include="html\images\thewallstreet.png" />
+    <Content Include="html\index.html" />
+    <Content Include="html\scripts\general.js" />
+    <Content Include="html\scripts\lib\css_browser_selector.js" />
+    <Content Include="html\scripts\lib\jquery-ui.js" />
+    <Content Include="html\scripts\lib\jquery.cycle.all.js" />
+    <Content Include="html\scripts\lib\jquery.js" />
+    <Content Include="html\scripts\lib\skdslider.js" />
+    <Content Include="html\stylesheets\base.css" />
+    <Content Include="html\stylesheets\general.css" />
+    <Content Include="html\stylesheets\images\animated-overlay.gif" />
+    <Content Include="html\stylesheets\images\left.png" />
+    <Content Include="html\stylesheets\images\loader.gif" />
+    <Content Include="html\stylesheets\images\next.png" />
+    <Content Include="html\stylesheets\images\pause.png" />
+    <Content Include="html\stylesheets\images\play.png" />
+    <Content Include="html\stylesheets\images\right.png" />
+    <Content Include="html\stylesheets\images\slide-bg-active.png" />
+    <Content Include="html\stylesheets\images\slide-bg.png" />
+    <Content Include="html\stylesheets\images\slide_desc.png" />
+    <Content Include="html\stylesheets\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="html\stylesheets\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="html\stylesheets\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="html\stylesheets\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="html\stylesheets\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="html\stylesheets\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="html\stylesheets\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="html\stylesheets\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="html\stylesheets\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="html\stylesheets\images\ui-icons_222222_256x240.png" />
+    <Content Include="html\stylesheets\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="html\stylesheets\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="html\stylesheets\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="html\stylesheets\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="html\stylesheets\jquery-ui.css" />
+    <Content Include="html\stylesheets\layout.css" />
+    <Content Include="html\stylesheets\skdslider.css" />
     <Content Include="Images\bgPopup1.png" />
     <Content Include="Images\bg_paging.png" />
     <Content Include="Images\btn_more.png" />
@@ -2698,6 +2789,9 @@
       <Project>{d92d0e86-f4f9-4b82-b5c5-e4c62e87d730}</Project>
       <Name>Kuyam.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="html\stylesheets\fonts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
