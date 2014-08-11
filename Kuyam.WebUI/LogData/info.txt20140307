@@ -1,0 +1,3 @@
+2014-03-07 10:56:35,910 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-07 12:26:11,506 INFO  - Kuyam.Domain.CustService.UpdateCustomer - Updated customer: CustID= 205
+2014-03-07 12:26:37,535 INFO  - Kuyam.Domain.CustService.UpdateCustomer - Updated customer: CustID= 205

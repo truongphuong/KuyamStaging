@@ -1,0 +1,36 @@
+2014-03-04 09:20:16,967 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 09:20:57,665 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 09:21:18,876 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 09:21:52,916 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 09:36:17,591 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-03-04 09:36:17,734 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-03-04 09:36:18,102 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fvinasource-santa-monica--ca--2701-ocean-park-boulevard%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-03-11T02%3a36%3a17.510Z&maxAmountPerPayment=45&maxTotalAmountOfAllPayments=45&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-03-04T02%3a36%3a17.343Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-03-04 09:36:19,880 DEBUG - Service response
+2014-03-04 09:36:19,880 DEBUG - responseEnvelope.timestamp=2014-03-03T18%3A36%3A17.657-08%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=1e845610f195e&responseEnvelope.build=9641252&preapprovalKey=PA-77C767487V641932P
+2014-03-04 10:17:47,358 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 14:36:44,139 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 16:22:55,935 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 16:23:10,830 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 16:23:19,692 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 16:23:40,217 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 16:23:58,870 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 16:24:20,547 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 16:24:35,804 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 17:23:35,307 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-04 17:23:35,308 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-04 17:26:16,408 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 17:44:01,626 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 17:44:09,385 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 18:14:04,730 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 18:14:16,202 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 18:56:43,892 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-04 18:57:41,985 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 19:46:37,299 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-04 21:25:11,300 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

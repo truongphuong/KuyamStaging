@@ -1,0 +1,51 @@
+2014-03-10 12:00:43,408 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 15:54:15,759 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 17:40:43,253 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 17:40:48,293 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 17:40:57,913 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin fail with username: phuongtruong@vinasource.com
+2014-03-10 17:41:15,226 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin fail with username: phuongtruong@vinasource.com
+2014-03-10 17:44:30,634 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin fail with username: phuongtruong@vinasource.com
+2014-03-10 17:45:28,808 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 17:58:35,009 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 17:58:49,489 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 17:58:53,742 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 17:59:05,065 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-03-10 17:59:25,069 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 18:20:09,666 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 22:22:48,051 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - 100000591893089 log out
+2014-03-10 22:23:02,238 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - 100000591893089 log out
+2014-03-10 22:23:34,076 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - 100000591893089 log out
+2014-03-10 22:28:42,452 INFO  - Kuyam.WebUI.Controllers.AccountController.RegisterEmail - mytrang208@yahoo.com register success
+2014-03-10 22:28:48,555 INFO  - Kuyam.WebUI.Controllers.AccountController.CreateCustomer - Send email  thanks sign up facebook: Email=mytrang208@yahoo.com
+2014-03-10 22:29:30,544 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - 100000042722618 log out
+2014-03-10 22:36:47,821 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 22:36:59,575 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:05:02,860 INFO  - Kuyam.WebUI.Controllers.AccountController.RegisterEmail - phuctruong@gmail.com register success
+2014-03-10 23:06:07,072 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuctruong@gmail.com log out
+2014-03-10 23:06:22,879 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuctruong@gmail.com login success
+2014-03-10 23:08:22,569 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuctruong@gmail.com log out
+2014-03-10 23:09:38,475 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 23:12:54,297 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:12:56,990 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:12:57,857 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:12:58,029 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:13:05,150 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:14:19,127 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:15:47,757 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 fail
+2014-03-10 23:15:49,506 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 750156 success
+2014-03-10 23:16:28,856 INFO  - Kuyam.Domain.CustService.UpdateCustomer - Updated customer: CustID= 205
+2014-03-10 23:17:26,199 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:17:43,106 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuctruong@gmail.com login success
+2014-03-10 23:19:50,154 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 472482 success
+2014-03-10 23:20:19,015 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuctruong@gmail.com log out
+2014-03-10 23:20:28,228 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 23:27:31,989 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:27:48,453 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 23:34:17,474 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:34:31,921 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-03-10 23:35:15,271 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:44:27,706 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 23:47:10,776 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:47:18,292 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-10 23:58:28,122 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-10 23:59:03,529 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

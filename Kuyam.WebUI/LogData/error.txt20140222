@@ -1,0 +1,8 @@
+2014-02-22 12:53:46,568 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 205
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1698
+2014-02-22 13:35:46,049 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 205
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1698

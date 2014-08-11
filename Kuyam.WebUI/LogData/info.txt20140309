@@ -1,0 +1,16 @@
+2014-03-09 01:02:19,291 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-09 01:34:25,551 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-09 01:55:21,051 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-09 02:13:02,212 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-09 02:13:03,735 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-09 02:17:33,290 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-09 02:36:51,919 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-09 02:36:51,967 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-09 02:37:25,477 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-09 21:56:00,911 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

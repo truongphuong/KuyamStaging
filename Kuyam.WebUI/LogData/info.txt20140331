@@ -1,0 +1,19 @@
+2014-03-31 11:07:46,169 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-31 11:38:20,504 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-31 11:42:43,067 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-31 11:43:07,551 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtnet@gmail.com login success
+2014-03-31 11:51:29,510 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-03-31 11:53:39,675 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-31 11:53:47,966 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtnet@gmail.com login success
+2014-03-31 11:56:54,440 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1729
+2014-03-31 11:56:54,450 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1729
+2014-03-31 11:57:00,369 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - guest@vinasource.com log out
+2014-03-31 13:32:34,294 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtnet@gmail.com login success
+2014-03-31 13:39:08,049 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-03-31 22:27:12,884 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

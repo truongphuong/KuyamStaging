@@ -1,0 +1,245 @@
+2014-01-15 10:24:13,034 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 11:24:06,435 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 11:25:39,234 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 11:26:56,371 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 11:39:29,408 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 11:39:32,193 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 11:40:34,641 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 13:33:29,213 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-01-15 14:08:18,509 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 14:09:51,762 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 15:02:14,026 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"hello","badge":1,"sound":"aps.wav"},"custId":1593,"appId":81,"notifyId":0,"type":7}
+2014-01-15 15:05:24,516 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":81,"notifyId":0,"type":7}
+2014-01-15 15:12:57,677 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":81,"notifyId":0,"type":7}
+2014-01-15 15:14:20,040 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":81,"notifyId":0,"type":7}
+2014-01-15 15:17:28,482 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"you have a new proposed appointment","badge":2,"sound":"aps.wav"},"custId":1593,"appId":82,"notifyId":38,"type":6}
+2014-01-15 15:20:01,716 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 15:20:02,038 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 15:20:49,568 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 16:38:16,594 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 16:38:34,693 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-01-15 16:44:48,793 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"gg","badge":2,"sound":"aps.wav"},"custId":1593,"appId":82,"notifyId":0,"type":7}
+2014-01-15 16:45:56,215 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"ppp","badge":2,"sound":"aps.wav"},"custId":1593,"appId":82,"notifyId":0,"type":7}
+2014-01-15 16:47:11,269 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"ppp","badge":2,"sound":"aps.wav"},"custId":1593,"appId":82,"notifyId":0,"type":7}
+2014-01-15 16:48:29,230 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"ppp","badge":2,"sound":"aps.wav"},"custId":1593,"appId":82,"notifyId":0,"type":7}
+2014-01-15 16:52:08,652 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"you have a new proposed appointment","badge":3,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":40,"type":6}
+2014-01-15 17:07:23,985 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"hello","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":7}
+2014-01-15 17:08:06,350 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "hello",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:08:10,622 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"hello","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:08:21,634 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "please type message to push notification\n            ",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:08:26,085 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:09:24,839 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:09:29,555 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:12:12,159 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:12:15,998 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:12:55,804 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:13:00,654 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:13:23,356 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:13:28,157 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:14:25,383 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bFvpNoEv-64HiV99gS-189VzoNVUEBM-l1uyfyidjwxrscrOva-msAsmLSHE1ThGBoQsUjfQk6sPZEh5pg0-_uIE9k5B5cb7i99kgah9Ij-yj6MdkI4tVpZ2W6VytfqeRlEXmGdDIJL8wMYVOfXouB1iAAJ8Q"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:14:30,407 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:20:25,545 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bGO7lPhUkGTzeERIK5TrltFiU8HAHrx89CGIHbthI7Yi9YU0OMaRFuy4ES4KOq31O4gjlaJ2_GIXzZvj087M02IZBJRJ5nrEkdVc3x6nmIn6Eg0GaIdGnzenTPe5uVw6rPdr4sfsOsIyKLIuqk2pBmOBkIHDw"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: MismatchSenderId
+2014-01-15 17:20:25,564 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bGO7lPhUkGTzeERIK5TrltFiU8HAHrx89CGIHbthI7Yi9YU0OMaRFuy4ES4KOq31O4gjlaJ2_GIXzZvj087M02IZBJRJ5nrEkdVc3x6nmIn6Eg0GaIdGnzenTPe5uVw6rPdr4sfsOsIyKLIuqk2pBmOBkIHDw"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: MismatchSenderId
+2014-01-15 17:20:28,788 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test push","badge":1,"sound":"aps.wav"},"custId":1815,"appId":77,"notifyId":0,"type":7}
+2014-01-15 17:21:03,282 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bGO7lPhUkGTzeERIK5TrltFiU8HAHrx89CGIHbthI7Yi9YU0OMaRFuy4ES4KOq31O4gjlaJ2_GIXzZvj087M02IZBJRJ5nrEkdVc3x6nmIn6Eg0GaIdGnzenTPe5uVw6rPdr4sfsOsIyKLIuqk2pBmOBkIHDw"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 75,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: MismatchSenderId
+2014-01-15 17:21:03,282 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bGO7lPhUkGTzeERIK5TrltFiU8HAHrx89CGIHbthI7Yi9YU0OMaRFuy4ES4KOq31O4gjlaJ2_GIXzZvj087M02IZBJRJ5nrEkdVc3x6nmIn6Eg0GaIdGnzenTPe5uVw6rPdr4sfsOsIyKLIuqk2pBmOBkIHDw"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 75,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: MismatchSenderId
+2014-01-15 17:21:07,114 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test push","badge":1,"sound":"aps.wav"},"custId":1815,"appId":75,"notifyId":0,"type":7}
+2014-01-15 17:22:59,965 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bEoQluwwEg6RngpBK4pWz3REcKY00QEDkenH0wmP0w7slPGFrz3U5VgrJb3hl7Q6j014h6SB9y8-y8JHvt5lYiKAETE5uH-HTsIn-_ny4Ah5XBOS5vVj743GdSwlxjTxqK6rJlgfnbEbT0baZ0d6XnZYD51jA"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 76,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+2014-01-15 17:23:05,422 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1811 - message {"aps":{"alert":"test push","badge":1,"sound":"aps.wav"},"custId":1815,"appId":76,"notifyId":0,"type":7}
+2014-01-15 17:25:22,361 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":7}
+2014-01-15 17:25:43,658 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":7}
+2014-01-15 17:26:05,610 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":7}
+2014-01-15 17:26:25,627 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":7}
+2014-01-15 18:09:22,749 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 18:11:51,920 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":6}
+2014-01-15 18:12:23,981 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification\n            ","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":6}
+2014-01-15 18:13:54,138 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"aaaaaaaaaaaa","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":6}
+2014-01-15 18:17:04,851 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"aaaaaaaaaaaa","badge":1,"sound":"aps.wav"},"custId":1593,"appId":84,"notifyId":0,"type":6}
+2014-01-15 22:17:20,230 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 22:21:54,186 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"dsfa","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:23:45,551 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"dsfa","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:24:23,670 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"asfas","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:25:11,502 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"af","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:26:44,633 INFO  - Kuyam.Domain.AdminService.ChangeUserStatus - Change user status:CustID= 1593
+2014-01-15 22:26:52,578 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"afasg","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:29:15,620 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"please type message to push notification","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:30:09,384 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"aggs","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:32:36,685 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"asdg","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:45:25,034 INFO  - Kuyam.Domain.AdminService.ChangeUserStatus - Change user status:CustID= 1593
+2014-01-15 22:45:53,656 INFO  - Kuyam.Domain.NotificationService.NotificationSent - Send notification SUCCESS to cust: 1593 - message {"aps":{"alert":"agfvag","badge":1,"sound":"aps.wav"},"custId":1593,"type":7}
+2014-01-15 22:46:28,495 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-01-15 22:47:20,560 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-01-15 23:07:49,986 INFO  - Kuyam.Domain.AdminService.ChangeUserStatus - Change user status:CustID= 219
+2014-01-15 23:08:02,292 INFO  - Kuyam.Domain.AdminService.ChangeUserStatus - Change user status:CustID= 219

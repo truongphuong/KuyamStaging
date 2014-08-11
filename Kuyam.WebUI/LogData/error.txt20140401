@@ -1,0 +1,8 @@
+2014-04-01 01:12:48,091 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1272
+2014-04-01 15:03:52,977 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1272

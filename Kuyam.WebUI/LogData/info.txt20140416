@@ -1,0 +1,6 @@
+2014-04-16 13:37:04,325 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-16 14:25:35,999 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-16 14:30:19,720 INFO  - Kuyam.Domain.GettyImageService.InsertGettyImage - Added getty image: GettyImageId= 162383291
+2014-04-16 14:30:45,232 INFO  - Kuyam.Domain.GettyImageService.UpdateGettyImage - Updated getty image: gettyImageID= 162383291
+2014-04-16 14:30:49,829 INFO  - Kuyam.Domain.GettyImageService.UpdateGettyImage - Updated getty image: gettyImageID= 162383291
+2014-04-16 14:30:59,176 INFO  - Kuyam.Domain.CompanyProfileServices.CompanyProfileService.UpdateCompanyMedia - Updated company image: CompanyMediaID= 0

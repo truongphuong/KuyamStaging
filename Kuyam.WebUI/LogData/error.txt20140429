@@ -1,0 +1,12 @@
+2014-04-29 11:13:36,935 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:43,674 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:48,434 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413

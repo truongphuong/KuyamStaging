@@ -1,0 +1,25 @@
+2014-03-13 17:28:21,134 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-13 17:44:14,616 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 492
+2014-03-13 17:56:17,682 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 492
+2014-03-13 18:00:11,598 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:00:53,298 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:01:23,941 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:02:13,212 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:06:09,200 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483

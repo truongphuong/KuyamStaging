@@ -1,0 +1,23 @@
+2014-07-23 14:57:42,279 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-23 16:00:05,078 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-23 16:00:27,942 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-23 16:02:33,421 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-23 16:03:03,785 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - kunka@kuyam.com login success
+2014-07-23 16:50:05,212 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: kunka@kuyam.com
+2014-07-23 16:57:56,729 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - kunka@kuyam.com log out
+2014-07-23 16:58:15,114 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-23 16:59:23,325 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-23 16:59:30,950 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - kunka@kuyam.com login success
+2014-07-23 17:00:25,888 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin fail with username: phuongtruong@vinasource.com
+2014-07-23 17:00:29,406 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin fail with username: phuongtruong@vinasource.com
+2014-07-23 17:00:35,822 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-07-23 17:01:03,480 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-23 17:01:17,981 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - kunka@kuyam.com login success
+2014-07-23 17:02:13,113 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - kunka@kuyam.com log out
+2014-07-23 17:02:23,750 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-23 17:03:01,821 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-23 17:03:10,153 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - kunka@kuyam.com login success
+2014-07-23 17:27:45,612 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-07-23 17:28:07,657 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - Created service: ServiceId= 2150
+2014-07-23 17:34:46,761 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-23 17:34:55,444 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - kunka@kuyam.com login success

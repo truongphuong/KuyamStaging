@@ -1,0 +1,122 @@
+2014-03-11 09:59:47,450 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-11 10:02:01,254 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code BF1B4E success
+2014-03-11 10:02:10,409 INFO  - Kuyam.Domain.CustService.UpdateCustomer - Updated customer: CustID= 205
+2014-03-11 11:21:18,949 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-03-11 16:22:19,367 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 11:30:11,839 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 15:03:06,319 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 15:55:47,774 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 16:16:28,328 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:16:36,472 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 16:36:46,452 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:37:48,022 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:38:02,087 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 16:39:53,945 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:42:04,961 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 16:43:47,665 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:44:00,102 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 16:44:02,580 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:44:49,242 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:45:47,495 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:46:38,059 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:47:36,514 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:47:50,404 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:50:09,203 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:50:09,330 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 16:50:16,525 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 16:53:59,483 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 16:54:12,987 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 17:10:29,263 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 17:16:02,137 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 17:17:47,051 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 17:17:58,486 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 17:21:15,586 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 17:27:05,186 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 17:28:21,134 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-13 17:28:21,149 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-13 17:38:47,304 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 17:39:18,856 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 17:40:39,458 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 17:41:46,508 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - nguyenb@gmail.com log out
+2014-03-13 17:42:15,792 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 17:44:14,616 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 492
+2014-03-13 17:44:14,658 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 492
+2014-03-13 17:44:22,745 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 17:55:59,872 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 17:56:08,202 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 17:56:17,682 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 492
+2014-03-13 17:56:17,683 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 492
+2014-03-13 18:00:11,598 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:00:11,642 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:00:13,342 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 18:00:34,910 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 18:00:53,298 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:00:53,299 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:01:00,898 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 18:01:02,287 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,083 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,242 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,396 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,537 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,669 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,808 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:03,932 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:04,052 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-13 18:01:15,714 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 18:01:23,941 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:01:23,942 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:02:13,212 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:02:13,212 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:03:47,964 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 18:05:25,479 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 18:06:09,200 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:06:09,247 ERROR - Kuyam.WebUI.Controllers.AdminController.ImpersonateUser - Login with Impersonate is fail: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.AdminController.ImpersonateUser(String email) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 483
+2014-03-13 18:09:29,683 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:09:47,652 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuctruong@gmail.com log out
+2014-03-13 18:10:02,779 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - nguyenb@gmail.com log out
+2014-03-13 18:10:11,176 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuctruong@gmail.com log out
+2014-03-13 18:11:07,173 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:11:39,118 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - nguyena@gmail.com log out
+2014-03-13 18:11:48,565 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-13 18:12:11,722 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-13 18:12:30,243 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:13:16,840 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:17:56,644 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:18:09,708 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:19:02,552 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:19:22,442 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-13 18:20:23,805 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out

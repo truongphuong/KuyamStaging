@@ -1,0 +1,254 @@
+2014-02-21 09:04:32,069 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 09:46:57,379 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 11:46:07,378 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-02-21 12:09:06,839 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 13:36:06,366 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 14:39:59,430 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 15:09:01,194 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-02-21 15:09:01,214 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-02-21 15:09:01,516 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fvinasource-santa-monica--ca--2701-ocean-park-boulevard-nguyen-dinh-chieu%2fPackage&currencyCode=USD&endingDate=2014-02-28T08%3a09%3a01.150Z&maxAmountPerPayment=100&maxTotalAmountOfAllPayments=100&returnUrl=http%3a%2f%2fdev.kuyam.com%2fPaypal%2fPayPackage&memo=fee+for+purchased+package+at+kuyam.com&startingDate=2014-02-21T08%3a09%3a01.147Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-02-21 15:09:04,118 DEBUG - Service response
+2014-02-21 15:09:04,118 DEBUG - responseEnvelope.timestamp=2014-02-21T00%3A09%3A04.290-08%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=4cb921c3d590b&responseEnvelope.build=9641252&preapprovalKey=PA-2HT110209B278852E
+2014-02-21 15:09:25,523 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-02-21 15:09:25,524 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-02-21 15:09:25,524 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-02-21 15:09:25,524 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-2HT110209B278852E&getBillingAddress=true&
+2014-02-21 15:09:29,297 DEBUG - Service response
+2014-02-21 15:09:29,297 DEBUG - responseEnvelope.timestamp=2014-02-21T00%3A09%3A29.597-08%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=02439d50d3c8e&responseEnvelope.build=9641252&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fvinasource-santa-monica--ca--2701-ocean-park-boulevard-nguyen-dinh-chieu%2FPackage&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-02-28T08%3A09%3A01.000Z&maxAmountPerPayment=100.00&maxTotalAmountOfAllPayments=100.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=http%3A%2F%2Fdev.kuyam.com%2FPaypal%2FPayPackage&senderEmail=kuyam3%40vinasource.com&memo=fee+for+purchased+package+at+kuyam.com&startingDate=2014-02-21T08%3A09%3A01.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-02-21 15:09:29,735 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-02-21 15:09:29,736 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-02-21 15:09:29,736 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-02-21 15:09:29,736 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-2HT110209B278852E&getBillingAddress=true&
+2014-02-21 15:09:30,960 DEBUG - Service response
+2014-02-21 15:09:30,960 DEBUG - responseEnvelope.timestamp=2014-02-21T00%3A09%3A31.282-08%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=161f842aec01d&responseEnvelope.build=9641252&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fvinasource-santa-monica--ca--2701-ocean-park-boulevard-nguyen-dinh-chieu%2FPackage&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-02-28T08%3A09%3A01.000Z&maxAmountPerPayment=100.00&maxTotalAmountOfAllPayments=100.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=http%3A%2F%2Fdev.kuyam.com%2FPaypal%2FPayPackage&senderEmail=kuyam3%40vinasource.com&memo=fee+for+purchased+package+at+kuyam.com&startingDate=2014-02-21T08%3A09%3A01.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-02-21 15:25:35,747 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1485
+2014-02-21 15:25:35,790 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1485
+2014-02-21 15:33:07,182 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1486
+2014-02-21 15:33:07,250 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1486
+2014-02-21 15:36:01,608 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1486
+2014-02-21 15:36:01,681 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1486
+2014-02-21 15:42:41,295 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1487
+2014-02-21 15:42:41,379 ERROR - Kuyam.WebUI.Controllers.PayPalController.AddPayPackage - PayPackage fail
+System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:3670/InfoConn.asmx that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:3670
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- End of inner exception stack trace ---
+
+Server stack trace: 
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   at System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   at System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoap.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType)
+   at Kuyam.WebUI.InfoConnServiceReference.InfoConnSoapClient.AddIncomingRequest(IncomingRequest incomingRequest, IncommingRequestType requestType) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Service References\InfoConnServiceReference\Reference.cs:line 1615
+   at Kuyam.WebUI.Controllers.PayPalController.AddPayPackage(String emailSender) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1487
+2014-02-21 16:32:16,252 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-02-21 16:33:52,023 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 16:50:54,129 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-02-21 16:56:58,712 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 17:17:44,254 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-02-21 17:17:53,097 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 17:39:04,419 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-02-21 17:44:11,409 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-02-21 20:46:38,903 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-02-21 22:06:03,189 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

@@ -1,0 +1,3 @@
+2014-04-07 23:40:08,815 ERROR - Kuyam.WebUI.Controllers.CalendarViewController.GetData - Get calendar is error: 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.CalendarViewController.GetData(DateTime start, DateTime end, Int32 calendarId) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\CalendarViewController.cs:line 116

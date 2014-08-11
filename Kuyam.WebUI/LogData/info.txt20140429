@@ -1,0 +1,59 @@
+2014-04-29 09:54:59,878 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-29 10:27:44,591 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-29 10:28:56,172 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:38:11,821 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - Created service: ServiceId= 1451
+2014-04-29 10:39:15,208 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - Created service: ServiceId= 1452
+2014-04-29 10:40:23,174 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryDelete - Deleted service: ServiceId= 1452
+2014-04-29 10:44:10,839 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - Created service: ServiceId= 1453
+2014-04-29 10:49:13,076 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 1453
+2014-04-29 10:51:10,640 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:51:21,764 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:51:57,858 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:53:57,292 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:54:27,220 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:58:12,444 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 10:58:30,832 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:00:17,372 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:00:39,178 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:01:45,682 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:02:18,530 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:02:37,949 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:03:27,176 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:12:21,745 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:13:36,935 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:37,130 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:43,674 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:43,674 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:48,434 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:48,435 ERROR - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - A data is in an invalid format
+System.IO.InvalidDataException: this category name has been used, please enter another name.
+   at Kuyam.Domain.AdminService.CreateService(Service service) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-Domain\Kuyam.Domain\AdminService.cs:line 612
+   at Kuyam.WebUI.Controllers.AdminController.CategoryCreate(Service model) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\AdminController.cs:line 1413
+2014-04-29 11:13:52,970 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryCreate - Created service: ServiceId= 1454
+2014-04-29 11:17:05,199 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 8
+2014-04-29 11:23:37,539 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 1389
+2014-04-29 11:24:24,274 INFO  - Kuyam.WebUI.Controllers.AdminController.CategoryModify - Updated category: ServiceID= 1396
+2014-04-29 13:43:08,301 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-29 14:14:02,729 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code DA3274 success
+2014-04-29 14:15:10,578 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 9DBF18 success
+2014-04-29 14:16:39,684 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 8DE926 success
+2014-04-29 14:19:43,151 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code 18C2CF success
+2014-04-29 15:09:30,496 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-29 17:14:14,190 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-29 22:44:44,022 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-29 23:34:47,523 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

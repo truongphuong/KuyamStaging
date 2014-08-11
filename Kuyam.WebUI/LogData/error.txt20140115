@@ -1,0 +1,32 @@
+2014-01-15 17:20:25,545 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bGO7lPhUkGTzeERIK5TrltFiU8HAHrx89CGIHbthI7Yi9YU0OMaRFuy4ES4KOq31O4gjlaJ2_GIXzZvj087M02IZBJRJ5nrEkdVc3x6nmIn6Eg0GaIdGnzenTPe5uVw6rPdr4sfsOsIyKLIuqk2pBmOBkIHDw"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 77,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: MismatchSenderId
+2014-01-15 17:21:03,282 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 1815 - message {
+  "registration_ids": [
+    "APA91bGO7lPhUkGTzeERIK5TrltFiU8HAHrx89CGIHbthI7Yi9YU0OMaRFuy4ES4KOq31O4gjlaJ2_GIXzZvj087M02IZBJRJ5nrEkdVc3x6nmIn6Eg0GaIdGnzenTPe5uVw6rPdr4sfsOsIyKLIuqk2pBmOBkIHDw"
+  ],
+  "data": {
+    "custId": 1815,
+    "appId": 75,
+    "notifyId": 0,
+    "type": 7,
+    "aps": {
+      "alert": "test push",
+      "badge": 3
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: MismatchSenderId

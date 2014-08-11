@@ -1,0 +1,226 @@
+2014-04-22 09:53:46,427 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-22 10:36:56,498 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code E73613 success
+2014-04-22 10:44:26,968 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 10:44:27,025 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 10:44:27,224 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-04-29T03%3a44%3a26.917Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T03%3a44%3a26.715Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-04-22 10:44:28,975 DEBUG - Service response
+2014-04-22 10:44:28,975 DEBUG - responseEnvelope.timestamp=2014-04-21T20%3A44%3A28.146-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=951619628cff9&responseEnvelope.build=10680030&preapprovalKey=PA-63H85824W3990083A
+2014-04-22 10:45:05,775 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-04-22 10:45:05,775 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 10:45:05,775 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 10:45:05,775 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-63H85824W3990083A&getBillingAddress=true&
+2014-04-22 10:45:07,290 DEBUG - Service response
+2014-04-22 10:45:07,290 DEBUG - responseEnvelope.timestamp=2014-04-21T20%3A45%3A06.458-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=a3c7ce48952f6&responseEnvelope.build=10680030&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-04-29T03%3A44%3A26.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T03%3A44%3A26.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-04-22 10:45:09,566 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 10:45:09,657 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 10:46:29,066 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-04-22 10:46:29,066 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:46:29,066 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:46:29,066 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 10:46:29,066 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 10:46:29,066 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 10:46:29,066 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 10:46:29,067 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 10:46:29,067 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 10:46:29,067 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 10:46:29,067 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-04-29T03%3a46%3a29.066Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T03%3a46%3a29.062Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-04-22 10:46:30,603 DEBUG - Service response
+2014-04-22 10:46:30,603 DEBUG - responseEnvelope.timestamp=2014-04-21T20%3A46%3A29.708-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=2c793dbfaf274&responseEnvelope.build=10680030&preapprovalKey=PA-4XX24062YJ168991R
+2014-04-22 10:46:57,848 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-04-22 10:46:57,848 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 10:46:57,848 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 10:46:57,848 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-4XX24062YJ168991R&getBillingAddress=true&
+2014-04-22 10:46:59,349 DEBUG - Service response
+2014-04-22 10:46:59,349 DEBUG - responseEnvelope.timestamp=2014-04-21T20%3A46%3A58.441-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=35010d7ab13fb&responseEnvelope.build=10680030&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-04-29T03%3A46%3A29.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T03%3A46%3A29.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-04-22 10:47:00,335 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 10:47:00,336 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 10:48:07,191 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-04-22 10:48:07,191 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 10:48:07,191 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 10:48:07,192 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-04-29T03%3a48%3a07.191Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T03%3a48%3a07.188Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-04-22 10:48:08,284 DEBUG - Service response
+2014-04-22 10:48:08,284 DEBUG - responseEnvelope.timestamp=2014-04-21T20%3A48%3A07.440-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=03a4a515c65c6&responseEnvelope.build=10680030&preapprovalKey=PA-1F757732BT3661257
+2014-04-22 10:48:36,315 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-04-22 10:48:36,315 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:48:36,315 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 10:48:36,315 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 10:48:36,315 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 10:48:36,315 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 10:48:36,315 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 10:48:36,316 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 10:48:36,316 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 10:48:36,316 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 10:48:36,316 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-1F757732BT3661257&getBillingAddress=true&
+2014-04-22 10:48:37,479 DEBUG - Service response
+2014-04-22 10:48:37,479 DEBUG - responseEnvelope.timestamp=2014-04-21T20%3A48%3A36.647-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=48e7763bc9474&responseEnvelope.build=10680030&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-04-29T03%3A48%3A07.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T03%3A48%3A07.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-04-22 10:48:38,781 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 10:48:38,782 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 10:49:03,531 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1730
+2014-04-22 10:49:03,532 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1730
+2014-04-22 11:31:58,972 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-04-22 11:32:09,007 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtnet@gmail.com login success
+2014-04-22 11:32:26,751 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 11:32:26,764 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 11:32:26,903 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-04-29T04%3a32%3a26.725Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T04%3a32%3a26.625Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-04-22 11:32:28,378 DEBUG - Service response
+2014-04-22 11:32:28,378 DEBUG - responseEnvelope.timestamp=2014-04-21T21%3A32%3A27.558-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=474a9ad84f46b&responseEnvelope.build=10680030&preapprovalKey=PA-2H249176PD302164M
+2014-04-22 11:32:52,318 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-04-22 11:32:52,318 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 11:32:52,318 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 11:32:52,318 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-2H249176PD302164M&getBillingAddress=true&
+2014-04-22 11:32:53,754 DEBUG - Service response
+2014-04-22 11:32:53,754 DEBUG - responseEnvelope.timestamp=2014-04-21T21%3A32%3A52.932-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=7024bbf2508d2&responseEnvelope.build=10680030&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-04-29T04%3A32%3A26.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T04%3A32%3A26.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-04-22 11:32:55,632 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 11:32:55,647 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 11:33:18,382 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1730
+2014-04-22 11:33:18,383 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1730
+2014-04-22 11:33:24,261 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtnet@gmail.com log out
+2014-04-22 11:33:32,028 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-04-22 11:33:52,120 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-04-22 11:33:52,120 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 11:33:52,120 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 11:33:52,120 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-04-29T04%3a33%3a52.119Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T04%3a33%3a52.115Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-04-22 11:33:53,651 DEBUG - Service response
+2014-04-22 11:33:53,651 DEBUG - responseEnvelope.timestamp=2014-04-21T21%3A33%3A52.739-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=a478d524610bc&responseEnvelope.build=10680030&preapprovalKey=PA-0848540433354360T
+2014-04-22 11:34:22,354 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-04-22 11:34:22,355 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 11:34:22,355 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 11:34:22,355 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-0848540433354360T&getBillingAddress=true&
+2014-04-22 11:34:23,537 DEBUG - Service response
+2014-04-22 11:34:23,537 DEBUG - responseEnvelope.timestamp=2014-04-21T21%3A34%3A22.623-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=4cfc324a6ac13&responseEnvelope.build=10680030&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-04-29T04%3A33%3A52.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T04%3A33%3A52.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-04-22 11:34:24,496 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 11:34:24,497 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 11:35:30,246 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-04-22 11:35:30,246 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 11:35:30,246 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 11:35:30,246 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-04-29T04%3a35%3a30.246Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T04%3a35%3a30.242Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-04-22 11:35:31,245 DEBUG - Service response
+2014-04-22 11:35:31,245 DEBUG - responseEnvelope.timestamp=2014-04-21T21%3A35%3A30.426-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=cf11bd2079561&responseEnvelope.build=10680030&preapprovalKey=PA-34B84627A51415827
+2014-04-22 11:35:53,245 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-04-22 11:35:53,245 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:35:53,245 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-04-22 11:35:53,245 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-04-22 11:35:53,245 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-04-22 11:35:53,245 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-04-22 11:35:53,245 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-04-22 11:35:53,245 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-04-22 11:35:53,246 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-04-22 11:35:53,246 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-04-22 11:35:53,246 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-34B84627A51415827&getBillingAddress=true&
+2014-04-22 11:35:54,727 DEBUG - Service response
+2014-04-22 11:35:54,727 DEBUG - responseEnvelope.timestamp=2014-04-21T21%3A35%3A53.906-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=eddcc41d7d2b5&responseEnvelope.build=10680030&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fconsider-an-example-where-an-authorization-subsystem-has-been-mocked-the-mock-object-implements-an-isuserallowed-consider-an-example-where-an-authorization-subsystem-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-04-29T04%3A35%3A30.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-04-22T04%3A35%3A30.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-04-22 11:35:54,841 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-04-22 11:35:54,842 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1273
+2014-05-26 10:18:23,441 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-05-26 13:54:25,965 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

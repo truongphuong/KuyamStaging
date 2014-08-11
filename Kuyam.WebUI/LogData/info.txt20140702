@@ -1,0 +1,9 @@
+2014-07-02 10:52:21,269 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-02 11:24:46,810 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-02 13:40:27,632 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-02 15:53:06,883 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-02 15:53:36,116 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-07-02 15:56:51,012 INFO  - Kuyam.WebUI.Controllers.AccountController.SMSVerifyInviteCode - Verify Invite code C2CBD6 success
+2014-07-02 15:56:59,266 INFO  - Kuyam.WebUI.Controllers.AccountController.RegisterEmail - pig@kuyam.com register success
+2014-07-02 15:58:38,329 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - pig@kuyam.com log out
+2014-07-02 16:32:19,161 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

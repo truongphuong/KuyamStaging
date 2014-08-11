@@ -1,0 +1,64 @@
+2014-02-23 18:17:10,579 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 205
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1698
+2014-02-23 18:18:50,363 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 205
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1698
+2014-02-23 18:19:24,280 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 205
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1698
+2014-02-23 23:09:37,378 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: Object reference not set to an instance of an object.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 202
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1698
+2014-02-23 23:12:35,720 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1362,
+    "notifyId": 120,
+    "type": 1,
+    "aps": {
+      "alert": " confirmed your appointment",
+      "badge": 58
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-02-23 23:12:39,796 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1336,
+    "notifyId": 121,
+    "type": 1,
+    "aps": {
+      "alert": " confirmed your appointment",
+      "badge": 59
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-02-23 23:12:43,727 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1363,
+    "notifyId": 122,
+    "type": 1,
+    "aps": {
+      "alert": " confirmed your appointment",
+      "badge": 60
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration

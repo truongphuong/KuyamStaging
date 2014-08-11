@@ -1,0 +1,356 @@
+2014-06-27 09:55:05,624 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-27 11:46:23,907 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-27 11:48:29,043 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1461,
+    "notifyId": 154,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 77
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 11:48:29,051 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1461,
+    "notifyId": 154,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 77
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:02:08,490 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-27 14:05:38,326 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1463,
+    "notifyId": 155,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 78
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:05:38,353 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1463,
+    "notifyId": 155,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 78
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:07:29,732 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1464,
+    "notifyId": 156,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 79
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:07:29,732 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1464,
+    "notifyId": 156,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 79
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:26:24,540 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1467,
+    "notifyId": 157,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 80
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:26:24,612 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1467,
+    "notifyId": 157,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 80
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:31:10,145 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1469,
+    "notifyId": 158,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 81
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 14:31:10,145 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1469,
+    "notifyId": 158,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 81
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 15:06:51,982 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-27 15:09:04,396 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1471,
+    "notifyId": 159,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 82
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 15:09:04,444 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1471,
+    "notifyId": 159,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 82
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 15:10:33,867 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1472,
+    "notifyId": 160,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 83
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 15:10:33,867 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1472,
+    "notifyId": 160,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 83
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 15:16:21,688 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1474,
+    "notifyId": 161,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 84
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 15:16:21,738 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1474,
+    "notifyId": 161,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 84
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 16:01:31,582 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1476,
+    "notifyId": 162,
+    "type": 2,
+    "aps": {
+      "alert": "vinasource test cancelled your appointment",
+      "badge": 85
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 16:01:31,625 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1476,
+    "notifyId": 162,
+    "type": 2,
+    "aps": {
+      "alert": "vinasource test cancelled your appointment",
+      "badge": 85
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 16:03:48,525 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1477,
+    "notifyId": 163,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 86
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 16:03:48,526 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1477,
+    "notifyId": 163,
+    "type": 1,
+    "aps": {
+      "alert": "vinasource test confirmed your appointment",
+      "badge": 86
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 16:04:42,700 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1473,
+    "notifyId": 164,
+    "type": 2,
+    "aps": {
+      "alert": "vinasource test cancelled your appointment",
+      "badge": 87
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration
+2014-06-27 16:04:42,700 ERROR - Kuyam.Domain.NotificationService.NotificationFailed - Send notification FAILURE to cust: 205 - message {
+  "registration_ids": [
+    "asfafasg"
+  ],
+  "data": {
+    "custId": 205,
+    "appId": 1473,
+    "notifyId": 164,
+    "type": 2,
+    "aps": {
+      "alert": "vinasource test cancelled your appointment",
+      "badge": 87
+    }
+  }
+}
+PushSharp.Android.GcmMessageTransportException: InvalidRegistration

@@ -1,0 +1,28 @@
+2014-06-22 11:15:59,377 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-22 11:29:48,030 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-06-22 11:29:48,048 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-06-22 11:29:48,631 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2favailability%2fvinasource-test-consider-an-example-where-an-authorization-sub-system-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-06-29T04%3a29%3a47.976Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-06-22T04%3a29%3a47.946Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-06-22 11:29:51,656 DEBUG - Service response
+2014-06-22 11:29:51,656 DEBUG - responseEnvelope.timestamp=2014-06-21T21%3A29%3A49.831-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=23211ddf402d9&responseEnvelope.build=10902368&preapprovalKey=PA-63U58202XL887815V
+2014-06-22 11:31:40,323 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-06-22 11:31:40,323 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-06-22 11:31:40,323 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-06-22 11:31:40,323 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-06-22 11:31:40,324 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-06-22 11:31:40,324 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-06-22 11:31:40,324 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-06-22 11:31:40,324 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-06-22 11:31:40,324 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-06-22 11:31:40,324 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-06-22 11:31:40,772 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-63U58202XL887815V&getBillingAddress=true&
+2014-06-22 11:31:44,085 DEBUG - Service response
+2014-06-22 11:31:44,086 DEBUG - responseEnvelope.timestamp=2014-06-21T21%3A31%3A40.916-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=b17e6db6a6ef9&responseEnvelope.build=10902368&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Favailability%2Fvinasource-test-consider-an-example-where-an-authorization-sub-system-has-been-mocked-ca-2701-ocean-park-boulevard-nguyen-dinh-chieu-consider-an%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-06-29T04%3A29%3A47.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-06-22T04%3A29%3A47.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-06-22 13:24:41,308 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-22 22:47:52,914 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success

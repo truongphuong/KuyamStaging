@@ -1,0 +1,89 @@
+2014-03-14 10:08:42,993 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 10:44:15,994 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 10:44:17,012 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-14 10:44:21,638 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-14 10:44:56,534 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax -  log out
+2014-03-14 10:45:32,371 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 10:46:04,790 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 10:47:07,248 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 10:49:17,364 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 10:50:11,874 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 10:51:33,248 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - nguyenb@gmail.com log out
+2014-03-14 11:18:57,574 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 11:20:50,299 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-03-14 11:20:50,384 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-03-14 11:20:50,762 DEBUG - requestEnvelope.errorLanguage=en_US&cancelUrl=http%3a%2f%2fdev.kuyam.com%2fvinasource-santa-monica--ca--2701-ocean-park-boulevard-nguyen-dinh-chieu%3fpaypalcancel%3dtrue&currencyCode=USD&endingDate=2014-03-21T04%3a20%3a50.274Z&maxAmountPerPayment=40&maxTotalAmountOfAllPayments=40&returnUrl=https%3a%2f%2fdev.kuyam.com%2fPayPal%2fPayPal&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-03-14T04%3a20%3a50.122Z&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&
+2014-03-14 11:20:52,358 DEBUG - Service response
+2014-03-14 11:20:52,358 DEBUG - responseEnvelope.timestamp=2014-03-13T21%3A20%3A52.754-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=f1af04900dbc8&responseEnvelope.build=9898581&preapprovalKey=PA-8M544840Y5442615D
+2014-03-14 11:21:24,963 DEBUG - Connecting to https://svcs.sandbox.paypal.com/AdaptivePayments/PreapprovalDetails
+2014-03-14 11:21:24,964 DEBUG - Returning cached credentials for phuongtruong-facilitator_api1.vinasource.com
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-SECURITY-USERID:phuongtruong-facilitator_api1.vinasource.com
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-SECURITY-PASSWORD:1363147218
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-SECURITY-SIGNATURE:ANljhjhuYZ3F8sfkC1xZJhRA7oVXAO-8WVFvV1AWjcT9-IoA26gmVJBL
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-APPLICATION-ID:APP-80W284485P519543T
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-REQUEST-DATA-FORMAT:NV
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-RESPONSE-DATA-FORMAT:NV
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-DEVICE-IPADDRESS:127.0.0.1
+2014-03-14 11:21:24,964 DEBUG - X-PAYPAL-REQUEST-SOURCE:sdk-adaptivepayments-dotnet-1.0.92
+2014-03-14 11:21:24,964 DEBUG - requestEnvelope.errorLanguage=en_US&preapprovalKey=PA-8M544840Y5442615D&getBillingAddress=true&
+2014-03-14 11:21:25,787 DEBUG - Service response
+2014-03-14 11:21:25,787 DEBUG - responseEnvelope.timestamp=2014-03-13T21%3A21%3A26.186-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=82fac9a3061d5&responseEnvelope.build=9898581&approved=true&cancelUrl=http%3A%2F%2Fdev.kuyam.com%2Fvinasource-santa-monica--ca--2701-ocean-park-boulevard-nguyen-dinh-chieu%3Fpaypalcancel%3Dtrue&curPayments=0&curPaymentsAmount=0.00&curPeriodAttempts=0&currencyCode=USD&dateOfMonth=0&dayOfWeek=NO_DAY_SPECIFIED&endingDate=2014-03-21T04%3A20%3A50.000Z&maxAmountPerPayment=40.00&maxTotalAmountOfAllPayments=40.00&paymentPeriod=NO_PERIOD_SPECIFIED&pinType=NOT_REQUIRED&returnUrl=https%3A%2F%2Fdev.kuyam.com%2FPayPal%2FPayPal&senderEmail=kuyam3%40vinasource.com&memo=fee+for+appointment+booked+at+kuyam.com&startingDate=2014-03-14T04%3A20%3A50.000Z&status=ACTIVE&addressList.address(0).addresseeName=truong+phuong&addressList.address(0).baseAddress.line1=1+Main+St&addressList.address(0).baseAddress.city=San+Jose&addressList.address(0).baseAddress.state=CA&addressList.address(0).baseAddress.postalCode=95131&addressList.address(0).baseAddress.countryCode=US&addressList.address(0).baseAddress.type=BILLING&addressList.address(0).addressId=11841020&feesPayer=EACHRECEIVER&displayMaxTotalAmount=true&sender.accountId=4VD6LJLR7QETA
+2014-03-14 11:21:26,491 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1253
+2014-03-14 11:21:26,553 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass27.<SavePaymentInfo>b__23 - PayPal fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass27.<SavePaymentInfo>b__23() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1253
+2014-03-14 11:21:46,388 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-14 11:21:46,389 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1703
+2014-03-14 11:36:08,331 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 11:37:30,345 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 11:53:51,634 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 14:25:13,289 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 15:36:01,156 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 15:43:07,791 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-14 15:43:18,651 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 15:43:27,056 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-14 16:23:29,289 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 16:32:53,624 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 17:05:16,671 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 17:18:03,585 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 17:18:43,469 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - nguyenb@gmail.com log out
+2014-03-14 17:18:57,519 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - nguyenb@gmail.com log out
+2014-03-14 17:28:45,232 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-14 17:34:19,409 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 17:35:32,251 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - mytrang2014@vinasource.com log out
+2014-03-14 17:44:12,014 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1709
+2014-03-14 17:44:12,050 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1709
+2014-03-14 17:49:29,803 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-03-14 17:49:39,139 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-03-14 17:50:27,800 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1716
+2014-03-14 17:50:27,813 ERROR - Kuyam.WebUI.Controllers.PayPalController+<>c__DisplayClass31.<BookAppointmentCash>b__30 - Book Appointment in person fail:
+System.Exception: The ObjectContext instance has been disposed and can no longer be used for operations that require a connection.
+   at Kuyam.WebUI.Controllers.PayPalController.ZendeskAdd(Appointment appointment, ProfileCompany company, String title) in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 206
+   at Kuyam.WebUI.Controllers.PayPalController.<>c__DisplayClass31.<BookAppointmentCash>b__30() in d:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\Controllers\PayPalController.cs:line 1716
+2014-03-14 18:04:15,557 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - concierge@vinasource.com log out
