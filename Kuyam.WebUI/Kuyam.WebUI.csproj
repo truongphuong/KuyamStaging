@@ -435,6 +435,8 @@
     <Content Include="Content\images\icons\icon_twitter.png" />
     <Content Include="Content\images\icons\icon_youtube.png" />
     <Content Include="Content\images\icons\live chat.png" />
+    <Content Include="Content\images\icons\live_chat.png" />
+    <Content Include="Content\images\icons\live_chat_off.png" />
     <Content Include="Content\images\icons\sale_ribbon.png" />
     <Content Include="Content\images\icons\yellow_star.png" />
     <Content Include="Content\images\itunes_badge.png" />
