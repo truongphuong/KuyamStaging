@@ -13,6 +13,7 @@
         if (ViewBag.Categories != null)
         {
             var profiles = ViewBag.ProfileCompanies;
+            var catUrl = "https://kuyamqa1.apphb.com";
             <div>
                 <ul class="tab-list desktop">
                     @foreach (Service category in ViewBag.Categories)
@@ -21,6 +22,7 @@
                         if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
                         {
                             <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                            catUrl = catUrl + "/" + category.ServiceName;
                         }
                         else
                         {
@@ -34,8 +36,9 @@
                 <div class="tab-content">
                     @foreach (CompanyProfileSearch profile in profiles)
                     {
-                        var urlLogo = "/Images/placeholder.png";
-                        string url = Url.RouteUrl("availability", new { seName = profile.GetSeName(profile.ProfileID) }); ;
+                        var urlLogo = "content/images/placeholder.png";
+                        var seName = profile.GetSeName(profile.ProfileID);
+                        string url = "https://kuyamqa1.apphb.com/" + "availability/" + seName;
 
                         if (!string.IsNullOrEmpty(profile.LogoMediaId))
                         {
@@ -82,12 +85,7 @@
                                     @switch (profile.Rate.ToString())
                                     {
                                         case "0":
-                                            {
-                                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
-                                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
-                                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
-                                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
-                                                <span class="gray"><img alt="Avatar" src="content/images/icons/gray_star.png"></span>
+                                            {                                               
                                                 break;
                                             }
                                         case "1":
@@ -144,20 +142,26 @@
                                     {
                                         foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
                                         {
-                                            var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
+                                            //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
+
+                                            string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId =" + timeSlot.EmployeeAvailableId
+                                                + "&start = " + timeSlot.StartTime + "&categoryId = " + ViewBag.CategoryId + "&book = true";
                                             if (profile.CompanyAvailableTimeSlots.IsRederect)
                                             {
-                                                urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                                //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                                urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName ;
                                             }
                                             <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                         }
 
                                         if (profile.CompanyAvailableTimeSlots.IsShowMore)
                                         {
-                                            var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
+                                           // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
+                                            var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId = " + ViewBag.CategoryId;
                                             if (profile.CompanyAvailableTimeSlots.IsRederect)
                                             {
-                                                url = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                                //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                                urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
                                             }
                                             <a href="@urlShowMore" title="more">more</a>
 
@@ -183,7 +187,7 @@
                     }
 
                     <div class="clear"></div>
-                    <p class="moreItems"><a href="#" title="more">more</a></p>
+                    <p class="moreItems"><a href="@catUrl" title="more">more</a></p>
                 </div>
 
 
