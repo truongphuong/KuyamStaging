@@ -124,7 +124,7 @@
     /* Note: Design for a width of 320px */
 
     @media only screen and (max-width: 767px) {
-        .container { width: 270px; }
+        .container { width: 100%; }
         .container .columns,
         .container .column { margin: 0; }
 
@@ -146,7 +146,7 @@
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column  { width: 270px; }
+        .container .two-thirds.column  { width: 100%; }
 
         /* Offsets */
         .container .offset-by-one,
