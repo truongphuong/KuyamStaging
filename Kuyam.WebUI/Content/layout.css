@@ -107,7 +107,7 @@
 .iphone-android p{font-size:32px;line-height:38px;font-weight:400;color:#363636;margin-bottom:0;font-family:bebas-neue, sans-serif;padding-right:5px;}
 .iphone-android p.phone{color:#88B048;}
 .iphone-android .linkStore{padding-top:13px;}
-.iphone-android .linkStore img{margin-right:5px;}
+.iphone-android .linkStore img{margin-right:5px;width:47%;}
 
 .container .two-thirds.group_image{padding-bottom:90px;}
 
@@ -158,8 +158,8 @@
 
 .slide_welcome{position:relative;}
 #slide_welcome.rslides{margin-bottom:90px;}
-#slide_welcome.rslides li{height:196px;background:no-repeat center center;background-size:cover;margin:0;text-align:center;}
-#slide_welcome.rslides li.iphone-android img{width:auto;display:inline-block;float:none;}
+#slide_welcome.rslides li{height:196px;background:no-repeat center center;background-size:contain;margin:0;text-align:center;}
+#slide_welcome.rslides li.iphone-android img{width:40%;display:inline-block;float:none;}
 
 .rslides_tabs{display:none;left:10px;text-align:center;}
 .rslides_tabs li a{height:8px;width:30px;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;background:#dddddd;}
@@ -240,6 +240,10 @@
 	.rslides_tabs{display:block;}
 	
 	.lineBottom .descriptionTitle p{text-align:center;}
+
+    #lbcopyright {padding-left:15px;padding-right:15px;}
+
+    .item_container .one-third a img {width:95%;}
 }
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
