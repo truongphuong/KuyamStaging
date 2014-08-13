@@ -774,6 +774,11 @@
                 return;
             }
 
+            if (typeof result.validTime != 'undefined') {
+                showAlertMessage("please select a different time because this slot is past.");
+                return;
+            }
+
             $("#servicetype").html("");
             $("#servicetype").html(result.sevice);
             $('#servicetype option:selected').next('option').attr('selected', 'selected');

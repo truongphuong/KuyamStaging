@@ -35,6 +35,7 @@ using Kuyam.Domain.HomeServices;
 using Kuyam.Domain.CompanyProfileServices;
 using Kuyam.Domain.SearchServices;
 using Kuyam.Domain.OfferServices;
+using Kuyam.Domain.CategoryServices;
 
 namespace Kuyam.WebUI.App_Start
 {
@@ -117,7 +118,7 @@ namespace Kuyam.WebUI.App_Start
             builder.RegisterType<SearchService>().As<ISearchService>().InstancePerHttpRequest();
 
             builder.RegisterType<OfferService>().As<IOfferService>().InstancePerHttpRequest();
-
+            builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerHttpRequest();
             
             
             #region Sitemap

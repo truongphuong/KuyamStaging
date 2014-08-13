@@ -2730,7 +2730,8 @@ namespace Kuyam.WebUI.Controllers
                     throw;
                 }
                 //MySession.ProfileID = profile.ProfileID;
-                return RedirectToAction("Image", "CompanySetup", new { companyId = profile.ProfileID });
+               // return RedirectToAction("Image", "CompanySetup", new { companyId = profile.ProfileID });
+               return  RedirectToAction("postsetup");
                 //return RedirectToAction("SetupImage", new { companyId = profile.ProfileID });
             }
 

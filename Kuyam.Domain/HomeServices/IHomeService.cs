@@ -15,5 +15,9 @@ namespace Kuyam.Domain.HomeServices
         PostExt GetFeaturedPostAtHomePage(Guid? featuredPostID, double? lat, double? lng);
         bool CheckCompanyAvailability(int profileId);
         be_Categories GeCategoryById(int id);
+
+        List<Service> GetListCategoryForHomePage();
+
+        List<CompanyProfileSearch> GetCompaniesAtHomePage(double lat, double lon, int categoryId = 0);
     }
 }

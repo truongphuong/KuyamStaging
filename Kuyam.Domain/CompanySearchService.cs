@@ -143,7 +143,7 @@ namespace Kuyam.Domain
             return pcList;
         }
 
-        private void TransformEmployeeHours(CompanyProfileSearch companyProfile)
+        public void TransformEmployeeHours(CompanyProfileSearch companyProfile)
         {
             var employeeHoursXml = UtiHelper.Deserialize<EmployeeHoursXml>("<EmployeeHoursXml>" + companyProfile.EmployeeHoursStr + "</EmployeeHoursXml>");
             companyProfile.EmployeeHours = employeeHoursXml != null
@@ -160,7 +160,7 @@ namespace Kuyam.Domain
                 : new List<EmployeeHour>();
         }
 
-        private void TransformInstructorClassSchedulerHours(CompanyProfileSearch companyProfile)
+        public void TransformInstructorClassSchedulerHours(CompanyProfileSearch companyProfile)
         {
             var employeeHoursXml = UtiHelper.Deserialize<EmployeeHoursXml>("<EmployeeHoursXml>" + companyProfile.InstructorClassSchedulerStr + "</EmployeeHoursXml>");
             companyProfile.InstructorClassSchedulerHours = employeeHoursXml != null
@@ -181,7 +181,7 @@ namespace Kuyam.Domain
                 : new List<EmployeeHour>();
         }
 
-        private void TransformCompanyHours(CompanyProfileSearch companyProfile)
+        public void TransformCompanyHours(CompanyProfileSearch companyProfile)
         {
             var companyHoursXml = UtiHelper.Deserialize<CompanyHoursXml>("<CompanyHoursXml>" + companyProfile.CompanyHoursStr + "</CompanyHoursXml>");
             companyProfile.CompanyHours = companyHoursXml != null
@@ -195,7 +195,7 @@ namespace Kuyam.Domain
                     : new List<CompanyHour>();
         }
 
-        private void TransformEvents(CompanyProfileSearch companyProfile)
+        public void TransformEvents(CompanyProfileSearch companyProfile)
         {
             var eventsXML = UtiHelper.Deserialize<EventsXml>("<EventsXml>" + companyProfile.CompanyEventsStr + "</EventsXml>");
             companyProfile.CompanyEvents = eventsXML != null
@@ -212,7 +212,7 @@ namespace Kuyam.Domain
                 : new List<EventDTO>();
         }
 
-        private TimeSlots GetCompanyAvailableTimeSlots(CompanyProfileSearch profileCompany)
+        public TimeSlots GetCompanyAvailableTimeSlots(CompanyProfileSearch profileCompany)
         {
             if (profileCompany == null)
                 return null;
@@ -262,7 +262,7 @@ namespace Kuyam.Domain
             return result;
         }
 
-        private List<Appointment> GetAppoinmentsByProfileIds(List<int> profileIds)
+        public List<Appointment> GetAppoinmentsByProfileIds(List<int> profileIds)
         {
             DateTime temp = DateTime.UtcNow.AddMinutes(-10);
             DateTime dtNow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow, DateTimeKind.Utc);

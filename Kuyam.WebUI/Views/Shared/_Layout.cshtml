@@ -19,13 +19,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="https://webfonts.creativecloud.com/c/b87fec/asap:n4:n7,bebas-neue:n4,open-sans:i4:n4.WXM:P:1,WXK:P:1,bCT:P:1,VvD:P:1,VvH:P:1/d">
-    <link rel="stylesheet" href="@Url.Content("~/content/themes/base/jquery-ui.css")">
-    <link rel="stylesheet" href="@Url.Content("~/content/base.css")">
-    ><link rel="stylesheet" href="@Url.Content("~/content/general.css")">
-    ><link rel="stylesheet" href="@Url.Content("~/content/layout.css")">
-    ><link rel="stylesheet" href="@Url.Content("~/content/skdslider.css")">
-    ><!--[if lt IE 9]>
+    <link type="text/css"  rel="stylesheet" href="https://webfonts.creativecloud.com/c/b87fec/asap:n4:n7,bebas-neue:n4,open-sans:i4:n4.WXM:P:1,WXK:P:1,bCT:P:1,VvD:P:1,VvH:P:1/d">
+    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/bootstrap.css")" />
+    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/bootstrap-theme.css")" />
+    <link type="text/css"  rel="Stylesheet" href="@Url.Content("~/content/themes/base/jquery-ui.css")">
+    <link type="text/css"  rel="Stylesheet" href="@Url.Content("~/content/responsiveslides.css")" />
+    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/base.css")">
+    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/general.css")">
+    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/layout.css")">    
+    <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!-- Favicons
@@ -34,73 +36,29 @@
     <link rel="apple-touch-icon" href="content/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="content/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="content/images/apple-touch-icon-114x114.png">
-    <script src="scripts/jquery-2.1.1.js"></script>
-    <script src="scripts/jquery-ui-1.10.4.js"></script>
-    <script src="scripts/skdslider.js"></script>
-    <script src="scripts/general.js"></script>
+    <script type="text/javascript" src="scripts/jquery-2.1.1.js" ></script>
+    <script type="text/javascript" src="scripts/jquery-ui-1.10.4.js" ></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/responsiveslides.js"></script>
+    <script type="text/javascript" src="scripts/general.js"></script>
 </head>
 <body>
     <!-- Primary Page Layout
     ================================================== -->
     <div class="page">
         <div class="header head_container">
-            <div class="container">
-                <div class="six columns alpha omega">
-                    <div class="logoKyuam">
-                        <a href="#" title="Kuyam"><img alt="Logo Kuyam" src="content/images/logo_kuyam.png" width="159" height="42"></a>
-                    </div>
-                    <div class="today">
-                        <p>Thursday, July 31 2014</p>
-                    </div>
-                </div>
-                <div class="two-thirds column alpha omega">
-                    <div class="topSearch">
-                        <div class="five columns alpha omega searchImage">
-                            <a href="#" title="live chat"><img alt="Live Chat" src="content/images/icons/live chat.png" width="92" height="38"></a>
-                        </div>
-                        <div class="six columns alpha omega searchInput">
-                            <span class="icon-list"></span><input type="text" value="" placeholder="search for a business" />
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                    <div class="menuList">
-                        <ul class="navMenu">
-                            <li><a href="#" title="Home">Home</a></li>
-                            <li><a href="#" title="How it works">How it works</a></li>
-                            <li><a href="#" title="Book">Book</a></li>
-                            <li><a href="#" title="Events">Events</a></li>
-                            <li><a href="#" title="Blog">Blog</a></li>
-                            <li><a href="#" title="Sign in">Sign in</a></li>
-                            <li><a href="#" title="Sign up">Sign up</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
+            @Html.Partial("_Header")
         </div>
         <div class="mainContent">
             @RenderBody()
         </div>
         <div class="footer footer_container">
-            <div class="container">
-                <div class="two-thirds column alpha omega leftFooter">
-                    <p>Copyright © 2014 Kuyam Companies, Inc. All rights reserved. Patent pending.</p>
-                </div>
-                <div class="six columns alpha omega rightFooter">
-                    <p>
-                        <a href="#" title="Facebook"><img alt="Facebook" src="content/images/icons/icon_facebook.png" width="11" height="20"></a>
-                        <a href="#" title="Twitter"><img alt="Twitter" src="content/images/icons/icon_twitter.png" width="19" height="17"></a>
-                        <a href="#" title="Google Plus"><img alt="Google Plus" src="content/images/icons/icon_google.png" width="25" height="24"></a>
-                        <a href="#" title="Pinterest"><img alt="Pinterest" src="content/images/icons/icon_pinterest.png" width="17" height="23"></a>
-                        <a href="#" title="Youtube"><img alt="Youtube" src="content/images/icons/icon_youtube.png" width="21" height="16"></a>
-                    </p>
-                </div>
-            </div>
+            @Html.Partial("_Footer")
         </div>
     </div>
-
+    <div class="loading"></div>
     <!-- End Document
     ================================================== -->
-
+    @Html.Partial("_LiveChat")
 </body>
 </html>

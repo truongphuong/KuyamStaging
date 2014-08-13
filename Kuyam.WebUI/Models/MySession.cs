@@ -108,7 +108,7 @@ namespace Kuyam.WebUI.Models
                         }
                         OriginalCustIfImpersonated = user;
                         user = impersonatedCust;
-                       
+
                     }
                 }
             }
@@ -568,7 +568,7 @@ namespace Kuyam.WebUI.Models
 
         public static bool ShowLiveChat
         {
-            get { return Session["ShowLiveChat"] == null || Convert.ToBoolean(Session["ShowLiveChat"]); }
+            get { return Convert.ToBoolean(Session["ShowLiveChat"]); }
             set { Session["ShowLiveChat"] = value; }
         }
 

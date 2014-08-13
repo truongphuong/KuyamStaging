@@ -654,7 +654,7 @@ namespace Kuyam.WebUI.Controllers
 
             var profileCompany = _companyProfileService.GetProfileCompanyByID(profileId);
 
-
+            
             // Get service of employee
             List<CompanyService> lstService = packageId.HasValue
                                                   ? _companyProfileService.GetServiceEmployeeByPackage(employeeId, packageId.Value, profileId, categoryId ?? 0)
@@ -673,6 +673,12 @@ namespace Kuyam.WebUI.Controllers
                 && serviceHour.Any(m => (m.Start <= startTime && m.End >= startTime.AddMinutes(s.Duration)) && (aptNext == null || startTime.AddMinutes(s.Duration) <= aptNext.Start) && m.EmployeeID == s.EmployeeID)).ToList();
 
             Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (startTime < DateTime.Now)
+            {
+                dict.Add("validTime", false);
+            }
+           
 
             if (profileCompany != null && profileCompany.IsShowCatagory.HasValue && profileCompany.IsShowCatagory.Value && !categoryId.HasValue)
             {

@@ -188,8 +188,10 @@
                                     {
                                         numberleft = "unlimited";
                                     }
-                                    DateTime _startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
-                                    DateTime _enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+                                    //DateTime _startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
+                                    //DateTime _enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+                                    DateTime _startdate = discount.StartDate;
+                                    DateTime _enddate = discount.EndDate;
                                     string startdate = _startdate.ToString("MM/dd/yy");
                                     string starttime = _startdate.ToString("hh:mm tt").ToLower();
                                     string enddate = string.Empty;

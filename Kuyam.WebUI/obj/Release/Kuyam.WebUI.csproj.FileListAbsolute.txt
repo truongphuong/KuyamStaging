@@ -265,6 +265,7 @@ E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.WebUI\bin\GeoFramework.xml
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.WebUI\obj\Release\Kuyam.WebUI.csprojResolveAssemblyReference.cache
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.WebUI\obj\Release\Kuyam.WebUI.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.WebUI\obj\Release\Kuyam.WebUI.pdb
+D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.WebUI\bin\System.Web.Razor.dll
 D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.WebUI\bin\System.Web.Razor.dll
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\bin\Resources\AppleProductioniOSPushServices.p12
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.WebUI\bin\Resources\concierge_apn_prod_key.p12

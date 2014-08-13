@@ -161,7 +161,8 @@
         $('#btnsubmit').click(function () {
             //            debugger;
             $("#existCompanyName").hide();
-            getCategory();
+            showDialog('savechangepopup');
+            getCategory();           
             $('#companysetup').submit();
             //            if (validationdata()) {
             //                getCategory();
@@ -173,6 +174,9 @@
             //                window.scrollTo(0, 0);
             //                return false;
             //            }
+            if (!validationdata()) {
+                hideDialog('savechangepopup');
+            }
         });
     });
 
@@ -257,6 +261,8 @@
     function validationdata() {
 
         var isValid = true;
+        
+        isValid = $('#companysetup').validate().element($('#companyname')) ? isValid : false;
         isValid = $('#companysetup').validate().element($('#streestcompanyname')) ? isValid : false;
         isValid = $('#companysetup').validate().element($('#city')) ? isValid : false;
         isValid = $('#companysetup').validate().element($('#zipcode')) ? isValid : false;
@@ -670,5 +676,12 @@
     </div>
 </div>
 <div class="clear">
+</div>
+<div id="savechangepopup" class="savechangepopup">
+    <div class="contentpopup">
+        <p>
+            Your company are saving
+        </p>
+    </div>
 </div>
 <!-- InstanceEndEditable -->

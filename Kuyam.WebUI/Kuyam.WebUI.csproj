@@ -321,6 +321,7 @@
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\GettyImageModels.cs" />
     <Compile Include="Models\GiftCardModels.cs" />
+    <Compile Include="Models\Home\IndexModel.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\ItemCustom.cs" />
     <Compile Include="Models\LandingPage\LandingPageCompanyModel.cs" />
@@ -382,6 +383,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\base.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\files\ExportImport\error.txt" />
     <Content Include="Content\gallery\classic-loader.gif" />
     <Content Include="Content\gallery\classic-map.png" />
@@ -400,6 +405,8 @@
     <Content Include="Content\images\6.jpg" />
     <Content Include="Content\images\7.jpg" />
     <Content Include="Content\images\8.jpg" />
+    <Content Include="Content\images\88.jpg" />
+    <Content Include="Content\images\9.jpg" />
     <Content Include="Content\images\apple-touch-icon-114x114.png" />
     <Content Include="Content\images\apple-touch-icon-72x72.png" />
     <Content Include="Content\images\apple-touch-icon.png" />
@@ -428,6 +435,7 @@
     <Content Include="Content\images\icons\icon_twitter.png" />
     <Content Include="Content\images\icons\icon_youtube.png" />
     <Content Include="Content\images\icons\live chat.png" />
+    <Content Include="Content\images\icons\sale_ribbon.png" />
     <Content Include="Content\images\icons\yellow_star.png" />
     <Content Include="Content\images\itunes_badge.png" />
     <Content Include="Content\images\itunes_badge1.png" />
@@ -435,15 +443,25 @@
     <Content Include="Content\images\kuyam_banner_2.jpg" />
     <Content Include="Content\images\kuyam_banner_3.jpg" />
     <Content Include="Content\images\laptop.png" />
+    <Content Include="Content\images\left.png" />
+    <Content Include="Content\images\loader.gif" />
     <Content Include="Content\images\logo_kuyam.png" />
     <Content Include="Content\images\mobile.png" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\pause.png" />
+    <Content Include="Content\images\play.png" />
     <Content Include="Content\images\reuters.png" />
+    <Content Include="Content\images\right.png" />
     <Content Include="Content\images\sale_ribbon.png" />
+    <Content Include="Content\images\slide-bg-active.png" />
+    <Content Include="Content\images\slide-bg.png" />
+    <Content Include="Content\images\slide_desc.png" />
     <Content Include="Content\images\startup.png" />
     <Content Include="Content\images\tablet.png" />
     <Content Include="Content\images\tech.png" />
     <Content Include="Content\images\techcrunch.png" />
     <Content Include="Content\images\thewallstreet.png" />
+    <Content Include="Content\images\welcome.jpg" />
     <Content Include="Content\jcarousel\jquery.jcarousel.js" />
     <Content Include="Content\jcarousel\jquery.jcarousel.min.js" />
     <Content Include="Content\jcarousel\skins\ie7\loading-small.gif" />
@@ -464,6 +482,7 @@
     <Content Include="Content\masteradmin\homepage.html" />
     <Content Include="Content\masteradmin\js\admin_js.js" />
     <Content Include="Content\masteradmin\js\general.js" />
+    <Content Include="Content\responsiveslides.css" />
     <Content Include="Content\scripts\encoder.js" />
     <Content Include="Content\scripts\login.js" />
     <Content Include="Content\skdslider.css" />
@@ -615,6 +634,7 @@
     <Content Include="css\verification.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\Baskerville-Italic.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fullCalendar\fullcalendar.css" />
     <Content Include="fullCalendar\fullcalendar.js" />
     <Content Include="fullCalendar\fullcalendar.min.js" />
@@ -687,6 +707,11 @@
     <Content Include="Mvc.sitemap" />
     <Content Include="Areas\API\Views\Web.config" />
     <Content Include="Areas\API\Views\Beautify\Index.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1521,6 +1546,8 @@
     <Content Include="Images\you_have_purchased_a_kuyam_gift_card.jpg" />
     <Content Include="Logs\Licenses.txt" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\colorpicker\colorPicker.css" />
     <Content Include="Scripts\colorpicker\colorPicker.js" />
     <Content Include="Scripts\date.js" />
@@ -1542,6 +1569,7 @@
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\responsiveslides.js" />
     <Content Include="Scripts\skdslider.js" />
     <Content Include="Scripts\dialogs.js" />
     <Content Include="Scripts\fbdropdown\fbdropdown.css" />
@@ -2748,6 +2776,7 @@
     <Content Include="Views\Company\_TimeSlots.cshtml" />
     <Content Include="Views\Book\Class.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_Companies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

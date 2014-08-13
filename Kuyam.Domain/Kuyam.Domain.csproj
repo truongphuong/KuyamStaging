@@ -156,6 +156,8 @@
     <Compile Include="BlogServices\ICategoryFeaturedHotelService.cs" />
     <Compile Include="BlogServices\ICategoryFeaturedService.cs" />
     <Compile Include="CalendarService.cs" />
+    <Compile Include="CategoryServices\CategoryService.cs" />
+    <Compile Include="CategoryServices\ICategoryService.cs" />
     <Compile Include="ClassModel\SchedulerAvailability.cs" />
     <Compile Include="ClassService.cs" />
     <Compile Include="Common\EmailAccount.cs" />

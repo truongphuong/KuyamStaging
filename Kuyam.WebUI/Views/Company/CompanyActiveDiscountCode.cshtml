@@ -199,9 +199,11 @@
                                     }
 
                                     string remain = string.Empty;
-                                    
-                                    DateTime startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
-                                    DateTime enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+
+                                    //DateTime startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
+                                    //DateTime enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+                                    DateTime startdate = discount.StartDate;
+                                    DateTime enddate = discount.EndDate;
                                     TimeSpan remainTime = new TimeSpan(enddate.AddTicks(-DateTime.Now.Ticks).Ticks);
                                     //string startdate = discount.StartDate.ToString("MM/dd/yy");
                                     //string starttime = discount.StartDate.ToString("hh:mm tt").ToLower();

@@ -1714,7 +1714,7 @@ namespace Kuyam.WebUI.Controllers
             }
 
             var urlName = new UserPackagePurchase().GetSeName(MySession.PurchaseCompanyProfileId);
-            string urlredirect = Url.RouteUrl("availability", new { seName = urlName }) + "/package";
+            string urlredirect = Url.RouteUrl("package", new { seName = urlName });
             if (MySession.IsBookDirect)
                 urlredirect = Url.RouteUrl("Booking - Company Package", new { companyUrlName = urlName });
             return Redirect(urlredirect);

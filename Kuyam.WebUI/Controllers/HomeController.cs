@@ -19,6 +19,9 @@ using Kuyam.WebUI.Extension;
 using Kuyam.Domain.HomeServices;
 using Kuyam.WebUI.App_Start;
 using Kuyam.Database.Extensions;
+using Kuyam.Domain.CategoryServices;
+using Kuyam.WebUI.Models.Home;
+using Kuyam.Utility;
 
 
 namespace Kuyam.WebUI.Controllers
@@ -29,22 +32,55 @@ namespace Kuyam.WebUI.Controllers
         private readonly IFeaturedCompanyService _featuredCompanyService;
         private readonly IProfileCompanyService _profileCompanyService;
         private readonly IHomeService _homeService;
+        private readonly ICategoryService _categoryService;
 
         public HomeController(IBlogPostService postService,
             IFeaturedCompanyService featuredCompanyService,
             IProfileCompanyService profileCompanyService,
-            IHomeService homeService)
+            IHomeService homeService,
+            ICategoryService categoryService)
         {
             _postService = postService;
             _featuredCompanyService = featuredCompanyService;
             _profileCompanyService = profileCompanyService;
             _homeService = homeService;
+            _categoryService = categoryService;
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(double? lat, double? lon)
         {
-            return View();
+            var model = new IndexModel();           
+            model.Categories = _categoryService.GetSequenceCategories();
+            var categories = model.Categories;
+            ViewBag.Categories = categories;
+            ViewBag.CategoryId = 0;
+            var curLat = lat.HasValue ? lat.Value : ConfigManager.DefaultLatitude;
+            var curLon = lon.HasValue ? lon.Value : ConfigManager.Defaultlongitude;
+            if (categories != null && categories.Count > 0)
+            {
+                ViewBag.ProfileCompanies = _homeService.GetCompaniesAtHomePage(curLat, curLon, categories[0].ServiceID);
+                ViewBag.CategoryId = categories[0].ServiceID;
+            }
+            ViewBag.Lat = curLat;
+            ViewBag.Lon = curLon;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult RefreshCompanyInfoBar(int categoryId, double lat, double lon)
+        {
+            var categories = _categoryService.GetSequenceCategories();
+            ViewBag.Categories = categories;
+            ViewBag.CategoryId = categoryId;
+
+            ViewBag.ProfileCompanies = _homeService.GetCompaniesAtHomePage(lat, lon, categoryId);
+
+            ViewBag.Lat = lat;
+            ViewBag.Lon = lon;
+
+
+            return PartialView("_Companies");
         }
 
         /*
@@ -816,7 +852,7 @@ namespace Kuyam.WebUI.Controllers
         public ActionResult ToogleShowLiveChat()
         {
             MySession.ShowLiveChat = !MySession.ShowLiveChat;
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(MySession.ShowLiveChat, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

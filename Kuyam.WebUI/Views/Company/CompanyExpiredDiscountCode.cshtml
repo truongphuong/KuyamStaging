@@ -184,8 +184,10 @@
                                         remainordepleted = "unlimited";
                                     }
 
-                                    DateTime _startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
-                                    DateTime _enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+                                    //DateTime _startdate = DateTimeUltility.ConvertToUserTime(discount.StartDate, DateTimeKind.Utc);
+                                    //DateTime _enddate = DateTimeUltility.ConvertToUserTime(discount.EndDate, DateTimeKind.Utc);
+                                    DateTime _startdate = discount.StartDate;
+                                    DateTime _enddate = discount.EndDate;
                                     string remain = string.Empty;
                                     string enddate = string.Empty;
                                     string endtime = string.Empty;

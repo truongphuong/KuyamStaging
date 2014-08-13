@@ -7,6 +7,7 @@ using Kuyam.Repository;
 using Kuyam.Repository.Interface;
 using Kuyam.Domain.BlogServices;
 using Kuyam.Database.Extensions;
+using Kuyam.Utility;
 
 namespace Kuyam.Domain.HomeServices
 {
@@ -15,6 +16,7 @@ namespace Kuyam.Domain.HomeServices
         #region Fields
         private IRepository<FeaturedCompany> _featuredCompanyRepository;
         private readonly IRepository<ProfileCompany> _profileCompanyRepository;
+        private readonly IRepository<Service> _serviceRepository;
         private readonly IRepository<CategoryFeatured> _categoryFeaturedRepository;
         private readonly IRepository<be_Posts> _postRepository;
         private readonly IRepository<be_PostCategory> _postCategorysRepository;
@@ -22,6 +24,7 @@ namespace Kuyam.Domain.HomeServices
         private readonly IRepository<EmployeeHour> _employeeHourRepository;
         private readonly IRepository<CompanyEmployee> _companyEmployeeRepository;
         private readonly IBlogPostService _postService;
+        private readonly CompanySearchService _companySearchService;
         #endregion
 
         #region Ctor
@@ -34,7 +37,9 @@ namespace Kuyam.Domain.HomeServices
             IRepository<CategoryFeatured> categoryFeaturedRepository,
             IRepository<EmployeeHour> employeeHourRepository,
             IRepository<CompanyEmployee> companyEmployeeRepository,
-            IBlogPostService postService)
+            IRepository<Service> serviceRepository,
+            IBlogPostService postService,
+            CompanySearchService companySearchService)
         {
             _featuredCompanyRepository = featuredCompanyRepository;
             _profileCompanyRepository = profileCompanyRepository;
@@ -44,7 +49,9 @@ namespace Kuyam.Domain.HomeServices
             _categoryFeaturedRepository = categoryFeaturedRepository;
             _employeeHourRepository = employeeHourRepository;
             _companyEmployeeRepository = companyEmployeeRepository;
+            _serviceRepository = serviceRepository;
             this._postService = postService;
+            _companySearchService = companySearchService;
         }
         #endregion
 
@@ -123,6 +130,36 @@ namespace Kuyam.Domain.HomeServices
         public be_Categories GeCategoryById(int id)
         {
             return _categoriesRepository.Table.FirstOrDefault(t => t.CategoryRowID == id);
+        }
+
+        public List<Service> GetListCategoryForHomePage()
+        {
+            return _serviceRepository.Table.Where(x => x.ParentServiceID == null && x.Sequence.HasValue && x.Sequence.Value > 0).OrderBy(x=>x.Sequence).ToList();
+        }
+
+        public List<CompanyProfileSearch> GetCompaniesAtHomePage(double lat, double lon, int categoryId = 0)
+        {           
+            var take = 8;            
+            var totalItems = 0;
+           
+            var pcList = _companySearchService.GetProfileCompaniesWebSite(categoryId, 0, decimal.MaxValue, DateTime.Today, DateTime.Today,
+                    false, string.Empty, lat, lon, 0, 0, 0, take, out totalItems);
+
+            
+            var appointments = _companySearchService.GetAppoinmentsByProfileIds(pcList.Select(a => a.ProfileID).ToList());
+
+            foreach (var companyProfileSearch in pcList)
+            {
+                _companySearchService.TransformEmployeeHours(companyProfileSearch);
+                _companySearchService.TransformInstructorClassSchedulerHours(companyProfileSearch);
+                _companySearchService.TransformCompanyHours(companyProfileSearch);
+                _companySearchService.TransformEvents(companyProfileSearch);
+                companyProfileSearch.Appointments = appointments.Where(m => m.ProfileId == companyProfileSearch.ProfileID).ToList();
+                companyProfileSearch.CompanyAvailableTimeSlots = _companySearchService.GetCompanyAvailableTimeSlots(companyProfileSearch);
+            }
+
+
+            return pcList;
         }
 
         #endregion

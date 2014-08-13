@@ -1130,8 +1130,8 @@ namespace Kuyam.Domain.CompanyProfileServices
         {
             startDate = startDate.Date.AddMinutes(startTime.TotalMinutes);
             endDate = endDate.Date.AddMinutes(endTime.TotalMinutes);
-            startDate = DateTimeUltility.ConvertToUtcTime(startDate, DateTimeKind.Local);
-            endDate = DateTimeUltility.ConvertToUtcTime(endDate, DateTimeKind.Local);
+            //startDate = DateTimeUltility.ConvertToUtcTime(startDate, DateTimeKind.Local);
+            //endDate = DateTimeUltility.ConvertToUtcTime(endDate, DateTimeKind.Local);
 
             Discount discount = new Discount()
             {
@@ -1169,8 +1169,8 @@ namespace Kuyam.Domain.CompanyProfileServices
         {
             startDate = startDate.Date.AddMinutes(startTime.TotalMinutes);
             endDate = endDate.Date.AddMinutes(endTime.TotalMinutes);
-            startDate = DateTimeUltility.ConvertToUtcTime(startDate, DateTimeKind.Local);
-            endDate = DateTimeUltility.ConvertToUtcTime(endDate, DateTimeKind.Local);
+            //startDate = DateTimeUltility.ConvertToUtcTime(startDate, DateTimeKind.Local);
+            //endDate = DateTimeUltility.ConvertToUtcTime(endDate, DateTimeKind.Local);
 
             Discount discount = _discountRepository.Table.FirstOrDefault(d => d.DiscountId == discountId);
             discount.Name = name;
