@@ -434,7 +434,6 @@
     <Content Include="Content\images\icons\icon_tumblr.png" />
     <Content Include="Content\images\icons\icon_twitter.png" />
     <Content Include="Content\images\icons\icon_youtube.png" />
-    <Content Include="Content\images\icons\live chat.png" />
     <Content Include="Content\images\icons\live_chat.png" />
     <Content Include="Content\images\icons\live_chat_off.png" />
     <Content Include="Content\images\icons\sale_ribbon.png" />
@@ -451,6 +450,7 @@
     <Content Include="Content\images\mobile.png" />
     <Content Include="Content\images\next.png" />
     <Content Include="Content\images\pause.png" />
+    <Content Include="Content\images\placeholder.png" />
     <Content Include="Content\images\play.png" />
     <Content Include="Content\images\reuters.png" />
     <Content Include="Content\images\right.png" />
@@ -1565,13 +1565,10 @@
     <Content Include="Scripts\css_browser_selector.js" />
     <Content Include="Scripts\general.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
-    <Content Include="Scripts\jquery-ui-timepicker-addon.css" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\responsiveslides.js" />

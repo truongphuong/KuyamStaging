@@ -9,6 +9,7 @@
     <input type="hidden" value="@ViewBag.Lat" id="curLat" />
     <input type="hidden" value="@ViewBag.Lon" id="curLon" />
     @{
+        var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
         if (ViewBag.Categories != null)
         {
             var profiles = ViewBag.ProfileCompanies;
@@ -33,7 +34,7 @@
                 <div class="tab-content">
                     @foreach (CompanyProfileSearch profile in profiles)
                     {
-                        var urlLogo = "content/images/placeholder.png";
+                        var urlLogo = "/Images/placeholder.png";
                         string url = Url.RouteUrl("availability", new { seName = profile.GetSeName(profile.ProfileID) }); ;
 
                         if (!string.IsNullOrEmpty(profile.LogoMediaId))
@@ -164,9 +165,19 @@
                                     }
 
                                 </div>
-                                <!-- remove code de test-->
-                                <div class="sale"></div>
-                                <!-- end remove code de test-->
+                                @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+                                {
+
+                                    var companyEvent = profile.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
+                                    if ((profile.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
+                                    {
+                                        <div class="sale"></div>
+                                    }
+
+
+                                }
+
+
                             </div>
                         </div>
                     }

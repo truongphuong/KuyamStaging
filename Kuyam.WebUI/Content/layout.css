@@ -113,7 +113,7 @@
 
 .tab-list{margin:0 0 18px;padding:0;list-style:none;}
 .tab-list li{display:inline-block;}
-.tab-list li a{color:#474747;padding:0 22px;font:400 16px/22px open-sans, sans-serif;text-decoration:none;}
+.tab-list li a{color:#474747;padding:0 19px;font:400 16px/22px open-sans, sans-serif;text-decoration:none;}
 .tab-list li.active{background:#87B140;}
 .tab-list li.active a{color:#fff;}
 
