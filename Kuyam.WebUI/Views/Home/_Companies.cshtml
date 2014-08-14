@@ -38,7 +38,7 @@
                     {
                         var urlLogo = "content/images/placeholder.png";
                         var seName = profile.GetSeName(profile.ProfileID);
-                        string url = "https://kuyamqa1.apphb.com/" + "availability/" + seName;
+                        string url = "https://kuyamqa1.apphb.com/" + "book/" + seName + "/availability";
 
                         if (!string.IsNullOrEmpty(profile.LogoMediaId))
                         {
@@ -76,7 +76,7 @@
                             </div>
                             <div class="desContent">
                                 <div class="titles">
-                                    <h3 class="iName"><a href="@url" title="Rockstar Nails">@profile.Name</a></h3>
+                                    <h3 class="iName"><a href="@url" title="Rockstar Nails">@UtilityHelper.TruncateAtWord(profile.Name, 14)</a></h3>
                                     <h4 class="iAddress">@state</h4>
                                 </div>
 
@@ -135,7 +135,7 @@
                                             }
                                     }
                                 </div>
-                                <p class="shortDes">@profile.Desc</p>
+                                <p class="shortDes">@UtilityHelper.TruncateAtWord(profile.Desc, 80)</p>
 
                                 <div class="group_link">
                                     @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
@@ -144,8 +144,8 @@
                                         {
                                             //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
 
-                                            string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId =" + timeSlot.EmployeeAvailableId
-                                                + "&start = " + timeSlot.StartTime + "&categoryId = " + ViewBag.CategoryId + "&book = true";
+                                            string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                                + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
                                             if (profile.CompanyAvailableTimeSlots.IsRederect)
                                             {
                                                 //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
@@ -157,7 +157,7 @@
                                         if (profile.CompanyAvailableTimeSlots.IsShowMore)
                                         {
                                            // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
-                                            var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId = " + ViewBag.CategoryId;
+                                            var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
                                             if (profile.CompanyAvailableTimeSlots.IsRederect)
                                             {
                                                 //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
