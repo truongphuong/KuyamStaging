@@ -40,30 +40,27 @@
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jquery-ui.js"></script>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/css_browser_selector.js"></script>
     <script type="text/javascript" src="scripts/responsiveslides.js"></script>
     <!-- TemplateBeginEditable name="script" -->
     <!-- TemplateEndEditable -->
-    <script type="text/javascript" src="scripts/general.js"></script>
-
-    <script type="text/javascript" src="scripts/css_browser_selector.js"></script>
+    <script type="text/javascript" src="scripts/general.js"></script>    
     <!-- === END SCRIPTS === -->
 </head>
-<body>
-    <form action="">
-        @Html.Partial("_Header")
+<body>    
+    @Html.Partial("_Header")
 
-        <!-- TemplateBeginEditable name="content" -->
-        <!-- .site-contact -->
-        @RenderBody()
-        <!-- .site-contact -->
-        <!-- TemplateEndEditable -->
+    <!-- TemplateBeginEditable name="content" -->
+    <!-- .site-contact -->
+    @RenderBody()
+    <!-- .site-contact -->
+    <!-- TemplateEndEditable -->
         
-        @Html.Partial("_Footer")
+    @Html.Partial("_Footer")
 
-        <div class="loading"></div>
+    <div class="loading"></div>
        
-        <!-- END HTML -->
-    </form>
+    <!-- END HTML -->
     @Html.Partial("_LiveChat")
 </body>
 </html>

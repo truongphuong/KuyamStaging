@@ -144,10 +144,13 @@
                                                 break;
                                             }
                                     }
+                                <span class="total-review"> (@profile.TotalReviews reviews)</span>
+                                <span class="vote-icon icon-unlike" style="display:none;"></span>
                         </div>
+
                         <p class="shortDes">available today:</p>
 
-                        <div class="group_link">
+                        <div class="group_link desktop">
                             @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
                                     {
                                         foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
@@ -180,6 +183,39 @@
 
                         </div>
                     </div>
+                    <div class="group_link iphone">
+                        @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
+                        {
+                            foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
+                            {
+                                //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
+
+                                string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                    + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
+                                if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                {
+                                    //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                    urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                }
+                                <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+                            }
+
+                            if (profile.CompanyAvailableTimeSlots.IsShowMore)
+                            {
+                                // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
+                                var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
+                                if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                {
+                                    //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                    urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                }
+                                <a href="@urlShowMore" title="more">more</a>
+
+                            }
+                        }
+
+                    </div>
+
                     @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
                         {
 
