@@ -28,12 +28,12 @@
                         var tabNumber = "#tabs-" + category.Sequence;
                         if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
                         {
-                    <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                            <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
                             catUrl = catUrl + "/" + category.ServiceName;
                         }
                         else
                         {
-                    <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                            <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
                         }
 
                     }
@@ -79,163 +79,170 @@
                         state = string.Format("{0}{1}", profile.City, profile.State);
                     }
                 }
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <div class="event-block clearfix">
-                    <div class="avatar">
-                        <a href="@url" title=""><img alt="Avatar" src="@urlLogo"></a>
-                    </div>
-                    <div class="desContent">
-                        <div class="titles">
-                            <h3 class="iName"><a href="@url" title="Rockstar Nails">@UtilityHelper.TruncateAtWord(profile.Name, 14)</a></h3>
-                            <h4 class="iAddress">@state</h4>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="event-block clearfix">
+                        <div class="avatar">
+                            <a href="@url" title=""><img alt="Avatar" src="@urlLogo"></a>
                         </div>
+                        <div class="desContent">
+                            <div class="titles">
+                                <h3 class="iName"><a href="@url" title="Rockstar Nails">@UtilityHelper.TruncateAtWord(profile.Name, 14)</a></h3>
+                                <h4 class="iAddress">@state</h4>
+                            </div>
 
-                        <!-- remove code de test-->
-                        <div class="votes">
-                            @switch (profile.Rate.ToString())
-                                    {
-                                        case "0":
-                                            {
-                                                break;
-                                            }
-                                        case "1":
-                                            {
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                                break;
-                                            }
-                                        case "2":
-                                            {
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                                break;
-                                            }
-                                        case "3":
-                                            {
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                                break;
-                                            }
-                                        case "4":
-                                            {
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon gray-star"></span>
-                                                break;
-                                            }
-                                        case "5":
-                                            {
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                <span class="vote-icon yellow-star"></span>
-                                                break;
-                                            }
-                                    }
-                                <span class="total-review"> (@profile.TotalReviews reviews)</span>
+                            <!-- remove code de test-->
+                            <div class="votes">
+                                @switch (profile.Rate.ToString())
+                                {
+                                    case "0":
+                                        {
+                                            break;
+                                        }
+                                    case "1":
+                                        {
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            break;
+                                        }
+                                    case "2":
+                                        {
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            break;
+                                        }
+                                    case "3":
+                                        {
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            break;
+                                        }
+                                    case "4":
+                                        {
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon gray-star"></span>
+                                            break;
+                                        }
+                                    case "5":
+                                        {
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            <span class="vote-icon yellow-star"></span>
+                                            break;
+                                        }
+                                }
+                                @if (profile.TotalReviews > 0)
+                                {
+                                    <span class="total-review">
+
+                                        (@profile.TotalReviews reviews)
+
+                                    </span>
+                                }
                                 <span class="vote-icon icon-unlike" style="display:none;"></span>
-                        </div>
+                            </div>
 
-                        <p class="shortDes">available today:</p>
+                            <p class="shortDes">available today:</p>
 
-                        <div class="group_link desktop">
-                            @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
+                            <div class="group_link desktop">
+                                @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
+                                {
+                                    foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
                                     {
-                                        foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
+                                        //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
+
+                                        string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                            + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
+                                        if (profile.CompanyAvailableTimeSlots.IsRederect)
                                         {
-                                            //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
-
-                                            string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
-                                                + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
-                                            if (profile.CompanyAvailableTimeSlots.IsRederect)
-                                            {
-                                                //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                                urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
-                                            }
-                                <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+                                            //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                            urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
                                         }
-
-                                        if (profile.CompanyAvailableTimeSlots.IsShowMore)
-                                        {
-                                            // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
-                                            var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
-                                            if (profile.CompanyAvailableTimeSlots.IsRederect)
-                                            {
-                                                //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                                urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
-                                            }
-                                <a href="@urlShowMore" title="more">more</a>
-
-                                        }
+                                        <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                     }
 
+                                    if (profile.CompanyAvailableTimeSlots.IsShowMore)
+                                    {
+                                        // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
+                                        var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
+                                        if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                        {
+                                            //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                            urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                        }
+                                        <a href="@urlShowMore" title="more">more</a>
+
+                                    }
+                                }
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="group_link iphone">
-                        @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
-                        {
-                            foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
+                        <div class="group_link iphone">
+                            @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
                             {
-                                //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
-
-                                string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
-                                    + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
-                                if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
                                 {
-                                    //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                    urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                    //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
+
+                                    string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                        + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
+                                    if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                    {
+                                        //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                        urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                    }
+                                    <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                 }
-                                <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+
+                                if (profile.CompanyAvailableTimeSlots.IsShowMore)
+                                {
+                                    // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
+                                    var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
+                                    if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                    {
+                                        //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                        urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                    }
+                                    <a href="@urlShowMore" title="more">more</a>
+
+                                }
                             }
 
-                            if (profile.CompanyAvailableTimeSlots.IsShowMore)
-                            {
-                                // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
-                                var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
-                                if (profile.CompanyAvailableTimeSlots.IsRederect)
-                                {
-                                    //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                    urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
-                                }
-                                <a href="@urlShowMore" title="more">more</a>
+                        </div>
 
-                            }
-                        }
-
-                    </div>
-
-                    @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+                        @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
                         {
 
                             var companyEvent = profile.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
                             if ((profile.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
                             {
-                        <div class="sale"><img alt="" src="content/images/icons/deal-sticker.png" width="70" /></div>
+                                <div class="sale"><img alt="" src="content/images/icons/deal-sticker.png" width="70" /></div>
                             }
 
 
                         }
 
 
+                    </div>
                 </div>
-            </div>
             }
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 moreItems">
-                <a href="#" title="more">more</a>
+                <a href="@catUrl" title="more">more</a>
             </div>
         </div>
     }
