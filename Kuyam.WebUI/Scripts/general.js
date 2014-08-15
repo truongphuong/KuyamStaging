@@ -8,6 +8,7 @@ function getunixtime() {
 function searchProfileCompanyBykey(key) {
     var param = "key=" + key;
     var url = "/company/companysearch?" + param;
+    alert(key);
     if (key == 'search for a business' || key == '') {
         url = "/company/companysearch";
     }

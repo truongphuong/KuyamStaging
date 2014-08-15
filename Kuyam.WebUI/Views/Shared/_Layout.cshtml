@@ -1,64 +1,69 @@
-﻿<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en">
-<!--<![endif]-->
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
-    <!-- Basic Page Needs
-    ================================================== -->
-    <meta charset="utf-8">
-    <title>New Home Page Kuyam</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Mobile Specific Metas
-    ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- CSS
-    ================================================== -->
-    <link type="text/css"  rel="stylesheet" href="https://webfonts.creativecloud.com/c/b87fec/asap:n4:n7,bebas-neue:n4,open-sans:i4:n4.WXM:P:1,WXK:P:1,bCT:P:1,VvD:P:1,VvH:P:1/d">
-    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/bootstrap.css")" />
-    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/bootstrap-theme.css")" />
-    <link type="text/css"  rel="Stylesheet" href="@Url.Content("~/content/themes/base/jquery-ui.css")">
-    <link type="text/css"  rel="Stylesheet" href="@Url.Content("~/content/responsiveslides.css")" />
-    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/base.css?v=1")">
-    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/general.css?v=1")">
-    <link type="text/css"  rel="stylesheet" href="@Url.Content("~/content/layout.css?v=1")">    
-    <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!-- Favicons
-    ================================================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="shortcut icon" href="content/images/favicon.ico">
     <link rel="apple-touch-icon" href="content/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="content/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="content/images/apple-touch-icon-114x114.png">
-    <script type="text/javascript" src="scripts/jquery-2.1.1.js" ></script>
-    <script type="text/javascript" src="scripts/jquery-ui-1.10.4.js" ></script>
+    <!-- TemplateBeginEditable name="doctitle" -->
+    <title>Kuyam - @ViewBag.Title</title>
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- TemplateEndEditable -->
+    <script type="text/javascript">
+        document.write('\x3Cscript src="' + (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//webfonts.creativecloud.com/asap:n4:all;open-sans:n4:all;bebas-neue:n4:all;raleway:n4,n7,n5:all.js" type="text/javascript">\x3C/script>');
+    </script>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/content/bootstrap.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/content/bootstrap-theme.css")" />
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- TemplateBeginEditable name="head" -->
+    <!-- TemplateEndEditable -->
+    <!-- jQuery UI CSS -->
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/themes/base/jquery.ui.core.css")" />
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/themes/base/jquery.ui.theme.css")" />
+    <link type="text/css" rel="Stylesheet" href="@Url.Content("~/content/responsiveslides.css")" />
+
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/style.css")" />
+
+    <script type="text/javascript" src="scripts/modernizr.custom.js"></script>
+    <!-- === SCRIPTS === -->
+    <script type="text/javascript" src="scripts/jquery.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui.js"></script>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="scripts/responsiveslides.js"></script>
+    <!-- TemplateBeginEditable name="script" -->
+    <!-- TemplateEndEditable -->
     <script type="text/javascript" src="scripts/general.js"></script>
+
+    <script type="text/javascript" src="scripts/css_browser_selector.js"></script>
+    <!-- === END SCRIPTS === -->
 </head>
 <body>
-    <!-- Primary Page Layout
-    ================================================== -->
-    <div class="page">
-        <div class="header head_container">
-            @Html.Partial("_Header")
-        </div>
-        <div class="mainContent">
-            @RenderBody()
-        </div>
-        <div class="footer footer_container">
-            @Html.Partial("_Footer")
-        </div>
-    </div>
-    <div class="loading"></div>
-    <!-- End Document
-    ================================================== -->
+    <form action="">
+        @Html.Partial("_Header")
+
+        <!-- TemplateBeginEditable name="content" -->
+        <!-- .site-contact -->
+        @RenderBody()
+        <!-- .site-contact -->
+        <!-- TemplateEndEditable -->
+        
+        @Html.Partial("_Footer")
+
+        <div class="loading"></div>
+       
+        <!-- END HTML -->
+    </form>
     @Html.Partial("_LiveChat")
 </body>
 </html>

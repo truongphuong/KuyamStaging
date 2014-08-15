@@ -1,5 +1,12 @@
-2014-06-30 16:43:18,362 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
-2014-06-30 16:43:45,609 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
-2014-06-30 16:55:57,651 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
-2014-06-30 16:56:16,007 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
-2014-07-17 10:40:31,220 INFO  - lambda_method - phuongtruong@vinasource.com login success
+2014-08-14 15:54:55,030 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin fail with username: phuongtnet@gmail.com
+2014-08-14 15:55:02,385 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-08-14 15:55:23,863 INFO  - lambda_method - Deleted service: ServiceId= 89
+2014-08-14 15:55:36,377 INFO  - lambda_method - Deleted service: ServiceId= 148
+2014-08-14 15:55:38,823 INFO  - lambda_method - Deleted service: ServiceId= 149
+2014-08-14 15:55:40,745 INFO  - lambda_method - Deleted service: ServiceId= 1451
+2014-08-14 15:55:43,066 INFO  - lambda_method - Deleted service: ServiceId= 1453
+2014-08-14 15:55:45,037 INFO  - lambda_method - Deleted service: ServiceId= 1454
+2014-08-14 15:55:50,111 INFO  - lambda_method - Deleted service: ServiceId= 1385
+2014-08-14 15:55:54,604 INFO  - lambda_method - Deleted service: ServiceId= 1386
+2014-08-14 15:56:08,797 INFO  - lambda_method - Updated category: ServiceID= 9
+2014-08-14 15:56:58,029 INFO  - lambda_method - Updated category: ServiceID= 10
