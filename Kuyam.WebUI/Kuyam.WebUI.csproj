@@ -419,6 +419,7 @@
     <Content Include="Content\images\google_badge.png" />
     <Content Include="Content\images\google_badge1.png" />
     <Content Include="Content\images\icons\arrow.jpg" />
+    <Content Include="Content\images\icons\arrow_down.png" />
     <Content Include="Content\images\icons\beautify-la-sticker.png" />
     <Content Include="Content\images\icons\deal-sticker.png" />
     <Content Include="Content\images\icons\gray_star.png" />
