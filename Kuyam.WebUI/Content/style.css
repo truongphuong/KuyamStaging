@@ -41,7 +41,7 @@ form, fieldset, legend{display:block;border:0;margin:0;padding:0;}
 .desktop{display:block !important;}
 .iphone{display:none !important;}
 
-.loading{background:url(../images/ui/progress.gif) center center no-repeat #000000;display:none;position:fixed;top:0;left:0;bottom:0;right:0;z-index:9999;opacity:0.5;filter:alpha(opacity=50);}
+.loading{background:url(images/loader.gif) center center no-repeat #000000;display:none;position:fixed;top:0;left:0;bottom:0;right:0;z-index:9999;opacity:0.5;filter:alpha(opacity=50);}
 .light-box{display:none;background:#000000;position:fixed;top:0;left:0;right:0;bottom:0;opacity:0.5;filter:alpha(opacity=50);}
 
 .bg-black-50{background:rgba(0, 0, 0, 0.5);}
@@ -74,7 +74,7 @@ body{margin:0;padding:0;font:20px/24px raleway,sans-serif;color:#000000;}
 .site-header .logo{margin: 25px 0 0;}
 .site-header .search-form{margin:25px 0 0;float:right;}
 .search-form .btnLiveChat{float:left;}
-.search-form fieldset{width:256px;float:left;background:url("../content/images/icons/icon_search.png") no-repeat 10px center #424242;padding:0 0 0 28px;margin:5px 0 0 25px;}
+.search-form fieldset{width:256px;float:left;background:url("images/icons/icon_search.png") no-repeat 10px center #424242;padding:0 0 0 28px;margin:5px 0 0 25px;}
 .search-form fieldset .form-control{background:transparent;border:0 none;font:400 14px/17px raleway,sans-serif;color:#8c8c8c;}
 .search-form fieldset .form-control:hover,
 .search-form fieldset .form-control:focus{box-shadow:none;}
@@ -150,7 +150,7 @@ body{margin:0;padding:0;font:20px/24px raleway,sans-serif;color:#000000;}
 
 .home-content{}
 .home-content .section-header{padding-top:90px;padding-bottom:10px;}
-.home-content .section-header h2{padding:2px 65px 5px 0;background:url(../content/images/icons/arrow.jpg) no-repeat right 9px;display:inline-block;color:#555;font:700 34px/41px raleway,sans-serif;}
+.home-content .section-header h2{padding:2px 65px 5px 0;background:url(images/icons/arrow.jpg) no-repeat right 9px;display:inline-block;color:#555;font:700 34px/41px raleway,sans-serif;}
 .home-content .section-header p{color:#555;font:400 20px/24px raleway,sans-serif;}
 
 .group_image{position:relative;padding:0 0 90px;width:620px;}

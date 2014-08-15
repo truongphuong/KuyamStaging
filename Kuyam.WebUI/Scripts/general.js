@@ -5,14 +5,3 @@ function getunixtime() {
     return unixtime;
 }
 
-function searchProfileCompanyBykey(key) {
-    var param = "key=" + key;
-    var url = "/company/companysearch?" + param;
-    alert(key);
-    if (key == 'search for a business' || key == '') {
-        url = "/company/companysearch";
-    }
-    self.location.href = url;
-    return false;
-}
-

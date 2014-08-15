@@ -30,7 +30,7 @@
         <!-- .navbar-collapse -->
         <div class="collapse navbar-collapse menuList" id="bs-navbar-collapse">
             <ul class="nav navbar-nav navbar-right navMenu">
-                <li class="active"><a href="index.html" title="Home">home</a><span class="desktop"></span></li>
+                <li class="active"><a href="/" title="Home">home</a><span class="desktop"></span></li>
                 <li><a href="#" title="How it works">how it works</a><span class="desktop"></span></li>
                 <li><a href="#" title="Book">book</a><span class="desktop"></span></li>
                 <li><a href="#" title="Beautify LA">Beautify LA</a><span class="desktop"></span></li>
@@ -62,4 +62,17 @@
         });
 
     });
+
+
+    function searchProfileCompanyBykey(key) {
+        var param = "key=" + key;
+        var url = "/company/companysearch?" + param;
+        alert(key);
+        if (key == 'search for a business' || key == '') {
+            url = "/company/companysearch";
+        }
+        self.location.href = url;
+        return false;
+    }
+
 </script>
