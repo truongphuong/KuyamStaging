@@ -52,8 +52,7 @@
 
     $(document).ready(function (e) {
 
-        $("#txtSearchInput").keypress(function (e) {
-            alert("aa");
+        $("#txtSearchInput").keypress(function (e) {            
             var kCode = e.keyCode || e.charCode;
             if (kCode == 13) {
                 var key = $(e.target).val();
