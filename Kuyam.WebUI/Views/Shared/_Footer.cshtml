@@ -61,7 +61,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                <p id="lbcopyright">Copyright © 2014 Kuyam Companies, Inc. All rights reserved. Patent pending.</p>
+                <p id="lbcopyright" class="desktop"></p>
+                <p id="lbcopyrightiphone" class="iphone"></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <ul class="link-socials desktop clearfix">
@@ -80,7 +81,9 @@
     $(function () {
         var stringdate = $.datepicker.formatDate('yy', new Date());
         var compyright = "Copyright © " + stringdate + " Kuyam Companies, Inc. All rights reserved. Patent pending.";
+        var compyrightiphone = "© " + stringdate + " copyright kuyam companies, inc. all rights reserved. patent pending.";
         $("#lbcopyright").html(compyright);
+        $("#lbcopyrightiphone").html(compyrightiphone);
     });
 
     //var _gaq = _gaq || [];
