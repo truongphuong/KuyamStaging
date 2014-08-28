@@ -1,0 +1,5 @@
+2014-06-30 16:43:18,362 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-06-30 16:43:45,609 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-06-30 16:55:57,651 INFO  - Kuyam.WebUI.Controllers.AccountController.LogoutAjax - phuongtruong@vinasource.com log out
+2014-06-30 16:56:16,007 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
+2014-07-17 10:40:31,220 INFO  - lambda_method - phuongtruong@vinasource.com login success

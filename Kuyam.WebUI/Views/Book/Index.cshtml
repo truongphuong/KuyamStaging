@@ -1,0 +1,283 @@
+﻿@using Kuyam.Database
+@using System.Configuration
+@using Kuyam.Domain.Seo;
+@using Kuyam.Domain;
+@model Kuyam.WebUI.Models.BookKing.BookingPageListModel
+@{
+    ViewBag.Title = "Kuyam - Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- .site-banner -->
+<div class="site-banner">
+    <!-- InstanceBeginEditable name="banner" -->
+    <!-- InstanceEndEditable -->
+</div>
+<!-- /.site-banner -->
+<!-- InstanceBeginEditable name="content" -->
+<!-- .event-section -->
+<div class="event-section book-page">
+    <div  class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- .section-header -->
+                <header class="section-header">
+                    <h2>find a business <span class="arrow_down"></span></h2>
+                    <p>select a category or search by business</p>
+                </header>
+                <!-- /.section-header -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="search-form">
+                    <fieldset>
+                        <span class="icon-list"></span>
+                        <input id="txtSearchInputbody" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'search for a business'; }" onfocus="if (this.value == 'search for a business') { this.value = ''; }" value="search for a business">
+                        <input id="searchBody" type="button" class="btn-search" value="Search" />
+                     </fieldset>
+                </div>
+            </div>
+        </div>
+        <div id="companyInfoBar">
+            @Html.Partial("_CompanyBox", Model)
+        </div>
+    </div>
+</div>
+<!-- /.event-section -->
+<!-- .map -->
+<div class="map desktop">
+    <div id="google-map"></div>
+</div>
+<script type="text/javascript" src="https://maps-api-ssl.google.com/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+<!-- /.map -->
+<!-- InstanceEndEditable -->
+<script>
+
+    var markerData = @Html.Raw(Model.MarkerData);
+
+    $(document).ready(function () {
+        getLocation();      
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        if (!agentID) {
+            loadmap(0, 0,markerData);
+        }
+
+        $("#txtSearchInputbody").keypress(function (e) {
+            var kCode = e.keyCode || e.charCode;
+            if (kCode == 13) {
+                var key = $(e.target).val();
+                var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
+                getListCompanyBykey(0, 0, key, categoryId)
+                
+            }
+        });
+    });
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, errorHandler);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function errorHandler(err) {
+        if (err.code == 1) {
+            alert("Error: Access is denied!");
+        } else if (err.code == 2) {
+            alert("Error: Position is unavailable!");
+        }
+    }
+
+
+    function showPosition(position) {
+        var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
+        var key = $("#txtSearchInputbody").val();
+        if (key == 'search for a business') {
+            key ="";
+        }
+         getListCompanyBykey(position.coords.latitude, position.coords.longitude, key, categoryId);
+    }
+
+    function getListCompanyBykey(lat, lon, key, categoryId) {
+        
+        var parameters = { key: key, categoryId: categoryId, lat: lat, lon: lon };
+        if (lat == 0 && lon == 0) {
+            $('.loading').show();
+        }
+        $.ajax(
+        {
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'json',
+            url: '@Url.Action("Index", "Book")'
+        })
+        .success(function (result) {
+            $('#companyInfoBar').html(result.content);
+            loadmap(10.773104, 106.6892475, result.locations);
+            $('.loading').hide();
+
+        })
+        .error(function (error) {
+            $('.loading').hide();
+
+        });
+    }
+    
+</script>
+
+<script type="text/javascript">
+    
+    var cityCircle;
+    function initialize() {
+
+        var map;
+        var myLatlng = new google.maps.LatLng('10.773104', '106.6892475');
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+
+        var markerLatLng = new google.maps.LatLng('10.773104', '106.6892475');
+        var image = '/content/images/num-10.png';
+
+        var beachMarker = new google.maps.Marker({
+            position: markerLatLng,
+            map: map,
+            icon:image,
+            visible: true
+        });
+
+
+        var boxText = document.createElement("div");        
+        boxText.innerHTML = "City Hall, Sechel British Columbia Canada";
+
+        var myOptions = {
+            content: boxText
+            , disableAutoPan: false
+            , maxWidth: 0
+            , pixelOffset: new google.maps.Size(7,-28)
+            , zIndex: null
+            , boxStyle: {
+                background: "url(/content/images/num.png) -22px center no-repeat"
+              , opacity: 1
+              , width: "auto"
+            }
+            , closeBoxMargin: "10px 2px 2px 2px"
+            , closeBoxURL: ""
+            , infoBoxClearance: new google.maps.Size(1, 1)
+            , isHidden: false
+            , pane: "floatPane"
+            , enableEventPropagation: false
+
+        };
+
+        var infobox = new InfoBox(myOptions);
+
+        google.maps.event.addListener(beachMarker, "mouseover", function () {
+            infobox.open(map, this);
+            });
+
+        google.maps.event.addListener(beachMarker, "mouseout", function () {
+            infobox.close();
+        });
+
+        google.maps.event.addListener(beachMarker, "click", function () {
+            alert("aa")
+        });
+    }
+
+    //google.maps.event.addDomListener(window, 'load', initialize);
+
+    function loadmap(lat, lon, locations) {
+        var map;
+        var myLatlng = new google.maps.LatLng(lat, lon);
+        var myOptions = {
+            zoom: 16,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+
+        initMarkers(map, locations.reverse());
+        map.panTo(new google.maps.LatLng('10.773104', '106.6892475'));
+    }    
+
+    function initMarkers(map, markerData) {
+        var newMarkers = [], marker;
+
+        for (var i = 0; i < markerData.length; i++) {
+            marker = new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(markerData[i].Latitude, markerData[i].Longitude),
+                visible: true,
+                icon: markerData[i].IconMarker,
+                zIndex: markerData[i].IndexId,
+                url: markerData[i].Slug,
+                name: markerData[i].Name
+            }),
+            boxText = document.createElement("div"),
+            infoboxOptions = {
+                content: boxText
+            , disableAutoPan: false
+            , maxWidth: 0
+            , pixelOffset: new google.maps.Size(7, -28)
+            , zIndex: null
+            , boxStyle: {
+                background: "url(/content/images/num.png) -22px center no-repeat"
+              , opacity: 1
+              , width: "auto"
+            }
+            , closeBoxMargin: "10px 2px 2px 2px"
+            , closeBoxURL: ""
+            , infoBoxClearance: new google.maps.Size(1, 1)
+            , isHidden: false
+            , pane: "floatPane"
+            , enableEventPropagation: false
+            };
+
+            newMarkers.push(marker);
+            boxText.innerHTML = markerData[i].Name
+            newMarkers[i].infobox = new InfoBox(infoboxOptions);
+            newMarkers[i].infobox.open(map, marker);
+            newMarkers[i].infobox.hide();         
+
+            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                return function () {      
+                    //map.panTo(new google.maps.LatLng(markerData[0].Latitude, markerData[0].Longitude));
+                    if (newMarkers[i].infobox.getVisible()) {
+                        newMarkers[i].infobox.setVisible(false);    
+                    }
+                    else {
+                        newMarkers[i].infobox.setVisible(true);    
+                    }
+                }
+            })(marker, i));
+
+            google.maps.event.addListener(marker, 'mouseout', (function (marker, i) {
+                return function () {
+                    newMarkers[i].infobox.setVisible(false);
+                }
+            })(marker, i));
+
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {                    
+                    var url = 'https://dev.kuyam.com/availability' + marker.url;
+                    location.href = url;
+                }
+            })(marker, i));
+        }
+
+        return newMarkers;
+    }
+    
+</script>
