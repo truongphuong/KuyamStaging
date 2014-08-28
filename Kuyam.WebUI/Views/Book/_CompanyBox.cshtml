@@ -283,6 +283,9 @@
         var lon = 0;
         var categoryId = $(this).attr('categoryId');
         var key = $("#txtSearchInputbody").val();
+        if (key == 'search for a business') {
+            key = '';
+        }
         getListCompanyBykey(lat, lon, key, categoryId);
     });
 
