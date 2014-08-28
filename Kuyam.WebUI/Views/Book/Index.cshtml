@@ -16,7 +16,7 @@
 <!-- InstanceBeginEditable name="content" -->
 <!-- .event-section -->
 <div class="event-section book-page">
-    <div  class="container">
+    <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- .section-header -->
@@ -35,7 +35,7 @@
                         <span class="icon-list"></span>
                         <input id="txtSearchInputbody" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'search for a business'; }" onfocus="if (this.value == 'search for a business') { this.value = ''; }" value="search for a business">
                         <input id="searchBody" type="button" class="btn-search desktop" value="Search" />
-                     </fieldset>
+                    </fieldset>
                 </div>
             </div>
         </div>
@@ -58,9 +58,9 @@
     var markerData = @Html.Raw(Model.MarkerData);
 
     $(document).ready(function () {
-        
+
         @Html.Raw(Model.DetectLocation);
-       
+
         var deviceAgent = navigator.userAgent.toLowerCase();
         var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
         if (!agentID) {
@@ -73,15 +73,15 @@
                 var key = $(e.target).val();
                 var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
                 getListCompanyBykey(0, 0, key, categoryId)
-                
+
             }
         });
     });
 
     function detectLocation() {
-        if (navigator.geolocation) {            
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, errorHandler);
-        } else {            
+        } else {
             alert("Geolocation is not supported by this browser.");
         }
     }
@@ -97,12 +97,12 @@
 
     function showPosition(position) {
         var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
-       
+
         var key = $("#txtSearchInput").val();
         if (key== ''|| key=='search for a business') {
-            key =  key = $("#txtSearchInputbody").val(); 
-        } 
-         getListCompanyBykey(position.coords.latitude, position.coords.longitude, key, categoryId);
+            key =  key = $("#txtSearchInputbody").val();
+        }
+        getListCompanyBykey(position.coords.latitude, position.coords.longitude, key, categoryId);
     }
 
     function getListCompanyBykey(lat, lon, key, categoryId) {
@@ -110,9 +110,9 @@
             key = '';
         }
         var parameters = { key: key, categoryId: categoryId, lat: lat, lon: lon };
-        if (lat == 0 && lon == 0) {
-            $('.loading').show();
-        }
+
+        $('.loading').show();
+
         $.ajax(
         {
             type: 'POST',
@@ -132,11 +132,11 @@
 
         });
     }
-    
+
 </script>
 
 <script type="text/javascript">
-      
+
 
     function loadmap(lat, lon, locations) {
         var map;
@@ -150,8 +150,8 @@
         map = new google.maps.Map(document.getElementById("google-map"), myOptions);
 
         initMarkers(map, locations.reverse());
-       
-    }   
+
+    }
 
     function initMarkers(map, markerData) {
         var newMarkers = [], marker;
@@ -190,16 +190,16 @@
             boxText.innerHTML = markerData[i].Name
             newMarkers[i].infobox = new InfoBox(infoboxOptions);
             newMarkers[i].infobox.open(map, marker);
-            newMarkers[i].infobox.hide();         
+            newMarkers[i].infobox.hide();
 
             google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
-                return function () {      
+                return function () {
                     //map.panTo(new google.maps.LatLng(markerData[0].Latitude, markerData[0].Longitude));
                     if (newMarkers[i].infobox.getVisible()) {
-                        newMarkers[i].infobox.setVisible(false);    
+                        newMarkers[i].infobox.setVisible(false);
                     }
                     else {
-                        newMarkers[i].infobox.setVisible(true);    
+                        newMarkers[i].infobox.setVisible(true);
                     }
                 }
             })(marker, i));
@@ -212,7 +212,7 @@
 
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {                    
+                return function () {
                     var url = 'https://kuyamstagingvns.apphb.com/availability' + marker.url;
                     location.href = url;
                 }
@@ -221,5 +221,5 @@
 
         return newMarkers;
     }
-    
+
 </script>
