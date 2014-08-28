@@ -16,15 +16,6 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\M2.Ut
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.xml
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.dll
 D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.pdb
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.dll.config
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.dll
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.pdb
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\DataAnnotationsExtensions.dll
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.dll
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\M2.Util.dll
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.xml
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.dll
-D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.pdb
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.dll.config
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.dll
 E:\Projects\Stagging Deploy\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.pdb
@@ -44,8 +35,18 @@ D:\Project\KuyamWeb\KuyamQA\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam
 D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.SqlServer.dll
 D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.SqlServer.xml
 D:\Project\KuyamWeb\KuyamProd\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.dll.config
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\Kuyam.Database.pdb
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\DataAnnotationsExtensions.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.dll
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\M2.Util.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.xml
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Release\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.dll
+D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Release\Kuyam.Database.pdb
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\Kuyam.Database.dll.config
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\Kuyam.Database.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\Kuyam.Database.pdb

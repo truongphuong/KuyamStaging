@@ -9,17 +9,14 @@ namespace Kuyam.Domain.SearchServices
 {
     public interface ISearchService
     {
-        List<ProfileCompany> SearchCompanies(
-            out int totalRecords,
-            string key = null,
+        List<CompanyProfileSearch> CompanySearchForWeb(
+            out int totalRecords ,
+            string keySearch = null,
             int? categoryId = null,
+            double? currentLat = null,
+            double? currentLon = null,
             double? distance = null,
-            decimal? priceMin = null,
-            decimal? priceMax = null,
-            DateTime? hourMin = null,
-            DateTime? hourMax = null,
-            bool? isAvailable = false,
-            int sortBy = 0,
+            int? custId = null,
             int pageIndex = 0,
             int pageSize = 2147483647);
     }

@@ -42,9 +42,7 @@ namespace Kuyam.WebUI.Controllers
         public ActionResult Index()
         {
             //Stopwatch stopwatch = new Stopwatch();
-            int totalRecord = 0;
-            var list = _searchService.SearchCompanies(out totalRecord);
-            _postService.GetTest();
+          
             //// Begin timing
             //stopwatch.Start();
             //var post = _postService.GetListPost(0, 0);

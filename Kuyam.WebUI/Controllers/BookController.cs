@@ -14,6 +14,13 @@ using System.Text;
 using Kuyam.Domain.Seo;
 using Kuyam.Domain.CompanyProfileServices;
 using Kuyam.Domain.ClassModel;
+using Kuyam.Domain.CategoryServices;
+using Kuyam.WebUI.Models.Home;
+using Kuyam.WebUI.Models.BookKing;
+using PagedList;
+using Kuyam.Domain.SearchServices;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Kuyam.WebUI.Controllers
 {
@@ -22,22 +29,109 @@ namespace Kuyam.WebUI.Controllers
         public BookController(ISeoFriendlyUrlService seoFriendlyUrlService,
             CompanyProfileService companyProfileService,
             IAppointmentService appointmentService,
-            OrderService orderService)
+            OrderService orderService,
+            ICategoryService categoryService,
+            ISearchService searchService
+            )
         {
             this.seoFriendlyUrlService = seoFriendlyUrlService;
-            _companyProfileService = companyProfileService;
-            _appointmentService = appointmentService;
-            _orderService = orderService;
+            this._companyProfileService = companyProfileService;
+            this._appointmentService = appointmentService;
+            this._orderService = orderService;
+            this._categoryService = categoryService;
+            this._searchService = searchService;
         }
 
         private ISeoFriendlyUrlService seoFriendlyUrlService;
         private readonly IAppointmentService _appointmentService;
         private readonly CompanyProfileService _companyProfileService;
         private readonly OrderService _orderService;
-
-        public ActionResult Index(string companyUrlName)
+        private readonly ICategoryService _categoryService;
+        private readonly ISearchService _searchService;
+        public ActionResult Index(string key = "", int categoryId = 0, int page = 1, double lat = 0, double lon = 0)
         {
-            return RedirectToAction("Availability", new { companyUrlName });
+            var model = new BookingPageListModel();
+            model.SearchKey = key;
+            model.CategoryId = categoryId;
+            model.Lat = lat;
+            model.Lon = lon;
+            if (MySession.CustID > 0)
+                model.IsLogin = true;
+
+            if (lat > 0 || lon > 0)
+            {
+                MySession.Latitude = 0;
+                MySession.Longitude = 0;
+            }
+            var categories = _categoryService.GetSequenceCategories();
+            if (categories != null && categories.Count > 0)
+            {
+                model.Categories = categories;
+                if (categoryId == 0)
+                    model.CategoryId = categories[0].ServiceID;
+                if (page < 1)
+                    page = 1;
+
+                StringBuilder htmlCategories = new StringBuilder();
+                htmlCategories.Append("<option value='0' selected='selected' >select a category</option>");
+
+                foreach (var item in categories)
+                {
+                    htmlCategories.AppendFormat("<option value=\"{0}\">{1}</option>", item.ServiceID, UtilityHelper.TruncateText(item.ServiceName, 36));
+                }
+
+                model.HtmlCategories = htmlCategories.ToString();
+                int totalRecord = 0;
+                model.Page = page.ToString();
+                var companyList = _searchService.CompanySearchForWeb(out totalRecord, key, model.CategoryId, MySession.Latitude, MySession.Longitude, 100, MySession.CustID, page, 10);
+                model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
+                model.locations = companyList.Select(item => new CompanyGoogleMap
+                {
+                    IndexId = item.IndexId,
+                    Name = item.Name,
+                    ProfileID = item.ProfileID,
+                    Latitude = item.Latitude,
+                    Longitude = item.Longitude,
+                    IconMarker = string.Format("/content/images/num-{0}.png", item.IndexId),
+                    Slug = Url.RouteUrl("Slug", new { sename = item.GetSeName(item.ProfileID) })
+                }).ToList();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { content = this.RenderPartialViewToString("_companyBox", (object)model), locations = model.locations }, JsonRequestBehavior.AllowGet);
+            }
+            model.MarkerData = JsonConvert.SerializeObject(model.locations);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult LoadMore(string key = "", int categoryId = 0, int page = 1, double lat = 0, double lon = 0)
+        {
+            var model = new BookingPageListModel();
+            model.SearchKey = key;
+            model.CategoryId = categoryId;
+            model.Lat = lat;
+            model.Lon = lon;
+            if (MySession.CustID > 0)
+                model.IsLogin = true;
+
+            if (lat > 0 || lon > 0)
+            {
+                MySession.Latitude = 0;
+                MySession.Longitude = 0;
+            }
+
+            model.CategoryId = categoryId;
+            if (page < 1)
+                page = 1;           
+           
+            int totalRecord = 0;
+            model.Page = page.ToString();
+            var companyList = _searchService.CompanySearchForWeb(out totalRecord, key, model.CategoryId, MySession.Latitude, MySession.Longitude, 100, MySession.CustID, page, 10);
+            model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
+            
+            return Json(new { content = this.RenderPartialViewToString("_LoadMoreBox", (object)model) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Availability(string companyUrlName, int? proposedId, int? categoryId, int? serviceId)
@@ -188,7 +282,6 @@ namespace Kuyam.WebUI.Controllers
 
             return strBuilder.ToString();
         }
-
 
         public ActionResult Description(string companyUrlName)
         {

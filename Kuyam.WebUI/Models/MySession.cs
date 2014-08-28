@@ -243,17 +243,32 @@ namespace Kuyam.WebUI.Models
             }
         }
 
-        /*
-        public static int AccountID
+        public static double Latitude
         {
             get
             {
-                if (Cust == null)
-                    return 0;
-                return Cust.AccountID;              
+
+                return Convert.ToInt32(Session["Latitude"]);
+            }
+            set
+            {
+                Session["Latitude"] = value;
             }
         }
-        */
+
+        public static double Longitude
+        {
+            get
+            {
+
+                return Convert.ToDouble(Session["Longitude"]);
+            }
+            set
+            {
+                Session["Longitude"] = value;
+            }
+        }
+
 
         public static Guid AspUserID
         {

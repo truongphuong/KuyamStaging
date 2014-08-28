@@ -224,6 +224,7 @@
     <Compile Include="CategoryFeaturedHotel.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CompanyGoogleMap.cs" />
     <Compile Include="EventDTO.cs" />
     <Compile Include="EventsXml.cs" />
     <Compile Include="EmployeeHoursXml.cs" />

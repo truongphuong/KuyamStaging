@@ -25,7 +25,7 @@ namespace Kuyam.Database
         public TimeSlots()
         {
             CompanyTimeSlots = new List<TimeSlot>();
-            DayAvaiable = "today";
+            DayAvaiable = "check for availabitily";
         }
 
         public List<TimeSlot> CompanyTimeSlots { get; set; }

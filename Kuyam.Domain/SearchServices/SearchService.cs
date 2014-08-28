@@ -16,23 +16,22 @@ namespace Kuyam.Domain.SearchServices
 
         #region Fields
         private readonly DbContext _dbContext;
+        private readonly CompanySearchService _companySearchService;
         #endregion
-        public SearchService(DbContext dbContext)
+        public SearchService(DbContext dbContext, CompanySearchService companySearchService)
         {
             this._dbContext = dbContext;
+            this._companySearchService = companySearchService;
         }
 
-        public List<ProfileCompany> SearchCompanies(
+        public List<CompanyProfileSearch> CompanySearchForWeb(
             out int totalRecords,
-            string key = null,
+            string keySearch = null,
             int? categoryId = null,
+            double? currentLat = null,
+            double? currentLon = null,
             double? distance = null,
-            decimal? priceMin = null,
-            decimal? priceMax = null,
-            DateTime? hourMin = null,
-            DateTime? hourMax = null,
-            bool? isAvailable = false,
-            int sortBy = 0,
+            int? custId = null,
             int pageIndex = 0,
             int pageSize = 2147483647)
         {
@@ -41,10 +40,33 @@ namespace Kuyam.Domain.SearchServices
             pTotalRecords.ParameterName = "TotalRecords";
             pTotalRecords.Direction = ParameterDirection.Output;
             pTotalRecords.DbType = DbType.Int32;
-            var list = _dbContext.SqlQuery<ProfileCompany>("GetAllCompaniesTest @TotalRecords out", pTotalRecords).ToList();
-           
+            var list = _dbContext.SqlQuery<CompanyProfileSearch>("CompanySearchForWeb @KeySearch,@ServiceID,@CurrentLat,@CurrentLong,@Distance,@CustID,@PageIndex,@PageSize, @TotalRecords out",
+                new SqlParameter("KeySearch", keySearch),
+                 new SqlParameter("ServiceID", categoryId),
+                 new SqlParameter("CurrentLat", currentLat),
+                 new SqlParameter("CurrentLong", currentLon),
+                 new SqlParameter("Distance", distance),
+                 new SqlParameter("CustID", custId),
+                 new SqlParameter("PageIndex", pageIndex),
+                 new SqlParameter("PageSize", pageSize),
+                     pTotalRecords
+                 ).ToList();
+
             totalRecords = (pTotalRecords.Value != DBNull.Value) ? Convert.ToInt32(pTotalRecords.Value) : 0;
-            return new PagedList<ProfileCompany>(list, pageIndex, pageSize, totalRecords);
+
+            var appointments = _companySearchService.GetAppoinmentsByProfileIds(list.Select(a => a.ProfileID).ToList());
+
+            foreach (var item in list)
+            {                
+                _companySearchService.TransformEmployeeHours(item);
+                _companySearchService.TransformInstructorClassSchedulerHours(item);
+                _companySearchService.TransformCompanyHours(item);
+                _companySearchService.TransformEvents(item);
+                item.Appointments = appointments.Where(m => m.ProfileId == item.ProfileID).ToList();
+                item.CompanyAvailableTimeSlots = _companySearchService.GetCompanyAvailableTimeSlots(item);
+            }
+
+            return list;
         }
     }
 }

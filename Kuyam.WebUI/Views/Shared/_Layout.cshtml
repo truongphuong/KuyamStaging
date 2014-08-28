@@ -30,20 +30,20 @@
     <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/themes/base/jquery.ui.theme.css")" />
     <link type="text/css" rel="Stylesheet" href="@Url.Content("~/content/responsiveslides.css")" />
 
-    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/style.css?v=8")" />
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/style.css?v=7")" />
 
-    <script type="text/javascript" src="scripts/modernizr.custom.js"></script>
-    <!-- === SCRIPTS === -->
-    <script type="text/javascript" src="scripts/jquery.js"></script>
-    <script type="text/javascript" src="scripts/jquery-ui.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="scripts/css_browser_selector.js"></script>
-    <script type="text/javascript" src="scripts/responsiveslides.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/modernizr.custom.js")"></script>
+<!-- === SCRIPTS === -->
+    <script type="text/javascript" src="@Url.Content("~/scripts/jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/jquery-ui.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/css_browser_selector.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/responsiveslides.js")"></script>
     <!-- TemplateBeginEditable name="script" -->
     <!-- TemplateEndEditable -->
-    <script type="text/javascript" src="scripts/general.js"></script>    
+    <script type="text/javascript" src="@Url.Content("~/scripts/general.js")"></script>
     <!-- === END SCRIPTS === -->
-</head>
+    </script></head>
 <body>    
     @Html.Partial("_Header")
 
@@ -55,8 +55,9 @@
         
     @Html.Partial("_Footer")
 
-    <div class="loading"></div>
-       
+    <div class="loading"></div>   
+    <div class="light-box"></div>
+         
     <!-- END HTML -->
     @Html.Partial("_LiveChat")
 </body>

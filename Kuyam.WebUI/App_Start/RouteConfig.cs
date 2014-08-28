@@ -125,10 +125,23 @@ namespace Kuyam.WebUI
                 new { controller = "Book", action = "Class" }
                 );
 
+            //routes.MapRoute(
+            //    "Booking - Company",
+            //    "book/{companyUrlName}",
+            //    new { controller = "Book", action = "Index" }
+            //    );
+
+
             routes.MapRoute(
-                "Booking - Company",
-                "book/{companyUrlName}",
+                "listCompanyBooking",
+                "book",
                 new { controller = "Book", action = "Index" }
+                );
+
+            routes.MapRoute(
+                "loadmore",
+                "book/loadMore",
+                new { controller = "Book", action = "loadMore" }
                 );
             
 

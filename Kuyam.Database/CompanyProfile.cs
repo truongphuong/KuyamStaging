@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace Kuyam.Database
 {
     public class CompanyProfileSearch
-    {
+    {      
+        public int IndexId { get; set; }
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public int ProfileID { get; set; }
@@ -119,6 +120,8 @@ namespace Kuyam.Database
         public List<EventDTO> CompanyEvents { get; set; }
 
         public string InstructorClassSchedulerStr { get; set; }
+
         public List<EmployeeHour> InstructorClassSchedulerHours { get; set; }
+        
     }
 }

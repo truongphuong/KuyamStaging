@@ -21,24 +21,28 @@
         var profiles = ViewBag.ProfileCompanies;
         var catUrl = "https://kuyamqa1.apphb.com";
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <ul class="tab-list desktop">
-                    @foreach (Service category in ViewBag.Categories)
-                    {
-                        var tabNumber = "#tabs-" + category.Sequence;
-                        if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
-                        {
-                            <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                            catUrl = catUrl + "/" + category.ServiceName;
-                        }
-                        else
-                        {
-                            <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                        }
 
-                    }
-                </ul>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="category-list">
+                    <ul class="tab-list clearfix desktop">
+                        @foreach (Service category in ViewBag.Categories)
+                         {
+                             var tabNumber = "#tabs-" + category.Sequence;
+                             if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
+                             {
+                        <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                                 catUrl = catUrl + "/" + category.ServiceName;
+                             }
+                             else
+                             {
+                        <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                             }
+
+                         }
+                    </ul>
+                </div>
             </div>
+
         </div>
 
         <div class="row">
@@ -96,7 +100,13 @@
                             {
                                 case "0":
                                     {
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
                                         break;
+
                                     }
                                 case "1":
                                     {
@@ -144,14 +154,11 @@
                                         break;
                                     }
                             }
-                            @if (profile.TotalReviews > 0)
-                            {
-                                <span class="total-review">
 
-                                    (@profile.TotalReviews reviews)
+                            <span class="total-review">
+                                (@profile.TotalReviews reviews)
+                            </span>
 
-                                </span>
-                            }
                             <span class="vote-icon icon-unlike" style="display:none;"></span>
                         </div>
 
@@ -171,7 +178,7 @@
                                         //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
                                         urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
                                     }
-                                    <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+                            <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                 }
 
                                 if (profile.CompanyAvailableTimeSlots.IsShowMore)
@@ -183,7 +190,7 @@
                                         //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
                                         urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
                                     }
-                                    <a class="bg-green" href="@urlShowMore" title="more">more</a>
+                            <a class="bg-green" href="@urlShowMore" title="more">more</a>
 
                                 }
                             }
@@ -219,11 +226,8 @@
         var lat = $('#curLat').val();
         var lon = $('#curLon').val();
         var categoryId = $(this).attr('categoryId');
-
-
         var parameters = { lat: lat, lon: lon, categoryId: categoryId };
         $('.loading').show();
-
         $.ajax(
         {
             type: 'POST',
