@@ -21,7 +21,7 @@
             <a class="btnLiveChat @(Kuyam.WebUI.Models.MySession.ShowLiveChat?"on":"off")" href="JavaScript:void(0);" title="live chat"></a>
             <fieldset>
                 <span class="icon-list"></span>
-                <input id="txtSearchInput" class="form-control" type="text" value="search for a business" onfocus="if (this.value == 'search for a business') { this.value = ''; }" onblur="if (this.value == '') { this.value = 'search for a business'; }" />
+                <input id="txtSearchInput" class="form-control" type="text" value="@(ViewBag.KeyWord != null ? ViewBag.KeyWord : "search for a business")" onfocus="if (this.value == 'search for a business') { this.value = ''; }" onblur="if (this.value == '') { this.value = 'search for a business'; }" />
                 <input  id="searchHeader" type="button" class="btn-search" value="Search" />
             </fieldset>
         </div>
@@ -56,19 +56,12 @@
         $("#txtSearchInput").keypress(function (e) {
             var kCode = e.keyCode || e.charCode;
             if (kCode == 13) {
-                var key = $(e.target).val();
-
-                if (key == 'search for a business') {
-                    return false;
-                }
-                $(".SearchText").val(key);
-
-                var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
+                var key = $(e.target).val();                 
                 if (typeof getListCompanyBykey == 'function') {
-                    getListCompanyBykey(0, 0, key, categoryId)
+                    getListCompanyBykey(0, 0, key, 0)
                 } else {
 
-                    searchProfileCompanyBykey(key, categoryId)
+                    searchProfileCompanyBykey(key, 0)
                 }
             }
         });
@@ -81,9 +74,7 @@
             } else {
                 key = $("#txtSearchInputbody").val();                
             }
-            if (key == 'search for a business') {                
-                return false;
-            }
+          
             $(".SearchText").val(key);
             var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
             if (typeof getListCompanyBykey == 'function') {
@@ -97,7 +88,7 @@
 
 
     function searchProfileCompanyBykey(key, categoryId) {        
-        var param = "key=" + key + "&categoryId=" + categoryId;
+        var param = "key=" + key ;
         var url = "/book?" + param;
         if (key == 'search for a business' || key == '') {
             url = "book";

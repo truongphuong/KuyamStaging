@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Kuyam.Database
 {
     public class CompanyGoogleMap
-    {
+    {        
         public int IndexId { get; set; }
         public int ProfileID { get; set; }
         public string Name { get; set; }

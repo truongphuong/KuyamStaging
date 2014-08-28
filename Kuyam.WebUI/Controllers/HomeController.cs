@@ -64,6 +64,10 @@ namespace Kuyam.WebUI.Controllers
             }
             ViewBag.Lat = curLat;
             ViewBag.Lon = curLon;
+            if (MySession.DetectedLocationExpired)
+            {
+                ViewBag.DetectLocation = "detectLocation()";
+            }            
             return View(model);
         }
 
@@ -78,8 +82,12 @@ namespace Kuyam.WebUI.Controllers
 
             ViewBag.Lat = lat;
             ViewBag.Lon = lon;
-
-
+            if (lat > 0 || lon > 0)
+            {
+                MySession.Latitude = lat;
+                MySession.Longitude = lon;
+            }
+            
             return PartialView("_Companies");
         }
 

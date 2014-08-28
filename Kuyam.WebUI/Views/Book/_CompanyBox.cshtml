@@ -201,17 +201,17 @@
 
                     </div>
 
-                    @if (profile.IsFeature)
-                    {
-                        <div class="sale"><img alt="" src="/content/images/icons/icon_featured.png" width="70" /></div>
-                    }
-                    else if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+                    @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
                     {
                         var companyEvent = profile.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
                         if ((profile.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
                         {
                             <div class="sale"><img alt="" src="/content/images/icons/icon_offer.png" width="70" /></div>
                         }
+                    }
+                    else if (profile.IsFeature)
+                    {
+                        <div class="sale"><img alt="" src="/content/images/icons/icon_featured.png" width="70" /></div>
                     }
                     <div class="mark desktop">@profile.IndexId</div>
                 </div>
@@ -236,8 +236,8 @@
               liTag.InnerHtml = aTag.ToString();
               return liTag;
           },
-          ContainerDivClasses= new List<string> { "pagination-container desktop" },
-          UlElementClasses = new List<string> { "" },         
+          ContainerDivClasses = new List<string> { "pagination-container desktop" },
+          UlElementClasses = new List<string> { "" },
           DisplayEllipsesWhenNotShowingAllPageNumbers = true,
           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
           DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -247,16 +247,16 @@
           LinkToPreviousPageFormat = "<span class=\"icon-prev\"></span>back"
 
       })
-            
-    <div id="loadmore" class="iphone">
-        <a class="book-more" title="" href="#">tap to see more<br /> <span class="icon-angle-down"></span></a>
-    </div>
+
+            <div id="loadmore" class="iphone">
+                <a class="book-more" title="" href="#">tap to see more<br /> <span class="icon-angle-down"></span></a>
+            </div>
 
         }
     </div>
 </div>
 <script type="text/javascript">
-    
+
     $(".desktop a").on("click", function (e) {
         e.preventDefault();
         var url = $(this).attr("href");
@@ -271,7 +271,7 @@
             })
             .success(function (result) {
                 $('#companyInfoBar').html(result.content);
-                loadmap(10.773104, 106.6892475, result.locations);
+                loadmap(0, 0, result.locations);
                 $('.loading').hide();
             }).error(function (error) {
                 $('.loading').hide();
@@ -283,9 +283,6 @@
         var lon = 0;
         var categoryId = $(this).attr('categoryId');
         var key = $("#txtSearchInputbody").val();
-        if (key == 'search for a business') {
-            key = '';
-        }
         getListCompanyBykey(lat, lon, key, categoryId);
     });
 
@@ -303,13 +300,13 @@
 
 
 <script>
-    
-    var pageIndex = 2; 
+
+    var pageIndex = 2;
     var totalPages = 10000;//'@Model.TotalPages';
 
-    $("#loadmore").click(function (e) { 
+    $("#loadmore").click(function (e) {
 
-        $(this).hide(); 
+        $(this).hide();
         $('.loading').show();
 
         var categoryId = $("#dllcategory option:selected").val();
@@ -317,26 +314,24 @@
         if (key == 'search for a business')
             key = '';
         var parameters = { key: key, page: pageIndex, categoryId: categoryId, lat: 0, lon: 0 };
-        if (pageIndex <= totalPages) 
-        {            
+        if (pageIndex <= totalPages) {
             $.post('@Url.Action("LoadMore", "Book")', parameters, function (data) {
 
-                $(".load_more").show(); 
+                $(".load_more").show();
                 $("#results").append(data.content);
-               
-                $("html, body").animate({ scrollTop: $("#loadmore").offset().top-1635 }, 500);
+
+                $("html, body").animate({ scrollTop: $("#loadmore").offset().top - 1635 }, 500);
                 $('.loading').hide();
 
                 pageIndex++;
 
-            }).fail(function(xhr, ajaxOptions, thrownError) {                
-                $("#loadmore").show(); 
+            }).fail(function (xhr, ajaxOptions, thrownError) {
+                $("#loadmore").show();
                 $('.loading').hide();
             });
 
 
-            if (pageIndex >= totalPages - 1)
-            {               
+            if (pageIndex >= totalPages - 1) {
                 $("#loadmore").attr("disabled", "disabled");
             }
         }

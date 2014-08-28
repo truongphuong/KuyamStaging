@@ -26,19 +26,19 @@
                 <div class="category-list">
                     <ul class="tab-list clearfix desktop">
                         @foreach (Service category in ViewBag.Categories)
-                         {
-                             var tabNumber = "#tabs-" + category.Sequence;
-                             if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
-                             {
-                        <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                                 catUrl = catUrl + "/" + category.ServiceName;
-                             }
-                             else
-                             {
-                        <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                             }
+                        {
+                            var tabNumber = "#tabs-" + category.Sequence;
+                            if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
+                            {
+                                <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                                catUrl = catUrl + "/" + category.ServiceName;
+                            }
+                            else
+                            {
+                                <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                            }
 
-                         }
+                        }
                     </ul>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                     }
                 }
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="event-block clearfix">
+                    <div class="event-block @(profile.IsFeature?"event-featured":"")  clearfix">
                         <div class="avatar">
                             <a href="@url" title=""><img alt="Avatar" src="@urlLogo"></a>
                         </div>
@@ -178,7 +178,7 @@
                                         //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
                                         urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
                                     }
-                            <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+                                    <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                 }
 
                                 if (profile.CompanyAvailableTimeSlots.IsShowMore)
@@ -190,7 +190,7 @@
                                         //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
                                         urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
                                     }
-                            <a class="bg-green" href="@urlShowMore" title="more">more</a>
+                                    <a class="bg-green" href="@urlShowMore" title="more">more</a>
 
                                 }
                             }
@@ -199,14 +199,15 @@
 
                         @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
                         {
-
                             var companyEvent = profile.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
                             if ((profile.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
                             {
-                                <div class="sale"><img alt="" src="content/images/icons/deal-sticker.png" width="70" /></div>
+                                <div class="sale"><img alt="" src="/content/images/icons/icon_offer.png" width="70" /></div>
                             }
-
-
+                        }
+                        else if (profile.IsFeature)
+                        {
+                            <div class="sale"><img alt="" src="/content/images/icons/icon_featured.png" width="70" /></div>
                         }
 
                     </div>
@@ -226,26 +227,9 @@
         var lat = $('#curLat').val();
         var lon = $('#curLon').val();
         var categoryId = $(this).attr('categoryId');
-        var parameters = { lat: lat, lon: lon, categoryId: categoryId };
-        $('.loading').show();
-        $.ajax(
-        {
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(parameters),
-            dataType: 'html',
-            url: '/home/RefreshCompanyInfoBar/'
-        })
-        .success(function (result) {
-            $('#companyInfoBar').html(result);
-            $('.loading').hide();
 
-        })
-        .error(function (error) {
-            $('.loading').hide();
-
-        });
-
+        fillterData(lat, lon, categoryId)
     });
+
 </script>
 

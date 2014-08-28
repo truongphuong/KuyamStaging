@@ -188,17 +188,45 @@
 <!-- /.ad_logo -->
 <script type="text/javascript">
     $(document).ready(function () {
-        var query = window.location.search;
-        if (query.indexOf("lat") == -1 && query.indexOf("lon") == -1) {
-            navigator.geolocation.getCurrentPosition(show_map);
-        }
+        //var query = window.location.search;
+        //if (query.indexOf("lat") == -1 && query.indexOf("lon") == -1) {
+        //    navigator.geolocation.getCurrentPosition(show_map);
+        //}
 
+        @Html.Raw(ViewBag.DetectLocation);
     });
+
+    function detectLocation() {       
+        navigator.geolocation.getCurrentPosition(show_map);
+    }
+
     function show_map(position) {
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
-        window.location.href = "?lat=" + lat + "&lon=" + lon;
+        var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
+        fillterData(lat, lon, categoryId);
+    }
 
+    function fillterData(lat, lon, categoryId) {
+        var parameters = { lat: lat, lon: lon, categoryId: categoryId };
+        $('.loading').show();
+        $.ajax(
+        {
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(parameters),
+            dataType: 'html',
+            url: '/home/RefreshCompanyInfoBar/'
+        })
+        .success(function (result) {
+            $('#companyInfoBar').html(result);
+            $('.loading').hide();
+
+        })
+        .error(function (error) {
+            $('.loading').hide();
+
+        });
     }
 </script>
 

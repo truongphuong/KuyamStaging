@@ -34,7 +34,7 @@
                     <fieldset>
                         <span class="icon-list"></span>
                         <input id="txtSearchInputbody" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'search for a business'; }" onfocus="if (this.value == 'search for a business') { this.value = ''; }" value="search for a business">
-                        <input id="searchBody" type="button" class="btn-search" value="Search" />
+                        <input id="searchBody" type="button" class="btn-search desktop" value="Search" />
                      </fieldset>
                 </div>
             </div>
@@ -58,11 +58,13 @@
     var markerData = @Html.Raw(Model.MarkerData);
 
     $(document).ready(function () {
-        getLocation();      
+        
+        @Html.Raw(Model.DetectLocation);
+       
         var deviceAgent = navigator.userAgent.toLowerCase();
         var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
         if (!agentID) {
-            loadmap(0, 0,markerData);
+            loadmap('@Model.Lat','@Model.Lon',markerData);
         }
 
         $("#txtSearchInputbody").keypress(function (e) {
@@ -76,10 +78,10 @@
         });
     });
 
-    function getLocation() {
-        if (navigator.geolocation) {
+    function detectLocation() {
+        if (navigator.geolocation) {            
             navigator.geolocation.getCurrentPosition(showPosition, errorHandler);
-        } else {
+        } else {            
             alert("Geolocation is not supported by this browser.");
         }
     }
@@ -95,15 +97,18 @@
 
     function showPosition(position) {
         var categoryId = $(".category-list .active .categoryLnk").attr('categoryId');
-        var key = $("#txtSearchInputbody").val();
-        if (key == 'search for a business') {
-            key ="";
-        }
+       
+        var key = $("#txtSearchInput").val();
+        if (key== ''|| key=='search for a business') {
+            key =  key = $("#txtSearchInputbody").val(); 
+        } 
          getListCompanyBykey(position.coords.latitude, position.coords.longitude, key, categoryId);
     }
 
     function getListCompanyBykey(lat, lon, key, categoryId) {
-        
+        if (key == 'search for a business') {
+            key = '';
+        }
         var parameters = { key: key, categoryId: categoryId, lat: lat, lon: lon };
         if (lat == 0 && lon == 0) {
             $('.loading').show();
@@ -118,7 +123,7 @@
         })
         .success(function (result) {
             $('#companyInfoBar').html(result.content);
-            loadmap(10.773104, 106.6892475, result.locations);
+            loadmap('@Model.Lat','@Model.Lon', result.locations);
             $('.loading').hide();
 
         })
@@ -131,70 +136,7 @@
 </script>
 
 <script type="text/javascript">
-    
-    var cityCircle;
-    function initialize() {
-
-        var map;
-        var myLatlng = new google.maps.LatLng('10.773104', '106.6892475');
-        var myOptions = {
-            zoom: 16,
-            disableDefaultUI: true,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("google-map"), myOptions);
-
-        var markerLatLng = new google.maps.LatLng('10.773104', '106.6892475');
-        var image = '/content/images/num-10.png';
-
-        var beachMarker = new google.maps.Marker({
-            position: markerLatLng,
-            map: map,
-            icon:image,
-            visible: true
-        });
-
-
-        var boxText = document.createElement("div");        
-        boxText.innerHTML = "City Hall, Sechel British Columbia Canada";
-
-        var myOptions = {
-            content: boxText
-            , disableAutoPan: false
-            , maxWidth: 0
-            , pixelOffset: new google.maps.Size(7,-28)
-            , zIndex: null
-            , boxStyle: {
-                background: "url(/content/images/num.png) -22px center no-repeat"
-              , opacity: 1
-              , width: "auto"
-            }
-            , closeBoxMargin: "10px 2px 2px 2px"
-            , closeBoxURL: ""
-            , infoBoxClearance: new google.maps.Size(1, 1)
-            , isHidden: false
-            , pane: "floatPane"
-            , enableEventPropagation: false
-
-        };
-
-        var infobox = new InfoBox(myOptions);
-
-        google.maps.event.addListener(beachMarker, "mouseover", function () {
-            infobox.open(map, this);
-            });
-
-        google.maps.event.addListener(beachMarker, "mouseout", function () {
-            infobox.close();
-        });
-
-        google.maps.event.addListener(beachMarker, "click", function () {
-            alert("aa")
-        });
-    }
-
-    //google.maps.event.addDomListener(window, 'load', initialize);
+      
 
     function loadmap(lat, lon, locations) {
         var map;
@@ -208,8 +150,8 @@
         map = new google.maps.Map(document.getElementById("google-map"), myOptions);
 
         initMarkers(map, locations.reverse());
-        map.panTo(new google.maps.LatLng('10.773104', '106.6892475'));
-    }    
+       
+    }   
 
     function initMarkers(map, markerData) {
         var newMarkers = [], marker;

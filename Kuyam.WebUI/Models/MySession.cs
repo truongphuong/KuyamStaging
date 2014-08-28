@@ -247,21 +247,25 @@ namespace Kuyam.WebUI.Models
         {
             get
             {
-
-                return Convert.ToInt32(Session["Latitude"]);
+                double lat = Convert.ToDouble(Session["Latitude"]);
+                if (lat == 0)
+                    return ConfigManager.DefaultLatitude;
+                return lat;
             }
             set
             {
                 Session["Latitude"] = value;
             }
         }
-
+      
         public static double Longitude
         {
             get
-            {
-
-                return Convert.ToDouble(Session["Longitude"]);
+            {  
+                double lon =Convert.ToDouble(Session["Longitude"]);
+                if (lon == 0)
+                    return ConfigManager.Defaultlongitude;
+                return lon;
             }
             set
             {
@@ -269,7 +273,15 @@ namespace Kuyam.WebUI.Models
             }
         }
 
-
+        public static bool DetectedLocationExpired
+        {
+            get
+            {
+                double lat = Convert.ToDouble(Session["Latitude"]);
+                double lon = Convert.ToDouble(Session["Longitude"]);
+                return (lat == 0.0 && lon == 0.0);                
+            }
+        }
         public static Guid AspUserID
         {
             get
