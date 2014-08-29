@@ -4,7 +4,11 @@ using System.Collections.Generic;
 namespace Kuyam.Database
 {
     public class CompanyProfileSearch
-    {      
+    {        
+        public CompanyProfileSearch()
+        {
+            ListsCategoriesds = new List<string>();
+        }
         public int IndexId { get; set; }
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
@@ -53,7 +57,9 @@ namespace Kuyam.Database
         public Nullable<bool> IsClass { get; set; }
         public bool IsFeature { get; set; }
         public double Distance { get; set; }
-        public bool IsUserFavorite { get; set; }
+        public bool IsUserFavorite { get; set; }      
+        public string ListServiceIds { get; set; }
+        public List<string>  ListsCategoriesds { get; set; }   
         public string ListServices { get; set; }
         public bool IsVideo { get; set; }
         public int Rate { get; set; }
@@ -102,6 +108,7 @@ namespace Kuyam.Database
                 _serviceCompanies = value;
             }
         }
+
 
         public List<Appointment> Appointments { get; set; }
 

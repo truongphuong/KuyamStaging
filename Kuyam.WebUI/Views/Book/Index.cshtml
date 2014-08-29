@@ -123,9 +123,10 @@
         })
         .success(function (result) {
             $('#companyInfoBar').html(result.content);
-            loadmap('@Model.Lat','@Model.Lon', result.locations);
-            $('.loading').hide();
+            loadmap('@Model.Lat','@Model.Lon', result.locations);            
+            $("html, body").animate({ scrollTop: $("#results").offset().top-500}, 500);
 
+            $('.loading').hide();
         })
         .error(function (error) {
             $('.loading').hide();
@@ -142,14 +143,33 @@
         var map;
         var myLatlng = new google.maps.LatLng(lat, lon);
         var myOptions = {
-            zoom: 16,
+            zoom: 8,
             disableDefaultUI: true,
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+       
+        //var shapenOptions = {
+        //    path: google.maps.SymbolPath.CIRCLE,
+        //    strokeColor: '#FF0000',
+        //    strokeOpacity: 1.0,
+        //    strokeWeight: 1,
+        //    fillColor: '#FF0000',
+        //    fillOpacity: 0.35,
+        //    map: map,
+        //    center: myLatlng,
+        //    radius: 50*1609.344
+        //};
+        //var citycircle = new google.maps.Circle(shapenOptions);
+        //map.fitBounds(citycircle.getBounds());
 
-        initMarkers(map, locations.reverse());
+        initMarkers(map, locations.reverse());        
+
+        map.setZoom(8);
+       map.setCenter(myLatlng);
+
+        
 
     }
 

@@ -26,6 +26,7 @@ namespace Kuyam.Domain.SearchServices
 
         public List<CompanyProfileSearch> CompanySearchForWeb(
             out int totalRecords,
+            List<string> categoriesId,
             string keySearch = null,
             int? categoryId = null,
             double? currentLat = null,
@@ -57,7 +58,12 @@ namespace Kuyam.Domain.SearchServices
             var appointments = _companySearchService.GetAppoinmentsByProfileIds(list.Select(a => a.ProfileID).ToList());
 
             foreach (var item in list)
-            {                
+            {
+                if (item.ListServiceIds != null)
+                {
+                    categoriesId.AddRange(item.ListServiceIds.Split(',').ToList());
+                    item.ListsCategoriesds.AddRange(item.ListServiceIds.Split(',').ToList());
+                }
                 _companySearchService.TransformEmployeeHours(item);
                 _companySearchService.TransformInstructorClassSchedulerHours(item);
                 _companySearchService.TransformCompanyHours(item);

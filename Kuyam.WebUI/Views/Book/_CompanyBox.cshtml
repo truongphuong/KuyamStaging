@@ -271,7 +271,8 @@
             })
             .success(function (result) {
                 $('#companyInfoBar').html(result.content);
-                loadmap(0, 0, result.locations);
+                loadmap('@Model.Lat', '@Model.Lon', result.locations);
+                $("html, body").animate({ scrollTop: $("#results").offset().top-500}, 500);
                 $('.loading').hide();
             }).error(function (error) {
                 $('.loading').hide();
@@ -302,7 +303,7 @@
 <script>
 
     var pageIndex = 2;
-    var totalPages = 10000;//'@Model.TotalPages';
+    var totalPages = '@Model.TotalPages';
 
     $("#loadmore").click(function (e) {
 

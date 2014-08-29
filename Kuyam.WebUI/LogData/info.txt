@@ -1,3 +1,1 @@
-2014-08-27 11:47:31,366 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
-2014-08-27 14:10:11,372 INFO  - Kuyam.WebUI.Controllers.AccountController.LoginAjax - phuongtruong@vinasource.com login success
-2014-08-27 23:16:19,790 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
+2014-08-29 17:53:07,978 INFO  - Kuyam.WebUI.Controllers.AdminController.Login - Login admin success with username: phuongtruong@vinasource.com
