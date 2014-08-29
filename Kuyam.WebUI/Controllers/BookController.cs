@@ -67,7 +67,7 @@ namespace Kuyam.WebUI.Controllers
             model.Lat = MySession.Latitude;
             model.Lon = MySession.Longitude;
 
-            var categories = _categoryService.GetSequenceCategories();
+            var categories = _categoryService.GetActiveCategories();
             if (categories != null && categories.Count > 0)
             {
                 model.Categories = categories;
@@ -84,17 +84,20 @@ namespace Kuyam.WebUI.Controllers
 
                 foreach (var item in categories)
                 {
-                    htmlCategories.AppendFormat("<option value=\"{0}\">{1}</option>", item.ServiceID, UtilityHelper.TruncateText(item.ServiceName, 36));
+                    string selected = string.Empty;
+                    if (model.CategoryId == item.ServiceID)
+                        selected = "selected";
+                    htmlCategories.AppendFormat("<option value=\"{0}\" {1}>{2}</option>", item.ServiceID, selected, UtilityHelper.TruncateText(item.ServiceName, 36));
                 }
-
                 model.HtmlCategories = htmlCategories.ToString();
+
                 int totalRecord = 0;
                 model.Page = page.ToString();
                 if (MySession.DetectedLocationExpired)
                 {
                     model.DetectLocation = "detectLocation()";
                 }
-                var companyList = _searchService.CompanySearchForWeb(out totalRecord, key, categoryId, MySession.Latitude, MySession.Longitude, 80.467, MySession.CustID, page, 10);
+                var companyList = _searchService.CompanySearchForWeb(out totalRecord, key, model.CategoryId, MySession.Latitude, MySession.Longitude, 80.467, MySession.CustID, page, 10);
                 model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
 
 
@@ -109,6 +112,7 @@ namespace Kuyam.WebUI.Controllers
                     Slug = Url.RouteUrl("Slug", new { sename = item.GetSeName(item.ProfileID) })
                 }).ToList();
 
+                
             }
 
             if (Request.IsAjaxRequest())
@@ -146,7 +150,7 @@ namespace Kuyam.WebUI.Controllers
 
             int totalRecord = 0;
             model.Page = page.ToString();
-            var companyList = _searchService.CompanySearchForWeb(out totalRecord, key, categoryId, MySession.Latitude, MySession.Longitude, 80.467, MySession.CustID, page, 10);
+            var companyList = _searchService.CompanySearchForWeb(out totalRecord, key, model.CategoryId, MySession.Latitude, MySession.Longitude, 80.467, MySession.CustID, page, 10);
             model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
 
             return Json(new { content = this.RenderPartialViewToString("_LoadMoreBox", (object)model) }, JsonRequestBehavior.AllowGet);

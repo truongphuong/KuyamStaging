@@ -2003,6 +2003,7 @@
     <NavigationProperty Name="ServiceCompanies" Relationship="Kuyam.WebUI.Models.FK_ServiceCompany_Services" FromRole="Service" ToRole="ServiceCompany" />
     <NavigationProperty Name="NonKuyamAppointments" Relationship="Kuyam.WebUI.Models.FK_NonKuyamAppointment_Service" FromRole="Service" ToRole="NonKuyamAppointment" />
     <NavigationProperty Name="ProposedAppointments" Relationship="Kuyam.WebUI.Models.FK_ProposedAppointment_Service" FromRole="Service" ToRole="ProposedAppointment" />
+    <Property Name="OrderBy" Type="Int32" />
   </EntityType>
   <EntityType Name="ServiceHour">
     <Key>

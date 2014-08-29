@@ -235,7 +235,7 @@ body{margin:0;padding:0;font:20px/24px raleway, sans-serif;color:#000000;}
 .event-section .moreItems a{width:165px;border-width:1px;border-style:solid;border-color:#C9C9C9;color:#C9C9C9;font-size:18px;line-height:40px;letter-spacing:0;text-align:center;font-weight:400;display:inline-block;text-decoration:none;height:40px;}
 .event-section .moreItems a:hover{border-color:#999;}
 
-.event-block{height:132px;border:1px solid #c9c9c9;margin-bottom:20px;position:relative;}
+.event-block{height:134px;border:1px solid #c9c9c9;margin-bottom:20px;position:relative;}
 .event-block:hover{border:1px solid #999;}
 .event-block .avatar{float:left;width:140px;height:130px;margin:0 10px 0 0;overflow:hidden;}
 .event-block .iName{margin-bottom:3px;}
@@ -267,7 +267,7 @@ body{margin:0;padding:0;font:20px/24px raleway, sans-serif;color:#000000;}
 .book-page .category-list{margin:22px 10px 17px;}
 .category-list select{width:100%;padding:5px 8px;font:400 20px/24px raleway, sans-serif;color:#8c8c8c;}
 .book-page .tab-list li{margin:0 8px 8px 0;}
-.book-page .tab-list li a{display:block;width:121px;height:32px;text-align:center;padding:0;border:1px solid #acacac;font:400 14px/32px raleway, sans-serif;}
+.book-page .tab-list li a{display:block;width:121px;height:32px;text-align:center;padding:2px;border:1px solid #acacac;font:400 14px/32px raleway, sans-serif; text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
 .book-page .tab-list li a.active{border:1px solid #96be3d;background:#96be3d;}
 
 .book-more{color:#8aae54;font:400 16px/19px raleway, sans-serif;text-decoration:none;}

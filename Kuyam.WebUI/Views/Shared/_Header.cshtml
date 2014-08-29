@@ -31,15 +31,15 @@
         <!-- .navbar-collapse -->
         <div class="collapse navbar-collapse menuList" id="bs-navbar-collapse">
             <ul class="nav navbar-nav navbar-right navMenu">
-                <li class="active"><a href="/" title="Home">home</a><span class="desktop"></span></li>
-                <li class="iphone"><a href="https://kuyamqa1.apphb.com/home/howitworks_user" title="How it works">how it works</a><span class="desktop"></span></li>
-                <li><a href="/book" title="Book">book</a><span class="desktop"></span></li>
-                <li><a href="http://beautify-la.com/" title="Beautify LA">Beautify LA</a><span class="desktop"></span></li>
-                <li><a href="https://kuyamqa1.apphb.com" title="Blog">lifestyle blog</a><span class="desktop"></span></li>
-                <li class="desktop"><a href="https://kuyamqa1.apphb.com/home/howitworks_user" title="How it works">how it works</a><span class="desktop"></span></li>
-                <li class="iphone"><a href="http://kuyam.org/" title="kuyam.org">kuyam.org</a><span class="desktop"></span></li>
-                <li><a class="bg-green" href="JavaScript:void(0);" title="login">login</a><span class="desktop"></span></li>
-                <li><a class="bg-green" href="JavaScript:void(0);" title="sign up">sign up</a><span class="desktop"></span></li>
+                <li @((Request.RawUrl.ToLower().Contains("/") && Request.RawUrl.Length==1) ? "class=active" : "")><a href="/" title="Home">home</a><span class="desktop"></span></li>
+                <li class="iphone @(Request.RawUrl.ToLower().Contains("") ? "active" : "")"><a href="https://kuyamqa1.apphb.com/home/howitworks_user" title="How it works">how it works</a><span class="desktop"></span></li>
+                <li @(Request.RawUrl.ToLower().Contains("/book") ? "class=active" : "")><a href="/book" title="Book">book</a><span class="desktop"></span></li>
+                <li @(Request.RawUrl.ToLower().Contains("la") ? "class=active" : "")><a href="http://beautify-la.com/" title="Beautify LA">Beautify LA</a><span class="desktop"></span></li>
+                <li @(Request.RawUrl.ToLower().Contains("/blog") ? "class=active" : "")><a href="https://kuyamqa1.apphb.com" title="Blog">lifestyle blog</a><span class="desktop"></span></li>
+                <li class="desktop @(Request.RawUrl.ToLower().Contains("/howitwork") ? "active" : "")"><a href="https://kuyamqa1.apphb.com/home/howitworks_user" title="How it works">how it works</a><span class="desktop"></span></li>
+                <li class="iphone @(Request.RawUrl.ToLower().Contains("org") ? "active" : "")"><a href="http://kuyam.org/" title="kuyam.org">kuyam.org</a><span class="desktop"></span></li>
+                <li><a class="bg-green @(Request.RawUrl.ToLower().Contains("login") ? "active" : "")" href="JavaScript:void(0);" title="login">login</a><span class="desktop"></span></li>
+                <li><a class="bg-green @(Request.RawUrl.ToLower().Contains("signup") ? "active" : "")" href="JavaScript:void(0);" title="sign up">sign up</a><span class="desktop"></span></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -49,10 +49,12 @@
 <!-- /.site-header -->
 
 <script type="text/javascript">
+
     var stringdate = $.datepicker.formatDate('DD, MM dd yy', new Date());
     $("#datetitle").html(stringdate);
 
     $(document).ready(function (e) {
+
         $("#txtSearchInput").keypress(function (e) {
             var kCode = e.keyCode || e.charCode;
             if (kCode == 13) {

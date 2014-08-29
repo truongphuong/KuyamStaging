@@ -44,3 +44,15 @@ D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\Entity
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\bin\Debug\EntityFramework.SqlServer.xml
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.dll
 D:\Project\KuyamWeb\KuyamDev\Kuyam-Website-WebUI\Kuyam.Database\obj\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\Kuyam.Database.dll.config
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\Kuyam.Database.pdb
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\DataAnnotationsExtensions.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\EntityFramework.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\M2.Util.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\EntityFramework.xml
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\obj\Debug\Kuyam.Database.csprojResolveAssemblyReference.cache
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\obj\Debug\Kuyam.Database.dll
+D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\obj\Debug\Kuyam.Database.pdb

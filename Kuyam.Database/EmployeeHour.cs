@@ -20,12 +20,8 @@ namespace Kuyam.Database
         public int CompanyEmployeeID { get; set; }
         public int DayOfWeek { get; set; }
         public bool IsPreview { get; set; }
-        public System.DateTime LastedUpdate { get; set; }
-    
+        public System.DateTime LastedUpdate { get; set; }    
         public virtual CompanyEmployee CompanyEmployee { get; set; }
-
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
     }
     
 }

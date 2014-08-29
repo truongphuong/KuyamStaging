@@ -29,6 +29,7 @@ namespace Kuyam.Database
         public Nullable<int> Sequence { get; set; }
         public Nullable<bool> Status { get; set; }
         public string kalturaId { get; set; }
+        public Nullable<int> OrderBy { get; set; }
     
         public virtual ICollection<Service> Service1 { get; set; }
         public virtual Service Service2 { get; set; }

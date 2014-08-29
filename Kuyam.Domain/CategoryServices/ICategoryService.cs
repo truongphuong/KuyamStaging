@@ -10,9 +10,15 @@ namespace Kuyam.Domain.CategoryServices
     public interface ICategoryService
     {
         /// <summary>
-        /// Get list active categories 
+        /// Get list active and Sequence  categories 
         /// </summary>
         /// <returns></returns>
         List<Service> GetSequenceCategories();
+
+        /// <summary>
+        ///  Get list active categories 
+        /// </summary>
+        /// <returns></returns>
+        List<Service> GetActiveCategories();
     }
 }

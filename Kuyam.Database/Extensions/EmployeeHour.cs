@@ -11,5 +11,7 @@ namespace Kuyam.Database
         public int ServiceCompanyID { get; set; }
         public string ServiceName { get; set; }
         public int AttendeesNumber { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

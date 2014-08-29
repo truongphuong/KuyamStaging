@@ -1269,6 +1269,7 @@
     <EntitySetMapping Name="Services">
       <EntityTypeMapping TypeName="Kuyam.WebUI.Models.Service">
         <MappingFragment StoreEntitySet="Service">
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
           <ScalarProperty Name="kalturaId" ColumnName="kalturaId" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Sequence" ColumnName="Sequence" />
