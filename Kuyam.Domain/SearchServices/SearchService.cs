@@ -26,6 +26,7 @@ namespace Kuyam.Domain.SearchServices
 
         public List<CompanyProfileSearch> CompanySearchForWeb(
             out int totalRecords,
+            out int categoryActive,
             List<string> categoriesId,
             string keySearch = null,
             int? categoryId = null,
@@ -35,13 +36,21 @@ namespace Kuyam.Domain.SearchServices
             int? custId = null,
             int pageIndex = 0,
             int pageSize = 2147483647)
-        {
+        {   
+
             totalRecords = 0;
             var pTotalRecords = new SqlParameter();
             pTotalRecords.ParameterName = "TotalRecords";
             pTotalRecords.Direction = ParameterDirection.Output;
             pTotalRecords.DbType = DbType.Int32;
-            var list = _dbContext.SqlQuery<CompanyProfileSearch>("CompanySearchForWeb @KeySearch,@ServiceID,@CurrentLat,@CurrentLong,@Distance,@CustID,@PageIndex,@PageSize, @TotalRecords out",
+
+            categoryActive = 0;
+            var pcategoryActive = new SqlParameter();
+            pcategoryActive.ParameterName = "CategoryActive";
+            pcategoryActive.Direction = ParameterDirection.Output;
+            pcategoryActive.DbType = DbType.Int32;
+
+            var list = _dbContext.SqlQuery<CompanyProfileSearch>("CompanySearchForWeb @KeySearch,@ServiceID,@CurrentLat,@CurrentLong,@Distance,@CustID,@PageIndex,@PageSize, @TotalRecords out, @CategoryActive out",
                 new SqlParameter("KeySearch", keySearch),
                  new SqlParameter("ServiceID", categoryId),
                  new SqlParameter("CurrentLat", currentLat),
@@ -50,11 +59,12 @@ namespace Kuyam.Domain.SearchServices
                  new SqlParameter("CustID", custId),
                  new SqlParameter("PageIndex", pageIndex),
                  new SqlParameter("PageSize", pageSize),
-                     pTotalRecords
+                     pTotalRecords,
+                     pcategoryActive
                  ).ToList();
 
             totalRecords = (pTotalRecords.Value != DBNull.Value) ? Convert.ToInt32(pTotalRecords.Value) : 0;
-
+            categoryActive = (pcategoryActive.Value != DBNull.Value) ? Convert.ToInt32(pcategoryActive.Value) : 0;
             var appointments = _companySearchService.GetAppoinmentsByProfileIds(list.Select(a => a.ProfileID).ToList());
 
             foreach (var item in list)

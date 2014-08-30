@@ -11,7 +11,8 @@ namespace Kuyam.WebUI.Models.BookKing
     {
         public BookingPageListModel()
         {
-            locations = new List<CompanyGoogleMap>();            
+            locations = new List<CompanyGoogleMap>();
+            Categories = new List<Service>();
         }
         public bool IsLogin { get; set; }
         public int CategoryId { get; set; }

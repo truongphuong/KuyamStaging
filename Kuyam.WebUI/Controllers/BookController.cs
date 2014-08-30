@@ -54,7 +54,7 @@ namespace Kuyam.WebUI.Controllers
             var model = new BookingPageListModel();
             model.SearchKey = key;
             ViewBag.KeyWord = key;
-            model.CategoryId = categoryId;           
+            model.CategoryId = categoryId;
             if (MySession.CustID > 0)
                 model.IsLogin = true;
 
@@ -68,43 +68,64 @@ namespace Kuyam.WebUI.Controllers
             model.Lon = MySession.Longitude;
 
             var categories = _categoryService.GetActiveCategories();
-            
+
+            if (MySession.DetectedLocationExpired)
+            {
+                model.DetectLocation = "detectLocation()";
+            }
 
             if (categories != null && categories.Count > 0)
             {
                 if (page < 1)
                     page = 1;
-                int totalRecord = 0;
+
                 model.Page = page.ToString();
-                if (MySession.DetectedLocationExpired)
-                {
-                    model.DetectLocation = "detectLocation()";
-                }
                 List<string> categoriesId = new List<string>();
-                
-                var companyList = _searchService.CompanySearchForWeb(out totalRecord, categoriesId, key, categoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
+                int activeCategoryId = 0;
+                int totalRecord = 0;
+                var companyList = _searchService.CompanySearchForWeb(out totalRecord, out activeCategoryId, categoriesId, key, categoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
                 model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
-                
+
                 categoriesId = categoriesId.Distinct().OrderBy(o => o).ToList();
-                
+
+                int totalPages = totalRecord / 10;
+
+                if (totalRecord % 10 > 0)
+                    totalPages++;
+                model.TotalPages = totalPages;
+
+
                 StringBuilder htmlCategories = new StringBuilder();
                 htmlCategories.Append("<option value='0' selected='selected' >select a category</option>");
-                categories = categories.Where(m => categoriesId.Contains(m.ServiceID.ToString())).Distinct().ToList();
-                model.Categories = categories;
+                categories = categories.Where(m => categoriesId.Contains(m.ServiceID.ToString())).Distinct().OrderBy(o => o.OrderBy).ToList();
+
+                if (categoryId == 0 && categories.Count() > 0)
+                {
+                    model.CategoryId = activeCategoryId;
+                }
+
+                var tmpCategory = new List<Service>();
                 foreach (var item in categories)
                 {
 
                     string selected = string.Empty;
                     if (model.CategoryId == item.ServiceID)
+                    {
                         selected = "selected";
+                        model.Categories.Add(item);
+                    }
+                    else
+                    {
+                        tmpCategory.Add(item);
+                    }
                     htmlCategories.AppendFormat("<option value=\"{0}\" {1}>{2}</option>", item.ServiceID, selected, UtilityHelper.TruncateText(item.ServiceName, 36));
 
                 }
+
+                model.Categories.AddRange(tmpCategory);
+
                 model.HtmlCategories = htmlCategories.ToString();
-                if (categoryId == 0 && categories.Count() > 0)
-                {
-                    model.CategoryId = categories[0].ServiceID;
-                }       
+                
 
                 model.locations = companyList.Select(item => new CompanyGoogleMap
                 {
@@ -154,9 +175,10 @@ namespace Kuyam.WebUI.Controllers
                 page = 1;
 
             int totalRecord = 0;
+            int activeCategoryId = 0;
             model.Page = page.ToString();
             List<string> categoriesId = new List<string>();
-            var companyList = _searchService.CompanySearchForWeb(out totalRecord, categoriesId, key, model.CategoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
+            var companyList = _searchService.CompanySearchForWeb(out totalRecord, out activeCategoryId, categoriesId, key, model.CategoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
             model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
 
             return Json(new { content = this.RenderPartialViewToString("_LoadMoreBox", (object)model) }, JsonRequestBehavior.AllowGet);
