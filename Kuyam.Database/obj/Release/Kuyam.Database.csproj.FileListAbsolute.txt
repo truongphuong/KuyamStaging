@@ -56,6 +56,5 @@ D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\EntityFram
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\M2.Util.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\EntityFramework.xml
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\bin\Release\EntityFramework.SqlServer.xml
-D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\obj\Release\Kuyam.Database.csprojResolveAssemblyReference.cache
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\obj\Release\Kuyam.Database.dll
 D:\Project\KuyamWeb\MyServers\KuyamStaging\Kuyam.Database\obj\Release\Kuyam.Database.pdb
