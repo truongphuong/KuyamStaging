@@ -18,8 +18,7 @@
     var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
     if (ViewBag.Categories != null)
     {
-        var profiles = ViewBag.ProfileCompanies;
-        var catUrl = "https://kuyamqa1.apphb.com";
+        var profiles = ViewBag.ProfileCompanies;       
         <div class="row">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -31,8 +30,7 @@
                             if (ViewBag.categoryId != null && category.ServiceID == (int)ViewBag.categoryId)
                             {
                                 <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                                catUrl = catUrl + "/" + category.ServiceName;
-                            }
+                                                            }
                             else
                             {
                                 <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
@@ -216,7 +214,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 moreItems">
-                <a href="@catUrl" title="more">more</a>
+                <a href="/book" title="more">more</a>
             </div>
         </div>
     }

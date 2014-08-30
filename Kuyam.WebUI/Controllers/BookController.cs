@@ -67,18 +67,30 @@ namespace Kuyam.WebUI.Controllers
             model.Lat = MySession.Latitude;
             model.Lon = MySession.Longitude;
 
-            var categories = _categoryService.GetActiveCategories(key, model.Lat, model.Lon, ConfigManager.DefaultDistance);
-            model.Categories = categories;
+            var categories = _categoryService.GetActiveCategories();
+            
+
             if (categories != null && categories.Count > 0)
             {
-                if (categoryId == 0 && categories.Count() > 0)
+                if (page < 1)
+                    page = 1;
+                int totalRecord = 0;
+                model.Page = page.ToString();
+                if (MySession.DetectedLocationExpired)
                 {
-                    model.CategoryId = categories[0].ServiceID;
+                    model.DetectLocation = "detectLocation()";
                 }
-
+                List<string> categoriesId = new List<string>();
+                
+                var companyList = _searchService.CompanySearchForWeb(out totalRecord, categoriesId, key, categoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
+                model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
+                
+                categoriesId = categoriesId.Distinct().OrderBy(o => o).ToList();
+                
                 StringBuilder htmlCategories = new StringBuilder();
                 htmlCategories.Append("<option value='0' selected='selected' >select a category</option>");
-
+                categories = categories.Where(m => categoriesId.Contains(m.ServiceID.ToString())).Distinct().ToList();
+                model.Categories = categories;
                 foreach (var item in categories)
                 {
 
@@ -89,18 +101,10 @@ namespace Kuyam.WebUI.Controllers
 
                 }
                 model.HtmlCategories = htmlCategories.ToString();
-
-                if (page < 1)
-                    page = 1;
-                int totalRecord = 0;
-                model.Page = page.ToString();
-                if (MySession.DetectedLocationExpired)
+                if (categoryId == 0 && categories.Count() > 0)
                 {
-                    model.DetectLocation = "detectLocation()";
-                }
-                List<string> categoriesId = new List<string>();
-                var companyList = _searchService.CompanySearchForWeb(out totalRecord, categoriesId, key, model.CategoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
-                model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, companyList.Count());
+                    model.CategoryId = categories[0].ServiceID;
+                }       
 
                 model.locations = companyList.Select(item => new CompanyGoogleMap
                 {
