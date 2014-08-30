@@ -1471,6 +1471,7 @@
     <Property Name="Sequence" Type="int" />
     <Property Name="Status" Type="bit" />
     <Property Name="kalturaId" Type="nvarchar" MaxLength="100" />
+    <Property Name="OrderBy" Type="int" />
   </EntityType>
   <EntityType Name="ServiceCompany">
     <Key>
