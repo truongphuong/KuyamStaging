@@ -12,17 +12,20 @@
         <div class="category-list">
             <!-- .tab-list-->
             <ul class="tab-list desktop clearfix">
-                @foreach (Service category in Model.Categories)
+                @if (Model.Categories != null)
                 {
-                    if (category.ServiceID == (int)Model.CategoryId)
+                    foreach (Service category in Model.Categories)
                     {
-                        <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                    }
+                        if (category.ServiceID == (int)Model.CategoryId)
+                        {
+                            <li class="active"><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="javascript:void(0);" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
+                        }
 
+                    }
                 }
             </ul>
             <!-- /.tab-list-->
