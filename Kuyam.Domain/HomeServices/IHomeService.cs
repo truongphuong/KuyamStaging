@@ -18,6 +18,6 @@ namespace Kuyam.Domain.HomeServices
 
         List<Service> GetListCategoryForHomePage();
 
-        List<CompanyProfileSearch> GetCompaniesAtHomePage(double lat, double lon, int categoryId = 0);
+        List<CompanyProfileSearch> GetCompaniesAtHomePage(double lat, double lon, int categoryId = 0, double distance=80.467);
     }
 }

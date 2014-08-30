@@ -71,11 +71,11 @@ namespace Kuyam.Domain.HomeServices
             else
             {
                 query = (from cpf in _profileCompanyRepository.Table
-                        join fcp in _featuredCompanyRepository.Table on cpf.ProfileID equals fcp.ProfileID
-                        where fcp.priority > 0 && cpf.CompanyStatusID != (int)Types.CompanyStatus.Deleted
-                        orderby fcp.priority
-                        select cpf).Take(3);
-            }        
+                         join fcp in _featuredCompanyRepository.Table on cpf.ProfileID equals fcp.ProfileID
+                         where fcp.priority > 0 && cpf.CompanyStatusID != (int)Types.CompanyStatus.Deleted
+                         orderby fcp.priority
+                         select cpf).Take(3);
+            }
 
 
             foreach (var profile in query)
@@ -134,18 +134,18 @@ namespace Kuyam.Domain.HomeServices
 
         public List<Service> GetListCategoryForHomePage()
         {
-            return _serviceRepository.Table.Where(x => x.ParentServiceID == null && x.Sequence.HasValue && x.Sequence.Value > 0).OrderBy(x=>x.Sequence).ToList();
+            return _serviceRepository.Table.Where(x => x.ParentServiceID == null && x.Sequence.HasValue && x.Sequence.Value > 0).OrderBy(x => x.Sequence).ToList();
         }
 
-        public List<CompanyProfileSearch> GetCompaniesAtHomePage(double lat, double lon, int categoryId = 0)
-        {           
-            var take = 8;            
+        public List<CompanyProfileSearch> GetCompaniesAtHomePage(double lat, double lon, int categoryId = 0, double distance = 80.467)
+        {
+            var take = 8;
             var totalItems = 0;
-           
-            var pcList = _companySearchService.GetProfileCompaniesWebSite(categoryId, 0, decimal.MaxValue, DateTime.Today, DateTime.Today,
-                    false, string.Empty, lat, lon, 0, 0, 0, take, out totalItems);
 
-            
+            var pcList = _companySearchService.GetProfileCompaniesWebSite(categoryId, 0, decimal.MaxValue, DateTime.Today, DateTime.Today,
+                    false, string.Empty, lat, lon, distance, 0, 0, take, out totalItems);
+
+
             var appointments = _companySearchService.GetAppoinmentsByProfileIds(pcList.Select(a => a.ProfileID).ToList());
 
             foreach (var companyProfileSearch in pcList)

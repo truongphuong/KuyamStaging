@@ -122,9 +122,14 @@
             url: '@Url.Action("Index", "Book")'
         })
         .success(function (result) {
+
             $('#companyInfoBar').html(result.content);
-            loadmap('@Model.Lat','@Model.Lon', result.locations);            
-            $("html, body").animate({ scrollTop: $("#results").offset().top-500}, 500);
+            var deviceAgent = navigator.userAgent.toLowerCase();
+            var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+            if (!agentID) {
+                loadmap('@Model.Lat','@Model.Lon', result.locations);
+                $("html, body").animate({ scrollTop: $("#results").offset().top-500}, 500);
+            }
 
             $('.loading').hide();
         })
@@ -149,7 +154,7 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         map = new google.maps.Map(document.getElementById("google-map"), myOptions);
-       
+
         //var shapenOptions = {
         //    path: google.maps.SymbolPath.CIRCLE,
         //    strokeColor: '#FF0000',
@@ -164,12 +169,12 @@
         //var citycircle = new google.maps.Circle(shapenOptions);
         //map.fitBounds(citycircle.getBounds());
 
-        initMarkers(map, locations.reverse());        
+        initMarkers(map, locations.reverse());
 
         map.setZoom(8);
-       map.setCenter(myLatlng);
+        map.setCenter(myLatlng);
 
-        
+
 
     }
 

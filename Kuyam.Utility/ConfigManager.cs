@@ -9,6 +9,7 @@ namespace Kuyam.Utility
 {
     public static class ConfigManager
     {
+        const string _DefaultDistance = "defaultDistance";
         const string _Defaultlongitude = "defaultLongitude";
         const string _DefaultLatitude = "defaultLatitude";
 
@@ -199,6 +200,30 @@ namespace Kuyam.Utility
         #endregion Kaltura
 
         #region Google API
+
+        public static double DefaultDistance
+        {
+            get
+            {
+                double defaultDistance = 80.467;
+                if (ConfigurationManager.AppSettings[_DefaultDistance] == null)
+                {
+                    return defaultDistance;
+                }
+                else
+                {
+                    double distance = 0;
+                    if (double.TryParse(ConfigurationManager.AppSettings[_DefaultDistance], out distance))
+                    {
+                        return distance;
+                    }
+                    else
+                    {
+                        return defaultDistance;
+                    }
+                }
+            }
+        }
         public static double Defaultlongitude
         {
             get

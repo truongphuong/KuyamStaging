@@ -59,7 +59,7 @@ namespace Kuyam.WebUI.Controllers
             var curLon = lon.HasValue ? lon.Value : ConfigManager.Defaultlongitude;
             if (categories != null && categories.Count > 0)
             {
-                ViewBag.ProfileCompanies = _homeService.GetCompaniesAtHomePage(curLat, curLon, categories[0].ServiceID);
+                ViewBag.ProfileCompanies = _homeService.GetCompaniesAtHomePage(curLat, curLon, categories[0].ServiceID, ConfigManager.DefaultDistance);
                 ViewBag.CategoryId = categories[0].ServiceID;
             }
             ViewBag.Lat = curLat;
@@ -78,7 +78,7 @@ namespace Kuyam.WebUI.Controllers
             ViewBag.Categories = categories;
             ViewBag.CategoryId = categoryId;
 
-            ViewBag.ProfileCompanies = _homeService.GetCompaniesAtHomePage(lat, lon, categoryId);
+            ViewBag.ProfileCompanies = _homeService.GetCompaniesAtHomePage(lat, lon, categoryId, ConfigManager.DefaultDistance);
 
             ViewBag.Lat = lat;
             ViewBag.Lon = lon;

@@ -19,6 +19,6 @@ namespace Kuyam.Domain.CategoryServices
         ///  Get list active categories 
         /// </summary>
         /// <returns></returns>
-        List<Service> GetActiveCategories();
+        List<Service> GetActiveCategories(string keySearch, double lat, double lon, double distance);
     }
 }

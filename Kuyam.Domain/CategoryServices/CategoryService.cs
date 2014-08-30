@@ -3,6 +3,7 @@ using Kuyam.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,10 +40,14 @@ namespace Kuyam.Domain.CategoryServices
         }
 
 
-        public List<Service> GetActiveCategories()
-        {            
-            var categories = _dbContext.SqlQuery<Service>("GetSequenceCategories");
-            return categories.ToList();
+        public List<Service> GetActiveCategories(string keySearch, double lat, double lon, double distance)
+        {
+            var categories = _dbContext.SqlQuery<Service>("GetSequenceCategories @KeySearch,@CurrentLat,@CurrentLong,@Distance", 
+                 new SqlParameter("KeySearch", keySearch),                 
+                 new SqlParameter("CurrentLat", lat),
+                 new SqlParameter("CurrentLong", lon),
+                 new SqlParameter("Distance", distance)).ToList();
+            return categories;
         }
     }
 }

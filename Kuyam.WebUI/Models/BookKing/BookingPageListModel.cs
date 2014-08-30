@@ -8,7 +8,11 @@ using System.Web;
 namespace Kuyam.WebUI.Models.BookKing
 {
     public class BookingPageListModel
-    {       
+    {
+        public BookingPageListModel()
+        {
+            locations = new List<CompanyGoogleMap>();            
+        }
         public bool IsLogin { get; set; }
         public int CategoryId { get; set; }
         public List<Service> Categories { get; set; }

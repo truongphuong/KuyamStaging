@@ -34,196 +34,199 @@
 
     </div>
 </div>
-@{
-    var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
-
-    <div class="row" id="results">
-
-        @foreach (CompanyProfileSearch profile in Model.PagedList)
+<div class="row" id="results">
+    @{
+        var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
+        if (Model.Categories != null && Model.Categories.Count > 0)
         {
-            var urlLogo = "/content/images/placeholder.png";
-            var seName = profile.GetSeName(profile.ProfileID);
-            string url = "https://kuyamqa1.apphb.com/" + "book/" + seName + "/availability";
-
-            if (!string.IsNullOrEmpty(profile.LogoMediaId))
+            foreach (CompanyProfileSearch profile in Model.PagedList)
             {
-                urlLogo = Types.KaturaDoman + "/p/811441/thumbnail/entry_id/" + profile.LogoMediaId + "/width/85/height/82";
+                var urlLogo = "/content/images/placeholder.png";
+                var seName = profile.GetSeName(profile.ProfileID);
+                string url = "https://kuyamqa1.apphb.com/" + "book/" + seName + "/availability";
 
-            }
-
-            string state = string.Empty;
-            if (!string.IsNullOrEmpty(profile.City) && !string.IsNullOrEmpty(profile.State))
-            {
-                if (!string.IsNullOrEmpty(profile.City) && profile.City.Length > 30)
+                if (!string.IsNullOrEmpty(profile.LogoMediaId))
                 {
-                    state = string.Format("{0}, {1}", UtilityHelper.TruncateAtWord(profile.City, 20), profile.State);
+                    urlLogo = Types.KaturaDoman + "/p/811441/thumbnail/entry_id/" + profile.LogoMediaId + "/width/85/height/82";
+
+                }
+
+                string state = string.Empty;
+                if (!string.IsNullOrEmpty(profile.City) && !string.IsNullOrEmpty(profile.State))
+                {
+                    if (!string.IsNullOrEmpty(profile.City) && profile.City.Length > 30)
+                    {
+                        state = string.Format("{0}, {1}", UtilityHelper.TruncateAtWord(profile.City, 20), profile.State);
+                    }
+                    else
+                    {
+                        state = string.Format("{0}, {1}", profile.City, profile.State);
+                    }
+
                 }
                 else
                 {
-                    state = string.Format("{0}, {1}", profile.City, profile.State);
-                }
-
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(profile.City) && profile.City.Length > 30)
-                {
-                    state = string.Format("{0}{1}", UtilityHelper.TruncateAtWord(profile.City, 30), profile.State);
-                }
-                else
-                {
-                    state = string.Format("{0}{1}", profile.City, profile.State);
-                }
-            }
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <div class="event-block @(profile.IsFeature?"event-featured":"") clearfix">
-                    <div class="avatar">
-                        <a href="@url" title=""><img alt="Avatar" src="@urlLogo"></a>
-                    </div>
-
-                    <div class="titles">
-                        <h3 class="iName"><a href="@url" title="@profile.Name">@UtilityHelper.TruncateAtWord(profile.Name, 14)</a></h3>
-                        <h4 class="iAddress">@state</h4>
-                    </div>
-
-                    <!-- remove code de test-->
-                    <div class="votes">
-                        @switch (profile.Rate.ToString())
-                        {
-                            case "0":
-                                {
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    break;
-                                }
-                            case "1":
-                                {
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    break;
-                                }
-                            case "2":
-                                {
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    break;
-                                }
-                            case "3":
-                                {
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    break;
-                                }
-                            case "4":
-                                {
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon gray-star"></span>
-                                    break;
-                                }
-                            case "5":
-                                {
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    <span class="vote-icon yellow-star"></span>
-                                    break;
-                                }
-                        }
-
-                        <span class="total-review">
-
-                            (@profile.TotalReviews reviews)
-
-                        </span>
-                        @if (Model.IsLogin)
-                        {
-
-                            if (profile.IsFeature)
-                            {
-                                <span class="vote-icon icon-like"></span>
-                            }
-                            else
-                            {
-                                <span class="vote-icon icon-unlike"></span>
-                            }
-                        }
-                    </div>
-
-                    <p class="shortDes">
-                        @(profile.CompanyAvailableTimeSlots.DayAvaiable):
-                    </p>
-                    <div class="group_link">
-                        @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
-                        {
-                            foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
-                            {
-                                //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
-
-                                string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
-                                    + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
-                                if (profile.CompanyAvailableTimeSlots.IsRederect)
-                                {
-                                    //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                    urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
-                                }
-                                <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
-                            }
-
-                            if (profile.CompanyAvailableTimeSlots.IsShowMore)
-                            {
-                                // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
-                                var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
-                                if (profile.CompanyAvailableTimeSlots.IsRederect)
-                                {
-                                    //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                    urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
-                                }
-                                <a class="bg-green" href="@urlShowMore" title="more">more</a>
-
-                            }
-                        }
-
-                    </div>
-
-                    @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+                    if (!string.IsNullOrEmpty(profile.City) && profile.City.Length > 30)
                     {
-                        var companyEvent = profile.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
-                        if ((profile.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
-                        {
-                            <div class="sale"><img alt="" src="/content/images/icons/icon_offer.png" width="70" /></div>
-                        }
+                        state = string.Format("{0}{1}", UtilityHelper.TruncateAtWord(profile.City, 30), profile.State);
                     }
-                    else if (profile.IsFeature)
+                    else
                     {
-                        <div class="sale"><img alt="" src="/content/images/icons/icon_featured.png" width="70" /></div>
+                        state = string.Format("{0}{1}", profile.City, profile.State);
                     }
-                    <div class="mark desktop">@profile.IndexId</div>
+                }
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="event-block @(profile.IsFeature?"event-featured":"") clearfix">
+                        <div class="avatar">
+                            <a href="@url" title=""><img alt="Avatar" src="@urlLogo"></a>
+                        </div>
+
+                        <div class="titles">
+                            <h3 class="iName"><a href="@url" title="@profile.Name">@UtilityHelper.TruncateAtWord(profile.Name, 14)</a></h3>
+                            <h4 class="iAddress">@state</h4>
+                        </div>
+
+                        <!-- remove code de test-->
+                        <div class="votes">
+                            @switch (profile.Rate.ToString())
+                            {
+                                case "0":
+                                    {
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        break;
+                                    }
+                                case "1":
+                                    {
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        break;
+                                    }
+                                case "2":
+                                    {
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        break;
+                                    }
+                                case "3":
+                                    {
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        break;
+                                    }
+                                case "4":
+                                    {
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon gray-star"></span>
+                                        break;
+                                    }
+                                case "5":
+                                    {
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        <span class="vote-icon yellow-star"></span>
+                                        break;
+                                    }
+                            }
+
+                            <span class="total-review">
+
+                                (@profile.TotalReviews reviews)
+
+                            </span>
+                            @if (Model.IsLogin)
+                            {
+
+                                if (profile.IsFeature)
+                                {
+                                    <span class="vote-icon icon-like"></span>
+                                }
+                                else
+                                {
+                                    <span class="vote-icon icon-unlike"></span>
+                                }
+                            }
+                        </div>
+
+                        <p class="shortDes">
+                            @(profile.CompanyAvailableTimeSlots.DayAvaiable):
+                        </p>
+                        <div class="group_link">
+                            @if (profile.CompanyAvailableTimeSlots.CompanyTimeSlots.Any())
+                            {
+                                foreach (var timeSlot in profile.CompanyAvailableTimeSlots.CompanyTimeSlots)
+                                {
+                                    //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
+
+                                    string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                        + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
+                                    if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                    {
+                                        //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                        urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                    }
+                                    <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
+                                }
+
+                                if (profile.CompanyAvailableTimeSlots.IsShowMore)
+                                {
+                                    // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
+                                    var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
+                                    if (profile.CompanyAvailableTimeSlots.IsRederect)
+                                    {
+                                        //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
+                                        urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                    }
+                                    <a class="bg-green" href="@urlShowMore" title="more">more</a>
+
+                                }
+                            }
+
+                        </div>
+
+                        @if (profile.CompanyEvents.Any(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)))
+                        {
+                            var companyEvent = profile.CompanyEvents.Where(x => x.StartDate.Value.AddDays(-3) <= pstNowTime && x.EndDate >= pstNowTime.AddDays(-1)).First();
+                            if ((profile.HasClassBooking && companyEvent.ClassEventsNumber > 0) || (companyEvent.CompanyServiceEventsNumber > 0))
+                            {
+                                <div class="sale"><img alt="" src="/content/images/icons/icon_offer.png" width="70" /></div>
+                            }
+                        }
+                        else if (profile.IsFeature)
+                        {
+                            <div class="sale"><img alt="" src="/content/images/icons/icon_featured.png" width="70" /></div>
+                        }
+                        <div class="mark desktop">@profile.IndexId</div>
+                    </div>
                 </div>
-            </div>
+            }
+
         }
-    </div>
-}
+    }
+
+</div>
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-        @if (Model.PagedList.TotalItemCount > 10)
+        @if (Model.PagedList != null && Model.PagedList.TotalItemCount > 10)
         {
-            @Html.PagedListPager(Model.PagedList, page => Url.Action("Index", "book", new { page = page, key = Model.SearchKey, categoryId = Model.CategoryId, lat = Model.Lat, lon = Model.Lon }),
+        @Html.PagedListPager(Model.PagedList, page => Url.Action("Index", "book", new { page = page, key = Model.SearchKey, categoryId = Model.CategoryId, lat = Model.Lat, lon = Model.Lon }),
      new PagedListRenderOptions
       {
 
@@ -248,9 +251,9 @@
 
       })
 
-            <div id="loadmore" class="iphone">
-                <a class="book-more" title="" href="#">tap to see more<br /> <span class="icon-angle-down"></span></a>
-            </div>
+        <div id="loadmore" class="iphone">
+            <a class="book-more" title="" href="#">tap to see more<br /> <span class="icon-angle-down"></span></a>
+        </div>
 
         }
     </div>
@@ -270,10 +273,12 @@
                 url: $(this).attr("href")
             })
             .success(function (result) {
+
                 $('#companyInfoBar').html(result.content);
                 loadmap('@Model.Lat', '@Model.Lon', result.locations);
-                $("html, body").animate({ scrollTop: $("#results").offset().top-500}, 500);
+                $("html, body").animate({ scrollTop: $("#results").offset().top - 500 }, 500);
                 $('.loading').hide();
+
             }).error(function (error) {
                 $('.loading').hide();
             });
@@ -298,8 +303,6 @@
         getListCompanyBykey(lat, lon, key, categoryId);
     });
 </script>
-
-
 <script>
 
     var pageIndex = 2;
