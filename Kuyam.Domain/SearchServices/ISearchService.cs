@@ -11,7 +11,6 @@ namespace Kuyam.Domain.SearchServices
     {
         List<CompanyProfileSearch> CompanySearchForWeb(
             out int totalRecords ,
-            out int categoryActive,
             List<string> categoriesId,
             string keySearch = null,
             int? categoryId = null,
