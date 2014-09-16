@@ -1,0 +1,140 @@
+﻿<div class="modal fade modal-form modal-login" id="modal-login" onkeypress="loginKeyPress(event);" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">welcome back!</h3>
+            </div>
+            <div class="modal-body">
+                <a title=""  href="@Url.Action("LogtoFacebook", "Account", new { returnUrl = "/Account/LoginByFacebook" })" class="btn-blue btn-facebook">login with facebook</a>
+                <div class="form-or">
+                    <hr />
+                    <span>or</span>
+                </div>
+                <fieldset>
+                    <input class="form-control" type="text" id="username" onblur="if (this.value == '') { this.value = 'email'; }" onfocus="if (this.value == 'email') { this.value = ''; }" value="email" />
+                    <input class="form-control" type="password" id="password" onblur="if (this.value == '') { this.value = 'password'; }" onfocus="if (this.value == 'password') { this.value = ''; }" value="password" />
+                    <div class="text-right link-form"><a class="link-forgot" title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-login,#modal-forgot">forgot password?</a></div>
+                    <button type="button" id="btnLogin" onclick="loginEvent();"  class="btn-green btn-form btn-login">login</button>
+                </fieldset>
+            </div>
+            <div id="loginError" style="display: none">
+                <span style="color: Red;">
+                    the user name or password is invalid
+                    <br />
+                    please try again.
+                </span>
+            </div>
+            <div class="modal-footer">
+                <hr />
+                <div class="text-right link-form">don't have an account? <a class="link-create" title="" data-target="#modal-sign-up" data-toggle="modal" href="javascript:void(0);">create account now</a></div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+  <!-- .modal-forgot -->
+<div class="modal fade modal-form modal-forgot" id="modal-forgot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">forgot password?</h3>
+                <h4>enter your email to reset password</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <input class="form-control" id="forgotEmail" type="text" onblur="if (this.value == '') { this.value = 'email'; }" onfocus="if (this.value == 'email') { this.value = ''; }" value="email" />
+                    <button type="button" class="btn-green btn-form btn-continue" onclick="forgotPassword()" >continue</button>
+                </fieldset>
+            </div>
+            <div class="errorarea">
+                <div id="forgotPass" style="display:none">
+                    &nbsp;check your e-mail for a reset password.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right link-form">don't have an account? <a class="link-create" title="" data-target="#modal-sign-up" data-toggle="modal" href="javascript:void(0);">create account now</a></div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /.modal-forgot -->
+
+<!-- .modal-confirm -->
+<div class="modal fade modal-form modal-confirm" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">check your mail</h3>
+                <h4>we send you an email for you to<br /> reset your password. follow the<br /> link included in the email.</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right link-form"><a class="link-login" title="" data-target="#modal-login" data-toggle="modal" href="javascript:void(0);">back to login</a></div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /.modal-confirm -->
+
+<script>
+   
+    function loginEvent()
+    {        
+        login();
+    }
+
+    function loginKeyPress(e)
+    {        
+        var kCode = e.keyCode || e.charCode;
+        if (kCode == 13) {
+            
+            login();
+            return false;
+        }
+    }
+
+    function forgotPassword() {
+        $('#forgotPass').hide();        
+
+        var email = $('#forgotEmail').val();
+        var loginParameters = { email: email };
+        var flag = true;
+
+        var reemail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+        if (!reemail.test(email) || email == '') {
+            $('#forgotPass').show();
+            return false;
+        }
+        $('#loginform #imgLoaderContact1').show();
+        $('#lightBox').css('opacity', '0.6').fadeIn(200);
+        if (flag) {
+            flag = false;
+            $.ajax(
+            {
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(loginParameters),
+                dataType: 'html',
+                url: '/Account/ForgotPassword/'
+            })
+            .success(function (result) {
+                if (result == 'false') {
+                    $('#forgotPass').show();
+                    flag = true;
+                } else {
+                    $('#modal-confirm').modal('show');
+                   $('#modal-forgot').modal('hide');
+                    
+                    
+                }
+            })
+            .error(function (error) {
+                flag = true;
+            })
+        }
+    }
+
+</script>

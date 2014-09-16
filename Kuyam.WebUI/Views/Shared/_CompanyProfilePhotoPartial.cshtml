@@ -1,0 +1,21 @@
+﻿<script type="text/javascript" src="@Url.Content("~/Content/gallery/galleria-1.2.9.js")"></script>
+<div class="photo-tab hidden-xs">
+    <header class="section-header">
+        <h2 class="clearfix">
+            photo:
+            <a title="" href="javascript:void(0)" ng-click="addToFavorite();" ng-show="!favorite" class="link-favorite">
+                <span class="icon-unlike"></span> add to favorites
+            </a>
+            <a title="" href="javascript:void(0);" ng-click="removeFavorite()" class="link-favorite" ng-show="favorite">
+                <span class="icon-like"></span> favorites
+            </a>
+        </h2>
+    </header>    
+    <!-- -->
+    <div id="galleria" style="height: 470px;">
+        <a ng-href="https://cdnsecakmi.kaltura.com/p/801372/thumbnail/entry_id/{{item}}/width/910/height/400" ng-repeat="item in ImageIds">
+            <img ng-src="https://cdnsecakmi.kaltura.com/p/811441/thumbnail/entry_id/{{item}}/height/50" alt="photo" />
+        </a>
+    </div>
+    <!-- -->    
+</div>

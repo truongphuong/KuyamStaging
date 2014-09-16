@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kuyam.Domain.Models;
 
 namespace Kuyam.Domain
 {
@@ -41,6 +42,8 @@ namespace Kuyam.Domain
         List<AppointmentBusyTime> GetAppoinmentBusyTimByEmployeeId(int profileId);
         AppointmentTemp GetAppoinmentTempsById(int id);
         List<Appointment> GetAppoinmentsByEmployeeIdForIP(int employeeId, DateTime startDate, DateTime endDate);
+        List<Rating> GetRatingsByProfileId(int profileId);
+        List<RatingModel> GetRatingByCompanyProfile(int companyProfileId);
         List<Rating> GetRatingListByProfileID(int profileID, int pageIndex, int pageSize, out int totalRecord);
         List<Appointment> GetAppoinmentsByCustId(int custID, DateTime startDate, DateTime endDate);
         List<PaymentMethod> GetPaymentMethodByProfileId(int profileId);

@@ -46,7 +46,7 @@
 .searchInput{padding-top:7px;}
 .searchInput input[type="text"]{border-width:1px;border-style:solid;border-color:#2D2D2D;background:#424242;width:215px;padding-bottom:6px;padding-top:6px;padding-left:35px;float:right;color:#fff;font-family:asap, sans-serif;}
 .searchImage a{float:right;position:relative;left:60px;}
-.icon-list{width:28px; height:24px;display:inline-block;background:url(images/icons/icon-list.jpg) no-repeat;position:relative;left:89px;top:2px;}
+.icon-list{width:28px; height:24px;display:inline-block;background:url(../content/images/icons/icon-list.jpg) no-repeat;position:relative;left:89px;top:2px;}
 
 .logoKyuam ,.topSearch{padding-top:25px;}
 
@@ -67,9 +67,9 @@
 
 .bottomContent{background:#2a2a2a;padding-bottom:30px;padding-top:70px;}
 .bottomContent p{color:#777777;font-size:13px;font-weight:400;line-height:21px;margin:0;margin-bottom:10px;font-family:open-sans, sans-serif;}
-.bottomContent p .address{margin:0;padding:2px 12px 2px 31px;background:url(images/icons/icon_location.png) no-repeat left 3px;display:block;}
-.bottomContent p .phone{margin:0;padding:2px 12px 2px 31px;background:url(/images/icons/icon_phone.png) no-repeat left 3px;display:block;}
-.bottomContent p .mailto{margin:0;padding:2px 12px 2px 31px;background:url(images/icons/icon_email.png) no-repeat left 3px;display:block;text-decoration:none;color:#777;}
+.bottomContent p .address{margin:0;padding:2px 12px 2px 31px;background:url(../content/images/icons/icon_location.png) no-repeat left 3px;display:block;}
+.bottomContent p .phone{margin:0;padding:2px 12px 2px 31px;background:url(../content/images/icons/icon_phone.png) no-repeat left 3px;display:block;}
+.bottomContent p .mailto{margin:0;padding:2px 12px 2px 31px;background:url(../content/images/icons/icon_email.png) no-repeat left 3px;display:block;text-decoration:none;color:#777;}
 .bottomContent .form label{display:block;line-height:16px;color:#C4C4C4;font-size:16px;font-weight:400;font-family:open-sans, sans-serif;}
 .bottomContent .form input[type=text]{margin-bottom:12px;width:95%;min-height:14px;padding:6px;color:#6B6C6A;font-size:13px;font-style:italic;font-weight:400;margin-top:4px;border-radius:0;background:#2a2a2a;border:1px solid #595959;font-family:open-sans, sans-serif;}
 .bottomContent .form input[type=text]:hover{background:#fff;color:#4f4f4f;font-style:normal;}
@@ -95,7 +95,7 @@
 .item_container .one-third a img:hover{opacity:0.8;}
 .items_container .eleven.columns{margin-bottom:50px;}
 
-.topContent h2{margin:0;padding:2px 65px 5px 0;background:url(images/icons/arrow.jpg) no-repeat right 9px;display:inline-block;line-height:38px;font-size:32px;font-weight:700;color:#555;font-family:asap, sans-serif;}
+.topContent h2{margin:0;padding:2px 65px 5px 0;background:url(../content/images/icons/arrow.jpg) no-repeat right 9px;display:inline-block;line-height:38px;font-size:32px;font-weight:700;color:#555;font-family:asap, sans-serif;}
 .topContent{padding-top:90px;padding-bottom:10px;}
 .topContent p{color:#555;line-height:24px;font-size:20px;font-weight:400;font-family:open-sans, sans-serif;}
 
@@ -107,13 +107,13 @@
 .iphone-android p{font-size:32px;line-height:38px;font-weight:400;color:#363636;margin-bottom:0;font-family:bebas-neue, sans-serif;padding-right:5px;}
 .iphone-android p.phone{color:#88B048;}
 .iphone-android .linkStore{padding-top:13px;}
-.iphone-android .linkStore img{margin-right:5px;width:47%;}
+.iphone-android .linkStore img{margin-right:5px;}
 
 .container .two-thirds.group_image{padding-bottom:90px;}
 
 .tab-list{margin:0 0 18px;padding:0;list-style:none;}
 .tab-list li{display:inline-block;}
-.tab-list li a{color:#474747;padding:0 19px;font:400 16px/22px open-sans, sans-serif;text-decoration:none;}
+.tab-list li a{color:#474747;padding:0 22px;font:400 16px/22px open-sans, sans-serif;text-decoration:none;}
 .tab-list li.active{background:#87B140;}
 .tab-list li.active a{color:#fff;}
 
@@ -134,7 +134,7 @@
 .event-block .desContent .iAddress{color:#96BE3D;font-size:14px;font-weight:400;line-height:17px;padding:0;font-family:open-sans, sans-serif;}
 .event-block .desContent .shortDes{display:block;color:#777777;font-size:13px;font-weight:400;line-height:18px;text-align:justify;padding:0;margin:0;width:93%;height:38px;overflow:hidden;margin-bottom:10px;font-family:open-sans, sans-serif;}
 .event-block .desContent .titles{width:145px;height:40px;display:inline-block;overflow:hidden;}
-.event-block .desContent .sale{position:absolute;width:57px;height:58px;background:url(images/sale_ribbon.png) no-repeat;top:-5px;right:-6px;}
+.event-block .desContent .sale{position:absolute;width:57px;height:58px;background:url(../images/sale_ribbon.png) no-repeat;top:-5px;right:-6px;}
 .event-block .desContent .group_link a{width:65px;display:inline-block;text-align:center;text-decoration:none;background:#8c8c8c;color:#fff;font-size:12px;font-weight:400;line-height:22px;margin-right:3px;font-family:open-sans, sans-serif;}
 .event-block .desContent .votes{display:inline-block;vertical-align:top;}
 .event-block .desContent .votes span{display:inline-block;margin-right:3px;}
@@ -158,8 +158,8 @@
 
 .slide_welcome{position:relative;}
 #slide_welcome.rslides{margin-bottom:90px;}
-#slide_welcome.rslides li{height:196px;background:no-repeat center center;background-size:contain;margin:0;text-align:center;}
-#slide_welcome.rslides li.iphone-android img{width:40%;display:inline-block;float:none;}
+#slide_welcome.rslides li{height:196px;background:no-repeat center center;background-size:cover;margin:0;text-align:center;}
+#slide_welcome.rslides li.iphone-android img{width:auto;display:inline-block;float:none;}
 
 .rslides_tabs{display:none;left:10px;text-align:center;}
 .rslides_tabs li a{height:8px;width:30px;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;background:#dddddd;}
@@ -240,10 +240,6 @@
 	.rslides_tabs{display:block;}
 	
 	.lineBottom .descriptionTitle p{text-align:center;}
-
-    #lbcopyright {padding-left:15px;padding-right:15px;}
-
-    .item_container .one-third a img {width:95%;}
 }
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */

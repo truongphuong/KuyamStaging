@@ -50,7 +50,7 @@ namespace Kuyam.WebUI.Controllers
 
         public ActionResult Index(double? lat, double? lon)
         {
-            var model = new IndexModel();           
+            var model = new IndexModel();
             model.Categories = _categoryService.GetSequenceCategories();
             var categories = model.Categories;
             ViewBag.Categories = categories;

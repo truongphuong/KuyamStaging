@@ -4,19 +4,13 @@ var activetab = 0;
 var kalturaPartnerId = '';
 var redirectUrl = '';
 
-function login(username, password) {
-    var email = $('#loginform #username').val();
-    var pass = $('#loginform #password').val();
-    $('#loginform #loginError').hide();
-    //alert(email);
-    //alert(pass);
-    //if (typeof (username) != 'undefined' && typeof (password) != 'undefined') {
-    //    email = username;
-    //    pass = password;
-    //}
-
-    if (email == '' || email == "enter e-mail address" || pass == '') {
-        $('#loginform #loginError').show();
+function login(username, password) {    
+    var email = $('#modal-login #username').val();
+    var pass = $('#modal-login #password').val();    
+   
+    $('#modal-login #loginError').hide();   
+    if (email == '' || email == "email" || pass == 'password' || pass =='') {
+        $('#modal-login #loginError').show();
         return false;
     }
 
@@ -33,33 +27,13 @@ function login(username, password) {
         })
         .success(function (result) {
             if (result.status == "true") {
-                hideDialog("loginpopup");
-                $.get('/Home/InitAppointmentReview', function (response) {
-                    if (response == 'null') {
-                        var param = getQueryString();
-                        var url = param["returnurl"];
-                        var link = "";
-                        if (typeof url != 'undefined')
-                            link = url;
-                        else
-                            link = redirectUrl;
-
-                        if (typeof link == 'undefined' || link == null || link == "") {
-                            location.reload();
-                        } else {
-
-                            window.location.href = link;
-                        }
-                    } else {
-                        $('#popupreviewappt').html(response);
-                        showpopup("popupreviewappt");
-                    }
-                });
+                $('#modal-login').modal('hide');
+                window.location.href = "./book";
             }
             else {
-                $('#loginform  #loginError').html("<span style='color: Red;'>" + result.message + "</span>");
-                $('#loginform  #loginError').show();
-                $('#loginform  #imgLoaderContact1').hide();
+                $('#modal-login  #loginError').html("<span style='color: Red;'>" + result.message + "</span>");
+                $('#modal-login  #loginError').show();
+                
 
             }
         })
@@ -68,7 +42,7 @@ function login(username, password) {
         })
 }
 
-function logout() {
+function logout() {    
     $.ajax(
     {
         type: 'POST',
@@ -363,25 +337,10 @@ Date.prototype.format = function (mask, utc) {
     return dateFormat(this, mask, utc);
 };
 
-function domScript() {
-    var scrpt = document.createElement('script');
-    scrpt.src = '/Scripts/js/updatescript.js';
-    $('body').append(scrpt);
-}
-
 function getTimezoneName() {
     timezone = jstz.determine();
     return timezone.name();
 }
-
-// Add html element to show "page is loading" when post ajax
-$(document).ready(function () {
-    if ($("#lightBox").length == 0)
-        $('body').append('<div id="lightBox" class="lightBox z499"> </div>');
-    if ($("#ajaxBusy").length == 0)
-        $('body').append('<img id="ajaxBusy" src="/Images/progress.gif" class="waiting" style="z-index:9999" alt="loading..." />');
-
-});
 
 // Listen action post of ajax to show "page is loading". To use this, you must declare: window.isUseDefaultAjaxHandle = true;
 $(document).ajaxStart(function () {
@@ -401,23 +360,22 @@ $(document).ajaxStart(function () {
 
 // Pause page
 function pageBusy() {
-    $('#lightBox').css({ 'opacity': '0.15', 'z-index': '9998' }).fadeIn(200);
-    $('#ajaxBusy').css({ 'z-index': '100000' }).show();
+    $('#lightBox').fadeIn(200);
+    $('#loading').show();
 }
 
 // Active page
 function pageActive() {
-    $('#ajaxBusy').hide();
-    $('#lightBox').fadeOut(200);
-    $('#aptImgLoader').hide();
+    $('#loading').hide();
+    $('#lightBox').fadeOut(200);    
 }
 
 function showIconLoading() {
-    $('#ajaxBusy').show();
+    $('#loading').show();
 }
 
 function hideIconLoading() {
-    $('#ajaxBusy').hide();
+    $('#loading').hide();
 }
 
 var nextFunctionAfterAlert;
@@ -460,22 +418,3 @@ function showConfirmGuestMessage(message, nextfunction) {
     nextFunctionAfterAlert = nextfunction;
 }
 
-$(function () {
-    var url = $.url(window.location.href);
-    var returnUrl = url.param('ReturnUrl');
-    if (typeof returnUrl != 'undefined' && returnUrl != '')
-        redirectUrl = returnUrl;
-
-    $("a.connectFacebook, a.btnFBLogin").on("click", function (event) {
-        event.preventDefault();
-        var link = $(this).attr("href");
-        if (redirectUrl != "") {
-            if (link.indexOf('?') > 0)
-                link = link + "&redirectTo=" + redirectUrl;
-            else
-                link = link + "?redirectTo=" + redirectUrl;
-        }
-        window.location = link;
-        return false;
-    });
-});

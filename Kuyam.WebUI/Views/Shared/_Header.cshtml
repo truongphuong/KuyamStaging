@@ -1,4 +1,10 @@
-﻿<!-- .site-header -->
+﻿@using Kuyam.WebUI.Extension
+@using Kuyam.WebUI.Models
+@using Kuyam.Database;
+@using Kuyam.Domain;
+
+
+<!-- .site-header -->
 <header class="site-header navbar navbar-static-top bs-docs-nav navbar-fixed-top">
     <div class="container">
 
@@ -38,12 +44,37 @@
                 <li @(Request.RawUrl.ToLower().Contains("/blog") ? "class=active" : "")><a href="https://kuyamqa1.apphb.com" title="Blog">lifestyle blog</a><span class="desktop"></span></li>
                 <li class="desktop @(Request.RawUrl.ToLower().Contains("/howitwork") ? "active" : "")"><a href="https://kuyamqa1.apphb.com/home/howitworks_user" title="How it works">how it works</a><span class="desktop"></span></li>
                 <li class="iphone @(Request.RawUrl.ToLower().Contains("org") ? "active" : "")"><a href="http://kuyam.org/" title="kuyam.org">kuyam.org</a><span class="desktop"></span></li>
-                <li><a class="bg-green @(Request.RawUrl.ToLower().Contains("login") ? "active" : "")" href="JavaScript:void(0);" title="login">login</a><span class="desktop"></span></li>
-                <li><a class="bg-green @(Request.RawUrl.ToLower().Contains("signup") ? "active" : "")" href="JavaScript:void(0);" title="sign up">sign up</a><span class="desktop"></span></li>
+
+                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    Cust user = MySession.Cust;
+                    
+                    <li class="hidden-xs">
+                    	<a class="link-account" href="javascript:void(0);" title=""><span class="icon-user"></span>hi, @(UtilityHelper.TruncateText(user.FirstName, 15))<span class="icon-down"></span></a>                    
+                    </li>
+                }
+                else
+                {
+                    <li class="desktop"><a class="bg-green" title="login" data-target="#modal-login" data-toggle="modal" href="javascript:void(0);">login<span class="hidden-xs"></span></a></li>
+                <li class="desktop"><a class="bg-green" title="Sign up" data-target="#modal-sign-up" data-toggle="modal" href="javascript:void(0);">Sign up</a><span class="desktop"></span></li>
+               
+                }
+                 <li class="iphone"><a class="bg-green" href="#" title="log in">log in</a><span class="desktop"></span></li>
+                <li class="iphone"><a class="bg-green" href="#" title="sign up">sign up</a><span class="desktop"></span></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
 
+    </div>
+
+    <div id="nav-account" class="nav-account">
+        <dl class="container clearfix">
+            <dt class="hidden-xs text-right"><a href="#" title="">add company</a> <a href="#" title="">settings</a> | <a href="#" title="" class="link-sign-out">sign out</a></dt>
+            <dd class="active"><a href="favorites.html" title=""><span class="icon-favorites"></span>favorites<span class="icon-down"></span></a></dd>
+            <dd><a href="appointments.html" title=""><span class="icon-appointments"><span class="new-items">999</span></span>appointments<span class="icon-down"></span></a></dd>
+            <dd><a href="receipt.html" title=""><span class="icon-receipt"></span>receipt history<span class="icon-down"></span></a></dd>
+            <dt class="hidden-xs text-right"><a class="link-account" href="#" title="">close</a></dt>
+        </dl>
     </div>
 </header>
 <!-- /.site-header -->
@@ -86,6 +117,10 @@
             }
         });
 
+        $('.link-sign-out').click(function (e) {
+            logout();
+        })
+
     });
 
 
@@ -98,5 +133,37 @@
         self.location.href = url;
         return false;
     }
+
+    //script to show user profile
+    $(function () {
+        var temp = 0;
+        var widthScreen;
+        $(window).resize(function () {
+            widthScreen = $(window).width();
+            if (widthScreen < 768 && temp == 1) {
+                $(".site-banner").animate({ "height": "-=186px" }, 500);
+                $("#nav-account").hide();
+                temp = 0;
+            }
+        });
+
+        function showNavAccount() {
+            if (temp == 0) {
+                $(".site-banner").animate({ "height": "+=186px" }, 500);
+                temp = 1;
+            } else {
+                $(".site-banner").animate({ "height": "-=186px" }, 500);
+                temp = 0;
+            }
+
+            $("#nav-account").toggle('blind', 500);
+        }
+
+        $(".link-account").click(function () {
+            showNavAccount();
+        });
+    });
+
+    //end script to show user profile
 
 </script>

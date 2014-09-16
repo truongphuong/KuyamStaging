@@ -1,0 +1,60 @@
+﻿<!-- .site-header -->
+<header class="site-header navbar navbar-static-top bs-docs-nav navbar-fixed-top">
+    <div class="container">
+
+        <!-- .navbar-header -->
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-target="#bs-navbar-collapse" data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="logo" title="" href="/"><img alt="kuyam" src="@Url.Content("~/content/images/logo_kuyam.png")" /></a>
+            <div class="system-date desktop">
+                <p id="datetitle">Thursday, July 31 2014</p>
+            </div>
+        </div>
+
+        <div class="company-info hidden-xs">
+            <h1><a class="btnLiveChat @(Kuyam.WebUI.Models.MySession.ShowLiveChat?"on":"off")" href="JavaScript:void(0);" title="live chat"></a>
+              Amy's Hair Salon</h1>
+            <div class="clear"></div>
+            <ul class="clearfix">
+                <li>spa</li>
+                <li>nails</li>
+                <li>blowout</li>
+            </ul>
+            <address>Santa Monica, CA</address>
+            <div class="clear"></div>
+        </div>      
+           
+        <!-- /.navbar-header -->   
+            
+        <!-- .navbar-collapse -->
+        <div class="collapse navbar-collapse menuList" id="bs-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right navMenu hidden-sm hidden-md hidden-lg">
+                <li class="active"><a href="home.html" title="Home">home<span class="hidden-xs"></span></a></li>
+                <li class="hidden-sm hidden-md hidden-lg"><a href="https://kuyamstagingvns.apphb.com/home/howitworks_user" title="How it works">how it works<span class="hidden-xs"></span></a></li>
+                <li><a href="book.html" title="Book">book<span class="hidden-xs"></span></a></li>
+                <li><a href="http://beautify-la.com/" title="Beautify LA">Beautify LA<span class="hidden-xs"></span></a></li>
+                <li><a href="https://kuyamqa1.apphb.com" title="lifestyle blog">lifestyle blog<span class="hidden-xs"></span></a></li>
+                <li class="hidden-sm hidden-md hidden-lg"><a href="http://kuyam.org/" title="kuyam.org">kuyam.org<span class="hidden-xs"></span></a></li>
+                <li class="hidden-xs"><a href="https://kuyamstagingvns.apphb.com/home/howitworks_user" title="How it works">how it works<span class="hidden-xs"></span></a></li>
+                <li><a class="bg-green" href="Javascript:void(0);" title="login">login<span class="hidden-xs"></span></a></li>
+                <li><a class="bg-green" href="Javascript:void(0);" title="sign up">sign up<span class="hidden-xs"></span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+
+    </div>
+</header>
+
+<!-- /.site-header -->
+
+<script type="text/javascript">
+
+    var stringdate = $.datepicker.formatDate('DD, MM dd yy', new Date());
+    $("#datetitle").html(stringdate);
+    
+</script>

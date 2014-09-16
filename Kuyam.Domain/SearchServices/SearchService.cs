@@ -1,5 +1,6 @@
 ﻿using Kuyam.Database;
 using Kuyam.Domain.PagedList;
+using Kuyam.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,11 +18,17 @@ namespace Kuyam.Domain.SearchServices
         #region Fields
         private readonly DbContext _dbContext;
         private readonly CompanySearchService _companySearchService;
+        private readonly IRepository<EmployeeService> _employeeServiceRepository;
+        private readonly IRepository<CompanyEmployee> _companyEmployeeRepository;
         #endregion
-        public SearchService(DbContext dbContext, CompanySearchService companySearchService)
+        public SearchService(DbContext dbContext, CompanySearchService companySearchService,
+            IRepository<CompanyEmployee> companyEmployeeRepository,
+            IRepository<EmployeeService> employeeServiceRepository)
         {
             this._dbContext = dbContext;
             this._companySearchService = companySearchService;
+            this._companyEmployeeRepository = companyEmployeeRepository;
+            this._employeeServiceRepository = employeeServiceRepository;
         }
 
         public List<CompanyProfileSearch> CompanySearchForWeb(
@@ -73,6 +80,37 @@ namespace Kuyam.Domain.SearchServices
             }
 
             return list;
+        }
+
+
+        public ProfileCompanyDetails GetCompanyProfileDetials(int profileId, int categoryId = 0)
+        {
+            var result = _dbContext.SqlQuery<ProfileCompanyDetails>("GetCompanyProfileDetials @ProfileID,@CategoryId",
+                new SqlParameter("ProfileID", profileId),
+                new SqlParameter("CategoryId", categoryId));
+
+            return result.FirstOrDefault();
+
+        }
+
+        public List<CompanyEmployee> GetEmployeeByServiceCompanyId(int serviceComapanyId)
+        {
+            var query = from ce in _companyEmployeeRepository.Table
+                        join ehs in _employeeServiceRepository.Table on ce.EmployeeID equals ehs.CompanyEmployeeID
+                        where ehs.ServiceCompanyID == serviceComapanyId                       
+                        orderby ce.EmployeeName      
+                        select ce;
+            return query.Distinct().ToList();
+        }
+
+        public List<ServiceCompany> GetServiceCompanyByCategoryId(int profileId, int categoryId)
+        {
+            var result = _dbContext.SqlQuery<ServiceCompany>("GetServiceCompanyByCategoryId @ProfileID,@CategoryId",
+                new SqlParameter("ProfileID", profileId),
+                new SqlParameter("CategoryId", categoryId));
+
+            return result.ToList();
+
         }
     }
 }

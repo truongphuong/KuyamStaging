@@ -21,6 +21,7 @@ namespace Kuyam.WebUI.Models
             ProfileId = 0;
             this.ProfileCompany = new ProfileCompany();
             this.MediaCompanies = new List<Medium>();
+            this.ProfileCompanyDetails = new ProfileCompanyDetails();
         }
         public int ProfileId { get; set; }
         public string CompanyName { get; set; }
@@ -41,6 +42,8 @@ namespace Kuyam.WebUI.Models
         public List<Medium> MediaCompanies { get; set; }
         public MetaTagExtension MetaTagExtension { get; set; }
         public ProfileCompany ProfileCompany { get; set; }
+        public ProfileCompanyDetails ProfileCompanyDetails { get; set; }
+        public string CompanyJsionData { get; set; }
         public CompanyService GetServices(int serviceID)
         {
             CompanyService companyService = ProfileCompany.GetServiceByServiceID(serviceID);

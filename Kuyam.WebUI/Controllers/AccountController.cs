@@ -32,7 +32,7 @@ namespace Kuyam.WebUI.Controllers
         public AccountController(IFormsAuthenticationService formsService,
             IMembershipService membershipService,
             AdminService adminService,
-            EmailSender emailSender, 
+            EmailSender emailSender,
             CustService custService,
             CompanyProfileService companyProfileService,
             IAppointmentService appointmentService)
@@ -635,7 +635,7 @@ namespace Kuyam.WebUI.Controllers
                     throw new Exception(AccountValidation.ErrorCodeToString(createStatus));
                 }
 
-                bool zipok = DAL.VerifyZipCode(model.ZipCode);
+                //bool zipok = DAL.VerifyZipCode(model.ZipCode);
 
                 model.CompanyName = string.Format("{0}'s company", model.FirstName);
                 if (model.Birthday == DateTime.MinValue)
@@ -775,7 +775,7 @@ namespace Kuyam.WebUI.Controllers
 
             MySession.RegisterModel = null;
 
-            return RedirectToAction("companysearch", "company");
+            return RedirectToAction("index", "book");
 
             //if (model.IsCompany)
             //{
@@ -1168,7 +1168,7 @@ namespace Kuyam.WebUI.Controllers
                 registerModel.UserName = registerModel.ContactEmail;
                 registerModel.TestKeyIsValid = true;
                 MySession.RegisterModel = registerModel;
-                return RedirectToAction("RegisterEmail");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
@@ -1245,6 +1245,125 @@ namespace Kuyam.WebUI.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+
+
+        [HttpPost]
+        public ActionResult SignUpNow()
+        {
+            string fname = Request.Params["fname"];
+            string lname = Request.Params["lname"];
+            string email = Request.Params["email"];
+            string password = Request.Params["pass"];
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            if (fname.Equals("Name") || email.Equals("E-mail address"))
+            {
+                result.Add("status", "0");
+                result.Add("message", "please input data");
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+
+            var cust = Cust.Load(email);
+
+            if (cust == null || !cust.GetRole.Contains("Guest"))
+            {
+                if (DAL.IsExistEmailAddress(email))
+                {
+                    result.Add("status", "0");
+                    result.Add("message", "this email has been used");
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                if (AccountHelper.InviteCodeCheckStatus(email))
+                {
+
+                    result.Add("status", "0");
+                    result.Add("message", "this email has been used");
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            try
+            {
+                if (MySession.RegisterModel == null)
+                    MySession.RegisterModel = new RegisterModel();
+
+                MySession.RegisterModel.UserName = email;
+                MySession.RegisterModel.FirstName = fname;
+                MySession.RegisterModel.LastName = lname;
+                MySession.RegisterModel.ContactEmail = email;
+                MySession.RegisterModel.Password = password;
+                MySession.RegisterModel.TestKeyIsValid = true;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex);
+            }
+            return SaveNewCust(MySession.RegisterModel);
+        }
+
+        [NonAction]
+        private ActionResult SaveNewCust(RegisterModel model)
+        {
+
+            //if no session, then restart at beginning
+            if (MySession.RegisterModel == null)
+                return RedirectToAction("Index", "Home");
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Book");
+            //a little hack, we're only storing in session on the last page.
+            //Maybe this was the wrong way to do this? Should break out into 
+            //multiple actions?
+            if (MySession.RegisterModel != null)
+            {
+                MySession.RegisterModel = null;
+            }
+                    
+            return CreateCustomer(model);
+         
+           
+            
+        }
+
+        [HttpPost]
+        public ActionResult SignUpFacebookNow()
+        {
+            string fname = Request.Params["fname"];
+            string lname = Request.Params["lname"];
+            string email = Request.Params["email"];
+            string facebookId = Request.Params["facebookId"];
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            if (fname.Equals("Name") || email.Equals("E-mail address"))
+            {
+                result.Add("status", "0");
+                result.Add("message", "please input data");
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+                       
+
+            try
+            {
+                if (MySession.RegisterModel == null)
+                    MySession.RegisterModel = new RegisterModel();
+
+                MySession.RegisterModel.UserName = email;
+                MySession.RegisterModel.FirstName = fname;
+                MySession.RegisterModel.LastName = lname;
+                MySession.RegisterModel.ContactEmail = email;
+                MySession.RegisterModel.Password = Guid.NewGuid().ToString();
+                MySession.RegisterModel.IsFacebookRegister = true;
+                MySession.RegisterModel.FacebookUserId = facebookId;
+                MySession.RegisterModel.TestKeyIsValid = true;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex);
+            }
+            return SaveNewCust(MySession.RegisterModel);
+        }
+        
 
         #endregion
     }

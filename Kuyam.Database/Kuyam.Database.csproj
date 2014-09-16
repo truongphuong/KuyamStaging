@@ -67,9 +67,6 @@
       <HintPath>..\Kuyam.Bin\M2.Util.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NLog">
-      <HintPath>..\..\Kuyam-Website-WebUI\packages\NLog.2.0.1.2\lib\net40\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -224,6 +221,7 @@
     <Compile Include="CategoryFeaturedHotel.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CompanyEmployeeXml.cs" />
     <Compile Include="CompanyGoogleMap.cs" />
     <Compile Include="EventDTO.cs" />
     <Compile Include="EventsXml.cs" />
@@ -239,6 +237,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProfileCompanyDetails.cs" />
+    <Compile Include="ServiceCompanyXml.cs" />
+    <Compile Include="ServiceXml.cs" />
     <Compile Include="TimeSlots.cs" />
     <Compile Include="CompanyEmployee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -551,6 +552,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kuyam.Utility\Kuyam.Utility.csproj">
+      <Project>{d92d0e86-f4f9-4b82-b5c5-e4c62e87d730}</Project>
+      <Name>Kuyam.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

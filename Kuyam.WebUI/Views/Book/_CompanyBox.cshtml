@@ -12,20 +12,17 @@
         <div class="category-list">
             <!-- .tab-list-->
             <ul class="tab-list desktop clearfix">
-                @if (Model.Categories != null)
+                @foreach (Service category in Model.Categories)
                 {
-                    foreach (Service category in Model.Categories)
+                    if (category.ServiceID == (int)Model.CategoryId)
                     {
-                        if (category.ServiceID == (int)Model.CategoryId)
-                        {
-                            <li class="active"><a href="#" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="#" class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</a></li>
-                        }
-
+                        <li ><button class="categoryLnk active" categoryid="@category.ServiceID">@category.ServiceName</button></li>
                     }
+                    else
+                    {
+                        <li><button class="categoryLnk" categoryid="@category.ServiceID">@category.ServiceName</button></li>
+                    }
+
                 }
             </ul>
             <!-- /.tab-list-->
@@ -46,7 +43,7 @@
             {
                 var urlLogo = "/content/images/placeholder.png";
                 var seName = profile.GetSeName(profile.ProfileID);
-                string url = "https://kuyamqa1.apphb.com/" + "book/" + seName + "/availability";
+                string url = "/book/" + seName ;
 
                 if (!string.IsNullOrEmpty(profile.LogoMediaId))
                 {
@@ -157,7 +154,7 @@
                             @if (Model.IsLogin)
                             {
 
-                                if (profile.IsFeature)
+                                if (profile.IsUserFavorite)
                                 {
                                     <span class="vote-icon icon-like"></span>
                                 }
@@ -178,12 +175,12 @@
                                 {
                                     //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
 
-                                    string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                    string urlTime = "/book/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
                                         + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
                                     if (profile.CompanyAvailableTimeSlots.IsRederect)
                                     {
                                         //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                        urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                        urlTime ="/book/" + seName;
                                     }
                                     <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                 }
@@ -191,11 +188,11 @@
                                 if (profile.CompanyAvailableTimeSlots.IsShowMore)
                                 {
                                     // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
-                                    var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
+                                    var urlShowMore = "/book/" + seName + "?categoryId=" + ViewBag.CategoryId;
                                     if (profile.CompanyAvailableTimeSlots.IsRederect)
                                     {
                                         //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                        urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                        urlShowMore = "/book/" + seName;
                                     }
                                     <a class="bg-green" href="@urlShowMore" title="more">more</a>
 
@@ -287,12 +284,14 @@
             });
     });
 
-    $('.categoryLnk').click(function () {
+    $('.categoryLnk').click(function (e) {
+        e.preventDefault();
         var lat = 0;
         var lon = 0;
         var categoryId = $(this).attr('categoryId');
         var key = $("#txtSearchInputbody").val();
         getListCompanyBykey(lat, lon, key, categoryId);
+        return false;
     });
 
     $('#dllcategory').change(function () {

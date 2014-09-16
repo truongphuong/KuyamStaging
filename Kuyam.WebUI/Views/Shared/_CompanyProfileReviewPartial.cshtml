@@ -1,0 +1,198 @@
+﻿@using Kuyam.Database;
+@using Kuyam.Domain.Models
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    List<RatingModel> ratings = ViewBag.Ratings;
+    var totalRecord = ratings.Count;
+    var avgReview = 0;
+    if (totalRecord > 0)
+    {
+        avgReview = Convert.ToInt32(Math.Round(ratings.Average(t => t.RatingValue)));
+    }
+    
+}
+<div class="reviews-tab">
+    <header class="section-header">
+        <h2 class="clearfix" ng-show="isAuthenticated">
+            business reviews:
+            <a title="" href="javascript:void(0)" ng-click="addToFavorite();" class="link-favorite hidden-xs" ng-show="!favorite">
+                <span class="icon-unlike"></span> add to favorites
+            </a>
+            <a title="" href="javascript:void(0);" ng-click="removeFavorite()" class="link-favorite hidden-xs" ng-show="favorite">
+                <span class="icon-like"></span> favorites
+            </a>
+        </h2>
+        <div class="votes clearfix">
+            @switch (avgReview)
+            {
+                case 0:
+                    {
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        break;
+                    }
+                case 1:
+                    {
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        break;
+                    }
+                case 2:
+                    {
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        break;
+                    }
+                case 3:
+                    {
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        break;
+                    }
+                case 4:
+                    {
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon gray-star"></span>
+                        break;
+                    }
+                case 5:
+                    {
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        <span class="vote-icon yellow-star"></span>
+                        break;
+                    }
+            }            
+            <span class="total-review">@totalRecord customer reviews</span>
+        </div>
+    </header>
+    <div class="review-content">
+        <div class="row">
+            @if (ratings.Count > 0)
+            {
+                <div class="col-xs-12 col-sm-6">
+                <!-- .review-accordion -->
+                <div class="review-accordion">
+                    <div id="accordion">
+                        @foreach (var review in ratings)
+                        {
+                            var createDate = review.CreateDate;
+                            var createDateString = string.Empty;
+                            if (createDate != null)
+                            {
+                                createDateString = DateTimeUltility.ConvertToUserTime(createDate.Value, DateTimeKind.Utc).ToString("MMMM d, yyyy");
+                            }
+                            <h3>@Kuyam.Domain.UtilityHelper.TruncateText(review.Content, 65)<span class="text-read-full hidden-sm hidden-md hidden-lg">read full review <span class="icon-angle-down1"></span></span>
+                            </h3>
+                            <div>
+                                <div class="votes clearfix">
+                                    @switch (review.RatingValue)
+                                    {
+                                        case 0:
+                                            {
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                break;
+                                            }
+                                        case 1:
+                                            {
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon gray-star"></span>
+                                                break;
+                                            }
+                                        case 5:
+                                            {
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                <span class="vote-icon yellow-star"></span>
+                                                break;
+                                            }
+                                    }                                    
+                                </div>
+                                <h4>
+                                    @review.Customer.FirstName @(!string.IsNullOrEmpty(review.Customer.LastName) ? review.Customer.LastName[0] + "." : "")
+                                    <time>@createDateString</time>
+                                </h4>
+                                <p>@review.Content</p>
+                            </div>
+                        }
+                    </div>
+                    <script>
+                        $(function () {
+                            $("#accordion").accordion({ heightStyle: "content" });
+                        });
+                    </script>
+                </div>
+                <!-- /.review-accordion -->
+
+            </div>
+            }          
+            <div class="col-xs-12 col-sm-6">
+                <header class="section-header">
+                    <h2 class="clearfix">write a review</h2>
+                    <p>you opinion is important! to write a<br /> review, please book with and visit<br /> this business.</p>
+                </header>
+                <a title="" href="javascript:activeBookTab();" class="btn-green btn-book">book now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function activeBookTab() {        
+        $('#tabs').tabs("option", "active", 0);
+    }
+</script>
+

@@ -1,0 +1,134 @@
+﻿@using Kuyam.Database;
+@model List<CompanyPackage>
+
+<div class="package-tab">
+    <header class="section-header" ng-show="isAuthenticated">
+        <h2 class="clearfix">
+            packages:
+            <a title="" href="javascript:void(0)" ng-click="addToFavorite();" ng-show="!favorite" class="link-favorite hidden-xs">
+                <span class="icon-unlike"></span> add to favorites
+            </a>
+            <a title="" href="javascript:void(0);" ng-click="removeFavorite()" class="link-favorite hidden-xs" ng-show="favorite">
+                <span class="icon-like"></span> favorites
+            </a>
+        </h2>
+        <p class="hidden-xs">packages are here for you to help you save money!</p>
+    </header>
+    @if (Model.Count == 0)
+    {
+        <div class="no-package hidden-xs">
+            this business currently does not have any packages.
+        </div>
+    }
+    <div class="package-list">
+        <div class="row">
+            @foreach (var package in Model)
+            {
+                var unitPrice = "";
+                var services = package.CompanyPackageServices.ToList();
+                var numberOfServices = services != null ? services.Count : 0;
+                int numberOfBooking = 0;
+                if (package.NumberOfBooking > 0)
+                {
+                    int tmp = (int)package.Price / package.NumberOfBooking;
+                    unitPrice = string.Format("${0}/{1}", tmp, package.PackageName);
+                    numberOfBooking = package.NumberOfBooking;
+                }
+                var imgsrc = "/content/images/placeholder.png";
+                if (package.KalturaImageId != null)
+                {
+                    imgsrc = string.Format("{0}/p/811441/thumbnail/entry_id/{1}/width/301/height/172", Types.KaturaDoman, package.KalturaImageId);
+                }
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <!-- .package-block -->
+                    <div class="package-block">
+                        <div style="background-image: url(@imgsrc);" class="package-img">
+
+                        </div>
+                        <div class="package-info">
+                            <h3>
+                                @*@if (numberOfBooking > 0)
+                                {
+                                    <text>@numberOfBooking</text>
+                                }*@
+                                @package.PackageName
+                            </h3>
+                            <div class="package-purchase">
+                                <span class="package-price">$@package.Price</span>
+                                <a title="" href="#" class="btn-green btn-purchase">purchase</a>
+                            </div>
+                            <div class="package-service">
+                                @unitPrice<br />
+                                applies to: <a title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-service-@package.PackageId">@numberOfServices services</a><br />
+                                @if (package.DurationInMonth.HasValue && package.DurationInMonth.Value > 0)
+                                {
+                                    @:expires @package.DurationInMonth.Value month(s) after purchase
+                                }
+                                else
+                                {
+                                    @:with unlimited booking(s)
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.package-block -->
+
+                </div>
+                @*Modal popup*@
+                <div class="modal fade modal-details modal-service" id="modal-service-@package.PackageId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">service details</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3>
+                                    @if (numberOfBooking > 0)
+                                    {
+                                        <text>@numberOfBooking</text>
+                                    }
+                                    @package.PackageName
+                                </h3>
+                                <p>
+                                    @unitPrice
+                                    <br />
+                                    @if (package.DurationInMonth.HasValue && package.DurationInMonth.Value > 0)
+                                    {
+                                        @:expires @package.DurationInMonth.Value month(s) after purchase
+                                }
+                                    else
+                                    {
+                                        @:with unlimited booking(s)
+                                }
+                                </p>
+                                <h4>applies to following services:</h4>
+                                <p>
+                                    @{
+                                    var i = 0;
+                                    if (services.Count > 0)
+                                    {
+                                        <text>@services[i].ServiceCompany.Service.ServiceName</text>
+                                    }
+                                    i++;
+                                    while (i < services.Count)
+                                    {
+                                        <br />
+                                        <text>@services[i].ServiceCompany.Service.ServiceName</text>
+                                        i++;
+                                    }
+                                    }
+                                </p>
+                            </div>
+                            <div class="modal-footer clearfix">
+                                <span class="package-price"><span>$@package.Price</span></span>
+                                <button type="button" class="btn-green btn-purchase">purchase</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            }
+        </div>
+    </div>
+</div>

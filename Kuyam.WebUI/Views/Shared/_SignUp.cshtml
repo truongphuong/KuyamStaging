@@ -1,0 +1,159 @@
+﻿@using Kuyam.WebUI.Models
+
+<div class="modal fade modal-form modal-sign-up" id="modal-sign-up" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">join kuyam free!</h3>
+                <h4>book appointments at home or<br /> on the go!</h4>
+            </div>
+            <div class="modal-body">
+                <a title="" href="@Url.Action("LogtoFacebook", "Account", new { returnUrl = "/Account/LoginByFacebook" })" class="btn-blue btn-facebook">login with facebook</a>
+                <div class="form-or">
+                    <hr />
+                    <span>or</span>
+                </div>
+                <fieldset>
+                    <input id="txtFirstname" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'first name'; }" onfocus="if (this.value == 'first name') { this.value = ''; }" value="first name">
+                    <input id="txtLastname" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'last name'; }" onfocus="if (this.value == 'last name') { this.value = ''; }" value="last name">
+                    <input id="txtEmailAddress" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'email'; }" onfocus="if (this.value == 'email') { this.value = ''; }" value="email">
+                    <input id="txtPassword" class="form-control" type="text" onblur="if (this.value == '') { this.value = 'password'; }" onfocus="if (this.value == 'password') { this.value = ''; }" value="password">
+                    <div>by signing up, I agree to kuyams<a class="link-form link-term" title="" href="#">terms of use and privacy</a></div>
+                    <button type="button" onclick="signUpNow()" class="btn-green btn-form btn-sign-up">sign up</button>
+                </fieldset>
+                <div id="loginError"></div>
+            </div>
+            <div class="modal-footer">
+                <hr />
+                <div class="text-right">already have an account? <a class="link-form link-login" title="" data-target="#modal-login" data-toggle="modal" href="javascript:void(0);">login</a></div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@if(MySession.RegisterModel != null && MySession.RegisterModel.IsFacebookRegister)
+{
+    RegisterModel register = MySession.RegisterModel;
+    
+    <div class="modal fade modal-form modal-facebook" id="modal-facebook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">Facebook sign up</h3>
+                <h4>please double check the info<br /> provided to us by Facebook is<br /> accurate</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <input type="hidden" id="registerFacebookId" value="@register.FacebookUserId" />
+                    <input class="form-control" id="firstNameFacebook"  type="text" onblur="if (this.value == '') { this.value = 'first name'; }" onfocus="if (this.value == 'first name') { this.value = ''; }" value="@register.FirstName" />
+                    <input class="form-control" id="lastNameFacebook" type="text" onblur="if (this.value == '') { this.value = 'last name'; }" onfocus="if (this.value == 'last name') { this.value = ''; }" value="@register.LastName" />
+                    <input class="form-control" id="emailFacebook" type="text" value="@register.ConfirmEmail" />
+                    <div class="link-form">by signing up, I agree to kuyams <a class="link-term" title="" href="#">terms of use and privacy</a></div>
+                    <button type="button" class="btn-green btn-form btn-sign-up">create account!</button>
+                </fieldset>
+            </div>
+            <div id="SignUpFacebookError"></div>
+            <div class="modal-footer">
+                <hr />
+                <div class="text-right link-form">already have an account? <a class="link-login" title="" data-target="#modal-login" data-toggle="modal" href="javascript:void(0);">login</a></div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /.modal-sign-up -->
+    
+    MySession.RegisterModel = null;
+    <script>
+        $(document).ready(function () {
+
+            $('#modal-facebook').modal('show');
+        });
+    </script>
+}
+
+<script type="text/javascript">
+    function signUpNow() {
+        $('#loginError').hide();
+        var fname = $('#txtFirstname').val();
+        var lname = $('#txtLastname').val();
+        var email = $('#txtEmailAddress').val();
+        var password = $('#txtPassword').val();
+        var err = "";
+        if (fullTrim(fname) == '' || fname == 'first name') {
+            err = err + 'first name is required.<br/> ';
+        }
+        if (fullTrim(lname) == '' || lname == 'last name') {
+            err = err + 'last name is required. <br/> ';
+        }
+        if (fullTrim(email) == '' || email == "e-mail") {
+            err = err + ' email is required.<br/>';
+        }
+        if (fullTrim(email) != '' && email != "enter e-mail address" && !validateEmail(email)) {
+            err = err + 'email is invalid.<br/>';
+        }
+        if (fullTrim(password) == '' || password == 'password') {
+            err = err + 'password is required. <br/> ';
+        }
+
+        $('#loginError').html("<div style='color: Red;padding-left: 39px;'>" + err + "</div>");
+        $('#loginError').show();
+        if (err == '') {
+            $('#loginError').hide();
+            var param = "fname=" + fname + "&lname=" + lname + "&email=" + email + "&pass=" + password;
+           // $('#signuppopup #imgLoaderContact1').show();
+            commonPostAjax("account", "SignUpNow", param, setHomeSignUpSuccess, callbackError);
+        } else {
+            $('#loginError').show();
+        }
+    };
+
+    function signUpFacebookNow() {
+        $('#SignUpFacebookError').hide();
+        var fname = $('#firstNameFacebook').val();
+        var lname = $('#lastNameFacebook').val();
+        var email = $('#emailFacebook').val();
+        var facebookId = $('#registerFacebookId').val();
+        var err = "";
+        if (fullTrim(fname) == '' || fname == 'first name') {
+            err = err + 'first name is required.<br/> ';
+        }
+        if (fullTrim(lname) == '' || lname == 'last name') {
+            err = err + 'last name is required. <br/> ';
+        }
+        if (fullTrim(email) == '' || email == "e-mail") {
+            err = err + ' email is required.<br/>';
+        }
+        if (fullTrim(email) != '' && email != "enter e-mail address" && !validateEmail(email)) {
+            err = err + 'email is invalid.<br/>';
+        }
+        
+
+        $('#SignUpFacebookError').html("<div style='color: Red;padding-left: 39px;'>" + err + "</div>");
+        $('#SignUpFacebookError').show();
+        if (err == '') {
+            $('#SignUpFacebookError').hide();
+            var param = "fname=" + fname + "&lname=" + lname + "&email=" + email + "&facebookId=" + facebookId;
+            // $('#signuppopup #imgLoaderContact1').show();
+            commonPostAjax("account", "SignUpFacebookNow", param, setHomeSignUpSuccess, callbackError);
+        } else {
+            $('#loginError').show();
+        }
+    };
+
+    function fullTrim(val) {
+        return val.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
+    };
+
+    function callbackError(error) {
+        $('#loginError').html("<span style='color: Red;padding-left: 20px;'>" + error + "</span>");
+        $('#loginError').show();
+    }
+
+    function setHomeSignUpSuccess(result) {      
+       
+            self.location.href = "/book";
+
+    }
+</script>

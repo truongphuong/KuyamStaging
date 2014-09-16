@@ -179,128 +179,130 @@ namespace Kuyam.WebUI.Controllers
             return string.Empty;
         }
 
-        private List<CalendarObject> GetData(DateTime start, DateTime end, int employeeId, int serviceId, int calendarId, int profileId)
+        private List<WeekObject> GetData(DateTime start, DateTime end, int employeeId, int serviceId, int calendarId, int profileId)
         {
-            List<CalendarObject> calendarObject = new List<CalendarObject>();
+
+            List<WeekObject> weekObject = new List<WeekObject>();
 
             string resutl = string.Empty;
             try
             {
-                DateTime dtNow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
-                DateTime beginDay = dtNow.Date;//new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
+                //DateTime dtNow = start;
+                //DateTime beginDay = start.Date;//new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
 
                 Cust user = MySession.Cust;
-                var syncCalendar = _appointmentService.GetCalendarIdById(calendarId);
-                try
-                {
-                    if (syncCalendar != null)
-                    {
-                        InfoConnSoapClient service = new InfoConnSoapClient();
-                        SearchOption searchOption = new SearchOption
-                        {
-                            CalendarId = syncCalendar.SyncCalendarId,
-                            StartDate = DateTimeUltility.ConvertToUtcTime(dtNow, DateTimeUltility.CurrentTimeZone),
-                            EndDate = DateTimeUltility.ConvertToUtcTime(end, DateTimeUltility.CurrentTimeZone),
-                            ConnectorSourceType = ConnectorSourceType.Google
-                        };
-                        string className = GetClassName(syncCalendar.BackColor);
+                //var syncCalendar = _appointmentService.GetCalendarIdById(calendarId);
+                //try
+                //{
+                //    if (syncCalendar != null)
+                //    {
+                //        InfoConnSoapClient service = new InfoConnSoapClient();
+                //        SearchOption searchOption = new SearchOption
+                //        {
+                //            CalendarId = syncCalendar.SyncCalendarId,
+                //            StartDate = DateTimeUltility.ConvertToUtcTime(dtNow, DateTimeUltility.CurrentTimeZone),
+                //            EndDate = DateTimeUltility.ConvertToUtcTime(end, DateTimeUltility.CurrentTimeZone),
+                //            ConnectorSourceType = ConnectorSourceType.Google
+                //        };
+                //        string className = GetClassName(syncCalendar.BackColor);
 
-                        if (syncCalendar.CalendarDisplayTypeID == (int)ConnectorSourceType.Google)
-                        {
-                            var eventsGoogle = service.GetEvents(user.CustID, searchOption, ConnectorSourceType.Google);
+                //        if (syncCalendar.CalendarDisplayTypeID == (int)ConnectorSourceType.Google)
+                //        {
+                //            var eventsGoogle = service.GetEvents(user.CustID, searchOption, ConnectorSourceType.Google);
 
-                            foreach (var evt in eventsGoogle)
-                            {
-                                var item = new CalendarObject
-                                {
-                                    id = evt.Id.ToString(),
-                                    title = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("h:mm"),
-                                    start = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
-                                    end = DateTimeUltility.ConvertToUserTime(evt.EndDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
-                                    className = "fc-orange",
-                                    eventType = (int)ConnectorSourceType.Google
-                                };
-                                calendarObject.Add(item);
-                            }
+                //            foreach (var evt in eventsGoogle)
+                //            {
+                //                var item = new CalendarObject
+                //                {
+                //                    id = evt.Id.ToString(),
+                //                    title = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("h:mm"),
+                //                    start = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
+                //                    end = DateTimeUltility.ConvertToUserTime(evt.EndDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
+                //                    className = "fc-orange",
+                //                    eventType = (int)ConnectorSourceType.Google
+                //                };
+                //                calendarObject.Add(item);
+                //            }
 
-                        }
-                        else if (syncCalendar.CalendarDisplayTypeID == (int)ConnectorSourceType.Facebook)
-                        {
-                            searchOption.ConnectorSourceType = ConnectorSourceType.Facebook;
-                            var eventsFacebook = service.GetEvents(user.CustID, searchOption, ConnectorSourceType.Facebook);
-                            foreach (var evt in eventsFacebook)
-                            {
-                                var item = new CalendarObject
-                                {
-                                    id = evt.Id.ToString(),
-                                    title = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("h:mm"),
-                                    start = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
-                                    end = DateTimeUltility.ConvertToUserTime(evt.EndDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
-                                    className = "fc-orange",
-                                    eventType = (int)ConnectorSourceType.Google
-                                };
-                                calendarObject.Add(item);
-                            }
+                //        }
+                //        else if (syncCalendar.CalendarDisplayTypeID == (int)ConnectorSourceType.Facebook)
+                //        {
+                //            searchOption.ConnectorSourceType = ConnectorSourceType.Facebook;
+                //            var eventsFacebook = service.GetEvents(user.CustID, searchOption, ConnectorSourceType.Facebook);
+                //            foreach (var evt in eventsFacebook)
+                //            {
+                //                var item = new CalendarObject
+                //                {
+                //                    id = evt.Id.ToString(),
+                //                    title = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("h:mm"),
+                //                    start = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
+                //                    end = DateTimeUltility.ConvertToUserTime(evt.EndDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
+                //                    className = "fc-orange",
+                //                    eventType = (int)ConnectorSourceType.Google
+                //                };
+                //                calendarObject.Add(item);
+                //            }
 
-                        }
-                        else if (syncCalendar.CalendarDisplayTypeID == (int)ConnectorSourceType.iCalendar)
-                        {
-                            searchOption.ConnectorSourceType = ConnectorSourceType.iCalendar;
-                            var eventsIcal = service.GetEvents(user.CustID, searchOption, ConnectorSourceType.iCalendar);
-                            foreach (var evt in eventsIcal)
-                            {
-                                var item = new CalendarObject
-                                {
-                                    id = evt.Id.ToString(),
-                                    title = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("h:mm"),
-                                    start = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
-                                    end = DateTimeUltility.ConvertToUserTime(evt.EndDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
-                                    className = "fc-orange",
-                                    eventType = (int)ConnectorSourceType.Google
-                                };
-                                calendarObject.Add(item);
-                            }
-                        }
-                    }
+                //        }
+                //        else if (syncCalendar.CalendarDisplayTypeID == (int)ConnectorSourceType.iCalendar)
+                //        {
+                //            searchOption.ConnectorSourceType = ConnectorSourceType.iCalendar;
+                //            var eventsIcal = service.GetEvents(user.CustID, searchOption, ConnectorSourceType.iCalendar);
+                //            foreach (var evt in eventsIcal)
+                //            {
+                //                var item = new CalendarObject
+                //                {
+                //                    id = evt.Id.ToString(),
+                //                    title = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("h:mm"),
+                //                    start = DateTimeUltility.ConvertToUserTime(evt.StartDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
+                //                    end = DateTimeUltility.ConvertToUserTime(evt.EndDate, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm"),
+                //                    className = "fc-orange",
+                //                    eventType = (int)ConnectorSourceType.Google
+                //                };
+                //                calendarObject.Add(item);
+                //            }
+                //        }
+                //    }
 
-                }
-                catch (Exception)
-                {
+                //}
+                //catch (Exception)
+                //{
 
-                }
+                //}
 
                 var profileCompany = _companyProfileService.GetProfileCompanyByID(profileId);
-                var empAppointments = _appointmentService.GetAppoinmentTempsByEmployeeId(employeeId, calendarId, dtNow, end);
+                var empAppointments = _appointmentService.GetAppoinmentTempsByEmployeeId(employeeId, calendarId, start, end);
 
                 var instructorHours = _appointmentService.GetAppoinmentBusyTimByEmployeeId(profileId);
 
-                var appoinmentsOfEmployee = _appointmentService.GetAppoinmentsByEmployeeId(employeeId, dtNow, end);
+                var appoinmentsOfEmployee = _appointmentService.GetAppoinmentsByEmployeeId(employeeId, start, end);
 
                 appoinmentsOfEmployee.ForEach(a => empAppointments.Add(a.ToAppointmentTemp()));
 
-                var serviceHour = GetEventListByEmployeeId(profileId, employeeId, serviceId);
+                var serviceHour = GetEventListByEmployeeId(profileId, employeeId, serviceId, start);
 
-                if (calendarId != 0)
-                {
-                    var calAppointment = _appointmentService.GetAppointmentByCalendarId(calendarId, dtNow, end);
+                //if (calendarId != 0)
+                //{
+                //    var calAppointment = _appointmentService.GetAppointmentByCalendarId(calendarId, dtNow, end);
 
-                    if (calAppointment != null && calAppointment.Count > 0)
-                    {
-                        foreach (var apt in calAppointment)
-                        {
-                            CalendarObject item = new CalendarObject
-                            {
-                                id = apt.CustID.ToString(),
-                                title = apt.Start.ToString("h:mm"),
-                                start = apt.Start.ToString("yyyy-MM-dd HH:mm"),
-                                end = apt.End.ToString("yyyy-MM-dd HH:mm"),
-                                className = "fc-orange"
-                            };
-                            calendarObject.Add(item);
+                //    if (calAppointment != null && calAppointment.Count > 0)
+                //    {
+                //        foreach (var apt in calAppointment)
+                //        {
+                //            CalendarObject item = new CalendarObject
+                //            {
+                //                id = apt.CustID.ToString(),
+                //                title = apt.Start.ToString("h:mm"),
+                //                start = apt.Start.ToString("yyyy-MM-dd HH:mm"),
+                //                end = apt.End.ToString("yyyy-MM-dd HH:mm"),
+                //                className = "fc-orange"
+                //            };
+                //            calendarObject.Add(item);
 
-                        }
-                    }
-                }
+                //        }
+                //    }
+                //}
+
 
                 if (serviceHour != null && serviceHour.Count > 0)
                 {
@@ -309,37 +311,45 @@ namespace Kuyam.WebUI.Controllers
                     // Get service of employee
                     List<CompanyService> lstService = _companyProfileService.GetServiceCompanybyEmployeeId(profileId, employeeId, serviceId);
 
-                    for (var index = 0; index < 7; index++)
+                    var diffResult = end.Subtract(start);
+                    int countDay = diffResult.Days;
+                    for (var index = 0; index < countDay; index++)
                     {
-                        if (!serviceHour.Any(m => m.DayOfWeek == index))
+                        DateTime currentDate = start.Date.AddDays(index);
+
+                        int dayOfWeek = (int)currentDate.DayOfWeek;
+
+                        string dayInWeek = currentDate.AddDays(index).ToString("dddd");
+                        if (index == 0 && currentDate.Date == DateTime.Now.Date)
+                        {
+                            dayInWeek = "Today";
+                        }
+
+                        WeekObject timslotPerDay = new WeekObject();
+                        timslotPerDay.DayOfWeek = dayOfWeek;
+                        timslotPerDay.Day = dayInWeek;
+                        timslotPerDay.DateTime = start.AddDays(index).ToString("MMM d, yyyy");
+
+                        if (!serviceHour.Any(m => m.DayOfWeek == dayOfWeek))
+                        {
+                            weekObject.Add(timslotPerDay);
                             continue;
-
-                        int dayOfWeek = (int)dtNow.DayOfWeek;
-                        int detDay = 7 - dayOfWeek;
-                        int day = 0;
-                        if (index >= dayOfWeek)
-                        {
-                            day = index - dayOfWeek;
-                        }
-                        else
-                        {
-                            day = index + detDay;
                         }
 
-                        DateTime currentDate = beginDay.Date.AddDays(day);
                         int stepHour = 30;
 
                         for (int i = 0; i < 48; i++)
                         {
+
                             string cssClass = string.Empty;
-                            EventCustom eventCustom = serviceHour.Where(x => x.DayOfWeek == index
+                            EventCustom eventCustom = serviceHour.Where(x => x.DayOfWeek == dayOfWeek
                                     && x.Start <= currentDate
                                     && x.End > currentDate).OrderBy(m => m.Start).FirstOrDefault();
 
                             DateTime beginDate = currentDate;
                             DateTime endDate = currentDate.AddMinutes(stepHour);
 
-                            if (eventCustom != null && (beginDate > dtNow))
+                            if (eventCustom != null && (beginDate > start))
                             {
 
                                 if (eventCustom.Start <= beginDate && endDate <= eventCustom.End || (endDate > eventCustom.End && beginDate < eventCustom.End))
@@ -383,7 +393,7 @@ namespace Kuyam.WebUI.Controllers
 
                                         if (!aptend.Any() && duration >= 30 && isAvailability)
                                         {
-                                            calendarObject.Add(item);
+                                            timslotPerDay.TimeSlot.Add(item);
                                             existTimeslot = true;
                                         }
                                     }
@@ -391,7 +401,7 @@ namespace Kuyam.WebUI.Controllers
                                     {
                                         if (duration >= 30 && isAvailability)
                                         {
-                                            calendarObject.Add(item);
+                                            timslotPerDay.TimeSlot.Add(item);
                                             existTimeslot = true;
                                         }
                                     }
@@ -406,18 +416,18 @@ namespace Kuyam.WebUI.Controllers
                                             if (tmpHour.Any() && !aptend.Any(m => m.EmployeeID == id) && duration >= 30 && isAvailabilityNew)
                                             {
                                                 item.id = id.ToString();
-                                                calendarObject.Add(item);
+                                                timslotPerDay.TimeSlot.Add(item);
                                                 break;
                                             }
                                         }
-
                                     }
-
                                 }
                             }
 
                             currentDate = currentDate.AddMinutes(stepHour);
                         }
+
+                        weekObject.Add(timslotPerDay);
                     }
                 }
             }
@@ -425,7 +435,7 @@ namespace Kuyam.WebUI.Controllers
             {
             }
 
-            return calendarObject;
+            return weekObject;
         }
 
         private List<CalendarObject> GetGeneralAvailability(DateTime start, DateTime end, int employeeId, int calendarId, int profileId)
@@ -498,7 +508,7 @@ namespace Kuyam.WebUI.Controllers
 
             return calendarObject;
         }
-        private List<EventCustom> GetEventListByEmployeeId(int profileId, int employeeId, int serviceId)
+        private List<EventCustom> GetEventListByEmployeeId(int profileId, int employeeId, int serviceId, DateTime dtnow)
         {
             var eventCustom = new List<EventCustom>();
             List<EmployeeHour> lstEmployeeHour = _companyProfileService.GetEmployeeHour(profileId, employeeId, serviceId);
@@ -506,7 +516,6 @@ namespace Kuyam.WebUI.Controllers
             if (lstEmployeeHour == null && lstEmployeeHour.Count <= 0)
                 return null;
 
-            DateTime dtnow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow);
             int dayOfWeek = (int)dtnow.DayOfWeek;
             int detDay = 7 - dayOfWeek;
             int day = 0;
@@ -654,13 +663,13 @@ namespace Kuyam.WebUI.Controllers
 
             var profileCompany = _companyProfileService.GetProfileCompanyByID(profileId);
 
-            
+
             // Get service of employee
             List<CompanyService> lstService = packageId.HasValue
                                                   ? _companyProfileService.GetServiceEmployeeByPackage(employeeId, packageId.Value, profileId, categoryId ?? 0)
                                                   : _companyProfileService.GetServiceCompanybyEmployeeId(profileId, employeeId, serviceId ?? 0, categoryId ?? 0);
 
-            var serviceHour = GetEventListByEmployeeId(profileId, employeeId, serviceId ?? 0);
+            var serviceHour = GetEventListByEmployeeId(profileId, employeeId, serviceId ?? 0, startTime);
 
             var empAppointments = _appointmentService.GetAppoinmentTempsByEmployeeId(employeeId, calendarId ?? 0, startTime, DateTime.MaxValue);
 
@@ -678,7 +687,7 @@ namespace Kuyam.WebUI.Controllers
             {
                 dict.Add("validTime", false);
             }
-           
+
 
             if (profileCompany != null && profileCompany.IsShowCatagory.HasValue && profileCompany.IsShowCatagory.Value && !categoryId.HasValue)
             {
@@ -976,7 +985,7 @@ namespace Kuyam.WebUI.Controllers
             return View();
         }
 
-        [Authorize]
+        //[Authorize]
         public ActionResult Availability(int? id, int? proposedId, int? categoryId, int? serviceId)
         {
             MySession.IsBookDirect = false;
@@ -1021,18 +1030,37 @@ namespace Kuyam.WebUI.Controllers
                 htmlSevice.AppendFormat("<option  title=\"0\" value=\"{1}\" {2} >{3}</option>", item.Service.ServiceName, item.ServiceCompanyID, selected, string.Format("{0}, {1} min, ${2}, {3} person", UtilityHelper.TruncateAtWord(item.Service.ServiceName, 30), item.Duration, item.Price, item.AttendeesNumber));
             }
             model.ServiceString = htmlSevice.ToString();
-
+            //business hours
+            var hours = _companyProfileService.SplitCompanyHours(model.ProfileCompany.CompanyHours.ToList());
+            hours = _companyProfileService.SortCompanyHours(hours);
+            ViewBag.CompanyHoursSort = hours;
+            //Ratings            
+            if (id.HasValue)
+            {
+                ViewBag.RatingList = _appointmentService.GetRatingsByProfileId(id.Value);
+            }
+            else
+            {
+                ViewBag.RatingList = new List<Rating>();
+            }
+            //Package
+            MySession.IsBookDirect = false;
+            var packages = _companyProfileService.GetCompanyPackages(id.Value);
+            ViewBag.CompanyPackages = packages;//GetCompanyPackages(packages);
+            //Photo
+            model.MediaCompanies = _companyProfileService.GetCompanyMediums(id ?? 0, Types.CompanyMediaType.IsBanner);
+            //return View("_OldAvailability", model);
             return View(model);
         }
 
-        public ActionResult Class(int? id, int? categoryId, int? serviceId)
+        public ActionResult Class(int id = 0, int serviceId = 0)
         {
             var model = new ProfileCompaniesModels();
-            model.ProfileId = id.Value;
-            var profileCompany = _companyProfileService.GetProfileCompanyByID(id.Value);
+            model.ProfileId = id;
+            var profileCompany = _companyProfileService.GetProfileCompanyByID(id);
             model.MetaTagExtension = new MetaTagExtension(profileCompany.Desc);
             model.ProfileCompany = profileCompany;
-            var categorys = _companyProfileService.GetCategoryByProfileID(id.Value);
+            var categorys = _companyProfileService.GetCategoryByProfileID(id);
             model.ListServiceCompany = categorys;
             var category = categorys.FirstOrDefault();
             model.CompanyName = profileCompany.Name;
@@ -1051,12 +1079,11 @@ namespace Kuyam.WebUI.Controllers
 
             DateTime endTime = dtnow.AddDays(7);
 
-            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id.Value, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
+            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id, serviceId, 0, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
             model.CalendarString = BuildCalendar(calendars, dtnow);
 
             return View(model);
         }
-
 
         private string BuildCalendar(List<SchedulerAvailability> schedulerAvailability, DateTime dtNow)
         {
@@ -1065,7 +1092,7 @@ namespace Kuyam.WebUI.Controllers
             for (int i = 0; i < 7; i++)
             {
                 string dayInWeek = dtNow.AddDays(i).ToString("ddd").ToLower();
-                string classToday = string.Empty;                
+                string classToday = string.Empty;
                 if (i == 0)
                 {
                     classToday = "today";
@@ -1113,6 +1140,88 @@ namespace Kuyam.WebUI.Controllers
 
             return strBuilder.ToString();
         }
+
+        public ActionResult GetTimslotsClassById(int profileId = 0, int serviceId = 0, int employeeId = 0, int weekNumber = 0, bool mobiledevice = false)
+        {
+            int dayPerWeek = 7;
+            if (mobiledevice)
+            {
+                weekNumber = 3 * weekNumber;
+                dayPerWeek = 3;
+            }
+            else
+            {
+                weekNumber = 7 * weekNumber;
+            }
+            DateTime dtnow = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow.AddDays(weekNumber));
+            DateTime endTime = dtnow.AddDays(dayPerWeek);
+
+            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(profileId, serviceId, employeeId, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
+
+            var calendarResult = GetObjetCalendar(calendars, dtnow, dayPerWeek);
+
+            return Json(calendarResult, JsonRequestBehavior.AllowGet);
+        }
+
+
+        private List<WeekObject> GetObjetCalendar(List<SchedulerAvailability> schedulerAvailability, DateTime dtNow, int dayPerWeek)
+        {
+            List<WeekObject> weekObject = new List<WeekObject>();
+
+            for (int i = 0; i < dayPerWeek; i++)
+            {
+                string dayInWeek = dtNow.AddDays(i).ToString("dddd");
+                if (i == 0 && dtNow.Date == DateTime.Now.Date)
+                {
+                    dayInWeek = "Today";
+                }
+
+                WeekObject timslotPerDay = new WeekObject();
+                int dayOfWeek = (int)dtNow.AddDays(i).DayOfWeek;
+                timslotPerDay.DayOfWeek = dayOfWeek;
+                timslotPerDay.Day = dayInWeek;
+                timslotPerDay.DateTime = dtNow.AddDays(i).ToString("MMM d, yyyy");
+
+                var classIndays = schedulerAvailability.Where(q => q.DayOfWeek == dayOfWeek).OrderBy(o => o.FromHour).ToList();
+
+                foreach (var item in classIndays)
+                {
+                    DateTime start = dtNow.AddDays(i).Date.AddTicks(item.FromHour.Ticks);
+                    string isFull = "full";
+
+                    if (item.IsAvailability && start < dtNow)
+                    {
+                        isFull = "expired";
+                    }
+
+                    string btnReserve = string.Empty;
+                    if (start >= dtNow.AddMinutes(10) && item.IsAvailability)
+                    {
+                        isFull = string.Empty;
+                        btnReserve = string.Format("<a id=\"reserve\" classSchedulerId =\"{0}\" startTime=\"{1}\" emdTime=\"{2}\" className= \"{3}\" instructorName=\"{4}\" class=\"reserve\"  href=\"javascript:void(0);\">reserve</a>",
+                            item.ClassSchedulerID, start.ToString("MM/dd/yyyy hh:mm tt"), start.AddMinutes(item.Duration).ToString("MM/dd/yyyy hh:mm tt"), item.ServiceName, item.EmployeeName);
+                    }
+
+                    CalendarObject calendarObject = new CalendarObject
+                    {
+                        id = item.ServiceCompanyID.ToString(),
+                        className = item.ServiceName,
+                        duration = item.Duration,
+                        employeeName = item.EmployeeName,
+                        title = new DateTime(item.FromHour.Ticks).ToString("h:mm tt").ToLower(),
+                        start = new DateTime(item.FromHour.Ticks).ToString("h:mm tt").ToLower(),
+                        end = new DateTime(item.FromHour.Ticks).AddMinutes(item.Duration).ToString("h:mm tt").ToLower()
+
+                    };
+                    timslotPerDay.TimeSlot.Add(calendarObject);
+                }
+                weekObject.Add(timslotPerDay);
+
+            }
+
+            return weekObject;
+        }
+
 
         public ActionResult GetCalendarAvailability(int classSchedulerId, string startDate)
         {
@@ -1184,7 +1293,7 @@ namespace Kuyam.WebUI.Controllers
                 int totalRecord = 0;
                 ViewBag.RatingList = _appointmentService.GetRatingListByProfileID(id ?? 0, 1, 10, out totalRecord);
                 ViewBag.TotalRecords = totalRecord;
-                ViewBag.Page = 1;               
+                ViewBag.Page = 1;
             }
             return View(model);
         }
@@ -1197,7 +1306,7 @@ namespace Kuyam.WebUI.Controllers
             int totalRecord = 0;
             ViewBag.RatingList = _appointmentService.GetRatingListByProfileID(profileID, pageIndex, 10, out totalRecord);
             ViewBag.Page = pageIndex;
-            ViewBag.TotalRecords = totalRecord;          
+            ViewBag.TotalRecords = totalRecord;
             var model = new ProfileCompaniesModels();
             return PartialView("_RatingList", model);
 
@@ -1327,35 +1436,29 @@ namespace Kuyam.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCalendars()
+        public ActionResult GetCalendars(int profileId = 0, int companyType = 0, int serviceId = 0, int employeeId = 0, int calendarId = 0, int weekNumber = 0, bool mobiledevice = false)
         {
-            var profile = Request.Params["profileId"];
-            var _companytype = Request.Params["companyType"];
-            var start = Request.Params["start"];
-            var end = Request.Params["end"];
-            var service = Request.Params["serviceId"];
-            var employee = Request.Params["employeeId"];
-            var calendar = Request.Params["calendarId"];
 
-            DateTime startDate = DateTimeUltility.ConvertFromUnixTimestamp(double.Parse(start));
-            DateTime endDate = DateTimeUltility.ConvertFromUnixTimestamp(double.Parse(end));
-            int employeeId = 0;
-            int serviceId = 0;
-            int calendarId = 0;
-            int profileId = 0;
-            int companytype = 0;
-            Int32.TryParse(employee, out employeeId);
-            Int32.TryParse(service, out serviceId);
-            Int32.TryParse(calendar, out calendarId);
-            Int32.TryParse(profile, out profileId);
-            Int32.TryParse(_companytype, out companytype);
+            int dayPerWeek = 7;
+            if (mobiledevice)
+            {
+                weekNumber = 3 * weekNumber;
+                dayPerWeek = 3;
+            }
+            else
+            {
+                weekNumber = 7 * weekNumber;
+            }
+            DateTime startDate = DateTimeUltility.ConvertToUserTime(DateTime.UtcNow.AddDays(weekNumber));
+            DateTime endDate = startDate.AddDays(dayPerWeek);
+
             if (MySession.AppointmentbookingTempId > 0)
             {
                 ProfileCompany.DeleteAppointmentTemp(MySession.AppointmentbookingTempId);
                 MySession.AppointmentbookingTempId = 0;
             }
 
-            if (companytype == (int)Types.CompanyType.KuyamBookIt || companytype == (int)Types.CompanyType.KuyamInstantBook || companytype == (int)Types.CompanyType.HybridKuyamBookIt)
+            if (companyType == (int)Types.CompanyType.KuyamBookIt || companyType == (int)Types.CompanyType.KuyamInstantBook || companyType == (int)Types.CompanyType.HybridKuyamBookIt)
             {
                 return Json(GetData(startDate, endDate, employeeId, serviceId, calendarId, profileId), JsonRequestBehavior.AllowGet);
             }

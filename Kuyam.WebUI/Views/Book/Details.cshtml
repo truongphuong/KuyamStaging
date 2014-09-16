@@ -1,0 +1,458 @@
+﻿@using Kuyam.Database
+@using Kuyam.Domain;
+@using Kuyam.Domain.Models
+@using Kuyam.WebUI.Models;
+@model ProfileCompaniesModels
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var companyProfile = Model.ProfileCompany;
+    var ratings = (List<RatingModel>)ViewBag.RatingList;
+    List<CompanyHour> companyHours = ViewBag.CompanyHoursSort;
+    List<CompanyPackage> companyPackages = ViewBag.CompanyPackages;
+}
+
+<script type="text/javascript">
+    var data = @Html.Raw(Model.CompanyJsionData);
+    var isAuthenticated = @Request.IsAuthenticated.ToString().ToLower();
+    var isFavorite = @Model.Favorite.ToString().ToLower();
+</script>
+
+<input type="hidden" value="@companyProfile.ProfileID" id="profileid" />
+<div class="site-banner">
+    <!-- InstanceBeginEditable name="banner" -->
+    <!-- InstanceEndEditable -->
+</div>
+
+<div class="event-section book-detail-page" ng-app="CompanyProfileApp">
+    <div class="container" ng-controller="BookCtrl">
+
+        <!-- .book-detials-banner -->
+        <div class="book-detials-banner hidden-sm hidden-md hidden-lg" style="background-image: url(@Url.Content("~/content/images/tab-photos.jpg"));">
+            <div class="sale">
+                <img width="101" src="@Url.Content("~/content/images/icons/icon_featured-left.png")" alt="" />
+            </div>
+            <a class="link-favorite" href="#" title=""><span class="icon-unlike"></span></a>
+            <div class="company-info">
+                <h1>Amy's Hair Salon</h1>
+                <address>Santa Monica, CA</address>
+                <ul class="clearfix">
+                    <li>spa</li>
+                    <li>nails</li>
+                    <li>blowout</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.book-detials-banner -->
+        <!-- #tabs -->
+
+        <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+            <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+                <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs-1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">book</a></li>
+                <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs-2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">info</a></li>
+                <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-3" aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs-3" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">reviews</a></li>
+                <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-4" aria-labelledby="ui-id-4" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs-4" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">packages</a></li>
+                <li  class="hidden-xs ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-5" aria-labelledby="ui-id-5" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs-5" ng-click="gallery()" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-5">photos</a></li>
+            </ul>
+            <div id="tabs-1" class="hide">
+                <div class="book-tab">
+                    <header class="section-header hidden-xs">
+                        <h2>lets schedule an appointment!</h2>
+                    </header>
+                    <header class="section-header section-header-pink">
+                        <h2>pick a categgory:</h2>
+                        <div class="category-list">
+                            <ul class="tab-list clearfix">
+                                <li ng-repeat="item in Categories" ng-click="selectedCategory($event,item)">
+                                    <button ng-class="{active:item.ServiceID==CategoryId}">{{item.ServiceName}}</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="select-what">
+
+                                <!-- .select-options -->
+                                <div class="dropdown select-options" on-toggle="toggled(open)">
+                                    <a href class="dropdown-toggle" id="a-what">
+                                        What would you like done?<br /> <span class="options-icon options-icon-down"></span>
+                                    </a>
+
+                                    <ul class="dropdown-menu options-text dropdown-toggle" role="menu" aria-labelledby="a-what">
+
+                                        <li ng-repeat="item in ServiceCompanies" ng-click="selectServiceRow(item,$event)">
+                                            <span class="options-info">
+                                                <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                                <span class="options-value">{{item.ServiceName}}</span>
+
+                                                <a ng-if="item.ServiceTypeId==0" class="link-service" title="" href="javascript:void(0);" ng-click="open(item)">(details)</a>
+                                                <a ng-if="item.ServiceTypeId==1" class="link-class" title="" href="javascript:void(0);" ng-click="open(item)">(class details)</a>
+
+                                            </span>
+                                            <span class="options-time">{{item.Duration}}m</span>
+                                            <span class="options-price">${{item.Price}}</span>
+                                            <hr />
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /.select-options -->
+
+                                <div class="select-text select-what-text">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div id="select-who">
+                                <!-- .select-options -->
+                                <div class="dropdown select-options">
+                                    <a id="a-who" href class="dropdown-toggle">
+                                        Who would you like?<br /> <span class="options-icon options-icon-down"></span>
+                                    </a>
+
+                                    <ul class="dropdown-menu options-text" role="menu" aria-labelledby="a-who">
+                                        <li ng-repeat="item in CompanyEmployees" ng-click="selectEmployeeRow(item,$event)">
+                                            <span class="options-info">
+                                                <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                                <span class="options-value">{{item.EmployeeName}}</span>
+                                            </span>
+                                            <hr />
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <!-- /.select-options -->
+
+                                <div class="select-text select-who-text">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- .service-details -->
+                        <script type="text/ng-template" id="serviceModalContent">
+                            <div class="modal-details modal-service">
+                                <div class="modal-header">
+                                    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">service details</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h3>{{item.ServiceName}}</h3>
+                                    <p>
+                                        {{item.Description}}
+                                    </p>
+                                </div>
+                                <div class="modal-footer clearfix">
+                                    <span class="package-price">
+                                        <span>{{item.Duration}}m</span>
+                                        <span>${{item.Price}}</span>
+                                    </span>
+                                    <button ng-click="bookNow(item)" type="button" class="btn-green btn-purchase">book now</button>
+                                </div>
+                            </div>
+                        </script>
+                        <!-- /.modal -->
+                        <!-- /.service-details -->
+                        <!-- .class-details -->
+                        <script type="text/ng-template" id="employeeModalContent">
+                            <div class="modal-details modal-class">
+                                <div class="modal-header">
+                                    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">class details</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h3>{{item.ServiceName}}</h3>
+                                    <p>
+                                        {{item.Description}}
+                                    </p>
+                                </div>
+                                <div class="modal-footer clearfix">
+                                    <span class="package-price">
+                                        <span>{{item.Duration}}m</span>
+                                        <span>${{item.Price}}</span>
+                                    </span>
+                                    <button ng-click="bookNow(item)" type="button" class="btn-pink btn-book">book now</button>
+                                </div>
+                            </div><!-- /.modal -->
+                        </script>
+                        <!-- /.class-details -->
+
+                    </div>
+
+                    <!-- .site-calendar -->
+                    <div class="site-calendar clearfix">
+
+                        <!-- .slide-calendar for desktop-->
+                        <div class="slide-calendar hidden-xs">
+                            <a ng-class="{hide:CurrentWeek<=0}" ng-click="prev()" class="rslides_nav rslides1_nav prev" href="javascript:void(0);">last<br>week</a>
+                            <a ng-class="{hide:!CalendarData.length}" ng-click="next()" class="rslides_nav rslides1_nav next" href="javascript:void(0);">next<br>week</a>
+
+                            <!-- .table-calendar -->
+                            <span class="table-css table-calendar">
+                                <!-- .table-calendar-header -->
+                                <span class="table-row table-calendar-header">
+                                    <span class="table-cell" ng-repeat="timeslots in CalendarData">
+                                        <span class="day">{{timeslots.Day}}</span>
+                                        <span class="datetime">{{timeslots.DateTime}}</span>
+                                    </span>
+                                </span>
+                                <!-- /.table-calendar-header -->
+                                <!-- /.table-calendar-body -->
+                                <span class="table-row table-calendar-body">
+                                    <!-- .table-cell -->
+                                    <span class="table-cell" ng-repeat="timeslots in CalendarData">
+                                        <span class="session" ng-repeat="timeslot in timeslots.TimeSlot" ng-switch on="{{ServiceType}}">
+                                            <span class="session-item session-class" ng-class="{active:hover}" ng-mouseover="hover = true" ng-mouseleave="hover = false" ng-switch-when="1">
+                                                <span class="session-time">{{timeslot.title}} <br />{{timeslot.employeeName}}</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book a spot</a>
+                                            </span>
+
+                                            <span class="session-item session-service" ng-class="{active:hover}" ng-mouseover="hover = true" ng-mouseleave="hover = false" ng-switch-when="0">
+                                                <span class="session-time">{{timeslot.title}}</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+
+                                </span>
+                                <!-- /.table-calendar-body -->
+
+                            </span>
+                            <!-- /.table-calendar -->
+
+                        </div>
+                        <!-- /.slide-calendar -->
+                        <!-- .slide-calendar for mobile -->
+                        <div class="slide-calendar-mobile hidden-sm hidden-md hidden-lg">
+                            <a ng-class="{hide:CurrentWeek<=0}" ng-click="prev()" class="rslides_nav rslides2_nav prev" href="javascript:void(0);"></a>
+                            <a ng-class="{hide:!CalendarData.length}" ng-click="next()" class="rslides_nav rslides2_nav next" href="javascript:void(0);"></a>
+                            <div class="table-css table-calendar-header">
+                                <div class="table-row">
+                                    <span ng-class="{active:dayActive==timeslots.DayOfWeek}" class="table-cell calendar-item" ng-repeat="timeslots in CalendarData" ng-click="fillterByDay(timeslots)">
+                                        <span class="day">{{timeslots.Day}}</span>
+                                        <span class="datetime">{{timeslots.DateTime}}</span>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="table-css calendar-item-info service-item-info">
+                                <div class="table-row" ng-repeat="timeslot in CalendarDataMobile" ng-switch on="{{ServiceType}}">
+                                    <div class="table-cell col-time" ng-switch-when="0">{{timeslot.title}}</div>
+                                    <div class="table-cell col-controls" ng-switch-when="0"><a title="" href="#" class="btn-green btn-book">book</a></div>
+                                    <div class="table-cell col-time" ng-switch-when="1">{{timeslot.title}} <span>{{timeslot.employeeName}}s</span></div>
+                                    <div class="table-cell col-controls" ng-switch-when="1"><a title="" href="#" class="btn-pink btn-book">book a spot</a></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- .slide-calendar for mobile -->
+
+                    </div>
+                    <!-- /.site-calendar -->
+
+                </div>
+            </div>
+            <div id="tabs-2" class="hide">
+                @Html.Partial("_InfoPartial", Model, new ViewDataDictionary { { "CompanyHours", companyHours } })
+            </div>
+            <div id="tabs-3" class="hide">
+                @Html.Partial("_CompanyProfileReviewPartial", Model, new ViewDataDictionary { { "Ratings", ratings } })
+            </div>
+            <div id="tabs-4" class="hide">
+                @Html.Partial("_CompanyProfilePackagePartial", companyPackages)
+            </div>
+            <div id="tabs-5" class="hide">
+                @Html.Partial("_CompanyProfilePhotoPartial", Model)
+            </div>
+        </div>
+        <!-- /#tabs -->
+
+    </div>
+</div>
+
+<!-- .map -->
+<div class="map hidden-xs">
+    <div id="google-map"></div>
+</div>
+<!-- /.map -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tabs-1').removeClass("hide");
+        $("#tabs").tabs();        
+        $('#tabs-2').removeClass("hide");
+        $('#tabs-3').removeClass("hide");
+        $('#tabs-4').removeClass("hide");
+        $('#tabs-5').removeClass("hide");
+
+        $('.select-options').click(function (e) {
+            $(".options-icon").removeClass("z-index-12");
+            $(this).find(".options-icon").addClass("z-index-12");
+        })
+    })
+</script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/bookingdetail.js")"></script>
+
+<script type="text/javascript" src="https://maps-api-ssl.google.com/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+<script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+
+<script type="text/javascript">
+
+    var $mapDiv = $('#google-map');
+
+    var mapDim = {
+        height: $mapDiv.height(),
+        width: $mapDiv.width()
+    }
+
+    $(document).ready(function () {
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|android|ipad)/);
+        if (!agentID) {
+           loadmap(data.locations);
+         }
+
+
+    });
+
+    function loadmap(location) {
+        var map;
+        var myLatlng = new google.maps.LatLng(location.Latitude, location.Longitude);
+        var myOptions = {
+            zoom: 8,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+        var locations= [];
+        locations.push(location);
+        var markers= initMarkers(map,locations);
+
+        var bounds = (markers.length > 0) ? createBoundsForMarkers(markers) : null;
+
+        var center = (bounds) ? bounds.getCenter() : new google.maps.LatLng(0, 0);
+        var zoomvalue= (bounds) ? getBoundsZoomLevel(bounds, mapDim) : 0;
+        map.setCenter(center);
+        map.setZoom(zoomvalue);
+    }
+
+
+    function createBoundsForMarkers(markers) {
+        var bounds = new google.maps.LatLngBounds();
+        $.each(markers, function() {
+            bounds.extend(this.getPosition());
+        });
+        return bounds;
+    }
+
+    function getBoundsZoomLevel(bounds, mapDim) {
+        var WORLD_DIM = { height: 256, width: 256 };
+        var ZOOM_MAX = 21;
+
+        function latRad(lat) {
+            var sin = Math.sin(lat * Math.PI / 180);
+            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+        }
+
+        function zoom(mapPx, worldPx, fraction) {
+            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+        }
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var latFraction = (latRad(ne.lat()) - latRad(sw.lat())) / Math.PI;
+
+        var lngDiff = ne.lng() - sw.lng();
+        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+        var latZoom = zoom(mapDim.height, WORLD_DIM.height, latFraction);
+        var lngZoom = zoom(mapDim.width, WORLD_DIM.width, lngFraction);
+
+        return Math.min(latZoom, lngZoom, ZOOM_MAX);
+    }
+
+    function initMarkers(map, markerData) {
+        var newMarkers = [], marker;
+
+        for (var i = 0; i < markerData.length; i++) {
+            marker = new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(markerData[i].Latitude, markerData[i].Longitude),
+                visible: true,
+                icon: markerData[i].IconMarker,
+                zIndex: markerData[i].IndexId,
+                url: markerData[i].Slug,
+                name: markerData[i].Name
+            }),
+            boxText = document.createElement("div"),
+            infoboxOptions = {
+                content: boxText
+            , disableAutoPan: false
+            , maxWidth: 0
+            , pixelOffset: new google.maps.Size(7, -28)
+            , zIndex: null
+            , boxStyle: {
+                background: "url(/content/images/num.png) -22px center no-repeat"
+              , opacity: 1
+              , width: "auto"
+            }
+            , closeBoxMargin: "10px 2px 2px 2px"
+            , closeBoxURL: ""
+            , infoBoxClearance: new google.maps.Size(1, 1)
+            , isHidden: false
+            , pane: "floatPane"
+            , enableEventPropagation: false
+            };
+
+            newMarkers.push(marker);
+            boxText.innerHTML = markerData[i].Name
+            newMarkers[i].infobox = new InfoBox(infoboxOptions);
+            newMarkers[i].infobox.open(map, marker);
+            newMarkers[i].infobox.hide();
+
+            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                return function () {
+                    //map.panTo(new google.maps.LatLng(markerData[0].Latitude, markerData[0].Longitude));
+                    if (newMarkers[i].infobox.getVisible()) {
+                        newMarkers[i].infobox.setVisible(false);
+                    }
+                    else {
+                        newMarkers[i].infobox.setVisible(true);
+                    }
+                }
+            })(marker, i));
+
+            google.maps.event.addListener(marker, 'mouseout', (function (marker, i) {
+                return function () {
+                    newMarkers[i].infobox.setVisible(false);
+                }
+            })(marker, i));
+
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    $('#tabs').tabs("option", "active", 1);
+                }
+            })(marker, i));
+        }
+
+        return newMarkers;
+    }
+
+</script>
+
+

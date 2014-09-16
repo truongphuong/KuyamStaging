@@ -162,6 +162,7 @@
     <Compile Include="ClassService.cs" />
     <Compile Include="Common\EmailAccount.cs" />
     <Compile Include="Common\EmailSender.cs" />
+    <Compile Include="CompanyProfileServices\CompanyHourComparer.cs" />
     <Compile Include="CompanyProfileServices\CompanyProfileService.cs" />
     <Compile Include="CompanyProfileServices\CompanyServiceComparer.cs" />
     <Compile Include="CompanySearchService.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="MessageServcies\ISMSProvider.cs" />
     <Compile Include="MessageServcies\SendSMSResult.cs" />
     <Compile Include="MessageServcies\SynSMSTask.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OfferServices\IOfferService.cs" />
     <Compile Include="OfferServices\OfferService.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="PromoCodeServices\IPromoCodeServices.cs" />
     <Compile Include="PromoCodeServices\PromoCodeServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\RatingModel.cs" />
     <Compile Include="RequestTimeSlotServices\IRequestTimeSlotServices.cs" />
     <Compile Include="RequestTimeSlotServices\RequestTimeSlotServices.cs" />
     <Compile Include="Scheduler.cs" />

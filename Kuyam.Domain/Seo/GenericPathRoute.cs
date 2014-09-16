@@ -98,8 +98,8 @@ namespace Kuyam.Domain.Seo
                 {
                     case "company":
                         {
-                            data.Values["controller"] = "CompanyProfile";
-                            data.Values["action"] = tabName ?? "availability";
+                            data.Values["controller"] = "book";
+                            data.Values["action"] = "details";
                             data.Values["id"] = friendlyUrl.EntityId;
                             data.Values["SeName"] = friendlyUrl.Slug;
                         }

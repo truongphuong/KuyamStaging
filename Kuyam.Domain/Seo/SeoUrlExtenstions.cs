@@ -49,9 +49,9 @@ namespace Kuyam.Domain.Seo
             if (string.IsNullOrEmpty(url))
                 return false;
             url = url.TrimStart('~').TrimStart();
-            if (url.StartsWith("/availability"))
+            if (url.StartsWith("/book"))
             {
-                tabName = "availability";
+                tabName = "book";
                 return true;
             }
             else if (url.StartsWith("/class"))

@@ -316,6 +316,7 @@
     <Compile Include="Models\CompanyAppointment\CompanyAvailableTimeSlots.cs" />
     <Compile Include="Models\CompanyAppointment\CompanyProfileTimeSlots.cs" />
     <Compile Include="Models\CompanyModels.cs" />
+    <Compile Include="Models\Offers\CompanyOfferModel.cs" />
     <Compile Include="Models\CompanyProfileSummary.cs" />
     <Compile Include="Models\Company\CompanyAjaxSearchModel.cs" />
     <Compile Include="Models\CustModels.cs" />
@@ -412,6 +413,9 @@
     <Content Include="Content\images\apple-touch-icon-114x114.png" />
     <Content Include="Content\images\apple-touch-icon-72x72.png" />
     <Content Include="Content\images\apple-touch-icon.png" />
+    <Content Include="Content\images\appointment-img.jpg" />
+    <Content Include="Content\images\avatar_1.jpg" />
+    <Content Include="Content\images\avatar_2.jpg" />
     <Content Include="Content\images\icons\bg-btn-search.png" />
     <Content Include="Content\images\btn_blog.png" />
     <Content Include="Content\images\btn_discover.png" />
@@ -429,21 +433,29 @@
     <Content Include="Content\images\icons\beautify-la-sticker.png" />
     <Content Include="Content\images\icons\deal-sticker.png" />
     <Content Include="Content\images\icons\gray_star.png" />
+    <Content Include="Content\images\icons\icon-accordion.png" />
     <Content Include="Content\images\icons\icon-angle-down.png" />
+    <Content Include="Content\images\icons\icon-angle-down1.png" />
     <Content Include="Content\images\icons\icon-list.jpg" />
+    <Content Include="Content\images\icons\icon-next-week.png" />
+    <Content Include="Content\images\icons\icon-prev-week.png" />
     <Content Include="Content\images\icons\icon_ business.png" />
     <Content Include="Content\images\icons\icon_arrow.png" />
     <Content Include="Content\images\icons\icon_blog.png" />
     <Content Include="Content\images\icons\icon_business.png" />
+    <Content Include="Content\images\icons\icon_cancellation.png" />
     <Content Include="Content\images\icons\icon_email.png" />
     <Content Include="Content\images\icons\icon_events.png" />
     <Content Include="Content\images\icons\icon_facebook.png" />
+    <Content Include="Content\images\icons\icon_featured-left.png" />
     <Content Include="Content\images\icons\icon_featured.png" />
     <Content Include="Content\images\icons\icon_getoffer.png" />
     <Content Include="Content\images\icons\icon_google.png" />
     <Content Include="Content\images\icons\icon_instagram.png" />
+    <Content Include="Content\images\icons\icon_like.png" />
     <Content Include="Content\images\icons\icon_location.png" />
     <Content Include="Content\images\icons\icon_offer.png" />
+    <Content Include="Content\images\icons\icon_pay.png" />
     <Content Include="Content\images\icons\icon_phone.png" />
     <Content Include="Content\images\icons\icon_pinterest.png" />
     <Content Include="Content\images\icons\icon_promo.png" />
@@ -451,6 +463,7 @@
     <Content Include="Content\images\icons\icon_search.png" />
     <Content Include="Content\images\icons\icon_tumblr.png" />
     <Content Include="Content\images\icons\icon_twitter.png" />
+    <Content Include="Content\images\icons\icon_unlike.png" />
     <Content Include="Content\images\icons\icon_youtube.png" />
     <Content Include="Content\images\icons\ico_address.png" />
     <Content Include="Content\images\icons\ico_email.png" />
@@ -458,9 +471,15 @@
     <Content Include="Content\images\icons\like.png" />
     <Content Include="Content\images\icons\live_chat.png" />
     <Content Include="Content\images\icons\live_chat_off.png" />
+    <Content Include="Content\images\icons\loader.gif" />
+    <Content Include="Content\images\icons\next.png" />
+    <Content Include="Content\images\icons\options-icon-down.png" />
+    <Content Include="Content\images\icons\options-icon-up.png" />
+    <Content Include="Content\images\icons\prev.png" />
     <Content Include="Content\images\icons\sale_ribbon.png" />
     <Content Include="Content\images\icons\unlike.png" />
     <Content Include="Content\images\icons\yellow_star.png" />
+    <Content Include="Content\images\info-tab.png" />
     <Content Include="Content\images\itunes_badge.png" />
     <Content Include="Content\images\itunes_badge1.png" />
     <Content Include="Content\images\kuyam_banner_1.jpg" />
@@ -470,6 +489,7 @@
     <Content Include="Content\images\left.png" />
     <Content Include="Content\images\loader.gif" />
     <Content Include="Content\images\logo_kuyam.png" />
+    <Content Include="Content\images\logo_la.png" />
     <Content Include="Content\images\mobile.png" />
     <Content Include="Content\images\next.png" />
     <Content Include="Content\images\num-0.png" />
@@ -484,6 +504,8 @@
     <Content Include="Content\images\num-8.png" />
     <Content Include="Content\images\num-9.png" />
     <Content Include="Content\images\num.png" />
+    <Content Include="Content\images\offer-description.png" />
+    <Content Include="Content\images\package-1.jpg" />
     <Content Include="Content\images\pause.png" />
     <Content Include="Content\images\placeholder.png" />
     <Content Include="Content\images\play-store.png" />
@@ -495,10 +517,25 @@
     <Content Include="Content\images\slide-bg.png" />
     <Content Include="Content\images\slide_desc.png" />
     <Content Include="Content\images\startup.png" />
+    <Content Include="Content\images\tab-photos.jpg" />
     <Content Include="Content\images\tablet.png" />
     <Content Include="Content\images\tech.png" />
     <Content Include="Content\images\techcrunch.png" />
     <Content Include="Content\images\thewallstreet.png" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\images\welcome.jpg" />
     <Content Include="Content\jcarousel\jquery.jcarousel.js" />
     <Content Include="Content\jcarousel\jquery.jcarousel.min.js" />
@@ -515,6 +552,7 @@
     <Content Include="Content\jcarousel\skins\tango\prev-horizontal.png" />
     <Content Include="Content\jcarousel\skins\tango\prev-vertical.png" />
     <Content Include="Content\jcarousel\skins\tango\skin.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\layout.css" />
     <Content Include="Content\masteradmin\css\style.css" />
     <Content Include="Content\masteradmin\homepage.html" />
@@ -751,6 +789,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\images\num-.psd" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1584,7 +1623,16 @@
     <Content Include="Images\you_changed_your_password.png" />
     <Content Include="Images\you_have_purchased_a_kuyam_gift_card.jpg" />
     <Content Include="Logs\Licenses.txt" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-ui\dialogs.js" />
+    <Content Include="Scripts\angular-ui\dialogs.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bookingdetail.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\colorpicker\colorPicker.css" />
@@ -1601,6 +1649,7 @@
     <Content Include="Scripts\datepicker\prototype-date-extensions.js" />
     <Content Include="Scripts\css_browser_selector.js" />
     <Content Include="Scripts\general.js" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -1608,6 +1657,7 @@
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.pikachoose.full.js" />
     <Content Include="Scripts\responsiveslides.js" />
     <Content Include="Scripts\skdslider.js" />
     <Content Include="Scripts\dialogs.js" />
@@ -2430,7 +2480,7 @@
     <Content Include="Views\CompanyAppointment\CompanyInvoices.cshtml" />
     <Content Include="Views\CompanyAppointment\Index.cshtml" />
     <Content Include="Views\CompanyAppointment\_AdminAppointmentLeftTab.cshtml" />
-    <Content Include="Views\CompanyProfile\Availability.cshtml" />
+    <Content Include="Views\CompanyProfile\_OldAvailability.cshtml" />
     <Content Include="Views\CompanyProfile\Description.cshtml" />
     <Content Include="Views\CompanyProfile\Index.cshtml" />
     <Content Include="Views\CompanyProfile\Package.cshtml" />
@@ -2519,7 +2569,6 @@
     <Content Include="Views\Home\howitworks.cshtml" />
     <Content Include="Views\Home\howitworks_pricing.cshtml" />
     <Content Include="Views\Home\howitworks_user.cshtml" />
-    <Content Include="Views\Home\Index_old.cshtml" />
     <Content Include="Views\Home\IndexLogin.cshtml" />
     <Content Include="Views\Home\learn-more.cshtml" />
     <Content Include="Views\Home\lifestyle.cshtml" />
@@ -2816,9 +2865,19 @@
     <Content Include="Views\Book\Class.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_Companies.cshtml" />
+    <Content Include="Views\Shared\_SignUp.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Book\_CompanyBox.cshtml" />
     <Content Include="Views\Book\_LoadMoreBox.cshtml" />
+    <Content Include="Views\CompanyProfile\Availability.cshtml" />
+    <Content Include="Views\Shared\_CompanyNewLayout.cshtml" />
+    <Content Include="Views\Shared\_InfoPartial.cshtml" />
+    <Content Include="Views\Shared\_CompanyProfileReviewPartial.cshtml" />
+    <Content Include="Views\Shared\_CompanyProfilePackagePartial.cshtml" />
+    <Content Include="Views\Shared\_HeaderBookDetails.cshtml" />
+    <Content Include="Views\Book\Details.cshtml" />
+    <Content Include="Views\Shared\_CompanyProfilePhotoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2866,11 +2925,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4236</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4236/</IISUrl>
+          <IISUrl>http://localhost:4311/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

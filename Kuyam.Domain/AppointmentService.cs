@@ -5,6 +5,7 @@ using System.Text;
 using Kuyam.Database;
 using Kuyam.Domain.AppointmentModel;
 using Kuyam.Domain.Company;
+using Kuyam.Domain.Models;
 using Kuyam.Repository;
 using Kuyam.Repository.Interface;
 using Kuyam.Repository.Infrastructure;
@@ -43,6 +44,7 @@ namespace Kuyam.Domain
         private readonly IRepository<ProposedAppointment> _proposedAppoinmentRepository;
         private readonly IRepository<InstructorClassScheduler> _instructorClassSchedulerRepository;
         private readonly IRepository<PaymentMethod> _paymentMethodRepository;
+        private readonly IRepository<Cust> _custRepository;
         #endregion
 
         #region Ctor
@@ -68,7 +70,8 @@ namespace Kuyam.Domain
             IRepository<RequestAppointment> requestAppointmentRepository,
             IRepository<ProposedAppointment> proposedAppoinmentRepository,
             IRepository<InstructorClassScheduler> instructorClassSchedulerRepository,
-            IRepository<PaymentMethod> paymentMethodRepository)
+            IRepository<PaymentMethod> paymentMethodRepository,
+            IRepository<Cust> custRepository)
         {
             this._dbContext = dbContext;
             this._companyProfileService = companyProfileService;
@@ -92,6 +95,7 @@ namespace Kuyam.Domain
             this._proposedAppoinmentRepository = proposedAppoinmentRepository;
             this._instructorClassSchedulerRepository = instructorClassSchedulerRepository;
             this._paymentMethodRepository = paymentMethodRepository;
+            this._custRepository = custRepository;
         }
 
         #endregion
@@ -572,6 +576,34 @@ namespace Kuyam.Domain
             totalRecord = result.Count();
 
             return result.OrderByDescending(r => r.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        /// <summary>
+        /// Get all ratings for a company.
+        /// </summary>
+        /// <param name="profileId"></param>
+        /// <returns></returns>
+        public List<Rating> GetRatingsByProfileId(int profileId)
+        {
+            return _ratingServiceRepository.Table.Where(t=>t.ServiceCompany.ProfileID == profileId).OrderByDescending(t=>t.CreateDate).ToList();
+        }
+
+        public List<RatingModel> GetRatingByCompanyProfile(int companyProfileId)
+        {            
+            var ratings = from r in _ratingServiceRepository.Table
+                join c in _custRepository.Table
+                    on r.CustID equals c.CustID
+                select new {Customer = c, Rating = r};
+            var ratingModels = new List<RatingModel>();
+            foreach (var rating in ratings)
+            {
+                var ratingModel = new RatingModel(rating.Rating)
+                {
+                    Customer = new CustomerModel(rating.Customer)
+                };
+                ratingModels.Add(ratingModel);
+            }            
+            return ratingModels;
         }
 
 

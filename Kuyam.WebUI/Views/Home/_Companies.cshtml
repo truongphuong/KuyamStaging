@@ -49,7 +49,7 @@
             {
                 var urlLogo = "content/images/placeholder.png";
                 var seName = profile.GetSeName(profile.ProfileID);
-                string url = "https://kuyamqa1.apphb.com/" + "book/" + seName + "/availability";
+                string url = "/book/" + seName ;
 
                 if (!string.IsNullOrEmpty(profile.LogoMediaId))
                 {
@@ -169,12 +169,12 @@
                                 {
                                     //var urlTime = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), employeeId = timeSlot.EmployeeAvailableId, start = timeSlot.StartTime, categoryId = ViewBag.CategoryId, book = true });
 
-                                    string urlTime = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
+                                    string urlTime = "/book/" + seName + "?employeeId=" + timeSlot.EmployeeAvailableId
                                         + "&start=" + timeSlot.StartTime + "&categoryId=" + ViewBag.CategoryId + "&book=true";
                                     if (profile.CompanyAvailableTimeSlots.IsRederect)
                                     {
                                         //urlTime = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                        urlTime = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                        urlTime = "/book/" + seName;
                                     }
                                     <a href="@urlTime" title="@timeSlot.Title.ToLower()">@timeSlot.StartTime.ToString("h:mmtt").ToLower()</a>
                                 }
@@ -182,11 +182,11 @@
                                 if (profile.CompanyAvailableTimeSlots.IsShowMore)
                                 {
                                     // var urlShowMore = Url.RouteUrl("Availability", new { seName = profile.GetSeName(profile.ProfileID), categoryId = ViewBag.CategoryId });
-                                    var urlShowMore = "https://kuyamqa1.apphb.com/" + "availability/" + seName + "?categoryId=" + ViewBag.CategoryId;
+                                    var urlShowMore = "/book/" + seName + "?categoryId=" + ViewBag.CategoryId;
                                     if (profile.CompanyAvailableTimeSlots.IsRederect)
                                     {
                                         //urlShowMore = Url.RouteUrl("BookingAvailability", new { seName = profile.GetSeName(profile.ProfileID) });
-                                        urlShowMore = "https://kuyamqa1.apphb.com/" + "BookingAvailability/" + seName;
+                                        urlShowMore = "/book/" + seName;
                                     }
                                     <a class="bg-green" href="@urlShowMore" title="more">more</a>
 
@@ -221,6 +221,7 @@
 }
 
 <script type="text/javascript">
+
     $('.categoryLnk').click(function () {
         var lat = $('#curLat').val();
         var lon = $('#curLon').val();
@@ -228,6 +229,5 @@
 
         fillterData(lat, lon, categoryId)
     });
-
 </script>
 

@@ -1,34 +1,1389 @@
-﻿@using Kuyam.Database
-@using Kuyam.Domain;
+﻿@using Kuyam.Database;
 @using Kuyam.WebUI.Models;
-@model ProfileCompaniesModels
 @{
-    ViewBag.Title = "availability of " + Model.CompanyName;
-    Layout = "~/Views/Shared/_MasterPageLayout.cshtml";
-
+    Layout = "~/Views/Shared/_CompanyNewLayout.cshtml";
+    ViewBag.Title = "Book";
+    var companyProfile = Model.ProfileCompany;
+    var ratings = (List<Rating>)ViewBag.RatingList;
+    //int totalRecord = ViewBag.TotalRecords;
+    List<CompanyHour> companyHours = ViewBag.CompanyHoursSort;
+    List<CompanyPackage> companyPackages = ViewBag.CompanyPackages;
 }
+@model ProfileCompaniesModels
 @section MetaSeoSection{
     @Model.MetaTagExtension.MetaTag()
 }
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar_appts_calendar.css?v=17")" />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/themes/base/fullcalendar.print_appts_calendar.css?v=17")" media="print" />
-<style type="text/css">
-    .ybox, .newcompanyschedule .allviewing .personcalendar .activeperson {
-        behavior: url(PIE.htc);
-    }
-</style>
-<div class="contentMarketPlace">
-    <div class="bgMainContent">
-        @Html.Partial("_CompanySearchLeftTab")
-        <div class="colRight newcompanyschedule">
-            @Html.Partial("_HeaderCompanyProfile")
-            <div class="clear7">
+<input type="hidden" value="@companyProfile.ProfileID" id="profileid" />
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">book</a></li>
+        <li><a href="#tabs-2">info</a></li>
+        <li><a href="#tabs-3">reviews</a></li>
+        <li><a href="#tabs-4">packages</a></li>
+        <li class="hidden-xs"><a href="#tabs-5">photos</a></li>
+    </ul>
+    <div id="tabs-1">
+        <div class="book-tab">
+            <header class="section-header hidden-xs">
+                <h2>lets schedule an appointment!</h2>
+            </header>
+            <header class="section-header section-header-pink">
+                <h2>pick a categgory:</h2>
+                <div class="category-list">
+                    <ul class="tab-list clearfix">
+                        <li>
+                            <button class="active">blowout</button>
+                        </li>
+                        <li>
+                            <button>facial</button>
+                        </li>
+                        <li>
+                            <button>massage</button>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="select-what">
+
+                        <!-- .select-options -->
+                        <div class="dropdown select-options">
+                            <a title="" id="a-what" data-toggle="dropdown" href="#">
+                                What would you like done?<br /> <span class="options-icon options-icon-down"></span>
+                            </a>
+
+                            <ul class="dropdown-menu options-text" role="menu" aria-labelledby="a-what">
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">facial</span>
+                                        <a class="link-service" title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-service">(details)</a>
+                                    </span>
+                                    <span class="options-time">60m</span>
+                                    <span class="options-price">$60</span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">spa package</span>
+                                        <a class="link-service" title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-service">(details)</a>
+                                    </span>
+                                    <span class="options-time">45m</span>
+                                    <span class="options-price">$45</span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">Brazillian wax with nail service and full spa treatment</span>
+                                        <a class="link-service" title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-service">(details)</a>
+                                    </span>
+                                    <span class="options-time">90m</span>
+                                    <span class="options-price">$250</span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">Brazillian wax</span>
+                                        <a class="link-service" title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-service">(details)</a>
+                                    </span>
+                                    <span class="options-time">30m</span>
+                                    <span class="options-price">$100</span>
+
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">spin</span>
+                                        <a class="link-class" title="" href="javascript:void(0);" data-toggle="modal" data-target="#modal-class">(class details)</a>
+                                    </span>
+                                    <span class="options-time">30m</span>
+                                    <span class="options-price">$100</span>
+                                    <hr />
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.select-options -->
+
+                        <div class="select-text select-what-text">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div id="select-who">
+                        <!-- .select-options -->
+                        <div class="dropdown select-options">
+                            <a title="" id="a-who" data-toggle="dropdown" href="#">
+                                Who would you like?<br /> <span class="options-icon options-icon-down"></span>
+                            </a>
+
+                            <ul class="dropdown-menu options-text" role="menu" aria-labelledby="a-who">
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">George 1</span>
+                                    </span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">George 2</span>
+                                    </span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">George 3</span>
+                                    </span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">George 4</span>
+                                    </span>
+                                    <hr />
+                                </li>
+                                <li>
+                                    <span class="options-info">
+                                        <span class="options-icon-mobile hidden-sm hidden-md hidden-lg"></span>
+                                        <span class="options-value">George 5</span>
+                                    </span>
+                                    <hr />
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.select-options -->
+
+                        <div class="select-text select-who-text">
+                        </div>
+                    </div>
+
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.select-options').click(function (e) {
+                            $(".options-icon").removeClass("z-index-12");
+                            $(this).find(".options-icon").addClass("z-index-12");
+                        })
+
+                        $('.options-text li').click(function (e) {
+                            var a = $(e.target).attr('class');
+                            if (a != "link-service" || a != "link-class") {
+                                $(".bg-white-50").fadeOut();
+                                $('.options-text li').removeClass("active");
+                                $(this).addClass("active");
+                                $('#select-who').fadeIn();
+                                $('#select-who').find(".select-text").html("");
+                                var getValue = $(this).find(".options-value").html();
+                                $(this).parent().parent().parent().find(".select-text").html(getValue);
+                            }
+                        });
+                    })
+                </script>
             </div>
-            @Html.Partial("_CompanyProfileAvailability", Model)
-        </div>
-        <div class="clear">
+
+            <!-- .site-calendar -->
+            <div class="site-calendar clearfix">
+                <div class="bg-white-50"></div>
+
+                <!-- .slide-calendar -->
+                <div class="slide-calendar hidden-xs">
+                    <ul id="slide-calendar" class="rslides">
+                        <li>
+                            <!-- .table-calendar -->
+                            <span class="table-css table-calendar">
+
+                                <!-- .table-calendar-header -->
+                                <span class="table-row table-calendar-header">
+                                    <span class="table-cell">
+                                        <span class="day">Today</span>
+                                        <span class="datetime">Sep 1, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Tuesday</span>
+                                        <span class="datetime">Sep 2, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Wednesday</span>
+                                        <span class="datetime">Sep 3, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Thursday</span>
+                                        <span class="datetime">Sep 4, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Friday</span>
+                                        <span class="datetime">Sep 5, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Saturday</span>
+                                        <span class="datetime">Sep 6, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Sunday</span>
+                                        <span class="datetime">Sep 7, 2014</span>
+                                    </span>
+                                </span>
+                                <!-- /.table-calendar-header -->
+                                <!-- /.table-calendar-body -->
+                                <span class="table-row table-calendar-body">
+
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+
+                                </span>
+                                <!-- /.table-calendar-body -->
+
+                            </span>
+                            <!-- /.table-calendar -->
+                        </li>
+                        <li>
+                            <!-- .table-calendar -->
+                            <span class="table-css table-calendar">
+
+                                <!-- .table-calendar-header -->
+                                <span class="table-row table-calendar-header">
+                                    <span class="table-cell">
+                                        <span class="day">Today</span>
+                                        <span class="datetime">Sep 8, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Tuesday</span>
+                                        <span class="datetime">Sep 9, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Wednesday</span>
+                                        <span class="datetime">Sep 10, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Thursday</span>
+                                        <span class="datetime">Sep 11, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Friday</span>
+                                        <span class="datetime">Sep 12, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Saturday</span>
+                                        <span class="datetime">Sep 13, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Sunday</span>
+                                        <span class="datetime">Sep 14, 2014</span>
+                                    </span>
+                                </span>
+                                <!-- /.table-calendar-header -->
+                                <!-- /.table-calendar-body -->
+                                <span class="table-row table-calendar-body">
+
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+
+                                </span>
+                                <!-- /.table-calendar-body -->
+
+                            </span>
+                            <!-- /.table-calendar -->
+                        </li>
+                        <li>
+                            <!-- .table-calendar -->
+                            <span class="table-css table-calendar">
+
+                                <!-- .table-calendar-header -->
+                                <span class="table-row table-calendar-header">
+                                    <span class="table-cell">
+                                        <span class="day">Today</span>
+                                        <span class="datetime">Sep 15, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Tuesday</span>
+                                        <span class="datetime">Sep 16, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Wednesday</span>
+                                        <span class="datetime">Sep 17, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Thursday</span>
+                                        <span class="datetime">Sep 18, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Friday</span>
+                                        <span class="datetime">Sep 19, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Saturday</span>
+                                        <span class="datetime">Sep 20, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Sunday</span>
+                                        <span class="datetime">Sep 21, 2014</span>
+                                    </span>
+                                </span>
+                                <!-- /.table-calendar-header -->
+                                <!-- /.table-calendar-body -->
+                                <span class="table-row table-calendar-body">
+
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+
+                                </span>
+                                <!-- /.table-calendar-body -->
+
+                            </span>
+                            <!-- /.table-calendar -->
+                        </li>
+                        <li>
+                            <!-- .table-calendar -->
+                            <span class="table-css table-calendar">
+
+                                <!-- .table-calendar-header -->
+                                <span class="table-row table-calendar-header">
+                                    <span class="table-cell">
+                                        <span class="day">Today</span>
+                                        <span class="datetime">Sep 22, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Tuesday</span>
+                                        <span class="datetime">Sep 23, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Wednesday</span>
+                                        <span class="datetime">Sep 24, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Thursday</span>
+                                        <span class="datetime">Sep 25, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Friday</span>
+                                        <span class="datetime">Sep 26, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Saturday</span>
+                                        <span class="datetime">Sep 27, 2014</span>
+                                    </span>
+                                    <span class="table-cell">
+                                        <span class="day">Sunday</span>
+                                        <span class="datetime">Sep 28, 2014</span>
+                                    </span>
+                                </span>
+                                <!-- /.table-calendar-header -->
+                                <!-- /.table-calendar-body -->
+                                <span class="table-row table-calendar-body">
+
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-class">
+                                                <span class="session-time">9:30am <br />George E. Spin</span>
+                                                <a class="btn-pink btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+                                    <!-- .table-cell -->
+                                    <span class="table-cell">
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                        <span class="session">
+                                            <span class="session-item session-service">
+                                                <span class="session-time">9:30am</span>
+                                                <a class="btn-green btn-book" title="" href="#">book</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!-- /.table-cell -->
+
+                                </span>
+                                <!-- /.table-calendar-body -->
+
+                            </span>
+                            <!-- /.table-calendar -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.slide-calendar -->
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        var calendarLength,
+                            calendarCurrent = 0;
+
+                        $("#slide-calendar").responsiveSlides({
+                            auto: false,
+                            pager: false,
+                            nav: true,
+                            speed: 800,
+                            prevText: "last <br /> week",
+                            nextText: "next <br /> week",
+                            after: function (i) {
+                                calendarCurrent = i;
+
+                                if (calendarCurrent == 0) {
+                                    $('.slide-calendar .prev').addClass("hide");
+                                } else {
+                                    $('.slide-calendar .prev').removeClass("hide");
+                                }
+
+                                if (calendarCurrent == calendarLength) {
+                                    $('.slide-calendar .next').addClass("hide");
+                                } else {
+                                    $('.slide-calendar .next').removeClass("hide");
+                                }
+                            }
+                        });
+
+                        $('.slide-calendar .prev').addClass("hide");
+                        calendarLength = $("#slide-calendar li").length - 1;
+
+                        $('.session-item').hover(function () {
+                            $(this).addClass("active");
+                        }, function () {
+                            $(this).removeClass("active");
+                        })
+
+                    });
+                </script>
+
+                <!-- .slide-calendar -->
+                <div class="slide-calendar-mobile hidden-sm hidden-md hidden-lg">
+                    <ul id="slide-calendar-mobile" class="rslides">
+                        <li class="clearfix">
+                            <span class="calendar-item">
+                                <span class="day">Today</span>
+                                <span class="datetime">Sep 1, 2014</span>
+                            </span>
+                            <span class="calendar-item">
+                                <span class="day">Tue</span>
+                                <span class="datetime">Sep 2, 2014</span>
+                            </span>
+                            <span class="calendar-item">
+                                <span class="day">Wed</span>
+                                <span class="datetime">Sep 3, 2014</span>
+                            </span>
+                        </li>
+                        <li class="clearfix">
+                            <span class="calendar-item">
+                                <span class="day">Thur</span>
+                                <span class="datetime">Sep 4, 2014</span>
+                            </span>
+                            <span class="calendar-item">
+                                <span class="day">Fri</span>
+                                <span class="datetime">Sep 5, 2014</span>
+                            </span>
+                            <span class="calendar-item">
+                                <span class="day">Sat</span>
+                                <span class="datetime">Sep 6, 2014</span>
+                            </span>
+                        </li>
+                        <li class="clearfix">
+                            <span class="calendar-item">
+                                <span class="day">Sun</span>
+                                <span class="datetime">Sep 7, 2014</span>
+                            </span>
+                            <span class="calendar-item">
+                                <span class="day">Mon</span>
+                                <span class="datetime">Sep 8, 2014</span>
+                            </span>
+                            <span class="calendar-item">
+                                <span class="day">Tue</span>
+                                <span class="datetime">Sep 9, 2014</span>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                    <table class="calendar-item-info service-item-info">
+                        <tr>
+                            <td class="col-time">9:30 am</td>
+                            <td class="col-controls"><a title="" href="#" class="btn-green btn-book">book</a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-time">9:30 am</td>
+                            <td class="col-controls"><a title="" href="#" class="btn-green btn-book">book</a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-time">9:30 am</td>
+                            <td class="col-controls"><a title="" href="#" class="btn-green btn-book">book</a></td>
+                        </tr>
+                    </table>
+                    <table class="calendar-item-info class-item-info">
+                        <tr>
+                            <td class="col-time">9:30 am <span>George E. spin class</span></td>
+                            <td class="col-controls"><a title="" href="#" class="btn-pink btn-book">book a spot</a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-time">9:30 am <span>George E. spin class</span></td>
+                            <td class="col-controls"><a title="" href="#" class="btn-pink btn-book">book a spot</a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-time">9:30 am <span>George E. spin class</span></td>
+                            <td class="col-controls"><a title="" href="#" class="btn-pink btn-book">book a spot</a></td>
+                        </tr>
+                    </table>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+
+                            var calendarLength,
+                                calendarCurrent = 0;
+
+                            $("#slide-calendar-mobile").responsiveSlides({
+                                auto: false,
+                                pager: false,
+                                nav: true,
+                                speed: 800,
+                                prevText: "",
+                                nextText: "",
+                                after: function (i) {
+                                    calendarCurrent = i;
+
+                                    if (calendarCurrent == 0) {
+                                        $('.slide-calendar-mobile .prev').addClass("hide");
+                                    } else {
+                                        $('.slide-calendar-mobile .prev').removeClass("hide");
+                                    }
+
+                                    if (calendarCurrent == calendarLength) {
+                                        $('.slide-calendar-mobile .next').addClass("hide");
+                                    } else {
+                                        $('.slide-calendar-mobile .next').removeClass("hide");
+                                    }
+                                }
+                            });
+
+                            $('.slide-calendar-mobile .prev').addClass("hide");
+                            calendarLength = $("#slide-calendar-mobile li").length - 1;
+
+                            $('.session-item').hover(function () {
+                                $(this).addClass("active");
+                            }, function () {
+                                $(this).removeClass("active");
+                            })
+
+                        });
+                    </script>
+                </div>
+                <!-- .slide-calendar -->
+
+            </div>
+            <!-- /.site-calendar -->
+
         </div>
     </div>
-    <div class="clear">
+    <div id="tabs-2">
+        @Html.Partial("_InfoPartial", Model, new ViewDataDictionary{{"CompanyHours", companyHours}})
+    </div>
+    <div id="tabs-3">
+        @Html.Partial("_CompanyProfileReviewPartial", Model, new ViewDataDictionary { { "Ratings", ratings } })        
+    </div>
+    <div id="tabs-4">
+        @Html.Partial("_CompanyProfilePackagePartial", companyPackages)        
+    </div>
+    <div id="tabs-5">
+        @Html.Partial("_CompanyProfilePhotoPartial", Model.MediaCompanies)        
     </div>
 </div>
+
+@section maps{
+    <!-- .map -->
+<div class="map hidden-xs">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCqVwY4a4mDTyOVzJY0S0nASARDb90i2pk&sensor=true"></script>
+    <script type="text/javascript">
+
+        var map;
+        function initialize() {
+            var myLatlng = new google.maps.LatLng('@Model.ProfileCompany.Latitude', '@Model.ProfileCompany.Longitude');
+            var myOptions = {
+                zoom: 16,
+                disableDefaultUI: true,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+            var myLatLng = new google.maps.LatLng('@Model.ProfileCompany.Latitude', '@Model.ProfileCompany.Longitude');
+            var beachMarker = new google.maps.Marker({
+                position: myLatLng,
+                map: map
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+        function loadmap(lat, lon, googleIcon) {
+            var myLatlng = new google.maps.LatLng(lat, lon);
+            var myOptions = {
+                zoom: 16,
+                disableDefaultUI: true,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+            var myLatLng = new google.maps.LatLng(lat, lon);
+            var beachMarker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: googleIcon
+
+
+            });
+        }
+    </script>
+    <div id="google-map"></div>
+</div>
+<!-- /.map -->
+}
+@section modalOffer{
+<div class="modal fade modal-offer" id="modal-offer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header clearfix">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <a class="logo-offer" title="" href="">
+                    <img src="/content/images/logo_la.png" alt="" />
+                </a>
+                <div class="event">
+                    {{offer.Event.Name}}
+                    <br />
+                    <span>
+                        {{offer.Event.StartDate | date:'MMM dd'}} -
+                        <span ng-if="offer.Event.EndDate.getMonth() != offer.Event.StartDate.getMonth()">
+                            {{offer.Event.EndDate | date:'MMM'}}
+                        </span>
+                        {{offer.Event.EndDate | date:'dd'}}
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body clearfix" ng-if="offer.Offers != null && offer.Offers.length > 0">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs clearfix" role="tablist">
+                    <li ng-repeat="item in offer.Offers" ng-class="{active: $first }">
+                        <a href="#tab-{{item.ID}}" role="tab" data-toggle="tab">
+                            <i>${{item.NewPrice | number:2}}</i>
+                            <span title="{{item.ServiceName}}">{{item.ServiceName | limitTo: 10}}</span>
+                            <br />
+                            <span title="{{item.CategoryName}}">{{item.CategoryName | limitTo: 10}}</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /Nav tabs -->
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane" ng-repeat="item in offer.Offers" id="tab-{{item.ID}}" ng-class="{active: $first }">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <div class="text-center">
+                                <h3>the offer</h3>
+                                <h4>
+                                    <del class="oldprice">${{item.OldPrice | number: 1}}</del>
+                                    <span class="newprice">${{item.NewPrice | number: 1}}</span>
+                                    <span class="saleoff">- {{ ((item.OldPrice - item.NewPrice) * 100 / item.OldPrice) | number:0 }}% off</span>
+                                </h4>
+                                <a class="btn-brown-gradient" href="javascript:void(0)" ng-click="checkAvaibility(item.ServiceCompanyID, item.IsClass)">check for availability</a>
+                                <p>promotional offers subject to <span class="offer-terms" data-toggle="modal" data-target="#modal-terms">terms</span></p>
+                                <hr class="iphone" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            <div class="offer-info">
+                                <div class="offer-description"></div>
+                                <p>{{item.Description}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Tab panes -->
+            </div>
+        </div>
+    </div>
+</div>
+}
+@section scripts{
+<script type="text/javascript">
+    (function () {
+        'uses strict';
+        var infoApp = angular.module('CompanyProfileApp', []);
+        infoApp.controller("HomeCtrl", ["$scope", "$http", function ($scope, $http) {
+            $scope.favorite = @Model.Favorite.ToString().ToLower();
+            $scope.isAuthenticated = @Request.IsAuthenticated.ToString().ToLower();
+            $scope.offer = {};
+
+            $scope.addToFavorite = function() {
+                if ('@(Request.IsAuthenticated?"1":"0")' == '0') {
+                    showDialog('signuppopup', 'btnCloseloginPopup');
+                    return;
+                }
+                var valu2 = $('#profileid').val();
+                var searchParameters = { profileid: valu2 };
+                $.ajax(
+                    {
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(searchParameters),
+                        dataType: 'html',
+                        url: '/CompanyProfile/AddToFavorite/'
+                    })
+                    .success(function (result) {
+                        $scope.$apply(function(){
+                            $scope.favorite = true;
+                        });
+                    })
+                    .error(function (error) {
+                        alert('error');
+                    });
+            }
+
+            $scope.removeFavorite = function(){
+                if ('@(Request.IsAuthenticated?"1":"0")' == '0') {
+                    showDialog('signuppopup', 'btnCloseloginPopup');
+                    return;
+                }
+                var valu2 = $('#profileid').val();
+                var searchParameters = { profileid: valu2 };
+                $.ajax(
+                        {
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(searchParameters),
+                            dataType: 'html',
+                            url: '/CompanyProfile/RemoveFromFavorite/'
+                        })
+                        .success(function (result) {
+                            $scope.$apply(function(){
+                                $scope.favorite = false;
+                            });
+                        })
+                        .error(function (error) {
+                            alert('error');
+                        });
+            };
+
+            $scope.getOfferInfo = function(offerId){
+                $('#modal-offer').modal({'show': true});
+                var url = "/company/GetOffer/?companyEventId="+ offerId + "&nocache=" + getunixtime();
+                $http({
+                    method: 'GET',
+                    url: url
+                }).
+                    success(function(data, status, headers, config){
+                        $scope.offer = data;
+                        $scope.offer.Event.StartDate = new Date($scope.offer.Event.StartDate);
+                        $scope.offer.Event.EndDate = new Date($scope.offer.Event.EndDate);
+                    }).
+                    error(function(data, status, headers, config){
+
+                    });
+            };
+
+            $scope.checkAvaibility = function(serviceId, isClass){
+                //alert(serviceId);
+                var url = "/availability" + $scope.offer.SlugName + "?serviceId=" + serviceId;
+                if(isClass){
+                    url = "/class" + $scope.offer.SlugName + "?serviceId=" + serviceId;
+                }
+                window.location.href = url;
+            };
+        }]);
+        //angular.element(document).ready(function () {
+        //    angular.bootstrap(document.body, ['CompanyProfileApp']);
+        //});
+    })();
+</script>
+}

@@ -43,7 +43,7 @@ namespace Kuyam.WebUI.Controllers
             this._searchService = searchService;
         }
 
-        private ISeoFriendlyUrlService seoFriendlyUrlService;
+        private readonly ISeoFriendlyUrlService seoFriendlyUrlService;
         private readonly IAppointmentService _appointmentService;
         private readonly CompanyProfileService _companyProfileService;
         private readonly OrderService _orderService;
@@ -54,7 +54,7 @@ namespace Kuyam.WebUI.Controllers
             var model = new BookingPageListModel();
             model.SearchKey = key;
             ViewBag.KeyWord = key;
-            model.CategoryId = categoryId;           
+            model.CategoryId = categoryId;
             if (MySession.CustID > 0)
                 model.IsLogin = true;
 
@@ -68,7 +68,7 @@ namespace Kuyam.WebUI.Controllers
             model.Lon = MySession.Longitude;
 
             var categories = _categoryService.GetActiveCategories();
-            
+
 
             if (categories != null && categories.Count > 0)
             {
@@ -81,20 +81,25 @@ namespace Kuyam.WebUI.Controllers
                     model.DetectLocation = "detectLocation()";
                 }
                 List<string> categoriesId = new List<string>();
-                
+
                 var companyList = _searchService.CompanySearchForWeb(out totalRecord, categoriesId, key, categoryId, MySession.Latitude, MySession.Longitude, ConfigManager.DefaultDistance, MySession.CustID, page, 10);
                 model.PagedList = new StaticPagedList<CompanyProfileSearch>(companyList, page, 10, totalRecord);
-                
+
+
+                int totalPages = (int)Math.Ceiling((double)totalRecord / 10);
+
+                model.TotalPages = totalPages;
+
                 categoriesId = categoriesId.Distinct().OrderBy(o => o).ToList();
-                
+
                 StringBuilder htmlCategories = new StringBuilder();
                 htmlCategories.Append("<option value='0' selected='selected' >select a category</option>");
-                categories = categories.Where(m => categoriesId.Contains(m.ServiceID.ToString())).OrderBy(o=>o.ServiceName).ToList();
+                categories = categories.Where(m => categoriesId.Contains(m.ServiceID.ToString())).Distinct().ToList();
                 model.Categories = categories;
                 if (categoryId == 0 && categories.Count() > 0)
                 {
                     model.CategoryId = categories[0].ServiceID;
-                }       
+                }
 
                 foreach (var item in categories)
                 {
@@ -105,7 +110,7 @@ namespace Kuyam.WebUI.Controllers
                     htmlCategories.AppendFormat("<option value=\"{0}\" {1}>{2}</option>", item.ServiceID, selected, UtilityHelper.TruncateText(item.ServiceName, 36));
 
                 }
-                model.HtmlCategories = htmlCategories.ToString();               
+                model.HtmlCategories = htmlCategories.ToString();
 
                 model.locations = companyList.Select(item => new CompanyGoogleMap
                 {
@@ -163,6 +168,74 @@ namespace Kuyam.WebUI.Controllers
             return Json(new { content = this.RenderPartialViewToString("_LoadMoreBox", (object)model) }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Details(int id = 0, int proposedId = 0, int categoryId = 0, int serviceId = 0)
+        {
+            ViewBag.HeaderActive = 1;
+            var model = new ProfileCompaniesModels();
+            model.ProfileId = id;
+            var profileCompany = _searchService.GetCompanyProfileDetials(id, categoryId);
+            model.ProfileCompanyDetails = profileCompany;
+            model.ProfileCompany = _companyProfileService.GetProfileCompanyByID(id);
+            model.CategoryId = categoryId;
+            profileCompany.CategoryId = categoryId;
+            model.Favorite = _companyProfileService.CheckFavoriteByProfileID(id, MySession.CustID);
+            var Keywords = MyApp.Settings.TagSetting.Keywords;
+            model.MetaTagExtension = new MetaTagExtension(profileCompany.Desc);
+            profileCompany.locations = new CompanyGoogleMap
+                {
+                    IndexId = 0,
+                    Name = profileCompany.Name,
+                    ProfileID = profileCompany.ProfileID,
+                    Latitude = profileCompany.Latitude,
+                    Longitude = profileCompany.Longitude,
+                    IconMarker = "/content/images/num-0.png",
+                    Slug = Url.RouteUrl("Slug", new { sename = profileCompany.GetSeName(profileCompany.ProfileID) })
+                };
+            model.CompanyJsionData = JsonConvert.SerializeObject(profileCompany);
+           
+            var hours = _companyProfileService.SplitCompanyHours(model.ProfileCompany.CompanyHours.ToList());
+            hours = _companyProfileService.SortCompanyHours(hours);
+            ViewBag.CompanyHoursSort = hours;
+            //Ratings         
+            ViewBag.RatingList = _appointmentService.GetRatingByCompanyProfile(id);//.GetRatingsByProfileId(id);           
+            //Package           
+            var packages = _companyProfileService.GetCompanyPackages(id);
+            ViewBag.CompanyPackages = packages;//GetCompanyPackages(packages);
+            //Photo
+            model.MediaCompanies = _companyProfileService.GetCompanyMediums(id, Types.CompanyMediaType.IsBanner);
+
+            return View(model);
+        }
+
+
+        public ActionResult GetServiceCompanyByCategoryId(int profileId, int categoryId)
+        {
+            var serviceCompanies = _searchService.GetServiceCompanyByCategoryId(profileId, categoryId);
+            return Json(serviceCompanies.Select(o => new ServiceCompany
+            {
+                ServiceCompanyID = o.ServiceCompanyID,
+                ServiceID = o.ServiceID,
+                ServiceTypeId = o.ServiceTypeId,
+                ServiceName = o.ServiceName,
+                ToDateTime = o.ToDateTime,
+                FromDateTime = o.FromDateTime,
+                Price = o.Price,
+                Duration = o.Duration,
+                Description = o.Description,
+                EmployeeName = o.EmployeeName,
+                IsPerDay = o.IsPerDay,
+                Modified = o.Modified,
+                Created = o.Created,
+                ProfileID = o.ProfileID,
+                Status = o.Status
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetEmployeeByServiceCompanyId(int serviceComapanyId)
+        {
+            var emloyeeslist = _searchService.GetEmployeeByServiceCompanyId(serviceComapanyId);
+            return Json(emloyeeslist.Select(o => new CompanyEmployee { EmployeeName = o.EmployeeName, EmployeeID = o.EmployeeID }), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Availability(string companyUrlName, int? proposedId, int? categoryId, int? serviceId)
         {
             MySession.IsBookDirect = true;
@@ -250,7 +323,7 @@ namespace Kuyam.WebUI.Controllers
 
             DateTime endTime = dtnow.AddDays(7);
 
-            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
+            var calendars = _companyProfileService.GetSchedulerAvailabilityOfClass(id, 0, 0, dtnow.ToString("MM-dd-yyyy hh:mm"), endTime.ToString("MM-dd-yyyy hh:mm"));
             model.CalendarString = BuildCalendar(calendars, dtnow);
 
             return View(model);

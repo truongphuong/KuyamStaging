@@ -29,6 +29,7 @@ using Kuyam.Domain.Seo;
 using Kuyam.Domain.CompanyProfileServices;
 using Kuyam.Domain.OfferServices;
 using Kuyam.WebUI.Models.Offers;
+using Newtonsoft.Json;
 
 
 namespace Kuyam.WebUI.Controllers
@@ -401,6 +402,61 @@ namespace Kuyam.WebUI.Controllers
 
             };
             return PartialView("_OfferPopup", model);
+        }
+
+        public IsoDateJsonResult GetOffer(int? companyEventId)
+        {
+            var companyEvent = _offerService.GetCompanyEventByCompanyEventId(companyEventId ?? 0);
+            var listOffers = _offerService.GetListServicesEventByCompanyEventId(companyEventId ?? 0, 0);
+            var ListClasses = listOffers.Where(m => m.ServiceTypeId == (int)Types.ServiceType.ClassType).OrderBy(o => o.NewPrice).Take(3).ToList();
+            var ListServices = listOffers.Where(m => m.ServiceTypeId == (int)Types.ServiceType.ServiceType).OrderBy(o => o.NewPrice).Take(3).ToList();
+            bool hasClass = (ListClasses != null && ListClasses.Count() > 0);
+
+            List<CompanyServiceEventDTO> offers = new List<CompanyServiceEventDTO>();
+
+            if (ListClasses != null && ListClasses.Count() > 0 && companyEvent.ProfileCompany.HasClassBooking)
+            {
+                offers = ListClasses.Select(item => new CompanyServiceEventDTO
+                {
+                    ID = item.ID,
+                    ServiceTypeId = item.ServiceTypeId,
+                    Description = item.Description,
+                    CompanyEventID = item.CompanyEventID,
+                    ServiceCompanyID = item.ServiceCompanyID,
+                    OldPrice = item.OldPrice,
+                    NewPrice = item.NewPrice,
+                    ServiceName = item.ServiceName,
+                    CategoryName = item.CategoryName,
+                    IsClass = true
+
+                }).ToList();
+            }
+            int numberOfferClass = offers != null ? offers.Count() : 0;
+            var serviceOffers = ListServices.Select(item => new CompanyServiceEventDTO
+            {
+                ID = item.ID,
+                ServiceTypeId = item.ServiceTypeId,
+                Description = item.Description,
+                CompanyEventID = item.CompanyEventID,
+                ServiceCompanyID = item.ServiceCompanyID,
+                OldPrice = item.OldPrice,
+                NewPrice = item.NewPrice,
+                ServiceName = item.ServiceName,
+                CategoryName = item.CategoryName,
+                IsClass = false
+
+            }).Take(3 - numberOfferClass).ToList();
+
+            offers.AddRange(serviceOffers);
+
+            var model = new CompanyOfferModel
+            {
+                SlugName = Url.RouteUrl("Slug", new { sename = companyEvent.GetSeName(companyEvent.ProfileCompany.ProfileID) }),
+                Event = new Models.Offers.EventDTO(companyEvent.Event),//companyEvent.Event,
+                Offers = offers
+
+            };
+            return new IsoDateJsonResult(model);
         }
 
 

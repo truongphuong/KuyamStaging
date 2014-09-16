@@ -19,7 +19,7 @@ namespace Kuyam.Domain.CategoryServices
 
         #region Ctor
 
-        public CategoryService(DbContext dbContext,IRepository<Service> serviceRepository)
+        public CategoryService(DbContext dbContext, IRepository<Service> serviceRepository)
         {
             this._dbContext = dbContext;
             this._serviceRepository = serviceRepository;
@@ -36,7 +36,7 @@ namespace Kuyam.Domain.CategoryServices
             var query = _serviceRepository.Table.Where(m => !m.ParentServiceID.HasValue
                 && (m.Status.HasValue && m.Status.Value)
                 && m.Sequence.HasValue);
-            return query.OrderBy(o=>o.Sequence).ToList();
+            return query.OrderBy(o => o.Sequence).ToList();
         }
 
 
@@ -44,6 +44,13 @@ namespace Kuyam.Domain.CategoryServices
         {
             var categories = _dbContext.SqlQuery<Service>("GetSequenceCategories").ToList();
             return categories;
+        }
+
+        public List<Service> GetCategoriesByProfileId(int profileId)
+        {
+            var query = _serviceRepository.Table.Where(m => !m.ParentServiceID.HasValue
+                && (m.Status.HasValue && m.Status.Value));
+            return query.OrderBy(o =>o.ServiceName).ToList();
         }
     }
 }

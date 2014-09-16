@@ -444,7 +444,7 @@ namespace Kuyam.Domain.CompanyProfileServices
                         && sv.ParentServiceID.HasValue
                         && (svcpn.Status == 0)
                         select svcpn;
-            return query.ToList();
+            return query.Distinct().ToList();
 
         }
 
@@ -1487,12 +1487,25 @@ namespace Kuyam.Domain.CompanyProfileServices
         }
         public List<EmployeeHour> GetEmployeeHour(int profileId, int employeeId, int serviceId)
         {
+            CompanyEmployee employee = new CompanyEmployee();
+            if (employeeId == 0)
+            {
+                var queryTemp = from emh in _employeeHourRepository.Table
+                                join emp in _companyEmployeeRepository.Table on emh.CompanyEmployeeID equals emp.EmployeeID
+                                join ems in _employeeServiceRepository.Table on emp.EmployeeID equals ems.CompanyEmployeeID                              
+                                where ems.ServiceCompanyID == serviceId 
+                                && !emh.IsPreview
+                                orderby emp.EmployeeName 
+                                select emp ;
+                employee = queryTemp.FirstOrDefault();
+            }
+
             var query = (from emh in _employeeHourRepository.Table
                          join emp in _companyEmployeeRepository.Table on emh.CompanyEmployeeID equals emp.EmployeeID
                          join ems in _employeeServiceRepository.Table on emp.EmployeeID equals ems.CompanyEmployeeID
                          where emp.ProfileCompanyID == profileId
                          && ((serviceId == 0 || ems.ServiceCompanyID == serviceId) && ems.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ServiceType)
-                         && (employeeId == 0 || emp.EmployeeID == employeeId)
+                         && (((employeeId == 0 && emp.IsDefault) || (emp.EmployeeID == employee.EmployeeID)) || emp.EmployeeID == employeeId)
                          && !emh.IsPreview // this field use for review or not
                          select emh).Distinct();
 
@@ -1841,14 +1854,53 @@ namespace Kuyam.Domain.CompanyProfileServices
         }
 
         #region Class base
-        public List<SchedulerAvailability> GetSchedulerAvailabilityOfClass(int profileId, string fromDate, string toDate)
+        public List<SchedulerAvailability> GetSchedulerAvailabilityOfClass(int profileId, int ServiceId, int employeeId, string fromDate, string toDate)
         {
-            return _dbContext.SqlQuery<SchedulerAvailability>("GetSchedulerAvailabilityOfClass @ProfileId, @FromDateTime, @ToDateTime",
+            return _dbContext.SqlQuery<SchedulerAvailability>("GetSchedulerAvailabilityOfClass @ProfileId, @ClassId, @EmployeeId,  @FromDateTime, @ToDateTime",
                 new SqlParameter("ProfileId", profileId),
+                new SqlParameter("ClassId", ServiceId),
+                new SqlParameter("EmployeeId", employeeId),
                 new SqlParameter("FromDateTime", fromDate),
                 new SqlParameter("ToDateTime", toDate)).ToList();
         }
         #endregion
+
+        /// <summary>
+        /// Example: DayOfWeek = 234 => [2, 3, 4]
+        /// Purpose: create simple model to display data. Take care to use for other purpose.
+        /// </summary>
+        /// <param name="hours"></param>
+        /// <returns></returns>
+        public List<CompanyHour> SplitCompanyHours(List<CompanyHour> hours)
+        {
+            var companyHours = new List<CompanyHour>();
+            foreach (var hour in hours)
+            {
+                var daysOfWeek = hour.DayOfWeek.ToString();
+                foreach (var day in daysOfWeek)
+                {
+                    var no = int.Parse(day.ToString());
+                    var companyHour = new CompanyHour
+                    {
+                        DayOfWeek = no,
+                        CompanyHourID = hour.CompanyHourID,
+                        FromHour = hour.FromHour,
+                        ToHour = hour.ToHour,
+                        IsDaily = hour.IsDaily,
+                        ProfileCompanyID = hour.ProfileCompanyID
+                    };
+                    companyHours.Add(companyHour);
+                }
+            }
+            return companyHours;
+        }
+
+        public List<CompanyHour> SortCompanyHours(List<CompanyHour> hours)
+        {
+            var companyHourComparer = new CompanyHourComparer();
+            hours.Sort(companyHourComparer);
+            return hours;
+        }
 
     }
 }

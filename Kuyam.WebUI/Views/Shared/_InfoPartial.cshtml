@@ -1,0 +1,213 @@
+﻿@using Kuyam.WebUI.Models;
+@using Kuyam.Database;
+@model ProfileCompaniesModels
+@{
+    var companyProfile = Model.ProfileCompany;
+    var dayOfWeek = 1;
+    var index = 0;
+    List<CompanyHour> hours = ViewBag.CompanyHours;//companyProfile.CompanyHours.ToList();
+    var daysOfWeek = new List<string> { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+    var nowDayOfWeek = (int)DateTime.Now.DayOfWeek;
+    string directUrl = "https://maps.google.com/maps?daddr=" + string.Format("{0} {1}, {2} {3}", companyProfile.Street1, companyProfile.City, companyProfile.State, companyProfile.Zip);
+    directUrl = directUrl + "&hl=en";
+    directUrl = directUrl + "&sll=" + companyProfile.Latitude + "," + companyProfile.Longitude;
+    directUrl = directUrl + "&sspn=0.000000,0.000000&mra=ls&t=m&z=16&iwloc=ddw1";
+    var pstNowTime = DateTimeUltility.ConvertToPstTime(DateTime.Now);
+}
+<div class="info-tab">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <header class="section-header">
+                <h2>address:</h2>
+                <p>@companyProfile.Street1.<br />@companyProfile.City, @companyProfile.State</p>
+            </header>
+            <div class="info-img hidden-sm hidden-md hidden-lg"><img alt="" src="~/content/images/info-tab.png" /></div>
+            <a class="btn-green btn-direction" href="@directUrl" title="directions">directions</a>
+            <div class="info-phone">@Kuyam.Domain.UtilityHelper.FormatPhone(companyProfile.Phone)</div>
+            <header class="section-header">
+                <h2>business hours:</h2>
+            </header>
+            <div class="clear"></div>
+            <div class="table-css">
+                @while (index < hours.Count)
+                {
+                    var companyAvailibleDay = hours[index].DayOfWeek;
+                    if (dayOfWeek > companyAvailibleDay)
+                    {
+                        if (companyAvailibleDay != 0)
+                        {
+                            if (companyAvailibleDay != 0)
+                            {
+                                dayOfWeek--;
+                            }
+                        }
+                        else
+                        {
+                            if (dayOfWeek > 7)
+                            {
+                                dayOfWeek = 7;
+                            }
+                        }
+                    }
+                    if (companyAvailibleDay == dayOfWeek || (companyAvailibleDay == 0 && dayOfWeek == 7))
+                    {
+                        var day = hours[index];
+                        var startDate = new DateTime().Add(day.FromHour);
+                        var endDate = new DateTime().Add(day.ToHour);
+                        <div class="table-row">
+                            <div class="table-cell">@(((DayOfWeek)companyAvailibleDay).ToString().Substring(0, 3))</div>
+                            <div class="table-cell">@string.Format("{0} - {1}", startDate.ToString("hh:mmtt"), endDate.ToString("hh:mmtt")).ToLower()</div>
+                            @if (nowDayOfWeek == companyAvailibleDay)
+                            {
+                                var currentTime = DateTime.Now;
+                                if (currentTime.TimeOfDay >= day.FromHour && currentTime.TimeOfDay <= day.ToHour)
+                                {
+                                    <div class="table-cell"><a title="" href="">Open now</a></div>
+                                }
+
+                            }
+
+                        </div>
+                        index++;
+                    }
+                    else
+                    {
+                        <div class="table-row">
+                            <div class="table-cell">@daysOfWeek[dayOfWeek]</div>
+                            <div class="table-cell">closed</div>
+                        </div>
+                    }
+                    dayOfWeek++;
+                }
+                @while (dayOfWeek < 8)
+                {
+                    <div class="table-row">
+                        <div class="table-cell">@daysOfWeek[dayOfWeek]</div>
+                        <div class="table-cell">closed</div>
+                    </div>
+                    dayOfWeek++;
+                }
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <header class="section-header hidden-xs" ng-show="isAuthenticated">
+                <h2 class="clearfix">
+                    <a title="" href="javascript:void(0)" ng-click="addToFavorite();" class="link-favorite" ng-show="!favorite">
+                        <span class="icon-unlike"></span> add to favorites
+                    </a>
+                    <a title="" href="javascript:void(0);" ng-click="removeFavorite()" class="link-favorite" ng-show="favorite">
+                        <span class="icon-like"></span> favorites
+                    </a>
+                </h2>
+            </header>
+            @if (companyProfile.CompanyEvents.Any(x => x.Event.StartDate.Value.AddDays(-3) <= pstNowTime && x.Event.EndDate >= pstNowTime.AddDays(-1)))
+            {
+                var companyEvent = companyProfile.CompanyEvents.Where(x => x.Event.StartDate.Value.AddDays(-3) <= pstNowTime && x.Event.EndDate >= pstNowTime.AddDays(-1)).First();
+                if ((companyProfile.HasClassBooking && companyEvent.CompanyServiceEvents.Any(x => x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ClassType))
+                    || (companyEvent.CompanyServiceEvents.Any(x => x.ServiceCompany.ServiceTypeId == (int)Types.ServiceType.ServiceType)))
+                {
+                    <header class="section-header hidden-xs">
+                        <div class="info-img"><a title="" href="javascript:void(0);" ng-click="getOfferInfo(@companyEvent.CompanyEventID)"><img src="/content/images/info-tab.png" alt=""></a></div>
+                    </header>
+                }
+            }
+            <header class="section-header">
+                <a title="@companyProfile.Url" href="@Kuyam.Domain.UtilityHelper.UrlFormat(companyProfile.Url)" class="info-web" target="_blank">company website</a>
+            </header>
+            <header class="section-header">
+                <a title="" href="#" class="info-pay">
+                    <span class="icon-pay"></span>
+                    @if (companyProfile.PaymentMethod.HasValue && companyProfile.PaymentMethod.Value == 1)
+                    {
+                        @:PayPal.<br />pay in person
+                    }
+                    else
+                    {
+                        @:PayPal
+                    }
+                </a>
+            </header>
+            <header class="section-header">
+                <a title="" href="#" class="info-cancel">
+                    <span class="icon-cancel"></span>
+                    @if (companyProfile.CancelHour > 0)
+                    {
+                        string notice = companyProfile.CancelHour + "hr notice";
+                        @notice
+                    }
+                    else
+                    {
+                        @:cancel anytime
+                    }
+                </a>
+            </header>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="test1.html">
+    <div class="modal-offer" id="modal-offer"  aria-labelledby="myModalLabel" aria-hidden="true">        
+            <div class="modal-content">
+                <div class="modal-header clearfix">
+                    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <a class="logo-offer" title="" href="">
+                        <img src="/content/images/logo_la.png" alt="" />
+                    </a>
+                    <div class="event">
+                        {{offer.Event.Name}}
+                        <br />
+                        <span>
+                            {{offer.Event.StartDate | date:'MMM dd'}} -
+                            <span ng-if="offer.Event.EndDate.getMonth() != offer.Event.StartDate.getMonth()">
+                                {{offer.Event.EndDate | date:'MMM'}}
+                            </span>
+                            {{offer.Event.EndDate | date:'dd'}}
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-body clearfix" ng-if="offer.Offers != null && offer.Offers.length > 0">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs clearfix" role="tablist">
+                        <li ng-repeat="item in offer.Offers" ng-class="{active: $first }" ng-click="activeTab(item.ID)">
+                            <a href="#tab-{{item.ID}}" role="tab" data-toggle="tab">
+                                <i>${{item.NewPrice | number:2}}</i>
+                                <span title="{{item.ServiceName}}">{{item.ServiceName | limitTo: 10}}</span>
+                                <br />
+                                <span title="{{item.CategoryName}}">{{item.CategoryName | limitTo: 10}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /Nav tabs -->
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane" ng-repeat="item in offer.Offers" id="tab-{{item.ID}}" ng-class="{active: item.ID == tabId}">
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                                <div class="text-center">
+                                    <h3>the offer</h3>
+                                    <h4>
+                                        <del class="oldprice">${{item.OldPrice | number: 1}}</del>
+                                        <span class="newprice">${{item.NewPrice | number: 1}}</span>
+                                        <span class="saleoff">- {{ ((item.OldPrice - item.NewPrice) * 100 / item.OldPrice) | number:0 }}% off</span>
+                                    </h4>
+                                    <a class="btn-brown-gradient" href="javascript:void(0)" ng-click="checkAvaibility(item.ServiceCompanyID, item.IsClass)">check for availability</a>
+                                    <p>promotional offers subject to <span class="offer-terms" data-toggle="modal" data-target="#modal-terms">terms</span></p>
+                                    <hr class="iphone" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                                <div class="offer-info">
+                                    <div class="offer-description"></div>
+                                    <p>{{item.Description}}</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Tab panes -->
+                </div>
+           
+        </div>
+    </div>
+
+</script>    
+
+

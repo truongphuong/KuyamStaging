@@ -20,5 +20,11 @@ namespace Kuyam.Domain.CategoryServices
         /// </summary>
         /// <returns></returns>
         List<Service> GetActiveCategories();
+
+        /// <summary>
+        ///  get lis categories for company
+        /// </summary>
+        /// <returns></returns>
+        List<Service> GetCategoriesByProfileId(int profileId);
     }
 }

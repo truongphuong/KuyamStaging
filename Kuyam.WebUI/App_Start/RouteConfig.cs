@@ -92,38 +92,38 @@ namespace Kuyam.WebUI
                 new { controller = "CompanyProfile", action = "Review" }
                 );
 
-           routes.MapRoute(
-                "BookingDescription",
-                "book/{companyUrlName}/Description",
-                new { controller = "Book", action = "Description" }
-                );
-            routes.MapRoute(
-                "BookingPhoto",
-                "book/{companyUrlName}/Photo",
-                new { controller = "Book", action = "Photo" }
-                );
-            routes.MapRoute(
-                "BookingReview",
-                "book/{companyUrlName}/Review",
-                new { controller = "Book", action = "Review" }
-                );
+           //routes.MapRoute(
+           //     "BookingDescription",
+           //     "book/{companyUrlName}/Description",
+           //     new { controller = "Book", action = "Description" }
+           //     );
+           // routes.MapRoute(
+           //     "BookingPhoto",
+           //     "book/{companyUrlName}/Photo",
+           //     new { controller = "Book", action = "Photo" }
+           //     );
+           // routes.MapRoute(
+           //     "BookingReview",
+           //     "book/{companyUrlName}/Review",
+           //     new { controller = "Book", action = "Review" }
+           //     );
 
-            routes.MapRoute(
-                "BookingPackage",
-                "book/{companyUrlName}/Package",
-                new { controller = "Book", action = "Package" }
-                );
+           // routes.MapRoute(
+           //     "BookingPackage",
+           //     "book/{companyUrlName}/Package",
+           //     new { controller = "Book", action = "Package" }
+           //     );
 
-            routes.MapRoute(
-                "BookingAvailability",
-                "book/{companyUrlName}/Availability",
-                new { controller = "Book", action = "Availability" }
-                );
-            routes.MapRoute(
-                "BookingClass",
-                "book/{companyUrlName}/class",
-                new { controller = "Book", action = "Class" }
-                );
+           // routes.MapRoute(
+           //     "BookingAvailability",
+           //     "book/{companyUrlName}/Availability",
+           //     new { controller = "Book", action = "Availability" }
+           //     );
+           // routes.MapRoute(
+           //     "BookingClass",
+           //     "book/{companyUrlName}/class",
+           //     new { controller = "Book", action = "Class" }
+           //     );
 
             //routes.MapRoute(
             //    "Booking - Company",
@@ -143,13 +143,27 @@ namespace Kuyam.WebUI
                 "book/loadMore",
                 new { controller = "Book", action = "loadMore" }
                 );
-            
+
+            routes.MapRoute(
+               "GetEmployeeByServiceCompanyId",
+               "book/GetEmployeeByServiceCompanyId",
+               new { controller = "Book", action = "GetEmployeeByServiceCompanyId" }
+               );
+
+            routes.MapRoute(
+               "GetServiceCompanyByCategoryId",
+               "book/GetServiceCompanyByCategoryId",
+               new { controller = "Book", action = "GetServiceCompanyByCategoryId" }
+               );
 
             // custom routes for seo
             routes.MapGenericPathRoute("GenericUrl", "{generic_se_name}", new { controller = "Error", action = "GenericUrl" });
 
             routes.MapGenericPathRoute("Slug", "{SeName}", new { controller = "CompanyProfile", action = "Availability" });
 
+
+            routes.MapGenericPathRoute("book", "book/{SeName}", new { controller = "book", action = "Details" });
+            
             routes.MapGenericPathRoute("Availability", "availability/{SeName}", new { controller = "CompanyProfile", action = "Availability" });
             routes.MapGenericPathRoute("Class", "class/{SeName}", new { controller = "CompanyProfile", action = "Class" });
             routes.MapGenericPathRoute("Description", "description/{SeName}", new { controller = "CompanyProfile", action = "Description" });

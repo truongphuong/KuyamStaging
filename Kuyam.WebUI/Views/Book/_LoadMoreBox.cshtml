@@ -12,7 +12,7 @@
         {
             var urlLogo = "/content/images/placeholder.png";
             var seName = profile.GetSeName(profile.ProfileID);
-            string url = "https://kuyamqa1.apphb.com/" + "book/" + seName + "/availability";
+            string url = "/book/" + seName + "/availability";
 
             if (!string.IsNullOrEmpty(profile.LogoMediaId))
             {
@@ -123,7 +123,7 @@
                         @if (Model.IsLogin)
                         {
 
-                            if (profile.IsFeature)
+                            if (profile.IsUserFavorite)
                             {
                                 <span class="vote-icon icon-like"></span>
                             }
